@@ -76,7 +76,7 @@ local function joshuto(path)
 	-- end
 
 	os.remove(output_path)
-	local cmd = string.format('joshuto --file-chooser --output-file %s %s', output_path, path)
+	local cmd = string.format('joshuto --file-chooser --output-file "%s" "%s"', output_path, path)
 
 	exec_joshuto_command(cmd)
 end
