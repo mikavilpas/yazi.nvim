@@ -1,28 +1,28 @@
--- local cmd = string.format('joshuto --file-chooser --output-file %s %s', output_path, current_directory)
+-- local cmd = string.format('yazi --file-chooser --output-file %s %s', output_path, current_directory)
 
-local open_floating_window = require("joshuto.window").open_floating_window
-local project_root_dir = require("joshuto.utils").project_root_dir
-local get_root = require("joshuto.utils").get_root
-local is_joshuto_available = require("joshuto.utils").is_joshuto_available
-local is_symlink = require("joshuto.utils").is_symlink
+local open_floating_window = require("yazi.window").open_floating_window
+local project_root_dir = require("yazi.utils").project_root_dir
+local get_root = require("yazi.utils").get_root
+local is_yazi_available = require("yazi.utils").is_yazi_available
+local is_symlink = require("yazi.utils").is_symlink
 
-JOSHUTO_BUFFER = nil
-JOSHUTO_LOADED = false
-vim.g.joshuto_opened = 0
+YAZI_BUFFER = nil
+YAZI_LOADED = false
+vim.g.yazi_opened = 0
 local prev_win = -1
 local win = -1
 local buffer = -1
 
-local output_path = "/tmp/joshuto_filechosen"
+local output_path = "/tmp/yazi_filechosen"
 
 local function on_exit(job_id, code, event)
 	if code ~= 0 and code ~= 102 then
 		return
 	end
 
-	JOSHUTO_BUFFER = nil
-	JOSHUTO_LOADED = false
-	vim.g.joshuto_opened = 0
+	YAZI_BUFFER = nil
+	YAZI_LOADED = false
+	vim.g.yazi_opened = 0
 	vim.cmd("silent! :checktime")
 
 	if vim.api.nvim_win_is_valid(prev_win) then
@@ -43,21 +43,21 @@ local function on_exit(job_id, code, event)
 	end
 end
 
---- Call joshuto
-local function exec_joshuto_command(cmd)
+--- Call yazi
+local function exec_yazi_command(cmd)
 	-- print(cmd)
-	if JOSHUTO_LOADED == false then
+	if YAZI_LOADED == false then
 		-- ensure that the buffer is closed on exit
-		vim.g.joshuto_opened = 1
+		vim.g.yazi_opened = 1
 		vim.fn.termopen(cmd, { on_exit = on_exit })
 	end
 	vim.cmd("startinsert")
 end
 
---- :Joshuto entry point
-local function joshuto(path)
-	if is_joshuto_available() ~= true then
-		print("Please install joshuto. Check documentation for more information")
+--- :Yazi entry point
+local function yazi(path)
+	if is_yazi_available() ~= true then
+		print("Please install yazi. Check documentation for more information")
 		return
 	end
 
@@ -76,11 +76,11 @@ local function joshuto(path)
 	-- end
 
 	os.remove(output_path)
-	local cmd = string.format('joshuto --file-chooser --output-file "%s" "%s"', output_path, path)
+	local cmd = string.format('yazi --file-chooser --output-file "%s" "%s"', output_path, path)
 
-	exec_joshuto_command(cmd)
+	exec_yazi_command(cmd)
 end
 
 return {
-	joshuto = joshuto,
+	yazi = yazi,
 }

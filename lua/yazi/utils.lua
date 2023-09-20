@@ -1,5 +1,5 @@
 -- store all git repositories visited in this session
-local joshuto_visited_git_repos = {}
+local yazi_visited_git_repos = {}
 
 local fn = vim.fn
 
@@ -9,13 +9,13 @@ local function append_git_repo_path(repo_path)
 		return
 	end
 
-	for _, path in ipairs(joshuto_visited_git_repos) do
+	for _, path in ipairs(yazi_visited_git_repos) do
 		if path == repo_path then
 			return
 		end
 	end
 
-	table.insert(joshuto_visited_git_repos, tostring(repo_path))
+	table.insert(yazi_visited_git_repos, tostring(repo_path))
 end
 
 
@@ -82,9 +82,9 @@ local function project_root_dir()
 	return repo_path
 end
 
---- Check if Joshuto is available
-local function is_joshuto_available()
-	return fn.executable('joshuto') == 1
+--- Check if Yazi is available
+local function is_yazi_available()
+	return fn.executable('yazi') == 1
 end
 
 local function is_symlink()
@@ -96,7 +96,7 @@ end
 return {
 	get_root = get_root,
 	project_root_dir = project_root_dir,
-	joshuto_visited_git_repos = joshuto_visited_git_repos,
-	is_joshuto_available = is_joshuto_available,
+	yazi_visited_git_repos = yazi_visited_git_repos,
+	is_yazi_available = is_yazi_available,
 	is_symlink = is_symlink,
 }
