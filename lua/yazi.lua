@@ -19,6 +19,12 @@ local function on_exit(job_id, code, event)
 	if code ~= 0 and code ~= 102 then
 		return
 	end
+	
+	-- test
+	-- local file=io.open("/tmp/test.txt","w+")
+	-- io.output(file)
+	-- io.write(code)
+	-- io.close()
 
 	YAZI_BUFFER = nil
 	YAZI_LOADED = false
@@ -28,7 +34,7 @@ local function on_exit(job_id, code, event)
 	if vim.api.nvim_win_is_valid(prev_win) then
 		vim.api.nvim_win_close(win, true)
 		vim.api.nvim_set_current_win(prev_win)
-		if code == 102 then
+		if code == 0 then
 			local chosen_file = vim.fn.readfile(output_path)[1]
 			if chosen_file then
 				vim.cmd(string.format('edit %s', chosen_file))
