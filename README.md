@@ -1,4 +1,10 @@
-# A Neovim Plugin for [yazi](https://github.com/DreamMaoMao/yazi.nvim.git)
+# A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
+
+
+
+https://github.com/DreamMaoMao/yazi.nvim/assets/30348075/bb16d6e7-1628-4bde-9e84-d81acf0fe382
+
+
 
 # install
 
