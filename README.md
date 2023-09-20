@@ -2,7 +2,7 @@
 
 # install
 
-```json
+```
  {
   "DreamMaoMao/yazi.nvim",
   dependencies = {
