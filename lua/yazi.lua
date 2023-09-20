@@ -76,7 +76,7 @@ local function yazi(path)
 	-- end
 
 	os.remove(output_path)
-	local cmd = string.format('yazi --chooser-file "%s"',  path)
+	local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
 
 	exec_yazi_command(cmd)
 end
