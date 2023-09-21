@@ -21,7 +21,7 @@ local function file_exists(name)
 end
 
 local function on_exit(job_id, code, event)
-	if code ~= 0 and code ~= 102 then
+	if code ~= 0 then
 		return
 	end
 	
