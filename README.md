@@ -4,7 +4,10 @@ clients overview for hyprland plugin ,
 Welcome to fork, if you improve the hycov plugin, please let me know, I will be happy to use your fork.
 
 
-https://github.com/DreamMaoMao/hycov/assets/30348075/527b4f01-44cd-4167-be6f-0336862b9401
+
+https://github.com/DreamMaoMao/hycov/assets/30348075/c8c9cf56-daba-47d8-9e16-11462eac8c3a
+
+
 
 
 
