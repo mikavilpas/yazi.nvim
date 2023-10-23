@@ -275,6 +275,7 @@ void GridLayout::changeToActivceSourceWorkspace(){
     const auto PNODE = getNodeFromWindow(PWINDOW);
     Node = getNodeFromWindow(PWINDOW);
     const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(Node->ovbk_pWindow_workspaceID); //获取当前workspace对象
+    PMONITOR->activeWorkspace = Node->ovbk_pWindow_workspaceID;
     PMONITOR->changeWorkspace(PWORKSPACE);
     g_pCompositor->focusWindow(PWINDOW);
 
