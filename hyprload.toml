@@ -1,0 +1,12 @@
+[hycov]
+description = "clients overview for hyprland"
+version = "0.1"
+author = "DreamMaoMao"
+
+[hycov.build]
+output = "build/libhycov.so"
+steps = [
+  "rm -rf build",
+  "cmake -DCMAKE_BUILD_TYPE=Debug -B build",
+  "cmake --build build"
+]
