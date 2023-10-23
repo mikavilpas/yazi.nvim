@@ -40,6 +40,14 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 		g_GridLayout->changeToActivceSourceWorkspace();
 	}
 	g_pLayoutManager->switchToLayout(*configLayoutName);
+
+	for (auto& w : g_pCompositor->m_vWindows) {
+        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
+            continue;
+		if(w->m_bIsFloating){
+ 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(w.get());
+		}
+	}
 	return;
 }
 
