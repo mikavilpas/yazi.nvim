@@ -74,19 +74,17 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
                 // moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
                 PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
             }
-            // pWindow->m_bIsFloating = false;  //清除浮动标志
-            // pWindow->m_bIsFullscreen = false; //清除全屏标志
-            if (PWORKSPACE->m_bHasFullscreenWindow && pWindow->m_bIsFullscreen){
-                PWORKSPACE->m_bHasFullscreenWindow = false;
-                pWindow->m_bIsFullscreen = false;
-                PACTIVEWORKSPACE->m_bHasFullscreenWindow = false;
-                g_pHyprRenderer->damageWindow(pWindow);
-            }
             isFirstTile = false;
         }
         PNODE->ovbk_pWindow_workspaceID = workspaceBack;
         PNODE->ovbk_position = posBack;
         PNODE->ovbk_size = sizeBack;
+
+
+    if (PWORKSPACE->m_bHasFullscreenWindow) {
+        const auto PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+        g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
+    }
     // 显示器重新计算布局
     recalculateMonitor(pWindow->m_iMonitorID);
 
@@ -126,6 +124,7 @@ void GridLayout::calculateWorkspace(const int& ws) {
     const auto  NODECOUNT = getNodesNumOnWorkspace(PWORKSPACE->m_iID);  //获取工作区中的平铺节点  
     const auto  PMONITOR = g_pCompositor->getMonitorFromID(PWORKSPACE->m_iMonitorID); //获取工作区对应的显示器对象
 
+
     if (NODECOUNT == 0)  //没有平铺节点,直接返回
         return;
 
@@ -133,6 +132,7 @@ void GridLayout::calculateWorkspace(const int& ws) {
     static const auto* PBORDERSIZE = &HyprlandAPI::getConfigValue(PHANDLE, "general:border_size")->intValue;
     static const auto* GAPPO = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappo")->intValue;
     static const auto* GAPPI = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappi")->intValue;
+
 
 
     auto m_x = PMONITOR->vecPosition.x;
@@ -216,6 +216,8 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData* pNode) { //将节点的数
     auto calcPos  = PWINDOW->m_vPosition;
     auto calcSize = PWINDOW->m_vSize;
 
+
+
     PWINDOW->m_vRealSize     = calcSize;
     PWINDOW->m_vRealPosition = calcPos;
     g_pXWaylandManager->setWindowSize(PWINDOW, calcSize);
@@ -293,8 +295,7 @@ void GridLayout::moveWindowToSourceWorkspace(){
             nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_pWindow_workspaceID;
             nd.pWindow->m_vPosition = nd.ovbk_position;
             nd.pWindow-> m_vSize = nd.ovbk_size; 
-            g_pHyprRenderer->damageWindow(nd.pWindow);
-	
+            g_pHyprRenderer->damageWindow(nd.pWindow);	
 		}
     }    
     
@@ -310,6 +311,7 @@ void GridLayout::onEnable() {
     }
 }
 
-void GridLayout::onDisable() {  
+void GridLayout::onDisable() {
+  
      m_lGridNodesData.clear();
 }

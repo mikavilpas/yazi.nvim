@@ -18,6 +18,17 @@ void dispatch_toggleoverview(std::string arg) {
 }
 
 void dispatch_enteroverview(std::string arg) { //进入overview
+    CWorkspace *PWORKSPACE;
+	CWindow *PFULLWINDOW;
+	for (auto& w : g_pCompositor->m_vWindows) {
+        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
+            continue;
+		PWORKSPACE = g_pCompositor->getWorkspaceByID(w->m_iWorkspaceID);
+		if (PWORKSPACE->m_bHasFullscreenWindow) {
+    	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+    	    g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
+    	}
+	}
 	g_pLayoutManager->switchToLayout("grid");
 	return;
 }
