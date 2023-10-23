@@ -1,5 +1,5 @@
 # hycov
-clients over view for hyprland plugin ,
+clients overview for hyprland plugin ,
 
 Welcome to fork, if you improve the hycov plugin, please let me know, I will be happy to use your fork.
 
