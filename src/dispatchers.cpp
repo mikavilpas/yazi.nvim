@@ -18,15 +18,11 @@ void dispatch_toggleoverview(std::string arg) {
 }
 
 void dispatch_enteroverview(std::string arg) { //进入overview
-    CWorkspace *PWORKSPACE;
 	CWindow *PFULLWINDOW;
-	for (auto& w : g_pCompositor->m_vWindows) {
-        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
-            continue;
-		hycov_log(LOG,"dispatch_enteroverview {}",w.get());
-		PWORKSPACE = g_pCompositor->getWorkspaceByID(w.get()->m_iWorkspaceID);
-		if (PWORKSPACE->m_bHasFullscreenWindow) {
-    	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+	for (auto& w : g_pCompositor->m_vWorkspaces) {
+
+		if (w.get()->m_bHasFullscreenWindow) {
+    	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(w.get()->m_iID);
     	    g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
 			PFULLWINDOW->m_bIsFullscreen = true;
     	}
