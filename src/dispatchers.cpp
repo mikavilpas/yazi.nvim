@@ -73,7 +73,9 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 			if(n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID ) {
 				continue;
 			}
-			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
+			auto FULLSCREENMODE = g_pCompositor->getWorkspaceByID(n.pWindow->m_iWorkspaceID)->m_efFullscreenMode;
+			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREENMODE);
+			// g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
 
 		}
 	}
