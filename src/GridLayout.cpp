@@ -62,29 +62,45 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
   
         const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); //获取当前活动workspace对象
 
+        // CWindow * PFULLWINDOW;
+
         PNODE->workspaceID = pWindow->m_iWorkspaceID;  //将window封装成node,方便添加自定义绑定到window的字段
         PNODE->pWindow     = pWindow;
-        // PNODE->ovbk_pWindow_isFloating = pWindow->m_bIsFloating;
-        // PNODE->ovbk_pWindow_isFullscreen = pWindow->m_bIsFullscreen;
+
         int workspaceBack = pWindow->m_iWorkspaceID;
         Vector2D posBack = pWindow->m_vPosition;
         Vector2D sizeBack = pWindow->m_vSize;
+        bool floatingStateBak = pWindow->m_bIsFloating;
+        bool fullscreenStateBak = pWindow->m_bIsFullscreen;
+
         if(isFirstTile){
             if(pWindow->m_iWorkspaceID != PACTIVEWORKSPACE->m_iID){
                 // moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
                 PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
             }
+
+		    if (pWindow->m_bIsFullscreen) {
+                pWindow->m_bIsFullscreen=false;
+    	    }
+
+		    if(pWindow->m_bIsFloating){
+            	pWindow->m_bIsFloating = false;
+            	pWindow->updateDynamicRules();	
+		    	// g_GridLayout->changeWindowFloatingMode(w.get());		
+		    }
+
             isFirstTile = false;
         }
         PNODE->ovbk_pWindow_workspaceID = workspaceBack;
         PNODE->ovbk_position = posBack;
         PNODE->ovbk_size = sizeBack;
+        PNODE->ovbk_pWindow_isFloating = floatingStateBak;
+        PNODE->ovbk_pWindow_isFullscreen = fullscreenStateBak;
 
-
-    if (PWORKSPACE->m_bHasFullscreenWindow) {
-        const auto PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
-        g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
-    }
+    // if (PWORKSPACE->m_bHasFullscreenWindow) {
+    //     const auto PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+    //     g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
+    // }
     // 显示器重新计算布局
     recalculateMonitor(pWindow->m_iMonitorID);
 
@@ -124,16 +140,12 @@ void GridLayout::calculateWorkspace(const int& ws) {
     const auto  NODECOUNT = getNodesNumOnWorkspace(PWORKSPACE->m_iID);  //获取工作区中的平铺节点  
     const auto  PMONITOR = g_pCompositor->getMonitorFromID(PWORKSPACE->m_iMonitorID); //获取工作区对应的显示器对象
 
-
     if (NODECOUNT == 0)  //没有平铺节点,直接返回
         return;
-
 
     static const auto* PBORDERSIZE = &HyprlandAPI::getConfigValue(PHANDLE, "general:border_size")->intValue;
     static const auto* GAPPO = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappo")->intValue;
     static const auto* GAPPI = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappi")->intValue;
-
-
 
     auto m_x = PMONITOR->vecPosition.x;
     auto m_y = PMONITOR->vecPosition.y;
@@ -162,6 +174,7 @@ void GridLayout::calculateWorkspace(const int& ws) {
              cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
       return;
     }
+
     if (NODECOUNT == 2) {
       NODE = tempNodes[0];
       cw = (w_width - 2 * (*GAPPO) - (*GAPPI)) / 2;
@@ -170,13 +183,13 @@ void GridLayout::calculateWorkspace(const int& ws) {
              cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
       resizeNodeSizePos(tempNodes[1], m_x  + (*GAPPO), m_y + (m_height - ch) / 2 + (*GAPPO),
              cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
-    
       return;
     }
     
     for (cols = 0; cols <= NODECOUNT / 2; cols++)
       if (cols * cols >= NODECOUNT)
         break;
+
     rows = (cols && (cols - 1) * cols >= NODECOUNT) ? cols - 1 : cols;
     ch = (w_height- 2 * (*GAPPO) - (rows - 1) * (*GAPPI)) / rows;
     cw = (w_width - 2 * (*GAPPO) - (cols - 1) * (*GAPPI)) / cols;
@@ -317,5 +330,5 @@ void GridLayout::onEnable() {
 
 void GridLayout::onDisable() {
   
-     m_lGridNodesData.clear();
+    //  m_lGridNodesData.clear();
 }

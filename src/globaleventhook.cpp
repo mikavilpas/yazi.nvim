@@ -56,6 +56,7 @@ void GridLayout::mouseButtonHook(void*, SCallbackInfo& info, std::any data) {
       break;
     case BTN_RIGHT:
     if(g_GridLayout->isOverView && event->state == WLR_BUTTON_PRESSED){
+      g_pHyprRenderer->damageWindow(g_pCompositor->m_pLastWindow);
       g_pCompositor->closeWindow(g_pCompositor->m_pLastWindow);
       info.cancelled = true; 
 
