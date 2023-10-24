@@ -86,7 +86,7 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
 		    if(pWindow->m_bIsFloating){
             	pWindow->m_bIsFloating = false;
             	pWindow->updateDynamicRules();	
-		    	// g_GridLayout->changeWindowFloatingMode(w.get());		
+		    	// g_GridLayout->changeWindowFloatingMode(pWindow);		
 		    }
 
             isFirstTile = false;

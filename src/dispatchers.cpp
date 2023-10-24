@@ -23,7 +23,8 @@ void dispatch_enteroverview(std::string arg) { //进入overview
 	for (auto& w : g_pCompositor->m_vWindows) {
         if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
             continue;
-		PWORKSPACE = g_pCompositor->getWorkspaceByID(w->m_iWorkspaceID);
+		hycov_log(LOG,"dispatch_enteroverview {}",w.get());
+		PWORKSPACE = g_pCompositor->getWorkspaceByID(w.get()->m_iWorkspaceID);
 		if (PWORKSPACE->m_bHasFullscreenWindow) {
     	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
     	    g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
@@ -41,30 +42,32 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 		g_GridLayout->moveWindowToSourceWorkspace();
 		g_GridLayout->changeToActivceSourceWorkspace();
 	}
-	g_pLayoutManager->switchToLayout(*configLayoutName);
 
-	// for (auto& w : g_pCompositor->m_vWindows) {
-    //     if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
-    //         continue;
-	// 	node = g_GridLayout->getNodeFromWindow(w.get());
 	for (auto& n : g_GridLayout->m_lGridNodesData) {
-		hycov_log(LOG,"test {}",n.pWindow);
+		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFloating){
 			g_pHyprRenderer->damageWindow(n.pWindow);
             n.pWindow->m_bIsFloating = true;
-            // w.get()->updateDynamicRules();
-			// g_pLayoutManager->getCurrentLayout()->changeWindowFloatingMode(w.get());
+			n.pWindow->updateDynamicRules();
 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
-			// g_pLayoutManager->getCurrentLayout()->resizeActiveWindow(node->ovbk_size, CORNER_NONE, w.get());
 			continue;
 		}
+	}
+
+	g_pLayoutManager->switchToLayout(*configLayoutName);
+
+	for (auto& n : g_GridLayout->m_lGridNodesData) {
+		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFullscreen){
 			// hycov_log(LOG,"test {}",w.get());
 			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
 			continue;
 		}
 	}
+
 	g_GridLayout->m_lGridNodesData.clear();
+	// g_pLayoutManager->getCurrentLayout()->onEnable();
+
 	return;
 }
 
