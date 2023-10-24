@@ -295,9 +295,10 @@ void GridLayout::changeToActivceSourceWorkspace(){
     const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(Node->ovbk_pWindow_workspaceID); //获取当前workspace对象
     PMONITOR->activeWorkspace = Node->ovbk_pWindow_workspaceID;
     PMONITOR->changeWorkspace(PWORKSPACE);
+
+    //todo send workspace change to waybar
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", PWORKSPACE->m_szName});
     EMIT_HOOK_EVENT("workspace", PWORKSPACE);
-    //todo send workspace change to waybar
     g_pCompositor->focusWindow(PWINDOW);
 
 }

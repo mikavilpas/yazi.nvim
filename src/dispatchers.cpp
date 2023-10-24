@@ -50,6 +50,19 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
             n.pWindow->m_bIsFloating = true;
 			n.pWindow->updateDynamicRules();
 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
+
+    		// n.pWindow->m_vRealSize      = n.ovbk_size;
+    		// n.pWindow->m_vRealPosition = n.ovbk_position;
+
+    		// auto calcPos  = n.pWindow->m_vPosition;
+    		// auto calcSize = n.pWindow->m_vSize;
+
+    		// n.pWindow->m_vRealSize     = calcSize;
+    		// n.pWindow->m_vRealPosition = calcPos;
+			// n.pWindow->updateWindowDecos();
+			// // hycov_log(LOG,"floatresize {} {}",calcSize,calcPos);
+    		// g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);	
+
 			continue;
 		}
 	}
@@ -60,8 +73,11 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFullscreen){
 			// hycov_log(LOG,"test {}",w.get());
+			if(n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID ) {
+				continue;
+			}
 			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
-			continue;
+
 		}
 	}
 
