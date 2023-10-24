@@ -244,6 +244,11 @@ void GridLayout::recalculateWindow(CWindow* pWindow) {
     ; // empty
 }
 
+// void GridLayout::onWindowCreated(CWindow* pWindow, eDirection direction) {
+
+// 	IHyprLayout::onWindowCreated(pWindow, direction);
+// }
+
 void GridLayout::resizeActiveWindow(const Vector2D& pixResize, eRectCorner corner, CWindow* pWindow) {
     ; // empty
 }

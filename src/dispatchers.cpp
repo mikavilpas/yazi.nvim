@@ -18,16 +18,16 @@ void dispatch_toggleoverview(std::string arg) {
 }
 
 void dispatch_enteroverview(std::string arg) { //进入overview
-    // CWorkspace *PWORKSPACE;
-	// CWindow *PFULLWINDOW;
+    CWorkspace *PWORKSPACE;
+	CWindow *PFULLWINDOW;
 	for (auto& w : g_pCompositor->m_vWindows) {
         if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
             continue;
-		// PWORKSPACE = g_pCompositor->getWorkspaceByID(w.get()->m_iWorkspaceID);
-		if (w.get()->m_bIsFullscreen) {
-			g_pHyprRenderer->damageWindow(w.get());
-    	    g_pCompositor->setWindowFullscreen(w.get(), false, FULLSCREEN_FULL);
-			w.get()->m_bIsFullscreen = true;
+		PWORKSPACE = g_pCompositor->getWorkspaceByID(w->m_iWorkspaceID);
+		if (PWORKSPACE->m_bHasFullscreenWindow) {
+    	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+    	    g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
+			PFULLWINDOW->m_bIsFullscreen = true;
     	}
 	}
 	g_pLayoutManager->switchToLayout("grid");
@@ -36,29 +36,31 @@ void dispatch_enteroverview(std::string arg) { //进入overview
 
 void dispatch_leaveoverview(std::string arg) { //离开overview
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
-	SGridNodeData *node;
+	// SGridNodeData *node;
 	if(!g_GridLayout->m_lGridNodesData.empty()){
 		g_GridLayout->moveWindowToSourceWorkspace();
 		g_GridLayout->changeToActivceSourceWorkspace();
 	}
 	g_pLayoutManager->switchToLayout(*configLayoutName);
 
-	for (auto& w : g_pCompositor->m_vWindows) {
-        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
-            continue;
-		hycov_log(LOG,"test {}",w.get());
-		node = g_GridLayout->getNodeFromWindow(w.get());
-		if(node->ovbk_pWindow_isFloating){
-			g_pHyprRenderer->damageWindow(w.get());
-            w.get()->m_bIsFloating = true;
+	// for (auto& w : g_pCompositor->m_vWindows) {
+    //     if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
+    //         continue;
+	// 	node = g_GridLayout->getNodeFromWindow(w.get());
+	for (auto& n : g_GridLayout->m_lGridNodesData) {
+		hycov_log(LOG,"test {}",n.pWindow);
+		if(n.ovbk_pWindow_isFloating){
+			g_pHyprRenderer->damageWindow(n.pWindow);
+            n.pWindow->m_bIsFloating = true;
             // w.get()->updateDynamicRules();
 			// g_pLayoutManager->getCurrentLayout()->changeWindowFloatingMode(w.get());
-			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(w.get());	
+			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
+			// g_pLayoutManager->getCurrentLayout()->resizeActiveWindow(node->ovbk_size, CORNER_NONE, w.get());
 			continue;
 		}
-		if(node->ovbk_pWindow_isFullscreen){
+		if(n.ovbk_pWindow_isFullscreen){
 			// hycov_log(LOG,"test {}",w.get());
-			g_pCompositor->setWindowFullscreen(w.get(), true, FULLSCREEN_FULL);	
+			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
 			continue;
 		}
 	}

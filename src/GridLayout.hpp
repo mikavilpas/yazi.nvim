@@ -22,6 +22,7 @@ struct SGridNodeData {
 
 class GridLayout : public IHyprLayout {
   public:
+    // virtual void                     onWindowCreated(CWindow*, eDirection = DIRECTION_DEFAULT);
     virtual void                     onWindowCreatedTiling(CWindow*, eDirection direction = DIRECTION_DEFAULT);
     virtual void                     onWindowRemovedTiling(CWindow*);
     virtual bool                     isWindowTiled(CWindow*);
