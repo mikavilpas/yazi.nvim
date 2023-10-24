@@ -6,6 +6,7 @@
 #include "dispatchers.hpp"
 #include "globals.hpp"
 
+
 void dispatch_toggleoverview(std::string arg) {
 	if(g_GridLayout->isOverView){
 		dispatch_leaveoverview(arg);
@@ -48,18 +49,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 			g_pHyprRenderer->damageWindow(n.pWindow);
             n.pWindow->m_bIsFloating = true;
 			n.pWindow->updateDynamicRules();
-			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);			
-
-    		n.pWindow->m_vRealSize      = n.ovbk_size;
-    		n.pWindow->m_vRealPosition = n.ovbk_position;
-
-    		auto calcPos  = n.pWindow->m_vPosition;
-    		auto calcSize = n.pWindow->m_vSize;
-
-    		n.pWindow->m_vRealSize     = calcSize;
-    		n.pWindow->m_vRealPosition = calcPos;
-			// hycov_log(LOG,"floatresize {} {}",calcSize,calcPos);
-    		g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);			
+			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
 			continue;
 		}
 	}
@@ -67,7 +57,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 	g_pLayoutManager->switchToLayout(*configLayoutName);
 
 	for (auto& n : g_GridLayout->m_lGridNodesData) {
-		// hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
+		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFullscreen){
 			// hycov_log(LOG,"test {}",w.get());
 			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREEN_FULL);	
@@ -76,6 +66,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 	}
 
 	g_GridLayout->m_lGridNodesData.clear();
+	// g_pLayoutManager->getCurrentLayout()->onEnable();
 
 	return;
 }
@@ -85,4 +76,5 @@ void registerDispatchers() {
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:enteroverview", dispatch_enteroverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:leaveoverview", dispatch_leaveoverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:toggleoverview", dispatch_toggleoverview);
+
 }

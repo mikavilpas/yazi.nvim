@@ -54,43 +54,53 @@ void GridLayout::moveWindowToWorkspaceSilent(CWindow *pWindow,const int& workspa
 }
 
 void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
-    const auto         PMONITOR = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); //从窗口中获取窗口当前所在的显示器id
-    const auto PNODE = &m_lGridNodesData.emplace_back();  //根据配置在node容器前面或者后面建立新节点
-    const auto PACTIVEWORKSPACE = g_pCompositor->getWorkspaceByID(PMONITOR->activeWorkspace); //获取当前活动workspace对象
+        const auto         PMONITOR = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); //从窗口中获取窗口当前所在的显示器id
 
-    const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); //获取当前活动workspace对象
+        const auto PNODE = &m_lGridNodesData.emplace_back();  //根据配置在node容器前面或者后面建立新节点
 
-    PNODE->workspaceID = pWindow->m_iWorkspaceID;  //将window封装成node,方便添加自定义绑定到window的字段
-    PNODE->pWindow     = pWindow;
+        const auto PACTIVEWORKSPACE = g_pCompositor->getWorkspaceByID(PMONITOR->activeWorkspace); //获取当前活动workspace对象
+  
+        const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); //获取当前活动workspace对象
 
-    int workspaceBack = pWindow->m_iWorkspaceID;
-    Vector2D posBack = pWindow->m_vPosition;
-    Vector2D sizeBack = pWindow->m_vSize;
-    bool floatingStateBak = pWindow->m_bIsFloating;
-    bool fullscreenStateBak = pWindow->m_bIsFullscreen;
+        // CWindow * PFULLWINDOW;
 
-    if(isFirstTile){
-        if(pWindow->m_iWorkspaceID != PACTIVEWORKSPACE->m_iID){
-            // moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
-            PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
+        PNODE->workspaceID = pWindow->m_iWorkspaceID;  //将window封装成node,方便添加自定义绑定到window的字段
+        PNODE->pWindow     = pWindow;
+
+        int workspaceBack = pWindow->m_iWorkspaceID;
+        Vector2D posBack = pWindow->m_vPosition;
+        Vector2D sizeBack = pWindow->m_vSize;
+        bool floatingStateBak = pWindow->m_bIsFloating;
+        bool fullscreenStateBak = pWindow->m_bIsFullscreen;
+
+        if(isFirstTile){
+            if(pWindow->m_iWorkspaceID != PACTIVEWORKSPACE->m_iID){
+                // moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
+                PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
+            }
+
+		    if (pWindow->m_bIsFullscreen) {
+                pWindow->m_bIsFullscreen=false;
+    	    }
+
+		    if(pWindow->m_bIsFloating){
+            	pWindow->m_bIsFloating = false;
+            	pWindow->updateDynamicRules();	
+		    	// g_GridLayout->changeWindowFloatingMode(pWindow);		
+		    }
+
+            isFirstTile = false;
         }
-	    if (pWindow->m_bIsFullscreen) {
-            pWindow->m_bIsFullscreen=false;
-        }
-	    if(pWindow->m_bIsFloating){
-        	pWindow->m_bIsFloating = false;
-        	pWindow->updateDynamicRules();	
-	    	// g_GridLayout->changeWindowFloatingMode(pWindow);		
-	    }
-        isFirstTile = false;
-    }
+        PNODE->ovbk_pWindow_workspaceID = workspaceBack;
+        PNODE->ovbk_position = posBack;
+        PNODE->ovbk_size = sizeBack;
+        PNODE->ovbk_pWindow_isFloating = floatingStateBak;
+        PNODE->ovbk_pWindow_isFullscreen = fullscreenStateBak;
 
-    PNODE->ovbk_pWindow_workspaceID = workspaceBack;
-    PNODE->ovbk_position = posBack;
-    PNODE->ovbk_size = sizeBack;
-    PNODE->ovbk_pWindow_isFloating = floatingStateBak;
-    PNODE->ovbk_pWindow_isFullscreen = fullscreenStateBak;
-
+    // if (PWORKSPACE->m_bHasFullscreenWindow) {
+    //     const auto PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
+    //     g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
+    // }
     // 显示器重新计算布局
     recalculateMonitor(pWindow->m_iMonitorID);
 
@@ -219,9 +229,12 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData* pNode) { //将节点的数
     auto calcPos  = PWINDOW->m_vPosition;
     auto calcSize = PWINDOW->m_vSize;
 
+
+
     PWINDOW->m_vRealSize     = calcSize;
     PWINDOW->m_vRealPosition = calcPos;
     g_pXWaylandManager->setWindowSize(PWINDOW, calcSize);
+
 
     PWINDOW->updateWindowDecos();
     g_pCompositor->focusWindow(PWINDOW);
@@ -231,6 +244,10 @@ void GridLayout::recalculateWindow(CWindow* pWindow) {
     ; // empty
 }
 
+// void GridLayout::onWindowCreated(CWindow* pWindow, eDirection direction) {
+
+// 	IHyprLayout::onWindowCreated(pWindow, direction);
+// }
 
 void GridLayout::resizeActiveWindow(const Vector2D& pixResize, eRectCorner corner, CWindow* pWindow) {
     ; // empty
@@ -282,7 +299,9 @@ void GridLayout::changeToActivceSourceWorkspace(){
     EMIT_HOOK_EVENT("workspace", PWORKSPACE);
     //todo send workspace change to waybar
     g_pCompositor->focusWindow(PWINDOW);
+
 }
+
 
 void GridLayout::moveWindowToSourceWorkspace(){
     std::string workspaceName = "";
@@ -301,6 +320,8 @@ void GridLayout::moveWindowToSourceWorkspace(){
             g_pHyprRenderer->damageWindow(nd.pWindow);	
 		}
     }    
+    
+
 }
 
 void GridLayout::onEnable() {
@@ -313,5 +334,6 @@ void GridLayout::onEnable() {
 }
 
 void GridLayout::onDisable() {
+  
     //  m_lGridNodesData.clear();
 }

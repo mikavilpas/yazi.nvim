@@ -13,6 +13,7 @@ std::unique_ptr<HOOK_CALLBACK_FN> mouseMoveHookPtr
 std::unique_ptr<HOOK_CALLBACK_FN> mouseButtonHookPtr
     = std::make_unique<HOOK_CALLBACK_FN>(GridLayout::mouseButtonHook);
 
+
 void GridLayout::toggle_hotarea(int x_root, int y_root) {
   CMonitor *PMONITOR  = g_pCompositor->m_pLastMonitor;
   std::string arg ="";
@@ -58,13 +59,16 @@ void GridLayout::mouseButtonHook(void*, SCallbackInfo& info, std::any data) {
       g_pHyprRenderer->damageWindow(g_pCompositor->m_pLastWindow);
       g_pCompositor->closeWindow(g_pCompositor->m_pLastWindow);
       info.cancelled = true; 
+
     } else if(g_GridLayout->isOverView && event->state == WLR_BUTTON_RELEASED){
       if(g_GridLayout->m_lGridNodesData.empty()){
         dispatch_toggleoverview("");
       }
     }
+
     break;
   }
+
 }
 
 void registerGlobalEventHook(){

@@ -22,6 +22,7 @@ struct SGridNodeData {
 
 class GridLayout : public IHyprLayout {
   public:
+    // virtual void                     onWindowCreated(CWindow*, eDirection = DIRECTION_DEFAULT);
     virtual void                     onWindowCreatedTiling(CWindow*, eDirection direction = DIRECTION_DEFAULT);
     virtual void                     onWindowRemovedTiling(CWindow*);
     virtual bool                     isWindowTiled(CWindow*);
@@ -36,7 +37,8 @@ class GridLayout : public IHyprLayout {
     virtual std::string              getLayoutName();
     virtual void                     replaceWindowDataWith(CWindow* from, CWindow* to);
 		virtual void										 moveWindowTo(CWindow *, const std::string& dir);
-    
+
+
     virtual void                     onEnable();
     virtual void                     onDisable();
 	  static void mouseMoveHook(void*, SCallbackInfo& info, std::any);
