@@ -67,11 +67,15 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
         PNODE->workspaceID = pWindow->m_iWorkspaceID;  //将window封装成node,方便添加自定义绑定到window的字段
         PNODE->pWindow     = pWindow;
 
+
         int workspaceBack = pWindow->m_iWorkspaceID;
-        Vector2D posBack = pWindow->m_vPosition;
-        Vector2D sizeBack = pWindow->m_vSize;
+        Vector2D posBack = pWindow->m_vRealPosition.goalv();
+        Vector2D sizeBack = pWindow->m_vRealSize.goalv();
         bool floatingStateBak = pWindow->m_bIsFloating;
         bool fullscreenStateBak = pWindow->m_bIsFullscreen;
+
+        // hycov_log(LOG,"floatresizebaksource {} {}",sizeBack,posBack);
+
 
         if(isFirstTile){
             if(pWindow->m_iWorkspaceID != PACTIVEWORKSPACE->m_iID){
@@ -96,7 +100,7 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
         PNODE->ovbk_size = sizeBack;
         PNODE->ovbk_pWindow_isFloating = floatingStateBak;
         PNODE->ovbk_pWindow_isFullscreen = fullscreenStateBak;
-
+        // hycov_log(LOG,"floatresizebak {} {}",sizeBack,posBack);
     // if (PWORKSPACE->m_bHasFullscreenWindow) {
     //     const auto PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
     //     g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);

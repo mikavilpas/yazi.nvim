@@ -23,7 +23,7 @@ void dispatch_enteroverview(std::string arg) { //进入overview
 	for (auto& w : g_pCompositor->m_vWindows) {
         if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
             continue;
-		hycov_log(LOG,"dispatch_enteroverview {}",w.get());
+		// hycov_log(LOG,"dispatch_enteroverview {}",w.get());
 		PWORKSPACE = g_pCompositor->getWorkspaceByID(w.get()->m_iWorkspaceID);
 		if (PWORKSPACE->m_bHasFullscreenWindow) {
     	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
@@ -44,24 +44,25 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 	}
 
 	for (auto& n : g_GridLayout->m_lGridNodesData) {
-		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
+		// hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFloating){
 			g_pHyprRenderer->damageWindow(n.pWindow);
             n.pWindow->m_bIsFloating = true;
 			n.pWindow->updateDynamicRules();
 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
 
-    		// n.pWindow->m_vRealSize      = n.ovbk_size;
-    		// n.pWindow->m_vRealPosition = n.ovbk_position;
+    		n.pWindow->m_vRealSize      = n.ovbk_size;
+    		n.pWindow->m_vRealPosition = n.ovbk_position;
 
-    		// auto calcPos  = n.pWindow->m_vPosition;
-    		// auto calcSize = n.pWindow->m_vSize;
+    		auto calcPos  = n.ovbk_position;
+    		auto calcSize = n.ovbk_size;
 
-    		// n.pWindow->m_vRealSize     = calcSize;
-    		// n.pWindow->m_vRealPosition = calcPos;
+    		n.pWindow->m_vRealSize     = calcSize;
+    		n.pWindow->m_vRealPosition = calcPos;
 			// n.pWindow->updateWindowDecos();
-			// // hycov_log(LOG,"floatresize {} {}",calcSize,calcPos);
-    		// g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);	
+			// hycov_log(LOG,"floatresize {} {}",calcSize,calcPos);
+			g_pHyprRenderer->damageWindow(n.pWindow);
+    		g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);	
 
 			continue;
 		}
@@ -70,7 +71,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 	g_pLayoutManager->switchToLayout(*configLayoutName);
 
 	for (auto& n : g_GridLayout->m_lGridNodesData) {
-		hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
+		// hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFullscreen){
 			// hycov_log(LOG,"test {}",w.get());
 			if(n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID ) {
