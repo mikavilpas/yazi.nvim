@@ -23,7 +23,7 @@ void dispatch_enteroverview(std::string arg) { //进入overview
 	for (auto& w : g_pCompositor->m_vWindows) {
         if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
             continue;
-		// hycov_log(LOG,"dispatch_enteroverview {}",w.get());
+		hycov_log(LOG,"dispatch_enteroverview {}",w.get());
 		PWORKSPACE = g_pCompositor->getWorkspaceByID(w.get()->m_iWorkspaceID);
 		if (PWORKSPACE->m_bHasFullscreenWindow) {
     	    PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(PWORKSPACE->m_iID);
@@ -46,7 +46,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
 	for (auto& n : g_GridLayout->m_lGridNodesData) {
 		// hycov_log(LOG,"dispatch_leaveoverview {}",n.pWindow);
 		if(n.ovbk_pWindow_isFloating){
-			g_pHyprRenderer->damageWindow(n.pWindow);
+			// g_pHyprRenderer->damageWindow(n.pWindow);
             n.pWindow->m_bIsFloating = true;
 			n.pWindow->updateDynamicRules();
 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);	
@@ -61,7 +61,7 @@ void dispatch_leaveoverview(std::string arg) { //离开overview
     		n.pWindow->m_vRealPosition = calcPos;
 			// n.pWindow->updateWindowDecos();
 			// hycov_log(LOG,"floatresize {} {}",calcSize,calcPos);
-			g_pHyprRenderer->damageWindow(n.pWindow);
+			// g_pHyprRenderer->damageWindow(n.pWindow);
     		g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);	
 
 			continue;
