@@ -11,4 +11,11 @@ stdenv.mkDerivation {
   inherit (hyprland) nativeBuildInputs;
 
   buildInputs = [ hyprland ] ++ hyprland.buildInputs;
+
+  meta = with lib; {
+    homepage = "https://github.com/DreamMaoMao/hycov";
+    description = "clients overview for hyprland plugin";
+    license = licenses.mit;
+    platforms = platforms.linux;
+  };
 }
