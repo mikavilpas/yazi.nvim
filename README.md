@@ -5,7 +5,9 @@ Welcome to fork, if you improve the hycov plugin, please let me know, I will be 
 
 
 
-https://github.com/DreamMaoMao/hycov/assets/30348075/c8c9cf56-daba-47d8-9e16-11462eac8c3a
+
+
+https://github.com/DreamMaoMao/hycov/assets/30348075/76998ed6-4046-4403-8236-7b9c2f913bc0
 
 
 
