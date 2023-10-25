@@ -35,7 +35,7 @@ CWindow  *direction_select(std::string arg){
     // }
     for (auto &w : g_pCompositor->m_vWindows)
     {
-        if (tc == w.get() || w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_bIsFullscreen)
+        if (tc == w.get() || tc->m_iWorkspaceID !=w.get()->m_iWorkspaceID || w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_bIsFullscreen)
             continue;
 			last++;
 			tempCWindows[last] = w.get();			
