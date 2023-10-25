@@ -9,12 +9,12 @@
 
 APICALL EXPORT std::string PLUGIN_API_VERSION() { return HYPRLAND_API_VERSION; }
 
-APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
+APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
+{
 	PHANDLE = handle;
 
-
-#define CONF(NAME, TYPE, VALUE)                                                                    \
-	HyprlandAPI::addConfigValue(PHANDLE, "plugin:hycov:" NAME, SConfigValue {.TYPE##Value = VALUE})
+#define CONF(NAME, TYPE, VALUE) \
+	HyprlandAPI::addConfigValue(PHANDLE, "plugin:hycov:" NAME, SConfigValue{.TYPE##Value = VALUE})
 
 	CONF("overview_gappo", int, 60);
 	CONF("overview_gappi", int, 24);
@@ -25,10 +25,9 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
 
 	g_GridLayout = std::make_unique<GridLayout>();
 	HyprlandAPI::addLayout(PHANDLE, "grid", g_GridLayout.get());
-	
+
 	registerGlobalEventHook();
 	registerDispatchers();
-
 
 	return {"hycov", "clients overview", "DreamMaoMao", "0.1"};
 }

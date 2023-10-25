@@ -8,14 +8,14 @@
 inline HANDLE PHANDLE = nullptr;
 inline std::unique_ptr<GridLayout> g_GridLayout;
 
-inline void errorNotif() {
+inline void errorNotif()
+{
 	HyprlandAPI::addNotificationV2(
-	    PHANDLE,
-	    {
-	        {"text", "Something has gone very wrong. Check the log for details."},
-	        {"time", (uint64_t) 10000},
-	        {"color", CColor(1.0, 0.0, 0.0, 1.0)},
-	        {"icon", ICON_ERROR},
-	    }
-	);
+		PHANDLE,
+		{
+			{"text", "Something has gone very wrong. Check the log for details."},
+			{"time", (uint64_t)10000},
+			{"color", CColor(1.0, 0.0, 0.0, 1.0)},
+			{"icon", ICON_ERROR},
+		});
 }
