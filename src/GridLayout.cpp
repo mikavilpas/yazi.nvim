@@ -79,8 +79,9 @@ void GridLayout::onWindowCreatedTiling(CWindow* pWindow, eDirection direction) {
 
         if(isFirstTile){
             if(pWindow->m_iWorkspaceID != PACTIVEWORKSPACE->m_iID){
-                // moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
-                PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
+                moveWindowToWorkspaceSilent(PNODE->pWindow,PACTIVEWORKSPACE->m_iID);
+                PNODE->workspaceID = PACTIVEWORKSPACE->m_iID;
+                // PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
             }
 
 		    if (pWindow->m_bIsFullscreen) {
@@ -317,10 +318,13 @@ void GridLayout::moveWindowToSourceWorkspace(){
             if (!pWorkspace) 
                 pWorkspace = g_pCompositor->createNewWorkspace(nd.ovbk_pWindow_workspaceID, nd.pWindow->m_iMonitorID, workspaceName);
 
-            nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_pWindow_workspaceID;
-            nd.pWindow->m_vPosition = nd.ovbk_position;
-            nd.pWindow-> m_vSize = nd.ovbk_size; 
+            // nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_pWindow_workspaceID;
+            // nd.pWindow->m_vPosition = nd.ovbk_position;
+            // nd.pWindow-> m_vSize = nd.ovbk_size; 
             g_pHyprRenderer->damageWindow(nd.pWindow);	
+            nd.pWindow->moveToWorkspace(nd.ovbk_pWindow_workspaceID);
+            nd.workspaceID = nd.ovbk_pWindow_workspaceID;
+
 		}
     }    
     
