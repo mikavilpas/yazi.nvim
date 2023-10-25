@@ -10,7 +10,7 @@ Welcome to fork, if you improve the hycov plugin, please let me know, I will be 
 
 _only support hyprland sourc code after the date(2023-10-22)_,
 
-Because this plug-in require a [commit](https://github.com/hyprwm/Hyprland/commit/a61eb7694df25a75f45502ed64b1536fda370c1d) in hyprland(was commited in 2023-10-21) 
+Because this plug-in require a [commit](https://github.com/hyprwm/Hyprland/commit/a61eb7694df25a75f45502ed64b1536fda370c1d) in hyprland(was commited in 2023-10-21)
 
 ##### use meson and ninja:
 
@@ -33,15 +33,15 @@ $ bash install.sh # `libhycov.so` path: /usr/lib/libhycov.so
 ### Useage(hyprland.conf)
 
 ```
-# when enter overview, you can use letf-button to jump,right-button to kill or use keybind 
+# when enter overview, you can use letf-button to jump,right-button to kill or use keybind
 plugin = /path/to/libhycov.so
 bind = CTRL_ALT,h,hycov:enteroverview
 bind = CTRL_ALT,m,hycov:leaveoverview
 bind = CTRL_ALT,k,hycov:toggleoverview
 
 # The direction switch shortcut key binding.
-# calculate the window closest to the direction to switch focus. 
-# This keybind is applicable not only to the overview  but also to the general layout 
+# calculate the window closest to the direction to switch focus.
+# This keybind is applicable not only to the overview  but also to the general layout
 bind=ALT,left,hycov:movefocus,l
 bind=ALT,right,hycov:movefocus,r
 bind=ALT,up,hycov:movefocus,u
@@ -74,7 +74,10 @@ plugin {
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    hycov.url = "github:DreamMaoMao/hycov";
+    hycov={
+      url = "github:DreamMaoMao/hycov";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = { nixpkgs, home-manager, hyprland, hycov, ... }:
@@ -98,6 +101,10 @@ plugin {
                 bind = CTRL_ALT,h,hycov:enteroverview
                 bind = CTRL_ALT,m,hycov:leaveoverview
                 bind = CTRL_ALT,k,hycov:toggleoverview
+                bind=ALT,left,hycov:movefocus,l
+                bind=ALT,right,hycov:movefocus,r
+                bind=ALT,up,hycov:movefocus,u
+                bind=ALT,down,hycov:movefocus,d
 
                 plugin {
                     hycov {
