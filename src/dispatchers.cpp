@@ -136,6 +136,7 @@ void dispatch_enteroverview(std::string arg)
 { 
 	//ali clients exit fullscreen status before enter overview
 	CWindow *PFULLWINDOW;
+	CWindow *ActiveWindow = g_pCompositor->m_pLastWindow;
 	for (auto &w : g_pCompositor->m_vWorkspaces)
 	{
 
@@ -150,6 +151,10 @@ void dispatch_enteroverview(std::string arg)
 	}
 	//enter overview layout
 	g_pLayoutManager->switchToLayout("grid");
+	if(ActiveWindow){
+		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
+	}
+
 	return;
 }
 
