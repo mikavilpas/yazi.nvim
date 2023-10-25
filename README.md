@@ -10,7 +10,7 @@ Welcome to fork, if you improve the hycov plugin, please let me know, I will be 
 
 ### Manual Installation
 
-_only support hyprland sourc code after(2023-12-22)_
+_only support hyprland sourc code after(2023-10-22)_
 
 ##### use meson and ninja:
 
