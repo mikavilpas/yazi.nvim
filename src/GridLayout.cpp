@@ -268,7 +268,7 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
     g_pXWaylandManager->setWindowSize(PWINDOW, calcSize);
 
     PWINDOW->updateWindowDecos();
-    g_pCompositor->focusWindow(PWINDOW);
+    // g_pCompositor->focusWindow(PWINDOW);
 }
 
 void GridLayout::recalculateWindow(CWindow *pWindow)
@@ -334,7 +334,7 @@ void GridLayout::changeToActivceSourceWorkspace()
     PMONITOR->changeWorkspace(PWORKSPACE);
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", PWORKSPACE->m_szName});
     EMIT_HOOK_EVENT("workspace", PWORKSPACE);
-    g_pCompositor->focusWindow(PWINDOW);
+    // g_pCompositor->focusWindow(PWINDOW);
 }
 
 void GridLayout::moveWindowToSourceWorkspace()
