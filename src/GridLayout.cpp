@@ -147,10 +147,10 @@ void GridLayout::calculateWorkspace(const int &ws)
     const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(ws); 
     SGridNodeData *tempNodes[100];
     SGridNodeData *NODE;
-    unsigned int i, n = 0;
+    int i, n = 0;
     int cx, cy;
-    unsigned int dx, cw, ch;;
-    unsigned int cols, rows, overcols,NODECOUNT;
+    int dx, cw, ch;;
+    int cols, rows, overcols,NODECOUNT;
 
     if (!PWORKSPACE)
         return;
@@ -165,14 +165,14 @@ void GridLayout::calculateWorkspace(const int &ws)
     static const auto *GAPPO = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappo")->intValue;
     static const auto *GAPPI = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappi")->intValue;
 
-    auto m_x = PMONITOR->vecPosition.x;
-    auto m_y = PMONITOR->vecPosition.y;
-    auto w_x = PMONITOR->vecReservedTopLeft.x;
-    auto w_y = PMONITOR->vecReservedTopLeft.y;
-    auto m_width = PMONITOR->vecSize.x;
-    auto m_height = PMONITOR->vecSize.y;
-    auto w_width = PMONITOR->vecSize.x;
-    auto w_height = PMONITOR->vecSize.y - PMONITOR->vecReservedTopLeft.y;
+    int m_x = PMONITOR->vecPosition.x;
+    int m_y = PMONITOR->vecPosition.y;
+    int w_x = PMONITOR->vecPosition.x;
+    int w_y = PMONITOR->vecReservedTopLeft.y;
+    int m_width = PMONITOR->vecSize.x;
+    int m_height = PMONITOR->vecSize.y;
+    int w_width = PMONITOR->vecSize.x;
+    int w_height = PMONITOR->vecSize.y - PMONITOR->vecReservedTopLeft.y;
 
     for (auto &node : m_lGridNodesData)
     {
@@ -208,22 +208,30 @@ void GridLayout::calculateWorkspace(const int &ws)
         return;
     }
 
+    //Calculate the integer part of the square root of the number of nodes
     for (cols = 0; cols <= NODECOUNT / 2; cols++)
         if (cols * cols >= NODECOUNT)
             break;
-
+    //The number of rows and columns multiplied by the number of nodes
+    // must be greater than the number of nodes to fit all the Windows
     rows = (cols && (cols - 1) * cols >= NODECOUNT) ? cols - 1 : cols;
-    ch = (w_height - 2 * (*GAPPO) - (rows - 1) * (*GAPPI)) / rows;
-    cw = (w_width - 2 * (*GAPPO) - (cols - 1) * (*GAPPI)) / cols;
 
+    //Calculate the width and height of the layout area based on 
+    //the number of rows and columns
+    ch = (int)((w_height - 2 * (*GAPPO) - (rows - 1) * (*GAPPI)) / rows);
+    cw = (int)((w_width - 2 * (*GAPPO) - (cols - 1) * (*GAPPI)) / cols);
+
+    //If the nodes do not exactly fill all rows, 
+    //the number of Windows in the unfilled rows is
     overcols = NODECOUNT % cols;
+
     if (overcols)
-        dx = (w_width - overcols * cw - (overcols - 1) * (*GAPPI)) / 2 - (*GAPPO);
+        dx = (int)((w_width - overcols * cw - (overcols - 1) * (*GAPPI)) / 2) - (*GAPPO);
     for (i = 0, NODE = tempNodes[0]; NODE; NODE = tempNodes[i + 1], i++)
     {
         cx = w_x + (i % cols) * (cw + (*GAPPI));
-        cy = w_y + (i / cols) * (ch + (*GAPPI));
-        if (overcols && i >= NODECOUNT - overcols)
+        cy = w_y + (int)(i / cols) * (ch + (*GAPPI));
+        if (overcols && i >= (NODECOUNT-overcols))
         {
             cx += dx;
         }
