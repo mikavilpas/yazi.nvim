@@ -7,6 +7,8 @@ struct SGridNodeData
 {
   CWindow *pWindow = nullptr;
   int ovbk_pWindow_workspaceID = -1;
+  std::string ovbk_pWindow_workspaceName;
+  std::string workspaceName;
   bool ovbk_pWindow_isFloating = false;
   bool ovbk_pWindow_isFullscreen = false;
   Vector2D ovbk_position;
