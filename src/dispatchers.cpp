@@ -25,14 +25,6 @@ CWindow  *direction_select(std::string arg){
 		return nullptr;
 	}
 
-    // for (auto &node : g_GridLayout->m_lGridNodesData)
-    // {
-    //     if (node.workspaceID == tc->m_iWorkspaceID)
-    //     {
-	// 		last++;
-	// 		tempCWindows[last] = node.pWindow;
-    //     }
-    // }
     for (auto &w : g_pCompositor->m_vWindows)
     {
         if (tc == w.get() || tc->m_iWorkspaceID !=w.get()->m_iWorkspaceID || w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_bIsFullscreen)
@@ -123,12 +115,10 @@ void dispatch_toggleoverview(std::string arg)
 	if (g_GridLayout->isOverView)
 	{
 		dispatch_leaveoverview(arg);
-		g_GridLayout->isOverView = false;
 	}
 	else
 	{
 		dispatch_enteroverview(arg);
-		g_GridLayout->isOverView = true;
 	}
 }
 
@@ -137,6 +127,21 @@ void dispatch_enteroverview(std::string arg)
 	//ali clients exit fullscreen status before enter overview
 	CWindow *PFULLWINDOW;
 	CWindow *ActiveWindow = g_pCompositor->m_pLastWindow;
+	bool isNoShouldTileWindow = true;
+
+    for (auto &w : g_pCompositor->m_vWindows)
+    {
+        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
+            continue;
+		isNoShouldTileWindow = false;
+	}
+
+	if(isNoShouldTileWindow){
+		return;
+	}
+
+	g_GridLayout->isOverView = true;
+
 	for (auto &w : g_pCompositor->m_vWorkspaces)
 	{
 
@@ -153,6 +158,9 @@ void dispatch_enteroverview(std::string arg)
 	g_pLayoutManager->switchToLayout("grid");
 	if(ActiveWindow){
 		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
+	} else {
+		auto node = g_GridLayout->m_lGridNodesData.back();
+		g_pCompositor->focusWindow(node.pWindow);
 	}
 
 	return;
@@ -161,6 +169,12 @@ void dispatch_enteroverview(std::string arg)
 void dispatch_leaveoverview(std::string arg)
 { 
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
+
+	if(!g_GridLayout->isOverView){
+		return;
+	}
+	
+	g_GridLayout->isOverView = false;
 
 	if (!g_GridLayout->m_lGridNodesData.empty())
 	{
