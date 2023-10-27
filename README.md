@@ -30,7 +30,7 @@ $ cd hycov
 $ bash install.sh # `libhycov.so` path: /usr/lib/libhycov.so
 ```
 
-### Useage(hyprland.conf)
+### Usage(hyprland.conf)
 
 ```
 # when enter overview, you can use letf-button to jump,right-button to kill or use keybind
