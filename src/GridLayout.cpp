@@ -74,14 +74,14 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     PNODE->workspaceID = pWindow->m_iWorkspaceID; // encapsulate window objects as node objects to bind more properties
     PNODE->pWindow = pWindow;
     PNODE->workspaceName = PWINDOWORIWORKSPACE->m_szName;
-
+    
     //record the window stats which are used by restore
-    int workspaceBackID = pWindow->m_iWorkspaceID;
-    std::string workspaceNameBack = PWINDOWORIWORKSPACE->m_szName;
-    Vector2D posBack = pWindow->m_vRealPosition.goalv();
-    Vector2D sizeBack = pWindow->m_vRealSize.goalv();
-    bool floatingStateBak = pWindow->m_bIsFloating;
-    bool fullscreenStateBak = pWindow->m_bIsFullscreen;
+    PNODE->ovbk_pWindow_workspaceID = pWindow->m_iWorkspaceID;
+    PNODE->ovbk_position = pWindow->m_vRealPosition.goalv();
+    PNODE->ovbk_size = pWindow->m_vRealSize.goalv();
+    PNODE->ovbk_pWindow_isFloating = pWindow->m_bIsFloating;
+    PNODE->ovbk_pWindow_isFullscreen = pWindow->m_bIsFullscreen;
+    PNODE->ovbk_pWindow_workspaceName = PWINDOWORIWORKSPACE->m_szName;
 
     if (isFirstTile) //only when original layout swith to overview do it once
     {
@@ -108,13 +108,6 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
         isFirstTile = false;
     }
 
-    //record backup state to node which are used by restore
-    PNODE->ovbk_pWindow_workspaceID = workspaceBackID;
-    PNODE->ovbk_position = posBack;
-    PNODE->ovbk_size = sizeBack;
-    PNODE->ovbk_pWindow_isFloating = floatingStateBak;
-    PNODE->ovbk_pWindow_isFullscreen = fullscreenStateBak;
-    PNODE->ovbk_pWindow_workspaceName = workspaceNameBack;
     recalculateMonitor(pWindow->m_iMonitorID);
 }
 
