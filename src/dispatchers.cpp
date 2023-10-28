@@ -35,7 +35,6 @@ CWindow  *direction_select(std::string arg){
 	
   	if (last < 0)
   	  return nullptr;
-	hycov_log(LOG,"hy_log focus dir {}",last);
   	int sel_x = tc->m_vRealPosition.goalv().x;
   	int sel_y = tc->m_vRealPosition.goalv().y;
   	long long int distance = LLONG_MAX;
@@ -220,9 +219,11 @@ void dispatch_leaveoverview(std::string arg)
 			if (n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID)
 			{
 				continue;
-			}
+			}	
+			n.pWindow->m_cRealBorderColor =n.pWindow->m_cRealBorderColorPrevious;
 			auto FULLSCREENMODE = g_pCompositor->getWorkspaceByID(n.pWindow->m_iWorkspaceID)->m_efFullscreenMode;
 			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREENMODE);
+
 		}
 	}
 
