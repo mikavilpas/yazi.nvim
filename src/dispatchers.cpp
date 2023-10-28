@@ -220,10 +220,7 @@ void dispatch_leaveoverview(std::string arg)
 			{
 				continue;
 			}	
-			n.pWindow->m_cRealBorderColor =n.pWindow->m_cRealBorderColorPrevious;
-			auto FULLSCREENMODE = g_pCompositor->getWorkspaceByID(n.pWindow->m_iWorkspaceID)->m_efFullscreenMode;
-			g_pCompositor->setWindowFullscreen(n.pWindow, true, FULLSCREENMODE);
-
+			g_pCompositor->setWindowFullscreen(n.pWindow, true, n.ovbk_pWindow_m_efFullscreenMode);
 		}
 	}
 

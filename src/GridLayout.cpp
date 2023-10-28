@@ -77,11 +77,13 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     
     //record the window stats which are used by restore
     PNODE->ovbk_pWindow_workspaceID = pWindow->m_iWorkspaceID;
+    PNODE->ovbk_pWindow_m_efFullscreenMode = PWINDOWORIWORKSPACE->m_efFullscreenMode;
     PNODE->ovbk_position = pWindow->m_vRealPosition.goalv();
     PNODE->ovbk_size = pWindow->m_vRealSize.goalv();
     PNODE->ovbk_pWindow_isFloating = pWindow->m_bIsFloating;
     PNODE->ovbk_pWindow_isFullscreen = pWindow->m_bIsFullscreen;
     PNODE->ovbk_pWindow_workspaceName = PWINDOWORIWORKSPACE->m_szName;
+
 
     if (isFirstTile) //only when original layout swith to overview do it once
     {
