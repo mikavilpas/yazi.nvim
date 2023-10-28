@@ -129,7 +129,8 @@ plugin {
 - The numbers on the waybar are confused
 
 ```
-1.Please pull the latest waybar source code compilation, this issue has been fixed in the waybar project, fix date (2023-12-27)
+1.Please pull the latest waybar source code compilation,
+this issue has been fixed in the waybar project, fix date (2023-10-27)
 
 2.Change the {id} field in hyprland/workspace field to {name}
 ```
