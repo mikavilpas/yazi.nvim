@@ -209,7 +209,10 @@ void dispatch_leaveoverview(std::string arg)
 	}
 
 	//exit overview layout,go back to old layout
+	g_pCompositor->focusWindow(nullptr);
 	g_pLayoutManager->switchToLayout(*configLayoutName);
+	g_pCompositor->focusWindow(g_pCompositor->windowFromCursor());
+	
 
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{
