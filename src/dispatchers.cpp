@@ -209,9 +209,15 @@ void dispatch_leaveoverview(std::string arg)
 	}
 
 	//exit overview layout,go back to old layout
+	CWindow *ActiveWindow = g_pCompositor->m_pLastWindow;
 	g_pCompositor->focusWindow(nullptr);
 	g_pLayoutManager->switchToLayout(*configLayoutName);
-	g_pCompositor->focusWindow(g_pCompositor->windowFromCursor());
+	if(ActiveWindow){
+		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
+	} else {
+		auto node = g_GridLayout->m_lGridNodesData.back();
+		g_pCompositor->focusWindow(node.pWindow);
+	}
 	
 
 	for (auto &n : g_GridLayout->m_lGridNodesData)
