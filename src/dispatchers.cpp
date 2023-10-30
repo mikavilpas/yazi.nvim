@@ -188,13 +188,17 @@ void dispatch_leaveoverview(std::string arg)
 	hycov_log(LOG,"leave overview");
 	isOverView = false;
 
-	if (!g_GridLayout->m_lGridNodesData.empty())
+	if (g_GridLayout->m_lGridNodesData.empty())
 	{
-		//move clients to it's original workspace 
-		g_GridLayout->moveWindowToSourceWorkspace();
-		//jump to target client's workspace
-		g_GridLayout->changeToActivceSourceWorkspace();
+		g_pLayoutManager->switchToLayout(*configLayoutName);	
+		g_GridLayout->m_lGridNodesData.clear();
+		return;
 	}
+
+	//move clients to it's original workspace 
+	g_GridLayout->moveWindowToSourceWorkspace();
+	//jump to target client's workspace
+	g_GridLayout->changeToActivceSourceWorkspace();
 
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{	

@@ -9,10 +9,10 @@
 
 static void toggle_hotarea(int x_root, int y_root)
 {
-  CMonitor *PMONITOR = g_pCompositor->m_pLastMonitor;
-  std::string arg = "";
   static const auto *enable_hotarea = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:enable_hotarea")->intValue;
   static const auto *hotarea_size = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:hotarea_size")->intValue;
+  CMonitor *PMONITOR = g_pCompositor->m_pLastMonitor;
+  std::string arg = "";
 
   auto m_x = PMONITOR->vecPosition.x;
   auto m_y = PMONITOR->vecPosition.y;
@@ -68,7 +68,7 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
     {
       if (g_GridLayout->m_lGridNodesData.empty())
       {
-        dispatch_toggleoverview("");
+        dispatch_leaveoverview("");
       }
     }
     break;
