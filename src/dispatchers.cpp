@@ -121,6 +121,7 @@ void dispatch_focusdir(std::string arg)
 
 void dispatch_toggleoverview(std::string arg)
 {
+	hycov_log(LOG,"toggle overview");
 	if (g_GridLayout->isOverView)
 	{
 		dispatch_leaveoverview(arg);
@@ -149,6 +150,7 @@ void dispatch_enteroverview(std::string arg)
 		return;
 	}
 
+	hycov_log(LOG,"enter overview");
 	g_GridLayout->isOverView = true;
 
 	for (auto &w : g_pCompositor->m_vWorkspaces)
@@ -183,6 +185,7 @@ void dispatch_leaveoverview(std::string arg)
 		return;
 	}
 	
+	hycov_log(LOG,"leave overview");
 	g_GridLayout->isOverView = false;
 
 	if (!g_GridLayout->m_lGridNodesData.empty())
