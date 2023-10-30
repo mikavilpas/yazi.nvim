@@ -122,7 +122,7 @@ void dispatch_focusdir(std::string arg)
 void dispatch_toggleoverview(std::string arg)
 {
 	hycov_log(LOG,"toggle overview");
-	if (g_GridLayout->isOverView)
+	if (isOverView)
 	{
 		dispatch_leaveoverview(arg);
 	}
@@ -151,7 +151,7 @@ void dispatch_enteroverview(std::string arg)
 	}
 
 	hycov_log(LOG,"enter overview");
-	g_GridLayout->isOverView = true;
+	isOverView = true;
 
 	for (auto &w : g_pCompositor->m_vWorkspaces)
 	{
@@ -181,12 +181,12 @@ void dispatch_leaveoverview(std::string arg)
 { 
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
 
-	if(!g_GridLayout->isOverView){
+	if(!isOverView){
 		return;
 	}
 	
 	hycov_log(LOG,"leave overview");
-	g_GridLayout->isOverView = false;
+	isOverView = false;
 
 	if (!g_GridLayout->m_lGridNodesData.empty())
 	{
@@ -254,7 +254,7 @@ void dispatch_leaveoverview(std::string arg)
 
 void registerDispatchers()
 {
-	g_GridLayout->isOverView = false;
+	isOverView = false;
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:enteroverview", dispatch_enteroverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:leaveoverview", dispatch_leaveoverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:toggleoverview", dispatch_toggleoverview);

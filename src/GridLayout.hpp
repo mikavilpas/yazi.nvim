@@ -42,12 +42,8 @@ public:
   virtual std::string getLayoutName();
   virtual void replaceWindowDataWith(CWindow *from, CWindow *to);
   virtual void moveWindowTo(CWindow *, const std::string &dir);
-
   virtual void onEnable();
   virtual void onDisable();
-  static void mouseMoveHook(void *, SCallbackInfo &info, std::any);
-  static void mouseButtonHook(void *, SCallbackInfo &info, std::any);
-  static void toggle_hotarea(int, int);
   void applyNodeDataToWindow(SGridNodeData *);
   void calculateWorkspace(const int &);
   int getNodesNumOnWorkspace(const int &);
@@ -58,8 +54,6 @@ public:
   std::list<SGridNodeData> m_lGridNodesData; 
   bool isFirstTile = true;
   void moveWindowToSourceWorkspace();
-  bool isOverView;
-  bool isInHotArea;
 
 private:
 };

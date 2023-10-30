@@ -8,6 +8,9 @@
 inline HANDLE PHANDLE = nullptr;
 inline std::unique_ptr<GridLayout> g_GridLayout;
 
+inline bool isOverView;
+inline bool isInHotArea;
+
 inline void errorNotif()
 {
 	HyprlandAPI::addNotificationV2(
