@@ -6,6 +6,10 @@
 #include "dispatchers.hpp"
 #include "globals.hpp"
 
+bool isDirection(const std::string& arg) {
+    return arg == "l" || arg == "r" || arg == "u" || arg == "d" || arg == "left" || arg == "right" || arg == "up" || arg == "down";
+}
+
 std::optional<ShiftDirection> parseShiftArg(std::string arg) {
 	if (arg == "l" || arg == "left") return ShiftDirection::Left;
 	else if (arg == "r" || arg == "right") return ShiftDirection::Right;
@@ -24,6 +28,11 @@ CWindow  *direction_select(std::string arg){
 	}else if (tc->m_bIsFullscreen){
 		return nullptr;
 	}
+
+    if (!isDirection(arg)) {
+        hycov_log(ERR, "Cannot move focus in direction {}, unsupported direction. Supported: l/left,r/right,u/up,d/down", arg);
+        return nullptr;
+    }
 
     for (auto &w : g_pCompositor->m_vWindows)
     {
@@ -59,12 +68,10 @@ CWindow  *direction_select(std::string arg){
   	case ShiftDirection::Down:
   	  for (int _i = 0; _i <= last; _i++) {
   	    if (tempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
-			hycov_log(LOG,"hy_log focus dir jj {}",tempCWindows[_i]);
   	      int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
   	      int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
   	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
   	      if (tmp_distance < distance) {
-			hycov_log(LOG,"hy_log focus dir kk {}",tempCWindows[_i]);
   	        distance = tmp_distance;
   	        tempFocusCWindows = tempCWindows[_i];
   	      }
@@ -104,9 +111,12 @@ CWindow  *direction_select(std::string arg){
 void dispatch_focusdir(std::string arg)
 {
 	CWindow *pWindow;
-	pWindow = direction_select(arg);
-	if(pWindow)
-		g_pCompositor->focusWindow(pWindow);
+	try {
+		pWindow = direction_select(arg);
+		if(pWindow)
+			g_pCompositor->focusWindow(pWindow);
+    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
+
 }
 
 void dispatch_toggleoverview(std::string arg)
