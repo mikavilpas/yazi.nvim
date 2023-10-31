@@ -10,6 +10,8 @@ inline std::unique_ptr<GridLayout> g_GridLayout;
 
 inline bool isOverView;
 inline bool isInHotArea;
+inline int enable_hotarea;
+inline int hotarea_size;
 
 inline void errorNotif()
 {
