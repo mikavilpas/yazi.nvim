@@ -78,7 +78,7 @@ static void toggle_hotarea(int x_root, int y_root)
   int hx = m_x + hotarea_size;
   int hy = m_y + m_height - hotarea_size;
 
-  if (enable_hotarea == 1 && !isInHotArea && y_root > hy &&
+  if (!isInHotArea && y_root > hy &&
       x_root < hx && x_root >= m_x &&
       y_root <= (m_y + m_height))
   {
@@ -86,14 +86,12 @@ static void toggle_hotarea(int x_root, int y_root)
     dispatch_toggleoverview(arg);
     isInHotArea = true;
   }
-  else if (enable_hotarea == 1 && isInHotArea &&
+  else if (isInHotArea &&
            (y_root <= hy || x_root >= hx || x_root < m_x ||
             y_root > (m_y + m_height)))
   {
-    isInHotArea = false;
-  }
-  else if(enable_hotarea != 1 && enable_hotarea != 0) {
-    hycov_log(ERR,"unkonw enavle_hotarea value:{}",enable_hotarea);
+    if(isInHotArea)
+      isInHotArea = false;
   }
 }
 
