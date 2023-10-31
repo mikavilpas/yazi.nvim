@@ -146,3 +146,8 @@ this issue has been fixed in the waybar project, fix date (2023-10-27)
 ```
 Please pull the latest hyprland source code to compile and install. Because the plugin relies on a hyprland pr,pr submission date (2023-10-21)
 ```
+
+- Unable to load
+```
+Check whether hyprland has been updated, and if so, please recompile hyprcov
+```
