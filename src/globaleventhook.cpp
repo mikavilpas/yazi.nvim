@@ -23,17 +23,20 @@ void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
     if(e->dx > 0 && gesture_dx - gesture_previous_dx > move_focus_distance){
       dispatch_focusdir("r");
       gesture_previous_dx = gesture_dx;
+      hycov_log(LOG,"OnSwipeUpdate hook focus right");
     } else if(e->dx < 0 && gesture_previous_dx - gesture_dx > move_focus_distance){
       dispatch_focusdir("l");
       gesture_previous_dx = gesture_dx;
+      hycov_log(LOG,"OnSwipeUpdate hook focus left");
     } else if(e->dy > 0 && gesture_dy - gesture_previous_dy > move_focus_distance){
       dispatch_focusdir("d");
       gesture_previous_dy = gesture_dy;
+      hycov_log(LOG,"OnSwipeUpdate hook focus down");
     } else if(e->dy < 0 && gesture_previous_dy - gesture_dy > move_focus_distance){
       dispatch_focusdir("u");
       gesture_previous_dy = gesture_dy;
+      hycov_log(LOG,"OnSwipeUpdate hook focus up");
     }
-    hycov_log(LOG,"OnSwipeUpdate hook toggle gesture_dx:{}",gesture_dx);
     return;
   }
   (*(origOnSwipeUpdate)g_pOnSwipeUpdateHook->m_pOriginal)(thisptr, e);
