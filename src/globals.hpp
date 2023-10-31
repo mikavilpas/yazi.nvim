@@ -15,6 +15,7 @@ inline int hotarea_size;
 inline int swipe_fingers;
 inline int isGestureBegin;
 inline int move_focus_distance;
+inline int enable_gesture;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;

@@ -68,10 +68,6 @@ static void toggle_hotarea(int x_root, int y_root)
   CMonitor *PMONITOR = g_pCompositor->m_pLastMonitor;
   std::string arg = "";
 
-  if(enable_hotarea == 0) {
-    return;
-  }
-
   auto m_x = PMONITOR->vecPosition.x;
   auto m_y = PMONITOR->vecPosition.y;
   auto m_height = PMONITOR->vecSize.y;
@@ -152,10 +148,15 @@ void registerGlobalEventHook()
   g_pOnSwipeEndHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeEnd, (void*)&hkOnSwipeEnd);
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
 
-  HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
-  HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
-  g_pOnSwipeBeginHook->hook();
-  g_pOnSwipeEndHook->hook();
-  g_pOnSwipeUpdateHook->hook();
+  if(enable_hotarea){
+    HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
+    HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
+  }
+
+  if(enable_gesture){
+    g_pOnSwipeBeginHook->hook();
+    g_pOnSwipeEndHook->hook();
+    g_pOnSwipeUpdateHook->hook();
+  }
 
 }

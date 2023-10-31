@@ -53,10 +53,14 @@ bind=ALT,down,hycov:movefocus,d
 
 plugin {
     hycov {
-      overview_gappo = 60 # gas width from screen
-      overview_gappi = 24 # gas width from clients
-	    hotarea_size = 10   # hotarea size in bottom left,10x10
-	    enable_hotarea = 1  # move cursor to bottom-left can toggle overview
+        overview_gappo = 60 #gas width from screem 
+        overview_gappi = 24 #gas width from clients
+	      hotarea_size = 10 #hotarea size in bottom left,10x10
+	      enable_hotarea = 1 # enable mouse cursor hotarea     
+        focus_as_new = 0 #focus as a new append tso old layout
+        swipe_fingers = 4 # finger number of gesture,move any directory
+        move_focus_distance = 100 # distance for movefocus,only can use 3 finger to move 
+        enable_gesture = 1 # enable gesture
     }
 }
 
