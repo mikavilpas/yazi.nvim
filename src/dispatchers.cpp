@@ -113,8 +113,10 @@ void dispatch_focusdir(std::string arg)
 	CWindow *pWindow;
 	try {
 		pWindow = direction_select(arg);
-		if(pWindow)
+		if(pWindow){
 			g_pCompositor->focusWindow(pWindow);
+			g_pCompositor->warpCursorTo(pWindow->middle());
+		}
     } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
 
 }
@@ -258,10 +260,8 @@ void dispatch_leaveoverview(std::string arg)
 
 void registerDispatchers()
 {
-	isOverView = false;
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:enteroverview", dispatch_enteroverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:leaveoverview", dispatch_leaveoverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:toggleoverview", dispatch_toggleoverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:movefocus", dispatch_focusdir);
-
 }

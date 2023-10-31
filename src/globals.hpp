@@ -12,6 +12,14 @@ inline bool isOverView;
 inline bool isInHotArea;
 inline int enable_hotarea;
 inline int hotarea_size;
+inline int swipe_fingers;
+inline int isGestureBegin;
+inline int move_focus_distance;
+
+inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
+inline CFunctionHook* g_pOnSwipeEndHook = nullptr;
+inline CFunctionHook* g_pOnSwipeUpdateHook = nullptr;
+
 
 inline void errorNotif()
 {
