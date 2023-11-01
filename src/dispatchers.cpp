@@ -54,7 +54,7 @@ CWindow  *direction_select(std::string arg){
   	switch (shift.value()) {
   	case ShiftDirection::Up:
   	  for (int _i = 0; _i <= last; _i++) {
-  	    if (tempCWindows[_i]->m_vRealPosition.goalv().y < sel_y ) {
+  	    if (tempCWindows[_i]->m_vRealPosition.goalv().y < sel_y && tempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
   	      int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
   	      int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
   	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
@@ -64,10 +64,23 @@ CWindow  *direction_select(std::string arg){
   	      }
   	    }
   	  }
+	  if(!tempFocusCWindows){
+  	  	for (int _i = 0; _i <= last; _i++) {
+  	  	  if (tempCWindows[_i]->m_vRealPosition.goalv().y < sel_y ) {
+  	  	    int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  	  	    int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  	  	    if (tmp_distance < distance) {
+  	  	      distance = tmp_distance;
+  	  	      tempFocusCWindows = tempCWindows[_i];
+  	  	    }
+  	  	  }
+  	  	}		
+	  }
   	  break;
   	case ShiftDirection::Down:
   	  for (int _i = 0; _i <= last; _i++) {
-  	    if (tempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
+  	    if (tempCWindows[_i]->m_vRealPosition.goalv().y > sel_y && tempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
   	      int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
   	      int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
   	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
@@ -77,6 +90,19 @@ CWindow  *direction_select(std::string arg){
   	      }
   	    }
   	  }
+	  if(!tempCWindows){
+  	  	for (int _i = 0; _i <= last; _i++) {
+  	  	  if (tempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
+  	  	    int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  	  	    int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  	  	    if (tmp_distance < distance) {
+  	  	      distance = tmp_distance;
+  	  	      tempFocusCWindows = tempCWindows[_i];
+  	  	    }
+  	  	  }
+  	  	}		
+	  }
   	  break;
   	case ShiftDirection::Left:
   	  for (int _i = 0; _i <= last; _i++) {
@@ -90,6 +116,19 @@ CWindow  *direction_select(std::string arg){
   	      }
   	    }
   	  }
+	  if(!tempFocusCWindows){
+  	  	for (int _i = 0; _i <= last; _i++) {
+  	  	  if (tempCWindows[_i]->m_vRealPosition.goalv().x < sel_x) {
+  	  	    int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  	  	    int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  	  	    if (tmp_distance < distance) {
+  	  	      distance = tmp_distance;
+  	  	      tempFocusCWindows = tempCWindows[_i];
+  	  	    }
+  	  	  }
+  	  	}		
+	  }
   	  break;
   	case ShiftDirection::Right:
   	  for (int _i = 0; _i <= last; _i++) {
@@ -103,6 +142,19 @@ CWindow  *direction_select(std::string arg){
   	      }
   	    }
   	  }
+	  if(!tempFocusCWindows){
+  	  	for (int _i = 0; _i <= last; _i++) {
+  	  	  if (tempCWindows[_i]->m_vRealPosition.goalv().x > sel_x) {
+  	  	    int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  	  	    int dis_y = tempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  	  	    if (tmp_distance < distance) {
+  	  	      distance = tmp_distance;
+  	  	      tempFocusCWindows = tempCWindows[_i];
+  	  	    }
+  	  	  }
+  	  	}		
+	  }
   	  break;
   	}
   	return tempFocusCWindows;
