@@ -275,7 +275,19 @@ void dispatch_leaveoverview(std::string arg)
 
 			g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);
 
-			continue;
+		} else if(!n.ovbk_pWindow_isFloating && !n.ovbk_pWindow_isFullscreen) {
+			//make floating client restore it's floating status
+			// make floating client restore it's position and size
+			n.pWindow->m_vRealSize = n.ovbk_size;
+			n.pWindow->m_vRealPosition = n.ovbk_position;
+
+			auto calcPos = n.ovbk_position;
+			auto calcSize = n.ovbk_size;
+
+			n.pWindow->m_vRealSize = calcSize;
+			n.pWindow->m_vRealPosition = calcPos;
+
+			g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);			
 		}
 	}
 
