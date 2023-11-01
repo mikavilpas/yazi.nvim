@@ -90,7 +90,7 @@ CWindow  *direction_select(std::string arg){
   	      }
   	    }
   	  }
-	  if(!tempCWindows){
+	  if(!tempFocusCWindows){
   	  	for (int _i = 0; _i <= last; _i++) {
   	  	  if (tempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
   	  	    int dis_x = tempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
