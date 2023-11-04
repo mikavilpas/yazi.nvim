@@ -168,6 +168,9 @@ void dispatch_focusdir(std::string arg)
 		if(pWindow){
 			g_pCompositor->focusWindow(pWindow);
 			g_pCompositor->warpCursorTo(pWindow->middle());
+			g_pInputManager->m_pForcedFocus = pWindow;
+        	g_pInputManager->simulateMouseMovement();
+        	g_pInputManager->m_pForcedFocus = nullptr;
 		}
     } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
 
