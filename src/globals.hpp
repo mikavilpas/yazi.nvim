@@ -20,6 +20,7 @@ inline int enable_gesture;
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;
 inline CFunctionHook* g_pOnSwipeUpdateHook = nullptr;
+inline CFunctionHook* g_pOnWindowRemovedTilingHook = nullptr;
 
 
 inline void errorNotif()

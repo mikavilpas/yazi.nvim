@@ -12,6 +12,8 @@
 typedef void (*origOnSwipeBegin)(void*, wlr_pointer_swipe_begin_event* e);
 typedef void (*origOnSwipeEnd)(void*, wlr_pointer_swipe_end_event* e);
 typedef void (*origOnSwipeUpdate)(void*, wlr_pointer_swipe_update_event* e);
+typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
+
 
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
@@ -122,14 +124,16 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
       g_pCompositor->closeWindow(g_pCompositor->m_pLastWindow);
       info.cancelled = true;
     }
-    else if (isOverView && event->state == WLR_BUTTON_RELEASED)
-    {
-      if (g_GridLayout->m_lGridNodesData.empty())
-      {
-        dispatch_leaveoverview("");
-      }
-    }
     break;
+  }
+}
+
+static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
+  (*(origOnWindowRemovedTiling)g_pOnWindowRemovedTilingHook->m_pOriginal)(thisptr, pWindow);
+
+  if (isOverView && g_GridLayout->m_lGridNodesData.empty()) {
+    hycov_log(LOG,"no tiling windwo,auto exit overview");
+    dispatch_leaveoverview("");
   }
 }
 
@@ -148,6 +152,9 @@ void registerGlobalEventHook()
   g_pOnSwipeBeginHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeBegin, (void*)&hkOnSwipeBegin);
   g_pOnSwipeEndHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeEnd, (void*)&hkOnSwipeEnd);
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
+
+  g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
+  g_pOnWindowRemovedTilingHook->hook();
 
   if(enable_hotarea){
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
