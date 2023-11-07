@@ -299,6 +299,9 @@ void dispatch_leaveoverview(std::string arg)
 	g_pLayoutManager->switchToLayout(*configLayoutName);
 	if(ActiveWindow){
 		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
+		if(ActiveWindow->m_bIsFloating)
+			g_pCompositor->changeWindowZOrder(ActiveWindow, true);
+
 	} else {
 		auto node = g_GridLayout->m_lGridNodesData.back();
 		g_pCompositor->focusWindow(node.pWindow);
