@@ -263,7 +263,6 @@ void dispatch_leaveoverview(std::string arg)
 		{
 			//make floating client restore it's floating status
 			n.pWindow->m_bIsFloating = true;
-			n.pWindow->updateDynamicRules();
 			g_pLayoutManager->getCurrentLayout()->onWindowCreatedFloating(n.pWindow);
 
 			// make floating client restore it's position and size
