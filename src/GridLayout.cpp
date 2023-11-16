@@ -102,7 +102,7 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
 
         if (pWindow->m_bIsFloating)
         {
-            //clean fullscreen status
+            //clean floating status
             pWindow->m_bIsFloating = false;
             pWindow->updateDynamicRules();
         }

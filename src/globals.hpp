@@ -23,6 +23,7 @@ inline CFunctionHook* g_pOnSwipeUpdateHook = nullptr;
 inline CFunctionHook* g_pOnWindowRemovedTilingHook = nullptr;
 inline CFunctionHook* g_pChangeworkspaceHook = nullptr;
 inline CFunctionHook* g_pMoveActiveToWorkspaceHook = nullptr;
+inline CFunctionHook* g_pSpawnHook = nullptr;
 
 inline void errorNotif()
 {

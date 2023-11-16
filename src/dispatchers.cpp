@@ -251,6 +251,7 @@ void dispatch_enteroverview(std::string arg)
 	//disable changeworkspace
   	g_pChangeworkspaceHook->hook();
 	g_pMoveActiveToWorkspaceHook->hook();
+	g_pSpawnHook->hook();
 
 	return;
 }
@@ -272,6 +273,7 @@ void dispatch_leaveoverview(std::string arg)
 	//enable changeworkspace
   	g_pChangeworkspaceHook->unhook();
 	g_pMoveActiveToWorkspaceHook->unhook();
+	g_pSpawnHook->unhook();
 
 	if (g_GridLayout->m_lGridNodesData.empty())
 	{

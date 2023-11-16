@@ -144,6 +144,10 @@ static void hkMoveActiveToWorkspace(void* thisptr, std::string args) {
   hycov_log(LOG,"MoveActiveToWorkspace hook toggle");
 }
 
+static void hkSpawn(void* thisptr, std::string args) {
+  hycov_log(LOG,"Spawn hook toggle");
+}
+
 void registerGlobalEventHook()
 {
   isInHotArea = false;
@@ -168,6 +172,9 @@ void registerGlobalEventHook()
 
   static const auto MoveActiveToWorkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "moveActiveToWorkspace");
   g_pMoveActiveToWorkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, MoveActiveToWorkspaceMethods[0].address, (void*)&hkMoveActiveToWorkspace);
+
+  static const auto SpawnMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "spawn");
+  g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
 
   if(enable_hotarea){
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
