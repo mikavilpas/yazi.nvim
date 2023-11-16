@@ -269,6 +269,10 @@ void dispatch_leaveoverview(std::string arg)
 	//restore workspace name
 	g_pCompositor->renameWorkspace(workspace_id_backup,workspace_name_backup);
 
+	//enable changeworkspace
+  	g_pChangeworkspaceHook->unhook();
+	g_pMoveActiveToWorkspaceHook->unhook();
+
 	if (g_GridLayout->m_lGridNodesData.empty())
 	{
 		g_pLayoutManager->switchToLayout(*configLayoutName);	
@@ -347,10 +351,6 @@ void dispatch_leaveoverview(std::string arg)
 
 	//clean overview layout node date
 	g_GridLayout->m_lGridNodesData.clear();
-
-	//enable changeworkspace
-  	g_pChangeworkspaceHook->unhook();
-	g_pMoveActiveToWorkspaceHook->unhook();
 	
 	return;
 }
