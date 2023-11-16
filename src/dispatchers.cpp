@@ -6,6 +6,11 @@
 #include "dispatchers.hpp"
 #include "globals.hpp"
 
+static const std::string overview_worksapce_name = "OVERVIEW";
+static std::string workspace_name_backup;
+static int workspace_id_backup;
+
+
 bool isDirection(const std::string& arg) {
     return arg == "l" || arg == "r" || arg == "u" || arg == "d" || arg == "left" || arg == "right" || arg == "up" || arg == "down";
 }
@@ -194,6 +199,9 @@ void dispatch_enteroverview(std::string arg)
 	//ali clients exit fullscreen status before enter overview
 	CWindow *PFULLWINDOW;
 	CWindow *ActiveWindow = g_pCompositor->m_pLastWindow;
+	CWorkspace *PACTIVEWORKSPACE;
+	CMonitor *PACTIVEMONITOR;
+
 	bool isNoShouldTileWindow = true;
 
     for (auto &w : g_pCompositor->m_vWindows)
@@ -224,8 +232,17 @@ void dispatch_enteroverview(std::string arg)
 	}
 	//enter overview layout
 	g_pLayoutManager->switchToLayout("grid");
+
+	//change workspace name to OVERVIEW
+	PACTIVEMONITOR	= g_pCompositor->m_pLastMonitor;
+	PACTIVEWORKSPACE = g_pCompositor->getWorkspaceByID(PACTIVEMONITOR->activeWorkspace);
+	workspace_name_backup = PACTIVEWORKSPACE->m_szName;
+	workspace_id_backup = PACTIVEWORKSPACE->m_iID;
+	g_pCompositor->renameWorkspace(PACTIVEMONITOR->activeWorkspace,overview_worksapce_name);
+
 	if(ActiveWindow){
 		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
+
 	} else {
 		auto node = g_GridLayout->m_lGridNodesData.back();
 		g_pCompositor->focusWindow(node.pWindow);
@@ -236,6 +253,7 @@ void dispatch_enteroverview(std::string arg)
 
 void dispatch_leaveoverview(std::string arg)
 { 
+	CMonitor *PACTIVEMONITOR;
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
 
 	if(!isOverView){
@@ -244,6 +262,9 @@ void dispatch_leaveoverview(std::string arg)
 	
 	hycov_log(LOG,"leave overview");
 	isOverView = false;
+
+	//restore workspace name
+	g_pCompositor->renameWorkspace(workspace_id_backup,workspace_name_backup);
 
 	if (g_GridLayout->m_lGridNodesData.empty())
 	{
