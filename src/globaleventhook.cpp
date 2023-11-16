@@ -14,7 +14,6 @@ typedef void (*origOnSwipeEnd)(void*, wlr_pointer_swipe_end_event* e);
 typedef void (*origOnSwipeUpdate)(void*, wlr_pointer_swipe_update_event* e);
 typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
 
-
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
 
@@ -137,6 +136,14 @@ static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
   }
 }
 
+static void hkChangeworkspace(void* thisptr, std::string args) {
+  hycov_log(LOG,"ChangeworkspaceHook hook toggle");
+}
+
+static void hkMoveActiveToWorkspace(void* thisptr, std::string args) {
+  hycov_log(LOG,"MoveActiveToWorkspace hook toggle");
+}
+
 void registerGlobalEventHook()
 {
   isInHotArea = false;
@@ -155,6 +162,12 @@ void registerGlobalEventHook()
 
   g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
   g_pOnWindowRemovedTilingHook->hook();
+
+  static const auto ChangeworkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "changeworkspace");
+  g_pChangeworkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, ChangeworkspaceMethods[0].address, (void*)&hkChangeworkspace);
+
+  static const auto MoveActiveToWorkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "moveActiveToWorkspace");
+  g_pMoveActiveToWorkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, MoveActiveToWorkspaceMethods[0].address, (void*)&hkMoveActiveToWorkspace);
 
   if(enable_hotarea){
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });

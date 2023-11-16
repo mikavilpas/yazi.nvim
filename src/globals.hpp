@@ -21,7 +21,8 @@ inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;
 inline CFunctionHook* g_pOnSwipeUpdateHook = nullptr;
 inline CFunctionHook* g_pOnWindowRemovedTilingHook = nullptr;
-
+inline CFunctionHook* g_pChangeworkspaceHook = nullptr;
+inline CFunctionHook* g_pMoveActiveToWorkspaceHook = nullptr;
 
 inline void errorNotif()
 {

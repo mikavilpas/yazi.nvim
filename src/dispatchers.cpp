@@ -248,12 +248,15 @@ void dispatch_enteroverview(std::string arg)
 		g_pCompositor->focusWindow(node.pWindow);
 	}
 
+	//disable changeworkspace
+  	g_pChangeworkspaceHook->hook();
+	g_pMoveActiveToWorkspaceHook->hook();
+
 	return;
 }
 
 void dispatch_leaveoverview(std::string arg)
 { 
-	CMonitor *PACTIVEMONITOR;
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
 
 	if(!isOverView){
@@ -345,6 +348,10 @@ void dispatch_leaveoverview(std::string arg)
 	//clean overview layout node date
 	g_GridLayout->m_lGridNodesData.clear();
 
+	//enable changeworkspace
+  	g_pChangeworkspaceHook->unhook();
+	g_pMoveActiveToWorkspaceHook->unhook();
+	
 	return;
 }
 
