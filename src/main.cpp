@@ -18,26 +18,26 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 
 	CONF("overview_gappo", int, 60);
 	CONF("overview_gappi", int, 24);
-	CONF("hotarea_size", int, 10);
-	CONF("enable_hotarea", int, 1);
-	CONF("swipe_fingers", int, 4);
-	CONF("move_focus_distance", int, 100);
-	CONF("enable_gesture", int, 1);
+	CONF("g_hotarea_size", int, 10);
+	CONF("g_enable_hotarea", int, 1);
+	CONF("g_swipe_fingers", int, 4);
+	CONF("g_move_focus_distance", int, 100);
+	CONF("g_enable_gesture", int, 1);
 
 #undef CONF
 
-	static const auto *enable_hotarea_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:enable_hotarea")->intValue;
-  	static const auto *hotarea_size_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:hotarea_size")->intValue;
-	static const auto *swipe_fingers_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:swipe_fingers")->intValue;
-	static const auto *move_focus_distance_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:move_focus_distance")->intValue;
-	static const auto *enable_gesture_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:enable_gesture")->intValue;
+	static const auto *pEnable_hotarea_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:g_enable_hotarea")->intValue;
+  	static const auto *pHotarea_size_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:g_hotarea_size")->intValue;
+	static const auto *pSwipe_fingers_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:g_swipe_fingers")->intValue;
+	static const auto *pMove_focus_distance_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:g_move_focus_distance")->intValue;
+	static const auto *pEnable_gesture_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:g_enable_gesture")->intValue;
 
 
-	enable_hotarea = *enable_hotarea_config;
-	hotarea_size = *hotarea_size_config;
-	swipe_fingers = *swipe_fingers_config;
-	move_focus_distance = *move_focus_distance_config;
-	enable_gesture = *enable_gesture_config;
+	g_enable_hotarea = *pEnable_hotarea_config;
+	g_hotarea_size = *pHotarea_size_config;
+	g_swipe_fingers = *pSwipe_fingers_config;
+	g_move_focus_distance = *pMove_focus_distance_config;
+	g_enable_gesture = *pEnable_gesture_config;
 
 	g_GridLayout = std::make_unique<GridLayout>();
 	HyprlandAPI::addLayout(PHANDLE, "grid", g_GridLayout.get());

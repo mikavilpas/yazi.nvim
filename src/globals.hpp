@@ -8,14 +8,14 @@
 inline HANDLE PHANDLE = nullptr;
 inline std::unique_ptr<GridLayout> g_GridLayout;
 
-inline bool isOverView;
-inline bool isInHotArea;
-inline int enable_hotarea;
-inline int hotarea_size;
-inline int swipe_fingers;
-inline int isGestureBegin;
-inline int move_focus_distance;
-inline int enable_gesture;
+inline bool g_isOverView;
+inline bool g_isInHotArea;
+inline int g_enable_hotarea;
+inline int g_hotarea_size;
+inline int g_swipe_fingers;
+inline int g_isGestureBegin;
+inline int g_move_focus_distance;
+inline int g_enable_gesture;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;

@@ -35,32 +35,32 @@ void GridLayout::resizeNodeSizePos(SGridNodeData *node, int x, int y, int width,
 
 void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
 {
-    const auto PMONITOR = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
+    const auto pMonitor = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
 
-    const auto PNODE = &m_lGridNodesData.emplace_back(); // make a new node in list back
+    const auto pNode = &m_lGridNodesData.emplace_back(); // make a new node in list back
 
-    const auto PACTIVEWORKSPACE = g_pCompositor->getWorkspaceByID(PMONITOR->activeWorkspace); 
+    const auto pActiveWorkspace = g_pCompositor->getWorkspaceByID(pMonitor->activeWorkspace); 
 
-    const auto PWINDOWORIWORKSPACE = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID);
+    const auto pWindowOriWorkspace = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID);
 
-    PNODE->workspaceID = pWindow->m_iWorkspaceID; // encapsulate window objects as node objects to bind more properties
-    PNODE->pWindow = pWindow;
-    PNODE->workspaceName = PWINDOWORIWORKSPACE->m_szName;
+    pNode->workspaceID = pWindow->m_iWorkspaceID; // encapsulate window objects as node objects to bind more properties
+    pNode->pWindow = pWindow;
+    pNode->workspaceName = pWindowOriWorkspace->m_szName;
     
     //record the window stats which are used by restore
-    PNODE->ovbk_pWindow_workspaceID = pWindow->m_iWorkspaceID;
-    PNODE->ovbk_pWindow_m_efFullscreenMode = PWINDOWORIWORKSPACE->m_efFullscreenMode;
-    PNODE->ovbk_position = pWindow->m_vRealPosition.goalv();
-    PNODE->ovbk_size = pWindow->m_vRealSize.goalv();
-    PNODE->ovbk_pWindow_isFloating = pWindow->m_bIsFloating;
-    PNODE->ovbk_pWindow_isFullscreen = pWindow->m_bIsFullscreen;
-    PNODE->ovbk_pWindow_workspaceName = PWINDOWORIWORKSPACE->m_szName;
+    pNode->ovbk_windowWorkspaceId = pWindow->m_iWorkspaceID;
+    pNode->ovbk_windowFullscreenMode  = pWindowOriWorkspace->m_efFullscreenMode;
+    pNode->ovbk_position = pWindow->m_vRealPosition.goalv();
+    pNode->ovbk_size = pWindow->m_vRealSize.goalv();
+    pNode->ovbk_windowIsFloating = pWindow->m_bIsFloating;
+    pNode->ovbk_windowIsFullscreen = pWindow->m_bIsFullscreen;
+    pNode->ovbk_windowWorkspaceName = pWindowOriWorkspace->m_szName;
 
     //change all client workspace to active worksapce 
-    if (PWINDOWORIWORKSPACE->m_iID != PACTIVEWORKSPACE->m_iID || PWINDOWORIWORKSPACE->m_szName != PACTIVEWORKSPACE->m_szName)
+    if (pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName)
     {
-        PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
-        PNODE->workspaceName = PACTIVEWORKSPACE->m_szName;
+        pNode->workspaceID = pWindow->m_iWorkspaceID = pActiveWorkspace->m_iID;
+        pNode->workspaceName = pActiveWorkspace->m_szName;
     }
 
     // clean fullscreen status
@@ -80,12 +80,12 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
 
 void GridLayout::onWindowRemovedTiling(CWindow *pWindow)
 {
-    const auto PNODE = getNodeFromWindow(pWindow);
+    const auto pNode = getNodeFromWindow(pWindow);
     SGridNodeData lastNode;
 
-    if (!PNODE)
+    if (!pNode)
         return;
-    m_lGridNodesData.remove(*PNODE);
+    m_lGridNodesData.remove(*pNode);
 
     if(m_lGridNodesData.empty()){
         return;
@@ -104,19 +104,19 @@ bool GridLayout::isWindowTiled(CWindow *pWindow)
 
 void GridLayout::calculateWorkspace(const int &ws)
 {
-    const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(ws); 
-    SGridNodeData *tempNodes[100];
-    SGridNodeData *NODE;
+    const auto pWorksapce = g_pCompositor->getWorkspaceByID(ws); 
+    SGridNodeData *pTempNodes[100];
+    SGridNodeData *pNode;
     int i, n = 0;
     int cx, cy;
     int dx, cw, ch;;
     int cols, rows, overcols,NODECOUNT;
 
-    if (!PWORKSPACE)
+    if (!pWorksapce)
         return;
 
-    NODECOUNT = getNodesNumOnWorkspace(PWORKSPACE->m_iID);          
-    const auto PMONITOR = g_pCompositor->getMonitorFromID(PWORKSPACE->m_iMonitorID); 
+    NODECOUNT = getNodesNumOnWorkspace(pWorksapce->m_iID);          
+    const auto pMonitor = g_pCompositor->getMonitorFromID(pWorksapce->m_iMonitorID); 
 
     if (NODECOUNT == 0) 
         return;
@@ -129,25 +129,25 @@ void GridLayout::calculateWorkspace(const int &ws)
     m is region that is moniotr,
     w is region that is monitor but don not contain bar  
     */
-    int m_x = PMONITOR->vecPosition.x;
-    int m_y = PMONITOR->vecPosition.y;
-    int w_x = PMONITOR->vecPosition.x;
-    int w_y = PMONITOR->vecReservedTopLeft.y;
-    int m_width = PMONITOR->vecSize.x;
-    int m_height = PMONITOR->vecSize.y;
-    int w_width = PMONITOR->vecSize.x;
-    int w_height = PMONITOR->vecSize.y - PMONITOR->vecReservedTopLeft.y;
+    int m_x = pMonitor->vecPosition.x;
+    int m_y = pMonitor->vecPosition.y;
+    int w_x = pMonitor->vecPosition.x;
+    int w_y = pMonitor->vecReservedTopLeft.y;
+    int m_width = pMonitor->vecSize.x;
+    int m_height = pMonitor->vecSize.y;
+    int w_width = pMonitor->vecSize.x;
+    int w_height = pMonitor->vecSize.y - pMonitor->vecReservedTopLeft.y;
 
     for (auto &node : m_lGridNodesData)
     {
         if (node.workspaceID == ws)
         {
-            tempNodes[n] = &node;
+            pTempNodes[n] = &node;
             n++;
         }
     }
 
-    tempNodes[n] = NULL;
+    pTempNodes[n] = NULL;
 
     if (NODECOUNT == 0)
         return;
@@ -155,10 +155,10 @@ void GridLayout::calculateWorkspace(const int &ws)
     // one client arrange
     if (NODECOUNT == 1)
     {
-        NODE = tempNodes[0];
+        pNode = pTempNodes[0];
         cw = (w_width - 2 * (*GAPPO)) * 0.7;
         ch = (w_height - 2 * (*GAPPO)) * 0.8;
-        resizeNodeSizePos(NODE, w_x + (int)((m_width - cw) / 2), w_y + (int)((w_height - ch) / 2),
+        resizeNodeSizePos(pNode, w_x + (int)((m_width - cw) / 2), w_y + (int)((w_height - ch) / 2),
                           cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
         return;
     }
@@ -166,12 +166,12 @@ void GridLayout::calculateWorkspace(const int &ws)
     // two client arrange
     if (NODECOUNT == 2)
     {
-        NODE = tempNodes[0];
+        pNode = pTempNodes[0];
         cw = (w_width - 2 * (*GAPPO) - (*GAPPI)) / 2;
         ch = (w_height - 2 * (*GAPPO)) * 0.65;
-        resizeNodeSizePos(NODE, m_x + cw + (*GAPPO) + (*GAPPI), m_y + (m_height - ch) / 2 + (*GAPPO),
+        resizeNodeSizePos(pNode, m_x + cw + (*GAPPO) + (*GAPPI), m_y + (m_height - ch) / 2 + (*GAPPO),
                           cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
-        resizeNodeSizePos(tempNodes[1], m_x + (*GAPPO), m_y + (m_height - ch) / 2 + (*GAPPO),
+        resizeNodeSizePos(pTempNodes[1], m_x + (*GAPPO), m_y + (m_height - ch) / 2 + (*GAPPO),
                           cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
         return;
     }
@@ -198,7 +198,7 @@ void GridLayout::calculateWorkspace(const int &ws)
 
     if (overcols)
         dx = (int)((w_width - overcols * cw - (overcols - 1) * (*GAPPI)) / 2) - (*GAPPO);
-    for (i = 0, NODE = tempNodes[0]; NODE; NODE = tempNodes[i + 1], i++)
+    for (i = 0, pNode = pTempNodes[0]; pNode; pNode = pTempNodes[i + 1], i++)
     {
         cx = w_x + (i % cols) * (cw + (*GAPPI));
         cy = w_y + (int)(i / cols) * (ch + (*GAPPI));
@@ -206,40 +206,40 @@ void GridLayout::calculateWorkspace(const int &ws)
         {
             cx += dx;
         }
-        resizeNodeSizePos(NODE, cx + (*GAPPO), cy + (*GAPPO), cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
+        resizeNodeSizePos(pNode, cx + (*GAPPO), cy + (*GAPPO), cw - 2 * (*PBORDERSIZE), ch - 2 * (*PBORDERSIZE));
     }
 }
 
 void GridLayout::recalculateMonitor(const int &monid)
 {
-    const auto PMONITOR = g_pCompositor->getMonitorFromID(monid);                       // 根据monitor id获取monitor对象
-    const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(PMONITOR->activeWorkspace); // 获取当前workspace对象
-    if (!PWORKSPACE)
+    const auto pMonitor = g_pCompositor->getMonitorFromID(monid);                       // 根据monitor id获取monitor对象
+    const auto pWorksapce = g_pCompositor->getWorkspaceByID(pMonitor->activeWorkspace); // 获取当前workspace对象
+    if (!pWorksapce)
         return;
 
-    g_pHyprRenderer->damageMonitor(PMONITOR); // Use local rendering
+    g_pHyprRenderer->damageMonitor(pMonitor); // Use local rendering
 
-    calculateWorkspace(PWORKSPACE->m_iID); // calculate windwo's size and position
+    calculateWorkspace(pWorksapce->m_iID); // calculate windwo's size and position
 }
 
 // set window's size and position
 void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
 { 
 
-    const auto PWINDOW = pNode->pWindow;
+    const auto pWindow = pNode->pWindow;
 
-    PWINDOW->m_vSize = pNode->size;
-    PWINDOW->m_vPosition = pNode->position;
+    pWindow->m_vSize = pNode->size;
+    pWindow->m_vPosition = pNode->position;
 
-    auto calcPos = PWINDOW->m_vPosition;
-    auto calcSize = PWINDOW->m_vSize;
+    auto calcPos = pWindow->m_vPosition;
+    auto calcSize = pWindow->m_vSize;
 
-    PWINDOW->m_vRealSize = calcSize;
-    PWINDOW->m_vRealPosition = calcPos;
-    g_pXWaylandManager->setWindowSize(PWINDOW, calcSize);
+    pWindow->m_vRealSize = calcSize;
+    pWindow->m_vRealPosition = calcPos;
+    g_pXWaylandManager->setWindowSize(pWindow, calcSize);
 
-    PWINDOW->updateWindowDecos();
-    // g_pCompositor->focusWindow(PWINDOW);
+    pWindow->updateWindowDecos();
+    // g_pCompositor->focusWindow(pWindow);
 }
 
 void GridLayout::recalculateWindow(CWindow *pWindow)
@@ -295,17 +295,17 @@ void GridLayout::moveWindowTo(CWindow *, const std::string &dir)
 
 void GridLayout::changeToActivceSourceWorkspace()
 {
-    CWindow *PWINDOW = nullptr;
-    SGridNodeData *Node;
-    PWINDOW = g_pCompositor->m_pLastWindow;
-    const auto PMONITOR = g_pCompositor->getMonitorFromID(PWINDOW->m_iMonitorID); 
-    Node = getNodeFromWindow(PWINDOW);
-    const auto PWORKSPACE = g_pCompositor->getWorkspaceByID(Node->ovbk_pWindow_workspaceID); 
-    PMONITOR->activeWorkspace = Node->ovbk_pWindow_workspaceID;
-    PMONITOR->changeWorkspace(PWORKSPACE);
-    g_pEventManager->postEvent(SHyprIPCEvent{"workspace", PWORKSPACE->m_szName});
-    EMIT_HOOK_EVENT("workspace", PWORKSPACE);
-    // g_pCompositor->focusWindow(PWINDOW);
+    CWindow *pWindow = nullptr;
+    SGridNodeData *pNode;
+    pWindow = g_pCompositor->m_pLastWindow;
+    const auto pMonitor = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
+    pNode = getNodeFromWindow(pWindow);
+    const auto pWorksapce = g_pCompositor->getWorkspaceByID(pNode->ovbk_windowWorkspaceId); 
+    pMonitor->activeWorkspace = pNode->ovbk_windowWorkspaceId;
+    pMonitor->changeWorkspace(pWorksapce);
+    g_pEventManager->postEvent(SHyprIPCEvent{"workspace", pWorksapce->m_szName});
+    EMIT_HOOK_EVENT("workspace", pWorksapce);
+    // g_pCompositor->focusWindow(pWindow);
 }
 
 void GridLayout::moveWindowToSourceWorkspace()
@@ -314,14 +314,14 @@ void GridLayout::moveWindowToSourceWorkspace()
     
     for (auto &nd : m_lGridNodesData)
     {
-        if (nd.pWindow && (nd.pWindow->m_iWorkspaceID != nd.ovbk_pWindow_workspaceID || nd.workspaceName != nd.ovbk_pWindow_workspaceName ))
+        if (nd.pWindow && (nd.pWindow->m_iWorkspaceID != nd.ovbk_windowWorkspaceId || nd.workspaceName != nd.ovbk_windowWorkspaceName ))
         {
-            pWorkspace = g_pCompositor->getWorkspaceByID(nd.ovbk_pWindow_workspaceID);
+            pWorkspace = g_pCompositor->getWorkspaceByID(nd.ovbk_windowWorkspaceId);
             if (!pWorkspace)
-                pWorkspace = g_pCompositor->createNewWorkspace(nd.ovbk_pWindow_workspaceID, nd.pWindow->m_iMonitorID,nd.ovbk_pWindow_workspaceName);
+                pWorkspace = g_pCompositor->createNewWorkspace(nd.ovbk_windowWorkspaceId, nd.pWindow->m_iMonitorID,nd.ovbk_windowWorkspaceName);
 
-            nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_pWindow_workspaceID;
-            nd.workspaceName = nd.ovbk_pWindow_workspaceName;
+            nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_windowWorkspaceId;
+            nd.workspaceName = nd.ovbk_windowWorkspaceName;
             nd.pWindow->m_vPosition = nd.ovbk_position;
             nd.pWindow->m_vSize = nd.ovbk_size;
             g_pHyprRenderer->damageWindow(nd.pWindow);

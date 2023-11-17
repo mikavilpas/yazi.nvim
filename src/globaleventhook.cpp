@@ -18,22 +18,22 @@ static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
 
 static void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
-  if(isOverView){
+  if(g_isOverView){
     gesture_dx = gesture_dx + e->dx;
     gesture_dy = gesture_dy + e->dy;
-    if(e->dx > 0 && gesture_dx - gesture_previous_dx > move_focus_distance){
+    if(e->dx > 0 && gesture_dx - gesture_previous_dx > g_move_focus_distance){
       dispatch_focusdir("r");
       gesture_previous_dx = gesture_dx;
       hycov_log(LOG,"OnSwipeUpdate hook focus right");
-    } else if(e->dx < 0 && gesture_previous_dx - gesture_dx > move_focus_distance){
+    } else if(e->dx < 0 && gesture_previous_dx - gesture_dx > g_move_focus_distance){
       dispatch_focusdir("l");
       gesture_previous_dx = gesture_dx;
       hycov_log(LOG,"OnSwipeUpdate hook focus left");
-    } else if(e->dy > 0 && gesture_dy - gesture_previous_dy > move_focus_distance){
+    } else if(e->dy > 0 && gesture_dy - gesture_previous_dy > g_move_focus_distance){
       dispatch_focusdir("d");
       gesture_previous_dy = gesture_dy;
       hycov_log(LOG,"OnSwipeUpdate hook focus down");
-    } else if(e->dy < 0 && gesture_previous_dy - gesture_dy > move_focus_distance){
+    } else if(e->dy < 0 && gesture_previous_dy - gesture_dy > g_move_focus_distance){
       dispatch_focusdir("u");
       gesture_previous_dy = gesture_dy;
       hycov_log(LOG,"OnSwipeUpdate hook focus up");
@@ -44,8 +44,8 @@ static void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
 }
 
 static void hkOnSwipeBegin(void* thisptr, wlr_pointer_swipe_begin_event* e) {
-  if(e->fingers == swipe_fingers){
-    isGestureBegin = true;
+  if(e->fingers == g_swipe_fingers){
+    g_isGestureBegin = true;
     return;
   } 
   hycov_log(LOG,"OnSwipeBegin hook toggle");
@@ -58,8 +58,8 @@ static void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
   gesture_dy = 0;
   gesture_previous_dy = 0;
   
-  if(isGestureBegin){
-    isGestureBegin = false;
+  if(g_isGestureBegin){
+    g_isGestureBegin = false;
     dispatch_toggleoverview("");
     return;
   }
@@ -69,30 +69,30 @@ static void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
 
 static void toggle_hotarea(int x_root, int y_root)
 {
-  CMonitor *PMONITOR = g_pCompositor->m_pLastMonitor;
+  CMonitor *pMonitor = g_pCompositor->m_pLastMonitor;
   std::string arg = "";
 
-  auto m_x = PMONITOR->vecPosition.x;
-  auto m_y = PMONITOR->vecPosition.y;
-  auto m_height = PMONITOR->vecSize.y;
+  auto m_x = pMonitor->vecPosition.x;
+  auto m_y = pMonitor->vecPosition.y;
+  auto m_height = pMonitor->vecSize.y;
 
-  int hx = m_x + hotarea_size;
-  int hy = m_y + m_height - hotarea_size;
+  int hx = m_x + g_hotarea_size;
+  int hy = m_y + m_height - g_hotarea_size;
 
-  if (!isInHotArea && y_root > hy &&
+  if (!g_isInHotArea && y_root > hy &&
       x_root < hx && x_root >= m_x &&
       y_root <= (m_y + m_height))
   {
     hycov_log(LOG,"cursor enter hotarea");
     dispatch_toggleoverview(arg);
-    isInHotArea = true;
+    g_isInHotArea = true;
   }
-  else if (isInHotArea &&
+  else if (g_isInHotArea &&
            (y_root <= hy || x_root >= hx || x_root < m_x ||
             y_root > (m_y + m_height)))
   {
-    if(isInHotArea)
-      isInHotArea = false;
+    if(g_isInHotArea)
+      g_isInHotArea = false;
   }
 }
 
@@ -105,19 +105,19 @@ static void mouseMoveHook(void *, SCallbackInfo &info, std::any data)
 
 static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
 {
-  wlr_pointer_button_event *event = std::any_cast<wlr_pointer_button_event *>(data); // 这个事件的数据解析可以参考dwl怎么解析出是哪个按键的
+  wlr_pointer_button_event *pEvent = std::any_cast<wlr_pointer_button_event *>(data); // 这个事件的数据解析可以参考dwl怎么解析出是哪个按键的
   info.cancelled = false;
-  switch (event->button)
+  switch (pEvent->button)
   {
   case BTN_LEFT:
-    if (isOverView && event->state == WLR_BUTTON_PRESSED)
+    if (g_isOverView && pEvent->state == WLR_BUTTON_PRESSED)
     {
       dispatch_toggleoverview("");
       info.cancelled = true;
     }
     break;
   case BTN_RIGHT:
-    if (isOverView && event->state == WLR_BUTTON_PRESSED)
+    if (g_isOverView && pEvent->state == WLR_BUTTON_PRESSED)
     {
       g_pHyprRenderer->damageWindow(g_pCompositor->m_pLastWindow);
       g_pCompositor->closeWindow(g_pCompositor->m_pLastWindow);
@@ -130,7 +130,7 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
 static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
   (*(origOnWindowRemovedTiling)g_pOnWindowRemovedTilingHook->m_pOriginal)(thisptr, pWindow);
 
-  if (isOverView && g_GridLayout->m_lGridNodesData.empty()) {
+  if (g_isOverView && g_GridLayout->m_lGridNodesData.empty()) {
     hycov_log(LOG,"no tiling windwo,auto exit overview");
     dispatch_leaveoverview("");
   }
@@ -150,9 +150,9 @@ static void hkSpawn(void* thisptr, std::string args) {
 
 void registerGlobalEventHook()
 {
-  isInHotArea = false;
-  isGestureBegin = false;
-  isOverView = false;
+  g_isInHotArea = false;
+  g_isGestureBegin = false;
+  g_isOverView = false;
   gesture_dx = 0;
   gesture_dy = 0;
   gesture_previous_dx = 0;
@@ -178,13 +178,13 @@ void registerGlobalEventHook()
   static const auto SpawnMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "spawn");
   g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
 
-  if(enable_hotarea){
-    //register event hook
+  if(g_enable_hotarea){
+    //register pEvent hook
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
   }
 
-  if(enable_gesture){
+  if(g_enable_gesture){
     //enabel function hook
     g_pOnSwipeBeginHook->hook();
     g_pOnSwipeEndHook->hook();
