@@ -17,7 +17,7 @@ typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
 
-void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
+static void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
   if(isOverView){
     gesture_dx = gesture_dx + e->dx;
     gesture_dy = gesture_dy + e->dy;
@@ -43,7 +43,7 @@ void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
   (*(origOnSwipeUpdate)g_pOnSwipeUpdateHook->m_pOriginal)(thisptr, e);
 }
 
-void hkOnSwipeBegin(void* thisptr, wlr_pointer_swipe_begin_event* e) {
+static void hkOnSwipeBegin(void* thisptr, wlr_pointer_swipe_begin_event* e) {
   if(e->fingers == swipe_fingers){
     isGestureBegin = true;
     return;
@@ -52,7 +52,7 @@ void hkOnSwipeBegin(void* thisptr, wlr_pointer_swipe_begin_event* e) {
   (*(origOnSwipeBegin)g_pOnSwipeBeginHook->m_pOriginal)(thisptr, e);
 }
 
-void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
+static void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
   gesture_dx = 0;
   gesture_previous_dx = 0;
   gesture_dy = 0;
@@ -160,6 +160,7 @@ void registerGlobalEventHook()
   
   // HyprlandAPI::registerCallbackStatic(PHANDLE, "mouseMove", mouseMoveHookPtr.get());
   // HyprlandAPI::registerCallbackStatic(PHANDLE, "mouseButton", mouseButtonHookPtr.get());
+  //create public function hook
   g_pOnSwipeBeginHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeBegin, (void*)&hkOnSwipeBegin);
   g_pOnSwipeEndHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeEnd, (void*)&hkOnSwipeEnd);
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
@@ -167,6 +168,7 @@ void registerGlobalEventHook()
   g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
   g_pOnWindowRemovedTilingHook->hook();
 
+  //create private function hook
   static const auto ChangeworkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "changeworkspace");
   g_pChangeworkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, ChangeworkspaceMethods[0].address, (void*)&hkChangeworkspace);
 
@@ -177,11 +179,13 @@ void registerGlobalEventHook()
   g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
 
   if(enable_hotarea){
+    //register event hook
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
   }
 
   if(enable_gesture){
+    //enabel function hook
     g_pOnSwipeBeginHook->hook();
     g_pOnSwipeEndHook->hook();
     g_pOnSwipeUpdateHook->hook();

@@ -10,7 +10,6 @@ static const std::string overview_worksapce_name = "OVERVIEW";
 static std::string workspace_name_backup;
 static int workspace_id_backup;
 
-
 bool isDirection(const std::string& arg) {
     return arg == "l" || arg == "r" || arg == "u" || arg == "d" || arg == "left" || arg == "right" || arg == "up" || arg == "down";
 }
@@ -211,6 +210,7 @@ void dispatch_enteroverview(std::string arg)
 		isNoShouldTileWindow = false;
 	}
 
+	//if no clients, forbit enter overview 
 	if(isNoShouldTileWindow){
 		return;
 	}
@@ -218,18 +218,19 @@ void dispatch_enteroverview(std::string arg)
 	hycov_log(LOG,"enter overview");
 	isOverView = true;
 
+	//make all fullscreen window exit fullscreen state
 	for (auto &w : g_pCompositor->m_vWorkspaces)
 	{
-
 		if (w.get()->m_bHasFullscreenWindow)
 		{
 			PFULLWINDOW = g_pCompositor->getFullscreenWindowOnWorkspace(w.get()->m_iID);
 			g_pCompositor->setWindowFullscreen(PFULLWINDOW, false, FULLSCREEN_FULL);
 
-			//let overview know it is a fullscreen before
+			//let overview know the client is a fullscreen before
 			PFULLWINDOW->m_bIsFullscreen = true;
 		}
 	}
+
 	//enter overview layout
 	g_pLayoutManager->switchToLayout("grid");
 
@@ -240,6 +241,7 @@ void dispatch_enteroverview(std::string arg)
 	workspace_id_backup = PACTIVEWORKSPACE->m_iID;
 	g_pCompositor->renameWorkspace(PACTIVEMONITOR->activeWorkspace,overview_worksapce_name);
 
+	//Preserve window focus
 	if(ActiveWindow){
 		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
 
@@ -251,6 +253,7 @@ void dispatch_enteroverview(std::string arg)
 	//disable changeworkspace
   	g_pChangeworkspaceHook->hook();
 	g_pMoveActiveToWorkspaceHook->hook();
+	//disable spawn
 	g_pSpawnHook->hook();
 
 	return;
@@ -258,6 +261,7 @@ void dispatch_enteroverview(std::string arg)
 
 void dispatch_leaveoverview(std::string arg)
 { 
+	// get default layout
 	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
 
 	if(!isOverView){
@@ -273,8 +277,10 @@ void dispatch_leaveoverview(std::string arg)
 	//enable changeworkspace
   	g_pChangeworkspaceHook->unhook();
 	g_pMoveActiveToWorkspaceHook->unhook();
+	//enable spawn
 	g_pSpawnHook->unhook();
 
+	// if no clients, just exit overview, don't restore client's state
 	if (g_GridLayout->m_lGridNodesData.empty())
 	{
 		g_pLayoutManager->switchToLayout(*configLayoutName);	
@@ -308,8 +314,7 @@ void dispatch_leaveoverview(std::string arg)
 			g_pXWaylandManager->setWindowSize(n.pWindow, calcSize);
 
 		} else if(!n.ovbk_pWindow_isFloating && !n.ovbk_pWindow_isFullscreen) {
-			//make floating client restore it's floating status
-			// make floating client restore it's position and size
+			// make nofloating client restore it's position and size
 			n.pWindow->m_vRealSize = n.ovbk_size;
 			n.pWindow->m_vRealPosition = n.ovbk_position;
 
@@ -327,6 +332,8 @@ void dispatch_leaveoverview(std::string arg)
 	CWindow *ActiveWindow = g_pCompositor->m_pLastWindow;
 	g_pCompositor->focusWindow(nullptr);
 	g_pLayoutManager->switchToLayout(*configLayoutName);
+
+	//Preserve window focus
 	if(ActiveWindow){
 		g_pCompositor->focusWindow(ActiveWindow); //restore the focus to before active window
 		if(ActiveWindow->m_bIsFloating)
@@ -337,7 +344,6 @@ void dispatch_leaveoverview(std::string arg)
 		g_pCompositor->focusWindow(node.pWindow);
 	}
 	
-
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{
 		//make all fullscrenn windwo restore it's status

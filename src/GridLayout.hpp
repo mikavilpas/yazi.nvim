@@ -52,7 +52,6 @@ public:
   void resizeNodeSizePos(SGridNodeData *, int, int, int, int);
   void moveWindowToWorkspaceSilent(CWindow *, const int &);
   std::list<SGridNodeData> m_lGridNodesData; 
-  bool isFirstTile = true;
   void moveWindowToSourceWorkspace();
 
 private:

@@ -33,34 +33,6 @@ void GridLayout::resizeNodeSizePos(SGridNodeData *node, int x, int y, int width,
     applyNodeDataToWindow(node);
 }
 
-void GridLayout::moveWindowToWorkspaceSilent(CWindow *pWindow, const int &workspaceID)
-{
-    std::string workspaceName = "";
-
-    if (!pWindow)
-        return;
-
-    g_pHyprRenderer->damageWindow(pWindow);
-
-    auto pWorkspace = g_pCompositor->getWorkspaceByID(workspaceID);
-    const auto OLDMIDDLE = pWindow->middle();
-
-    if (pWorkspace)
-    {
-        g_pCompositor->moveWindowToWorkspaceSafe(pWindow, pWorkspace);
-    }
-    else
-    {
-        pWorkspace = g_pCompositor->createNewWorkspace(workspaceID, pWindow->m_iMonitorID, workspaceName);
-        g_pCompositor->moveWindowToWorkspaceSafe(pWindow, pWorkspace);
-    }
-
-    if (const auto PATCOORDS = g_pCompositor->vectorToWindowIdeal(OLDMIDDLE); PATCOORDS && PATCOORDS != pWindow)
-        g_pCompositor->focusWindow(PATCOORDS);
-    else
-        g_pInputManager->refocus();
-}
-
 void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
 {
     const auto PMONITOR = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
@@ -84,30 +56,23 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     PNODE->ovbk_pWindow_isFullscreen = pWindow->m_bIsFullscreen;
     PNODE->ovbk_pWindow_workspaceName = PWINDOWORIWORKSPACE->m_szName;
 
-
-    if (isFirstTile) //only when original layout swith to overview do it once
+    //change all client workspace to active worksapce 
+    if (PWINDOWORIWORKSPACE->m_iID != PACTIVEWORKSPACE->m_iID || PWINDOWORIWORKSPACE->m_szName != PACTIVEWORKSPACE->m_szName)
     {
-        if (PWINDOWORIWORKSPACE->m_iID != PACTIVEWORKSPACE->m_iID || PWINDOWORIWORKSPACE->m_szName != PACTIVEWORKSPACE->m_szName)
-        {
-            //change all client workspace to active worksapce 
-            PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
-            PNODE->workspaceName = PACTIVEWORKSPACE->m_szName;
-        }
+        PNODE->workspaceID = pWindow->m_iWorkspaceID = PACTIVEWORKSPACE->m_iID;
+        PNODE->workspaceName = PACTIVEWORKSPACE->m_szName;
+    }
 
-        if (pWindow->m_bIsFullscreen)
-        {   
-            // clean fullscreen status
-            pWindow->m_bIsFullscreen = false;
-        }
+    // clean fullscreen status
+    if (pWindow->m_bIsFullscreen)
+    {   
+        pWindow->m_bIsFullscreen = false;
+    }
 
-        if (pWindow->m_bIsFloating)
-        {
-            //clean floating status
-            pWindow->m_bIsFloating = false;
-            pWindow->updateDynamicRules();
-        }
-
-        isFirstTile = false;
+    //clean floating status
+    if (pWindow->m_bIsFloating)
+    {        pWindow->m_bIsFloating = false;
+        pWindow->updateDynamicRules();
     }
 
     recalculateMonitor(pWindow->m_iMonitorID);
@@ -160,6 +125,10 @@ void GridLayout::calculateWorkspace(const int &ws)
     static const auto *GAPPO = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappo")->intValue;
     static const auto *GAPPI = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:overview_gappi")->intValue;
 
+    /*
+    m is region that is moniotr,
+    w is region that is monitor but don not contain bar  
+    */
     int m_x = PMONITOR->vecPosition.x;
     int m_y = PMONITOR->vecPosition.y;
     int w_x = PMONITOR->vecPosition.x;
@@ -177,10 +146,13 @@ void GridLayout::calculateWorkspace(const int &ws)
             n++;
         }
     }
+
     tempNodes[n] = NULL;
 
     if (NODECOUNT == 0)
         return;
+
+    // one client arrange
     if (NODECOUNT == 1)
     {
         NODE = tempNodes[0];
@@ -191,6 +163,7 @@ void GridLayout::calculateWorkspace(const int &ws)
         return;
     }
 
+    // two client arrange
     if (NODECOUNT == 2)
     {
         NODE = tempNodes[0];
@@ -203,10 +176,13 @@ void GridLayout::calculateWorkspace(const int &ws)
         return;
     }
 
+    //more than two client arrange
+
     //Calculate the integer part of the square root of the number of nodes
     for (cols = 0; cols <= NODECOUNT / 2; cols++)
         if (cols * cols >= NODECOUNT)
             break;
+            
     //The number of rows and columns multiplied by the number of nodes
     // must be greater than the number of nodes to fit all the Windows
     rows = (cols && (cols - 1) * cols >= NODECOUNT) ? cols - 1 : cols;
@@ -340,7 +316,6 @@ void GridLayout::moveWindowToSourceWorkspace()
     {
         if (nd.pWindow && (nd.pWindow->m_iWorkspaceID != nd.ovbk_pWindow_workspaceID || nd.workspaceName != nd.ovbk_pWindow_workspaceName ))
         {
-
             pWorkspace = g_pCompositor->getWorkspaceByID(nd.ovbk_pWindow_workspaceID);
             if (!pWorkspace)
                 pWorkspace = g_pCompositor->createNewWorkspace(nd.ovbk_pWindow_workspaceID, nd.pWindow->m_iMonitorID,nd.ovbk_pWindow_workspaceName);
@@ -354,17 +329,18 @@ void GridLayout::moveWindowToSourceWorkspace()
     }
 }
 
+// it will exec once when change layout enable
 void GridLayout::onEnable()
 {
     for (auto &w : g_pCompositor->m_vWindows)
     {
         if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
             continue;
-        isFirstTile = true;
         onWindowCreatedTiling(w.get());
     }
 }
 
+// it will exec once when change layout disable
 void GridLayout::onDisable()
 {
     //  m_lGridNodesData.clear();
