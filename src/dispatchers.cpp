@@ -183,12 +183,9 @@ void dispatch_focusdir(std::string arg)
 void dispatch_toggleoverview(std::string arg)
 {
 	hycov_log(LOG,"toggle overview");
-	if (isOverView)
-	{
+	if (isOverView) {
 		dispatch_leaveoverview(arg);
-	}
-	else
-	{
+	} else {
 		dispatch_enteroverview(arg);
 	}
 }
