@@ -53,13 +53,16 @@ bind=ALT,down,hycov:movefocus,d
 
 plugin {
     hycov {
-        overview_gappo = 60 #gas width from screem 
-        overview_gappi = 24 #gas width from clients
-	      hotarea_size = 10 #hotarea size in bottom left,10x10
+        overview_gappo = 60 # gas width from screem 
+        overview_gappi = 24 # gas width from clients
+	      hotarea_size = 10 # hotarea size in bottom left,10x10
 	      enable_hotarea = 1 # enable mouse cursor hotarea     
         swipe_fingers = 4 # finger number of gesture,move any directory
         move_focus_distance = 100 # distance for movefocus,only can use 3 finger to move 
-        enable_gesture = 1 # enable gesture
+        enable_gesture = 0 # enable gesture
+        disable_workspace_change = 0 # disable workspace change when in overview mode
+        disable_spawn = 0 # disable bind exec when in overview mode
+        auto_exit = 1 # enable auto exit when no client in overview
     }
 }
 
