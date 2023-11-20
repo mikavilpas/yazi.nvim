@@ -297,11 +297,17 @@ void GridLayout::changeToActivceSourceWorkspace()
 {
     CWindow *pWindow = nullptr;
     SGridNodeData *pNode;
+    CWorkspace *pWorksapce;
     pWindow = g_pCompositor->m_pLastWindow;
     const auto pMonitor = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
     pNode = getNodeFromWindow(pWindow);
-    const auto pWorksapce = g_pCompositor->getWorkspaceByID(pNode->ovbk_windowWorkspaceId); 
-    pMonitor->activeWorkspace = pNode->ovbk_windowWorkspaceId;
+    if(pNode) {
+        pWorksapce = g_pCompositor->getWorkspaceByID(pNode->ovbk_windowWorkspaceId); 
+        pMonitor->activeWorkspace = pNode->ovbk_windowWorkspaceId;
+    } else {
+        pWorksapce = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); 
+        pMonitor->activeWorkspace = pWindow->m_iWorkspaceID;        
+    }
     pMonitor->changeWorkspace(pWorksapce);
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", pWorksapce->m_szName});
     EMIT_HOOK_EVENT("workspace", pWorksapce);

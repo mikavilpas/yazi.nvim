@@ -248,10 +248,15 @@ void dispatch_enteroverview(std::string arg)
 	}
 
 	//disable changeworkspace
-  	g_pChangeworkspaceHook->hook();
-	g_pMoveActiveToWorkspaceHook->hook();
+	if(g_disable_workspace_change) {
+  		g_pChangeworkspaceHook->hook();
+		g_pMoveActiveToWorkspaceHook->hook();
+	}
+
 	//disable spawn
-	g_pSpawnHook->hook();
+	if(g_disable_spawn) {
+		g_pSpawnHook->hook();
+	}
 
 	return;
 }
@@ -272,10 +277,15 @@ void dispatch_leaveoverview(std::string arg)
 	g_pCompositor->renameWorkspace(workspaceIdBackup,workspaceNameBackup);
 
 	//enable changeworkspace
-  	g_pChangeworkspaceHook->unhook();
-	g_pMoveActiveToWorkspaceHook->unhook();
+	if(g_disable_workspace_change) {
+  		g_pChangeworkspaceHook->unhook();
+		g_pMoveActiveToWorkspaceHook->unhook();
+	}
+
 	//enable spawn
-	g_pSpawnHook->unhook();
+	if(g_disable_spawn) {
+		g_pSpawnHook->unhook();
+	}
 
 	// if no clients, just exit overview, don't restore client's state
 	if (g_GridLayout->m_lGridNodesData.empty())

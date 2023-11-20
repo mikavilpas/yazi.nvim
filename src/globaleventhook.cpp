@@ -166,7 +166,6 @@ void registerGlobalEventHook()
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
 
   g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
-  g_pOnWindowRemovedTilingHook->hook();
 
   //create private function hook
   static const auto ChangeworkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "changeworkspace");
@@ -178,17 +177,22 @@ void registerGlobalEventHook()
   static const auto SpawnMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "spawn");
   g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
 
+  //register pEvent hook
   if(g_enable_hotarea){
-    //register pEvent hook
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseMove",[&](void* self, SCallbackInfo& info, std::any data) { mouseMoveHook(self, info, data); });
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
   }
 
+  //enable function hook
   if(g_enable_gesture){
-    //enabel function hook
     g_pOnSwipeBeginHook->hook();
     g_pOnSwipeEndHook->hook();
     g_pOnSwipeUpdateHook->hook();
+  }
+
+  //enable auto exit
+  if(g_auto_exit){
+    g_pOnWindowRemovedTilingHook->hook();
   }
 
 }
