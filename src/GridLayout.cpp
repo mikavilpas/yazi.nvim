@@ -298,6 +298,7 @@ void GridLayout::changeToActivceSourceWorkspace()
     CWindow *pWindow = nullptr;
     SGridNodeData *pNode;
     CWorkspace *pWorksapce;
+    hycov_log(LOG,"changeToActivceSourceWorkspace");
     pWindow = g_pCompositor->m_pLastWindow;
     const auto pMonitor = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
     pNode = getNodeFromWindow(pWindow);
@@ -309,6 +310,7 @@ void GridLayout::changeToActivceSourceWorkspace()
         pMonitor->activeWorkspace = pWindow->m_iWorkspaceID;        
     }
     pMonitor->changeWorkspace(pWorksapce);
+    hycov_log(LOG,"changeToWorkspace:{}",pWorksapce->m_iID);
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", pWorksapce->m_szName});
     EMIT_HOOK_EVENT("workspace", pWorksapce);
     // g_pCompositor->focusWindow(pWindow);
@@ -318,14 +320,18 @@ void GridLayout::moveWindowToSourceWorkspace()
 {
     CWorkspace *pWorkspace;
     
+    hycov_log(LOG,"moveWindowToSourceWorkspace");
+
     for (auto &nd : m_lGridNodesData)
     {
         if (nd.pWindow && (nd.pWindow->m_iWorkspaceID != nd.ovbk_windowWorkspaceId || nd.workspaceName != nd.ovbk_windowWorkspaceName ))
         {
             pWorkspace = g_pCompositor->getWorkspaceByID(nd.ovbk_windowWorkspaceId);
-            if (!pWorkspace)
+            if (!pWorkspace){
+                hycov_log(LOG,"source workspace no exist");
                 pWorkspace = g_pCompositor->createNewWorkspace(nd.ovbk_windowWorkspaceId, nd.pWindow->m_iMonitorID,nd.ovbk_windowWorkspaceName);
-
+                hycov_log(LOG,"create workspace: id:{} name:{}",nd.ovbk_windowWorkspaceId,nd.ovbk_windowWorkspaceName);
+            }
             nd.workspaceID = nd.pWindow->m_iWorkspaceID = nd.ovbk_windowWorkspaceId;
             nd.workspaceName = nd.ovbk_windowWorkspaceName;
             nd.pWindow->m_vPosition = nd.ovbk_position;
