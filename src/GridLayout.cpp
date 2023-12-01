@@ -310,10 +310,10 @@ void GridLayout::changeToActivceSourceWorkspace()
         // pMonitor->activeWorkspace = pWindow->m_iWorkspaceID;        
     }
     pMonitor->changeWorkspace(pWorksapce);
+
     hycov_log(LOG,"changeToWorkspace:{}",pWorksapce->m_iID);
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", pWorksapce->m_szName});
     EMIT_HOOK_EVENT("workspace", pWorksapce);
-    // g_pCompositor->focusWindow(pWindow);
 }
 
 void GridLayout::moveWindowToSourceWorkspace()
@@ -346,7 +346,7 @@ void GridLayout::onEnable()
 {
     for (auto &w : g_pCompositor->m_vWindows)
     {
-        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut)
+        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_iWorkspaceID == -99)
             continue;
         onWindowCreatedTiling(w.get());
     }
