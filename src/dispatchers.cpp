@@ -202,7 +202,7 @@ void dispatch_enteroverview(std::string arg)
 
     for (auto &w : g_pCompositor->m_vWindows)
     {
-        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_iWorkspaceID == -99)
+        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(w->m_iWorkspaceID))
             continue;
 		isNoShouldTileWindow = false;
 	}
