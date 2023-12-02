@@ -10,6 +10,26 @@ static const std::string overviewWorksapceName = "OVERVIEW";
 static std::string workspaceNameBackup;
 static int workspaceIdBackup;
 
+bool want_auto_fullscren(CWindow *pWindow) {
+	int nodeNumInTargetWorkspace = 1;
+	auto pNode = g_GridLayout->getNodeFromWindow(pWindow);
+	if (pNode->ovbk_windowIsFullscreen) {
+		return false;
+	}
+
+	for (auto &n : g_GridLayout->m_lGridNodesData) {
+		if(n.pWindow != pNode->pWindow && n.ovbk_windowWorkspaceId == pNode->ovbk_windowWorkspaceId) {
+			nodeNumInTargetWorkspace++;
+		}
+	}
+
+	if(nodeNumInTargetWorkspace > 1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool isDirection(const std::string& arg) {
     return arg == "l" || arg == "r" || arg == "u" || arg == "d" || arg == "left" || arg == "right" || arg == "up" || arg == "down";
 }
@@ -346,7 +366,8 @@ void dispatch_leaveoverview(std::string arg)
 		if(pActiveWindow->m_bIsFloating)
 			g_pCompositor->changeWindowZOrder(pActiveWindow, true);
 		else if(g_auto_fullscreen) {
-			g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
+			if(want_auto_fullscren(pActiveWindow))
+				g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
 		}
 
 	} else {
