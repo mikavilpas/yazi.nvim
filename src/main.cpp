@@ -26,6 +26,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	CONF("disable_workspace_change", int, 1);
 	CONF("disable_spawn", int, 1);
 	CONF("auto_exit", int, 1);
+	CONF("auto_fullscreen", int, 1);
 
 
 #undef CONF
@@ -38,6 +39,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	static const auto *pDisable_workspace_change_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:disable_workspace_change")->intValue;
 	static const auto *pDisable_spawn_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:disable_spawn")->intValue;
 	static const auto *pAuto_exit_config = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:auto_exit")->intValue;
+	static const auto *pAuto_fullscreen = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:auto_fullscreen")->intValue;
 
 
 	g_enable_hotarea = *pEnable_hotarea_config;
@@ -48,6 +50,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	g_disable_workspace_change = *pDisable_workspace_change_config;
 	g_disable_spawn = *pDisable_spawn_config;
 	g_auto_exit = *pAuto_exit_config;
+	g_auto_fullscreen = *pAuto_fullscreen;
 
 
 	g_GridLayout = std::make_unique<GridLayout>();
