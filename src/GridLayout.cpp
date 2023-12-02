@@ -57,8 +57,7 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     pNode->ovbk_windowWorkspaceName = pWindowOriWorkspace->m_szName;
 
     //change all client workspace to active worksapce 
-    if (pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName)
-    {
+    if ((pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName) && !g_only_active_workspace)    {
         pNode->workspaceID = pWindow->m_iWorkspaceID = pActiveWorkspace->m_iID;
         pNode->workspaceName = pActiveWorkspace->m_szName;
     }

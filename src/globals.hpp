@@ -20,6 +20,7 @@ inline int g_disable_workspace_change;
 inline int g_disable_spawn;
 inline int g_auto_exit;
 inline int g_auto_fullscreen;
+inline int g_only_active_workspace;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;
