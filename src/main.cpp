@@ -22,11 +22,11 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	CONF("enable_hotarea", int, 1);
 	CONF("swipe_fingers", int, 4);
 	CONF("move_focus_distance", int, 100);
-	CONF("enable_gesture", int, 1);
-	CONF("disable_workspace_change", int, 1);
-	CONF("disable_spawn", int, 1);
+	CONF("enable_gesture", int, 0);
+	CONF("disable_workspace_change", int, 0);
+	CONF("disable_spawn", int, 0);
 	CONF("auto_exit", int, 1);
-	CONF("auto_fullscreen", int, 1);
+	CONF("auto_fullscreen", int, 0);
 	CONF("only_active_workspace", int, 0);
 
 
