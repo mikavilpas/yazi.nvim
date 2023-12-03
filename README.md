@@ -38,10 +38,9 @@ $ bash install.sh # `libhycov.so` path: /usr/lib/libhycov.so
 
 ```
 # when enter overview, you can use letf-button to jump,right-button to kill or use keybind
-plugin = /path/to/libhycov.so
-bind = CTRL_ALT,h,hycov:enteroverview
-bind = CTRL_ALT,m,hycov:leaveoverview
-bind = CTRL_ALT,k,hycov:toggleoverview
+plugin = /usr/lib/libhycov.so
+# bind key to toggle overview
+bind = ALT,tab,hycov:toggleoverview
 
 # The direction switch shortcut key binding.
 # calculate the window closest to the direction to switch focus.
@@ -55,8 +54,8 @@ plugin {
     hycov {
         overview_gappo = 60 # gas width from screem 
         overview_gappi = 24 # gas width from clients
-	      hotarea_size = 10 # hotarea size in bottom left,10x10
-	      enable_hotarea = 1 # enable mouse cursor hotarea     
+	hotarea_size = 10 # hotarea size in bottom left,10x10
+	enable_hotarea = 1 # enable mouse cursor hotarea     
         swipe_fingers = 4 # finger number of gesture,move any directory
         move_focus_distance = 100 # distance for movefocus,only can use 3 finger to move 
         enable_gesture = 0 # enable gesture
@@ -69,6 +68,29 @@ plugin {
 }
 
 ```
+
+# suggestion
+- when enable `auto_fullscreen=1`,you can also set the border color to mark the maximize state.and bind key to control fullscrenn maximize state.
+```
+windowrulev2 = bordercolor rgb(158833),fullscreen:1 # set bordercolor to green if window is fullscreen maximize
+# toggle fullscrenn maximize
+bind = ALT,a,fullscreen,1
+
+```
+
+https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0ca98e01e0f
+
+- if you use `hyprland/workspaces` of waybar,you should change field {id} to {name}.it will let you know you are in overview mode.
+```
+"hyprland/workspaces": {
+    "format": "{name}",
+    "on-click":"activate",
+},
+```
+![image](https://github.com/DreamMaoMao/hycov/assets/30348075/332f4025-20c1-4a44-853b-1b5264df986e)
+![image](https://github.com/DreamMaoMao/hycov/assets/30348075/500d9fd7-299b-48bc-ab72-146f263044a5)
+
+
 
 ### NixOS with home—manager
 
