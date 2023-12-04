@@ -8,15 +8,15 @@ https://github.com/DreamMaoMao/hycov/assets/30348075/59121362-21a8-4143-be95-72c
 
 
 
-Welcome to fork, if you improve the hycov plugin, please let me know, I will be happy to use your fork.
+Anyone is welcome to fork. If you end up improving the plugin, please let me know, and I'll be happy to use your fork.
 
 ### Manual Installation
 
-_only support hyprland sourc code after the date(2023-10-22)_,
+_Only supports hyprland source code after 2023-10-22,
 
-Because this plug-in require a [commit](https://github.com/hyprwm/Hyprland/commit/a61eb7694df25a75f45502ed64b1536fda370c1d) in hyprland(was commited in 2023-10-21)
+because the plugin requires this [commit](https://github.com/hyprwm/Hyprland/commit/a61eb7694df25a75f45502ed64b1536fda370c1d) in hyprland(was commited in 2023-10-21)
 
-##### use meson and ninja:
+##### using meson and ninja:
 
 ```console
 $ git clone https://github.com/DreamMaoMao/hycov.git
@@ -26,7 +26,7 @@ $ sudo ninja -C build
 $ sudo ninja -C build install # `libhycov.so` path: /usr/lib/libhycov.so
 ```
 
-##### use cmake:
+##### using cmake:
 
 ```console
 $ git clone https://github.com/DreamMaoMao/hycov.git
@@ -34,10 +34,10 @@ $ cd hycov
 $ bash install.sh # `libhycov.so` path: /usr/lib/libhycov.so
 ```
 
-### Usage(hyprland.conf)
+### Usage (hyprland.conf)
 
 ```
-# when enter overview, you can use letf-button to jump,right-button to kill or use keybind
+# when enter overview, you can use left-button to jump, right-button to kill or use keybind
 plugin = /usr/lib/libhycov.so
 # bind key to toggle overview
 bind = ALT,tab,hycov:toggleoverview
@@ -69,8 +69,8 @@ plugin {
 
 ```
 
-# suggestion
-- when enable `auto_fullscreen=1`,you can also set the border color to mark the maximize state.and bind key to control fullscrenn maximize state.
+# suggested additional configuration
+- when `auto_fullscreen=1` is set, you can also set the border color to mark the maximize state and bind key to control fullscreen maximize state.
 ```
 windowrulev2 = bordercolor rgb(158833),fullscreen:1 # set bordercolor to green if window is fullscreen maximize
 # toggle fullscrenn maximize
@@ -80,7 +80,7 @@ bind = ALT,a,fullscreen,1
 
 https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0ca98e01e0f
 
-- if you use `hyprland/workspaces` of waybar,you should change field {id} to {name}.it will let you know you are in overview mode.
+- if you use the `hyprland/workspaces` module with waybar,you should change field {id} to {name}. It will let you know you are in overview mode.
 ```
 "hyprland/workspaces": {
     "format": "{name}",
@@ -171,7 +171,7 @@ this issue has been fixed in the waybar project, fix date (2023-10-27)
 
 - Compilation failure
 ```
-Please pull the latest hyprland source code to compile and install. Because the plugin relies on a hyprland pr,pr submission date (2023-10-21)
+Please pull the latest hyprland source code to compile and install. The plugin relies on a hyprland pr,pr submission date (2023-10-21)
 ```
 
 - Unable to load
