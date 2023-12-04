@@ -52,6 +52,6 @@ public:
   void moveWindowToWorkspaceSilent(CWindow *, const int &);
   std::list<SGridNodeData> m_lGridNodesData; 
   void moveWindowToSourceWorkspace();
-  // void changeToActivceSourceWorkspace();
+  void changeToActivceSourceWorkspace();
 private:
 };

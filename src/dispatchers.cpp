@@ -314,12 +314,13 @@ void dispatch_leaveoverview(std::string arg)
 	{
 		g_pLayoutManager->switchToLayout(*configLayoutName);	
 		g_GridLayout->m_lGridNodesData.clear();
+		g_isOverViewExiting = false;
 		return;
 	}
 
 	//move clients to it's original workspace 
 	g_GridLayout->moveWindowToSourceWorkspace();
-	// g_GridLayout->changeToActivceSourceWorkspace();
+	g_GridLayout->changeToActivceSourceWorkspace();
 	
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{	
@@ -392,7 +393,7 @@ void dispatch_leaveoverview(std::string arg)
 	//clean overview layout node date
 	g_GridLayout->m_lGridNodesData.clear();
 
-	//mark has exited mode
+	//mark has exited overview mode
 	g_isOverViewExiting = false;
 	return;
 }

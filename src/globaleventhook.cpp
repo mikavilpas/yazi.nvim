@@ -150,10 +150,12 @@ static void hkSpawn(void* thisptr, std::string args) {
 }
 
 static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) {
-  if (!g_isOverViewExiting) {
-    (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, instant);
-  } else {
+  if (g_isOverViewExiting) {
     (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, true);
+    hycov_log(LOG,"hook startAnim,disable workspace change anim,in:{},isOverview:{}",in,g_isOverView);
+  } else {
+    (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, instant);
+    hycov_log(LOG,"hook startAnim,enable workspace change anim,in:{},isOverview:{}",in,g_isOverView);
   }
 }
 
