@@ -21,6 +21,7 @@ inline int g_disable_spawn;
 inline int g_auto_exit;
 inline int g_auto_fullscreen;
 inline int g_only_active_workspace;
+inline bool g_isOverViewExiting;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;
@@ -29,6 +30,7 @@ inline CFunctionHook* g_pOnWindowRemovedTilingHook = nullptr;
 inline CFunctionHook* g_pChangeworkspaceHook = nullptr;
 inline CFunctionHook* g_pMoveActiveToWorkspaceHook = nullptr;
 inline CFunctionHook* g_pSpawnHook = nullptr;
+inline CFunctionHook* g_pStartAnimHook = nullptr;
 
 inline void errorNotif()
 {
