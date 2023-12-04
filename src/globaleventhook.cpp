@@ -13,6 +13,7 @@ typedef void (*origOnSwipeBegin)(void*, wlr_pointer_swipe_begin_event* e);
 typedef void (*origOnSwipeEnd)(void*, wlr_pointer_swipe_end_event* e);
 typedef void (*origOnSwipeUpdate)(void*, wlr_pointer_swipe_update_event* e);
 typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
+typedef void (*origStartAnim)(void*, bool in, bool left, bool instant);
 
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
@@ -148,11 +149,20 @@ static void hkSpawn(void* thisptr, std::string args) {
   hycov_log(LOG,"Spawn hook toggle");
 }
 
+static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) {
+  if (!g_isOverViewExiting) {
+    (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, instant);
+  } else {
+    (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, true);
+  }
+}
+
 void registerGlobalEventHook()
 {
   g_isInHotArea = false;
   g_isGestureBegin = false;
   g_isOverView = false;
+  g_isOverViewExiting = false;
   gesture_dx = 0;
   gesture_dy = 0;
   gesture_previous_dx = 0;
@@ -166,6 +176,9 @@ void registerGlobalEventHook()
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
 
   g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
+
+  g_pStartAnimHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CWorkspace::startAnim, (void*)&hkStartAnim);
+  g_pStartAnimHook->hook();
 
   //create private function hook
   static const auto ChangeworkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "changeworkspace");

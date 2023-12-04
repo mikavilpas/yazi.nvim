@@ -48,11 +48,10 @@ public:
   void calculateWorkspace(const int &);
   int getNodesNumOnWorkspace(const int &);
   SGridNodeData *getNodeFromWindow(CWindow *);
-  void changeToActivceSourceWorkspace();
   void resizeNodeSizePos(SGridNodeData *, int, int, int, int);
   void moveWindowToWorkspaceSilent(CWindow *, const int &);
   std::list<SGridNodeData> m_lGridNodesData; 
   void moveWindowToSourceWorkspace();
-
+  // void changeToActivceSourceWorkspace();
 private:
 };

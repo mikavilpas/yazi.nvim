@@ -292,7 +292,9 @@ void dispatch_leaveoverview(std::string arg)
 	
 	hycov_log(LOG,"leave overview");
 	g_isOverView = false;
-
+	//mark exiting overview mode
+	g_isOverViewExiting = true;
+	
 	//restore workspace name
 	g_pCompositor->renameWorkspace(workspaceIdBackup,workspaceNameBackup);
 
@@ -317,9 +319,8 @@ void dispatch_leaveoverview(std::string arg)
 
 	//move clients to it's original workspace 
 	g_GridLayout->moveWindowToSourceWorkspace();
-	//jump to target client's workspace
-	g_GridLayout->changeToActivceSourceWorkspace();
-
+	// g_GridLayout->changeToActivceSourceWorkspace();
+	
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{	
 		if (n.ovbk_windowIsFloating)
@@ -390,7 +391,9 @@ void dispatch_leaveoverview(std::string arg)
 
 	//clean overview layout node date
 	g_GridLayout->m_lGridNodesData.clear();
-	
+
+	//mark has exited mode
+	g_isOverViewExiting = false;
 	return;
 }
 
