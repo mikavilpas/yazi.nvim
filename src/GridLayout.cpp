@@ -299,20 +299,16 @@ void GridLayout::changeToActivceSourceWorkspace()
     CWorkspace *pWorksapce;
     hycov_log(LOG,"changeToActivceSourceWorkspace");
     pWindow = g_pCompositor->m_pLastWindow;
-    const auto pMonitor = g_pCompositor->getMonitorFromID(pWindow->m_iMonitorID); 
     pNode = getNodeFromWindow(pWindow);
     if(pNode) {
         pWorksapce = g_pCompositor->getWorkspaceByID(pNode->ovbk_windowWorkspaceId); 
-        // pMonitor->activeWorkspace = pNode->ovbk_windowWorkspaceId;
     } else {
         pWorksapce = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); 
-        // pMonitor->activeWorkspace = pWindow->m_iWorkspaceID;        
     }
     // pMonitor->changeWorkspace(pWorksapce);
     hycov_log(LOG,"changeToWorkspace:{}",pWorksapce->m_iID);
     g_pEventManager->postEvent(SHyprIPCEvent{"workspace", pWorksapce->m_szName});
     EMIT_HOOK_EVENT("workspace", pWorksapce);
-    // g_pCompositor->focusWindow(pWindow);
 }
 
 void GridLayout::moveWindowToSourceWorkspace()
