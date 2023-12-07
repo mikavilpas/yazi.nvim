@@ -41,6 +41,7 @@ static void hkOnSwipeUpdate(void* thisptr, wlr_pointer_swipe_update_event* e) {
     }
     return;
   }
+  // call the original function,Let it do what it should do
   (*(origOnSwipeUpdate)g_pOnSwipeUpdateHook->m_pOriginal)(thisptr, e);
 }
 
@@ -50,6 +51,8 @@ static void hkOnSwipeBegin(void* thisptr, wlr_pointer_swipe_begin_event* e) {
     return;
   } 
   hycov_log(LOG,"OnSwipeBegin hook toggle");
+
+  // call the original function,Let it do what it should do
   (*(origOnSwipeBegin)g_pOnSwipeBeginHook->m_pOriginal)(thisptr, e);
 }
 
@@ -65,6 +68,7 @@ static void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
     return;
   }
   hycov_log(LOG,"OnSwipeEnd hook toggle");
+  // call the original function,Let it do what it should do
   (*(origOnSwipeEnd)g_pOnSwipeEndHook->m_pOriginal)(thisptr, e);
 }
 
@@ -114,7 +118,7 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
     if (g_isOverView && pEvent->state == WLR_BUTTON_PRESSED)
     {
       dispatch_toggleoverview("");
-      info.cancelled = true;
+      info.cancelled = true;  // Prevent the event from continuing to be passed to the client
     }
     break;
   case BTN_RIGHT:
@@ -122,15 +126,17 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
     {
       g_pHyprRenderer->damageWindow(g_pCompositor->m_pLastWindow);
       g_pCompositor->closeWindow(g_pCompositor->m_pLastWindow);
-      info.cancelled = true;
+      info.cancelled = true; // Prevent the event from continuing to be passed to the client
     }
     break;
   }
 }
 
 static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
+  // call the original function,Let it do what it should do
   (*(origOnWindowRemovedTiling)g_pOnWindowRemovedTilingHook->m_pOriginal)(thisptr, pWindow);
 
+  // after done original thing,The workspace automatically exit overview if no client exists 
   if (g_isOverView && g_GridLayout->m_lGridNodesData.empty()) {
     hycov_log(LOG,"no tiling windwo,auto exit overview");
     dispatch_leaveoverview("");
@@ -138,18 +144,22 @@ static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
 }
 
 static void hkChangeworkspace(void* thisptr, std::string args) {
+  // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"ChangeworkspaceHook hook toggle");
 }
 
 static void hkMoveActiveToWorkspace(void* thisptr, std::string args) {
+  // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"MoveActiveToWorkspace hook toggle");
 }
 
 static void hkSpawn(void* thisptr, std::string args) {
+  // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"Spawn hook toggle");
 }
 
 static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) {
+  // if is exiting overview, omit the animation of workspace change (instant = true)
   if (g_isOverViewExiting) {
     (*(origStartAnim)g_pStartAnimHook->m_pOriginal)(thisptr, in, left, true);
     hycov_log(LOG,"hook startAnim,disable workspace change anim,in:{},isOverview:{}",in,g_isOverView);
@@ -172,23 +182,32 @@ void registerGlobalEventHook()
   
   // HyprlandAPI::registerCallbackStatic(PHANDLE, "mouseMove", mouseMoveHookPtr.get());
   // HyprlandAPI::registerCallbackStatic(PHANDLE, "mouseButton", mouseButtonHookPtr.get());
+  
   //create public function hook
+
+  // hook function of Swipe gesture event handle 
   g_pOnSwipeBeginHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeBegin, (void*)&hkOnSwipeBegin);
   g_pOnSwipeEndHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeEnd, (void*)&hkOnSwipeEnd);
   g_pOnSwipeUpdateHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onSwipeUpdate, (void*)&hkOnSwipeUpdate);
 
+  // hook function of Gridlayout Remove a node from tiled list
   g_pOnWindowRemovedTilingHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&GridLayout::onWindowRemovedTiling, (void*)&hkOnWindowRemovedTiling);
 
+  // hook function of workspace change animation start
   g_pStartAnimHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CWorkspace::startAnim, (void*)&hkStartAnim);
   g_pStartAnimHook->hook();
 
   //create private function hook
+
+  // hook function of changeworkspace
   static const auto ChangeworkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "changeworkspace");
   g_pChangeworkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, ChangeworkspaceMethods[0].address, (void*)&hkChangeworkspace);
 
+  // hook function of moveActiveToWorkspace
   static const auto MoveActiveToWorkspaceMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "moveActiveToWorkspace");
   g_pMoveActiveToWorkspaceHook = HyprlandAPI::createFunctionHook(PHANDLE, MoveActiveToWorkspaceMethods[0].address, (void*)&hkMoveActiveToWorkspace);
 
+  // hook function of spawn (bindkey will call spawn to excute a command or a dispatch)
   static const auto SpawnMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "spawn");
   g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
 
@@ -198,14 +217,14 @@ void registerGlobalEventHook()
     HyprlandAPI::registerCallbackDynamic(PHANDLE, "mouseButton", [&](void* self, SCallbackInfo& info, std::any data) { mouseButtonHook(self, info, data); });
   }
 
-  //enable function hook
+  //if enable gesture, apply hook Swipe function 
   if(g_enable_gesture){
     g_pOnSwipeBeginHook->hook();
     g_pOnSwipeEndHook->hook();
     g_pOnSwipeUpdateHook->hook();
   }
 
-  //enable auto exit
+  //if enable auto_exit, apply hook RemovedTiling function
   if(g_auto_exit){
     g_pOnWindowRemovedTilingHook->hook();
   }

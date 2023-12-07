@@ -13,16 +13,20 @@ static int workspaceIdBackup;
 bool want_auto_fullscren(CWindow *pWindow) {
 	int nodeNumInTargetWorkspace = 1;
 	auto pNode = g_GridLayout->getNodeFromWindow(pWindow);
+
+	// if client is fullscreen before,don't make it fullscreen
 	if (pNode->ovbk_windowIsFullscreen) {
 		return false;
 	}
 
+	// caculate the number of clients that will be in the same workspace with pWindow(don't contain itself)
 	for (auto &n : g_GridLayout->m_lGridNodesData) {
 		if(n.pWindow != pNode->pWindow && n.ovbk_windowWorkspaceId == pNode->ovbk_windowWorkspaceId) {
 			nodeNumInTargetWorkspace++;
 		}
 	}
-
+	
+	// if only one client in workspace(pWindow itself), don't make it fullscreen
 	if(nodeNumInTargetWorkspace > 1) {
 		return true;
 	} else {
@@ -77,109 +81,113 @@ CWindow  *direction_select(std::string arg){
 	auto shift = parseShiftArg(values[0]);
   	switch (shift.value()) {
   	case ShiftDirection::Up:
-  	  for (int _i = 0; _i <= last; _i++) {
-  	    if (pTempCWindows[_i]->m_vRealPosition.goalv().y < sel_y && pTempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
-  	      int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	      int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	      if (tmp_distance < distance) {
-  	        distance = tmp_distance;
-  	        pTempFocusCWindows = pTempCWindows[_i];
-  	      }
-  	    }
-  	  }
-	  if(!pTempFocusCWindows){
-  	  	for (int _i = 0; _i <= last; _i++) {
-  	  	  if (pTempCWindows[_i]->m_vRealPosition.goalv().y < sel_y ) {
-  	  	    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	  	    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	  	    if (tmp_distance < distance) {
-  	  	      distance = tmp_distance;
-  	  	      pTempFocusCWindows = pTempCWindows[_i];
-  	  	    }
-  	  	  }
-  	  	}		
-	  }
-  	  break;
+		// Find the window with the closest coordinates 
+		// in the top left corner of the window (is limited to same x)
+  		for (int _i = 0; _i <= last; _i++) {
+  		  if (pTempCWindows[_i]->m_vRealPosition.goalv().y < sel_y && pTempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
+  		    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  		    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  		    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  		    if (tmp_distance < distance) {
+  		      distance = tmp_distance;
+  		      pTempFocusCWindows = pTempCWindows[_i];
+  		    }
+  		  }
+  		}
+		// if find nothing above 
+		// find again(is unlimited to x)
+		if(!pTempFocusCWindows){
+  			for (int _i = 0; _i <= last; _i++) {
+  			  if (pTempCWindows[_i]->m_vRealPosition.goalv().y < sel_y ) {
+  			    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  			    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  			    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  			    if (tmp_distance < distance) {
+  			      distance = tmp_distance;
+  			      pTempFocusCWindows = pTempCWindows[_i];
+  			    }
+  			  }
+  			}		
+		}
+  		break;
   	case ShiftDirection::Down:
-  	  for (int _i = 0; _i <= last; _i++) {
-  	    if (pTempCWindows[_i]->m_vRealPosition.goalv().y > sel_y && pTempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
-  	      int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	      int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	      if (tmp_distance < distance) {
-  	        distance = tmp_distance;
-  	        pTempFocusCWindows = pTempCWindows[_i];
-  	      }
-  	    }
-  	  }
-	  if(!pTempFocusCWindows){
-  	  	for (int _i = 0; _i <= last; _i++) {
-  	  	  if (pTempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
-  	  	    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	  	    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	  	    if (tmp_distance < distance) {
-  	  	      distance = tmp_distance;
-  	  	      pTempFocusCWindows = pTempCWindows[_i];
-  	  	    }
-  	  	  }
-  	  	}		
-	  }
-  	  break;
+  		for (int _i = 0; _i <= last; _i++) {
+  		  if (pTempCWindows[_i]->m_vRealPosition.goalv().y > sel_y && pTempCWindows[_i]->m_vRealPosition.goalv().x == sel_x) {
+  		    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  		    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  		    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  		    if (tmp_distance < distance) {
+  		      distance = tmp_distance;
+  		      pTempFocusCWindows = pTempCWindows[_i];
+  		    }
+  		  }
+  		}
+		if(!pTempFocusCWindows){
+  			for (int _i = 0; _i <= last; _i++) {
+  			  if (pTempCWindows[_i]->m_vRealPosition.goalv().y > sel_y ) {
+  			    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  			    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  			    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  			    if (tmp_distance < distance) {
+  			      distance = tmp_distance;
+  			      pTempFocusCWindows = pTempCWindows[_i];
+  			    }
+  			  }
+  			}		
+		}
+  		break;
   	case ShiftDirection::Left:
-  	  for (int _i = 0; _i <= last; _i++) {
-  	    if (pTempCWindows[_i]->m_vRealPosition.goalv().x < sel_x && pTempCWindows[_i]->m_vRealPosition.goalv().y == sel_y) {
-  	      int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	      int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	      if (tmp_distance < distance) {
-  	        distance = tmp_distance;
-  	        pTempFocusCWindows = pTempCWindows[_i];
-  	      }
-  	    }
-  	  }
-	  if(!pTempFocusCWindows){
-  	  	for (int _i = 0; _i <= last; _i++) {
-  	  	  if (pTempCWindows[_i]->m_vRealPosition.goalv().x < sel_x) {
-  	  	    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	  	    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	  	    if (tmp_distance < distance) {
-  	  	      distance = tmp_distance;
-  	  	      pTempFocusCWindows = pTempCWindows[_i];
-  	  	    }
-  	  	  }
-  	  	}		
-	  }
-  	  break;
+  		for (int _i = 0; _i <= last; _i++) {
+  		  if (pTempCWindows[_i]->m_vRealPosition.goalv().x < sel_x && pTempCWindows[_i]->m_vRealPosition.goalv().y == sel_y) {
+  		    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  		    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  		    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  		    if (tmp_distance < distance) {
+  		      distance = tmp_distance;
+  		      pTempFocusCWindows = pTempCWindows[_i];
+  		    }
+  		  }
+  		}
+		if(!pTempFocusCWindows){
+  			for (int _i = 0; _i <= last; _i++) {
+  			  if (pTempCWindows[_i]->m_vRealPosition.goalv().x < sel_x) {
+  			    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  			    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  			    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  			    if (tmp_distance < distance) {
+  			      distance = tmp_distance;
+  			      pTempFocusCWindows = pTempCWindows[_i];
+  			    }
+  			  }
+  			}		
+		}
+  		break;
   	case ShiftDirection::Right:
-  	  for (int _i = 0; _i <= last; _i++) {
-  	    if (pTempCWindows[_i]->m_vRealPosition.goalv().x > sel_x  && pTempCWindows[_i]->m_vRealPosition.goalv().y == sel_y) {
-  	      int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	      int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	      long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	      if (tmp_distance < distance) {
-  	        distance = tmp_distance;
-  	        pTempFocusCWindows = pTempCWindows[_i];
-  	      }
-  	    }
-  	  }
-	  if(!pTempFocusCWindows){
-  	  	for (int _i = 0; _i <= last; _i++) {
-  	  	  if (pTempCWindows[_i]->m_vRealPosition.goalv().x > sel_x) {
-  	  	    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
-  	  	    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
-  	  	    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
-  	  	    if (tmp_distance < distance) {
-  	  	      distance = tmp_distance;
-  	  	      pTempFocusCWindows = pTempCWindows[_i];
-  	  	    }
-  	  	  }
-  	  	}		
-	  }
-  	  break;
+  		for (int _i = 0; _i <= last; _i++) {
+  		  if (pTempCWindows[_i]->m_vRealPosition.goalv().x > sel_x  && pTempCWindows[_i]->m_vRealPosition.goalv().y == sel_y) {
+  		    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  		    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  		    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  		    if (tmp_distance < distance) {
+  		      distance = tmp_distance;
+  		      pTempFocusCWindows = pTempCWindows[_i];
+  		    }
+  		  }
+  		}
+		if(!pTempFocusCWindows){
+  			for (int _i = 0; _i <= last; _i++) {
+  			  if (pTempCWindows[_i]->m_vRealPosition.goalv().x > sel_x) {
+  			    int dis_x = pTempCWindows[_i]->m_vRealPosition.goalv().x - sel_x;
+  			    int dis_y = pTempCWindows[_i]->m_vRealPosition.goalv().y - sel_y;
+  			    long long int tmp_distance = dis_x * dis_x + dis_y * dis_y; 
+  			    if (tmp_distance < distance) {
+  			      distance = tmp_distance;
+  			      pTempFocusCWindows = pTempCWindows[_i];
+  			    }
+  			  }
+  			}		
+		}
+  		break;
   	}
   	return pTempFocusCWindows;
 }
@@ -320,6 +328,7 @@ void dispatch_leaveoverview(std::string arg)
 
 	//move clients to it's original workspace 
 	g_GridLayout->moveWindowToSourceWorkspace();
+	// go to the workspace where the active client was before
 	g_GridLayout->changeToActivceSourceWorkspace();
 	
 	for (auto &n : g_GridLayout->m_lGridNodesData)
@@ -367,7 +376,7 @@ void dispatch_leaveoverview(std::string arg)
 		g_pCompositor->focusWindow(pActiveWindow); //restore the focus to before active window
 		if(pActiveWindow->m_bIsFloating)
 			g_pCompositor->changeWindowZOrder(pActiveWindow, true);
-		else if(g_auto_fullscreen) {
+		else if(g_auto_fullscreen) { // if enale auto_fullscreen after exit overview
 			if(want_auto_fullscren(pActiveWindow))
 				g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
 		}
