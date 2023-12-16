@@ -341,9 +341,10 @@ void GridLayout::onEnable()
 {
     for (auto &w : g_pCompositor->m_vWindows)
     {
-        if (w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(w->m_iWorkspaceID))
+        CWindow *pWindow = w.get();
+        if (pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
             continue;
-        onWindowCreatedTiling(w.get());
+        onWindowCreatedTiling(pWindow);
     }
 }
 

@@ -64,10 +64,11 @@ CWindow  *direction_select(std::string arg){
 
     for (auto &w : g_pCompositor->m_vWindows)
     {
-        if (pTempClient == w.get() || pTempClient->m_iWorkspaceID !=w.get()->m_iWorkspaceID || w->isHidden() || !w->m_bIsMapped || w->m_bFadingOut || w->m_bIsFullscreen)
+		CWindow *pWindow = w.get();
+        if (pTempClient == pWindow || pTempClient->m_iWorkspaceID !=pWindow->m_iWorkspaceID || pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || pWindow->m_bIsFullscreen)
             continue;
 			last++;
-			pTempCWindows[last] = w.get();			
+			pTempCWindows[last] = pWindow;			
     }
 	
   	if (last < 0)
@@ -246,9 +247,10 @@ void dispatch_enteroverview(std::string arg)
 	//make all fullscreen window exit fullscreen state
 	for (auto &w : g_pCompositor->m_vWorkspaces)
 	{
-		if (w.get()->m_bHasFullscreenWindow)
+		CWorkspace *pWorkspace = w.get();
+		if (pWorkspace->m_bHasFullscreenWindow)
 		{
-			pFullscreenWindow = g_pCompositor->getFullscreenWindowOnWorkspace(w.get()->m_iID);
+			pFullscreenWindow = g_pCompositor->getFullscreenWindowOnWorkspace(pWorkspace->m_iID);
 			g_pCompositor->setWindowFullscreen(pFullscreenWindow, false, FULLSCREEN_FULL);
 
 			//let overview know the client is a fullscreen before
