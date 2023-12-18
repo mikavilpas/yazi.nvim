@@ -1,10 +1,6 @@
 #include <optional>
 
-#include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/plugins/PluginAPI.hpp>
-
 #include "dispatchers.hpp"
-#include "globals.hpp"
 #include "globaleventhook.hpp"
 
 APICALL EXPORT std::string PLUGIN_API_VERSION() { return HYPRLAND_API_VERSION; }

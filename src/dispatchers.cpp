@@ -1,10 +1,4 @@
-#include <optional>
-
-#include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/plugins/PluginAPI.hpp>
-
 #include "dispatchers.hpp"
-#include "globals.hpp"
 
 static const std::string overviewWorksapceName = "OVERVIEW";
 static std::string workspaceNameBackup;

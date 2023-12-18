@@ -1,5 +1,4 @@
 
-#include <hyprland/src/Compositor.hpp>
 #include "globals.hpp"
 #include "GridLayout.hpp"
 

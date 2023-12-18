@@ -1,10 +1,9 @@
-#include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/plugins/PluginAPI.hpp>
+
+#include "globaleventhook.hpp"
+#include "dispatchers.hpp"
 #include <regex>
 #include <set>
-
-#include "dispatchers.hpp"
-#include "globals.hpp"
+#include <hyprland/src/SharedDefs.hpp>
 #include "GridLayout.hpp"
 
 // std::unique_ptr<HOOK_CALLBACK_FN> mouseMoveHookPtr = std::make_unique<HOOK_CALLBACK_FN>(mouseMoveHook);
@@ -14,6 +13,7 @@ typedef void (*origOnSwipeEnd)(void*, wlr_pointer_swipe_end_event* e);
 typedef void (*origOnSwipeUpdate)(void*, wlr_pointer_swipe_update_event* e);
 typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
 typedef void (*origStartAnim)(void*, bool in, bool left, bool instant);
+typedef void (*origFullscreenActive)(std::string args);
 
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
@@ -169,6 +169,29 @@ static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) 
   }
 }
 
+static void hkFullscreenActive(std::string args) {
+  // auto exit overview and fullscreen window when toggle fullscreen in overview mode
+  hycov_log(LOG,"FullscreenActive hook toggle");
+
+  // (*(origFullscreenActive)g_pFullscreenActiveHook->m_pOriginal)(args);
+  const auto pWindow = g_pCompositor->m_pLastWindow;
+
+  if (!pWindow)
+        return;
+
+  if (g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
+        return;
+
+  if (g_isOverView && want_auto_fullscren(pWindow)) {
+    dispatch_toggleoverview("");
+    g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
+  } else if (g_isOverView && !want_auto_fullscren(pWindow)) {
+        dispatch_toggleoverview("");
+  } else {
+    g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
+  }
+}
+
 void registerGlobalEventHook()
 {
   g_isInHotArea = false;
@@ -197,6 +220,7 @@ void registerGlobalEventHook()
   g_pStartAnimHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CWorkspace::startAnim, (void*)&hkStartAnim);
   g_pStartAnimHook->hook();
 
+
   //create private function hook
 
   // hook function of changeworkspace
@@ -210,6 +234,10 @@ void registerGlobalEventHook()
   // hook function of spawn (bindkey will call spawn to excute a command or a dispatch)
   static const auto SpawnMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "spawn");
   g_pSpawnHook = HyprlandAPI::createFunctionHook(PHANDLE, SpawnMethods[0].address, (void*)&hkSpawn);
+
+  //hook function of fullscreenActive
+  static const auto FullscreenActiveMethods = HyprlandAPI::findFunctionsByName(PHANDLE, "fullscreenActive");
+  g_pFullscreenActiveHook = HyprlandAPI::createFunctionHook(PHANDLE, FullscreenActiveMethods[0].address, (void*)&hkFullscreenActive);
 
   //register pEvent hook
   if(g_enable_hotarea){
@@ -229,4 +257,6 @@ void registerGlobalEventHook()
     g_pOnWindowRemovedTilingHook->hook();
   }
 
+  // enable hook fullscreenActive funciton
+  g_pFullscreenActiveHook->hook();
 }
