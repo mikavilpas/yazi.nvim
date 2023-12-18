@@ -182,10 +182,10 @@ static void hkFullscreenActive(std::string args) {
   if (g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
         return;
 
-  if (g_isOverView && want_auto_fullscren(pWindow)) {
+  if (g_isOverView && want_auto_fullscren(pWindow) && !g_auto_fullscreen) {
     dispatch_toggleoverview("");
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
-  } else if (g_isOverView && !want_auto_fullscren(pWindow)) {
+  } else if (g_isOverView && (!want_auto_fullscren(pWindow) || g_auto_fullscreen)) {
         dispatch_toggleoverview("");
   } else {
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
