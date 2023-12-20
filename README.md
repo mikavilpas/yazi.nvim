@@ -64,6 +64,7 @@ plugin {
         auto_exit = 1 # enable auto exit when no client in overview
         auto_fullscreen = 0 # auto make active window maximize after exit overview
         only_active_workspace = 0 # only overview the active workspace
+        only_active_monitor = 0 # only overview the active monitor
     }
 }
 

@@ -29,6 +29,7 @@ inline int g_disable_spawn;
 inline int g_auto_exit;
 inline int g_auto_fullscreen;
 inline int g_only_active_workspace;
+inline int g_only_active_monitor;
 inline bool g_isOverViewExiting;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
