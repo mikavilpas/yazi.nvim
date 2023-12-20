@@ -1,9 +1,17 @@
 #pragma once
 
-#include "GridLayout.hpp"
 #include "log.hpp"
+#include <hyprland/src/includes.hpp>
+#include <any>
 
+#define private public
+#include <hyprland/src/Compositor.hpp>
 #include <hyprland/src/plugins/PluginAPI.hpp>
+#include <hyprland/src/managers/KeybindManager.hpp>
+#undef private
+
+#include "GridLayout.hpp"
+
 
 inline HANDLE PHANDLE = nullptr;
 inline std::unique_ptr<GridLayout> g_GridLayout;
@@ -21,6 +29,8 @@ inline int g_disable_spawn;
 inline int g_auto_exit;
 inline int g_auto_fullscreen;
 inline int g_only_active_workspace;
+inline int g_only_active_monitor;
+inline int g_enable_alt_release_exit;
 inline bool g_isOverViewExiting;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
@@ -31,6 +41,8 @@ inline CFunctionHook* g_pChangeworkspaceHook = nullptr;
 inline CFunctionHook* g_pMoveActiveToWorkspaceHook = nullptr;
 inline CFunctionHook* g_pSpawnHook = nullptr;
 inline CFunctionHook* g_pStartAnimHook = nullptr;
+inline CFunctionHook* g_pFullscreenActiveHook = nullptr;
+inline CFunctionHook* g_pOnKeyboardKeyHook = nullptr;
 
 inline void errorNotif()
 {

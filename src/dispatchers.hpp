@@ -1,4 +1,5 @@
 #pragma once
+#include "globals.hpp"
 
 enum class ShiftDirection {
 	Left,
@@ -7,6 +8,7 @@ enum class ShiftDirection {
 	Right,
 };
 
+bool want_auto_fullscren(CWindow *pWindow);
 void dispatch_focusdir(std::string arg);
 void dispatch_toggleoverview(std::string arg);
 void dispatch_enteroverview(std::string arg);

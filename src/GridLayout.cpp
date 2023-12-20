@@ -1,5 +1,4 @@
 
-#include <hyprland/src/Compositor.hpp>
 #include "globals.hpp"
 #include "GridLayout.hpp"
 
@@ -342,8 +341,13 @@ void GridLayout::onEnable()
     for (auto &w : g_pCompositor->m_vWindows)
     {
         CWindow *pWindow = w.get();
+
         if (pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
             continue;
+
+        if(pWindow->m_iMonitorID != g_pCompositor->m_pLastMonitor->ID && g_only_active_monitor)
+            continue;
+
         onWindowCreatedTiling(pWindow);
     }
 }

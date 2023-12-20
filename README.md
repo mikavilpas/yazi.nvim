@@ -64,6 +64,8 @@ plugin {
         auto_exit = 1 # enable auto exit when no client in overview
         auto_fullscreen = 0 # auto make active window maximize after exit overview
         only_active_workspace = 0 # only overview the active workspace
+        only_active_monitor = 0 # only overview the active monitor
+        enable_alt_release_exit = 0 # alt swith mode,see readme for detail
     }
 }
 
@@ -89,6 +91,25 @@ https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0c
 ```
 ![image](https://github.com/DreamMaoMao/hycov/assets/30348075/332f4025-20c1-4a44-853b-1b5264df986e)
 ![image](https://github.com/DreamMaoMao/hycov/assets/30348075/500d9fd7-299b-48bc-ab72-146f263044a5)
+
+
+# alt switch mode
+```
+enable_alt_release_exit = 1
+```
+if you enable this mode , it will just allow you to use `alt + otherkey` to bind toggleoverview.
+
+such as `alt + tab`:
+
+- 1.`alt + tab` will enter overview when you not in overview(please hold alt,don't make it release)
+
+- 2.`alt + tab` will switch window focus circularly. (please hold alt,don't make it release)
+
+- 3.when you release `alt` , it will auto exit overview.
+
+
+https://github.com/DreamMaoMao/hycov/assets/30348075/aa426b44-2f83-4434-bdb6-aef7e8534273
+
 
 
 

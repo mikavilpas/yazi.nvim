@@ -1,10 +1,4 @@
-#include <optional>
-
-#include <hyprland/src/Compositor.hpp>
-#include <hyprland/src/plugins/PluginAPI.hpp>
-
 #include "dispatchers.hpp"
-#include "globals.hpp"
 
 static const std::string overviewWorksapceName = "OVERVIEW";
 static std::string workspaceNameBackup;
@@ -193,6 +187,46 @@ CWindow  *direction_select(std::string arg){
   	return pTempFocusCWindows;
 }
 
+CWindow *get_circle_next_window (std::string arg) {
+	bool next_ready = false;
+	CWindow *begin_window;
+	CWindow *pTempClient =  g_pCompositor->m_pLastWindow;
+    for (auto &w : g_pCompositor->m_vWindows)
+    {
+		CWindow *pWindow = w.get();
+        if (pTempClient->m_iWorkspaceID !=pWindow->m_iWorkspaceID || pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || pWindow->m_bIsFullscreen)
+            continue;
+		if (next_ready)
+			return 	pWindow;
+		if (pWindow == pTempClient)
+			next_ready = true;	
+    }
+
+    for (auto &w : g_pCompositor->m_vWindows)
+    {
+		CWindow *pWindow = w.get();
+        if (pTempClient->m_iWorkspaceID !=pWindow->m_iWorkspaceID || pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || pWindow->m_bIsFullscreen)
+            continue;
+		return pWindow;
+    }
+
+}
+
+void dispatch_circle(std::string arg)
+{
+	CWindow *pWindow;
+	try {
+		pWindow = get_circle_next_window(arg);
+		if(pWindow){
+			g_pCompositor->focusWindow(pWindow);
+			g_pCompositor->warpCursorTo(pWindow->middle());
+			g_pInputManager->m_pForcedFocus = pWindow;
+        	g_pInputManager->simulateMouseMovement();
+        	g_pInputManager->m_pForcedFocus = nullptr;
+		}
+    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
+}
+
 void dispatch_focusdir(std::string arg)
 {
 	CWindow *pWindow;
@@ -206,16 +240,16 @@ void dispatch_focusdir(std::string arg)
         	g_pInputManager->m_pForcedFocus = nullptr;
 		}
     } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
-
 }
 
 void dispatch_toggleoverview(std::string arg)
 {
-	hycov_log(LOG,"toggle overview");
-	if (g_isOverView) {
-		dispatch_leaveoverview(arg);
+	if (g_isOverView && (!g_enable_alt_release_exit || arg == "normalToggle")) {
+		dispatch_leaveoverview("");
+	} else if (g_isOverView && g_enable_alt_release_exit && arg != "normalToggle") {
+		dispatch_circle("");
 	} else {
-		dispatch_enteroverview(arg);
+		dispatch_enteroverview("");
 	}
 }
 
