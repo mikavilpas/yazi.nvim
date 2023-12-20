@@ -97,7 +97,7 @@ https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0c
 ```
 enable_alt_release_exit = 1
 ```
-if you enable this mode , you can just use `alt + otherkey` to bind toggleoverview.
+if you enable this mode , it will just allow you to use `alt + otherkey` to bind toggleoverview.
 
 such as `alt + tab`:
 
@@ -106,6 +106,12 @@ such as `alt + tab`:
 - 2.`alt + tab` will switch window focus circularly. (please hold alt,don't make it release)
 
 - 3.when you release `alt` , it will auto exit overview.
+
+
+https://github.com/DreamMaoMao/hycov/assets/30348075/aa426b44-2f83-4434-bdb6-aef7e8534273
+
+
+
 
 ### NixOS with home—manager
 
