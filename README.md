@@ -52,7 +52,7 @@ bind=ALT,down,hycov:movefocus,d
 
 plugin {
     hycov {
-        overview_gappo = 60 # gas width from screem 
+        overview_gappo = 60 # gas width from screen edge
         overview_gappi = 24 # gas width from clients
 	hotarea_size = 10 # hotarea size in bottom left,10x10
 	enable_hotarea = 1 # enable mouse cursor hotarea     
@@ -103,7 +103,7 @@ such as `alt + tab`:
 
 - 1.`alt + tab` will enter overview when you not in overview(please hold alt,don't make it release)
 
-- 2.`alt + tab` will switch window focus circularly. (please hold alt,don't make it release)
+- 2.`alt + tab` will switch window focus circularly when you in overview. (please hold alt,don't make it release)
 
 - 3.when you release `alt` , it will auto exit overview.
 
