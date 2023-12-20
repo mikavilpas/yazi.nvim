@@ -110,8 +110,15 @@ static void mouseMoveHook(void *, SCallbackInfo &info, std::any data)
 
 static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
 {
+  if(!g_isOverView)
+    return;
+    
   wlr_pointer_button_event *pEvent = std::any_cast<wlr_pointer_button_event *>(data); // 这个事件的数据解析可以参考dwl怎么解析出是哪个按键的
   info.cancelled = false;
+  CWindow *pTargetWindow = g_pCompositor->windowFromCursor();
+  if(pTargetWindow)
+    g_pCompositor->focusWindow(pTargetWindow);
+
   switch (pEvent->button)
   {
   case BTN_LEFT:
@@ -257,6 +264,7 @@ void registerGlobalEventHook()
     g_pOnWindowRemovedTilingHook->hook();
   }
 
+  // TODO: wait hyprland to support this function hook
   // enable hook fullscreenActive funciton
-  g_pFullscreenActiveHook->hook();
+  // g_pFullscreenActiveHook->hook();
 }
