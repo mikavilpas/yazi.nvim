@@ -92,7 +92,9 @@ void GridLayout::onWindowRemovedTiling(CWindow *pWindow)
 
     lastNode = m_lGridNodesData.back();
 
-    g_pCompositor->focusWindow(lastNode.pWindow);
+	auto pActiveMonitor	= g_pCompositor->m_pLastMonitor;
+	if(&lastNode && lastNode.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
+		g_pCompositor->focusWindow(lastNode.pWindow);
 }
 
 bool GridLayout::isWindowTiled(CWindow *pWindow)
@@ -301,8 +303,10 @@ void GridLayout::changeToActivceSourceWorkspace()
     pNode = getNodeFromWindow(pWindow);
     if(pNode) {
         pWorksapce = g_pCompositor->getWorkspaceByID(pNode->ovbk_windowWorkspaceId); 
-    } else {
+    } else if(pWindow) {
         pWorksapce = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID); 
+    } else {
+        pWorksapce = g_pCompositor->getWorkspaceByID(g_pCompositor->m_pLastMonitor->activeWorkspace);
     }
     // pMonitor->changeWorkspace(pWorksapce);
     hycov_log(LOG,"changeToWorkspace:{}",pWorksapce->m_iID);

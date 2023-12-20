@@ -419,7 +419,9 @@ void dispatch_leaveoverview(std::string arg)
 
 	} else {
 		auto node = g_GridLayout->m_lGridNodesData.back();
-		g_pCompositor->focusWindow(node.pWindow);
+		auto pActiveMonitor	= g_pCompositor->m_pLastMonitor;
+		if(&node && node.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
+			g_pCompositor->focusWindow(node.pWindow);
 	}
 
 	for (auto &n : g_GridLayout->m_lGridNodesData)

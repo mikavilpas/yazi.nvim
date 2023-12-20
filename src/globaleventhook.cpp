@@ -145,7 +145,13 @@ static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
   (*(origOnWindowRemovedTiling)g_pOnWindowRemovedTilingHook->m_pOriginal)(thisptr, pWindow);
 
   // after done original thing,The workspace automatically exit overview if no client exists 
-  if (g_isOverView && g_GridLayout->m_lGridNodesData.empty()) {
+  auto nodeNumInSameMonitor = 0;
+	for (auto &n : g_GridLayout->m_lGridNodesData) {
+		if(n.pWindow->m_iMonitorID == g_pCompositor->m_pLastMonitor->ID) {
+			nodeNumInSameMonitor++;
+		}
+	}
+  if (g_isOverView && nodeNumInSameMonitor == 0) {
     hycov_log(LOG,"no tiling windwo,auto exit overview");
     dispatch_leaveoverview("");
   }
