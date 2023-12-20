@@ -208,7 +208,7 @@ CWindow *get_circle_next_window (std::string arg) {
             continue;
 		return pWindow;
     }
-
+	return nullptr;
 }
 
 void dispatch_circle(std::string arg)
@@ -243,9 +243,9 @@ void dispatch_focusdir(std::string arg)
 
 void dispatch_toggleoverview(std::string arg)
 {
-	if (g_isOverView && (!g_enable_alt_release_exit || arg == "normalToggle")) {
+	if (g_isOverView && (!g_enable_alt_release_exit || arg == "internalToggle")) {
 		dispatch_leaveoverview("");
-	} else if (g_isOverView && g_enable_alt_release_exit && arg != "normalToggle") {
+	} else if (g_isOverView && g_enable_alt_release_exit && arg != "internalToggle") {
 		dispatch_circle("");
 	} else {
 		dispatch_enteroverview("");
@@ -420,7 +420,7 @@ void dispatch_leaveoverview(std::string arg)
 	} else {
 		auto node = g_GridLayout->m_lGridNodesData.back();
 		auto pActiveMonitor	= g_pCompositor->m_pLastMonitor;
-		if(&node && node.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
+		if(node.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
 			g_pCompositor->focusWindow(node.pWindow);
 	}
 

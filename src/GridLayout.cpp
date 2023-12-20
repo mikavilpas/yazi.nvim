@@ -93,7 +93,7 @@ void GridLayout::onWindowRemovedTiling(CWindow *pWindow)
     lastNode = m_lGridNodesData.back();
 
 	auto pActiveMonitor	= g_pCompositor->m_pLastMonitor;
-	if(&lastNode && lastNode.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
+	if(lastNode.pWindow->m_iWorkspaceID == pActiveMonitor->activeWorkspace)
 		g_pCompositor->focusWindow(lastNode.pWindow);
 }
 

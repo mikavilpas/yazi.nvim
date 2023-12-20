@@ -20,7 +20,7 @@ inline bool g_isOverView;
 inline bool g_isInHotArea;
 inline int g_enable_hotarea;
 inline int g_hotarea_size;
-inline int g_swipe_fingers;
+inline unsigned int g_swipe_fingers;
 inline int g_isGestureBegin;
 inline int g_move_focus_distance;
 inline int g_enable_gesture;
