@@ -244,12 +244,12 @@ void dispatch_focusdir(std::string arg)
 
 void dispatch_toggleoverview(std::string arg)
 {
-	if (g_isOverView && !g_enable_alt_release_exit) {
-		dispatch_leaveoverview(arg);
-	} else if (g_isOverView && g_enable_alt_release_exit) {
+	if (g_isOverView && (!g_enable_alt_release_exit || arg == "normalToggle")) {
+		dispatch_leaveoverview("");
+	} else if (g_isOverView && g_enable_alt_release_exit && arg != "normalToggle") {
 		dispatch_circle("");
 	} else {
-		dispatch_enteroverview(arg);
+		dispatch_enteroverview("");
 	}
 }
 

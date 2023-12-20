@@ -65,7 +65,7 @@ static void hkOnSwipeEnd(void* thisptr, wlr_pointer_swipe_end_event* e) {
   
   if(g_isGestureBegin){
     g_isGestureBegin = false;
-    dispatch_toggleoverview("");
+    dispatch_toggleoverview("normalToggle");
     return;
   }
   hycov_log(LOG,"OnSwipeEnd hook toggle");
@@ -90,7 +90,7 @@ static void toggle_hotarea(int x_root, int y_root)
       y_root <= (m_y + m_height))
   {
     hycov_log(LOG,"cursor enter hotarea");
-    dispatch_toggleoverview(arg);
+    dispatch_toggleoverview("normalToggle");
     g_isInHotArea = true;
   }
   else if (g_isInHotArea &&
@@ -125,7 +125,7 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
   case BTN_LEFT:
     if (g_isOverView && pEvent->state == WLR_BUTTON_PRESSED)
     {
-      dispatch_toggleoverview("");
+      dispatch_toggleoverview("normalToggle");
       info.cancelled = true;  // Prevent the event from continuing to be passed to the client
     }
     break;
@@ -203,10 +203,10 @@ static void hkFullscreenActive(std::string args) {
         return;
 
   if (g_isOverView && want_auto_fullscren(pWindow) && !g_auto_fullscreen) {
-    dispatch_toggleoverview("");
+    dispatch_toggleoverview("normalToggle");
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
   } else if (g_isOverView && (!want_auto_fullscren(pWindow) || g_auto_fullscreen)) {
-        dispatch_toggleoverview("");
+        dispatch_toggleoverview("normalToggle");
   } else {
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
   }
