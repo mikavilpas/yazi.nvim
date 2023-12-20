@@ -25,6 +25,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	CONF("auto_fullscreen", int, 0);
 	CONF("only_active_workspace", int, 0);
 	CONF("only_active_monitor", int, 0);
+	CONF("enable_alt_release_exit", int, 0);
 
 
 #undef CONF
@@ -40,6 +41,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	static const auto *pAuto_fullscreen = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:auto_fullscreen")->intValue;
 	static const auto *pOnly_active_workspace = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:only_active_workspace")->intValue;
 	static const auto *pOnly_active_monitor = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:only_active_monitor")->intValue;
+	static const auto *pEnable_alt_release_exit = &HyprlandAPI::getConfigValue(PHANDLE, "plugin:hycov:enable_alt_release_exit")->intValue;
 
 
 	g_enable_hotarea = *pEnable_hotarea_config;
@@ -53,7 +55,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle)
 	g_auto_fullscreen = *pAuto_fullscreen;
 	g_only_active_workspace = *pOnly_active_workspace;
 	g_only_active_monitor = *pOnly_active_monitor;
-
+	g_enable_alt_release_exit = *pEnable_alt_release_exit;
 
 	g_GridLayout = std::make_unique<GridLayout>();
 	HyprlandAPI::addLayout(PHANDLE, "grid", g_GridLayout.get());

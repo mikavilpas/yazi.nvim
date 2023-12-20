@@ -14,6 +14,7 @@ typedef void (*origOnSwipeUpdate)(void*, wlr_pointer_swipe_update_event* e);
 typedef void (*origOnWindowRemovedTiling)(void*, CWindow *pWindow);
 typedef void (*origStartAnim)(void*, bool in, bool left, bool instant);
 typedef void (*origFullscreenActive)(std::string args);
+typedef void (*origOnKeyboardKey)(void*, wlr_keyboard_key_event* e, SKeyboard* pKeyboard);
 
 static double gesture_dx,gesture_previous_dx;
 static double gesture_dy,gesture_previous_dy;
@@ -176,6 +177,18 @@ static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) 
   }
 }
 
+static void hkOnKeyboardKey(void* thisptr,wlr_keyboard_key_event* e, SKeyboard* pKeyboard) {
+
+  // WL_KEYBOARD_KEY_STATE_RELEASED
+  (*(origOnKeyboardKey)g_pOnKeyboardKeyHook->m_pOriginal)(thisptr, e, pKeyboard);
+  hycov_log(LOG,"super key,keycode:{}",e->keycode);
+  if(g_enable_alt_release_exit && g_isOverView && e->keycode == 56 && e->state == WL_KEYBOARD_KEY_STATE_RELEASED) {
+    dispatch_leaveoverview("");
+    hycov_log(LOG,"super key release toggle leave overview");
+  }
+
+}
+
 static void hkFullscreenActive(std::string args) {
   // auto exit overview and fullscreen window when toggle fullscreen in overview mode
   hycov_log(LOG,"FullscreenActive hook toggle");
@@ -227,6 +240,9 @@ void registerGlobalEventHook()
   g_pStartAnimHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CWorkspace::startAnim, (void*)&hkStartAnim);
   g_pStartAnimHook->hook();
 
+  //  hook function of keypress
+  g_pOnKeyboardKeyHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onKeyboardKey, (void*)&hkOnKeyboardKey);
+  g_pOnKeyboardKeyHook->hook();
 
   //create private function hook
 
