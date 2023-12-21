@@ -146,15 +146,28 @@ static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
 
   // after done original thing,The workspace automatically exit overview if no client exists 
   auto nodeNumInSameMonitor = 0;
+  auto nodeNumInSameWorkspace = 0;
 	for (auto &n : g_GridLayout->m_lGridNodesData) {
 		if(n.pWindow->m_iMonitorID == g_pCompositor->m_pLastMonitor->ID) {
 			nodeNumInSameMonitor++;
 		}
+		if(n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastMonitor->activeWorkspace) {
+			nodeNumInSameWorkspace++;
+		}
 	}
+
   if (g_isOverView && nodeNumInSameMonitor == 0) {
-    hycov_log(LOG,"no tiling windwo,auto exit overview");
+    hycov_log(LOG,"no tiling window in same monitor,auto exit overview");
     dispatch_leaveoverview("");
+    return;
   }
+
+  if (g_isOverView && nodeNumInSameWorkspace == 0 && g_only_active_workspace) {
+    hycov_log(LOG,"no tiling windwo in same workspace,auto exit overview");
+    dispatch_leaveoverview("");
+    return;
+  }
+
 }
 
 static void hkChangeworkspace(void* thisptr, std::string args) {
