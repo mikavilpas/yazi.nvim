@@ -261,7 +261,6 @@ void registerGlobalEventHook()
 
   //  hook function of keypress
   g_pOnKeyboardKeyHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onKeyboardKey, (void*)&hkOnKeyboardKey);
-  g_pOnKeyboardKeyHook->hook();
 
   //create private function hook
 
@@ -299,7 +298,12 @@ void registerGlobalEventHook()
     g_pOnWindowRemovedTilingHook->hook();
   }
 
+  //apply hook OnKeyboardKey function
+  if (g_enable_alt_release_exit) {
+      g_pOnKeyboardKeyHook->hook();
+  }
+
   // TODO: wait hyprland to support this function hook
   // enable hook fullscreenActive funciton
-  g_pFullscreenActiveHook->hook();
+  // g_pFullscreenActiveHook->hook();
 }
