@@ -198,7 +198,6 @@ static void hkStartAnim(void* thisptr,bool in, bool left, bool instant = false) 
 
 static void hkOnKeyboardKey(void* thisptr,wlr_keyboard_key_event* e, SKeyboard* pKeyboard) {
 
-  // WL_KEYBOARD_KEY_STATE_RELEASED
   (*(origOnKeyboardKey)g_pOnKeyboardKeyHook->m_pOriginal)(thisptr, e, pKeyboard);
   // hycov_log(LOG,"alt key,keycode:{}",e->keycode);
   if(g_enable_alt_release_exit && g_isOverView && e->keycode == 56 && e->state == WL_KEYBOARD_KEY_STATE_RELEASED) {

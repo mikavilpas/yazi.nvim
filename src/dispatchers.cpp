@@ -245,7 +245,7 @@ void dispatch_toggleoverview(std::string arg)
 {
 	if (g_isOverView && (!g_enable_alt_release_exit || arg == "internalToggle")) {
 		dispatch_leaveoverview("");
-		hycov_log(LOG,"leave overview:internalToggle");
+		hycov_log(LOG,"leave overview:toggleMethod:{},enable_alt_release_exit:{}",arg,g_enable_alt_release_exit);
 	} else if (g_isOverView && g_enable_alt_release_exit && arg != "internalToggle") {
 		dispatch_circle("");
 		hycov_log(LOG,"toggle overview:switch focus circlely");
@@ -255,7 +255,7 @@ void dispatch_toggleoverview(std::string arg)
 		hycov_log(LOG,"enter overview:alt switch mode auto next");
 	} else {
 		dispatch_enteroverview(arg);
-		hycov_log(LOG,"enter overview:foreignToggle");
+		hycov_log(LOG,"enter overview:toggleMethod:{}",arg);
 	}
 }
 
