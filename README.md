@@ -66,6 +66,7 @@ plugin {
         only_active_workspace = 0 # only overview the active workspace
         only_active_monitor = 0 # only overview the active monitor
         enable_alt_release_exit = 0 # alt swith mode,see readme for detail
+        alt_toggle_auto_next = 0 # auto focus next window when toggle overview in alt swith mode
     }
 }
 

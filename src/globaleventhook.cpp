@@ -187,10 +187,10 @@ static void hkOnKeyboardKey(void* thisptr,wlr_keyboard_key_event* e, SKeyboard* 
 
   // WL_KEYBOARD_KEY_STATE_RELEASED
   (*(origOnKeyboardKey)g_pOnKeyboardKeyHook->m_pOriginal)(thisptr, e, pKeyboard);
-  hycov_log(LOG,"super key,keycode:{}",e->keycode);
+  // hycov_log(LOG,"alt key,keycode:{}",e->keycode);
   if(g_enable_alt_release_exit && g_isOverView && e->keycode == 56 && e->state == WL_KEYBOARD_KEY_STATE_RELEASED) {
     dispatch_leaveoverview("");
-    hycov_log(LOG,"super key release toggle leave overview");
+    hycov_log(LOG,"alt key release toggle leave overview");
   }
 
 }
@@ -288,5 +288,5 @@ void registerGlobalEventHook()
 
   // TODO: wait hyprland to support this function hook
   // enable hook fullscreenActive funciton
-  // g_pFullscreenActiveHook->hook();
+  g_pFullscreenActiveHook->hook();
 }
