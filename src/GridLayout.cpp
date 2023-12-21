@@ -56,7 +56,7 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     pNode->ovbk_windowWorkspaceName = pWindowOriWorkspace->m_szName;
 
     //change all client workspace to active worksapce 
-    if ((pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName) && !g_only_active_workspace)    {
+    if ((pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName) && (!g_only_active_workspace || g_forece_display_all))    {
         pNode->workspaceID = pWindow->m_iWorkspaceID = pActiveWorkspace->m_iID;
         pNode->workspaceName = pActiveWorkspace->m_szName;
     }
@@ -349,7 +349,7 @@ void GridLayout::onEnable()
         if (pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
             continue;
 
-        if(pWindow->m_iMonitorID != g_pCompositor->m_pLastMonitor->ID && g_only_active_monitor)
+        if(pWindow->m_iMonitorID != g_pCompositor->m_pLastMonitor->ID && (g_only_active_monitor || g_forece_display_all))
             continue;
 
         onWindowCreatedTiling(pWindow);

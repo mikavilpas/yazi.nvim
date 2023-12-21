@@ -33,6 +33,7 @@ inline int g_only_active_monitor;
 inline int g_enable_alt_release_exit;
 inline int g_alt_toggle_auto_next;
 inline bool g_isOverViewExiting;
+inline bool g_forece_display_all;
 
 inline CFunctionHook* g_pOnSwipeBeginHook = nullptr;
 inline CFunctionHook* g_pOnSwipeEndHook = nullptr;

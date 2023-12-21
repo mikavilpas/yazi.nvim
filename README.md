@@ -2,10 +2,7 @@
 
 clients overview for hyprland plugin
 
-
-
 https://github.com/DreamMaoMao/hycov/assets/30348075/59121362-21a8-4143-be95-72ce79ee8e95
-
 
 
 Anyone is welcome to fork. If you end up improving the plugin, please let me know, and I'll be happy to use your fork.
@@ -36,11 +33,14 @@ $ bash install.sh # `libhycov.so` path: /usr/lib/libhycov.so
 
 ### Usage (hyprland.conf)
 
-```
+```conf
 # when enter overview, you can use left-button to jump, right-button to kill or use keybind
 plugin = /usr/lib/libhycov.so
-# bind key to toggle overview
+
+# bind key to toggle overview(normal mode)
 bind = ALT,tab,hycov:toggleoverview
+# bind key to toggle overview(force mode,no affected by `only_active_workspace` and `only_active_monitor`)
+bind = ALT,grave,hycov:toggleoverview,forceall #grave key is the '~' key
 
 # The direction switch shortcut key binding.
 # calculate the window closest to the direction to switch focus.
@@ -54,8 +54,8 @@ plugin {
     hycov {
         overview_gappo = 60 # gas width from screen edge
         overview_gappi = 24 # gas width from clients
-	hotarea_size = 10 # hotarea size in bottom left,10x10
-	enable_hotarea = 1 # enable mouse cursor hotarea     
+        hotarea_size = 10 # hotarea size in bottom left,10x10
+        enable_hotarea = 1 # enable mouse cursor hotarea     
         swipe_fingers = 4 # finger number of gesture,move any directory
         move_focus_distance = 100 # distance for movefocus,only can use 3 finger to move 
         enable_gesture = 0 # enable gesture
@@ -76,14 +76,13 @@ plugin {
 - when `auto_fullscreen=1` is set, you can also set the border color to mark the maximize state and bind key to control fullscreen maximize state.
 ```
 windowrulev2 = bordercolor rgb(158833),fullscreen:1 # set bordercolor to green if window is fullscreen maximize
-# toggle fullscrenn maximize
+# toggle fullscreen maximize
 bind = ALT,a,fullscreen,1
-
 ```
 
 https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0ca98e01e0f
 
-- if you use the `hyprland/workspaces` module with waybar,you should change field {id} to {name}. It will let you know you are in overview mode.
+- if you use the `hyprland/workspaces` module in waybar,you should change field {id} to {name}. It will let you know you are in overview mode.
 ```
 "hyprland/workspaces": {
     "format": "{name}",
@@ -98,7 +97,7 @@ https://github.com/DreamMaoMao/hycov/assets/30348075/15ba36c2-1782-4ae0-8ac1-d0c
 ```
 enable_alt_release_exit = 1
 ```
-if you enable this mode , it will just allow you to use `alt + otherkey` to bind toggleoverview.
+if you enable this mode , you will just allow to use `alt + otherkey` to bind toggleoverview.
 
 such as `alt + tab`:
 
@@ -107,12 +106,6 @@ such as `alt + tab`:
 - 2.`alt + tab` will switch window focus circularly when you in overview. (please hold alt,don't make it release)
 
 - 3.when you release `alt` , it will auto exit overview.
-
-
-https://github.com/DreamMaoMao/hycov/assets/30348075/aa426b44-2f83-4434-bdb6-aef7e8534273
-
-
-
 
 ### NixOS with home—manager
 
@@ -164,8 +157,8 @@ https://github.com/DreamMaoMao/hycov/assets/30348075/aa426b44-2f83-4434-bdb6-aef
 
                 plugin {
                     hycov {
-                        overview_gappo = 60 #gas width from screem
-                        overview_gappi = 24 #gas width from clients
+                      overview_gappo = 60 #gas width from screem
+                      overview_gappi = 24 #gas width from clients
                 	    hotarea_size = 10 #hotarea size in bottom left,10x10
                 	    enable_hotarea = 1 # enable mouse cursor hotarea
                     }

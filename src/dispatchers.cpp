@@ -40,7 +40,7 @@ std::optional<ShiftDirection> parseShiftArg(std::string arg) {
 	else return {};
 }
 
-CWindow  *direction_select(std::string arg){
+CWindow *direction_select(std::string arg){
 	CWindow *pTempCWindows[100];
 	CWindow *pTempClient =  g_pCompositor->m_pLastWindow;
 	CWindow *pTempFocusCWindows = nullptr;
@@ -223,7 +223,7 @@ void dispatch_circle(std::string arg)
         	g_pInputManager->simulateMouseMovement();
         	g_pInputManager->m_pForcedFocus = nullptr;
 		}
-    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
+    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "circle", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
 }
 
 void dispatch_focusdir(std::string arg)
@@ -254,13 +254,17 @@ void dispatch_toggleoverview(std::string arg)
 		dispatch_circle("");
 		hycov_log(LOG,"enter overview:alt switch mode auto next");
 	} else {
-		dispatch_enteroverview("");
+		dispatch_enteroverview(arg);
 		hycov_log(LOG,"enter overview:foreignToggle");
 	}
 }
 
 void dispatch_enteroverview(std::string arg)
 { 
+	if (arg == "forceall") {
+		g_forece_display_all = true;
+		hycov_log(LOG,"force display all clients");
+	}
 	//ali clients exit fullscreen status before enter overview
 	CWindow *pFullscreenWindow;
 	CWindow *pActiveWindow = g_pCompositor->m_pLastWindow;
@@ -327,6 +331,10 @@ void dispatch_enteroverview(std::string arg)
 	//disable spawn
 	if(g_disable_spawn) {
 		g_pSpawnHook->hook();
+	}
+
+	if (arg == "forceall") {
+		g_forece_display_all = false;
 	}
 
 	return;
@@ -454,6 +462,7 @@ void dispatch_leaveoverview(std::string arg)
 
 void registerDispatchers()
 {
+	g_forece_display_all = false;
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:enteroverview", dispatch_enteroverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:leaveoverview", dispatch_leaveoverview);
 	HyprlandAPI::addDispatcher(PHANDLE, "hycov:toggleoverview", dispatch_toggleoverview);
