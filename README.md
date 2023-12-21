@@ -1,6 +1,16 @@
 ## hycov
+hyprland overview mode plugin,a new tile window workflow 
 
-clients overview for hyprland plugin
+### what can it do:
+- Tile all window in one workspace by grid layout
+
+- Support restore size and position of floating window and fullscreen window
+
+- Support a variety of trigger methods, touch pad gestures, mouse screen hot area, shortcut keys
+
+- Support for multiple monitors
+
+- Supports a variety of focus switching modes, direction switching, single shortcut key cyclic switching
 
 https://github.com/DreamMaoMao/hycov/assets/30348075/59121362-21a8-4143-be95-72ce79ee8e95
 
