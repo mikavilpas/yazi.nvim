@@ -117,8 +117,12 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
   wlr_pointer_button_event *pEvent = std::any_cast<wlr_pointer_button_event *>(data); // 这个事件的数据解析可以参考dwl怎么解析出是哪个按键的
   info.cancelled = false;
   CWindow *pTargetWindow = g_pCompositor->windowFromCursor();
-  if(pTargetWindow)
+  if(pTargetWindow && pTargetWindow != g_pCompositor->m_pLastWindow) {
     g_pCompositor->focusWindow(pTargetWindow);
+  } else if(!pTargetWindow) {
+    info.cancelled = true; //overview mode only can click window,disable click bar or other layer
+    return;
+  } 
 
   switch (pEvent->button)
   {
