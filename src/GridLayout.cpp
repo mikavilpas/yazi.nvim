@@ -236,9 +236,9 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
 
 
     pWindow->m_sSpecialRenderData.border   = true;
-    pWindow->m_sSpecialRenderData.decorate = false;
+    // pWindow->m_sSpecialRenderData.decorate = false;
     pWindow->m_sSpecialRenderData.rounding = true;
-    pWindow->m_sSpecialRenderData.shadow   = false;
+    // pWindow->m_sSpecialRenderData.shadow   = false;
     pWindow->updateWindowDecos();
 
     pWindow->m_vSize = pNode->size;
