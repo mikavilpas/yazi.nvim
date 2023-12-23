@@ -241,7 +241,6 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
     // force enable bordear and rounding
     pWindow->m_sSpecialRenderData.border   = true;
     pWindow->m_sSpecialRenderData.rounding = true;
-    pWindow->updateWindowDecos();
 
     pWindow->m_vSize = pNode->size;
     pWindow->m_vPosition = pNode->position;
