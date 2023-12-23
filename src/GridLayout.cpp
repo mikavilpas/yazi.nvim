@@ -234,11 +234,13 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
 
     const auto pWindow = pNode->pWindow;
 
-
-    pWindow->m_sSpecialRenderData.border   = true;
+    // force disable decorate and shadow
     // pWindow->m_sSpecialRenderData.decorate = false;
-    pWindow->m_sSpecialRenderData.rounding = true;
     // pWindow->m_sSpecialRenderData.shadow   = false;
+
+    // force enable bordear and rounding
+    pWindow->m_sSpecialRenderData.border   = true;
+    pWindow->m_sSpecialRenderData.rounding = true;
     pWindow->updateWindowDecos();
 
     pWindow->m_vSize = pNode->size;
