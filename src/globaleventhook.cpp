@@ -104,7 +104,6 @@ static void toggle_hotarea(int x_root, int y_root)
 
 static void mouseMoveHook(void *, SCallbackInfo &info, std::any data)
 {
-
   const Vector2D coordinate = std::any_cast<const Vector2D>(data);
   toggle_hotarea(coordinate.x, coordinate.y);
 }
@@ -174,17 +173,17 @@ static void hkOnWindowRemovedTiling(void* thisptr, CWindow *pWindow) {
 
 }
 
-static void hkChangeworkspace(void* thisptr, std::string args) {
+static void hkChangeworkspace(std::string args) {
   // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"ChangeworkspaceHook hook toggle");
 }
 
-static void hkMoveActiveToWorkspace(void* thisptr, std::string args) {
+static void hkMoveActiveToWorkspace(std::string args) {
   // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"MoveActiveToWorkspace hook toggle");
 }
 
-static void hkSpawn(void* thisptr, std::string args) {
+static void hkSpawn(std::string args) {
   // just log a message and do nothing, mean the original function is disabled
   hycov_log(LOG,"Spawn hook toggle");
 }

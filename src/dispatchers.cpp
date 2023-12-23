@@ -211,34 +211,30 @@ CWindow *get_circle_next_window (std::string arg) {
 	return nullptr;
 }
 
+void warpcursor_and_focus_to_window(CWindow *pWindow) {
+	g_pCompositor->focusWindow(pWindow);
+	g_pCompositor->warpCursorTo(pWindow->middle());
+	g_pInputManager->m_pForcedFocus = pWindow;
+    g_pInputManager->simulateMouseMovement();
+    g_pInputManager->m_pForcedFocus = nullptr;
+}
+
 void dispatch_circle(std::string arg)
 {
 	CWindow *pWindow;
-	try {
-		pWindow = get_circle_next_window(arg);
-		if(pWindow){
-			g_pCompositor->focusWindow(pWindow);
-			g_pCompositor->warpCursorTo(pWindow->middle());
-			g_pInputManager->m_pForcedFocus = pWindow;
-        	g_pInputManager->simulateMouseMovement();
-        	g_pInputManager->m_pForcedFocus = nullptr;
-		}
-    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "circle", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
+	pWindow = get_circle_next_window(arg);
+	if(pWindow){
+		warpcursor_and_focus_to_window(pWindow);
+	}
 }
 
 void dispatch_focusdir(std::string arg)
 {
 	CWindow *pWindow;
-	try {
-		pWindow = direction_select(arg);
-		if(pWindow){
-			g_pCompositor->focusWindow(pWindow);
-			g_pCompositor->warpCursorTo(pWindow->middle());
-			g_pInputManager->m_pForcedFocus = pWindow;
-        	g_pInputManager->simulateMouseMovement();
-        	g_pInputManager->m_pForcedFocus = nullptr;
-		}
-    } catch (std::bad_any_cast& e) { HyprlandAPI::addNotification(PHANDLE, "focusdir", CColor{0.f, 0.5f, 1.f, 1.f}, 5000); }
+	pWindow = direction_select(arg);
+	if(pWindow){
+		warpcursor_and_focus_to_window(pWindow);
+	}
 }
 
 void dispatch_toggleoverview(std::string arg)
@@ -431,12 +427,11 @@ void dispatch_leaveoverview(std::string arg)
 	//Preserve window focus
 	if(pActiveWindow){
 		g_pCompositor->focusWindow(pActiveWindow); //restore the focus to before active window
-		if(pActiveWindow->m_bIsFloating)
+		if(pActiveWindow->m_bIsFloating) {
 			g_pCompositor->changeWindowZOrder(pActiveWindow, true);
-		else if(g_auto_fullscreen && want_auto_fullscren(pActiveWindow)) { // if enale auto_fullscreen after exit overview
+		} else if(g_auto_fullscreen && want_auto_fullscren(pActiveWindow)) { // if enale auto_fullscreen after exit overview
 			g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
 		}
-
 	} else {
 		auto node = g_GridLayout->m_lGridNodesData.back();
 		auto pActiveMonitor	= g_pCompositor->m_pLastMonitor;
