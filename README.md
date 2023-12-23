@@ -62,8 +62,8 @@ bind=ALT,down,hycov:movefocus,d
 
 plugin {
     hycov {
-        overview_gappo = 60 # gas width from screen edge
-        overview_gappi = 24 # gas width from clients
+        overview_gappo = 60 # gaps width from screen edge
+        overview_gappi = 24 # gaps width from clients
         hotarea_size = 10 # hotarea size in bottom left,10x10
         enable_hotarea = 1 # enable mouse cursor hotarea     
         swipe_fingers = 4 # finger number of gesture,move any directory
@@ -167,8 +167,8 @@ such as `alt + tab`:
 
                 plugin {
                     hycov {
-                      overview_gappo = 60 #gas width from screem
-                      overview_gappi = 24 #gas width from clients
+                      overview_gappo = 60 #gaps width from screem
+                      overview_gappi = 24 #gaps width from clients
                 	    hotarea_size = 10 #hotarea size in bottom left,10x10
                 	    enable_hotarea = 1 # enable mouse cursor hotarea
                     }
