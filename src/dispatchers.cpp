@@ -433,9 +433,8 @@ void dispatch_leaveoverview(std::string arg)
 		g_pCompositor->focusWindow(pActiveWindow); //restore the focus to before active window
 		if(pActiveWindow->m_bIsFloating)
 			g_pCompositor->changeWindowZOrder(pActiveWindow, true);
-		else if(g_auto_fullscreen) { // if enale auto_fullscreen after exit overview
-			if(want_auto_fullscren(pActiveWindow))
-				g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
+		else if(g_auto_fullscreen && want_auto_fullscren(pActiveWindow)) { // if enale auto_fullscreen after exit overview
+			g_pCompositor->setWindowFullscreen(pActiveWindow,true,FULLSCREEN_MAXIMIZED);
 		}
 
 	} else {
