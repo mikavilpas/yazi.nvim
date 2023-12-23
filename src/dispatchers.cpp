@@ -384,7 +384,7 @@ void dispatch_leaveoverview(std::string arg)
 	
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{	
-		//make all windwo restore it's style
+		//make all window restore it's style
     	n.pWindow->m_sSpecialRenderData.border   = n.ovbk_windowIsWithBorder;
     	n.pWindow->m_sSpecialRenderData.decorate = n.ovbk_windowIsWithDecorate;
     	n.pWindow->m_sSpecialRenderData.rounding = n.ovbk_windowIsWithRounding;
