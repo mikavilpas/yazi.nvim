@@ -120,7 +120,7 @@ static void mouseButtonHook(void *, SCallbackInfo &info, std::any data)
   if(pTargetWindow && pTargetWindow != g_pCompositor->m_pLastWindow) {
     g_pCompositor->focusWindow(pTargetWindow);
   } else if(!pTargetWindow) {
-    info.cancelled = true; //overview mode only can click window,disable click bar or other layer
+    // info.cancelled = true; //overview mode only can click window,disable click bar or other layer
     return;
   } 
 
