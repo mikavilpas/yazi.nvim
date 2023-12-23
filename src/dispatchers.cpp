@@ -384,6 +384,12 @@ void dispatch_leaveoverview(std::string arg)
 	
 	for (auto &n : g_GridLayout->m_lGridNodesData)
 	{	
+		//make all fullscrenn windwo restore it's style
+    	n.pWindow->m_sSpecialRenderData.border   = n.ovbk_windowIsWithBorder;
+    	n.pWindow->m_sSpecialRenderData.decorate = n.ovbk_windowIsWithDecorate;
+    	n.pWindow->m_sSpecialRenderData.rounding = n.ovbk_windowIsWithRounding;
+    	n.pWindow->m_sSpecialRenderData.shadow   = n.ovbk_windowIsWithShadow;
+
 		if (n.ovbk_windowIsFloating)
 		{
 			//make floating client restore it's floating status

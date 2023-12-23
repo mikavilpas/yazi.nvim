@@ -55,6 +55,12 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     pNode->ovbk_windowIsFullscreen = pWindow->m_bIsFullscreen;
     pNode->ovbk_windowWorkspaceName = pWindowOriWorkspace->m_szName;
 
+    //record the window style which are used by restore
+    pNode->ovbk_windowIsWithBorder = pWindow->m_sSpecialRenderData.border;
+    pNode->ovbk_windowIsWithDecorate = pWindow->m_sSpecialRenderData.decorate;
+    pNode->ovbk_windowIsWithRounding = pWindow->m_sSpecialRenderData.rounding;
+    pNode->ovbk_windowIsWithShadow = pWindow->m_sSpecialRenderData.shadow;
+
     //change all client workspace to active worksapce 
     if ((pWindowOriWorkspace->m_iID != pActiveWorkspace->m_iID || pWindowOriWorkspace->m_szName != pActiveWorkspace->m_szName) && (!g_only_active_workspace || g_forece_display_all))    {
         pNode->workspaceID = pWindow->m_iWorkspaceID = pActiveWorkspace->m_iID;
@@ -227,6 +233,13 @@ void GridLayout::applyNodeDataToWindow(SGridNodeData *pNode)
 { 
 
     const auto pWindow = pNode->pWindow;
+
+
+    pWindow->m_sSpecialRenderData.border   = true;
+    pWindow->m_sSpecialRenderData.decorate = false;
+    pWindow->m_sSpecialRenderData.rounding = true;
+    pWindow->m_sSpecialRenderData.shadow   = false;
+    pWindow->updateWindowDecos();
 
     pWindow->m_vSize = pNode->size;
     pWindow->m_vPosition = pNode->position;

@@ -16,6 +16,10 @@ struct SGridNodeData
   Vector2D ovbk_size;
   Vector2D position;
   Vector2D size;
+  bool ovbk_windowIsWithBorder;
+  bool ovbk_windowIsWithDecorate;
+  bool ovbk_windowIsWithRounding;
+  bool ovbk_windowIsWithShadow;
 
   int workspaceID = -1;
 
