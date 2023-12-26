@@ -307,5 +307,5 @@ void registerGlobalEventHook()
 
   // TODO: wait hyprland to support this function hook
   // enable hook fullscreenActive funciton
-  // g_pFullscreenActiveHook->hook();
+  g_pFullscreenActiveHook->hook();
 }

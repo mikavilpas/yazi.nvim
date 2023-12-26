@@ -6,7 +6,16 @@ static int workspaceIdBackup;
 
 bool want_auto_fullscren(CWindow *pWindow) {
 	int nodeNumInTargetWorkspace = 1;
+
+	if(!pWindow) {
+		return false;
+	}
+
 	auto pNode = g_GridLayout->getNodeFromWindow(pWindow);
+
+	if(!pNode) {
+		return true;
+	}
 
 	// if client is fullscreen before,don't make it fullscreen
 	if (pNode->ovbk_windowIsFullscreen) {
