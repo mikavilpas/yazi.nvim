@@ -444,6 +444,10 @@ void dispatch_leaveoverview(std::string arg)
 		//make all fullscrenn windwo restore it's status
 		if (n.ovbk_windowIsFullscreen)
 		{
+			if (!g_pCompositor->m_pLastWindow) {
+				continue;
+			}
+
 			if (n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID)
 			{
 				continue;
