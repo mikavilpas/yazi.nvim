@@ -224,11 +224,14 @@ static void hkFullscreenActive(std::string args) {
         return;
 
   if (g_isOverView && want_auto_fullscren(pWindow) && !g_auto_fullscreen) {
+    hycov_log(LOG,"FullscreenActive toggle leave overview with fullscreen");
     dispatch_toggleoverview("internalToggle");
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
   } else if (g_isOverView && (!want_auto_fullscren(pWindow) || g_auto_fullscreen)) {
-        dispatch_toggleoverview("internalToggle");
+    hycov_log(LOG,"FullscreenActive toggle leave overview without fullscreen");
+    dispatch_toggleoverview("internalToggle");
   } else {
+    hycov_log(LOG,"FullscreenActive set fullscreen");
     g_pCompositor->setWindowFullscreen(pWindow, !pWindow->m_bIsFullscreen, args == "1" ? FULLSCREEN_MAXIMIZED : FULLSCREEN_FULL);
   }
 }
