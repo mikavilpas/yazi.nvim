@@ -45,6 +45,10 @@ inline CFunctionHook* g_pSpawnHook = nullptr;
 inline CFunctionHook* g_pStartAnimHook = nullptr;
 inline CFunctionHook* g_pFullscreenActiveHook = nullptr;
 inline CFunctionHook* g_pOnKeyboardKeyHook = nullptr;
+inline CFunctionHook* g_pHyprDwindleLayout_recalculateMonitor = nullptr;
+inline CFunctionHook* g_pHyprMasterLayout_recalculateMonitor = nullptr;
+inline CFunctionHook* g_pHyprDwindleLayout_recalculateWindow = nullptr;
+inline CFunctionHook* g_pSDwindleNodeData_recalcSizePosRecursive = nullptr;
 
 inline void errorNotif()
 {

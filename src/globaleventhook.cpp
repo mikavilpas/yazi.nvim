@@ -236,6 +236,24 @@ static void hkFullscreenActive(std::string args) {
   }
 }
 
+void hkHyprDwindleLayout_recalculateMonitor(void* thisptr,const int& ID) {
+  ;
+}
+
+void hkHyprMasterLayout_recalculateMonitor(void* thisptr,const int& ID) {
+  ;
+}
+
+void hkHyprDwindleLayout_recalculateWindow(void* thisptr,CWindow* pWindow) {
+  ;
+}
+
+void hkSDwindleNodeData_recalcSizePosRecursive(void* thisptr,bool force, bool horizontalOverride, bool verticalOverride) {
+  ;
+}
+
+
+
 void registerGlobalEventHook()
 {
   g_isInHotArea = false;
@@ -266,6 +284,13 @@ void registerGlobalEventHook()
 
   //  hook function of keypress
   g_pOnKeyboardKeyHook = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CInputManager::onKeyboardKey, (void*)&hkOnKeyboardKey);
+
+  // layotu reculate
+  g_pHyprDwindleLayout_recalculateMonitor = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CHyprDwindleLayout::recalculateMonitor, (void*)&hkHyprDwindleLayout_recalculateMonitor);
+  g_pHyprMasterLayout_recalculateMonitor = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CHyprMasterLayout::recalculateMonitor, (void*)&hkHyprMasterLayout_recalculateMonitor);
+  g_pHyprDwindleLayout_recalculateWindow = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&CHyprDwindleLayout::recalculateWindow, (void*)&hkHyprDwindleLayout_recalculateWindow);
+  g_pSDwindleNodeData_recalcSizePosRecursive = HyprlandAPI::createFunctionHook(PHANDLE, (void*)&SDwindleNodeData::recalcSizePosRecursive, (void*)&hkSDwindleNodeData_recalcSizePosRecursive);
+
 
   //create private function hook
 

@@ -20,6 +20,7 @@ struct SGridNodeData
   bool ovbk_windowIsWithDecorate;
   bool ovbk_windowIsWithRounding;
   bool ovbk_windowIsWithShadow;
+  bool isInOldLayout = false;
 
   int workspaceID = -1;
 
@@ -57,5 +58,9 @@ public:
   std::list<SGridNodeData> m_lGridNodesData; 
   void moveWindowToSourceWorkspace();
   void changeToActivceSourceWorkspace();
+  void removeOldLayoutData(CWindow *pWindow);
+  void changeLayout(std::string layout);
+
+  bool isFromOnEnable = false;
 private:
 };

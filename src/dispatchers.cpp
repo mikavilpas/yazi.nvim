@@ -4,6 +4,28 @@ static const std::string overviewWorksapceName = "OVERVIEW";
 static std::string workspaceNameBackup;
 static int workspaceIdBackup;
 
+void recalculateAllMonitor() {
+	for (auto &m : g_pCompositor->m_vMonitors) {
+		CMonitor *pMonitor = m.get();
+		g_pLayoutManager->getCurrentLayout()->recalculateMonitor(pMonitor->ID);
+	}
+}
+
+void switchToLayoutWithoutReleaseData(std::string layout) {
+    for (size_t i = 0; i < g_pLayoutManager->m_vLayouts.size(); ++i) {
+        if (g_pLayoutManager->m_vLayouts[i].first == layout) {
+            if (i == (size_t)g_pLayoutManager->m_iCurrentLayoutID)
+                return;
+
+            // getCurrentLayout()->onDisable();
+            g_pLayoutManager->m_iCurrentLayoutID = i;
+            // getCurrentLayout()->onEnable();
+            return;
+        }
+    }
+    hycov_log(ERR, "Unknown layout!");
+}
+
 bool want_auto_fullscren(CWindow *pWindow) {
 	int nodeNumInTargetWorkspace = 1;
 
@@ -309,7 +331,10 @@ void dispatch_enteroverview(std::string arg)
 	}
 
 	//enter overview layout
-	g_pLayoutManager->switchToLayout("grid");
+	// g_pLayoutManager->switchToLayout("grid");
+	switchToLayoutWithoutReleaseData("grid");
+	g_pLayoutManager->getCurrentLayout()->onEnable();
+	
 
 	//change workspace name to OVERVIEW
 	pActiveMonitor	= g_pCompositor->m_pLastMonitor;
@@ -431,7 +456,10 @@ void dispatch_leaveoverview(std::string arg)
 	//exit overview layout,go back to old layout
 	CWindow *pActiveWindow = g_pCompositor->m_pLastWindow;
 	g_pCompositor->focusWindow(nullptr);
-	g_pLayoutManager->switchToLayout(*configLayoutName);
+	// g_pLayoutManager->switchToLayout(*configLayoutName);
+	g_pLayoutManager->getCurrentLayout()->onDisable();
+	switchToLayoutWithoutReleaseData(*configLayoutName);
+	recalculateAllMonitor();
 
 	//Preserve window focus
 	if(pActiveWindow){
@@ -456,12 +484,17 @@ void dispatch_leaveoverview(std::string arg)
 			if (!g_pCompositor->m_pLastWindow) {
 				continue;
 			}
-			
+
 			if (n.pWindow != g_pCompositor->m_pLastWindow && n.pWindow->m_iWorkspaceID == g_pCompositor->m_pLastWindow->m_iWorkspaceID)
 			{
 				continue;
 			}	
 			g_pCompositor->setWindowFullscreen(n.pWindow, true, n.ovbk_windowFullscreenMode );
+		}
+		
+		// if client not in old layout,create tiling of the client
+		if (!n.isInOldLayout) {
+			g_pLayoutManager->getCurrentLayout()->onWindowCreatedTiling(n.pWindow);
 		}
 	}
 
