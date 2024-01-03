@@ -42,6 +42,11 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
 
     const auto pWindowOriWorkspace = g_pCompositor->getWorkspaceByID(pWindow->m_iWorkspaceID);
 
+    if(isFromOnEnable) {
+        pNode->isInOldLayout = true;
+        isFromOnEnable = false;
+    }
+
     pNode->workspaceID = pWindow->m_iWorkspaceID; // encapsulate window objects as node objects to bind more properties
     pNode->pWindow = pWindow;
     pNode->workspaceName = pWindowOriWorkspace->m_szName;
@@ -82,8 +87,51 @@ void GridLayout::onWindowCreatedTiling(CWindow *pWindow, eDirection direction)
     recalculateMonitor(pWindow->m_iMonitorID);
 }
 
+void GridLayout::changeLayout(std::string layout) {
+    for (size_t i = 0; i < g_pLayoutManager->m_vLayouts.size(); ++i) {
+        if (g_pLayoutManager->m_vLayouts[i].first == layout) {
+            if (i == (size_t)g_pLayoutManager->m_iCurrentLayoutID)
+                return;
+            g_pLayoutManager->m_iCurrentLayoutID = i;
+            return;
+        }
+    }    
+}
+
+void GridLayout::removeOldLayoutData(CWindow *pWindow) {
+
+	std::string *configLayoutName = &HyprlandAPI::getConfigValue(PHANDLE, "general:layout")->strValue;
+    changeLayout(*configLayoutName);
+    hycov_log(LOG,"remove data of old layout:{}",*configLayoutName);
+
+    if(*configLayoutName == "dwindle") {
+        g_pHyprDwindleLayout_recalculateMonitor->hook();
+        g_pHyprDwindleLayout_recalculateWindow->hook();
+        g_pSDwindleNodeData_recalcSizePosRecursive->hook();
+
+        g_pLayoutManager->getCurrentLayout()->onWindowRemovedTiling(pWindow);
+
+        g_pSDwindleNodeData_recalcSizePosRecursive->unhook();
+        g_pHyprDwindleLayout_recalculateWindow->unhook();
+        g_pHyprDwindleLayout_recalculateMonitor->unhook();
+    } else if(*configLayoutName == "master") {
+        g_pHyprMasterLayout_recalculateMonitor->hook();
+
+        g_pLayoutManager->getCurrentLayout()->onWindowRemovedTiling(pWindow);
+
+        g_pHyprMasterLayout_recalculateMonitor->unhook();
+    } else {
+        hycov_log(ERR,"unknow old layout:{}",*configLayoutName);
+        g_pLayoutManager->getCurrentLayout()->onWindowRemovedTiling(pWindow);
+    }
+
+    changeLayout("grid");
+}
+
 void GridLayout::onWindowRemovedTiling(CWindow *pWindow)
 {
+    removeOldLayoutData(pWindow);
+
     const auto pNode = getNodeFromWindow(pWindow);
     SGridNodeData lastNode;
 
@@ -356,8 +404,11 @@ void GridLayout::moveWindowToSourceWorkspace()
 // it will exec once when change layout enable
 void GridLayout::onEnable()
 {
+
     for (auto &w : g_pCompositor->m_vWindows)
     {
+        isFromOnEnable = true;
+        
         CWindow *pWindow = w.get();
 
         if (pWindow->isHidden() || !pWindow->m_bIsMapped || pWindow->m_bFadingOut || g_pCompositor->isWorkspaceSpecial(pWindow->m_iWorkspaceID))
