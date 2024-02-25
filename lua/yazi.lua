@@ -6,7 +6,6 @@ local M = {}
 ---@type integer?
 YAZI_BUFFER = nil
 YAZI_LOADED = false
-vim.g.yazi_opened = 0
 local prev_win = -1
 
 ---@type integer?
@@ -23,7 +22,6 @@ local function on_exit(job_id, code, event)
 
   YAZI_BUFFER = nil
   YAZI_LOADED = false
-  vim.g.yazi_opened = 0
   vim.cmd('silent! :checktime')
 
   -- NOTE the types for nvim_ apis are inaccurate so we need to typecast
@@ -54,7 +52,6 @@ end
 local function exec_yazi_command(cmd)
   if YAZI_LOADED == false then
     -- ensure that the buffer is closed on exit
-    vim.g.yazi_opened = 1
     vim.fn.termopen(cmd, { on_exit = on_exit })
   end
   vim.cmd('startinsert')
