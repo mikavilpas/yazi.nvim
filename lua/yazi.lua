@@ -48,15 +48,6 @@ local function on_exit(job_id, code, event)
   end
 end
 
---- Call yazi
-local function exec_yazi_command(cmd)
-  if YAZI_LOADED == false then
-    -- ensure that the buffer is closed on exit
-    vim.fn.termopen(cmd, { on_exit = on_exit })
-  end
-  vim.cmd('startinsert')
-end
-
 --- :Yazi entry point
 function M.yazi(path)
   if utils.is_yazi_available() ~= true then
@@ -72,7 +63,11 @@ function M.yazi(path)
   os.remove(output_path)
   local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
 
-  exec_yazi_command(cmd)
+  if YAZI_LOADED == false then
+    -- ensure that the buffer is closed on exit
+    vim.fn.termopen(cmd, { on_exit = on_exit })
+  end
+  vim.cmd('startinsert')
 end
 
 return M
