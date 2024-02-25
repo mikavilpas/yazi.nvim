@@ -80,8 +80,6 @@ local function yazi(path)
 
   win, buffer = window.open_floating_window()
 
-  _ = utils.project_root_dir()
-
   os.remove(output_path)
   local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
 
