@@ -1,10 +1,6 @@
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 
-local open_floating_window = window.open_floating_window
-local project_root_dir = utils.project_root_dir
-local is_yazi_available = utils.is_yazi_available
-
 YAZI_BUFFER = nil
 YAZI_LOADED = false
 vim.g.yazi_opened = 0
@@ -67,7 +63,7 @@ end
 
 --- :Yazi entry point
 local function yazi(path)
-  if is_yazi_available() ~= true then
+  if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check documentation for more information')
     return
   end
@@ -75,9 +71,9 @@ local function yazi(path)
   prev_win = vim.api.nvim_get_current_win()
   path = vim.fn.expand('%:p:h')
 
-  win, buffer = open_floating_window()
+  win, buffer = window.open_floating_window()
 
-  _ = project_root_dir()
+  _ = utils.project_root_dir()
 
   os.remove(output_path)
   local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
