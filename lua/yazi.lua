@@ -49,14 +49,24 @@ local function on_exit(job_id, code, event)
 end
 
 --- :Yazi entry point
+---@param path string? defaults to the current file or the working directory
 function M.yazi(path)
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check documentation for more information')
     return
   end
 
+  if path == '' or path == nil then
+    path = vim.fn.expand('%:p')
+  end
+  if path == '' or path == nil then
+    path = vim.fn.expand('%:p:h')
+  end
+  if path == '' or path == nil then
+    vim.fn.expand('%:p')
+  end
+
   prev_win = vim.api.nvim_get_current_win()
-  path = vim.fn.expand('%:p:h')
 
   win, buffer = window.open_floating_window()
 
