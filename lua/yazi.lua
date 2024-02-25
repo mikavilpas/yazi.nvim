@@ -1,6 +1,8 @@
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 
+local M = {}
+
 ---@type integer?
 YAZI_BUFFER = nil
 YAZI_LOADED = false
@@ -69,7 +71,7 @@ local function exec_yazi_command(cmd)
 end
 
 --- :Yazi entry point
-local function yazi(path)
+function M.yazi(path)
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check documentation for more information')
     return
@@ -86,6 +88,4 @@ local function yazi(path)
   exec_yazi_command(cmd)
 end
 
-return {
-  yazi = yazi,
-}
+return M
