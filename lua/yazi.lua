@@ -1,5 +1,3 @@
--- local cmd = string.format('yazi --file-chooser --output-file %s %s', output_path, current_directory)
-
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 
@@ -30,12 +28,6 @@ local function on_exit(job_id, code, event)
   if code ~= 0 then
     return
   end
-
-  -- test
-  -- local file=io.open("/tmp/test.txt","w+")
-  -- io.output(file)
-  -- io.write(code)
-  -- io.close()
 
   YAZI_BUFFER = nil
   YAZI_LOADED = false
@@ -86,13 +78,6 @@ local function yazi(path)
   win, buffer = open_floating_window()
 
   _ = project_root_dir()
-
-  -- if path == nil then
-  -- 	if is_symlink() then
-  -- 		path = project_root_dir()
-  -- 	else
-  -- 	end
-  -- end
 
   os.remove(output_path)
   local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
