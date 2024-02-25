@@ -2,9 +2,7 @@
 
 local open_floating_window = require('yazi.window').open_floating_window
 local project_root_dir = require('yazi.utils').project_root_dir
-local get_root = require('yazi.utils').get_root
 local is_yazi_available = require('yazi.utils').is_yazi_available
-local is_symlink = require('yazi.utils').is_symlink
 
 YAZI_BUFFER = nil
 YAZI_LOADED = false
