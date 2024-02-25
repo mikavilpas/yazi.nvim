@@ -60,7 +60,6 @@ end
 
 --- Call yazi
 local function exec_yazi_command(cmd)
-  -- print(cmd)
   if YAZI_LOADED == false then
     -- ensure that the buffer is closed on exit
     vim.g.yazi_opened = 1
