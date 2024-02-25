@@ -1,0 +1,28 @@
+name: Linting
+
+on: [push, pull_request]
+
+jobs:
+  selene:
+    name: selene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: NTBBloodbath/selene-action@v1.0.0
+        with:
+          # Github secret token
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # selene arguments
+          args: --display-style=quiet .
+          # selene version
+          version: 0.12.1
+  stylua:
+    name: stylua
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JohnnyMorganz/stylua-action@v3
+        with:
+          version: latest
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --color always --check lua
