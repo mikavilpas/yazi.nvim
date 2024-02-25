@@ -1,8 +1,11 @@
 -- local cmd = string.format('yazi --file-chooser --output-file %s %s', output_path, current_directory)
 
-local open_floating_window = require('yazi.window').open_floating_window
-local project_root_dir = require('yazi.utils').project_root_dir
-local is_yazi_available = require('yazi.utils').is_yazi_available
+local window = require('yazi.window')
+local utils = require('yazi.utils')
+
+local open_floating_window = window.open_floating_window
+local project_root_dir = utils.project_root_dir
+local is_yazi_available = utils.is_yazi_available
 
 YAZI_BUFFER = nil
 YAZI_LOADED = false
