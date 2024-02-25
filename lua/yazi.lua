@@ -1,6 +1,7 @@
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 
+---@type integer?
 YAZI_BUFFER = nil
 YAZI_LOADED = false
 vim.g.yazi_opened = 0
