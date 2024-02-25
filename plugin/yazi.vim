@@ -15,10 +15,6 @@ if !exists('g:yazi_floating_window_scaling_factor')
   let g:yazi_floating_window_scaling_factor = 0.9
 endif
 
-if !exists('g:yazi_use_neovim_remote')
-  let g:yazi_use_neovim_remote = executable('nvr') ? 1 : 0
-endif
-
 if exists('g:yazi_floating_window_corner_chars')
   echohl WarningMsg
   echomsg "`g:yazi_floating_window_corner_chars` is deprecated. Please use `g:yazi_floating_window_border_chars` instead."
