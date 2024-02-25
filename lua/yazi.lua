@@ -6,7 +6,10 @@ YAZI_BUFFER = nil
 YAZI_LOADED = false
 vim.g.yazi_opened = 0
 local prev_win = -1
+
+---@type integer?
 local win = -1
+---@type integer?
 local buffer = -1
 
 local output_path = '/tmp/yazi_filechosen'
@@ -31,7 +34,10 @@ local function on_exit(job_id, code, event)
   vim.g.yazi_opened = 0
   vim.cmd('silent! :checktime')
 
+  -- NOTE the types for nvim_ apis are inaccurate so we need to typecast
+
   if vim.api.nvim_win_is_valid(prev_win) then
+    ---@cast win integer
     vim.api.nvim_win_close(win, true)
     vim.api.nvim_set_current_win(prev_win)
     if code == 0 and file_exists(output_path) == true then
@@ -42,6 +48,7 @@ local function on_exit(job_id, code, event)
     end
     prev_win = -1
     if
+      ---@cast buffer integer
       vim.api.nvim_buf_is_valid(buffer) and vim.api.nvim_buf_is_loaded(buffer)
     then
       vim.api.nvim_buf_delete(buffer, { force = true })
