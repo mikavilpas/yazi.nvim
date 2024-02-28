@@ -1,0 +1,1 @@
+We just opened this file with yazi.nvim! 🎉
