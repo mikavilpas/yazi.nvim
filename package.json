@@ -1,0 +1,15 @@
+{
+  "name": "yazi.nvim",
+  "version": "1.0.0",
+  "description": "I forked this from https://github.com/DreamMaoMao/yazi.nvim for my own use.",
+  "scripts": {
+    "markdownlint": "markdownlint-cli2 README.md"
+  },
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "markdownlint-cli2": "0.12.1"
+  }
+}
