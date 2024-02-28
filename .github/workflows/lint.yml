@@ -27,5 +27,9 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --color always --check lua
 
+  markdownlint:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
       - name: markdownlint-cli
         uses: nosborn/github-action-markdown-cli@v3.3.0
