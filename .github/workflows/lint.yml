@@ -31,5 +31,4 @@ jobs:
     name: markdownlint
     runs-on: ubuntu-latest
     steps:
-      - name: markdownlint-cli
-        uses: nosborn/github-action-markdown-cli@v3.3.0
+      - uses: DavidAnson/markdownlint-cli2-action@v15
