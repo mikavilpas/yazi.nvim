@@ -21,7 +21,7 @@ Using lazy.nvim:
     "nvim-telescope/telescope.nvim",
     "nvim-lua/plenary.nvim",
   },
-
+  cmd = "Yazi",
   keys = {
     { "<leader>-", "<cmd>Yazi<CR>", desc = "Toggle Yazi" },
   },
