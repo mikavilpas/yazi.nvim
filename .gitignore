@@ -1,2 +1,4 @@
 node_modules
 demo/demo.mp4
+development_dependencies
+scripts/lazy.nvim/

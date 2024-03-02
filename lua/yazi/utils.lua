@@ -17,4 +17,20 @@ function M.file_exists(name)
   end
 end
 
+---@param path string?
+---@return string
+function M.selected_file_path(path)
+  if path == '' or path == nil then
+    path = vim.fn.expand('%:p')
+  end
+  if path == '' or path == nil then
+    path = vim.fn.expand('%:p:h')
+  end
+  if path == '' or path == nil then
+    path = vim.fn.expand('%:p')
+  end
+
+  return path
+end
+
 return M

@@ -1,5 +1,3 @@
-local api = vim.api
-
 --- open floating window with nice borders
 ---@return number | nil, number | nil
 local function open_floating_window()
@@ -67,25 +65,20 @@ local function open_floating_window()
   table.insert(border_lines, botleft .. string.rep(bot, width) .. botright)
 
   -- create a unlisted scratch buffer for the border
-  local border_buffer = api.nvim_create_buf(false, true)
+  local border_buffer = vim.api.nvim_create_buf(false, true)
 
   -- set border_lines in the border buffer from start 0 to end -1 and strict_indexing false
-  api.nvim_buf_set_lines(border_buffer, 0, -1, true, border_lines)
+  vim.api.nvim_buf_set_lines(border_buffer, 0, -1, true, border_lines)
   -- create border window
-  local border_window = api.nvim_open_win(border_buffer, true, border_opts)
+  local border_window = vim.api.nvim_open_win(border_buffer, true, border_opts)
   vim.api.nvim_set_hl(0, 'YaziBorder', { link = 'Normal', default = true })
   vim.cmd('set winhl=NormalFloat:YaziBorder')
 
-  -- create a unlisted scratch buffer
-  if YAZI_BUFFER == nil or vim.fn.bufwinnr(YAZI_BUFFER) == -1 then
-    YAZI_BUFFER = api.nvim_create_buf(false, true)
-  else
-    YAZI_LOADED = true
-  end
+  local yazi_buffer = vim.api.nvim_create_buf(false, true)
   -- create file window, enter the window, and use the options defined in opts
-  local win = api.nvim_open_win(YAZI_BUFFER, true, opts)
+  local win = vim.api.nvim_open_win(yazi_buffer, true, opts)
 
-  vim.bo[YAZI_BUFFER].filetype = 'yazi'
+  vim.bo[yazi_buffer].filetype = 'yazi'
 
   vim.cmd('setlocal bufhidden=hide')
   vim.cmd('setlocal nocursorcolumn')
