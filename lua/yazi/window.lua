@@ -1,6 +1,8 @@
+local M = {}
+
 --- open floating window with nice borders
 ---@return number | nil, number | nil
-local function open_floating_window()
+function M.open_floating_window()
   local floating_window_scaling_factor =
     vim.g.yazi_floating_window_scaling_factor
 
@@ -95,6 +97,4 @@ local function open_floating_window()
   return win, border_window
 end
 
-return {
-  open_floating_window = open_floating_window,
-}
+return M
