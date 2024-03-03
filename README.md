@@ -8,6 +8,7 @@ So far I have done some maintenance work:
 
 - chore: removed unused code
 - feat: yazi pre-selects the current file when opened
+- test: add simple testing setup for future development
 
 If you'd like to collaborate, contact me via GitHub issues.
 
