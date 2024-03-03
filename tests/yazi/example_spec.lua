@@ -1,6 +1,7 @@
 local assert = require('luassert')
 local mock = require('luassert.mock')
 local match = require('luassert.match')
+local spy = require('luassert.spy')
 
 local api_mock = mock(require('yazi.vimfn'))
 
@@ -35,5 +36,30 @@ describe('setup with no custom options', function()
     assert
       .stub(api_mock.termopen)
       .was_called_with('yazi "/tmp/" --chooser-file "/tmp/yazi_filechosen"', match.is_table())
+  end)
+
+  describe("when a file is selected in yazi's chooser", function()
+    -- yazi writes the selected file to this file for us to read
+    local target_file = '/tmp/test-file.txt'
+
+    before_each(function()
+      -- have to start editing a valid file, otherwise the plugin will ignore the callback
+      vim.cmd('edit ' .. '/tmp/a.txt')
+
+      local termopen = spy.on(api_mock, 'termopen')
+      termopen.callback = function(_, callback)
+        -- simulate yazi writing to the output file. This is done when a file is
+        -- chosen in yazi
+        local exit_code = 0
+        vim.fn.writefile({ target_file }, '/tmp/yazi_filechosen')
+        callback.on_exit('job-id-ignored', exit_code, 'event-ignored')
+      end
+    end)
+
+    it('opens the file that the user selected in yazi', function()
+      plugin.yazi()
+
+      assert.equals(target_file, vim.fn.expand('%'))
+    end)
   end)
 end)
