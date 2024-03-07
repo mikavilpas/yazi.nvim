@@ -1,6 +1,6 @@
 # A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
 
-<https://github.com/sp3ctum/yazi.nvim/assets/300791/4640cb54-efad-47b5-9157-735e78bf0c43>
+<https://github.com/mikavilpas/yazi.nvim/assets/300791/4640cb54-efad-47b5-9157-735e78bf0c43>
 
 I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use.
 
@@ -19,7 +19,7 @@ Using lazy.nvim:
 ```lua
 ---@type LazySpec
 {
-  "sp3ctum/yazi.nvim",
+  "mikavilpas/yazi.nvim",
   dependencies = {
     "nvim-telescope/telescope.nvim",
     "nvim-lua/plenary.nvim",
