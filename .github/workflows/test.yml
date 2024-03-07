@@ -1,0 +1,60 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: unit tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            rev: nightly/nvim-linux64.tar.gz
+            manager: sudo apt-get
+            packages: -y ripgrep
+          - os: ubuntu-latest
+            rev: v0.9.0/nvim-linux64.tar.gz
+            manager: sudo apt-get
+            packages: -y ripgrep
+    steps:
+      - uses: actions/checkout@v3
+      - run: date +%F > todays-date
+      - name: Restore from today's cache
+        uses: actions/cache@v3
+        with:
+          path: _neovim
+          key: ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
+
+      - name: Prepare
+        run: |
+          ${{ matrix.manager }} update
+          ${{ matrix.manager }} install ${{ matrix.packages }}
+
+          # Install neovim
+          test -d _neovim || {
+            mkdir -p _neovim
+            curl -sL "https://github.com/neovim/neovim/releases/download/${{ matrix.rev }}" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
+          }
+          mkdir -p ~/.local/share/nvim/site/pack/vendor/start
+          git submodule init
+          git submodule update
+          # git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
+
+          # Install yazi
+          test -d _yazi || {
+            mkdir -p _yazi
+            wget "https://github.com/sxyazi/yazi/releases/download/v0.2.3/yazi-x86_64-unknown-linux-gnu.zip" --output-document yazi.zip
+            unzip yazi.zip -d _yazi
+          }
+          echo "Current _yazi/ contents"
+          ls -R _yazi
+
+      - name: Run tests
+        run: |
+          export PATH="${PWD}/_neovim/bin:${PATH}"
+          export PATH="${PWD}/_yazi/yazi-x86_64-unknown-linux-gnu/:${PATH}"
+          export VIM="${PWD}/_neovim/share/nvim/runtime"
+          make test
