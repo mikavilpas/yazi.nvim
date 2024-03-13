@@ -1,6 +1,7 @@
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
+local config = require('yazi.config')
 
 local M = {}
 
@@ -61,6 +62,36 @@ function M.yazi(path)
     })
   end
   vim.cmd('startinsert')
+end
+
+M.config = config.default()
+
+---@param opts YaziConfig?
+function M.setup(opts)
+  M.config = vim.tbl_deep_extend('force', M.config, opts or {})
+
+  if M.config.open_for_directories == true then
+    local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
+
+    -- disable netrw, the built-in file explorer
+    vim.cmd('silent! autocmd! FileExplorer *')
+
+    -- executed before starting to edit a new buffer.
+    vim.api.nvim_create_autocmd('BufAdd', {
+      pattern = '*',
+      callback = function(ev)
+        local file = ev.file
+        if vim.fn.isdirectory(file) == 1 then
+          local bufnr = ev.buf
+          -- A buffer was opened for a directory.
+          -- Remove the buffer as we want to show yazi instead
+          vim.api.nvim_buf_delete(bufnr, { force = true })
+          require('yazi').yazi(file)
+        end
+      end,
+      group = yazi_augroup,
+    })
+  end
 end
 
 return M
