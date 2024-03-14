@@ -9,6 +9,7 @@ So far I have done some maintenance work:
 - chore: removed unused code
 - feat: yazi pre-selects the current file when opened
 - test: add simple testing setup for future development
+- feat: can optionally open yazi instead of netrw for directories
 
 If you'd like to collaborate, contact me via GitHub issues.
 
