@@ -89,9 +89,8 @@ function M.open_floating_window()
   vim.cmd('set winblend=' .. vim.g.yazi_floating_window_winblend)
 
   -- use autocommand to ensure that the border_buffer closes at the same time as the main buffer
-  local cmd = [[autocmd WinLeave <buffer> silent! execute 'hide']]
-  vim.cmd(cmd)
-  cmd = [[autocmd WinLeave <buffer> silent! execute 'silent bdelete! %s']]
+  vim.cmd("autocmd WinLeave <buffer> silent! execute 'hide'")
+  local cmd = [[autocmd WinLeave <buffer> silent! execute 'silent bdelete! %s']]
   vim.cmd(cmd:format(border_buffer))
 
   return win, border_window
