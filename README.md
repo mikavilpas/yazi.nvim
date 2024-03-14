@@ -23,9 +23,20 @@ Using lazy.nvim:
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
-  cmd = "Yazi",
+  event = "VeryLazy",
   keys = {
-    { "<leader>-", "<cmd>Yazi<CR>", desc = "Toggle Yazi" },
+    {
+      "<leader>-",
+      function()
+        require("yazi").yazi()
+      end,
+      { desc = "Open the file manager" },
+    },
+  },
+  ---@type YaziConfig
+  opts = {
+    -- enable this if you want to open yazi instead of netrw
+    open_for_directories = false,
   },
 }
 ```
