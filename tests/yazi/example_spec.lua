@@ -7,7 +7,7 @@ local api_mock = mock(require('yazi.vimfn'))
 
 local plugin = require('yazi')
 
-describe('setup with no custom options', function()
+describe('opening a file', function()
   before_each(function()
     -- add default options that are set in ../../plugin/yazi.vim
     vim.g.yazi_floating_window_winblend = 0
@@ -19,7 +19,7 @@ describe('setup with no custom options', function()
   end)
 
   it('opens yazi with the current file selected', function()
-    vim.api.nvim_command('edit ' .. '/tmp/test-file.txt')
+    vim.api.nvim_command('edit /tmp/test-file.txt')
     plugin.yazi()
 
     assert.stub(api_mock.termopen).was_called_with(
@@ -29,7 +29,7 @@ describe('setup with no custom options', function()
   end)
 
   it('opens yazi with the current directory selected', function()
-    vim.api.nvim_command('edit ' .. '/tmp/')
+    vim.api.nvim_command('edit /tmp/')
 
     plugin.yazi()
 
@@ -44,7 +44,7 @@ describe('setup with no custom options', function()
 
     before_each(function()
       -- have to start editing a valid file, otherwise the plugin will ignore the callback
-      vim.cmd('edit ' .. '/tmp/a.txt')
+      vim.cmd('edit /tmp/a.txt')
 
       local termopen = spy.on(api_mock, 'termopen')
       termopen.callback = function(_, callback)
