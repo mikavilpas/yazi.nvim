@@ -61,7 +61,9 @@ function M.yazi(path)
       end,
     })
   end
-  vim.cmd('startinsert')
+  vim.schedule(function()
+    vim.cmd('startinsert')
+  end)
 end
 
 M.config = config.default()
