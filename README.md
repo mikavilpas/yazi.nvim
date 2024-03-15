@@ -10,6 +10,7 @@ So far I have done some maintenance work:
 - feat: yazi pre-selects the current file when opened
 - test: add simple testing setup for future development
 - feat: can optionally open yazi instead of netrw for directories
+- feat: health check for yazi
 
 If you'd like to collaborate, contact me via GitHub issues.
 
@@ -41,3 +42,5 @@ Using lazy.nvim:
   },
 }
 ```
+
+You can run `:checkhealth yazi` to see if the plugin is installed and working.
