@@ -8,6 +8,7 @@ local M = {}
 M.yazi_loaded = false
 
 local output_path = '/tmp/yazi_filechosen'
+local yazi_nvim_events_path = '/tmp/yazi.nvim.events.txt'
 
 --- :Yazi entry point
 ---@param path string? defaults to the current file or the working directory
@@ -24,7 +25,11 @@ function M.yazi(path)
   local win, buffer = window.open_floating_window()
 
   os.remove(output_path)
-  local cmd = string.format('yazi "%s" --chooser-file "%s"', path, output_path)
+  local cmd = string.format(
+    'yazi "%s" --local-events "rename" --chooser-file "%s" > /tmp/yazi.nvim.events.txt',
+    path,
+    output_path
+  )
 
   if M.yazi_loaded == false then
     -- ensure that the buffer is closed on exit
@@ -38,6 +43,7 @@ function M.yazi(path)
         M.yazi_loaded = false
         vim.cmd('silent! :checktime')
 
+        -- open the file that was chosen
         if vim.api.nvim_win_is_valid(prev_win) then
           -- NOTE the types for nvim_ apis are inaccurate so we need to typecast
           ---@cast win integer
@@ -50,13 +56,22 @@ function M.yazi(path)
             end
           end
 
+          ---@cast buffer integer
           if
-            ---@cast buffer integer
             vim.api.nvim_buf_is_valid(buffer)
             and vim.api.nvim_buf_is_loaded(buffer)
           then
             vim.api.nvim_buf_delete(buffer, { force = true })
           end
+        end
+
+        -- process events emitted from yazi
+        local rename_events = utils.read_events_file(yazi_nvim_events_path)
+        local renames =
+          utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
+
+        for _, event in ipairs(renames) do
+          vim.api.nvim_buf_set_name(event.buffer, event.to)
         end
       end,
     })
