@@ -1,6 +1,3 @@
----@class YaziConfig
----@field public open_for_directories boolean
-
 local M = {}
 
 ---@return YaziConfig
