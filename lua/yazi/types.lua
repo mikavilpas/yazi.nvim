@@ -1,0 +1,2 @@
+---@class YaziConfig
+---@field public open_for_directories boolean
