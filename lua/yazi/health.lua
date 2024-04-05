@@ -21,9 +21,9 @@ return {
     end
 
     local checker = require('vim.version')
-    if not checker.gt(semver, '0.1.5') then
+    if not checker.gt(semver, '0.2.4') then
       return vim.health.warn(
-        'yazi version is too old, please upgrade to 0.1.5 or newer'
+        'yazi version is too old, please upgrade to 0.2.4 or newer'
       )
     end
 

@@ -23,7 +23,7 @@ describe('opening a file', function()
     plugin.yazi()
 
     assert.stub(api_mock.termopen).was_called_with(
-      'yazi "/tmp/test-file.txt" --chooser-file "/tmp/yazi_filechosen"',
+      'yazi "/tmp/test-file.txt" --local-events "rename" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
       match.is_table()
     )
   end)
@@ -33,9 +33,10 @@ describe('opening a file', function()
 
     plugin.yazi()
 
-    assert
-      .stub(api_mock.termopen)
-      .was_called_with('yazi "/tmp/" --chooser-file "/tmp/yazi_filechosen"', match.is_table())
+    assert.stub(api_mock.termopen).was_called_with(
+      'yazi "/tmp/" --local-events "rename" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
+      match.is_table()
+    )
   end)
 
   describe("when a file is selected in yazi's chooser", function()

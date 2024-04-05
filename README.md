@@ -11,10 +11,14 @@ So far I have done some maintenance work:
 - test: add simple testing setup for future development
 - feat: can optionally open yazi instead of netrw for directories
 - feat: health check for yazi
+- feat: files renamed in yazi are kept in sync with open buffers
 
 If you'd like to collaborate, contact me via GitHub issues.
 
 ## Installation
+
+> **Note:** This plugin requires a recent version of yazi.
+> You can run `:checkhealth yazi` to see if a compatible version is installed and working.
 
 Using lazy.nvim:
 
@@ -42,5 +46,3 @@ Using lazy.nvim:
   },
 }
 ```
-
-You can run `:checkhealth yazi` to see if the plugin is installed and working.
