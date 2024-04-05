@@ -14,14 +14,14 @@ return {
 
     -- parse the version
 
-    local semver = raw_version:match('^yazi (%w+%.%w+%.%w+)')
+    local semver = raw_version:match('^[Yy]azi (%w+%.%w+%.%w+)')
 
     if semver == nil then
       vim.health.warn('yazi --version looks unexpected, saw ' .. raw_version)
     end
 
     local checker = require('vim.version')
-    if not checker.gt(semver, '0.2.4') then
+    if not checker.gt(semver, '0.2.3') then
       return vim.health.warn(
         'yazi version is too old, please upgrade to 0.2.4 or newer'
       )
