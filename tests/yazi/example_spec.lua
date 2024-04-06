@@ -19,11 +19,11 @@ describe('opening a file', function()
   end)
 
   it('opens yazi with the current file selected', function()
-    vim.api.nvim_command('edit /tmp/test-file.txt')
+    vim.api.nvim_command('edit /abc/test-file.txt')
     plugin.yazi()
 
     assert.stub(api_mock.termopen).was_called_with(
-      'yazi "/tmp/test-file.txt" --local-events "rename" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
+      'yazi "/abc/test-file.txt" --local-events "rename" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
       match.is_table()
     )
   end)
@@ -41,11 +41,11 @@ describe('opening a file', function()
 
   describe("when a file is selected in yazi's chooser", function()
     -- yazi writes the selected file to this file for us to read
-    local target_file = '/tmp/test-file.txt'
+    local target_file = '/abc/test-file.txt'
 
     before_each(function()
       -- have to start editing a valid file, otherwise the plugin will ignore the callback
-      vim.cmd('edit /tmp/a.txt')
+      vim.cmd('edit /abc/a.txt')
 
       local termopen = spy.on(api_mock, 'termopen')
       termopen.callback = function(_, callback)

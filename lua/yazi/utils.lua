@@ -1,5 +1,5 @@
 local fn = vim.fn
-local iterators = require('plenary.iterators')
+local RenameableBuffer = require('yazi.renameable_buffer')
 
 local M = {}
 
@@ -87,46 +87,34 @@ function M.read_events_file(path)
 end
 
 ---@param rename_events YaziRenameEvent[]
----@return YaziBufferRenameInstruction[]
+---@return RenameableBuffer[] "instructions for renaming the buffers (command pattern)"
 function M.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
-  local buffers = iterators
-    .iter(vim.api.nvim_list_bufs())
-    :filter(function(buffer)
-      if vim.api.nvim_buf_get_name(buffer) == '' then
-        return false
+  ---@type RenameableBuffer[]
+  local open_buffers = {}
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local path = vim.api.nvim_buf_get_name(bufnr)
+    if path ~= '' and path ~= nil then
+      local renameable_buffer = RenameableBuffer.new(bufnr, path)
+      open_buffers[#open_buffers + 1] = renameable_buffer
+    end
+  end
+
+  ---@type table<integer, RenameableBuffer>
+  local renamed_buffers = {}
+
+  for _, event in ipairs(rename_events) do
+    for _, buffer in ipairs(open_buffers) do
+      if buffer:matches_exactly(event.data.from) then
+        buffer:rename(event.data.to)
+        renamed_buffers[buffer.bufnr] = buffer
+      elseif buffer:matches_parent(event.data.from) then
+        buffer:rename_parent(event.data.from, event.data.to)
+        renamed_buffers[buffer.bufnr] = buffer
       end
+    end
+  end
 
-      return true
-    end)
-    :map(function(buffer)
-      -- the buffer is found if
-      -- * the buffer name matches the original name
-      -- * or the buffer's file is under a directory that was renamed (also nested directories)
-      for _, event in ipairs(rename_events) do
-        local buffer_name = vim.api.nvim_buf_get_name(buffer)
-
-        if event.data.from == buffer_name then
-          ---@type YaziBufferRenameInstruction
-          return {
-            buffer = buffer,
-            to = event.data.to,
-          }
-        end
-
-        local starts_with = buffer_name:sub(1, #event.data.from)
-          == event.data.from
-        if starts_with then
-          ---@type YaziBufferRenameInstruction
-          return {
-            buffer = buffer,
-            to = event.data.to .. buffer_name:sub(#event.data.from + 1),
-          }
-        end
-      end
-    end)
-    :tolist()
-
-  return buffers
+  return vim.tbl_values(renamed_buffers)
 end
 
 return M
