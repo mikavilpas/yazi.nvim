@@ -26,28 +26,28 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
         timestamp = '1712242143209837',
         id = '1712242143209837',
         data = {
-          from = '/my-tmp/file3',
-          to = '/my-tmp/file4',
+          from = '/my-tmp/file_A',
+          to = '/my-tmp/file_B',
         },
       },
     }
 
     -- simulate the buffers being opened
     vim.fn.bufadd('/my-tmp/file1')
-    vim.fn.bufadd('/my-tmp/file3')
+    vim.fn.bufadd('/my-tmp/file_A')
 
-    local renames =
+    local rename_instructions =
       utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
-    assert.is_equal(#renames, 2)
+    assert.is_equal(vim.tbl_count(rename_instructions), 2)
 
-    local result1 = renames[1]
-    assert.is_equal('/my-tmp/file2', result1.to)
-    assert.is_number(result1.buffer)
+    local result1 = rename_instructions[1]
+    assert.is_equal('/my-tmp/file2', result1.path.filename)
+    assert.is_number(result1.bufnr)
 
-    local result2 = renames[2]
-    assert.is_equal('/my-tmp/file4', result2.to)
-    assert.is_number(result2.buffer)
+    local result2 = rename_instructions[2]
+    assert.is_equal('/my-tmp/file_B', result2.path.filename)
+    assert.is_number(result2.bufnr)
   end)
 
   it(
@@ -69,13 +69,12 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
       -- simulate the buffer being opened
       vim.fn.bufadd('/my-tmp/dir1/file')
 
-      local renames =
+      local rename_instructions =
         utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
-      assert.is_equal(#renames, 1)
-
-      local result1 = renames[1]
-      assert.is_equal('/my-tmp/dir2/file', result1.to)
+      assert.is_equal(vim.tbl_count(rename_instructions), 1)
+      local result = rename_instructions[1]
+      assert.is_equal('/my-tmp/dir2/file', result.path.filename)
     end
   )
 
@@ -96,9 +95,79 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     -- simulate the buffer being opened
     vim.fn.bufadd('/my-tmp/dir1/file')
 
-    local renames =
+    local rename_instructions =
       utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
-    assert.is_equal(#renames, 0)
+    assert.is_equal(vim.tbl_count(rename_instructions), 0)
+  end)
+
+  it('can rename the same file multiple times', function()
+    ---@type YaziRenameEvent[]
+    local rename_events = {
+      {
+        type = 'rename',
+        timestamp = '1712242143209837',
+        id = '1712242143209837',
+        data = {
+          from = '/my-tmp/file1',
+          to = '/my-tmp/file2',
+        },
+      },
+      {
+        type = 'rename',
+        timestamp = '1712242143209837',
+        id = '1712242143209837',
+        data = {
+          from = '/my-tmp/file2',
+          to = '/my-tmp/file3',
+        },
+      },
+    }
+
+    -- simulate the buffers being opened
+    vim.fn.bufadd('/my-tmp/file1')
+
+    local rename_instructions =
+      utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
+
+    assert.is_equal(vim.tbl_count(rename_instructions), 1)
+
+    local result = rename_instructions[1]
+    assert.is_equal('/my-tmp/file3', result.path.filename)
+    assert.is_number(result.bufnr)
+  end)
+
+  it('can rename the same directory multiple times', function()
+    ---@type YaziRenameEvent[]
+    local rename_events = {
+      {
+        type = 'rename',
+        timestamp = '1712242143209837',
+        id = '1712242143209837',
+        data = {
+          from = '/my-tmp/dir1',
+          to = '/my-tmp/dir2',
+        },
+      },
+      {
+        type = 'rename',
+        timestamp = '1712242143209837',
+        id = '1712242143209837',
+        data = {
+          from = '/my-tmp/dir2',
+          to = '/my-tmp/dir3',
+        },
+      },
+    }
+
+    -- simulate the buffer being opened
+    vim.fn.bufadd('/my-tmp/dir1/file')
+
+    local rename_instructions =
+      utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
+
+    assert.is_equal(vim.tbl_count(rename_instructions), 1)
+    local result = rename_instructions[1]
+    assert.is_equal('/my-tmp/dir3/file', result.path.filename)
   end)
 end)

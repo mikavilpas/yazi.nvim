@@ -10,7 +10,3 @@
 ---@class YaziEventDataRename
 ---@field public from string
 ---@field public to string
-
----@class YaziBufferRenameInstruction
----@field buffer integer the existing buffer number that needs renaming
----@field to string the new file name that the buffer should point to

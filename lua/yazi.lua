@@ -71,7 +71,7 @@ function M.yazi(path)
           utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
         for _, event in ipairs(renames) do
-          vim.api.nvim_buf_set_name(event.buffer, event.to)
+          vim.api.nvim_buf_set_name(event.bufnr, event.path.filename)
         end
       end,
     })
