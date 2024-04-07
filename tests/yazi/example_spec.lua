@@ -86,4 +86,22 @@ describe('opening a file', function()
       assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
     end
   )
+
+  it('calls the open_file_function to open the selected file', function()
+    local spy_hook = spy.new(function(chosen_file)
+      assert.equals('/abc/test-file.txt', chosen_file)
+    end)
+
+    ---@diagnostic disable-next-line: missing-fields
+    plugin.setup({
+      ---@diagnostic disable-next-line: assign-type-mismatch
+      open_file_function = spy_hook,
+    })
+
+    vim.api.nvim_command('edit /abc/test-file.txt')
+
+    plugin.yazi()
+
+    assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
+  end)
 end)

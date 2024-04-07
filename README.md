@@ -56,6 +56,11 @@ Using lazy.nvim:
     -- events
     events_file_path = '/tmp/yazi.nvim.events.txt',
 
+    -- what neovim should do a when a file was opened (selected) in yazi.
+    -- Defaults to simply opening the file.
+    -- If you want to open it in a split / new tab, you can define it here.
+    open_file_function = function(chosen_file) end,
+
     hooks = {
       -- if you want to execute a custom action when yazi has been closed
       -- successfully, you can define it here
