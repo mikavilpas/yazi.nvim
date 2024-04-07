@@ -86,7 +86,7 @@ function M.read_events_file(path)
   return events
 end
 
----@param rename_events YaziRenameEvent[]
+---@param rename_events YaziEventDataRename[]
 ---@return RenameableBuffer[] "instructions for renaming the buffers (command pattern)"
 function M.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
   ---@type RenameableBuffer[]
@@ -104,11 +104,11 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
   for _, event in ipairs(rename_events) do
     for _, buffer in ipairs(open_buffers) do
-      if buffer:matches_exactly(event.data.from) then
-        buffer:rename(event.data.to)
+      if buffer:matches_exactly(event.from) then
+        buffer:rename(event.to)
         renamed_buffers[buffer.bufnr] = buffer
-      elseif buffer:matches_parent(event.data.from) then
-        buffer:rename_parent(event.data.from, event.data.to)
+      elseif buffer:matches_parent(event.from) then
+        buffer:rename_parent(event.from, event.to)
         renamed_buffers[buffer.bufnr] = buffer
       end
     end

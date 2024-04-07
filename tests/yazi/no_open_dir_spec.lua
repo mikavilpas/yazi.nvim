@@ -11,6 +11,7 @@ describe('when the user set open_for_directories = false', function()
   end)
 
   before_each(function()
+    ---@diagnostic disable-next-line: missing-fields
     plugin.setup({ open_for_directories = false })
   end)
 

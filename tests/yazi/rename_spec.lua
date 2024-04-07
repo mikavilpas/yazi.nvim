@@ -10,25 +10,15 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   end)
 
   it('can detect renames to files whose names match exactly', function()
-    ---@type YaziRenameEvent[]
+    ---@type YaziEventDataRename[]
     local rename_events = {
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/file1',
-          to = '/my-tmp/file2',
-        },
+        from = '/my-tmp/file1',
+        to = '/my-tmp/file2',
       },
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/file_A',
-          to = '/my-tmp/file_B',
-        },
+        from = '/my-tmp/file_A',
+        to = '/my-tmp/file_B',
       },
     }
 
@@ -53,16 +43,11 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   it(
     'can detect renames to buffers open in a directory that was renamed',
     function()
-      ---@type YaziRenameEvent[]
+      ---@type YaziEventDataRename[]
       local rename_events = {
         {
-          type = 'rename',
-          timestamp = '1712242143209837',
-          id = '1712242143209837',
-          data = {
-            from = '/my-tmp/dir1',
-            to = '/my-tmp/dir2',
-          },
+          from = '/my-tmp/dir1',
+          to = '/my-tmp/dir2',
         },
       }
 
@@ -79,16 +64,11 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   )
 
   it("doesn't rename a buffer that was not renamed in yazi", function()
-    ---@type YaziRenameEvent[]
+    ---@type YaziEventDataRename[]
     local rename_events = {
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/not-opened-file',
-          to = '/my-tmp/not-opened-file-renamed',
-        },
+        from = '/my-tmp/not-opened-file',
+        to = '/my-tmp/not-opened-file-renamed',
       },
     }
 
@@ -102,25 +82,15 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   end)
 
   it('can rename the same file multiple times', function()
-    ---@type YaziRenameEvent[]
+    ---@type YaziEventDataRename[]
     local rename_events = {
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/file1',
-          to = '/my-tmp/file2',
-        },
+        from = '/my-tmp/file1',
+        to = '/my-tmp/file2',
       },
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/file2',
-          to = '/my-tmp/file3',
-        },
+        from = '/my-tmp/file2',
+        to = '/my-tmp/file3',
       },
     }
 
@@ -138,25 +108,15 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   end)
 
   it('can rename the same directory multiple times', function()
-    ---@type YaziRenameEvent[]
+    ---@type YaziEventDataRename[]
     local rename_events = {
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/dir1',
-          to = '/my-tmp/dir2',
-        },
+        from = '/my-tmp/dir1',
+        to = '/my-tmp/dir2',
       },
       {
-        type = 'rename',
-        timestamp = '1712242143209837',
-        id = '1712242143209837',
-        data = {
-          from = '/my-tmp/dir2',
-          to = '/my-tmp/dir3',
-        },
+        from = '/my-tmp/dir2',
+        to = '/my-tmp/dir3',
       },
     }
 
