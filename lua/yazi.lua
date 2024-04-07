@@ -7,7 +7,6 @@ local M = {}
 
 M.yazi_loaded = false
 
-local output_path = '/tmp/yazi_filechosen'
 local yazi_nvim_events_path = '/tmp/yazi.nvim.events.txt'
 
 --- :Yazi entry point
@@ -24,11 +23,12 @@ function M.yazi(path)
 
   local win, buffer = window.open_floating_window()
 
-  os.remove(output_path)
+  os.remove(M.config.chosen_file_path)
   local cmd = string.format(
-    'yazi "%s" --local-events "rename" --chooser-file "%s" > /tmp/yazi.nvim.events.txt',
+    'yazi "%s" --local-events "rename" --chooser-file "%s" > %s',
     path,
-    output_path
+    M.config.chosen_file_path,
+    yazi_nvim_events_path
   )
 
   if M.yazi_loaded == false then
@@ -49,8 +49,10 @@ function M.yazi(path)
           ---@cast win integer
           vim.api.nvim_win_close(win, true)
           vim.api.nvim_set_current_win(prev_win)
-          if code == 0 and utils.file_exists(output_path) == true then
-            local chosen_file = vim.fn.readfile(output_path)[1]
+          if
+            code == 0 and utils.file_exists(M.config.chosen_file_path) == true
+          then
+            local chosen_file = vim.fn.readfile(M.config.chosen_file_path)[1]
             if chosen_file then
               vim.cmd(string.format('edit %s', chosen_file))
             end

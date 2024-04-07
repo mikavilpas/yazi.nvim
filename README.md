@@ -41,8 +41,15 @@ Using lazy.nvim:
   },
   ---@type YaziConfig
   opts = {
+    -- Below is the default configuration. It is optional to set these values.
+    --
+
     -- enable this if you want to open yazi instead of netrw
     open_for_directories = false,
+
+    -- the path to a temporary file that will be created by yazi to store the
+    -- chosen file path
+    chosen_file_path = '/tmp/yazi_filechosen',
   },
 }
 ```
