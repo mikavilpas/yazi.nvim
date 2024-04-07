@@ -7,8 +7,6 @@ local M = {}
 
 M.yazi_loaded = false
 
-local yazi_nvim_events_path = '/tmp/yazi.nvim.events.txt'
-
 --- :Yazi entry point
 ---@param path string? defaults to the current file or the working directory
 function M.yazi(path)
@@ -28,7 +26,7 @@ function M.yazi(path)
     'yazi "%s" --local-events "rename" --chooser-file "%s" > %s',
     path,
     M.config.chosen_file_path,
-    yazi_nvim_events_path
+    M.config.events_file_path
   )
 
   if M.yazi_loaded == false then
@@ -68,7 +66,7 @@ function M.yazi(path)
         end
 
         -- process events emitted from yazi
-        local rename_events = utils.read_events_file(yazi_nvim_events_path)
+        local rename_events = utils.read_events_file(M.config.events_file_path)
         local renames =
           utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 

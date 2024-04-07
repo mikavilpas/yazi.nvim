@@ -50,6 +50,10 @@ Using lazy.nvim:
     -- the path to a temporary file that will be created by yazi to store the
     -- chosen file path
     chosen_file_path = '/tmp/yazi_filechosen',
+
+    -- the path to a temporary file that will be created by yazi to store
+    -- events
+    events_file_path = '/tmp/yazi.nvim.events.txt'
   },
 }
 ```
