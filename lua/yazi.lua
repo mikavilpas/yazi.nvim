@@ -55,7 +55,7 @@ function M.yazi(path)
             local chosen_file = vim.fn.readfile(M.config.chosen_file_path)[1]
             M.config.hooks.yazi_closed_successfully(chosen_file)
             if chosen_file then
-              vim.cmd(string.format('edit %s', chosen_file))
+              M.config.open_file_function(chosen_file)
             end
           end
 
