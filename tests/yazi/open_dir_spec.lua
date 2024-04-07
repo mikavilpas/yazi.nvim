@@ -12,6 +12,7 @@ describe('when the user set open_for_directories = true', function()
     vim.g.yazi_floating_window_winblend = 0
     vim.g.yazi_floating_window_scaling_factor = 0.9
 
+    ---@diagnostic disable-next-line: missing-fields
     plugin.setup({ open_for_directories = true })
   end)
 
