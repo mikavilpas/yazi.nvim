@@ -63,4 +63,27 @@ describe('opening a file', function()
       assert.equals(target_file, vim.fn.expand('%'))
     end)
   end)
+
+  it(
+    "calls the yazi_closed_successfully hook when a file is selected in yazi's chooser",
+    function()
+      local spy_hook = spy.new(function(chosen_file)
+        assert.equals('/abc/test-file.txt', chosen_file)
+      end)
+
+      ---@diagnostic disable-next-line: missing-fields
+      plugin.setup({
+        hooks = {
+          ---@diagnostic disable-next-line: assign-type-mismatch
+          yazi_closed_successfully = spy_hook,
+        },
+      })
+
+      vim.api.nvim_command('edit /abc/test-file.txt')
+
+      plugin.yazi()
+
+      assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
+    end
+  )
 end)

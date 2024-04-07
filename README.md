@@ -4,7 +4,7 @@
 
 I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use.
 
-So far I have done some maintenance work:
+So far I have done some maintenance work and added a bunch of features:
 
 - chore: removed unused code
 - feat: yazi pre-selects the current file when opened
@@ -12,6 +12,7 @@ So far I have done some maintenance work:
 - feat: can optionally open yazi instead of netrw for directories
 - feat: health check for yazi
 - feat: files renamed in yazi are kept in sync with open buffers
+- feat: allow customizing the method of opening the selected file in neovim
 
 If you'd like to collaborate, contact me via GitHub issues.
 
@@ -53,7 +54,13 @@ Using lazy.nvim:
 
     -- the path to a temporary file that will be created by yazi to store
     -- events
-    events_file_path = '/tmp/yazi.nvim.events.txt'
+    events_file_path = '/tmp/yazi.nvim.events.txt',
+
+    hooks = {
+      -- if you want to execute a custom action when yazi has been closed
+      -- successfully, you can define it here
+      yazi_closed_successfully = function(chosen_file) end,
+    },
   },
 }
 ```
