@@ -2,6 +2,10 @@
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
 ---@field public events_file_path? string "the path to a temporary file that will be created by yazi to store events"
+---@field public hooks? YaziConfigHooks
+
+---@class YaziConfigHooks
+---@field public yazi_closed_successfully? fun(chosen_file: string | nil): nil
 
 ---@class YaziRenameEvent
 ---@field public type "rename"
