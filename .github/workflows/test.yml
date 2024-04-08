@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: date +%F > todays-date
       - name: Restore from today's cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: _neovim
           key: ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
