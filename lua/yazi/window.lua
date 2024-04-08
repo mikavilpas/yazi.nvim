@@ -2,21 +2,8 @@ local M = {}
 
 --- open floating window with nice borders
 ---@param config YaziConfig
----@return number | nil, number | nil
+---@return integer, integer
 function M.open_floating_window(config)
-  local status, plenary = pcall(require, 'plenary.window.float')
-  if
-    status
-    and vim.g.yazi_floating_window_use_plenary
-    and vim.g.yazi_floating_window_use_plenary ~= 0
-  then
-    plenary.percentage_range_window(
-      config.floating_window_scaling_factor,
-      config.floating_window_scaling_factor
-    )
-    return
-  end
-
   local height = math.ceil(vim.o.lines * config.floating_window_scaling_factor)
     - 1
   local width = math.ceil(vim.o.columns * config.floating_window_scaling_factor)
