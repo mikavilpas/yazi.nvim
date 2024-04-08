@@ -2,7 +2,16 @@
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/4640cb54-efad-47b5-9157-735e78bf0c43>
 
-I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use.
+## Features
+
+- Open yazi in a floating window
+- (optionally) open yazi instead of netrw for directories
+- yazi pre-selects the current file when opened
+- Files renamed in yazi are kept in sync with open buffers
+
+## About my fork
+
+I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
 
 So far I have done some maintenance work and added a bunch of features:
 
