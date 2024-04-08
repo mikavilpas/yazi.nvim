@@ -42,15 +42,8 @@ function M.open_floating_window(config)
     height = height,
   }
 
-  local topleft, top, topright, right, botright, bot, botleft, left
-  local window_chars = vim.g.yazi_floating_window_border_chars
-  if type(window_chars) == 'table' and #window_chars == 8 then
-    topleft, top, topright, right, botright, bot, botleft, left =
-      unpack(window_chars)
-  else
-    topleft, top, topright, right, botright, bot, botleft, left =
-      '╭', '─', '╮', '│', '╯', '─', '╰', '│'
-  end
+  local topleft, top, topright, right, botright, bot, botleft, left =
+    '╭', '─', '╮', '│', '╯', '─', '╰', '│'
 
   local border_lines = { topleft .. string.rep(top, width) .. topright }
   local middle_line = left .. string.rep(' ', width) .. right
