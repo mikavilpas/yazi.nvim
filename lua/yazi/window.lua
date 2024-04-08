@@ -1,17 +1,9 @@
 local M = {}
 
 --- open floating window with nice borders
+---@param config YaziConfig
 ---@return number | nil, number | nil
-function M.open_floating_window()
-  local floating_window_scaling_factor =
-    vim.g.yazi_floating_window_scaling_factor
-
-  -- Why is this required?
-  -- vim.g.yazi_floating_window_scaling_factor returns different types if the value is an integer or float
-  if type(floating_window_scaling_factor) == 'table' then
-    floating_window_scaling_factor = floating_window_scaling_factor[false]
-  end
-
+function M.open_floating_window(config)
   local status, plenary = pcall(require, 'plenary.window.float')
   if
     status
@@ -19,14 +11,15 @@ function M.open_floating_window()
     and vim.g.yazi_floating_window_use_plenary ~= 0
   then
     plenary.percentage_range_window(
-      floating_window_scaling_factor,
-      floating_window_scaling_factor
+      config.floating_window_scaling_factor,
+      config.floating_window_scaling_factor
     )
     return
   end
 
-  local height = math.ceil(vim.o.lines * floating_window_scaling_factor) - 1
-  local width = math.ceil(vim.o.columns * floating_window_scaling_factor)
+  local height = math.ceil(vim.o.lines * config.floating_window_scaling_factor)
+    - 1
+  local width = math.ceil(vim.o.columns * config.floating_window_scaling_factor)
 
   local row = math.ceil(vim.o.lines - height) / 2
   local col = math.ceil(vim.o.columns - width) / 2
@@ -86,7 +79,7 @@ function M.open_floating_window()
   vim.cmd('setlocal nocursorcolumn')
   vim.api.nvim_set_hl(0, 'YaziFloat', { link = 'Normal', default = true })
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
-  vim.cmd('set winblend=' .. vim.g.yazi_floating_window_winblend)
+  vim.cmd('set winblend=' .. config.yazi_floating_window_winblend)
 
   -- use autocommand to ensure that the border_buffer closes at the same time as the main buffer
   vim.cmd("autocmd WinLeave <buffer> silent! execute 'hide'")

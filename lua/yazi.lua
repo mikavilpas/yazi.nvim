@@ -21,7 +21,7 @@ function M.yazi(path)
 
   local prev_win = vim.api.nvim_get_current_win()
 
-  local win, buffer = window.open_floating_window()
+  local win, buffer = window.open_floating_window(M.config)
 
   os.remove(M.config.chosen_file_path)
   local cmd = string.format(
