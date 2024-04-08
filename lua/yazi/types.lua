@@ -6,6 +6,7 @@
 ---@field public hooks? YaziConfigHooks
 
 ---@class YaziConfigHooks
+---@field public yazi_opened? fun(preselected_path: string | nil): nil
 ---@field public yazi_closed_successfully? fun(chosen_file: string | nil): nil
 
 ---@class YaziRenameEvent

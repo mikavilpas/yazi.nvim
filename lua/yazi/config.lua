@@ -12,6 +12,8 @@ function M.default()
     end,
     hooks = {
       ---@diagnostic disable-next-line: unused-local
+      yazi_opened = function(_preselected_path) end,
+      ---@diagnostic disable-next-line: unused-local
       yazi_closed_successfully = function(_chosen_file) end,
     },
   }

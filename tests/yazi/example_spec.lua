@@ -87,6 +87,24 @@ describe('opening a file', function()
     end
   )
 
+  it('calls the yazi_opened hook when yazi is opened', function()
+    local spy_hook = spy.new()
+
+    ---@diagnostic disable-next-line: missing-fields
+    plugin.setup({
+      hooks = {
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        yazi_opened = spy_hook,
+      },
+    })
+
+    vim.api.nvim_command('edit /abc/yazi_opened_hook_file.txt')
+
+    plugin.yazi()
+
+    assert.spy(spy_hook).was_called_with('/abc/yazi_opened_hook_file.txt')
+  end)
+
   it('calls the open_file_function to open the selected file', function()
     local spy_hook = spy.new(function(chosen_file)
       assert.equals('/abc/test-file.txt', chosen_file)
