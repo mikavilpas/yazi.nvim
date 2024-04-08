@@ -16,6 +16,9 @@ function M.default()
       ---@diagnostic disable-next-line: unused-local
       yazi_closed_successfully = function(_chosen_file) end,
     },
+
+    floating_window_scaling_factor = 0.9,
+    yazi_floating_window_winblend = 0,
   }
 end
 
