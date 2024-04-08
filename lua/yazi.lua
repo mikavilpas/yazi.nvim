@@ -45,8 +45,6 @@ function M.yazi(path)
 
         -- open the file that was chosen
         if vim.api.nvim_win_is_valid(prev_win) then
-          -- NOTE the types for nvim_ apis are inaccurate so we need to typecast
-          ---@cast win integer
           vim.api.nvim_win_close(win, true)
           vim.api.nvim_set_current_win(prev_win)
           if
@@ -59,7 +57,6 @@ function M.yazi(path)
             end
           end
 
-          ---@cast buffer integer
           if
             vim.api.nvim_buf_is_valid(buffer)
             and vim.api.nvim_buf_is_loaded(buffer)
