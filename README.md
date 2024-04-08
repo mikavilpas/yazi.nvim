@@ -62,8 +62,11 @@ Using lazy.nvim:
     open_file_function = function(chosen_file) end,
 
     hooks = {
-      -- if you want to execute a custom action when yazi has been closed
-      -- successfully, you can define it here
+      -- if you want to execute a custom action when yazi has been opened,
+      -- you can define it here
+      yazi_opened = function(preselected_path) end,
+
+      -- when yazi was successfully closed
       yazi_closed_successfully = function(chosen_file) end,
     },
   },

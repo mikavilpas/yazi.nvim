@@ -84,6 +84,8 @@ function M.yazi(path)
         end
       end,
     })
+
+    M.config.hooks.yazi_opened(path)
   end
   vim.schedule(function()
     vim.cmd('startinsert')
