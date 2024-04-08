@@ -19,7 +19,7 @@ jobs:
             manager: sudo apt-get
             packages: -y ripgrep
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: date +%F > todays-date
       - name: Restore from today's cache
         uses: actions/cache@v3
