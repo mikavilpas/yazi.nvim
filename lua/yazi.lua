@@ -2,6 +2,7 @@ local window = require('yazi.window')
 local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
 local config = require('yazi.config')
+local renaming = require('yazi.renaming')
 
 local iterators = require('plenary.iterators')
 
@@ -81,7 +82,9 @@ function M.yazi(path)
           :tolist()
 
         local renames =
-          utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
+          renaming.get_buffers_that_need_renaming_after_yazi_exited(
+            rename_events
+          )
 
         for _, event in ipairs(renames) do
           vim.api.nvim_buf_set_name(event.bufnr, event.path.filename)
