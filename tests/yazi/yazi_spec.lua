@@ -8,12 +8,6 @@ local api_mock = mock(require('yazi.vimfn'))
 local plugin = require('yazi')
 
 describe('opening a file', function()
-  before_each(function()
-    -- add default options that are set in ../../plugin/yazi.vim
-    vim.g.yazi_floating_window_winblend = 0
-    vim.g.yazi_floating_window_scaling_factor = 0.9
-  end)
-
   after_each(function()
     mock.clear(api_mock)
   end)
