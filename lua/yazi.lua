@@ -67,14 +67,21 @@ function M.yazi(path)
 
         -- process events emitted from yazi
         local events = utils.read_events_file(M.config.events_file_path)
+        local rename_events = iterators
+          .iter(events)
+          :filter(function(event)
+            return event.type == 'rename'
+          end)
+          :map(
+            ---@param event YaziRenameEvent
+            function(event)
+              return event.data
+            end
+          )
+          :tolist()
 
         local renames =
-          utils.get_buffers_that_need_renaming_after_yazi_exited(iterators
-            .iter(events)
-            :filter(function(event)
-              return event.type == 'rename'
-            end)
-            :tolist())
+          utils.get_buffers_that_need_renaming_after_yazi_exited(rename_events)
 
         for _, event in ipairs(renames) do
           vim.api.nvim_buf_set_name(event.bufnr, event.path.filename)
