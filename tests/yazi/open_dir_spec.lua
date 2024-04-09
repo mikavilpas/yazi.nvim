@@ -8,10 +8,6 @@ local plugin = require('yazi')
 
 describe('when the user set open_for_directories = true', function()
   before_each(function()
-    -- add default options that are set in ../../plugin/yazi.vim
-    vim.g.yazi_floating_window_winblend = 0
-    vim.g.yazi_floating_window_scaling_factor = 0.9
-
     ---@diagnostic disable-next-line: missing-fields
     plugin.setup({ open_for_directories = true })
   end)
