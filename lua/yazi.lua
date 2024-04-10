@@ -2,7 +2,7 @@ local window = require('yazi.window')
 local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
 local configModule = require('yazi.config')
-local renaming = require('yazi.renaming')
+local event_handling = require('yazi.event_handling')
 
 local M = {}
 
@@ -28,7 +28,7 @@ function M.yazi(config, path)
 
   os.remove(config.chosen_file_path)
   local cmd = string.format(
-    'yazi "%s" --local-events "rename" --chooser-file "%s" > %s',
+    'yazi "%s" --local-events "rename,delete,trash" --chooser-file "%s" > %s',
     path,
     config.chosen_file_path,
     config.events_file_path
@@ -73,8 +73,9 @@ function M.yazi(config, path)
 
         for _, event in ipairs(events) do
           if event.type == 'rename' then
+            ---@cast event YaziRenameEvent
             local rename_instructions =
-              renaming.get_buffers_that_need_renaming_after_yazi_exited(
+              event_handling.get_buffers_that_need_renaming_after_yazi_exited(
                 event.data
               )
             for _, instruction in ipairs(rename_instructions) do
@@ -83,6 +84,13 @@ function M.yazi(config, path)
                 instruction.path.filename
               )
             end
+          elseif event.type == 'delete' then
+            ---@cast event YaziDeleteEvent
+            event_handling.process_delete_event(event)
+          elseif event.type == 'trash' then
+            -- selene: allow(if_same_then_else)
+            ---@cast event YaziTrashEvent
+            event_handling.process_delete_event(event)
           end
         end
       end,

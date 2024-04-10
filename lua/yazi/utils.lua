@@ -1,4 +1,5 @@
 local fn = vim.fn
+local RenameableBuffer = require('yazi.renameable_buffer')
 
 local M = {}
 
@@ -44,6 +45,7 @@ function M.parse_events(events_file_lines)
     local parts = vim.split(line, ',')
     local type = parts[1]
 
+    -- selene: allow(if_same_then_else)
     if type == 'rename' then
       -- example of a rename event:
 
@@ -60,6 +62,38 @@ function M.parse_events(events_file_lines)
         data = vim.fn.json_decode(data_string),
       }
       table.insert(events, event)
+    elseif type == 'delete' then
+      -- example of a delete event:
+      -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
+
+      local timestamp = parts[2]
+      local id = parts[3]
+      local data_string = table.concat(parts, ',', 4, #parts)
+
+      ---@type YaziDeleteEvent
+      local event = {
+        type = type,
+        timestamp = timestamp,
+        id = id,
+        data = vim.fn.json_decode(data_string),
+      }
+      table.insert(events, event)
+    elseif type == 'trash' then
+      -- example of a trash event:
+      -- trash,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
+
+      local timestamp = parts[2]
+      local id = parts[3]
+      local data_string = table.concat(parts, ',', 4, #parts)
+
+      ---@type YaziTrashEvent
+      local event = {
+        type = type,
+        timestamp = timestamp,
+        id = id,
+        data = vim.fn.json_decode(data_string),
+      }
+      table.insert(events, event)
     end
   end
 
@@ -67,7 +101,7 @@ function M.parse_events(events_file_lines)
 end
 
 ---@param path string
----@return YaziRenameEvent[]
+---@return YaziEvent[]
 function M.read_events_file(path)
   local success, events_file_lines = pcall(vim.fn.readfile, path)
   os.remove(path)
@@ -83,6 +117,21 @@ function M.read_events_file(path)
   end
 
   return events
+end
+
+---@return RenameableBuffer[]
+function M.get_open_buffers()
+  ---@type RenameableBuffer[]
+  local open_buffers = {}
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    local path = vim.api.nvim_buf_get_name(bufnr)
+    if path ~= '' and path ~= nil then
+      local renameable_buffer = RenameableBuffer.new(bufnr, path)
+      open_buffers[#open_buffers + 1] = renameable_buffer
+    end
+  end
+
+  return open_buffers
 end
 
 return M

@@ -1,19 +1,25 @@
-local RenameableBuffer = require('yazi.renameable_buffer')
+local utils = require('yazi.utils')
 
 local M = {}
+
+---@param event YaziDeleteEvent | YaziTrashEvent
+function M.process_delete_event(event)
+  local open_buffers = utils.get_open_buffers()
+
+  for _, buffer in ipairs(open_buffers) do
+    for _, url in ipairs(event.data.urls) do
+      if buffer:matches_exactly(url) or buffer:matches_parent(url) then
+        -- allow the user to cancel the deletion
+        vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
+      end
+    end
+  end
+end
 
 ---@param rename_event YaziEventDataRename
 ---@return RenameableBuffer[] "instructions for renaming the buffers (command pattern)"
 function M.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
-  ---@type RenameableBuffer[]
-  local open_buffers = {}
-  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    local path = vim.api.nvim_buf_get_name(bufnr)
-    if path ~= '' and path ~= nil then
-      local renameable_buffer = RenameableBuffer.new(bufnr, path)
-      open_buffers[#open_buffers + 1] = renameable_buffer
-    end
-  end
+  local open_buffers = utils.get_open_buffers()
 
   ---@type table<integer, RenameableBuffer>
   local renamed_buffers = {}

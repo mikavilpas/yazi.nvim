@@ -22,4 +22,23 @@ describe('parsing yazi event file events', function()
       },
     })
   end)
+
+  it('can parse delete events', function()
+    local data = {
+      'delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}',
+    }
+
+    local events = utils.parse_events(data)
+
+    assert.are.same(events, {
+      {
+        type = 'delete',
+        timestamp = '1712766606832135',
+        id = '1712766606832135',
+        data = {
+          urls = { '/tmp/test-directory/test_2' },
+        },
+      },
+    })
+  end)
 end)
