@@ -4,8 +4,6 @@ local vimfn = require('yazi.vimfn')
 local configModule = require('yazi.config')
 local renaming = require('yazi.renaming')
 
-local iterators = require('plenary.iterators')
-
 local M = {}
 
 M.yazi_loaded = false
@@ -72,26 +70,20 @@ function M.yazi(config, path)
 
         -- process events emitted from yazi
         local events = utils.read_events_file(config.events_file_path)
-        local rename_events = iterators
-          .iter(events)
-          :filter(function(event)
-            return event.type == 'rename'
-          end)
-          :map(
-            ---@param event YaziRenameEvent
-            function(event)
-              return event.data
+
+        for _, event in ipairs(events) do
+          if event.type == 'rename' then
+            local rename_instructions =
+              renaming.get_buffers_that_need_renaming_after_yazi_exited(
+                event.data
+              )
+            for _, instruction in ipairs(rename_instructions) do
+              vim.api.nvim_buf_set_name(
+                instruction.bufnr,
+                instruction.path.filename
+              )
             end
-          )
-          :tolist()
-
-        local renames =
-          renaming.get_buffers_that_need_renaming_after_yazi_exited(
-            rename_events
-          )
-
-        for _, event in ipairs(renames) do
-          vim.api.nvim_buf_set_name(event.bufnr, event.path.filename)
+          end
         end
       end,
     })
