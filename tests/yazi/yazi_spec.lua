@@ -65,17 +65,14 @@ describe('opening a file', function()
         assert.equals('/abc/test-file.txt', chosen_file)
       end)
 
-      ---@diagnostic disable-next-line: missing-fields
-      plugin.setup({
+      vim.api.nvim_command('edit /abc/test-file.txt')
+
+      plugin.yazi({
         hooks = {
           ---@diagnostic disable-next-line: assign-type-mismatch
           yazi_closed_successfully = spy_hook,
         },
       })
-
-      vim.api.nvim_command('edit /abc/test-file.txt')
-
-      plugin.yazi()
 
       assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
     end
@@ -84,17 +81,14 @@ describe('opening a file', function()
   it('calls the yazi_opened hook when yazi is opened', function()
     local spy_hook = spy.new()
 
-    ---@diagnostic disable-next-line: missing-fields
-    plugin.setup({
+    vim.api.nvim_command('edit /abc/yazi_opened_hook_file.txt')
+
+    plugin.yazi({
       hooks = {
         ---@diagnostic disable-next-line: assign-type-mismatch
         yazi_opened = spy_hook,
       },
     })
-
-    vim.api.nvim_command('edit /abc/yazi_opened_hook_file.txt')
-
-    plugin.yazi()
 
     assert.spy(spy_hook).was_called_with('/abc/yazi_opened_hook_file.txt')
   end)
@@ -104,15 +98,12 @@ describe('opening a file', function()
       assert.equals('/abc/test-file.txt', chosen_file)
     end)
 
-    ---@diagnostic disable-next-line: missing-fields
-    plugin.setup({
+    vim.api.nvim_command('edit /abc/test-file.txt')
+
+    plugin.yazi({
       ---@diagnostic disable-next-line: assign-type-mismatch
       open_file_function = spy_hook,
     })
-
-    vim.api.nvim_command('edit /abc/test-file.txt')
-
-    plugin.yazi()
 
     assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
   end)

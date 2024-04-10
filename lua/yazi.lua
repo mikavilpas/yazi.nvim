@@ -1,7 +1,7 @@
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
-local config = require('yazi.config')
+local configModule = require('yazi.config')
 local renaming = require('yazi.renaming')
 
 local iterators = require('plenary.iterators')
@@ -11,25 +11,29 @@ local M = {}
 M.yazi_loaded = false
 
 --- :Yazi entry point
----@param path string? defaults to the current file or the working directory
-function M.yazi(path)
+---@param config? YaziConfig?
+---@param path? string
+---@diagnostic disable-next-line: redefined-local
+function M.yazi(config, path)
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check documentation for more information')
     return
   end
 
+  config = vim.tbl_deep_extend('force', M.config, config or {})
+
   path = utils.selected_file_path(path)
 
   local prev_win = vim.api.nvim_get_current_win()
 
-  local win, buffer = window.open_floating_window(M.config)
+  local win, buffer = window.open_floating_window(config)
 
-  os.remove(M.config.chosen_file_path)
+  os.remove(config.chosen_file_path)
   local cmd = string.format(
     'yazi "%s" --local-events "rename" --chooser-file "%s" > %s',
     path,
-    M.config.chosen_file_path,
-    M.config.events_file_path
+    config.chosen_file_path,
+    config.events_file_path
   )
 
   if M.yazi_loaded == false then
@@ -49,12 +53,12 @@ function M.yazi(path)
           vim.api.nvim_win_close(win, true)
           vim.api.nvim_set_current_win(prev_win)
           if
-            code == 0 and utils.file_exists(M.config.chosen_file_path) == true
+            code == 0 and utils.file_exists(config.chosen_file_path) == true
           then
-            local chosen_file = vim.fn.readfile(M.config.chosen_file_path)[1]
-            M.config.hooks.yazi_closed_successfully(chosen_file)
+            local chosen_file = vim.fn.readfile(config.chosen_file_path)[1]
+            config.hooks.yazi_closed_successfully(chosen_file)
             if chosen_file then
-              M.config.open_file_function(chosen_file)
+              config.open_file_function(chosen_file)
             end
           end
 
@@ -67,7 +71,7 @@ function M.yazi(path)
         end
 
         -- process events emitted from yazi
-        local events = utils.read_events_file(M.config.events_file_path)
+        local events = utils.read_events_file(config.events_file_path)
         local rename_events = iterators
           .iter(events)
           :filter(function(event)
@@ -92,14 +96,14 @@ function M.yazi(path)
       end,
     })
 
-    M.config.hooks.yazi_opened(path)
+    config.hooks.yazi_opened(path)
   end
   vim.schedule(function()
     vim.cmd('startinsert')
   end)
 end
 
-M.config = config.default()
+M.config = configModule.default()
 
 ---@param opts YaziConfig?
 function M.setup(opts)
@@ -121,7 +125,7 @@ function M.setup(opts)
           -- A buffer was opened for a directory.
           -- Remove the buffer as we want to show yazi instead
           vim.api.nvim_buf_delete(bufnr, { force = true })
-          require('yazi').yazi(file)
+          M.yazi(M.config, file)
         end
       end,
       group = yazi_augroup,
