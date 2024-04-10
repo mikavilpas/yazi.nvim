@@ -1,5 +1,5 @@
 local assert = require('luassert')
-local renaming = require('yazi.renaming')
+local event_handning = require('yazi.event_handling')
 
 describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   before_each(function()
@@ -21,7 +21,9 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     vim.fn.bufadd('/my-tmp/file_A')
 
     local rename_instructions =
-      renaming.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
+      event_handning.get_buffers_that_need_renaming_after_yazi_exited(
+        rename_event
+      )
 
     assert.is_equal(vim.tbl_count(rename_instructions), 1)
 
@@ -43,7 +45,9 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
       vim.fn.bufadd('/my-tmp/dir1/file')
 
       local rename_instructions =
-        renaming.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
+        event_handning.get_buffers_that_need_renaming_after_yazi_exited(
+          rename_event
+        )
 
       assert.is_equal(vim.tbl_count(rename_instructions), 1)
       local result = rename_instructions[1]
@@ -62,7 +66,9 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     vim.fn.bufadd('/my-tmp/dir1/file')
 
     local rename_instructions =
-      renaming.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
+      event_handning.get_buffers_that_need_renaming_after_yazi_exited(
+        rename_event
+      )
 
     assert.is_equal(vim.tbl_count(rename_instructions), 0)
   end)
