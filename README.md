@@ -61,6 +61,10 @@ Using lazy.nvim:
 
       -- when yazi was successfully closed
       yazi_closed_successfully = function(chosen_file) end,
+
+      -- when yazi opened multiple files. The default is to send them to the
+      -- quickfix list, but if you want to change that, you can define it here
+      yazi_opened_multiple_files = function(chosen_files) end,
     },
 
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
@@ -85,5 +89,6 @@ So far I have done some maintenance work and added a bunch of features:
 - feat: health check for yazi
 - feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
 - feat: allow customizing the method of opening the selected file in neovim
+- feat: can send multiple opened files to the quickfix list
 
 If you'd like to collaborate, contact me via GitHub issues.

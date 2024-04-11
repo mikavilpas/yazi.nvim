@@ -94,9 +94,7 @@ describe('opening a file', function()
   end)
 
   it('calls the open_file_function to open the selected file', function()
-    local spy_hook = spy.new(function(chosen_file)
-      assert.equals('/abc/test-file.txt', chosen_file)
-    end)
+    local spy_hook = spy.new()
 
     vim.api.nvim_command('edit /abc/test-file.txt')
 
@@ -106,5 +104,39 @@ describe('opening a file', function()
     })
 
     assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
+  end)
+end)
+describe('opening multiple files', function()
+  local target_file_1 = '/abc/test-file-multiple-1.txt'
+  local target_file_2 = '/abc/test-file-multiple-2.txt'
+
+  before_each(function()
+    local termopen = spy.on(api_mock, 'termopen')
+    termopen.callback = function(_, callback)
+      -- simulate yazi writing to the output file. This is done when a file is
+      -- chosen in yazi
+      local exit_code = 0
+      vim.fn.writefile({
+        target_file_1,
+        target_file_2,
+      }, '/tmp/yazi_filechosen-123')
+      callback.on_exit('job-id-ignored', exit_code, 'event-ignored')
+    end
+  end)
+
+  it('can open multiple files', function()
+    local spy_open_multiple_files = spy.new()
+    plugin.yazi({
+      hooks = {
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        yazi_opened_multiple_files = spy_open_multiple_files,
+      },
+      chosen_file_path = '/tmp/yazi_filechosen-123',
+    })
+
+    assert.spy(spy_open_multiple_files).was_called_with({
+      target_file_1,
+      target_file_2,
+    })
   end)
 end)

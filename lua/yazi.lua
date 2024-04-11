@@ -53,10 +53,16 @@ function M.yazi(config, path)
           if
             code == 0 and utils.file_exists(config.chosen_file_path) == true
           then
-            local chosen_file = vim.fn.readfile(config.chosen_file_path)[1]
-            config.hooks.yazi_closed_successfully(chosen_file)
-            if chosen_file then
-              config.open_file_function(chosen_file)
+            local chosen_files = vim.fn.readfile(config.chosen_file_path)
+
+            if #chosen_files > 1 then
+              config.hooks.yazi_opened_multiple_files(chosen_files)
+            else
+              local chosen_file = chosen_files[1]
+              config.hooks.yazi_closed_successfully(chosen_file)
+              if chosen_file then
+                config.open_file_function(chosen_file)
+              end
             end
           end
 
