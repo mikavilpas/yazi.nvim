@@ -38,4 +38,40 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
   return vim.tbl_values(renamed_buffers)
 end
 
+---@param config YaziConfig
+function M.process_events_emitted_from_yazi(config)
+  -- process events emitted from yazi
+  local events = utils.read_events_file(config.events_file_path)
+
+  for _, event in ipairs(events) do
+    if event.type == 'rename' then
+      ---@cast event YaziRenameEvent
+      local rename_instructions =
+        M.get_buffers_that_need_renaming_after_yazi_exited(event.data)
+      for _, instruction in ipairs(rename_instructions) do
+        vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
+      end
+    elseif event.type == 'move' then
+      ---@cast event YaziMoveEvent
+      for _, item in ipairs(event.data.items) do
+        local rename_instructions =
+          M.get_buffers_that_need_renaming_after_yazi_exited(item)
+        for _, instruction in ipairs(rename_instructions) do
+          vim.api.nvim_buf_set_name(
+            instruction.bufnr,
+            instruction.path.filename
+          )
+        end
+      end
+    elseif event.type == 'delete' then
+      ---@cast event YaziDeleteEvent
+      M.process_delete_event(event)
+    elseif event.type == 'trash' then
+      -- selene: allow(if_same_then_else)
+      ---@cast event YaziTrashEvent
+      M.process_delete_event(event)
+    end
+  end
+end
+
 return M

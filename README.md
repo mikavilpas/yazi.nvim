@@ -20,7 +20,7 @@ So far I have done some maintenance work and added a bunch of features:
 - test: add simple testing setup for future development
 - feat: can optionally open yazi instead of netrw for directories
 - feat: health check for yazi
-- feat: files renamed in yazi are kept in sync with open buffers
+- feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
 - feat: allow customizing the method of opening the selected file in neovim
 
 If you'd like to collaborate, contact me via GitHub issues.
