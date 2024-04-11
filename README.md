@@ -9,22 +9,6 @@
 - yazi pre-selects the current file when opened
 - Files renamed in yazi are kept in sync with open buffers
 
-## About my fork
-
-I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
-
-So far I have done some maintenance work and added a bunch of features:
-
-- chore: removed unused code
-- feat: yazi pre-selects the current file when opened
-- test: add simple testing setup for future development
-- feat: can optionally open yazi instead of netrw for directories
-- feat: health check for yazi
-- feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
-- feat: allow customizing the method of opening the selected file in neovim
-
-If you'd like to collaborate, contact me via GitHub issues.
-
 ## Installation
 
 > **Note:** This plugin requires a recent version of yazi.
@@ -87,3 +71,19 @@ Using lazy.nvim:
   },
 }
 ```
+
+## About my fork
+
+I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
+
+So far I have done some maintenance work and added a bunch of features:
+
+- chore: removed unused code
+- feat: yazi pre-selects the current file when opened
+- test: add simple testing setup for future development
+- feat: can optionally open yazi instead of netrw for directories
+- feat: health check for yazi
+- feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
+- feat: allow customizing the method of opening the selected file in neovim
+
+If you'd like to collaborate, contact me via GitHub issues.
