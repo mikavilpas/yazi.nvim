@@ -11,15 +11,21 @@
 ---@field public yazi_opened? fun(preselected_path: string | nil): nil
 ---@field public yazi_closed_successfully? fun(chosen_file: string | nil): nil
 
----@alias YaziEvent YaziRenameEvent | YaziDeleteEvent | YaziTrashEvent
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent
 
 ---@class YaziRenameEvent
 ---@field public type "rename"
 ---@field public timestamp string
 ---@field public id string
----@field public data YaziEventDataRename
+---@field public data YaziEventDataRenameOrMove
 
----@class YaziEventDataRename
+---@class YaziMoveEvent
+---@field public type "move"
+---@field public timestamp string
+---@field public id string
+---@field public data {items: YaziEventDataRenameOrMove[]}
+
+---@class YaziEventDataRenameOrMove
 ---@field public from string
 ---@field public to string
 

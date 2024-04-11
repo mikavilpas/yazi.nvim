@@ -9,9 +9,9 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     end
   end)
 
-  it('can detect renames to files whose names match exactly', function()
+  it('can detect moves to files whose names match exactly', function()
     ---@type YaziEventDataRenameOrMove
-    local rename_event = {
+    local move_event = {
       from = '/my-tmp/file1',
       to = '/my-tmp/file2',
     }
@@ -20,23 +20,23 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     vim.fn.bufadd('/my-tmp/file1')
     vim.fn.bufadd('/my-tmp/file_A')
 
-    local rename_instructions =
+    local instructions =
       event_handling.get_buffers_that_need_renaming_after_yazi_exited(
-        rename_event
+        move_event
       )
 
-    assert.is_equal(vim.tbl_count(rename_instructions), 1)
+    assert.is_equal(vim.tbl_count(instructions), 1)
 
-    local result1 = rename_instructions[1]
+    local result1 = instructions[1]
     assert.is_equal('/my-tmp/file2', result1.path.filename)
     assert.is_number(result1.bufnr)
   end)
 
   it(
-    'can detect renames to buffers open in a directory that was renamed',
+    'can detect moves to buffers open in a directory that was moved',
     function()
       ---@type YaziEventDataRenameOrMove
-      local rename_event = {
+      local move_event = {
         from = '/my-tmp/dir1',
         to = '/my-tmp/dir2',
       }
@@ -44,32 +44,32 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
       -- simulate the buffer being opened
       vim.fn.bufadd('/my-tmp/dir1/file')
 
-      local rename_instructions =
+      local instructions =
         event_handling.get_buffers_that_need_renaming_after_yazi_exited(
-          rename_event
+          move_event
         )
 
-      assert.is_equal(vim.tbl_count(rename_instructions), 1)
-      local result = rename_instructions[1]
+      assert.is_equal(vim.tbl_count(instructions), 1)
+      local result = instructions[1]
       assert.is_equal('/my-tmp/dir2/file', result.path.filename)
     end
   )
 
-  it("doesn't rename a buffer that was not renamed in yazi", function()
+  it("doesn't move a buffer that was not moved in yazi", function()
     ---@type YaziEventDataRenameOrMove
-    local rename_event = {
+    local move_event = {
       from = '/my-tmp/not-opened-file',
-      to = '/my-tmp/not-opened-file-renamed',
+      to = '/my-tmp/not-opened-file-moved',
     }
 
     -- simulate the buffer being opened
     vim.fn.bufadd('/my-tmp/dir1/file')
 
-    local rename_instructions =
+    local instructions =
       event_handling.get_buffers_that_need_renaming_after_yazi_exited(
-        rename_event
+        move_event
       )
 
-    assert.is_equal(vim.tbl_count(rename_instructions), 0)
+    assert.is_equal(vim.tbl_count(instructions), 0)
   end)
 end)

@@ -28,7 +28,7 @@ function M.yazi(config, path)
 
   os.remove(config.chosen_file_path)
   local cmd = string.format(
-    'yazi "%s" --local-events "rename,delete,trash" --chooser-file "%s" > %s',
+    'yazi "%s" --local-events "rename,delete,trash,move" --chooser-file "%s" > %s',
     path,
     config.chosen_file_path,
     config.events_file_path
@@ -83,6 +83,20 @@ function M.yazi(config, path)
                 instruction.bufnr,
                 instruction.path.filename
               )
+            end
+          elseif event.type == 'move' then
+            ---@cast event YaziMoveEvent
+            for _, item in ipairs(event.data.items) do
+              local rename_instructions =
+                event_handling.get_buffers_that_need_renaming_after_yazi_exited(
+                  item
+                )
+              for _, instruction in ipairs(rename_instructions) do
+                vim.api.nvim_buf_set_name(
+                  instruction.bufnr,
+                  instruction.path.filename
+                )
+              end
             end
           elseif event.type == 'delete' then
             ---@cast event YaziDeleteEvent

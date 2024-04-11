@@ -62,6 +62,21 @@ function M.parse_events(events_file_lines)
         data = vim.fn.json_decode(data_string),
       }
       table.insert(events, event)
+    elseif type == 'move' then
+      -- example of a move event:
+      -- move,1712854829131439,1712854829131439,{"items":[{"from":"/tmp/test/test","to":"/tmp/test"}]}
+      local timestamp = parts[2]
+      local id = parts[3]
+      local data_string = table.concat(parts, ',', 4, #parts)
+
+      ---@type YaziMoveEvent
+      local event = {
+        type = type,
+        timestamp = timestamp,
+        id = id,
+        data = vim.fn.json_decode(data_string),
+      }
+      table.insert(events, event)
     elseif type == 'delete' then
       -- example of a delete event:
       -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
