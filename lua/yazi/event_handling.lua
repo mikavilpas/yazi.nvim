@@ -16,7 +16,7 @@ function M.process_delete_event(event)
   end
 end
 
----@param rename_event YaziEventDataRename
+---@param rename_event YaziEventDataRenameOrMove
 ---@return RenameableBuffer[] "instructions for renaming the buffers (command pattern)"
 function M.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
   local open_buffers = utils.get_open_buffers()
