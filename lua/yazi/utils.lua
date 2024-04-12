@@ -149,4 +149,45 @@ function M.get_open_buffers()
   return open_buffers
 end
 
+---@param prev_win integer
+---@param floating_window_id integer
+---@param floating_window_buffer integer
+---@param config YaziConfig
+function M.on_yazi_exited(
+  prev_win,
+  floating_window_id,
+  floating_window_buffer,
+  config
+)
+  vim.cmd('silent! :checktime')
+
+  -- open the file that was chosen
+  if not vim.api.nvim_win_is_valid(prev_win) then
+    return
+  end
+
+  vim.api.nvim_win_close(floating_window_id, true)
+  vim.api.nvim_set_current_win(prev_win)
+  if M.file_exists(config.chosen_file_path) == true then
+    local chosen_files = vim.fn.readfile(config.chosen_file_path)
+
+    if #chosen_files > 1 then
+      config.hooks.yazi_opened_multiple_files(chosen_files)
+    else
+      local chosen_file = chosen_files[1]
+      config.hooks.yazi_closed_successfully(chosen_file)
+      if chosen_file then
+        config.open_file_function(chosen_file)
+      end
+    end
+  end
+
+  if
+    vim.api.nvim_buf_is_valid(floating_window_buffer)
+    and vim.api.nvim_buf_is_loaded(floating_window_buffer)
+  then
+    vim.api.nvim_buf_delete(floating_window_buffer, { force = true })
+  end
+end
+
 return M

@@ -16,7 +16,7 @@ function M.default()
       ---@diagnostic disable-next-line: unused-local
       yazi_closed_successfully = function(_chosen_file) end,
       yazi_opened_multiple_files = function(chosen_files)
-        -- show the items it the quickfix list
+        -- show the items in the quickfix list
         vim.fn.setqflist({}, 'r', {
           title = 'Yazi',
           items = vim.tbl_map(function(file)

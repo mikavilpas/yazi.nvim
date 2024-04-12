@@ -1,6 +1,6 @@
 local M = {}
 
---- open floating window with nice borders
+--- open a floating window with nice borders
 ---@param config YaziConfig
 ---@return integer, integer
 function M.open_floating_window(config)

@@ -39,40 +39,12 @@ function M.yazi(config, path)
     vimfn.termopen(cmd, {
       ---@diagnostic disable-next-line: unused-local
       on_exit = function(_job_id, code, _event)
+        M.yazi_loaded = false
         if code ~= 0 then
           return
         end
 
-        M.yazi_loaded = false
-        vim.cmd('silent! :checktime')
-
-        -- open the file that was chosen
-        if vim.api.nvim_win_is_valid(prev_win) then
-          vim.api.nvim_win_close(win, true)
-          vim.api.nvim_set_current_win(prev_win)
-          if
-            code == 0 and utils.file_exists(config.chosen_file_path) == true
-          then
-            local chosen_files = vim.fn.readfile(config.chosen_file_path)
-
-            if #chosen_files > 1 then
-              config.hooks.yazi_opened_multiple_files(chosen_files)
-            else
-              local chosen_file = chosen_files[1]
-              config.hooks.yazi_closed_successfully(chosen_file)
-              if chosen_file then
-                config.open_file_function(chosen_file)
-              end
-            end
-          end
-
-          if
-            vim.api.nvim_buf_is_valid(buffer)
-            and vim.api.nvim_buf_is_loaded(buffer)
-          then
-            vim.api.nvim_buf_delete(buffer, { force = true })
-          end
-        end
+        utils.on_yazi_exited(prev_win, win, buffer, config)
 
         event_handling.process_events_emitted_from_yazi(config)
       end,
