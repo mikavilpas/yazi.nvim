@@ -68,6 +68,7 @@ describe('opening a file', function()
       vim.api.nvim_command('edit /abc/test-file.txt')
 
       plugin.yazi({
+        ---@diagnostic disable-next-line: missing-fields
         hooks = {
           ---@diagnostic disable-next-line: assign-type-mismatch
           yazi_closed_successfully = spy_hook,
@@ -84,6 +85,7 @@ describe('opening a file', function()
     vim.api.nvim_command('edit /abc/yazi_opened_hook_file.txt')
 
     plugin.yazi({
+      ---@diagnostic disable-next-line: missing-fields
       hooks = {
         ---@diagnostic disable-next-line: assign-type-mismatch
         yazi_opened = spy_hook,
@@ -106,6 +108,7 @@ describe('opening a file', function()
     assert.spy(spy_hook).was_called_with('/abc/test-file.txt')
   end)
 end)
+
 describe('opening multiple files', function()
   local target_file_1 = '/abc/test-file-multiple-1.txt'
   local target_file_2 = '/abc/test-file-multiple-2.txt'
@@ -127,6 +130,7 @@ describe('opening multiple files', function()
   it('can open multiple files', function()
     local spy_open_multiple_files = spy.new()
     plugin.yazi({
+      ---@diagnostic disable-next-line: missing-fields
       hooks = {
         ---@diagnostic disable-next-line: assign-type-mismatch
         yazi_opened_multiple_files = spy_open_multiple_files,

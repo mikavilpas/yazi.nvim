@@ -8,9 +8,9 @@
 ---@field public yazi_floating_window_winblend? float "the winblend value for the floating window. See :h winblend"
 
 ---@class YaziConfigHooks
----@field public yazi_opened? fun(preselected_path: string | nil): nil
----@field public yazi_closed_successfully? fun(chosen_file: string | nil): nil
----@field public yazi_opened_multiple_files? fun(chosen_files: string[]): nil
+---@field public yazi_opened fun(preselected_path: string | nil): nil
+---@field public yazi_closed_successfully fun(chosen_file: string | nil): nil
+---@field public yazi_opened_multiple_files fun(chosen_files: string[]): nil
 
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent
 
