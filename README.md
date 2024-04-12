@@ -36,9 +36,10 @@ Using lazy.nvim:
   ---@type YaziConfig
   opts = {
     -- Below is the default configuration. It is optional to set these values.
-    --
 
-    -- enable this if you want to open yazi instead of netrw
+    -- enable this if you want to open yazi instead of netrw.
+    -- Note that if you enable this, you need to call yazi.setup() to
+    -- initialize the plugin.
     open_for_directories = false,
 
     -- the path to a temporary file that will be created by yazi to store the
