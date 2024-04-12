@@ -2,7 +2,7 @@ local M = {}
 
 --- open a floating window with nice borders
 ---@param config YaziConfig
----@return integer, integer
+---@return integer, integer, integer
 function M.open_floating_window(config)
   local height = math.ceil(vim.o.lines * config.floating_window_scaling_factor)
     - 1
@@ -66,7 +66,7 @@ function M.open_floating_window(config)
   local cmd = [[autocmd WinLeave <buffer> silent! execute 'silent bdelete! %s']]
   vim.cmd(cmd:format(border_buffer))
 
-  return win, border_window
+  return win, border_window, yazi_buffer
 end
 
 return M

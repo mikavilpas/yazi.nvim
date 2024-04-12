@@ -38,10 +38,12 @@ Using lazy.nvim:
   ---@type YaziConfig
   opts = {
     -- Below is the default configuration. It is optional to set these values.
+    -- You can customize the configuration for each yazi call by passing it to
+    -- yazi() explicitly
 
     -- enable this if you want to open yazi instead of netrw.
     -- Note that if you enable this, you need to call yazi.setup() to
-    -- initialize the plugin.
+    -- initialize the plugin. lazy.nvim does this for you in certain cases.
     open_for_directories = false,
 
     -- the path to a temporary file that will be created by yazi to store the
@@ -54,20 +56,26 @@ Using lazy.nvim:
 
     -- what neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
-    -- If you want to open it in a split / new tab, you can define it here.
-    open_file_function = function(chosen_file) end,
+    open_file_function = function(chosen_file, config) end,
+
+    -- completely override the keymappings for yazi. This function will be
+    -- called in the context of the yazi terminal buffer.
+    set_keymappings_function = function(yazi_buffer_id, config) end,
 
     hooks = {
       -- if you want to execute a custom action when yazi has been opened,
-      -- you can define it here
-      yazi_opened = function(preselected_path) end,
+      -- you can define it here.
+      yazi_opened = function(preselected_path, yazi_buffer_id, config)
+        -- you can optionally modify the config for this specific yazi
+        -- invocation if you want to customize the behaviour
+      end,
 
       -- when yazi was successfully closed
-      yazi_closed_successfully = function(chosen_file) end,
+      yazi_closed_successfully = function(chosen_file, config) end,
 
       -- when yazi opened multiple files. The default is to send them to the
       -- quickfix list, but if you want to change that, you can define it here
-      yazi_opened_multiple_files = function(chosen_files) end,
+      yazi_opened_multiple_files = function(chosen_files, config) end,
     },
 
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
@@ -78,6 +86,12 @@ Using lazy.nvim:
   },
 }
 ```
+
+## Keybindings
+
+These are the default keybindings that are available when yazi is open:
+
+- `<c-v>`: open the selected file in a vertical split
 
 ## About my fork
 
@@ -93,5 +107,6 @@ So far I have done some maintenance work and added a bunch of features:
 - feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
 - feat: allow customizing the method of opening the selected file in neovim
 - feat: can send multiple opened files to the quickfix list
+- feat: can open a file in a vertical split
 
 If you'd like to collaborate, contact me via GitHub issues.

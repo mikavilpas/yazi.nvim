@@ -24,7 +24,7 @@ function M.yazi(config, path)
 
   local prev_win = vim.api.nvim_get_current_win()
 
-  local win, buffer = window.open_floating_window(config)
+  local win, _, yazi_buffer = window.open_floating_window(config)
 
   os.remove(config.chosen_file_path)
   local cmd = string.format(
@@ -41,16 +41,18 @@ function M.yazi(config, path)
       on_exit = function(_job_id, code, _event)
         M.yazi_loaded = false
         if code ~= 0 then
+          print('yazi exited with code', code)
           return
         end
 
-        utils.on_yazi_exited(prev_win, win, buffer, config)
+        utils.on_yazi_exited(prev_win, win, yazi_buffer, config)
 
         event_handling.process_events_emitted_from_yazi(config)
       end,
     })
 
-    config.hooks.yazi_opened(path)
+    config.hooks.yazi_opened(path, yazi_buffer, config)
+    config.set_keymappings_function(yazi_buffer, config)
   end
   vim.schedule(function()
     vim.cmd('startinsert')
