@@ -1,5 +1,7 @@
 # A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
 
+Yazi is a blazing fast file manager for the terminal. This plugin allows you to open yazi in a floating window in neovim.
+
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/4640cb54-efad-47b5-9157-735e78bf0c43>
 
 ## Features
