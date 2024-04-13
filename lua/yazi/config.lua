@@ -24,25 +24,27 @@ end
 ---@param yazi_buffer integer
 ---@param config YaziConfig
 function M.default_set_keymappings_function(yazi_buffer, config)
-  local function select_current_file_and_close_yazi()
-    -- select the current file in yazi and close it (enter is the default
-    -- keybinding for selecting a file)
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes('<enter>', true, false, true),
-      'n',
-      true
-    )
-  end
-
   vim.keymap.set({ 't' }, '<c-v>', function()
     config.open_file_function = openers.open_file_in_vertical_split
-    select_current_file_and_close_yazi()
+    M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-s>', function()
     config.open_file_function = openers.open_file_in_horizontal_split
-    select_current_file_and_close_yazi()
+    M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
+end
+
+-- This is a utility function that can be used in the set_keymappings_function
+-- You can also use it in your own keymappings function
+function M.select_current_file_and_close_yazi()
+  -- select the current file in yazi and close it (enter is the default
+  -- keybinding for selecting a file)
+  vim.api.nvim_feedkeys(
+    vim.api.nvim_replace_termcodes('<enter>', true, false, true),
+    'n',
+    true
+  )
 end
 
 return M
