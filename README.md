@@ -7,9 +7,11 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 ## Features
 
 - Open yazi in a floating window
+- Files can be opened in the current buffer, a vertical split, a horizontal split, or a new tab
+- If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
-- yazi pre-selects the current file when opened
 - Files renamed in yazi are kept in sync with open buffers
+- Customizable keybindings
 
 ## Installation
 
