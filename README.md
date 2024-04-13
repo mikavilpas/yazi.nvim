@@ -92,6 +92,7 @@ Using lazy.nvim:
 These are the default keybindings that are available when yazi is open:
 
 - `<c-v>`: open the selected file in a vertical split
+- `<c-s>`: open the selected file in a horizontal split
 
 ## About my fork
 
@@ -108,5 +109,6 @@ So far I have done some maintenance work and added a bunch of features:
 - feat: allow customizing the method of opening the selected file in neovim
 - feat: can send multiple opened files to the quickfix list
 - feat: can open a file in a vertical split
+- feat: can open a file in a horizontal split
 
 If you'd like to collaborate, contact me via GitHub issues.
