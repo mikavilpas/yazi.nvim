@@ -73,7 +73,7 @@ Using lazy.nvim:
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
     floating_window_scaling_factor = 0.9,
 
-    -- the winblend value for the floating window. See :h winblend
+    -- the transparency of the yazi floating window (0-100). See :h winblend
     yazi_floating_window_winblend = 0,
   },
 }

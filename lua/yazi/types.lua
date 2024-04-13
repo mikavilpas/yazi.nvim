@@ -5,7 +5,7 @@
 ---@field public open_file_function? fun(chosen_file: string): nil "a function that will be called when a file is chosen in yazi"
 ---@field public hooks? YaziConfigHooks
 ---@field public floating_window_scaling_factor? float "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
----@field public yazi_floating_window_winblend? float "the winblend value for the floating window. See :h winblend"
+---@field public yazi_floating_window_winblend? float "the transparency of the yazi floating window (0-100). See :h winblend"
 
 ---@class YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil): nil
