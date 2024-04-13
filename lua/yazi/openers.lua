@@ -13,6 +13,10 @@ function M.open_file_in_horizontal_split(chosen_file)
   vim.cmd(string.format('split %s', chosen_file))
 end
 
+function M.open_file_in_tab(chosen_file)
+  vim.cmd(string.format('tabedit %s', chosen_file))
+end
+
 ---@param chosen_files string[]
 function M.send_files_to_quickfix_list(chosen_files)
   vim.fn.setqflist({}, 'r', {
