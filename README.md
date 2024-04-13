@@ -93,6 +93,9 @@ These are the default keybindings that are available when yazi is open:
 
 - `<c-v>`: open the selected file in a vertical split
 - `<c-s>`: open the selected file in a horizontal split
+- `<c-t>`: open the selected file in a new tab
+
+Notice that these are also the defaults for telescope.
 
 ## About my fork
 
@@ -110,5 +113,6 @@ So far I have done some maintenance work and added a bunch of features:
 - feat: can send multiple opened files to the quickfix list
 - feat: can open a file in a vertical split
 - feat: can open a file in a horizontal split
+- feat: can open a file in a new tab
 
 If you'd like to collaborate, contact me via GitHub issues.
