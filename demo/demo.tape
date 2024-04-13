@@ -72,22 +72,86 @@ Set Height 600
 Hide
 Type "nvim ./file.txt" Enter
 Sleep 1s
+Enter
+Escape
 Space
 Type "snd" # hide all notifications from my LazyVim
+Type "" Escape # close any notifications
 
 Show
-Sleep 2.5s
+Sleep 1s
 
 Type "i" Enter
 Type "Welcome to yazi.nvim!" Enter
 Sleep 1s
-Type "Let's open another file with yazi." Escape
+Type "Let's open a couple of files with yazi." Escape
 Sleep 2.5s
 
-
-Type@800ms ":Yazi" Enter
-Sleep 2.5s
+# open yazi
 Up
 Sleep 2.5s
+
+# select ./file-1.txt and open it with Enter
+Down
+Sleep 0.8s
 Enter
 Sleep 2s
+
+Type "Go" Enter Enter
+Sleep 0.5s
+Type "Besides opening in the current buffer," Enter
+Type "files can also be opened in splits." Enter
+Type "Now let's open a file in a vertical split." Escape
+Sleep 1s
+
+# open yazi
+Up
+Sleep 2s
+
+# select ./file-2.txt
+Down
+Sleep 0.8s
+# open in vertical split
+Ctrl+V
+Sleep 1s
+Type "Go" Enter Enter
+Sleep 0.5s
+Type "Let's open the next file in a horizontal split." Escape
+Sleep 0.5
+
+# open yazi
+Up
+Sleep 2s
+
+# select ./file-1.txt
+Down
+Sleep 0.8s
+# open in horizontal split
+Ctrl+S
+Sleep 2s
+
+Type "Go" Enter Enter
+Sleep 0.5s
+Type "Yazi can also select multiple files" Enter
+Type "with <space> or <c-a>." Enter 
+Type "This will place them in the quickfix list." Enter 
+Sleep 0.5
+Type "Let's see what that looks like." Escape
+Sleep 1
+
+# close the new split windows in order to make room for the quickfix list
+Space 
+Type "wd"
+Sleep 0.2
+Space 
+Type "wd"
+Sleep 0.2
+
+# open yazi
+Up
+Sleep 2s
+Ctrl+A
+Sleep 1s
+Enter
+
+Sleep 0.5
