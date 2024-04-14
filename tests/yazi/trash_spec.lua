@@ -20,7 +20,7 @@ describe('process_trash_event', function()
       data = { urls = { '/abc/def' } },
     }
 
-    event_handling.process_delete_event(event)
+    event_handling.process_delete_event(event, {})
 
     assert.is_false(vim.api.nvim_buf_is_valid(buffer))
   end)
@@ -36,7 +36,7 @@ describe('process_trash_event', function()
       data = { urls = { '/abc' } },
     }
 
-    event_handling.process_delete_event(event)
+    event_handling.process_delete_event(event, {})
 
     assert.is_false(vim.api.nvim_buf_is_valid(buffer))
   end)
@@ -52,8 +52,32 @@ describe('process_trash_event', function()
       data = { urls = { '/abc/ghi' } },
     }
 
-    event_handling.process_delete_event(event)
+    event_handling.process_delete_event(event, {})
 
     assert.is_true(vim.api.nvim_buf_is_valid(buffer))
+  end)
+
+  it("doesn't delete a buffer that was renamed to in a later event", function()
+    local buffer1 = vim.fn.bufadd('/def/file')
+
+    ---@type YaziTrashEvent
+    local delete_event = {
+      type = 'trash',
+      timestamp = '1712766606832135',
+      id = '1712766606832135',
+      data = { urls = { '/def/file' } },
+    }
+
+    ---@type YaziRenameEvent
+    local rename_event = {
+      type = 'rename',
+      timestamp = '1712766606832135',
+      id = '1712766606832135',
+      data = { from = '/def/other-file', to = '/def/file' },
+    }
+
+    event_handling.process_delete_event(delete_event, { rename_event })
+
+    assert.is_true(vim.api.nvim_buf_is_valid(buffer1))
   end)
 end)
