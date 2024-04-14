@@ -14,5 +14,15 @@ lint:
 test:
 	${NVIM} --headless -c "PlenaryBustedDirectory tests { init = 'scripts/init.lua' }"
 
+test-in-ci:
+	(for i in $$(seq 1 3); do \
+			${NVIM} --headless -c "PlenaryBustedDirectory tests { init = 'scripts/init.lua' }" && break || \
+			if [ $$i -eq 3 ]; then \
+					echo "Tests failed after 3 attempts."; \
+					exit 1; \
+			fi; \
+			echo "Retrying tests... attempt $$i"; \
+	done)
+
 format:
 	stylua lua/

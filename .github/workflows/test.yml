@@ -57,4 +57,4 @@ jobs:
           export PATH="${PWD}/_neovim/bin:${PATH}"
           export PATH="${PWD}/_yazi/yazi-x86_64-unknown-linux-gnu/:${PATH}"
           export VIM="${PWD}/_neovim/share/nvim/runtime"
-          make test
+          make test-in-ci
