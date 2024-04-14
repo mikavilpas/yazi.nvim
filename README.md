@@ -15,8 +15,12 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 
 ## Installation
 
-> **Note:** This plugin requires a recent version of yazi.
-> You can run `:checkhealth yazi` to see if a compatible version is installed and working.
+First, make sure you have the requirements:
+
+- neovim 0.9.x or later
+- yazi 0.2.4 or later. For the best experience, use a version released after 2024-04-06 that includes [this](https://github.com/sxyazi/yazi/pull/880) change
+
+> You can run `:checkhealth yazi` to see if compatible versions are installed and working.
 
 Using lazy.nvim:
 
