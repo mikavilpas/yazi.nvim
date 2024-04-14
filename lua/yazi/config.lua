@@ -26,16 +26,31 @@ end
 function M.default_set_keymappings_function(yazi_buffer, config)
   vim.keymap.set({ 't' }, '<c-v>', function()
     config.open_file_function = openers.open_file_in_vertical_split
+    config.hooks.yazi_opened_multiple_files = function(chosen_files)
+      for _, chosen_file in ipairs(chosen_files) do
+        config.open_file_function(chosen_file, config)
+      end
+    end
     M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-s>', function()
     config.open_file_function = openers.open_file_in_horizontal_split
+    config.hooks.yazi_opened_multiple_files = function(chosen_files)
+      for _, chosen_file in ipairs(chosen_files) do
+        config.open_file_function(chosen_file, config)
+      end
+    end
     M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-t>', function()
     config.open_file_function = openers.open_file_in_tab
+    config.hooks.yazi_opened_multiple_files = function(chosen_files)
+      for _, chosen_file in ipairs(chosen_files) do
+        config.open_file_function(chosen_file, config)
+      end
+    end
     M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
 end
