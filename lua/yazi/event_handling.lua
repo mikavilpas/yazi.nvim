@@ -1,16 +1,30 @@
 local utils = require('yazi.utils')
+local plenaryIterators = require('plenary.iterators')
 
 local M = {}
 
 ---@param event YaziDeleteEvent | YaziTrashEvent
-function M.process_delete_event(event)
+---@param remaining_events YaziEvent[]
+function M.process_delete_event(event, remaining_events)
   local open_buffers = utils.get_open_buffers()
 
   for _, buffer in ipairs(open_buffers) do
     for _, url in ipairs(event.data.urls) do
       if buffer:matches_exactly(url) or buffer:matches_parent(url) then
-        -- allow the user to cancel the deletion
-        vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
+        local is_renamed_in_later_event = plenaryIterators
+          .iter(remaining_events)
+          :find(
+            ---@param e YaziEvent
+            function(e)
+              return e.type == 'rename' and e.data.to == url
+            end
+          )
+
+        if is_renamed_in_later_event then
+          break
+        else
+          vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
+        end
       end
     end
   end
@@ -43,7 +57,7 @@ function M.process_events_emitted_from_yazi(config)
   -- process events emitted from yazi
   local events = utils.read_events_file(config.events_file_path)
 
-  for _, event in ipairs(events) do
+  for i, event in ipairs(events) do
     if event.type == 'rename' then
       ---@cast event YaziRenameEvent
       local rename_instructions =
@@ -64,12 +78,14 @@ function M.process_events_emitted_from_yazi(config)
         end
       end
     elseif event.type == 'delete' then
+      local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziDeleteEvent
-      M.process_delete_event(event)
+      M.process_delete_event(event, remaining_events)
     elseif event.type == 'trash' then
       -- selene: allow(if_same_then_else)
+      local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziTrashEvent
-      M.process_delete_event(event)
+      M.process_delete_event(event, remaining_events)
     end
   end
 end
