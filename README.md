@@ -58,8 +58,15 @@ Using lazy.nvim:
     -- initialize the plugin. lazy.nvim does this for you in certain cases.
     open_for_directories = false,
 
+    -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
+    floating_window_scaling_factor = 0.9,
+
+    -- the transparency of the yazi floating window (0-100). See :h winblend
+    yazi_floating_window_winblend = 0,
+
     -- the path to a temporary file that will be created by yazi to store the
-    -- chosen file path
+    -- chosen file path. This is used internally but you might want to change
+    -- it if there are issues accessing the default path.
     chosen_file_path = '/tmp/yazi_filechosen',
 
     -- the path to a temporary file that will be created by yazi to store
@@ -89,12 +96,6 @@ Using lazy.nvim:
       -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = function(chosen_files, config) end,
     },
-
-    -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
-    floating_window_scaling_factor = 0.9,
-
-    -- the transparency of the yazi floating window (0-100). See :h winblend
-    yazi_floating_window_winblend = 0,
   },
 }
 ```
