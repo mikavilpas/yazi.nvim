@@ -1,4 +1,4 @@
-# A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
+# 🎲 A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
 
 <a href="https://dotfyle.com/plugins/mikavilpas/yazi.nvim">
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" />
@@ -8,7 +8,7 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/c7ff98ee-54d6-4ad0-9318-903e4b674f84>
 
-## Features
+## ✨ Features
 
 - Open yazi in a floating window
 - Files can be opened in the current buffer, a vertical split, a horizontal split, or a new tab
@@ -17,7 +17,7 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 - Files renamed in yazi are kept in sync with open buffers
 - Customizable keybindings
 
-## Installation
+## 📦 Installation
 
 First, make sure you have the requirements:
 
@@ -25,6 +25,8 @@ First, make sure you have the requirements:
 - yazi 0.2.4 or later. For the best experience, use a version released after 2024-04-06 that includes [this](https://github.com/sxyazi/yazi/pull/880) change
 
 > You can run `:checkhealth yazi` to see if compatible versions are installed and working.
+
+## ⚙️ Configuration
 
 Using lazy.nvim:
 
@@ -97,7 +99,7 @@ Using lazy.nvim:
 }
 ```
 
-## Keybindings
+## ⌨️ Keybindings
 
 These are the default keybindings that are available when yazi is open:
 
@@ -107,7 +109,7 @@ These are the default keybindings that are available when yazi is open:
 
 Notice that these are also the defaults for telescope.
 
-## About my fork
+## 🍴 About my fork
 
 I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
 
