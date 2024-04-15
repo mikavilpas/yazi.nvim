@@ -1,5 +1,9 @@
 # A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
 
+<a href="https://dotfyle.com/plugins/mikavilpas/yazi.nvim">
+  <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" />
+</a>
+
 Yazi is a blazing fast file manager for the terminal. This plugin allows you to open yazi in a floating window in neovim.
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/c7ff98ee-54d6-4ad0-9318-903e4b674f84>
