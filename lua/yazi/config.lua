@@ -34,7 +34,7 @@ function M.default_set_keymappings_function(yazi_buffer, config)
     M.select_current_file_and_close_yazi()
   end, { buffer = yazi_buffer })
 
-  vim.keymap.set({ 't' }, '<c-s>', function()
+  vim.keymap.set({ 't' }, '<c-x>', function()
     config.open_file_function = openers.open_file_in_horizontal_split
     config.hooks.yazi_opened_multiple_files = function(chosen_files)
       for _, chosen_file in ipairs(chosen_files) do

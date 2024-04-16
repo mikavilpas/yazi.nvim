@@ -123,7 +123,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
 These are the default keybindings that are available when yazi is open:
 
 - `<c-v>`: open the selected file in a vertical split
-- `<c-s>`: open the selected file in a horizontal split
+- `<c-x>`: open the selected file in a horizontal split
 - `<c-t>`: open the selected file in a new tab
 
 Notice that these are also the defaults for telescope.
