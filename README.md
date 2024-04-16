@@ -110,7 +110,7 @@ These are the default keybindings that are available when yazi is open:
 
 Notice that these are also the defaults for telescope.
 
-## Customizing yazi
+## 🪛 Customizing yazi
 
 Yazi is highly customizable. It features its own plugin and event system, themes, and keybindings. This section lists some of the plugins and themes that I like.
 
