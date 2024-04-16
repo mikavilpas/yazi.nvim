@@ -28,7 +28,7 @@ First, make sure you have the requirements:
 
 ## ⚙️ Configuration
 
-Using lazy.nvim:
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 ---@type LazySpec
@@ -40,6 +40,7 @@ Using lazy.nvim:
   event = "VeryLazy",
   keys = {
     {
+      -- 👇 choose your own keymapping
       "<leader>-",
       function()
         require("yazi").yazi()
@@ -47,6 +48,23 @@ Using lazy.nvim:
       { desc = "Open the file manager" },
     },
   },
+  ---@type YaziConfig
+  opts = {
+    open_for_directories = false,
+  },
+}
+```
+
+### Advanced configuration
+
+> You don't have to set any of these options. The defaults are fine for most users.
+
+You can optionally configure yazi.nvim by setting any of the options below.
+
+```lua
+{
+  -- ... other lazy.nvim configuration from above
+
   ---@type YaziConfig
   opts = {
     -- Below is the default configuration. It is optional to set these values.
