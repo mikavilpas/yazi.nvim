@@ -110,6 +110,19 @@ These are the default keybindings that are available when yazi is open:
 
 Notice that these are also the defaults for telescope.
 
+## Customizing yazi
+
+Yazi is highly customizable. It features its own plugin and event system, themes, and keybindings. This section lists some of the plugins and themes that I like.
+
+- <https://github.com/DreamMaoMao/keyjump.yazi> allows jumping to a line by
+  typing a hint character, much like
+  [hop.nvim](https://github.com/smoka7/hop.nvim)
+- <https://github.com/Rolv-Apneseth/starship.yazi> is a port of the
+  [starship prompt](https://starship.rs) to yazi. It allows reusing the prompt
+  you are using in your shell in yazi.
+- <https://github.com/catppuccin/yazi> ports the catppuccin theme to yazi.
+- <https://github.com/catppuccin/bat> can be used to change the syntax highlighting theme yazi uses to preview files. See [this discussion](https://github.com/sxyazi/yazi/discussions/818) or [my config](https://github.com/mikavilpas/dotfiles/commit/bb07515f69d219fd3435d222fcb2d80d27a25025#diff-973b37f40e024ca0f7e62f2569efce24ad550d0352adc8449168ac950af9eaf5R8) for an example of using it
+
 ## 🍴 About my fork
 
 I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
