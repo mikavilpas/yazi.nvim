@@ -4,7 +4,7 @@
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" />
 </a>
 
-Yazi is a blazing fast file manager for the terminal. This plugin allows you to open yazi in a floating window in neovim.
+Yazi is a blazing fast file manager for the terminal. This plugin allows you to open yazi in a floating window in Neovim.
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/c7ff98ee-54d6-4ad0-9318-903e4b674f84>
 
@@ -21,7 +21,7 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 
 First, make sure you have the requirements:
 
-- neovim 0.9.x or later
+- Neovim 0.9.x or later
 - yazi 0.2.4 or later. For the best experience, use a version released after 2024-04-06 that includes [this](https://github.com/sxyazi/yazi/pull/880) change
 
 > You can run `:checkhealth yazi` to see if compatible versions are installed and working.
@@ -91,7 +91,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- events
     events_file_path = '/tmp/yazi.nvim.events.txt',
 
-    -- what neovim should do a when a file was opened (selected) in yazi.
+    -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
     open_file_function = function(chosen_file, config) end,
 
@@ -143,7 +143,7 @@ Yazi is highly customizable. It features its own plugin and event system, themes
 
 ## 🍴 About my fork
 
-I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn neovim plugin development.
+I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn Neovim plugin development.
 
 So far I have done some maintenance work and added a bunch of features:
 
@@ -153,7 +153,7 @@ So far I have done some maintenance work and added a bunch of features:
 - feat: can optionally open yazi instead of netrw for directories
 - feat: health check for yazi
 - feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
-- feat: allow customizing the method of opening the selected file in neovim
+- feat: allow customizing the method of opening the selected file in Neovim
 - feat: can send multiple opened files to the quickfix list
 - feat: can open a file in a vertical split
 - feat: can open a file in a horizontal split
