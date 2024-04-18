@@ -149,6 +149,31 @@ function M.get_open_buffers()
   return open_buffers
 end
 
+---@param path string
+---@return boolean
+function M.is_buffer_open(path)
+  local open_buffers = M.get_open_buffers()
+  for _, buffer in ipairs(open_buffers) do
+    if buffer:matches_exactly(path) then
+      return true
+    end
+  end
+
+  return false
+end
+
+---@param instruction RenameableBuffer
+---@return nil
+function M.rename_or_close_buffer(instruction)
+  -- If the target buffer is already open in neovim, just close the old buffer.
+  -- It causes an error to try to rename to a buffer that's already open.
+  if M.is_buffer_open(instruction.path.filename) then
+    vim.api.nvim_buf_delete(instruction.bufnr, {})
+  else
+    vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
+  end
+end
+
 ---@param prev_win integer
 ---@param floating_window_id integer
 ---@param floating_window_buffer integer
