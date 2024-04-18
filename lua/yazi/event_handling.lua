@@ -30,15 +30,17 @@ function M.process_delete_event(event, remaining_events)
   end
 end
 
----@param rename_event YaziEventDataRenameOrMove
+---@param rename_or_move_event YaziEventDataRenameOrMove
 ---@return RenameableBuffer[] "instructions for renaming the buffers (command pattern)"
-function M.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
+function M.get_buffers_that_need_renaming_after_yazi_exited(
+  rename_or_move_event
+)
   local open_buffers = utils.get_open_buffers()
 
   ---@type table<integer, RenameableBuffer>
   local renamed_buffers = {}
 
-  local event = rename_event
+  local event = rename_or_move_event
   for _, buffer in ipairs(open_buffers) do
     if buffer:matches_exactly(event.from) then
       buffer:rename(event.to)
@@ -52,10 +54,9 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(rename_event)
   return vim.tbl_values(renamed_buffers)
 end
 
----@param config YaziConfig
-function M.process_events_emitted_from_yazi(config)
+---@param events YaziEvent[]
+function M.process_events_emitted_from_yazi(events)
   -- process events emitted from yazi
-  local events = utils.read_events_file(config.events_file_path)
 
   for i, event in ipairs(events) do
     if event.type == 'rename' then
@@ -63,7 +64,7 @@ function M.process_events_emitted_from_yazi(config)
       local rename_instructions =
         M.get_buffers_that_need_renaming_after_yazi_exited(event.data)
       for _, instruction in ipairs(rename_instructions) do
-        vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
+        utils.rename_or_close_buffer(instruction)
       end
     elseif event.type == 'move' then
       ---@cast event YaziMoveEvent
@@ -71,10 +72,7 @@ function M.process_events_emitted_from_yazi(config)
         local rename_instructions =
           M.get_buffers_that_need_renaming_after_yazi_exited(item)
         for _, instruction in ipairs(rename_instructions) do
-          vim.api.nvim_buf_set_name(
-            instruction.bufnr,
-            instruction.path.filename
-          )
+          utils.rename_or_close_buffer(instruction)
         end
       end
     elseif event.type == 'delete' then

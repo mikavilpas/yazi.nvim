@@ -47,7 +47,8 @@ function M.yazi(config, path)
 
         utils.on_yazi_exited(prev_win, win, yazi_buffer, config)
 
-        event_handling.process_events_emitted_from_yazi(config)
+        local events = utils.read_events_file(config.events_file_path)
+        event_handling.process_events_emitted_from_yazi(events)
       end,
     })
 

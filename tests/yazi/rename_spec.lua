@@ -1,5 +1,6 @@
 local assert = require('luassert')
 local event_handling = require('yazi.event_handling')
+local utils = require('yazi.utils')
 
 describe('get_buffers_that_need_renaming_after_yazi_exited', function()
   before_each(function()
@@ -71,5 +72,64 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
       )
 
     assert.is_equal(vim.tbl_count(rename_instructions), 0)
+  end)
+end)
+
+describe('process_events_emitted_from_yazi', function()
+  before_each(function()
+    -- clear all buffers
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end)
+
+  it('closes a buffer that was renamed to another open buffer', function()
+    vim.fn.bufadd('/my-tmp/file1')
+    vim.fn.bufadd('/my-tmp/file2')
+
+    ---@type YaziRenameEvent
+    local event = {
+      type = 'rename',
+      data = {
+        from = '/my-tmp/file1',
+        to = '/my-tmp/file2',
+      },
+      timestamp = '2021-09-01T00:00:00Z',
+      id = '123',
+    }
+
+    event_handling.process_events_emitted_from_yazi({ event })
+
+    local open_buffers = utils.get_open_buffers()
+    for _, buffer in ipairs(open_buffers) do
+      assert.is_not_equal('/my-tmp/file1', buffer.path.filename)
+    end
+  end)
+
+  it('closes a buffer that was moved to another open buffer', function()
+    vim.fn.bufadd('/my-tmp/file1')
+    vim.fn.bufadd('/my-tmp/file2')
+
+    ---@type YaziMoveEvent
+    local event = {
+      type = 'move',
+      id = '123',
+      timestamp = '2021-09-01T00:00:00Z',
+      data = {
+        items = {
+          {
+            from = '/my-tmp/file1',
+            to = '/my-tmp/file2',
+          },
+        },
+      },
+    }
+
+    event_handling.process_events_emitted_from_yazi({ event })
+
+    local open_buffers = utils.get_open_buffers()
+    for _, buffer in ipairs(open_buffers) do
+      assert.is_not_equal('/my-tmp/file1', buffer.path.filename)
+    end
   end)
 end)
