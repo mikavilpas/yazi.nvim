@@ -49,7 +49,7 @@ function YaziFloatingWindow:open_and_display()
     col = col,
     width = width,
     height = height,
-    border = 'rounded',
+    border = self.config.yazi_floating_window_border,
   }
 
   local yazi_buffer = vim.api.nvim_create_buf(false, true)
