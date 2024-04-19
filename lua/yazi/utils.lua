@@ -191,7 +191,10 @@ function M.on_yazi_exited(
     return
   end
 
-  vim.api.nvim_win_close(floating_window_id, true)
+  if vim.api.nvim_win_is_valid(floating_window_id) then
+    vim.api.nvim_win_close(floating_window_id, true)
+  end
+
   vim.api.nvim_set_current_win(prev_win)
   if M.file_exists(config.chosen_file_path) == true then
     local chosen_files = vim.fn.readfile(config.chosen_file_path)
