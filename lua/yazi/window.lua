@@ -96,10 +96,12 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
   vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
 
-  -- use autocommand to ensure that the border_buffer closes at the same time as the main buffer
-  vim.cmd("autocmd WinLeave <buffer> silent! execute 'hide'")
-  local cmd = [[autocmd WinLeave <buffer> silent! execute 'silent bdelete! %s']]
-  vim.cmd(cmd:format(border_buffer))
+  vim.api.nvim_create_autocmd('WinLeave', {
+    buffer = yazi_buffer,
+    callback = function()
+      self:close()
+    end,
+  })
 
   self.win = win
   self.border_window = border_window
