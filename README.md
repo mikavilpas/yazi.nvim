@@ -99,6 +99,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- called in the context of the yazi terminal buffer.
     set_keymappings_function = function(yazi_buffer_id, config) end,
 
+    -- the type of border to use for the floating window. Can be many values,
+    -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
+    -- more information, see :h nvim_open_win
+    yazi_floating_window_border = 'rounded',
+
     hooks = {
       -- if you want to execute a custom action when yazi has been opened,
       -- you can define it here.
@@ -113,11 +118,6 @@ You can optionally configure yazi.nvim by setting any of the options below.
       -- when yazi opened multiple files. The default is to send them to the
       -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = function(chosen_files, config) end,
-
-      -- the type of border to use for the floating window. Can be many values,
-      -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
-      -- more information, see :h nvim_open_win
-      yazi_floating_window_border = 'rounded',
     },
   },
 }
