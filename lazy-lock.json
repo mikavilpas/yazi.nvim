@@ -1,5 +1,5 @@
 {
-  "nvim-treesitter": { "branch": "master", "commit": "e6cd337e30962cc0982d51fa03beedcc6bc70e3d" },
+  "nvim-treesitter": { "branch": "master", "commit": "208d504421e4ac53f4230a34cd4b831e8e76cb69" },
   "plenary.nvim": { "branch": "master", "commit": "8aad4396840be7fc42896e3011751b7609ca4119" },
   "tokyonight.nvim": { "branch": "main", "commit": "9bf9ec53d5e87b025e2404069b71e7ebdc3a13e5" }
 }
