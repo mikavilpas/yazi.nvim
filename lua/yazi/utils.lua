@@ -175,15 +175,9 @@ function M.rename_or_close_buffer(instruction)
 end
 
 ---@param prev_win integer
----@param floating_window_id integer
----@param floating_window_buffer integer
+---@param window YaziFloatingWindow
 ---@param config YaziConfig
-function M.on_yazi_exited(
-  prev_win,
-  floating_window_id,
-  floating_window_buffer,
-  config
-)
+function M.on_yazi_exited(prev_win, window, config)
   vim.cmd('silent! :checktime')
 
   -- open the file that was chosen
@@ -191,9 +185,7 @@ function M.on_yazi_exited(
     return
   end
 
-  if vim.api.nvim_win_is_valid(floating_window_id) then
-    vim.api.nvim_win_close(floating_window_id, true)
-  end
+  window:close()
 
   vim.api.nvim_set_current_win(prev_win)
   if M.file_exists(config.chosen_file_path) == true then
@@ -208,13 +200,6 @@ function M.on_yazi_exited(
         config.open_file_function(chosen_file, config)
       end
     end
-  end
-
-  if
-    vim.api.nvim_buf_is_valid(floating_window_buffer)
-    and vim.api.nvim_buf_is_loaded(floating_window_buffer)
-  then
-    vim.api.nvim_buf_delete(floating_window_buffer, { force = true })
   end
 end
 
