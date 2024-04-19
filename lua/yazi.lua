@@ -8,7 +8,6 @@ local M = {}
 
 M.yazi_loaded = false
 
---- :Yazi entry point
 ---@param config? YaziConfig?
 ---@param path? string
 ---@diagnostic disable-next-line: redefined-local
@@ -18,7 +17,8 @@ function M.yazi(config, path)
     return
   end
 
-  config = vim.tbl_deep_extend('force', M.config, config or {})
+  config =
+    vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
 
   path = utils.selected_file_path(path)
 
@@ -65,7 +65,8 @@ M.config = configModule.default()
 
 ---@param opts YaziConfig?
 function M.setup(opts)
-  M.config = vim.tbl_deep_extend('force', M.config, opts or {})
+  M.config =
+    vim.tbl_deep_extend('force', configModule.default(), M.config, opts or {})
 
   if M.config.open_for_directories == true then
     local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
