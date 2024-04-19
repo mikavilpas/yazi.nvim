@@ -7,6 +7,7 @@
 ---@field public hooks? YaziConfigHooks
 ---@field public floating_window_scaling_factor? float "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
 ---@field public yazi_floating_window_winblend? float "the transparency of the yazi floating window (0-100). See :h winblend"
+---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 
 ---@class YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil
