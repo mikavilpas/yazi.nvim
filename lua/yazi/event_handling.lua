@@ -1,5 +1,6 @@
 local utils = require('yazi.utils')
 local plenaryIterators = require('plenary.iterators')
+local lsp_delete = require('yazi.lsp.delete')
 
 local M = {}
 
@@ -24,6 +25,7 @@ function M.process_delete_event(event, remaining_events)
           break
         else
           vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
+          lsp_delete.file_deleted(buffer.path.filename)
         end
       end
     end
