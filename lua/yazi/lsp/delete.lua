@@ -1,3 +1,5 @@
+local lsp_util = require('yazi.lsp.lsp_util')
+
 local M = {}
 
 ---@param path string
@@ -5,10 +7,7 @@ local function notify_file_was_deleted(path)
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_willDeleteFiles
   local method = 'workspace/willDeleteFiles'
 
-  local clients = vim.lsp.get_clients({
-    method = method,
-    bufnr = vim.api.nvim_get_current_buf(),
-  })
+  local clients = lsp_util.get_clients(method, vim.api.nvim_get_current_buf())
 
   for _, client in ipairs(clients) do
     local resp = client.request_sync(method, {
@@ -30,10 +29,7 @@ local function notify_delete_complete(path)
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didDeleteFiles
   local method = 'workspace/didDeleteFiles'
 
-  local clients = vim.lsp.get_clients({
-    method = method,
-    bufnr = vim.api.nvim_get_current_buf(),
-  })
+  local clients = lsp_util.get_clients(method, vim.api.nvim_get_current_buf())
 
   for _, client in ipairs(clients) do
     -- NOTE: this returns nothing, so no need to do anything with the response
