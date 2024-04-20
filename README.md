@@ -15,6 +15,7 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open buffers in Neovim
+  - The files are also kept in sync with currently running LSP servers
 - Customizable keybindings
 
 ## 📦 Installation
@@ -55,7 +56,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 }
 ```
 
-### Advanced configuration
+### ⚙️⚙️ Advanced configuration
 
 > You don't have to set any of these options. The defaults are fine for most users.
 
