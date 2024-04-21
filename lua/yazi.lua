@@ -42,7 +42,9 @@ function M.yazi(config, path)
       on_exit = function(_job_id, code, _event)
         M.yazi_loaded = false
         if code ~= 0 then
-          print('yazi exited with code', code)
+          print(
+            "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
+          )
           return
         end
 
