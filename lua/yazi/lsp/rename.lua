@@ -8,7 +8,7 @@ local function notify_file_was_renamed(from, to)
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_willRenameFiles
   local method = 'workspace/willRenameFiles'
 
-  local clients = lsp_util.get_clients(method, vim.api.nvim_get_current_buf())
+  local clients = lsp_util.get_clients(method)
 
   for _, client in ipairs(clients) do
     local resp = client.request_sync(method, {
@@ -32,7 +32,7 @@ local function notify_rename_complete(from, to)
   -- https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didRenameFiles
   local method = 'workspace/didRenameFiles'
 
-  local clients = lsp_util.get_clients(method, vim.api.nvim_get_current_buf())
+  local clients = lsp_util.get_clients(method)
 
   for _, client in ipairs(clients) do
     -- NOTE: this returns nothing, so no need to do anything with the response
