@@ -1,6 +1,5 @@
 local fn = vim.fn
 local RenameableBuffer = require('yazi.renameable_buffer')
-local lsp_rename = require('yazi.lsp.rename')
 
 local M = {}
 
@@ -173,8 +172,6 @@ function M.rename_or_close_buffer(instruction)
   else
     vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
   end
-
-  lsp_rename.file_renamed(instruction.original_path, instruction.path.filename)
 end
 
 ---@param prev_win integer

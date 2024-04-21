@@ -1,6 +1,7 @@
 local utils = require('yazi.utils')
 local plenaryIterators = require('plenary.iterators')
 local lsp_delete = require('yazi.lsp.delete')
+local lsp_rename = require('yazi.lsp.rename')
 
 local M = {}
 
@@ -63,6 +64,8 @@ function M.process_events_emitted_from_yazi(events)
   for i, event in ipairs(events) do
     if event.type == 'rename' then
       ---@cast event YaziRenameEvent
+      lsp_rename.file_renamed(event.data.from, event.data.to)
+
       local rename_instructions =
         M.get_buffers_that_need_renaming_after_yazi_exited(event.data)
       for _, instruction in ipairs(rename_instructions) do
@@ -71,6 +74,8 @@ function M.process_events_emitted_from_yazi(events)
     elseif event.type == 'move' then
       ---@cast event YaziMoveEvent
       for _, item in ipairs(event.data.items) do
+        lsp_rename.file_renamed(item.from, item.to)
+
         local rename_instructions =
           M.get_buffers_that_need_renaming_after_yazi_exited(item)
         for _, instruction in ipairs(rename_instructions) do
