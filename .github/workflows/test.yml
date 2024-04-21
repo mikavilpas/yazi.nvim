@@ -25,7 +25,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: _neovim
-          key: ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
+          key:
+            ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
 
       - name: Prepare
         run: |
