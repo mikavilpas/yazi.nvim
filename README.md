@@ -4,17 +4,20 @@
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" />
 </a>
 
-Yazi is a blazing fast file manager for the terminal. This plugin allows you to open yazi in a floating window in Neovim.
+Yazi is a blazing fast file manager for the terminal. This plugin allows you to
+open yazi in a floating window in Neovim.
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/c7ff98ee-54d6-4ad0-9318-903e4b674f84>
 
 ## ✨ Features
 
 - Open yazi in a floating window
-- Files can be opened in the current buffer, a vertical split, a horizontal split, or a new tab
+- Files can be opened in the current buffer, a vertical split, a horizontal
+  split, or a new tab
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
-- Files that are renamed, moved, or deleted in yazi are kept in sync with open buffers in Neovim
+- Files that are renamed, moved, or deleted in yazi are kept in sync with open
+  buffers in Neovim
   - The files are also kept in sync with currently running LSP servers
 - Customizable keybindings
 
@@ -23,9 +26,12 @@ Yazi is a blazing fast file manager for the terminal. This plugin allows you to 
 First, make sure you have the requirements:
 
 - Neovim 0.9.x or later
-- yazi 0.2.4 or later. For the best experience, use a version released after 2024-04-06 that includes [this](https://github.com/sxyazi/yazi/pull/880) change
+- yazi 0.2.4 or later. For the best experience, use a version released after
+  2024-04-06 that includes [this](https://github.com/sxyazi/yazi/pull/880)
+  change
 
-> You can run `:checkhealth yazi` to see if compatible versions are installed and working.
+> You can run `:checkhealth yazi` to see if compatible versions are installed
+> and working.
 
 ## ⚙️ Configuration
 
@@ -58,7 +64,8 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ### ⚙️⚙️ Advanced configuration
 
-> You don't have to set any of these options. The defaults are fine for most users.
+> You don't have to set any of these options. The defaults are fine for most
+> users.
 
 You can optionally configure yazi.nvim by setting any of the options below.
 
@@ -136,7 +143,9 @@ Notice that these are also the defaults for telescope.
 
 ## 🪛 Customizing yazi
 
-Yazi is highly customizable. It features its own plugin and event system, themes, and keybindings. This section lists some of the plugins and themes that I like.
+Yazi is highly customizable. It features its own plugin and event system,
+themes, and keybindings. This section lists some of the plugins and themes that
+I like.
 
 - <https://github.com/DreamMaoMao/keyjump.yazi> allows jumping to a line by
   typing a hint character, much like
@@ -145,11 +154,16 @@ Yazi is highly customizable. It features its own plugin and event system, themes
   [starship prompt](https://starship.rs) to yazi. It allows reusing the prompt
   you are using in your shell in yazi.
 - <https://github.com/catppuccin/yazi> ports the catppuccin theme to yazi.
-- <https://github.com/catppuccin/bat> can be used to change the syntax highlighting theme yazi uses to preview files. See [this discussion](https://github.com/sxyazi/yazi/discussions/818) or [my config](https://github.com/mikavilpas/dotfiles/commit/bb07515f69d219fd3435d222fcb2d80d27a25025#diff-973b37f40e024ca0f7e62f2569efce24ad550d0352adc8449168ac950af9eaf5R8) for an example of using it
+- <https://github.com/catppuccin/bat> can be used to change the syntax
+  highlighting theme yazi uses to preview files. See
+  [this discussion](https://github.com/sxyazi/yazi/discussions/818) or
+  [my config](https://github.com/mikavilpas/dotfiles/commit/bb07515f69d219fd3435d222fcb2d80d27a25025#diff-973b37f40e024ca0f7e62f2569efce24ad550d0352adc8449168ac950af9eaf5R8)
+  for an example of using it
 
 ## 🍴 About my fork
 
-I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use, and also because I wanted to learn Neovim plugin development.
+I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use,
+and also because I wanted to learn Neovim plugin development.
 
 So far I have done some maintenance work and added a bunch of features:
 
@@ -158,7 +172,9 @@ So far I have done some maintenance work and added a bunch of features:
 - test: add simple testing setup for future development
 - feat: can optionally open yazi instead of netrw for directories
 - feat: health check for yazi
-- feat: files that are renamed, moved, deleted, or trashed in yazi are kept in sync with open buffers (this requires a version of yazi that includes [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
+- feat: files that are renamed, moved, deleted, or trashed in yazi are kept in
+  sync with open buffers (this requires a version of yazi that includes
+  [this](https://github.com/sxyazi/yazi/pull/880) change from 2024-04-06)
 - feat: allow customizing the method of opening the selected file in Neovim
 - feat: can send multiple opened files to the quickfix list
 - feat: can open a file in a vertical split

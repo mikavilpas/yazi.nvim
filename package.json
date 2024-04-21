@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "I forked this from https://github.com/DreamMaoMao/yazi.nvim for my own use.",
   "scripts": {
+    "prettier": "prettier --check .",
     "markdownlint": "markdownlint-cli2 README.md"
   },
   "private": true,
@@ -10,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "markdownlint-cli2": "0.12.1"
+    "markdownlint-cli2": "0.12.1",
+    "prettier": "3.2.5"
   }
 }

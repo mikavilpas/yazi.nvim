@@ -5,6 +5,19 @@ name: Style checking
 on: [push, pull_request]
 
 jobs:
+  prettier:
+    runs-on: ubuntu-22.04
+    name: prettier
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - run: npm run prettier
+
   stylua:
     name: stylua
     runs-on: ubuntu-22.04
