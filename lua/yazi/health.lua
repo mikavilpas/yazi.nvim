@@ -27,6 +27,13 @@ return {
       )
     end
 
+    local yazi_help = vim.fn.system('yazi --help')
+    if not yazi_help:find('--local-events', 1, true) then
+      vim.health.warn(
+        'The yazi version does not support --local-events. Please upgrade to the newest version of yazi.'
+      )
+    end
+
     vim.health.ok('yazi')
   end,
 }
