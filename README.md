@@ -50,7 +50,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
       function()
         require("yazi").yazi()
       end,
-      { desc = "Open the file manager" },
+      desc = "Open the file manager",
     },
   },
   ---@type YaziConfig
