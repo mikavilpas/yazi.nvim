@@ -71,46 +71,6 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
   vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
 
-  if self.config.enable_mouse_support == true then
-    -- Disable nvim mouse support so that yazi can handle mouse events instead
-    local original_mouse_settings = vim.o.mouse
-    vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
-      buffer = yazi_buffer,
-      callback = function()
-        vim.api.nvim_set_option_value('mouse', '', {})
-      end,
-    })
-
-    -- Extra mouse fix for tmux
-    -- If tmux mouse mode is enabled
-    if os.getenv('TMUX') then
-      local output = vim.fn.system('tmux display -p "#{mouse}"')
-      if output:sub(1, 1) == '1' then
-        vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
-          buffer = yazi_buffer,
-          callback = function()
-            vim.fn.system('tmux set mouse off')
-          end,
-        })
-
-        vim.api.nvim_create_autocmd({ 'WinLeave' }, {
-          buffer = yazi_buffer,
-          callback = function()
-            vim.fn.system('tmux set mouse on')
-          end,
-        })
-      end
-    end
-
-    self.cleanup = function()
-      -- Restore mouse mode on exiting
-      vim.api.nvim_set_option_value('mouse', original_mouse_settings, {})
-      if os.getenv('TMUX') then
-        vim.fn.system('tmux set mouse on')
-      end
-    end
-  end
-
   vim.api.nvim_create_autocmd({ 'WinLeave', 'TermLeave' }, {
     buffer = yazi_buffer,
     callback = function()
@@ -118,7 +78,45 @@ function YaziFloatingWindow:open_and_display()
     end,
   })
 
+  if self.config.enable_mouse_support == true then
+    self:add_hacky_mouse_support(yazi_buffer)
+  end
+
   return self
+end
+
+---@param yazi_buffer integer
+function YaziFloatingWindow:add_hacky_mouse_support(yazi_buffer)
+  -- Disable nvim mouse support so that yazi can handle mouse events instead
+  local original_mouse_settings = vim.o.mouse
+  vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+    buffer = yazi_buffer,
+    callback = function()
+      vim.api.nvim_set_option_value('mouse', '', {})
+    end,
+  })
+
+  -- Extra mouse fix for tmux
+  -- If tmux mouse mode is enabled
+  if os.getenv('TMUX') then
+    local output = vim.fn.system('tmux display -p "#{mouse}"')
+    if output:sub(1, 1) == '1' then
+      vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+        buffer = yazi_buffer,
+        callback = function()
+          vim.fn.system('tmux set mouse off')
+        end,
+      })
+    end
+  end
+
+  self.cleanup = function()
+    -- Restore mouse mode on exiting
+    vim.api.nvim_set_option_value('mouse', original_mouse_settings, {})
+    if os.getenv('TMUX') then
+      vim.fn.system('tmux set mouse on')
+    end
+  end
 end
 
 return M
