@@ -81,9 +81,33 @@ function YaziFloatingWindow:open_and_display()
       end,
     })
 
+    -- Extra mouse fix for tmux
+    -- If tmux mouse mode is enabled
+    if os.getenv('TMUX') then
+      local output = vim.fn.system('tmux display -p "#{mouse}"')
+      if output:sub(1, 1) == '1' then
+        vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+          buffer = yazi_buffer,
+          callback = function()
+            vim.fn.system('tmux set mouse off')
+          end,
+        })
+
+        vim.api.nvim_create_autocmd({ 'WinLeave' }, {
+          buffer = yazi_buffer,
+          callback = function()
+            vim.fn.system('tmux set mouse on')
+          end,
+        })
+      end
+    end
+
     self.cleanup = function()
       -- Restore mouse mode on exiting
       vim.api.nvim_set_option_value('mouse', original_mouse_settings, {})
+      if os.getenv('TMUX') then
+        vim.fn.system('tmux set mouse on')
+      end
     end
   end
 
