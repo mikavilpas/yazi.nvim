@@ -1,10 +1,13 @@
 local M = {}
 
----@class YaziFloatingWindow
+---@class (exact) YaziFloatingWindow
+---@field new fun(config: YaziConfig): YaziFloatingWindow
 ---@field win integer floating_window_id
 ---@field content_buffer integer
 ---@field config YaziConfig
+---@field private cleanup fun(): nil
 local YaziFloatingWindow = {}
+---@diagnostic disable-next-line: inject-field
 YaziFloatingWindow.__index = YaziFloatingWindow
 
 M.YaziFloatingWindow = YaziFloatingWindow
@@ -19,6 +22,8 @@ function YaziFloatingWindow.new(config)
 end
 
 function YaziFloatingWindow:close()
+  pcall(self.cleanup)
+
   if
     vim.api.nvim_buf_is_valid(self.content_buffer)
     and vim.api.nvim_buf_is_loaded(self.content_buffer)
@@ -55,6 +60,8 @@ function YaziFloatingWindow:open_and_display()
   local yazi_buffer = vim.api.nvim_create_buf(false, true)
   -- create file window, enter the window, and use the options defined in opts
   local win = vim.api.nvim_open_win(yazi_buffer, true, opts)
+  self.win = win
+  self.content_buffer = yazi_buffer
 
   vim.bo[yazi_buffer].filetype = 'yazi'
 
@@ -64,15 +71,28 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
   vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
 
-  vim.api.nvim_create_autocmd('WinLeave', {
+  if self.config.enable_mouse_support == true then
+    -- Disable nvim mouse support so that yazi can handle mouse events instead
+    local original_mouse_settings = vim.o.mouse
+    vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+      buffer = yazi_buffer,
+      callback = function()
+        vim.api.nvim_set_option_value('mouse', '', {})
+      end,
+    })
+
+    self.cleanup = function()
+      -- Restore mouse mode on exiting
+      vim.api.nvim_set_option_value('mouse', original_mouse_settings, {})
+    end
+  end
+
+  vim.api.nvim_create_autocmd({ 'WinLeave', 'TermLeave' }, {
     buffer = yazi_buffer,
     callback = function()
       self:close()
     end,
   })
-
-  self.win = win
-  self.content_buffer = yazi_buffer
 
   return self
 end
