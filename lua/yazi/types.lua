@@ -44,3 +44,12 @@
 ---@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
+
+---@class yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
+---@field public id number
+---@field public event string
+---@field public group number | nil
+---@field public match string
+---@field public buf number
+---@field public file string
+---@field public data any

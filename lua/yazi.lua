@@ -71,6 +71,17 @@ function M.setup(opts)
     vim.tbl_deep_extend('force', configModule.default(), M.config, opts or {})
 
   if M.config.open_for_directories == true then
+    ---@param file string
+    ---@param bufnr number
+    local function open_yazi_in_directory(file, bufnr)
+      if vim.fn.isdirectory(file) == 1 then
+        -- A buffer was opened for a directory.
+        -- Remove the buffer as we want to show yazi instead
+        vim.api.nvim_buf_delete(bufnr, { force = true })
+        M.yazi(M.config, file)
+      end
+    end
+
     local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
 
     -- disable netrw, the built-in file explorer
@@ -79,18 +90,17 @@ function M.setup(opts)
     -- executed before starting to edit a new buffer.
     vim.api.nvim_create_autocmd('BufAdd', {
       pattern = '*',
+      ---@param ev yazi.AutoCmdEvent
       callback = function(ev)
-        local file = ev.file
-        if vim.fn.isdirectory(file) == 1 then
-          local bufnr = ev.buf
-          -- A buffer was opened for a directory.
-          -- Remove the buffer as we want to show yazi instead
-          vim.api.nvim_buf_delete(bufnr, { force = true })
-          M.yazi(M.config, file)
-        end
+        open_yazi_in_directory(ev.file, ev.buf)
       end,
       group = yazi_augroup,
     })
+
+    -- When opening neovim with "nvim ." or "nvim <directory>", the current
+    -- buffer is already open at this point. If we have already opened a
+    -- directory, display yazi instead.
+    open_yazi_in_directory(vim.fn.expand('%:p'), vim.api.nvim_get_current_buf())
   end
 end
 
