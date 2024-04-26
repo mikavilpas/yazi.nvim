@@ -58,7 +58,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
       function()
         require("yazi").yazi(nil, vim.fn.getcwd())
       end,
-      { desc = "Open the file manager in nvim's working directory" },
+      desc = "Open the file manager in nvim's working directory" ,
     },
   },
   ---@type YaziConfig
