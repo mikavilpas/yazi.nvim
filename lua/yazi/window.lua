@@ -5,10 +5,15 @@ local M = {}
 ---@field win integer floating_window_id
 ---@field content_buffer integer
 ---@field config YaziConfig
+---@field on_resized fun(event: yazi.FloatingWindowResizedEvent): nil # allows resizing the contents (the yazi terminal) inside of the floating window
 ---@field private cleanup fun(): nil
 local YaziFloatingWindow = {}
 ---@diagnostic disable-next-line: inject-field
 YaziFloatingWindow.__index = YaziFloatingWindow
+
+---@class yazi.FloatingWindowResizedEvent
+---@field win_height integer
+---@field win_width integer
 
 M.YaziFloatingWindow = YaziFloatingWindow
 
@@ -36,24 +41,34 @@ function YaziFloatingWindow:close()
   end
 end
 
-function YaziFloatingWindow:open_and_display()
-  local height = math.ceil(
-    vim.o.lines * self.config.floating_window_scaling_factor
-  ) - 1
-  local width =
-    math.ceil(vim.o.columns * self.config.floating_window_scaling_factor)
+---@param config YaziConfig
+local function get_window_dimensions(config)
+  local height = math.ceil(vim.o.lines * config.floating_window_scaling_factor)
+    - 1
+  local width = math.ceil(vim.o.columns * config.floating_window_scaling_factor)
 
   local row = math.ceil(vim.o.lines - height) / 2
   local col = math.ceil(vim.o.columns - width) / 2
+
+  return {
+    height = height,
+    width = width,
+    row = row,
+    col = col,
+  }
+end
+
+function YaziFloatingWindow:open_and_display()
+  local dimensions = get_window_dimensions(self.config)
 
   ---@type vim.api.keyset.win_config
   local opts = {
     style = 'minimal',
     relative = 'editor',
-    row = row,
-    col = col,
-    width = width,
-    height = height,
+    row = dimensions.row,
+    col = dimensions.col,
+    width = dimensions.width,
+    height = dimensions.height,
     border = self.config.yazi_floating_window_border,
   }
 
@@ -74,6 +89,27 @@ function YaziFloatingWindow:open_and_display()
   if self.config.enable_mouse_support == true then
     self:add_hacky_mouse_support(yazi_buffer)
   end
+
+  vim.api.nvim_create_autocmd({ 'VimResized' }, {
+    buffer = yazi_buffer,
+    callback = function()
+      local dims = get_window_dimensions(self.config)
+
+      vim.api.nvim_win_set_config(win, {
+        width = dims.width,
+        height = dims.height,
+        row = dims.row,
+        col = dims.col,
+        relative = 'editor',
+        style = 'minimal',
+      })
+
+      self.on_resized({
+        win_height = dims.height,
+        win_width = dims.width,
+      })
+    end,
+  })
 
   return self
 end

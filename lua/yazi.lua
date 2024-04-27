@@ -37,7 +37,7 @@ function M.yazi(config, path)
 
   if M.yazi_loaded == false then
     -- ensure that the buffer is closed on exit
-    vimfn.termopen(cmd, {
+    local job_id = vimfn.termopen(cmd, {
       ---@diagnostic disable-next-line: unused-local
       on_exit = function(_job_id, code, _event)
         M.yazi_loaded = false
@@ -57,6 +57,9 @@ function M.yazi(config, path)
 
     config.hooks.yazi_opened(path, win.content_buffer, config)
     config.set_keymappings_function(win.content_buffer, config)
+    win.on_resized = function(event)
+      vim.fn.jobresize(job_id, event.win_width, event.win_height)
+    end
   end
   vim.schedule(function()
     vim.cmd('startinsert')
