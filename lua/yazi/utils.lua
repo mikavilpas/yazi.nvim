@@ -197,8 +197,7 @@ function M.on_yazi_exited(prev_win, window, config)
       local chosen_file = chosen_files[1]
       config.hooks.yazi_closed_successfully(chosen_file, config)
       if chosen_file then
-        local path = vim.fn.fnameescape(chosen_file)
-        config.open_file_function(path, config)
+        config.open_file_function(chosen_file, config)
       end
     end
   end

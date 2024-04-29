@@ -30,7 +30,7 @@ function M.yazi(config, path)
   os.remove(config.chosen_file_path)
   local cmd = string.format(
     'yazi "%s" --local-events "rename,delete,trash,move" --chooser-file "%s" > %s',
-    path,
+    vim.fn.fnameescape(path),
     config.chosen_file_path,
     config.events_file_path
   )
