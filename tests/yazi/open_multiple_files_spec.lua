@@ -3,7 +3,7 @@ describe('the default configuration', function()
     local config = require('yazi.config').default()
     local chosen_files = { '/abc/test-file.txt', '/abc/test-file2.txt' }
 
-    config.hooks.yazi_opened_multiple_files(chosen_files)
+    config.hooks.yazi_opened_multiple_files(chosen_files, config)
 
     local quickfix_list = vim.fn.getqflist()
 
