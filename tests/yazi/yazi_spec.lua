@@ -62,6 +62,16 @@ describe('opening a file', function()
 
       assert.equals(target_file, vim.fn.expand('%'))
     end)
+
+    it('can open files with complex characters in their name', function()
+      -- the filename contains a '$' character which can be problematic to nvim
+      local target_file = 'routes/posts.$postId/route.tsx'
+      setup_fake_yazi_opens_file(target_file)
+
+      plugin.yazi({ set_keymappings_function = function() end })
+
+      assert.equals(target_file, vim.fn.expand('%'))
+    end)
   end)
 
   it(
