@@ -7,7 +7,6 @@ function M.default()
   return {
     open_for_directories = false,
     chosen_file_path = '/tmp/yazi_filechosen',
-    events_file_path = '/tmp/yazi.nvim.events.txt',
     enable_mouse_support = false,
     open_file_function = openers.open_file,
     set_keymappings_function = M.default_set_keymappings_function,

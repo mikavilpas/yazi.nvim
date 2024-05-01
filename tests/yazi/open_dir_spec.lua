@@ -9,7 +9,10 @@ local plugin = require('yazi')
 describe('when the user set open_for_directories = true', function()
   before_each(function()
     ---@diagnostic disable-next-line: missing-fields
-    plugin.setup({ open_for_directories = true })
+    plugin.setup({
+      open_for_directories = true,
+      events_file_path = '/tmp/yazi.nvim.events.txt',
+    })
   end)
 
   after_each(function()
