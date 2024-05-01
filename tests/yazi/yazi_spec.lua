@@ -35,7 +35,10 @@ describe('opening a file', function()
 
   it('opens yazi with the current file selected', function()
     vim.api.nvim_command('edit ' .. vim.fn.fnameescape('/abc/test-file-$1.txt'))
-    plugin.yazi({ events_file_path = '/tmp/yazi.nvim.events.txt' })
+    plugin.yazi({
+      chosen_file_path = '/tmp/yazi_filechosen',
+      events_file_path = '/tmp/yazi.nvim.events.txt',
+    })
 
     assert.stub(api_mock.termopen).was_called_with(
       'yazi "/abc/test-file-\\$1.txt" --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
@@ -46,7 +49,10 @@ describe('opening a file', function()
   it('opens yazi with the current directory selected', function()
     vim.api.nvim_command('edit /tmp/')
 
-    plugin.yazi({ events_file_path = '/tmp/yazi.nvim.events.txt' })
+    plugin.yazi({
+      chosen_file_path = '/tmp/yazi_filechosen',
+      events_file_path = '/tmp/yazi.nvim.events.txt',
+    })
 
     assert.stub(api_mock.termopen).was_called_with(
       'yazi "/tmp/" --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > /tmp/yazi.nvim.events.txt',
@@ -58,7 +64,10 @@ describe('opening a file', function()
     it('opens the file that the user selected in yazi', function()
       local target_file = '/abc/test-file.txt'
       setup_fake_yazi_opens_file(target_file)
-      plugin.yazi({ set_keymappings_function = function() end })
+      plugin.yazi({
+        chosen_file_path = '/tmp/yazi_filechosen',
+        set_keymappings_function = function() end,
+      })
 
       assert.equals(target_file, vim.fn.expand('%'))
     end)
@@ -68,7 +77,10 @@ describe('opening a file', function()
       local target_file = 'routes/posts.$postId/route.tsx'
       setup_fake_yazi_opens_file(target_file)
 
-      plugin.yazi({ set_keymappings_function = function() end })
+      plugin.yazi({
+        chosen_file_path = '/tmp/yazi_filechosen',
+        set_keymappings_function = function() end,
+      })
 
       assert.equals(target_file, vim.fn.expand('%'))
     end)
@@ -86,6 +98,7 @@ describe('opening a file', function()
       vim.api.nvim_command('edit /abc/test-file.txt')
 
       plugin.yazi({
+        chosen_file_path = '/tmp/yazi_filechosen',
         set_keymappings_function = function() end,
         ---@diagnostic disable-next-line: missing-fields
         hooks = {
@@ -127,6 +140,7 @@ describe('opening a file', function()
     vim.api.nvim_command('edit ' .. target_file)
 
     plugin.yazi({
+      chosen_file_path = '/tmp/yazi_filechosen',
       set_keymappings_function = function() end,
       ---@diagnostic disable-next-line: assign-type-mismatch
       open_file_function = spy_open_file_function,

@@ -96,11 +96,6 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- the transparency of the yazi floating window (0-100). See :h winblend
     yazi_floating_window_winblend = 0,
 
-    -- the path to a temporary file that will be created by yazi to store the
-    -- chosen file path. This is used internally but you might want to change
-    -- it if there are issues accessing the default path.
-    chosen_file_path = '/tmp/yazi_filechosen',
-
     -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
     open_file_function = function(chosen_file, config) end,
