@@ -101,10 +101,6 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- it if there are issues accessing the default path.
     chosen_file_path = '/tmp/yazi_filechosen',
 
-    -- the path to a temporary file that will be created by yazi to store
-    -- events
-    events_file_path = '/tmp/yazi.nvim.events.txt',
-
     -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
     open_file_function = function(chosen_file, config) end,

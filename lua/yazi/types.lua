@@ -1,7 +1,7 @@
 ---@class YaziConfig
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
----@field public events_file_path? string "the path to a temporary file that will be created by yazi to store events"
+---@field public events_file_path? string "the path to a temporary file that will be created by yazi to store events. A random path will be used by default"
 ---@field public enable_mouse_support? boolean
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig): nil "a function that will be called when a file is chosen in yazi"
 ---@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
