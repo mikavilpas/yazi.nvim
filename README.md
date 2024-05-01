@@ -12,8 +12,8 @@ open yazi in a floating window in Neovim.
 ## ✨ Features
 
 - Open yazi in a floating window
-- Files can be opened in the current buffer, a vertical split, a horizontal
-  split, or a new tab
+- Files can be selected in yazi and opened in the current buffer, a vertical
+  split, a horizontal split, or a new tab
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open
