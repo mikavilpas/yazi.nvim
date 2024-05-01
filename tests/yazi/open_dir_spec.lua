@@ -11,6 +11,7 @@ describe('when the user set open_for_directories = true', function()
     ---@diagnostic disable-next-line: missing-fields
     plugin.setup({
       open_for_directories = true,
+      chosen_file_path = '/tmp/yazi_filechosen',
       events_file_path = '/tmp/yazi.nvim.events.txt',
     })
   end)
