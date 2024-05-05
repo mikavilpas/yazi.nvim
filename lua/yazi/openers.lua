@@ -32,7 +32,6 @@ function M.send_files_to_quickfix_list(chosen_files)
       end
 
       return {
-        lnum = 1,
         filename = path,
         text = path,
       }
