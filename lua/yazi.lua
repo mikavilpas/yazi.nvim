@@ -85,6 +85,11 @@ function M.setup(opts)
         -- Remove the buffer as we want to show yazi instead
         vim.api.nvim_buf_delete(bufnr, { force = true })
         M.yazi(M.config, file)
+
+        -- HACK: for some reason, the cursor is not in insert mode when opening
+        -- yazi, so just simulate pressing "i" to enter insert mode :)
+        -- It did nothing when when I tried using vim.cmd('startinsert') or vim.cmd('normal! i')
+        vim.api.nvim_feedkeys('i', 'n', false)
       end
     end
 
