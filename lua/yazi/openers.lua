@@ -25,10 +25,16 @@ function M.send_files_to_quickfix_list(chosen_files)
   vim.fn.setqflist({}, 'r', {
     title = 'Yazi',
     items = vim.tbl_map(function(file)
+      -- append / to directories
+      local path = file
+      if vim.fn.isdirectory(file) == 1 then
+        path = file .. '/'
+      end
+
       return {
-        filename = file,
         lnum = 1,
-        text = file,
+        filename = path,
+        text = path,
       }
     end, chosen_files),
   })
