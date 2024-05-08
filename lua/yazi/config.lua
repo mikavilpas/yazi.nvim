@@ -5,6 +5,7 @@ local M = {}
 function M.default()
   ---@type YaziConfig
   return {
+    log_level = vim.log.levels.OFF,
     open_for_directories = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,

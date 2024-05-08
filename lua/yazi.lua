@@ -3,6 +3,7 @@ local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
 local configModule = require('yazi.config')
 local event_handling = require('yazi.event_handling')
+local Log = require('yazi.log')
 
 local M = {}
 
@@ -39,7 +40,8 @@ function M.yazi(config, path)
   )
 
   if M.yazi_loaded == false then
-    -- ensure that the buffer is closed on exit
+    Log:debug(string.format('Opening yazi with the command: (%s)', cmd))
+
     local job_id = vimfn.termopen(cmd, {
       ---@diagnostic disable-next-line: unused-local
       on_exit = function(_job_id, code, _event)
@@ -75,6 +77,8 @@ M.config = configModule.default()
 function M.setup(opts)
   M.config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, opts or {})
+
+  Log.level = M.config.log_level
 
   if M.config.open_for_directories == true then
     ---@param file string
