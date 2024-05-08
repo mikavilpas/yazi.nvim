@@ -34,6 +34,10 @@ return {
       )
     end
 
+    local logfile_location = require('yazi.log'):get_logfile_path()
+    vim.health.info('yazi.nvim log file is at ' .. logfile_location)
+    vim.health.info('    hint: use `gf` to open the file path under the cursor')
+
     vim.health.ok('yazi')
   end,
 }
