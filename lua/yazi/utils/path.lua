@@ -22,6 +22,9 @@ local M = {}
 M.escape_path_for_cmd = function(path)
   local escaped_path = vim.fn.fnameescape(path)
   if M.is_windows then
+    -- Replace forward slash spaces with just spaces.
+    escaped_path = escaped_path:gsub('\\ ', ' ')
+
     -- on windows, some punctuation preceeded by a `\` needs to have a second
     -- `\` added to preserve the path separator. this is a naive replacement and
     -- definitely not bullet proof. if we start finding issues with opening files

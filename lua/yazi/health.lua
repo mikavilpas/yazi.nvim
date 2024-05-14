@@ -14,7 +14,7 @@ return {
 
     -- parse the version
 
-    local semver = raw_version:match('^[Yy]azi (%w+%.%w+%.%w+)')
+    local semver = raw_version:match('[Yy]azi (%w+%.%w+%.%w+)')
 
     if semver == nil then
       vim.health.warn('yazi --version looks unexpected, saw ' .. raw_version)
