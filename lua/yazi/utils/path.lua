@@ -38,6 +38,8 @@ M.escape_path_for_cmd = function(path)
       -- for the ones that do (e.g., `%(` and `%^`)
       escaped_path = escaped_path:gsub('\\%' .. c, '\\%1')
     end
+
+    escaped_path = string.format('"%s"', escaped_path)
   end
   return escaped_path
 end
