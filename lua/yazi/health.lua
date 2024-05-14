@@ -13,7 +13,10 @@ return {
     local raw_version = vim.fn.system('yazi --version')
 
     -- parse the version
-
+    --
+    -- the beginning of the output might contain CSI sequences on some systems. See
+    -- https://github.com/mikavilpas/yazi.nvim/pull/73
+    -- https://github.com/sxyazi/yazi/commit/4c35f26e
     local semver = raw_version:match('[Yy]azi (%w+%.%w+%.%w+)')
 
     if semver == nil then
