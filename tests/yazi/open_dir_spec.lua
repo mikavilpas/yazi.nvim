@@ -25,7 +25,7 @@ describe('when the user set open_for_directories = true', function()
     vim.api.nvim_command('edit /')
 
     assert.stub(api_mock.termopen).was_called_with(
-      'yazi / --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
+      'yazi \'/\' --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
       match.is_table()
     )
   end)
