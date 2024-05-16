@@ -20,7 +20,7 @@ local M = {}
 ---@param path string
 ---@return string
 M.escape_path_for_cmd = function(path)
-  local escaped_path = vim.fn.fnameescape(path)
+  local escaped_path = vim.fn.shellescape(path)
   if M.is_windows then
     -- Replace forward slash spaces with just spaces.
     escaped_path = escaped_path:gsub('\\ ', ' ')

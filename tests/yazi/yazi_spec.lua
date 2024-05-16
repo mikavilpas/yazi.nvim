@@ -42,7 +42,7 @@ describe('opening a file', function()
     })
 
     assert.stub(api_mock.termopen).was_called_with(
-      'yazi /abc/test\\ file-\\$1.txt --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
+      'yazi \'/abc/test file-$1.txt\' --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
       match.is_table()
     )
   end)
@@ -56,7 +56,7 @@ describe('opening a file', function()
     })
 
     assert.stub(api_mock.termopen).was_called_with(
-      'yazi /tmp/ --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
+      'yazi \'/tmp/\' --local-events "rename,delete,trash,move" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
       match.is_table()
     )
   end)
