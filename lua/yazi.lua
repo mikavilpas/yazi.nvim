@@ -3,7 +3,6 @@ local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
 local configModule = require('yazi.config')
 local event_handling = require('yazi.event_handling')
-local path_utils = require('yazi.utils.path')
 local Log = require('yazi.log')
 
 local M = {}
@@ -35,7 +34,7 @@ function M.yazi(config, path)
   os.remove(config.chosen_file_path)
   local cmd = string.format(
     'yazi %s --local-events "rename,delete,trash,move" --chooser-file "%s" > "%s"',
-    path_utils.escape_path_for_cmd(path),
+    vim.fn.shellescape(path),
     config.chosen_file_path,
     config.events_file_path
   )
