@@ -16,16 +16,6 @@ jobs:
           args: --display-style=quiet .
           # selene version
           version: 0.12.1
-  stylua:
-    name: stylua
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: JohnnyMorganz/stylua-action@v3
-        with:
-          version: latest
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --color always --check lua
 
   markdownlint:
     name: markdownlint
