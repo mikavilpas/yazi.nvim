@@ -25,7 +25,7 @@ open yazi in a floating window in Neovim.
 
 First, make sure you have the requirements:
 
-- Neovim 0.9.x or later
+- Neovim 0.10.x or later
 - yazi [0.2.5](https://github.com/sxyazi/yazi/releases/tag/v0.2.5) or later
 
 > You can run `:checkhealth yazi` to see if compatible versions are installed
