@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.runtime.path": ["lua/?.lua", "lua/?/init.lua"],
+  "Lua.workspace.library": [
+    "/home/runner/work/yazi.nvim/yazi.nvim/lua_modules/share/lua/5.1",
+    "/home/runner/work/yazi.nvim/yazi.nvim/deps/neovim/runtime/lua",
+    "/home/runner/work/yazi.nvim/yazi.nvim/deps/neodev.nvim/types/stable",
+    "/home/runner/work/yazi.nvim/yazi.nvim/deps/plenary.nvim"
+  ],
+  "Lua.diagnostics.libraryFiles": "Disable",
+  "Lua.workspace.checkThirdParty": "Disable"
+}
