@@ -22,37 +22,22 @@ function M.default()
   }
 end
 
+--- This sets the default keymappings for yazi. If you want to use your own
+--- keymappings, you can set the set_keymappings_function in your config. Copy
+--- this function as the basis.
 ---@param yazi_buffer integer
 ---@param config YaziConfig
 function M.default_set_keymappings_function(yazi_buffer, config)
   vim.keymap.set({ 't' }, '<c-v>', function()
-    config.open_file_function = openers.open_file_in_vertical_split
-    config.hooks.yazi_opened_multiple_files = function(chosen_files)
-      for _, chosen_file in ipairs(chosen_files) do
-        config.open_file_function(chosen_file, config)
-      end
-    end
-    M.select_current_file_and_close_yazi()
+    M.open_file_in_vertical_split(config)
   end, { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-x>', function()
-    config.open_file_function = openers.open_file_in_horizontal_split
-    config.hooks.yazi_opened_multiple_files = function(chosen_files)
-      for _, chosen_file in ipairs(chosen_files) do
-        config.open_file_function(chosen_file, config)
-      end
-    end
-    M.select_current_file_and_close_yazi()
+    M.open_file_in_horizontal_split(config)
   end, { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-t>', function()
-    config.open_file_function = openers.open_file_in_tab
-    config.hooks.yazi_opened_multiple_files = function(chosen_files)
-      for _, chosen_file in ipairs(chosen_files) do
-        config.open_file_function(chosen_file, config)
-      end
-    end
-    M.select_current_file_and_close_yazi()
+    M.open_file_in_tab(config)
   end, { buffer = yazi_buffer })
 end
 
@@ -66,6 +51,39 @@ function M.select_current_file_and_close_yazi()
     'n',
     true
   )
+end
+
+---@param config YaziConfig
+function M.open_file_in_vertical_split(config)
+  config.open_file_function = openers.open_file_in_vertical_split
+  config.hooks.yazi_opened_multiple_files = function(chosen_files)
+    for _, chosen_file in ipairs(chosen_files) do
+      config.open_file_function(chosen_file, config)
+    end
+  end
+  M.select_current_file_and_close_yazi()
+end
+
+---@param config YaziConfig
+function M.open_file_in_horizontal_split(config)
+  config.open_file_function = openers.open_file_in_horizontal_split
+  config.hooks.yazi_opened_multiple_files = function(chosen_files)
+    for _, chosen_file in ipairs(chosen_files) do
+      config.open_file_function(chosen_file, config)
+    end
+  end
+  M.select_current_file_and_close_yazi()
+end
+
+---@param config YaziConfig
+function M.open_file_in_tab(config)
+  config.open_file_function = openers.open_file_in_tab
+  config.hooks.yazi_opened_multiple_files = function(chosen_files)
+    for _, chosen_file in ipairs(chosen_files) do
+      config.open_file_function(chosen_file, config)
+    end
+  end
+  M.select_current_file_and_close_yazi()
 end
 
 return M
