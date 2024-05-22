@@ -165,5 +165,4 @@ and also because I wanted to learn Neovim plugin development.
 
 ## Contributing
 
-Contributions are welcome! If you'd like to collaborate, contact me via GitHub
-issues.
+Please see [COMMUNITY.md](./COMMUNITY.md) for more information on the project!
