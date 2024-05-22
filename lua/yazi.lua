@@ -10,9 +10,9 @@ local M = {}
 M.yazi_loaded = false
 
 ---@param config? YaziConfig?
----@param path? string
+---@param input_path? string
 ---@diagnostic disable-next-line: redefined-local
-function M.yazi(config, path)
+function M.yazi(config, input_path)
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check documentation for more information')
     return
@@ -21,7 +21,7 @@ function M.yazi(config, path)
   config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
 
-  path = utils.selected_file_path(path)
+  local path = utils.selected_file_path(input_path)
 
   local prev_win = vim.api.nvim_get_current_win()
 
@@ -33,8 +33,8 @@ function M.yazi(config, path)
 
   os.remove(config.chosen_file_path)
   local cmd = string.format(
-    'yazi %s --local-events "rename,delete,trash,move" --chooser-file "%s" > "%s"',
-    vim.fn.shellescape(path),
+    'yazi %s --local-events "rename,delete,trash,move,cd" --chooser-file "%s" > "%s"',
+    vim.fn.shellescape(path.filename),
     config.chosen_file_path,
     config.events_file_path
   )
@@ -53,14 +53,25 @@ function M.yazi(config, path)
           return
         end
 
-        utils.on_yazi_exited(prev_win, win, config)
-
         local events = utils.read_events_file(config.events_file_path)
-        event_handling.process_events_emitted_from_yazi(events)
+        local event_info =
+          event_handling.process_events_emitted_from_yazi(events)
+
+        local last_directory = event_info.last_directory
+        if last_directory == nil then
+          if path:is_file() then
+            last_directory = path:parent()
+          else
+            last_directory = path
+          end
+        end
+        utils.on_yazi_exited(prev_win, win, config, {
+          last_directory = event_info.last_directory or path:parent(),
+        })
       end,
     })
 
-    config.hooks.yazi_opened(path, win.content_buffer, config)
+    config.hooks.yazi_opened(path.filename, win.content_buffer, config)
     config.set_keymappings_function(win.content_buffer, config)
     win.on_resized = function(event)
       vim.fn.jobresize(job_id, event.win_width, event.win_height)
