@@ -1,5 +1,6 @@
 local fn = vim.fn
 local RenameableBuffer = require('yazi.renameable_buffer')
+local plenary_path = require('plenary.path')
 
 local M = {}
 
@@ -19,7 +20,7 @@ function M.file_exists(name)
 end
 
 ---@param path string?
----@return string
+---@return Path
 function M.selected_file_path(path)
   if path == '' or path == nil then
     path = vim.fn.expand('%:p')
@@ -31,7 +32,7 @@ function M.selected_file_path(path)
     path = vim.fn.expand('%:p')
   end
 
-  return path
+  return plenary_path:new(path)
 end
 
 -- Returns parsed events from the yazi events file
@@ -109,6 +110,22 @@ function M.parse_events(events_file_lines)
         data = vim.fn.json_decode(data_string),
       }
       table.insert(events, event)
+    elseif type == 'cd' then
+      -- example of a change directory (cd) event:
+      -- cd,1716307611001689,1716307611001689,{"tab":0,"url":"/tmp/test-directory"}
+
+      local timestamp = parts[2]
+      local id = parts[3]
+      local data_string = table.concat(parts, ',', 4, #parts)
+
+      ---@type YaziChangeDirectoryEvent
+      local event = {
+        type = type,
+        timestamp = timestamp,
+        id = id,
+        url = vim.fn.json_decode(data_string)['url'],
+      }
+      table.insert(events, event)
     end
   end
 
@@ -177,7 +194,8 @@ end
 ---@param prev_win integer
 ---@param window YaziFloatingWindow
 ---@param config YaziConfig
-function M.on_yazi_exited(prev_win, window, config)
+---@param state YaziClosedState
+function M.on_yazi_exited(prev_win, window, config, state)
   vim.cmd('silent! :checktime')
 
   -- open the file that was chosen
@@ -195,11 +213,13 @@ function M.on_yazi_exited(prev_win, window, config)
       config.hooks.yazi_opened_multiple_files(chosen_files, config)
     else
       local chosen_file = chosen_files[1]
-      config.hooks.yazi_closed_successfully(chosen_file, config)
+      config.hooks.yazi_closed_successfully(chosen_file, config, state)
       if chosen_file then
         config.open_file_function(chosen_file, config)
       end
     end
+  else
+    config.hooks.yazi_closed_successfully(nil, config, state)
   end
 end
 

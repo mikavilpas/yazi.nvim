@@ -13,10 +13,13 @@
 
 ---@class YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil
----@field public yazi_closed_successfully fun(chosen_file: string | nil, config: YaziConfig): nil
+---@field public yazi_closed_successfully fun(chosen_file: string | nil, config: YaziConfig, state: YaziClosedState): nil
 ---@field public yazi_opened_multiple_files fun(chosen_files: string[], config: YaziConfig): nil
 
----@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent
+
+---@class YaziClosedState # describes the state of yazi when it was closed; the last known state
+---@field public last_directory Path # the last directory that yazi was in before it was closed
 
 ---@class YaziRenameEvent
 ---@field public type "rename"
@@ -45,6 +48,12 @@
 ---@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
+
+---@class YaziChangeDirectoryEvent
+---@field public type "cd"
+---@field public timestamp string
+---@field public id string
+---@field public url string
 
 ---@class yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
 ---@field public id number
