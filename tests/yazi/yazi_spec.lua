@@ -151,7 +151,7 @@ describe('opening a file', function()
 
     assert
       .spy(spy_open_file_function)
-      .was_called_with(target_file, match.is_table())
+      .was_called_with(target_file, match.is_table(), match.is_table())
   end)
 end)
 
@@ -188,6 +188,6 @@ describe('opening multiple files', function()
     assert.spy(spy_open_multiple_files).was_called_with({
       target_file_1,
       target_file_2,
-    }, match.is_table())
+    }, match.is_table(), match.is_table())
   end)
 end)
