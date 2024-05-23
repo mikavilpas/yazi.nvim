@@ -210,12 +210,12 @@ function M.on_yazi_exited(prev_win, window, config, state)
     local chosen_files = vim.fn.readfile(config.chosen_file_path)
 
     if #chosen_files > 1 then
-      config.hooks.yazi_opened_multiple_files(chosen_files, config)
+      config.hooks.yazi_opened_multiple_files(chosen_files, config, state)
     else
       local chosen_file = chosen_files[1]
       config.hooks.yazi_closed_successfully(chosen_file, config, state)
       if chosen_file then
-        config.open_file_function(chosen_file, config)
+        config.open_file_function(chosen_file, config, state)
       end
     end
   else

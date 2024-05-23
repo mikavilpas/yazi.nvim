@@ -73,6 +73,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 > You don't have to set any of these options. The defaults are fine for most
 > users.
+>
+> For advanced configuration, it's recommended to have your Lua language server
+> set up so that you can type check your configuration and avoid errors.
 
 You can optionally configure yazi.nvim by setting any of the options below.
 
@@ -123,7 +126,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
       -- when yazi opened multiple files. The default is to send them to the
       -- quickfix list, but if you want to change that, you can define it here
-      yazi_opened_multiple_files = function(chosen_files, config) end,
+      yazi_opened_multiple_files = function(chosen_files, config, state) end,
     },
   },
 }
