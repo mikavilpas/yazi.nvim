@@ -11,7 +11,7 @@ local YaziFloatingWindow = {}
 ---@diagnostic disable-next-line: inject-field
 YaziFloatingWindow.__index = YaziFloatingWindow
 
----@class yazi.FloatingWindowResizedEvent
+---@class (exact) yazi.FloatingWindowResizedEvent
 ---@field win_height integer
 ---@field win_width integer
 

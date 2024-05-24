@@ -2,7 +2,6 @@ local openers = require('yazi.openers')
 
 --- Hacky actions that can be used when yazi is open. They typically select the
 --- current file and execute some useful operation on the selected file.
----@class YaziOpenerActions
 local YaziOpenerActions = {}
 
 ---@param config YaziConfig
@@ -30,7 +29,7 @@ end
 --
 --
 --
----@class YaziOpenerActionsCallbacks
+---@class (exact) YaziOpenerActionsCallbacks
 ---@field on_file_opened fun(chosen_file: string, config: YaziConfig, state: YaziClosedState):nil
 ---@field on_multiple_files_opened? fun(chosen_files: string[], config: YaziConfig, state: YaziClosedState):nil
 
