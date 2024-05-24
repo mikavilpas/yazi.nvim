@@ -128,6 +128,14 @@ You can optionally configure yazi.nvim by setting any of the options below.
       -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = function(chosen_files, config, state) end,
     },
+
+    integrations = {
+      --- What should be done when the user wants to grep in a directory
+      ---@param directory string
+      grep_in_directory = function(directory)
+        -- the default implementation uses telescope if available, otherwise nothing
+      end,
+    },
   },
 }
 ```
@@ -139,6 +147,9 @@ These are the default keybindings that are available when yazi is open:
 - `<c-v>`: open the selected file in a vertical split
 - `<c-x>`: open the selected file in a horizontal split
 - `<c-t>`: open the selected file in a new tab
+- `<c-s>`: close the current yazi directory using
+  [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`.
+  If telescope is not available, nothing happens. You can customize this
 
 Notice that these are also the defaults for telescope.
 

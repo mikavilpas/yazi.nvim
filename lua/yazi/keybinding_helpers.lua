@@ -42,10 +42,9 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
   config.open_file_function = callbacks.on_file_opened
 
   if callbacks.on_multiple_files_opened == nil then
-    ---@diagnostic disable-next-line: redefined-local
-    callbacks.on_multiple_files_opened = function(chosen_files, config, state)
+    callbacks.on_multiple_files_opened = function(chosen_files, cfg, state)
       for _, chosen_file in ipairs(chosen_files) do
-        config.open_file_function(chosen_file, config, state)
+        cfg.open_file_function(chosen_file, cfg, state)
       end
     end
   end
