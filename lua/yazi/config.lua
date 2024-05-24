@@ -17,6 +17,16 @@ function M.default()
       yazi_opened_multiple_files = openers.send_files_to_quickfix_list,
     },
 
+    integrations = {
+      grep_in_directory = function(directory)
+        require('telescope.builtin').live_grep({
+          search = '',
+          prompt_title = 'Grep in ' .. directory,
+          cwd = directory,
+        })
+      end,
+    },
+
     floating_window_scaling_factor = 0.9,
     yazi_floating_window_winblend = 0,
     yazi_floating_window_border = 'rounded',
@@ -39,6 +49,29 @@ function M.default_set_keymappings_function(yazi_buffer, config)
 
   vim.keymap.set({ 't' }, '<c-t>', function()
     keybinding_helpers.open_file_in_tab(config)
+  end, { buffer = yazi_buffer })
+
+  vim.keymap.set({ 't' }, '<c-s>', function()
+    keybinding_helpers.select_current_file_and_close_yazi(config, {
+      on_file_opened = function(_, _, state)
+        if config.integrations.grep_in_directory == nil then
+          return
+        end
+
+        local success, result_or_error = pcall(
+          config.integrations.grep_in_directory,
+          state.last_directory.filename
+        )
+
+        if not success then
+          local message = 'yazi.nvim: error searching with telescope.'
+          vim.notify(message, vim.log.levels.WARN)
+          require('yazi.log'):debug(
+            vim.inspect({ message = message, error = result_or_error })
+          )
+        end
+      end,
+    })
   end, { buffer = yazi_buffer })
 end
 
