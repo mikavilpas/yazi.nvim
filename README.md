@@ -149,7 +149,8 @@ These are the default keybindings that are available when yazi is open:
 - `<c-t>`: open the selected file in a new tab
 - `<c-s>`: close the current yazi directory using
   [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`.
-  If telescope is not available, nothing happens. You can customize this
+  If telescope is not available, nothing happens. You can customize the search
+  action in your configuration.
 
 Notice that these are also the defaults for telescope.
 
