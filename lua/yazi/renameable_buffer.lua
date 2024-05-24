@@ -9,7 +9,9 @@ local function remove_trailing_slash(path)
   return path
 end
 
----@class RenameableBuffer
+---@class (exact) RenameableBuffer
+---@field new fun(bufnr: number, path: string): RenameableBuffer
+---@field __index RenameableBuffer
 ---@field bufnr number
 ---@field original_path string
 ---@field path Path

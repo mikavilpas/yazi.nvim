@@ -1,6 +1,6 @@
 -- TODO all config properties are optional when given, but mandatory inside the plugin
 
----@class YaziConfig
+---@class (exact) YaziConfig
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
 ---@field public events_file_path? string "the path to a temporary file that will be created by yazi to store events. A random path will be used by default"
@@ -14,54 +14,54 @@
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
 
----@class YaziConfigHooks
+---@class (exact) YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil
 ---@field public yazi_closed_successfully fun(chosen_file: string | nil, config: YaziConfig, state: YaziClosedState): nil
 ---@field public yazi_opened_multiple_files fun(chosen_files: string[], config: YaziConfig, state: YaziClosedState): nil
 
----@class YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
+---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? fun(directory: string): nil "a function that will be called when the user wants to grep in a directory"
 
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent
 
----@class YaziClosedState # describes the state of yazi when it was closed; the last known state
+---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
 ---@field public last_directory Path # the last directory that yazi was in before it was closed
 
----@class YaziRenameEvent
+---@class (exact) YaziRenameEvent
 ---@field public type "rename"
 ---@field public timestamp string
 ---@field public id string
 ---@field public data YaziEventDataRenameOrMove
 
----@class YaziMoveEvent
+---@class (exact) YaziMoveEvent
 ---@field public type "move"
 ---@field public timestamp string
 ---@field public id string
 ---@field public data {items: YaziEventDataRenameOrMove[]}
 
----@class YaziEventDataRenameOrMove
+---@class (exact) YaziEventDataRenameOrMove
 ---@field public from string
 ---@field public to string
 
----@class YaziDeleteEvent
+---@class (exact) YaziDeleteEvent
 ---@field public type "delete"
 ---@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
 
----@class YaziTrashEvent
+---@class (exact) YaziTrashEvent
 ---@field public type "trash"
 ---@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
 
----@class YaziChangeDirectoryEvent
+---@class (exact) YaziChangeDirectoryEvent
 ---@field public type "cd"
 ---@field public timestamp string
 ---@field public id string
 ---@field public url string
 
----@class yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
+---@class (exact) yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
 ---@field public id number
 ---@field public event string
 ---@field public group number | nil
