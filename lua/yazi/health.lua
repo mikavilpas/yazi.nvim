@@ -4,6 +4,12 @@ return {
   check = function()
     vim.health.start('yazi')
 
+    if vim.fn.has('nvim-0.10.0') ~= 1 then
+      vim.health.warn(
+        'yazi.nvim requires Neovim >= 0.10.0. You might have unexpected issues.'
+      )
+    end
+
     if vim.fn.executable('yazi') ~= 1 then
       vim.health.warn('yazi not found on PATH')
     end
