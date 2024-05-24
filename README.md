@@ -3,7 +3,7 @@
 <a href="https://dotfyle.com/plugins/mikavilpas/yazi.nvim">
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" /> </a>
 
-[![Type checked codebase](https://github.com/mrcjkb/lua-typecheck-action/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml)
+[![Type checked codebase](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml)
 
 Yazi is a blazing fast file manager for the terminal. This plugin allows you to
 open yazi in a floating window in Neovim.
