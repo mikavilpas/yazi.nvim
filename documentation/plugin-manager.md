@@ -1,18 +1,63 @@
 # The yazi.nvim plugin manager
 
-Yazi.nvim ships with _experimental plugin manager_ support for lazy.nvim. Its
-purpose is to provide users a way to fully manage their yazi and neovim plugins
-from inside neovim.
+Yazi.nvim ships with _experimental plugin manager_ support for lazy.nvim. It
+allows you to fully manage your yazi and neovim plugins from inside neovim.
+
+## Getting started
+
+In this example, we will install the yazi plugin
+[DreamMaoMao/keyjump.yazi](https://github.com/DreamMaoMao/keyjump.yazi), which
+adds a "jump-to-line" feature to yazi.
+
+In your yazi.nvim configuration, add a new lazy.nvim plugin specification for
+`DreamMaoMao/keyjump.yazi`:
+
+```lua
+-- this file is: /Users/mikavilpas/.config/nvim/lua/plugins/my-file-manager.lua
+---@type LazySpec
+return {
+  {
+    "mikavilpas/yazi.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", },
+    keys = {
+      {
+        "<up>",
+        function()
+          require("yazi").yazi()
+        end,
+      },
+    },
+  },
+  {
+    "DreamMaoMao/keyjump.yazi",
+    lazy = true,
+    build = function(plugin)
+      require("yazi.plugin").build_plugin(plugin)
+    end,
+  },
+}
+```
+
+Make sure to add the `lazy` and `build` keys to the plugin specification .
+
+Next, run `:Lazy` in neovim to install the plugin.
+
+Finally, add a keybinding to your `~/.config/yazi/keymap.toml` according to the
+instructions provided by the plugin author.
+
+You're all set! You can now use the new plugin in yazi, and update it using
+lazy.nvim.
 
 > Demo: installing a new Yazi plugin with lazy.nvim, and then using `<leader>l`
 > to view its commits
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/e746ba3a-7606-428c-9e6b-a6cb05094930>
 
+## How it works
+
 The way it works is the following:
 
 - in your `lazy.nvim` configuration, you add the plugins you want to install
-  (see the example below)
   - in each plugin, you add a `build` function that calls
     `require("yazi.plugin").build_plugin(plugin)`. This will link the plugin so
     that Yazi can find it.
@@ -46,9 +91,9 @@ As the Yazi plugin system is currently in beta, the yazi.nvim plugin manager is
 subject to change. Users seeking stability are encouraged to use the official
 plugin manager.
 
-## How to use it
+## More technical details and examples
 
-Add the following to your lazy.nvim configuration:
+> Note: this section is for advanced users.
 
 ```lua
 -- Example plugins:
@@ -99,4 +144,5 @@ return {
 
 For further reading, please refer to the following resources:
 
-- <https://yazi-rs.github.io/docs/plugins/overview>
+- Yazi plugin documentation <https://yazi-rs.github.io/docs/plugins/overview>
+- lazy.nvim documentation <https://github.com/folke/lazy.nvim>
