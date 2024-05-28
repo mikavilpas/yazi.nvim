@@ -78,13 +78,19 @@ The benefits of using the yazi.nvim plugin manager are:
 
 ## Caveats
 
+> [!NOTE]
+>
 > Note that only [lazy.nvim](https://github.com/folke/lazy.nvim) is supported at
 > the moment.
 
-> Note that Yazi also ships with its own plugin manager. Some of the features
-> are very similar. The intent is to provide a more integrated experience with
-> the same (or, if possible, improved) features.
+> [!NOTE]
+>
+> Yazi also ships with its own plugin manager. Some of the features are very
+> similar. The intent is to provide a more integrated experience with the same
+> (or, if possible, improved) features.
 
+> [!NOTE]
+>
 > Right now, it's not known if it works on Windows. Please report any issues.
 
 As the Yazi plugin system is currently in beta, the yazi.nvim plugin manager is
@@ -93,7 +99,9 @@ plugin manager.
 
 ## More technical details and examples
 
-> Note: this section is for advanced users.
+> [!NOTE]
+>
+> This section is for advanced users.
 
 ```lua
 -- Example plugins:
