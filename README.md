@@ -32,6 +32,8 @@ First, make sure you have the requirements:
 - Neovim 0.10.x or later
 - yazi [0.2.5](https://github.com/sxyazi/yazi/releases/tag/v0.2.5) or later
 
+> [!TIP]
+>
 > You can run `:checkhealth yazi` to see if compatible versions are installed
 > and working.
 
@@ -74,6 +76,8 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ### ⚙️⚙️ Advanced configuration
 
+> [!IMPORTANT]
+>
 > You don't have to set any of these options. The defaults are fine for most
 > users.
 >
