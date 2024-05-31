@@ -13,37 +13,37 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.6
 
       - name: Checkout dependency neodev # get neodev and neovim/runtime for builtin types
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.6
         with:
           repository: "folke/neodev.nvim"
           path: "deps/neodev.nvim"
 
       - name: Checkout dependency plenary
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.6
         with:
           repository: "nvim-lua/plenary.nvim"
           path: "deps/plenary.nvim"
 
       - name: Checkout neovim for type annotations
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.6
         with:
           repository: "neovim/neovim"
           path: "deps/neovim"
 
-      - uses: leafo/gh-actions-lua@v9 # get luarocks dependencies for their types (eg `PathlibPath`)
+      - uses: leafo/gh-actions-lua@v10.0.0 # get luarocks dependencies for their types (eg `PathlibPath`)
         with:
           luaVersion: "5.1"
-      - uses: leafo/gh-actions-luarocks@v4
+      - uses: leafo/gh-actions-luarocks@v4.3.0
       - name: install dependencies
         run: |
           luarocks init
           luarocks install --only-deps ./*.rockspec
 
       - name: Typecheck the code base
-        uses: mrcjkb/lua-typecheck-action@v0.2.1
+        uses: mrcjkb/lua-typecheck-action@v1.0.0
         with:
           configpath: .github/workflows/.luarc.json
           directories: |

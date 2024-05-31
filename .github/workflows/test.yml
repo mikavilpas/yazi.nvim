@@ -19,10 +19,10 @@ jobs:
             manager: sudo apt-get
             packages: -y ripgrep
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.6
       - run: date +%F > todays-date
       - name: Restore from today's cache
-        uses: actions/cache@v4
+        uses: actions/cache@v4.0.2
         with:
           path: _neovim
           key:
