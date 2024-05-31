@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           # [Required] Access token with `workflow` scope.
-          token: ${{ secrets.WORKFLOW_SECRET }}
+          token: ${{ secrets.WORKFLOW_UPDATER_SECRET }}
 
       - name: Run GitHub Actions Version Updater
         uses: saadmk11/github-actions-version-updater@v0.8.1
@@ -25,7 +25,7 @@ jobs:
         id: gha-update
         with:
           # [Required] Access token with `workflow` scope.
-          token: ${{ secrets.WORKFLOW_SECRET }}
+          token: ${{ secrets.WORKFLOW_UPDATER_SECRET }}
           skip_pull_request: "false"
       - name: Get PR Number
         run:
