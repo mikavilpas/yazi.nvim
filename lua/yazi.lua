@@ -44,6 +44,11 @@ local function on_exit(job_id, code, event)
 			if chosen_file then
 				vim.cmd(string.format('edit %s', chosen_file))
 			end
+
+			-- if open a folder, auto switch nvim working directory
+			if vim.fn.isdirectory(chosen_file) == 1 then
+				vim.cmd('cd ' .. chosen_file)
+			end
 		end
 		prev_win = -1
 		if vim.api.nvim_buf_is_valid(buffer) and vim.api.nvim_buf_is_loaded(buffer) then
