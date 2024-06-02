@@ -7,7 +7,8 @@ allows you to fully manage your yazi and neovim plugins from inside neovim.
 
 In this example, we will install the yazi plugin
 [DreamMaoMao/keyjump.yazi](https://github.com/DreamMaoMao/keyjump.yazi), which
-adds a "jump-to-line" feature to yazi.
+adds a "jump-to-line" feature to yazi. We will also install a _flavor_ which
+applies a color scheme to yazi.
 
 In your yazi.nvim configuration, add a new lazy.nvim plugin specification for
 `DreamMaoMao/keyjump.yazi`:
@@ -29,10 +30,19 @@ return {
     },
   },
   {
+    -- example: include a plugin
     "DreamMaoMao/keyjump.yazi",
     lazy = true,
     build = function(plugin)
       require("yazi.plugin").build_plugin(plugin)
+    end,
+  },
+  {
+    -- example: include a flavor
+    "BennyOe/onedark.yazi",
+    lazy = true,
+    build = function(plugin)
+      require("yazi.plugin").build_flavor(plugin)
     end,
   },
 }
@@ -40,13 +50,19 @@ return {
 
 Make sure to add the `lazy` and `build` keys to the plugin specification .
 
-Next, run `:Lazy` in neovim to install the plugin.
+Next, run `:Lazy` in neovim to install the plugin and flavor.
 
-Finally, add a keybinding to your `~/.config/yazi/keymap.toml` according to the
-instructions provided by the plugin author.
+Finally, make changes in your yazi configuration:
 
-You're all set! You can now use the new plugin in yazi, and update it using
-lazy.nvim.
+- add a keybinding to your `~/.config/yazi/keymap.toml` according to the
+  [instructions](https://github.com/DreamMaoMao/keyjump.yazi?tab=readme-ov-file#usage)
+  provided by the plugin author.
+- include the flavor in your `~/.config/yazi/theme.toml` according to the
+  [instructions](https://github.com/BennyOe/onedark.yazi?tab=readme-ov-file#%EF%B8%8F-usage)
+  provided by the flavor author.
+
+You're all set! You can now use the new plugin and flavor in yazi, and update
+them using lazy.nvim.
 
 > Demo: installing a new Yazi plugin with lazy.nvim, and then using `<leader>l`
 > to view its commits
@@ -154,3 +170,5 @@ For further reading, please refer to the following resources:
 
 - Yazi plugin documentation <https://yazi-rs.github.io/docs/plugins/overview>
 - lazy.nvim documentation <https://github.com/folke/lazy.nvim>
+- General discussion on the idea
+  <https://github.com/folke/lazy.nvim/discussions/1488>

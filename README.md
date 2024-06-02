@@ -21,7 +21,7 @@ open yazi in a floating window in Neovim.
   buffers in Neovim
   - The files are also kept in sync with currently running LSP servers
 - Customizable keybindings
-- 🆕 Plugin manager for Yazi plugins
+- 🆕 Plugin manager for Yazi plugins and flavors
   ([documentation](./documentation/plugin-manager.md)). Please provide your
   feedback!
 
