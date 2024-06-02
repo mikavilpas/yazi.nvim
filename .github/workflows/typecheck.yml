@@ -1,50 +1,22 @@
-# copied from https://github.com/nvim-neorg/neorg/blob/1e63f84f04caed4b8831b8122c4ba2e7dbda389f/.github/workflows/typecheck.yml#L17
-name: Type check the code base
+---
+name: Type check
 on:
   pull_request: ~
   push:
     branches:
-      - "*"
+      - master
 
 jobs:
   build:
-    name: Type Check Code Base
+    name: Type check
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4.1.6
-
-      - name: Checkout dependency neodev # get neodev and neovim/runtime for builtin types
-        uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4
+      - uses: stevearc/nvim-typecheck-action@v2
         with:
-          repository: "folke/neodev.nvim"
-          path: "deps/neodev.nvim"
-
-      - name: Checkout dependency plenary
-        uses: actions/checkout@v4.1.6
-        with:
-          repository: "nvim-lua/plenary.nvim"
-          path: "deps/plenary.nvim"
-
-      - name: Checkout neovim for type annotations
-        uses: actions/checkout@v4.1.6
-        with:
-          repository: "neovim/neovim"
-          path: "deps/neovim"
-
-      - uses: leafo/gh-actions-lua@v10.0.0 # get luarocks dependencies for their types (eg `PathlibPath`)
-        with:
-          luaVersion: "5.1"
-      - uses: leafo/gh-actions-luarocks@v4.3.0
-      - name: install dependencies
-        run: |
-          luarocks init
-          luarocks install --only-deps ./*.rockspec
-
-      - name: Typecheck the code base
-        uses: mrcjkb/lua-typecheck-action@v1.0.0
-        with:
-          configpath: .github/workflows/.luarc.json
-          directories: |
-            lua
+          path: lua
+          level: Information
+          libraries:
+            # space separated
+            https://github.com/nvim-lua/plenary.nvim

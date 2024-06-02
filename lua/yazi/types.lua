@@ -1,5 +1,7 @@
 -- TODO all config properties are optional when given, but mandatory inside the plugin
 
+---@module "plenary.path"
+
 ---@class (exact) YaziConfig
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
@@ -9,8 +11,8 @@
 ---@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
 ---@field public hooks? YaziConfigHooks
 ---@field public integrations? YaziConfigIntegrations
----@field public floating_window_scaling_factor? float "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
----@field public yazi_floating_window_winblend? float "the transparency of the yazi floating window (0-100). See :h winblend"
+---@field public floating_window_scaling_factor? number "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
+---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
 
