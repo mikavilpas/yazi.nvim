@@ -63,11 +63,28 @@ end
 ---@param to string
 ---@return YaziSpecInstallationResultSuccess | YaziSpecInstallationResultFailure
 function M.symlink(spec, to)
+  -- Check if the symlink already exists, which will happen on repeated calls
+  local existing_stat = vim.uv.fs_lstat(to)
+  if
+    existing_stat
+    and existing_stat.type == 'link'
+    and vim.uv.fs_readlink(to) == spec.dir
+  then
+    ---@type YaziSpecInstallationResultSuccess
+    local result = {
+      message = 'yazi.nvim: already installed ' .. spec.name,
+      from = spec.dir,
+      to = to,
+    }
+    -- don't notify about this as it's a common case
+    return result
+  end
+
   local dir = vim.uv.fs_stat(spec.dir)
   if dir == nil or dir.type ~= 'directory' then
     ---@type YaziSpecInstallationResultFailure
     local result = {
-      error = 'yazi plugin/flavor directory does not exist',
+      error = 'source directory does not exist',
       from = spec.dir,
       message = 'yazi.nvim: failed to install',
     }
