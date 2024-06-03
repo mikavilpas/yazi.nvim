@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.0.0...v1.1.0) (2024-06-03)
+
+
+### Features
+
+* **plugins:** support including yazi flavors with `.build_flavor` ([efc0ef1](https://github.com/mikavilpas/yazi.nvim/commit/efc0ef111835534455a93a05432aff13ea05bde2))
+
 ## 1.0.0 (2024-05-26)
 
 
