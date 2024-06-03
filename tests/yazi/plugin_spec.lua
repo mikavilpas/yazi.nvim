@@ -47,10 +47,7 @@ describe('installing a plugin', function()
         name = 'test-plugin-2',
       }, { yazi_dir = yazi_dir })
 
-      assert.is_equal(
-        result.error,
-        'yazi plugin/flavor directory does not exist'
-      )
+      assert.is_equal(result.error, 'source directory does not exist')
       assert.is_equal(result.from, plugin_dir)
     end)
   end)
@@ -72,6 +69,21 @@ describe('installing a plugin', function()
         vim.uv.fs_readlink(vim.fs.joinpath(yazi_dir, 'flavors', 'test-flavor'))
 
       assert.are.same(flavor_dir, symlink)
+    end)
+  end)
+
+  describe('symlink', function()
+    it("doesn't complain if the symlink already exists", function()
+      local source = vim.fs.joinpath(base_dir, 'source-dir')
+      local target = vim.fs.joinpath(base_dir, 'target-dir')
+
+      vim.fn.mkdir(source)
+
+      local result = plugin.symlink({ name = 'source', dir = source }, target)
+      assert.are.same(result.error, nil)
+
+      local result2 = plugin.symlink({ name = 'source', dir = source }, target)
+      assert.are.same(result2.error, nil)
     end)
   end)
 end)
