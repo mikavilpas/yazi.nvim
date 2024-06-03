@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.0...v1.1.1) (2024-06-03)
+
+
+### Bug Fixes
+
+* **plugins:** fix failure on repeated installation ([3df04c4](https://github.com/mikavilpas/yazi.nvim/commit/3df04c467e11b448083a0987688ba4d4782e73ec))
+
 ## [1.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.0.0...v1.1.0) (2024-06-03)
 
 
