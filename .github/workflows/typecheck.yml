@@ -11,8 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: stevearc/nvim-typecheck-action@v2
-        name: Type check lua/
+      - name: Type check lua/
+        uses: stevearc/nvim-typecheck-action@v2
         with:
           path: lua
           level: Information
@@ -20,9 +20,9 @@ jobs:
             # space separated
             https://github.com/nvim-lua/plenary.nvim
 
-      - uses: stevearc/nvim-typecheck-action@v2
+      - name: Type check tests/
+        uses: stevearc/nvim-typecheck-action@v2
         with:
-          name: Type check tests/
           path: tests/
           level: Information
           libraries:
