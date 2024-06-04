@@ -2,9 +2,7 @@
 name: Type check
 on:
   pull_request: ~
-  push:
-    branches:
-      - master
+  push: ~
 
 jobs:
   build:
