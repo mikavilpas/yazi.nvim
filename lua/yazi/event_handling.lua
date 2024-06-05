@@ -11,6 +11,9 @@ local M = {}
 function M.process_delete_event(event, remaining_events)
   local open_buffers = utils.get_open_buffers()
 
+  ---@type RenameableBuffer[]
+  local deleted_buffers = {}
+
   for _, buffer in ipairs(open_buffers) do
     for _, url in ipairs(event.data.urls) do
       if buffer:matches_exactly(url) or buffer:matches_parent(url) then
@@ -26,12 +29,18 @@ function M.process_delete_event(event, remaining_events)
         if is_renamed_in_later_event then
           break
         else
-          vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
-          lsp_delete.file_deleted(buffer.path.filename)
+          deleted_buffers[#deleted_buffers + 1] = buffer
+
+          vim.schedule(function()
+            vim.api.nvim_buf_delete(buffer.bufnr, { force = false })
+            lsp_delete.file_deleted(buffer.path.filename)
+          end)
         end
       end
     end
   end
+
+  return deleted_buffers
 end
 
 ---@param rename_or_move_event YaziEventDataRenameOrMove
