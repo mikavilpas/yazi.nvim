@@ -22,6 +22,9 @@ describe('process_delete_event', function()
 
     event_handling.process_delete_event(event, {})
 
+    vim.wait(1000, function()
+      return not vim.api.nvim_buf_is_valid(buffer)
+    end)
     assert.is_false(vim.api.nvim_buf_is_valid(buffer))
   end)
 
@@ -38,11 +41,14 @@ describe('process_delete_event', function()
 
     event_handling.process_delete_event(event, {})
 
+    vim.wait(1000, function()
+      return not vim.api.nvim_buf_is_valid(buffer)
+    end)
     assert.is_false(vim.api.nvim_buf_is_valid(buffer))
   end)
 
   it("doesn't delete a buffer that doesn't match the delete event", function()
-    local buffer = vim.fn.bufadd('/abc/def')
+    vim.fn.bufadd('/abc/def')
 
     ---@type YaziDeleteEvent
     local event = {
@@ -52,13 +58,16 @@ describe('process_delete_event', function()
       data = { urls = { '/abc/ghi' } },
     }
 
-    event_handling.process_delete_event(event, {})
+    local deletions = event_handling.process_delete_event(event, {})
 
-    assert.is_true(vim.api.nvim_buf_is_valid(buffer))
+    -- NOTE waiting for something not to happen is not possible to do reliably.
+    -- Inspect the return value so we can at least get some level of
+    -- confidence.
+    assert.are.same({}, deletions)
   end)
 
   it("doesn't delete a buffer that was renamed to in a later event", function()
-    local buffer1 = vim.fn.bufadd('/def/file')
+    vim.fn.bufadd('/def/file')
 
     ---@type YaziDeleteEvent
     local delete_event = {
@@ -76,8 +85,9 @@ describe('process_delete_event', function()
       data = { from = '/def/other-file', to = '/def/file' },
     }
 
-    event_handling.process_delete_event(delete_event, { rename_event })
+    local deletions =
+      event_handling.process_delete_event(delete_event, { rename_event })
 
-    assert.is_true(vim.api.nvim_buf_is_valid(buffer1))
+    assert.are.same({}, deletions)
   end)
 end)
