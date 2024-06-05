@@ -157,7 +157,10 @@ function M.get_open_buffers()
   local open_buffers = {}
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
     local path = vim.api.nvim_buf_get_name(bufnr)
-    if path ~= '' and path ~= nil then
+    local type = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+
+    local is_ordinary_file = path ~= '' and type == ''
+    if is_ordinary_file then
       local renameable_buffer = RenameableBuffer.new(bufnr, path)
       open_buffers[#open_buffers + 1] = renameable_buffer
     end
