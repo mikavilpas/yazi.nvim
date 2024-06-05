@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.1...v1.1.2) (2024-06-05)
+
+
+### Bug Fixes
+
+* open buffers deleted in yazi were not closed ([6dc4a48](https://github.com/mikavilpas/yazi.nvim/commit/6dc4a48c586201f545a9bac6c1e69474d3059c93))
+
+
+### Performance Improvements
+
+* processing open buffers only processes normal buffers ([5acce15](https://github.com/mikavilpas/yazi.nvim/commit/5acce153d31c821dcc3535f1cd2da2ddbd4200f7))
+
 ## [1.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.0...v1.1.1) (2024-06-03)
 
 
