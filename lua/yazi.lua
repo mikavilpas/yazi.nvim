@@ -1,3 +1,5 @@
+---@module "plenary"
+
 local window = require('yazi.window')
 local utils = require('yazi.utils')
 local vimfn = require('yazi.vimfn')
