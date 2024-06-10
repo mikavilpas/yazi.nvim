@@ -13,7 +13,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4.1.1
+      - uses: googleapis/release-please-action@v4.1.3
         with:
           # this is a built-in strategy in release-please, see "Action Inputs"
           # for more options
