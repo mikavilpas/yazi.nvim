@@ -93,6 +93,8 @@ function M.setup(opts)
 
   Log.level = M.config.log_level
 
+  local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
+
   if M.config.open_for_directories == true then
     ---@param file string
     ---@param bufnr number
@@ -109,8 +111,6 @@ function M.setup(opts)
         vim.api.nvim_feedkeys('i', 'n', false)
       end
     end
-
-    local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
 
     -- disable netrw, the built-in file explorer
     vim.cmd('silent! autocmd! FileExplorer *')

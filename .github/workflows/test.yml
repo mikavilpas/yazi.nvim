@@ -1,49 +1,23 @@
-name: Tests
-
-on: [push, pull_request]
+---
+name: Run tests
+on:
+  pull_request: ~
+  push:
+    branches:
+      - main
 
 jobs:
-  tests:
-    name: unit tests
-    runs-on: ${{ matrix.os }}
+  build:
+    name: Run tests
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-latest
-            rev: nightly/nvim-linux64.tar.gz
-            manager: sudo apt-get
-            packages: -y ripgrep
-          - os: ubuntu-latest
-            rev: v0.10.0/nvim-linux64.tar.gz
-            manager: sudo apt-get
-            packages: -y ripgrep
+        neovim_version: ["nightly", "stable"]
+
     steps:
-      - uses: actions/checkout@v4.1.6
-      - run: date +%F > todays-date
-      - name: Restore from today's cache
-        uses: actions/cache@v4.0.2
-        with:
-          path: _neovim
-          key:
-            ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
-
-      - name: Prepare
+      - uses: actions/checkout@v4
+      - name: Set up yazi
         run: |
-          ${{ matrix.manager }} update
-          ${{ matrix.manager }} install ${{ matrix.packages }}
-
-          # Install neovim
-          test -d _neovim || {
-            mkdir -p _neovim
-            curl -sL "https://github.com/neovim/neovim/releases/download/${{ matrix.rev }}" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
-          }
-          mkdir -p ~/.local/share/nvim/site/pack/vendor/start
-          git submodule init
-          git submodule update
-          # git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
-          ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
-
           # Install yazi
           test -d _yazi || {
             mkdir -p _yazi
@@ -53,9 +27,11 @@ jobs:
           echo "Current _yazi/ contents"
           ls -R _yazi
 
+          # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-system-path
+          echo "${PWD}/_yazi/yazi-x86_64-unknown-linux-gnu/" >> $GITHUB_PATH
+
       - name: Run tests
-        run: |
-          export PATH="${PWD}/_neovim/bin:${PATH}"
-          export PATH="${PWD}/_yazi/yazi-x86_64-unknown-linux-gnu/:${PATH}"
-          export VIM="${PWD}/_neovim/share/nvim/runtime"
-          make test-in-ci
+        uses: nvim-neorocks/nvim-busted-action@v1
+        with:
+          nvim_version: ${{ matrix.neovim_version }}
+          luarocks_version: "3.11.1"

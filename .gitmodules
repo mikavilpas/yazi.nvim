@@ -1,3 +1,0 @@
-[submodule "scripts/lazy.nvim"]
-	path = scripts/lazy.nvim
-	url = https://github.com/folke/lazy.nvim.git
