@@ -16,6 +16,7 @@ describe('opening a file', function()
 
   before_each(function()
     mock.clear(termopen)
+    plugin.setup({})
   end)
 
   ---@param target_file string
@@ -47,7 +48,7 @@ describe('opening a file', function()
     )
   end)
 
-  it('opens yazi with the current directory selected', function()
+  it('#focus opens yazi with the current directory selected', function()
     vim.api.nvim_command('edit /tmp/')
 
     plugin.yazi({

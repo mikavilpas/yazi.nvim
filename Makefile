@@ -3,26 +3,44 @@
 PROJECT_ROOT := $(shell git rev-parse --show-toplevel)
 NVIM := nvim -u "${PROJECT_ROOT}/scripts/init.lua"
 
+# Define color variables
+COLOR_RESET := \033[0m
+COLOR_GREEN := \033[1;32m
+COLOR_BLUE_ := \033[1;34m
+COLOR_YELLO := \033[1;33m
+COLOR_WHITE := \033[1;37m
+
 # install development and testing dependencies
 init:
-	${NVIM} -c "lua require('lazy').update()"
+	luarocks init
+	luarocks install busted 2.2.0-1
+
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo ""
+	@echo "$(COLOR_GREEN)Welcome to yazi.nvim development! 🚀$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE_)Next, run one of these commands to get started:$(COLOR_RESET)"
+	@echo "$(COLOR_YELLO)  make test$(COLOR_RESET)"
+	@echo "$(COLOR_WHITE)    Run all tests$(COLOR_RESET)"
+
+	@echo "$(COLOR_YELLO)  make test-focus$(COLOR_RESET)"
+	@echo "$(COLOR_WHITE)    Run only the tests marked with #focus in the test name$(COLOR_RESET)"
+
+	@echo "$(COLOR_YELLO)  make lint$(COLOR_RESET)"
+	@echo "$(COLOR_WHITE)    Check the code for lint errors$(COLOR_RESET)"
+
+	@echo "$(COLOR_YELLO)  make format$(COLOR_RESET)"
+	@echo "$(COLOR_WHITE)    Reformat all code$(COLOR_RESET)"
 
 lint:
-	selene ./lua/ ./tests/
+	selene ./lua/ ./spec/
 
-# run tests, headless
 test:
-	${NVIM} --headless -c "PlenaryBustedDirectory tests { init = 'scripts/init.lua' }"
+	luarocks test --local
 
-test-in-ci:
-	(for i in $$(seq 1 3); do \
-			${NVIM} --headless -c "PlenaryBustedDirectory tests { init = 'scripts/init.lua' }" && break || \
-			if [ $$i -eq 3 ]; then \
-					echo "Tests failed after 3 attempts."; \
-					exit 1; \
-			fi; \
-			echo "Retrying tests... attempt $$i"; \
-	done)
+test-focus:
+	luarocks test --local -- --filter=focus
 
 format:
 	stylua lua/
