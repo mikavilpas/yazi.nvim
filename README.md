@@ -83,6 +83,9 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 >
 > For advanced configuration, it's recommended to have your Lua language server
 > set up so that you can type check your configuration and avoid errors.
+>
+> For help on how to do this, there is a section for Neovim development tools in
+> the [documentation](./documentation/for-developers/setting-up.md).
 
 You can optionally configure yazi.nvim by setting any of the options below.
 
