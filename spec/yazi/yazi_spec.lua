@@ -48,7 +48,7 @@ describe('opening a file', function()
     )
   end)
 
-  it('#focus opens yazi with the current directory selected', function()
+  it('opens yazi with the current directory selected', function()
     vim.api.nvim_command('edit /tmp/')
 
     plugin.yazi({

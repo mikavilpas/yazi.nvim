@@ -35,6 +35,13 @@ init:
 
 lint:
 	selene ./lua/ ./spec/
+	@if grep -r -e "#focus" --include \*.lua .; then \
+			echo "\n"; \
+			echo "Error: ${COLOR_GREEN}#focus${COLOR_RESET} tags found in the codebase.\n"; \
+			echo "Please remove them to prevent issues with not accidentally running all tests."; \
+			exit 1; \
+	fi
+
 
 test:
 	luarocks test --local
