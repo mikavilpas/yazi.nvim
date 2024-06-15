@@ -1,0 +1,47 @@
+{
+  "name": "@yazi.nvim/integration-tests",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --kill-others --names 'client,server' --prefix-colors 'blue,green' 'vite' 'npm run dev:server'; exit 0",
+    "dev:client": "vite",
+    "dev:server": "tsc-watch --noClear --build --onSuccess 'tsx ./server/server.ts'",
+    "cy:open": "cypress open",
+    "cy:run": "concurrently --kill-others --success 'command-cypress' --names 'dev,cypress' --prefix-colors 'blue,green' 'npm run dev' 'wait-on http://localhost:5173 && npx cypress run'",
+    "build": "tsc && vite build",
+    "eslint": "eslint --max-warnings=0 .",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node": "20.14.8",
+    "@types/ws": "^8.5.10",
+    "@typescript-eslint/eslint-plugin": "7.13.0",
+    "@typescript-eslint/parser": "7.13.0",
+    "@xterm/addon-attach": "0.11.0",
+    "@xterm/addon-fit": "0.10.0",
+    "@xterm/xterm": "5.5.0",
+    "concurrently": "8.2.2",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-no-only-tests": "3.1.0",
+    "express": "4.19.2",
+    "prettier-plugin-organize-imports": "3.2.4",
+    "tsc-watch": "6.2.0",
+    "typescript": "5.5.2",
+    "vite": "^5.3.1"
+  },
+  "dependencies": {
+    "@catppuccin/palette": "1.2.0",
+    "@types/uuid": "10.0.0",
+    "@types/winston": "2.4.4",
+    "cypress": "13.12.0",
+    "node-pty": "1.0.0",
+    "socket.io": "4.7.5",
+    "socket.io-client": "4.7.5",
+    "tsx": "4.15.7",
+    "wait-on": "7.2.0",
+    "winston": "3.13.0"
+  }
+}

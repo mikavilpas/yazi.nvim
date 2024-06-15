@@ -1,0 +1,28 @@
+{
+  // tsconfig settings for the server only
+
+  // TODO redo the directory structure so that the client is clearly separated
+  // from the server
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "outDir": "dist",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "baseUrl": "./",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+
+  "include": ["./server/**/*.ts", "./.eslintrc.cjs"]
+}

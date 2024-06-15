@@ -1,8 +1,12 @@
 {
-  "name": "yazi.nvim",
+  "name": "@yazi.nvim/plugin",
   "version": "1.0.0",
+  "workspaces": [
+    "integration-tests"
+  ],
   "description": "I forked this from https://github.com/DreamMaoMao/yazi.nvim for my own use.",
   "scripts": {
+    "install:all": "npm install --workspaces --include-workspace-root",
     "prettier": "prettier --check .",
     "markdownlint": "markdownlint-cli2 README.md"
   },
