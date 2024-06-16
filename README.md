@@ -25,6 +25,9 @@ open yazi in a floating window in Neovim.
   ([documentation](./documentation/plugin-manager.md)). Please provide your
   feedback!
 
+For previewing images with yazi, see Yazi's documentation related to Neovim
+[here](https://yazi-rs.github.io/docs/image-preview/#neovim).
+
 ## 📦 Installation
 
 First, make sure you have the requirements:
