@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.2...v1.1.3) (2024-06-16)
+
+
+### Bug Fixes
+
+* exiting insert mode with "&lt;esc&gt;<esc>" ([bc2aabb](https://github.com/mikavilpas/yazi.nvim/commit/bc2aabbc23aa194b7a3e7aed5a0d466d0a7565f9))
+
 ## [1.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.1...v1.1.2) (2024-06-05)
 
 
