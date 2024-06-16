@@ -90,6 +90,15 @@ function YaziFloatingWindow:open_and_display()
     self:add_hacky_mouse_support(yazi_buffer)
   end
 
+  vim.api.nvim_create_autocmd('ModeChanged', {
+    buffer = yazi_buffer,
+    callback = function()
+      -- HACK Sometimes pressing "<esc><esc>" exits insert mode the first time it's pressed.
+      -- Work around this by starting insert mode after the first time the mode changes.
+      vim.cmd('startinsert')
+    end,
+  })
+
   vim.api.nvim_create_autocmd({ 'VimResized' }, {
     buffer = yazi_buffer,
     callback = function()
