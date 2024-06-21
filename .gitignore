@@ -5,4 +5,3 @@ scripts/lazy.nvim/
 /luarocks
 /lua_modules
 /.luarocks
-/lua
