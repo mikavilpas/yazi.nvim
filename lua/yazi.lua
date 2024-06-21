@@ -128,7 +128,10 @@ function M.setup(opts)
     -- When opening neovim with "nvim ." or "nvim <directory>", the current
     -- buffer is already open at this point. If we have already opened a
     -- directory, display yazi instead.
-    open_yazi_in_directory(vim.fn.expand('%:p'), vim.api.nvim_get_current_buf())
+    open_yazi_in_directory(
+      vim.b.netrw_curdir or vim.fn.expand('%:p'),
+      vim.api.nvim_get_current_buf()
+    )
   end
 end
 
