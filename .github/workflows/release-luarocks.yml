@@ -1,10 +1,12 @@
 # https://github.com/marketplace/actions/luarocks-tag-release
 name: LuaRocks release
 on:
-  push:
-    tags: # Will upload to luarocks.org when a tag is pushed
-      - "*"
   pull_request: # Will test a local install without uploading to luarocks.org
+  workflow_dispatch: # makes it possible to run the workflow manually
+  release:
+    types:
+      # Will upload to luarocks.org when a release is made
+      - published
 
 jobs:
   luarocks-release:
