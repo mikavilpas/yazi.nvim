@@ -1,3 +1,8 @@
+-- You can use this file to reproduce an issue with your configuration.
+
+---@module "yazi"
+---@module "lazy"
+
 -- DO NOT change the paths and don't remove the colorscheme
 local root = vim.fn.fnamemodify('./.repro', ':p')
 
@@ -20,7 +25,8 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 vim.g.mapleader = ' '
 
--- install plugins
+-- install the following plugins
+---@type LazySpec
 local plugins = {
   'folke/tokyonight.nvim',
   {
@@ -40,6 +46,7 @@ local plugins = {
         { desc = 'Open the file manager' },
       },
     },
+    ---@type YaziConfig
     opts = {
       open_for_directories = false,
     },
