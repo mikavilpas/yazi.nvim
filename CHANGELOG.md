@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.3...v1.1.4) (2024-06-21)
+
+
+### Bug Fixes
+
+* opening "nvim dir/" may focus wrong window ([93de590](https://github.com/mikavilpas/yazi.nvim/commit/93de590cf13e430ed7077e8abc65b2213878706a))
+
 ## [1.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.2...v1.1.3) (2024-06-16)
 
 
