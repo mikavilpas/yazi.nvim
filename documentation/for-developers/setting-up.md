@@ -86,6 +86,45 @@ nvm use
 npm install
 ```
 
+## Managing your development code
+
+> As a developer using lazy.nvim, I want to make source code changes and try out
+> unfinished ideas. I also want to be able to revert to a working setup at any
+> time, because I need yazi.nvim for other activities as well.
+
+You can use the following approach to have a nice split with unstable and stable
+code:
+
+1. (use lazy.nvim to install the plugin)
+2. Create a fork of the project in Github. Put it in a separate directory such
+   as `~/git/yazi.nvim/`
+3. Specify the version you want to use in your plugin specification (see
+   lazy.nvim [docs](https://github.com/folke/lazy.nvim)):
+
+   ```lua
+   -- this file is /Users/mikavilpas/.config/nvim/lua/plugins/my-file-manager.lua
+   ---@type LazySpec
+   return {
+     ---@type LazyPlugin
+     {
+       -- uncomment the one you want to use when you want to use the stable version
+       -- stable, from Github
+       -- "mikavilpas/yazi.nvim",
+       -- if you want to use a specific branch, tag, or commit, you can specify it too
+
+       -- development, from local directory
+       dir = "~/git/yazi.nvim/",
+       dependencies = {
+         "nvim-lua/plenary.nvim",
+       },
+       -- (... Many more settings)
+     }
+   }
+   ```
+
+An example can be found
+[here](https://github.com/mikavilpas/dotfiles/blob/75e070ce6ac45b7ed8ac4c818f77abadbdd4b152/.config/nvim/lua/plugins/my-file-manager.lua?plain=1#L9).
+
 ## Resources
 
 More information about the setup:
