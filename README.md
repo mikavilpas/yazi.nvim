@@ -114,6 +114,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- the transparency of the yazi floating window (0-100). See :h winblend
     yazi_floating_window_winblend = 0,
 
+    -- the log level to use. Off by default, but can be used to diagnose
+    -- issues. You can find the location of the log file by running
+    -- `:checkhealth yazi` in Neovim.
+    log_level = vim.log.levels.OFF,
+
     -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
     open_file_function = function(chosen_file, config) end,
