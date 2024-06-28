@@ -1,7 +1,20 @@
 local M = {}
 
+local function delete_empty_path_buffers()
+  local buffers = vim.api.nvim_list_bufs()
+  if #buffers == 2 then
+    for _, buf in ipairs(buffers) do
+      local file_path = vim.api.nvim_buf_get_name(buf)
+      if file_path == '' then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      end
+    end
+  end
+end
+
 ---@param chosen_file string
 function M.open_file(chosen_file)
+  delete_empty_path_buffers()
   vim.cmd(string.format('edit %s', vim.fn.fnameescape(chosen_file)))
 end
 
