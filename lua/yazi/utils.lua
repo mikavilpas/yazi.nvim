@@ -195,15 +195,20 @@ function M.rename_or_close_buffer(instruction)
 end
 
 ---@param prev_win integer
+---@param prev_buf integer
 ---@param window YaziFloatingWindow
 ---@param config YaziConfig
 ---@param state YaziClosedState
-function M.on_yazi_exited(prev_win, window, config, state)
+function M.on_yazi_exited(prev_win, prev_buf, window, config, state)
   vim.cmd('silent! :checktime')
 
   -- open the file that was chosen
   if not vim.api.nvim_win_is_valid(prev_win) then
     return
+  end
+
+  if vim.api.nvim_buf_is_valid(prev_buf) then
+    vim.api.nvim_set_current_buf(prev_buf)
   end
 
   window:close()
