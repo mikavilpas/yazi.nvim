@@ -3,7 +3,7 @@
 <a href="https://dotfyle.com/plugins/mikavilpas/yazi.nvim">
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" /> </a>
 
-![LuaRocks](https://img.shields.io/luarocks/v/mikavilpas/yazi.nvim)
+[![LuaRocks](https://img.shields.io/luarocks/v/mikavilpas/yazi.nvim?logo=lua)](https://luarocks.org/modules/mikavilpas/yazi.nvim)
 [![Type checked codebase](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml)
 
 Yazi is a blazing fast file manager for the terminal. This plugin allows you to
