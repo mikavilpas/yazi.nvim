@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.4...v1.1.5) (2024-06-29)
+
+
+### Bug Fixes
+
+* open file results in one empty buffer ([#138](https://github.com/mikavilpas/yazi.nvim/issues/138)) ([73a5f8f](https://github.com/mikavilpas/yazi.nvim/commit/73a5f8f37971cc133bbab978eac825968e90bb9c))
+
 ## [1.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.3...v1.1.4) (2024-06-21)
 
 
