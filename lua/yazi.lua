@@ -26,6 +26,7 @@ function M.yazi(config, input_path)
   local path = utils.selected_file_path(input_path)
 
   local prev_win = vim.api.nvim_get_current_win()
+  local prev_buf = vim.api.nvim_get_current_buf()
 
   config.chosen_file_path = config.chosen_file_path or vim.fn.tempname()
   config.events_file_path = config.events_file_path or vim.fn.tempname()
@@ -67,7 +68,7 @@ function M.yazi(config, input_path)
             last_directory = path
           end
         end
-        utils.on_yazi_exited(prev_win, win, config, {
+        utils.on_yazi_exited(prev_win, prev_buf, win, config, {
           last_directory = event_info.last_directory or path:parent(),
         })
       end,
