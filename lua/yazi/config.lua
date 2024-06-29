@@ -1,3 +1,5 @@
+---@module "plenary.path"
+
 local openers = require('yazi.openers')
 local keybinding_helpers = require('yazi.keybinding_helpers')
 
@@ -42,6 +44,11 @@ function M.default_set_keymappings_function(yazi_buffer, config)
   vim.keymap.set({ 't' }, '<c-v>', function()
     keybinding_helpers.open_file_in_vertical_split(config)
   end, { buffer = yazi_buffer })
+  vim.keymap.set('t', '<esc>', '<esc>', { buffer = yazi_buffer })
+
+  -- LazyVim sets <esc><esc> to forcibly enter normal mode. This has been
+  -- confusing for some users. Let's disable it when using yazi.nvim only.
+  vim.keymap.set({ 't' }, '<esc><esc>', '<Nop>', { buffer = yazi_buffer })
 
   vim.keymap.set({ 't' }, '<c-x>', function()
     keybinding_helpers.open_file_in_horizontal_split(config)
