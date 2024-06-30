@@ -5,7 +5,7 @@ are caused by plugins or configuration. This can also make it very difficult to
 provide a fix. To help us diagnose the issue, please follow these steps:
 
 1. copy [repro.lua](../repro.lua) to a directory on your system
-2. run `nvim -u repro.lua` in that directory
+2. run `nvim -u repro.lua -c "lua require('lazy').update()"` in that directory
    - this will start Neovim with a minimal configuration, completely defined by
      that one file.
 3. try to reproduce the issue
