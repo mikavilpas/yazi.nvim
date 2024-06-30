@@ -48,34 +48,36 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 ---@type LazySpec
 {
-  "mikavilpas/yazi.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
-  event = "VeryLazy",
-  keys = {
-    -- 👇 in this section, choose your own keymappings!
-    {
-      "<leader>-",
-      function()
-        require("yazi").yazi()
-      end,
-      desc = "Open the file manager",
+  { 'nvim-lua/plenary.nvim', lazy = true },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "<leader>-",
+        function()
+          require("yazi").yazi()
+        end,
+        desc = "Open the file manager",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>cw",
+        function()
+          require("yazi").yazi(nil, vim.fn.getcwd())
+        end,
+        desc = "Open the file manager in nvim's working directory" ,
+      },
     },
-    {
-      -- Open in the current working directory
-      "<leader>cw",
-      function()
-        require("yazi").yazi(nil, vim.fn.getcwd())
-      end,
-      desc = "Open the file manager in nvim's working directory" ,
+    ---@type YaziConfig
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
     },
-  },
-  ---@type YaziConfig
-  opts = {
-    open_for_directories = false,
   },
 }
+
 ```
 
 ### ⚙️⚙️ Advanced configuration
@@ -106,6 +108,17 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- enable this if you want to open yazi instead of netrw.
     -- Note that if you enable this, you need to call yazi.setup() to
     -- initialize the plugin. lazy.nvim does this for you in certain cases.
+    --
+    -- If you are also using neotree, you may prefer not to bring it up when
+    -- opening a directory:
+    -- {
+    --   "nvim-neo-tree/neo-tree.nvim",
+    --   opts = {
+    --     filesystem = {
+    --       hijack_netrw_behavior = "disabled",
+    --     },
+    --   },
+    -- }
     open_for_directories = false,
 
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
