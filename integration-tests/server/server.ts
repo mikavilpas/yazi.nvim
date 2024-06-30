@@ -5,6 +5,7 @@ import express from "express"
 import assert from "node:assert"
 import { createServer } from "node:http"
 import path from "node:path"
+import * as url from "url"
 import type { StartAppMessageArguments } from "../client/startAppGlobalType"
 
 export type StdinMessage = "stdin"
@@ -13,8 +14,8 @@ export type StartAppMessage = "startApp"
 
 const expressApp = express()
 const server = createServer(expressApp)
-
 const connections: Map<string, TerminalApplication> = new Map()
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url))
 
 const io = new Server(server, {
   cors: {
@@ -40,11 +41,7 @@ io.on("connection", function connection(socket) {
   socket.on(
     "startApp" satisfies StartAppMessage,
     function (args: StartAppMessageArguments) {
-      const testDirectory = path.join(
-        import.meta.dirname,
-        "..",
-        "test-environment/",
-      )
+      const testDirectory = path.join(__dirname, "..", "test-environment/")
       const app = TerminalApplication.start({
         command: args.command,
         args: args.args,
