@@ -1,4 +1,4 @@
-# Setting up your development environment
+# Managing your development environment
 
 ## Install dependencies
 
@@ -48,16 +48,41 @@ having trouble.
 - <https://github.com/folke/lazydev.nvim> which allows fast LSP startup
 - <https://github.com/folke/trouble.nvim> which shows errors and diagnostics
 - <https://github.com/stevearc/conform.nvim> which formats your code on save.
-  Configure it to use "stylua" using the instructions in its README file
+  Configure it to use stylua and prettier using the instructions in its README
+  file
 
 ## Running tests
 
-### On the command line
+This project has two types of tests
+
+1. unit tests. These are run with
+   [busted](https://github.com/lunarmodules/busted), a lua headless unit testing
+   framework.
+   - very fast to run
+   - can make assertions about lua level results
+   - more difficult to test high level features such as actual integration with
+     yazi
+2. integration tests. These are run with [cypress](https://www.cypress.io/), an
+   interactive JavaScript browser testing framework.
+   - very visual
+   - slower to run but still very nice
+   - can make assertions about the actual UI and integration with yazi
+   - (optionally) can be run to drive the development of new features - this is
+     explained in depth in the
+     [philosophy of cypress](https://www.cypress.io/how-it-works)
+
+### 1. Unit tests
+
+![unit tests](https://github.com/mikavilpas/yazi.nvim/assets/300791/2cbc89e3-6933-4ccc-aadd-a92e42d78b37)
 
 ```sh
 # run all tests
 make test
-# run tests marked with #focus
+# NOTE: if you get an error about "busted.runner" not being found, you may need
+# to run the following command:
+eval $(luarocks path --no-bin --lua-version 5.1)
+
+# run only the tests marked with #focus in their name
 make test-focus
 ```
 
@@ -65,25 +90,35 @@ Recommended: use a file watcher to run tests automatically when files change. I
 like [watchexec 🦀](https://github.com/watchexec/watchexec), and I run it with
 `watchexec make test`
 
-### (optional) Install test integration plugins for Neovim
-
-See the "Tools" section of
+Optionally, you can install test integration plugins for Neovim to start the
+tests from within Neovim. See the "Tools" section of
 [nvim-best-practices](https://github.com/nvim-neorocks/nvim-best-practices/tree/main?tab=readme-ov-file#hammer_and_wrench-tools-3)
 for some ideas.
 
-## (optional) Install markdown related tooling
+### 2. Integration tests
 
-Markdown (`.md`) is used in the documentation. Various checks are performed on
-all markdown files.
+![integration tests](https://github.com/mikavilpas/yazi.nvim/assets/300791/817ccb3f-725b-4830-b5e0-d99a9b87ad26)
 
-Install everything with `npm`:
+Optional, but recommended: install
+[Node Version Manager](https://github.com/nvm-sh/nvm) to install the correct
+version of node.
 
-- Install [Node Version Manager](https://github.com/nvm-sh/nvm), which is used
-  to choose the correct node version.
+Run the following commands in the root of the project:
 
 ```sh
+# activate the correct version of node
 nvm use
-npm install
+# or nvm install <version> if you don't have the correct version installed
+
+# install the dependencies
+npm run install:all
+```
+
+Next, start the integration test environment inside the
+[integration-tests](../../integration-tests/) directory:
+
+```sh
+npm run dev
 ```
 
 ## Managing your development code
@@ -105,22 +140,19 @@ code:
    -- this file is /Users/mikavilpas/.config/nvim/lua/plugins/my-file-manager.lua
    ---@type LazySpec
    return {
-     ---@type LazyPlugin
      {
-       -- uncomment the one you want to use when you want to use the stable version
-       -- stable, from Github
-       -- "mikavilpas/yazi.nvim",
+       "mikavilpas/yazi.nvim",
        -- if you want to use a specific branch, tag, or commit, you can specify it too
 
-       -- development, from local directory
+       -- for development, load from local directory
        dir = "~/git/yazi.nvim/",
-       dependencies = {
-         "nvim-lua/plenary.nvim",
-       },
        -- (... Many more settings)
      }
    }
    ```
+
+4. When you finish your development session, you can switch back to the stable
+   version by commenting the `dir` setting from the plugin specification.
 
 An example can be found
 [here](https://github.com/mikavilpas/dotfiles/blob/75e070ce6ac45b7ed8ac4c818f77abadbdd4b152/.config/nvim/lua/plugins/my-file-manager.lua?plain=1#L9).

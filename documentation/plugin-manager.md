@@ -19,7 +19,6 @@ In your yazi.nvim configuration, add a new lazy.nvim plugin specification for
 return {
   {
     "mikavilpas/yazi.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", },
     keys = {
       {
         "<up>",

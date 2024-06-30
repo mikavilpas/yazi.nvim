@@ -29,7 +29,6 @@ vim.g.mapleader = ' '
 ---@type LazySpec
 local plugins = {
   'folke/tokyonight.nvim',
-  { 'nvim-lua/plenary.nvim', lazy = true },
   {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',
