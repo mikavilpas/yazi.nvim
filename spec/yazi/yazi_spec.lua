@@ -63,17 +63,6 @@ describe('opening a file', function()
   end)
 
   describe("when a file is selected in yazi's chooser", function()
-    it('opens the file that the user selected in yazi', function()
-      local target_file = '/abc/test-file.txt'
-      setup_fake_yazi_opens_file(target_file)
-      plugin.yazi({
-        chosen_file_path = '/tmp/yazi_filechosen',
-        set_keymappings_function = function() end,
-      })
-
-      assert.equals(target_file, vim.fn.expand('%'))
-    end)
-
     it('can open files with complex characters in their name', function()
       -- the filename contains a '$' character which can be problematic to nvim
       local target_file = 'routes/posts.$postId/route.tsx'

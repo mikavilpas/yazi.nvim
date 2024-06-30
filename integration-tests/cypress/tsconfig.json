@@ -1,0 +1,12 @@
+{
+  // https://docs.cypress.io/guides/tooling/typescript-support
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node"],
+    "strictNullChecks": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["**/*.ts"]
+}

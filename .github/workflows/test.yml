@@ -35,3 +35,23 @@ jobs:
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
+      - name: Set up ripgrep
+        run: |
+          which rg || {
+            sudo apt-get install ripgrep
+          }
+
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6.1.0
+        with:
+          command: npm run cy:run
+      - uses: actions/upload-artifact@v4
+        # add the line below to store screenshots only on failures
+        # if: failure()
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: integration-tests/cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`

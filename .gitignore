@@ -6,3 +6,7 @@ scripts/lazy.nvim/
 /lua_modules
 /.luarocks
 .repro
+integration-tests/server/build/server.js
+integration-tests/pid.txt
+integration-tests/server/build
+*.pem
