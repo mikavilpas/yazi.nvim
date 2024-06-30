@@ -8,7 +8,7 @@
     "dev:client": "vite",
     "dev:server": "tsc-watch --noClear --build --onSuccess 'tsx ./server/server.ts'",
     "cy:open": "cypress open",
-    "cy:run": "concurrently --kill-others --success 'command-cypress' --names 'dev,cypress' --prefix-colors 'blue,green' 'npm run dev' 'wait-on --timeout 60000 http://localhost:5173 && npx cypress run'",
+    "cy:run": "concurrently --kill-others --success 'command-cypress' --names 'dev,cypress' --prefix-colors 'blue,green' 'npm run dev' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
     "build": "tsc && vite build",
     "eslint": "eslint --max-warnings=0 .",
     "preview": "vite preview"
