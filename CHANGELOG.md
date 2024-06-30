@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.5...v1.2.0) (2024-06-30)
+
+
+### Features
+
+* lazy.nvim users no longer need to specify dependencies ([#144](https://github.com/mikavilpas/yazi.nvim/issues/144)) ([e6fe720](https://github.com/mikavilpas/yazi.nvim/commit/e6fe720ca30459f67a798e31e6d84fdce76f2b89))
+
 ## [1.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.4...v1.1.5) (2024-06-29)
 
 
