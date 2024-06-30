@@ -76,7 +76,8 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 }
 ```
 
-If you are not using lazy.nvim, see [lazy.lua](./lazy.lua) for what dependencies are required.
+If you are not using lazy.nvim, see [lazy.lua](./lazy.lua) for what dependencies
+are required.
 
 ### ⚙️⚙️ Advanced configuration
 
