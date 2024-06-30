@@ -3,6 +3,7 @@ describe("the healthcheck", () => {
     cy.visit("http://localhost:5173")
     cy.startNeovim()
 
+    cy.typeIntoTerminal(":=require('yazi'){enter}")
     cy.typeIntoTerminal(":checkhealth yazi{enter}")
 
     // the `yazi` application should be found successfully
