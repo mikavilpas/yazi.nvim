@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.0...v1.2.1) (2024-06-30)
+
+
+### Bug Fixes
+
+* **repro:** update the repro instructions to update the dependencies ([#146](https://github.com/mikavilpas/yazi.nvim/issues/146)) ([b90d4fe](https://github.com/mikavilpas/yazi.nvim/commit/b90d4fe28ea8338174daf8922f49718c82d66161))
+
 ## [1.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.1.5...v1.2.0) (2024-06-30)
 
 
