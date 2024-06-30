@@ -34,15 +34,16 @@ vim.opt.rtp:prepend('../../')
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+vim.g.maplocalleader = ' '
 
 -- install the following plugins
 ---@type LazySpec
 local plugins = {
   {
     'mikavilpas/yazi.nvim',
-    dir = '../../',
     event = 'VeryLazy',
+    -- for tests, always use the code from this repository
+    dir = '../../',
     keys = {
       {
         '<up>',
@@ -57,7 +58,6 @@ local plugins = {
     },
   },
   { 'nvim-telescope/telescope.nvim', lazy = true },
-  { 'nvim-lua/plenary.nvim', lazy = true },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
 }
 require('lazy').setup({ spec = plugins })

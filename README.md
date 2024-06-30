@@ -48,37 +48,35 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 ---@type LazySpec
 {
-  { 'nvim-lua/plenary.nvim', lazy = true },
-  {
-    "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
-    keys = {
-      -- 👇 in this section, choose your own keymappings!
-      {
-        "<leader>-",
-        function()
-          require("yazi").yazi()
-        end,
-        desc = "Open the file manager",
-      },
-      {
-        -- Open in the current working directory
-        "<leader>cw",
-        function()
-          require("yazi").yazi(nil, vim.fn.getcwd())
-        end,
-        desc = "Open the file manager in nvim's working directory" ,
-      },
+  "mikavilpas/yazi.nvim",
+  event = "VeryLazy",
+  keys = {
+    -- 👇 in this section, choose your own keymappings!
+    {
+      "<leader>-",
+      function()
+        require("yazi").yazi()
+      end,
+      desc = "Open the file manager",
     },
-    ---@type YaziConfig
-    opts = {
-      -- if you want to open yazi instead of netrw, see below for more info
-      open_for_directories = false,
+    {
+      -- Open in the current working directory
+      "<leader>cw",
+      function()
+        require("yazi").yazi(nil, vim.fn.getcwd())
+      end,
+      desc = "Open the file manager in nvim's working directory" ,
     },
   },
+  ---@type YaziConfig
+  opts = {
+    -- if you want to open yazi instead of netrw, see below for more info
+    open_for_directories = false,
+  },
 }
-
 ```
+
+If you are not using lazy.nvim, see [lazy.lua](./lazy.lua) for what dependencies are required.
 
 ### ⚙️⚙️ Advanced configuration
 
