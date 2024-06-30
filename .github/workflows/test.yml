@@ -35,6 +35,11 @@ jobs:
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
+      - name: Set up ripgrep
+        run: |
+          which rg || {
+            sudo apt-get install ripgrep
+          }
 
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
