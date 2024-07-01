@@ -6,12 +6,14 @@ import { FitAddon } from "@xterm/addon-fit"
 import { Terminal } from "@xterm/xterm"
 import io from "socket.io-client"
 import type {
-  StartAppMessage,
+  StartNeovimMessage,
   StdinMessage,
   StdoutMessage,
 } from "../server/server"
-import "./startAppGlobalType"
-import type { StartAppMessageArguments } from "./startAppGlobalType"
+import type {
+  StartNeovimArguments,
+  StartNeovimServerArguments,
+} from "./testEnvironmentTypes"
 
 const app = document.querySelector<HTMLDivElement>("#app")
 if (!app) {
@@ -73,8 +75,18 @@ socket.on("disconnect", (reason) => {
   console.log("disconnected: ", reason)
 })
 
-window.startApp = function startApp(args: StartAppMessageArguments) {
-  socket.emit("startApp" satisfies StartAppMessage, args)
+window.startNeovim = async function startApp(
+  directory: string,
+  startArgs?: StartNeovimArguments,
+) {
+  await socket.emitWithAck(
+    "startNeovim" satisfies StartNeovimMessage,
+    {
+      directory,
+      filename: startArgs?.filename ?? "initial-file.txt",
+      startupScriptModifications: startArgs?.startupScriptModifications,
+    } satisfies StartNeovimServerArguments,
+  )
 }
 
 socket.on(

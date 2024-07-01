@@ -1,40 +1,42 @@
+---@module "plenary.path"
+
 local assert = require('luassert')
 local mock = require('luassert.mock')
 local match = require('luassert.match')
 local spy = require('luassert.spy')
-
-local api_mock = mock(require('yazi.vimfn'))
+package.loaded['yazi.yazi_process'] =
+  require('spec.yazi.helpers.fake_yazi_process')
+local fake_yazi_process = require('spec.yazi.helpers.fake_yazi_process')
+local yazi_process = require('yazi.yazi_process')
 
 local plugin = require('yazi')
 
 describe('opening a file', function()
   after_each(function()
-    mock.clear(api_mock)
+    package.loaded['yazi.yazi_process'] = yazi_process
   end)
-
-  local termopen = spy.on(api_mock, 'termopen')
 
   before_each(function()
-    mock.clear(termopen)
-    plugin.setup({})
+    mock.revert(fake_yazi_process)
+    package.loaded['yazi.yazi_process'] = mock(fake_yazi_process)
+    plugin.setup({
+      -- set_keymappings_function can only work with a real yazi process
+      set_keymappings_function = function() end,
+    })
   end)
 
-  ---@param target_file string
-  local function setup_fake_yazi_opens_file(target_file)
-    -- have to start editing a valid file, otherwise the plugin will ignore the callback
-    vim.cmd('edit /abc/a.txt')
+  ---@param file string
+  local function assert_opened_yazi_with_file(file)
+    local call = mock(fake_yazi_process).start.calls[1]
 
-    termopen.callback = function(_, callback)
-      -- simulate yazi writing to the output file. This is done when a file is
-      -- chosen in yazi
-      local exit_code = 0
-      vim.fn.writefile({ target_file }, '/tmp/yazi_filechosen')
-      callback.on_exit('job-id-ignored', exit_code, 'event-ignored')
-      return 0
-    end
+    ---@type Path
+    local path = call.vals[3]
+    assert.equals(file, path.filename)
   end
 
   it('opens yazi with the current file selected', function()
+    fake_yazi_process.setup_created_instances_to_instantly_exit({})
+
     -- the file name should have a space as well as special characters, in order to test that
     vim.api.nvim_command('edit ' .. vim.fn.fnameescape('/abc/test file-$1.txt'))
     plugin.yazi({
@@ -42,13 +44,12 @@ describe('opening a file', function()
       events_file_path = '/tmp/yazi.nvim.events.txt',
     })
 
-    assert.stub(api_mock.termopen).was_called_with(
-      'yazi \'/abc/test file-$1.txt\' --local-events "rename,delete,trash,move,cd" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
-      match.is_table()
-    )
+    assert_opened_yazi_with_file('/abc/test file-$1.txt')
   end)
 
   it('opens yazi with the current directory selected', function()
+    fake_yazi_process.setup_created_instances_to_instantly_exit({})
+
     vim.api.nvim_command('edit /tmp/')
 
     plugin.yazi({
@@ -56,35 +57,22 @@ describe('opening a file', function()
       events_file_path = '/tmp/yazi.nvim.events.txt',
     })
 
-    assert.stub(api_mock.termopen).was_called_with(
-      'yazi \'/tmp/\' --local-events "rename,delete,trash,move,cd" --chooser-file "/tmp/yazi_filechosen" > "/tmp/yazi.nvim.events.txt"',
-      match.is_table()
-    )
-  end)
-
-  describe("when a file is selected in yazi's chooser", function()
-    it('can open files with complex characters in their name', function()
-      -- the filename contains a '$' character which can be problematic to nvim
-      local target_file = 'routes/posts.$postId/route.tsx'
-      setup_fake_yazi_opens_file(target_file)
-
-      plugin.yazi({
-        chosen_file_path = '/tmp/yazi_filechosen',
-        set_keymappings_function = function() end,
-      })
-
-      assert.equals(target_file, vim.fn.expand('%'))
-    end)
+    assert_opened_yazi_with_file('/tmp/')
   end)
 
   it(
     "calls the yazi_closed_successfully hook when a file is selected in yazi's chooser",
     function()
       local target_file = '/abc/test-file-potato.txt'
-      setup_fake_yazi_opens_file(target_file)
+
+      fake_yazi_process.setup_created_instances_to_instantly_exit({
+        selected_files = { target_file },
+      })
+
       ---@param state YaziClosedState
+      ---@diagnostic disable-next-line: unused-local
       local spy_hook = spy.new(function(chosen_file, _config, state)
-        assert.equals('/abc/test-file-potato.txt', chosen_file)
+        assert.equals(target_file, chosen_file)
         assert.equals('/abc', state.last_directory.filename)
       end)
 
@@ -92,7 +80,6 @@ describe('opening a file', function()
 
       plugin.yazi({
         chosen_file_path = '/tmp/yazi_filechosen',
-        set_keymappings_function = function() end,
         ---@diagnostic disable-next-line: missing-fields
         hooks = {
           ---@diagnostic disable-next-line: assign-type-mismatch
@@ -102,7 +89,7 @@ describe('opening a file', function()
 
       assert
         .spy(spy_hook)
-        .was_called_with('/abc/test-file-potato.txt', match.is_table(), match.is_table())
+        .was_called_with(target_file, match.is_table(), match.is_table())
     end
   )
 
@@ -112,7 +99,6 @@ describe('opening a file', function()
     vim.api.nvim_command('edit /abc/yazi_opened_hook_file.txt')
 
     plugin.yazi({
-      set_keymappings_function = function() end,
       ---@diagnostic disable-next-line: missing-fields
       hooks = {
         ---@diagnostic disable-next-line: assign-type-mismatch
@@ -127,14 +113,15 @@ describe('opening a file', function()
 
   it('calls the open_file_function to open the selected file', function()
     local target_file = '/abc/test-file-lnotial.txt'
-    setup_fake_yazi_opens_file(target_file)
+    fake_yazi_process.setup_created_instances_to_instantly_exit({
+      selected_files = { target_file },
+    })
     local spy_open_file_function = spy.new()
 
     vim.api.nvim_command('edit ' .. target_file)
 
     plugin.yazi({
       chosen_file_path = '/tmp/yazi_filechosen',
-      set_keymappings_function = function() end,
       ---@diagnostic disable-next-line: assign-type-mismatch
       open_file_function = spy_open_file_function,
     })
@@ -149,24 +136,13 @@ describe('opening multiple files', function()
   local target_file_1 = '/abc/test-file-multiple-1.txt'
   local target_file_2 = '/abc/test-file-multiple-2.txt'
 
-  before_each(function()
-    local termopen = spy.on(api_mock, 'termopen')
-    termopen.callback = function(_, callback)
-      -- simulate yazi writing to the output file. This is done when a file is
-      -- chosen in yazi
-      local exit_code = 0
-      vim.fn.writefile({
-        target_file_1,
-        target_file_2,
-      }, '/tmp/yazi_filechosen-123')
-      callback.on_exit('job-id-ignored', exit_code, 'event-ignored')
-    end
-  end)
-
   it('can open multiple files', function()
+    fake_yazi_process.setup_created_instances_to_instantly_exit({
+      selected_files = { target_file_1, target_file_2 },
+    })
+
     local spy_open_multiple_files = spy.new()
     plugin.yazi({
-      set_keymappings_function = function() end,
       ---@diagnostic disable-next-line: missing-fields
       hooks = {
         ---@diagnostic disable-next-line: assign-type-mismatch

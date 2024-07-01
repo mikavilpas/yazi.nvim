@@ -38,20 +38,19 @@
 //   }
 // }
 
-import "../../client/startAppGlobalType"
-import type { StartAppMessageArguments } from "../../client/startAppGlobalType"
+import "../../client/testEnvironmentTypes"
+import type {
+  StartNeovimArguments,
+  TestDirectory,
+} from "../../client/testEnvironmentTypes"
 
-export type StartNeovimArguments = {
-  filename?: string
-}
-
-Cypress.Commands.add("startNeovim", (args?: StartNeovimArguments) => {
+Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   cy.window().then((win) => {
-    const startApp: StartAppMessageArguments = {
-      command: "nvim",
-      args: ["-u", "test-setup.lua", args?.filename ?? "initial-file.txt"],
-    }
-    win.startApp(startApp)
+    // eslint-disable-next-line @typescript-eslint/require-await
+    cy.task("createTempDir").then(async (dir) => {
+      void win.startNeovim(dir.rootPath, startArguments)
+      return dir
+    })
   })
 })
 
@@ -64,8 +63,17 @@ Cypress.Commands.add("typeIntoTerminal", (text: string) => {
 declare global {
   namespace Cypress {
     interface Chainable {
-      startNeovim(args?: StartNeovimArguments): Chainable<void>
+      startNeovim(args?: StartNeovimArguments): Chainable<TestDirectory>
       typeIntoTerminal(text: string): Chainable<void>
+      task(event: "createTempDir"): Chainable<TestDirectory>
     }
   }
 }
+
+afterEach(() => {
+  cy.task("showYaziLog")
+})
+
+beforeEach(() => {
+  cy.task("removeYaziLog")
+})

@@ -10,3 +10,4 @@ integration-tests/server/build/server.js
 integration-tests/pid.txt
 integration-tests/server/build
 *.pem
+integration-tests/test-environment/testdirs

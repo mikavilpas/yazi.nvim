@@ -35,7 +35,7 @@ init:
 
 lint:
 	selene ./lua/ ./spec/
-	@if grep -r -e "#focus" --include \*.lua .; then \
+	@if grep -r -e "#focus" --include \*.lua ./spec/; then \
 			echo "\n"; \
 			echo "Error: ${COLOR_GREEN}#focus${COLOR_RESET} tags found in the codebase.\n"; \
 			echo "Please remove them to prevent issues with not accidentally running all tests."; \

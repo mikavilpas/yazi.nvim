@@ -56,6 +56,20 @@ local plugins = {
     ---@type YaziConfig
     opts = {
       open_for_directories = true,
+      -- allows logging debug data, which can be shown in CI when cypress tests fail
+      log_level = vim.log.levels.DEBUG,
+      integrations = {
+        grep_in_directory = function(directory)
+          require('telescope.builtin').live_grep({
+            -- disable previewer to be able to see the full directory name. The
+            -- tests can make assertions on this path.
+            previewer = false,
+            search = '',
+            prompt_title = 'Grep in ' .. directory,
+            cwd = directory,
+          })
+        end,
+      },
     },
   },
   { 'nvim-telescope/telescope.nvim', lazy = true },
