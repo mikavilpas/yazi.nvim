@@ -58,7 +58,12 @@ end
 
 ---@param message string
 function Log:debug(message)
-  if self.level and self.level >= log_levels.DEBUG then
+  vim.notify(vim.inspect({ self.level }))
+  if
+    self.level
+    and self.level ~= log_levels.OFF
+    and self.level <= log_levels.DEBUG
+  then
     self:write_message('DEBUG', message)
   end
 end
