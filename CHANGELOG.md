@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.1...v1.2.2) (2024-07-02)
+
+
+### Bug Fixes
+
+* not being able to disable writing DEBUG logs ([#150](https://github.com/mikavilpas/yazi.nvim/issues/150)) ([8f251de](https://github.com/mikavilpas/yazi.nvim/commit/8f251defe31ce7b3e623b499e08a7c558d79bfdb))
+
 ## [1.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.0...v1.2.1) (2024-06-30)
 
 
