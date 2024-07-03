@@ -8,7 +8,7 @@
   "scripts": {
     "install:all": "npm install --workspaces --include-workspace-root",
     "prettier": "prettier --check .",
-    "cy:run": "npm run cy:run --workspace integration-tests",
+    "cy:run": "npm run cy:run:ci --workspace integration-tests",
     "markdownlint": "markdownlint-cli2 README.md"
   },
   "private": true,
