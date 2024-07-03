@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.2...v1.2.3) (2024-07-03)
+
+
+### Bug Fixes
+
+* remove extra debug logging ([#153](https://github.com/mikavilpas/yazi.nvim/issues/153)) ([2fc4679](https://github.com/mikavilpas/yazi.nvim/commit/2fc46796d35a89958aca8666ddbeda81b81a3d0a))
+
 ## [1.2.2](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.1...v1.2.2) (2024-07-02)
 
 
