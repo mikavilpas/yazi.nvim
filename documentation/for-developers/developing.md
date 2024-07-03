@@ -50,6 +50,8 @@ having trouble.
 - <https://github.com/stevearc/conform.nvim> which formats your code on save.
   Configure it to use stylua and prettier using the instructions in its README
   file
+- <https://www.lazyvim.org/extras/lang/typescript> or similar tooling for
+  working with integration tests
 
 ## Running tests
 
@@ -98,6 +100,15 @@ for some ideas.
 ### 2. Integration tests
 
 ![integration tests](https://github.com/mikavilpas/yazi.nvim/assets/300791/817ccb3f-725b-4830-b5e0-d99a9b87ad26)
+
+This project includes a custom setup for running integration tests. The setup
+shows Neovim running in a web based terminal and allows simulating pressing keys
+and checking that the correct output is shown. Because the real applications are
+being run in a real environment, almost all features that Neovim and yazi
+support can be tested.
+
+The tests are written in TypeScript using the [Cypress](https://www.cypress.io/)
+browser testing framework.
 
 Optional, but recommended: install
 [Node Version Manager](https://github.com/nvm-sh/nvm) to install the correct
