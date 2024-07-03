@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@umbrelladocs/linkspector": "0.3.12",
     "markdownlint-cli2": "0.12.1",
     "prettier": "3.2.5"
   }

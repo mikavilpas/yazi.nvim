@@ -1,0 +1,8 @@
+dirs:
+  - .
+  - ./documentation/
+useGitIgnore: true
+ignorePatterns:
+  # these seem to fail due to timeouts anyway
+  # https://github.com/UmbrellaDocs/linkspector/issues/5
+  - pattern: "https://github.com/mikavilpas/yazi.nvim/assets/.*"
