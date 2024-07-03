@@ -58,7 +58,6 @@ end
 
 ---@param message string
 function Log:debug(message)
-  vim.notify(vim.inspect({ self.level }))
   if
     self.level
     and self.level ~= log_levels.OFF
