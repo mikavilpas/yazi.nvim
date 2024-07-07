@@ -1,10 +1,15 @@
 ---@module "plenary.path"
 
+---@alias WindowId integer
+
 local Log = require('yazi.log')
 local utils = require('yazi.utils')
+local highlight_hovered_buffer =
+  require('yazi.buffer_highlighting.highlight_hovered_buffer')
 
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
+---@field public new fun(config: YaziConfig): YaProcess
 ---@field private config YaziConfig
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
@@ -13,7 +18,8 @@ local YaProcess = {}
 YaProcess.__index = YaProcess
 
 ---@param config YaziConfig
-function YaProcess:new(config)
+function YaProcess.new(config)
+  local self = setmetatable({}, YaProcess)
   self.config = config
   self.events = {}
   self.retries = 0
@@ -33,6 +39,7 @@ end
 function YaProcess:kill()
   Log:debug('Killing ya process')
   pcall(self.ya_process.kill, self.ya_process, 'sigterm')
+  highlight_hovered_buffer.clear_highlights()
 end
 
 function YaProcess:wait(timeout)
@@ -42,11 +49,12 @@ function YaProcess:wait(timeout)
 end
 
 function YaProcess:start()
-  local ya_command = { 'ya', 'sub', 'rename,delete,trash,move,cd' }
+  local ya_command = { 'ya', 'sub', 'rename,delete,trash,move,cd,hover' }
   Log:debug(
     string.format(
-      'Opening ya with the command: (%s)',
-      table.concat(ya_command, ' ')
+      'Opening ya with the command: (%s), attempt %s',
+      table.concat(ya_command, ' '),
+      self.retries
     )
   )
 
@@ -85,21 +93,27 @@ function YaProcess:start()
       if err then
         Log:debug(string.format("ya stdout error: '%s'", data))
       end
-
-      if data == nil then
-        -- weird event, ignore
-        return
-      end
-
-      -- remove the final newline character because it's annoying in the logs
-      if data:sub(-1) == '\n' then
-        data = data:sub(1, -2)
-      end
+      data = data or ''
 
       Log:debug(string.format("ya stdout: '%s'", data))
-      local parsed = utils.safe_parse_events({ data })
+
+      data = vim.split(data, '\n', { plain = true, trimempty = true })
+
+      local parsed = utils.safe_parse_events(data)
+      Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
+
       for _, event in ipairs(parsed) do
-        self.events[#self.events + 1] = event
+        if event.type == 'hover' then
+          vim.schedule(function()
+            ---@cast event YaziHoverEvent
+            highlight_hovered_buffer.highlight_hovered_buffer(
+              event.url,
+              self.config.highlight_groups
+            )
+          end)
+        else
+          self.events[#self.events + 1] = event
+        end
       end
     end,
 

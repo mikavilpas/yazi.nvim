@@ -87,6 +87,11 @@ export default defineConfig({
                   stem: "sub",
                   extension: ".txt",
                 },
+                "modify_yazi_config_to_use_ya_as_event_reader.lua": {
+                  name: "modify_yazi_config_to_use_ya_as_event_reader.lua",
+                  stem: "modify_yazi_config_to_use_ya_as_event_reader",
+                  extension: ".lua",
+                },
                 "routes/posts.$postId/adjacent-file.tsx": {
                   name: "adjacent-file.tsx",
                   stem: "adjacent-file",
