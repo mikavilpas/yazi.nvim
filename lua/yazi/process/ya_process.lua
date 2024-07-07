@@ -91,7 +91,7 @@ function YaProcess:start()
         return
       end
 
-      -- remove the final newline character becauze it's annoying in the logs
+      -- remove the final newline character because it's annoying in the logs
       if data:sub(-1) == '\n' then
         data = data:sub(1, -2)
       end
