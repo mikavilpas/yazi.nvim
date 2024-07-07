@@ -46,11 +46,6 @@ function YaziProcess:start(config, path, on_exit)
     end,
   })
 
-  if config.use_ya_for_events_reading == true then
-    self.event_reader = YaProcess:new(config)
-  else
-    self.event_reader = LegacyEventReadingFromEventFile:new(config)
-  end
   self.event_reader:start()
 
   return self
