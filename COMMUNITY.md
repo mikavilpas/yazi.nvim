@@ -8,6 +8,8 @@ I started this project because I think it's fun to build cool things, and also
 to learn how to build a neovim plugin. I have been very happy to see that many
 people have found this useful.
 
+This document lists some ways you can contribute to this project.
+
 ## Please share your ideas and feedback
 
 There are many different kinds of people using this. I have been programming
@@ -28,3 +30,16 @@ I want to encourage you to share your ideas and feedback:
   - give feedback on upcoming features and development ideas
   - tip: you can use the GitHub `watch` feature to get notified about new
     discussions and comments.
+
+## Provide feedback on upcoming features
+
+Generally, all new features will be opened as pull requests on GitHub. If you
+want to provide feedback on upcoming features, you can
+
+- follow new pull requests on GitHub (e.g. set
+  `watch -> custom -> pull requests`)
+- similarly, follow issues
+
+To test pull requests locally, you can use `branch = "feature-branch-name"` in
+your lazy.nvim plugin spec. See the lazy.nvim documentation for more
+information: <https://lazy.folke.io/spec#spec-versioning>.
