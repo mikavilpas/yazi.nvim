@@ -34,18 +34,43 @@ return {
       return vim.health.warn(
         'yazi version is too old, please upgrade to 0.2.5 or newer'
       )
-    end
-
-    local yazi_help = vim.fn.system('yazi --help')
-    if not yazi_help:find('--local-events', 1, true) then
-      vim.health.warn(
-        'The yazi version does not support --local-events. Please upgrade to the newest version of yazi.'
-      )
+    else
+      vim.health.info(('Found `yazi` version `%s` 👍'):format(semver))
     end
 
     local logfile_location = require('yazi.log'):get_logfile_path()
     vim.health.info('yazi.nvim log file is at ' .. logfile_location)
     vim.health.info('    hint: use `gf` to open the file path under the cursor')
+
+    if require('yazi').config.use_ya_for_events_reading == true then
+      if vim.fn.executable('ya') ~= 1 then
+        vim.health.error(
+          'You have opted in to using `ya` for events reading, but `ya` is not found on PATH. Please install `ya` or disable `use_ya_for_events_reading` in your config.'
+        )
+        return
+      end
+
+      -- example data:
+      -- Ya 0.2.5 (f5a7ace 2024-06-23)
+      local raw_ya_version = vim.fn.system('ya --version') or ''
+      local ya_semver = raw_ya_version:match('[Yy]a (%w+%.%w+%.%w+)')
+      if ya_semver == nil then
+        vim.health.warn(
+          string.format(
+            '`ya --version` looks unexpected, saw `%s` 🤔',
+            raw_ya_version
+          )
+        )
+      else
+        if not checker.gt(ya_semver, '0.2.4') then
+          vim.health.warn(
+            'The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version.'
+          )
+        else
+          vim.health.info(('Found `ya` version `%s` 👍'):format(ya_semver))
+        end
+      end
+    end
 
     vim.health.ok('yazi')
   end,

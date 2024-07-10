@@ -2,26 +2,34 @@
 
 local window = require('yazi.window')
 local utils = require('yazi.utils')
-local vimfn = require('yazi.vimfn')
 local configModule = require('yazi.config')
 local event_handling = require('yazi.event_handling')
 local Log = require('yazi.log')
+local YaziProcess = require('yazi.yazi_process')
 
 local M = {}
-
-M.yazi_loaded = false
 
 ---@param config? YaziConfig?
 ---@param input_path? string
 ---@diagnostic disable-next-line: redefined-local
 function M.yazi(config, input_path)
   if utils.is_yazi_available() ~= true then
-    print('Please install yazi. Check documentation for more information')
+    print('Please install yazi. Check the documentation for more information')
     return
   end
 
   config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
+
+  if
+    config.use_ya_for_events_reading == true
+    and utils.is_ya_available() ~= true
+  then
+    print(
+      'Please install ya (the yazi command line utility). Check the documentation for more information'
+    )
+    return
+  end
 
   local path = utils.selected_file_path(input_path)
 
@@ -34,52 +42,56 @@ function M.yazi(config, input_path)
   local win = window.YaziFloatingWindow.new(config)
   win:open_and_display()
 
-  os.remove(config.chosen_file_path)
-  local cmd = string.format(
-    'yazi %s --local-events "rename,delete,trash,move,cd" --chooser-file "%s" > "%s"',
-    vim.fn.shellescape(path.filename),
-    config.chosen_file_path,
-    config.events_file_path
+  local yazi_process = YaziProcess:start(
+    config,
+    path,
+    function(exit_code, selected_files, events)
+      if exit_code ~= 0 then
+        print(
+          "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
+        )
+        Log:debug(
+          string.format('yazi.nvim: had trouble opening yazi: %s', exit_code)
+        )
+        return
+      end
+
+      Log:debug(
+        string.format(
+          'yazi process exited successfully with code: %s, selected_files %s, and events %s',
+          exit_code,
+          vim.inspect(selected_files),
+          vim.inspect(events)
+        )
+      )
+
+      local event_info = event_handling.process_events_emitted_from_yazi(events)
+
+      local last_directory = event_info.last_directory
+      if last_directory == nil then
+        if path:is_file() then
+          last_directory = path:parent()
+        else
+          last_directory = path
+        end
+      end
+      utils.on_yazi_exited(prev_win, prev_buf, win, config, selected_files, {
+        last_directory = event_info.last_directory or path:parent(),
+      })
+    end
   )
 
-  if M.yazi_loaded == false then
-    Log:debug(string.format('Opening yazi with the command: (%s)', cmd))
+  config.hooks.yazi_opened(path.filename, win.content_buffer, config)
+  config.set_keymappings_function(win.content_buffer, config)
 
-    local job_id = vimfn.termopen(cmd, {
-      ---@diagnostic disable-next-line: unused-local
-      on_exit = function(_job_id, code, _event)
-        M.yazi_loaded = false
-        if code ~= 0 then
-          print(
-            "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
-          )
-          return
-        end
-
-        local events = utils.read_events_file(config.events_file_path)
-        local event_info =
-          event_handling.process_events_emitted_from_yazi(events)
-
-        local last_directory = event_info.last_directory
-        if last_directory == nil then
-          if path:is_file() then
-            last_directory = path:parent()
-          else
-            last_directory = path
-          end
-        end
-        utils.on_yazi_exited(prev_win, prev_buf, win, config, {
-          last_directory = event_info.last_directory or path:parent(),
-        })
-      end,
-    })
-
-    config.hooks.yazi_opened(path.filename, win.content_buffer, config)
-    config.set_keymappings_function(win.content_buffer, config)
-    win.on_resized = function(event)
-      vim.fn.jobresize(job_id, event.win_width, event.win_height)
-    end
+  win.on_resized = function(event)
+    vim.fn.jobresize(
+      yazi_process.yazi_job_id,
+      event.win_width,
+      event.win_height
+    )
   end
+
   vim.schedule(function()
     vim.cmd('startinsert')
   end)

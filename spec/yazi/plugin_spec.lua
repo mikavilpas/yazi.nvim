@@ -1,10 +1,12 @@
 local assert = require('luassert')
 local plugin = require('yazi.plugin')
+local stub = require('luassert.stub')
 
 describe('installing a plugin', function()
   local base_dir = os.tmpname() -- create a temporary file with a unique name
 
   before_each(function()
+    stub(vim, 'notify')
     -- convert the unique name from a file to a directory
     assert(base_dir:match('/tmp/'), 'Failed to create a temporary directory')
     os.remove(base_dir)
@@ -12,6 +14,7 @@ describe('installing a plugin', function()
   end)
 
   after_each(function()
+    stub(vim, 'notify'):revert()
     vim.fn.delete(base_dir, 'rf')
   end)
 

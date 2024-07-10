@@ -70,8 +70,6 @@ end
 ---@param events YaziEvent[]
 ---@return {last_directory?: Path}
 function M.process_events_emitted_from_yazi(events)
-  -- process events emitted from yazi
-
   ---@type Path | nil
   local last_directory = nil
 

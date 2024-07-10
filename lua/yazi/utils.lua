@@ -4,9 +4,12 @@ local plenary_path = require('plenary.path')
 
 local M = {}
 
----@return boolean
 function M.is_yazi_available()
   return fn.executable('yazi') == 1
+end
+
+function M.is_ya_available()
+  return fn.executable('ya') == 1
 end
 
 function M.file_exists(name)
@@ -37,9 +40,8 @@ end
 
 -- Returns parsed events from the yazi events file
 ---@param events_file_lines string[]
----@return YaziRenameEvent[]
 function M.parse_events(events_file_lines)
-  ---@type string[]
+  ---@type YaziEvent[]
   local events = {}
 
   for _, line in ipairs(events_file_lines) do
@@ -60,7 +62,7 @@ function M.parse_events(events_file_lines)
         type = type,
         timestamp = timestamp,
         id = id,
-        data = vim.fn.json_decode(data_string),
+        data = vim.json.decode(data_string),
       }
       table.insert(events, event)
     elseif type == 'move' then
@@ -75,7 +77,7 @@ function M.parse_events(events_file_lines)
         type = type,
         timestamp = timestamp,
         id = id,
-        data = vim.fn.json_decode(data_string),
+        data = vim.json.decode(data_string),
       }
       table.insert(events, event)
     elseif type == 'delete' then
@@ -91,7 +93,7 @@ function M.parse_events(events_file_lines)
         type = type,
         timestamp = timestamp,
         id = id,
-        data = vim.fn.json_decode(data_string),
+        data = vim.json.decode(data_string),
       }
       table.insert(events, event)
     elseif type == 'trash' then
@@ -107,7 +109,7 @@ function M.parse_events(events_file_lines)
         type = type,
         timestamp = timestamp,
         id = id,
-        data = vim.fn.json_decode(data_string),
+        data = vim.json.decode(data_string),
       }
       table.insert(events, event)
     elseif type == 'cd' then
@@ -123,7 +125,7 @@ function M.parse_events(events_file_lines)
         type = type,
         timestamp = timestamp,
         id = id,
-        url = vim.fn.json_decode(data_string)['url'],
+        url = vim.json.decode(data_string)['url'],
       }
       table.insert(events, event)
     end
@@ -133,7 +135,6 @@ function M.parse_events(events_file_lines)
 end
 
 ---@param path string
----@return YaziEvent[]
 function M.read_events_file(path)
   local success, events_file_lines = pcall(vim.fn.readfile, path)
   os.remove(path)
@@ -141,9 +142,12 @@ function M.read_events_file(path)
     return {}
   end
 
-  -- selene: allow(shadowing)
-  ---@diagnostic disable-next-line: redefined-local
-  local success, events = pcall(M.parse_events, events_file_lines)
+  return M.safe_parse_events(events_file_lines)
+end
+
+---@param event_lines string[]
+function M.safe_parse_events(event_lines)
+  local success, events = pcall(M.parse_events, event_lines)
   if not success then
     return {}
   end
@@ -198,8 +202,16 @@ end
 ---@param prev_buf integer
 ---@param window YaziFloatingWindow
 ---@param config YaziConfig
+---@param selected_files string[]
 ---@param state YaziClosedState
-function M.on_yazi_exited(prev_win, prev_buf, window, config, state)
+function M.on_yazi_exited(
+  prev_win,
+  prev_buf,
+  window,
+  config,
+  selected_files,
+  state
+)
   vim.cmd('silent! :checktime')
 
   -- open the file that was chosen
@@ -214,13 +226,12 @@ function M.on_yazi_exited(prev_win, prev_buf, window, config, state)
   window:close()
 
   vim.api.nvim_set_current_win(prev_win)
-  if M.file_exists(config.chosen_file_path) == true then
-    local chosen_files = vim.fn.readfile(config.chosen_file_path)
-
-    if #chosen_files > 1 then
-      config.hooks.yazi_opened_multiple_files(chosen_files, config, state)
+  -- if M.file_exists(config.chosen_file_path) == true then
+  if #selected_files > 0 then
+    if #selected_files > 1 then
+      config.hooks.yazi_opened_multiple_files(selected_files, config, state)
     else
-      local chosen_file = chosen_files[1]
+      local chosen_file = selected_files[1]
       config.hooks.yazi_closed_successfully(chosen_file, config, state)
       if chosen_file then
         config.open_file_function(chosen_file, config, state)

@@ -7,7 +7,7 @@
     "dev": "concurrently --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'npm run cy:open'",
     "dev:client": "vite",
     "dev:server": "tsc-watch --noClear --build --onSuccess 'tsx ./server/server.ts'",
-    "cy:open": "cypress open",
+    "cy:open": "cypress open --e2e",
     "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
     "build": "tsc && vite build",
     "eslint": "eslint --max-warnings=0 .",

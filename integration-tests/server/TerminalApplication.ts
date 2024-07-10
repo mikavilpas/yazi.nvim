@@ -56,12 +56,13 @@ export class TerminalApplication {
   }): TerminalApplication {
     // NOTE the size for the terminal was chosen so that it looks good in the
     // cypress test preview
+    console.log(`Starting '${command} ${args.join(" ")}' in cwd '${cwd}'`)
     const ptyProcess = pty.spawn(command, args, {
       name: "xterm-color",
       cwd,
       env,
-      cols: 126,
-      rows: 44,
+      cols: 125,
+      rows: 43,
     })
 
     const processId = ptyProcess.pid

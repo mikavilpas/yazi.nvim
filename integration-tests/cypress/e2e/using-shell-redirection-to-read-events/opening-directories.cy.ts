@@ -5,10 +5,10 @@ describe("opening directories", () => {
       // `neovim .` specifies to open the current directory when neovim is
       // starting
       filename: ".",
+    }).then((dir) => {
+      // yazi should now be visible, showing the names of adjacent files
+      cy.contains(dir.contents["file.txt"].name)
+      cy.contains(dir.contents["initial-file.txt"].name)
     })
-
-    // yazi should now be visible, showing the names of adjacent files
-    cy.contains("file.txt")
-    cy.contains("initial-file.txt")
   })
 })
