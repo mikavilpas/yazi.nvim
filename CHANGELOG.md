@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.3...v1.3.0) (2024-07-10)
+
+
+### version
+
+* 1.3.0 ([bd19300](https://github.com/mikavilpas/yazi.nvim/commit/bd193005f818473dd924d35448b8af7eb398cf9a))
+
+
+### Features
+
+* support bulk renaming files in nightly yazi (opt-in) ([#152](https://github.com/mikavilpas/yazi.nvim/issues/152)) ([8bd164d](https://github.com/mikavilpas/yazi.nvim/commit/8bd164dc0631e6bb394ba6f680e85c1adefd74be))
+
+
 ## [1.2.3](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.2...v1.2.3) (2024-07-03)
 
 
