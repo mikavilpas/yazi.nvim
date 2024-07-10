@@ -6,12 +6,12 @@ allows you to fully manage your yazi and neovim plugins from inside neovim.
 ## Getting started
 
 In this example, we will install the yazi plugin
-[DreamMaoMao/keyjump.yazi](https://github.com/DreamMaoMao/keyjump.yazi), which
-adds a "jump-to-line" feature to yazi. We will also install a _flavor_ which
-applies a color scheme to yazi.
+[starship.yazi](https://github.com/Rolv-Apneseth/starship.yazi), which adds
+support for the [starship](https://starship.rs/) shell prompt to yazi. We will
+also install a _flavor_ which applies a color scheme to yazi.
 
 In your yazi.nvim configuration, add a new lazy.nvim plugin specification for
-`DreamMaoMao/keyjump.yazi`:
+`Rolv-Apneseth/starship.yazi`:
 
 ```lua
 -- this file is: /Users/mikavilpas/.config/nvim/lua/plugins/my-file-manager.lua
@@ -29,8 +29,7 @@ return {
     },
   },
   {
-    -- example: include a plugin
-    "DreamMaoMao/keyjump.yazi",
+    "Rolv-Apneseth/starship.yazi",
     lazy = true,
     build = function(plugin)
       require("yazi.plugin").build_plugin(plugin)
@@ -53,9 +52,9 @@ Next, run `:Lazy` in neovim to install the plugin and flavor.
 
 Finally, make changes in your yazi configuration:
 
-- add a keybinding to your `~/.config/yazi/keymap.toml` according to the
-  [instructions](https://github.com/DreamMaoMao/keyjump.yazi?tab=readme-ov-file#usage)
-  provided by the plugin author.
+- (for plugins requiring keybindings) add a keybinding to your
+  `~/.config/yazi/keymap.toml` according to the instructions provided by the
+  plugin author.
 - include the flavor in your `~/.config/yazi/theme.toml` according to the
   [instructions](https://github.com/BennyOe/onedark.yazi?tab=readme-ov-file#%EF%B8%8F-usage)
   provided by the flavor author.
@@ -123,12 +122,16 @@ plugin manager.
 ---@type LazyPlugin[]
 return {
   {
-    -- a yazi plugin which like flash.nvim in neovim,allow use key char to Precise selection
-    -- https://github.com/DreamMaoMao/keyjump.yazi
-    "DreamMaoMao/keyjump.yazi",
+    -- example: a yazi plugin monorepo which provides multiple plugins for
+    -- yazi. To use it, you need to specify the sub_dir for the plugin you want
+    -- to install.
+    "redbeardymcgee/yazi-plugins",
     lazy = true,
     build = function(plugin)
-      require("yazi.plugin").build_plugin(plugin)
+      -- This is a plugin like flash.nvim in neovim - it allows you to jump to
+      -- a line by typing the first few characters of the line.
+      -- https://github.com/redbeardymcgee/yazi-plugins
+      require("yazi.plugin").build_plugin(plugin, { sub_dir = "keyjump.yazi" })
     end,
   },
   {

@@ -195,8 +195,8 @@ Yazi is highly customizable. It features its own plugin and event system,
 themes, and keybindings. This section lists some of the plugins and themes that
 I like.
 
-- <https://github.com/DreamMaoMao/keyjump.yazi> allows jumping to a line by
-  typing a hint character, much like
+- <https://github.com/redbeardymcgee/yazi-plugins/tree/main/keyjump.yazi> allows
+  jumping to a line by typing a hint character, much like
   [hop.nvim](https://github.com/smoka7/hop.nvim)
 - <https://github.com/Rolv-Apneseth/starship.yazi> is a port of the
   [starship prompt](https://starship.rs) to yazi. It allows reusing the prompt
@@ -207,11 +207,6 @@ I like.
   [this discussion](https://github.com/sxyazi/yazi/discussions/818) or
   [my config](https://github.com/mikavilpas/dotfiles/commit/bb07515f69d219fd3435d222fcb2d80d27a25025#diff-973b37f40e024ca0f7e62f2569efce24ad550d0352adc8449168ac950af9eaf5R8)
   for an example of using it
-
-## 🍴 About my fork
-
-I forked this from <https://github.com/DreamMaoMao/yazi.nvim> for my own use,
-and also because I wanted to learn Neovim plugin development.
 
 ## Contributing
 
