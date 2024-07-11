@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.3.0...v1.4.0) (2024-07-11)
+
+
+### Features
+
+* **plugin:** allow specifying a subdirectory for plugins ([0e79514](https://github.com/mikavilpas/yazi.nvim/commit/0e795143ac53d8805e9b08cf2454c55cb3a6a83a))
+
 ## [1.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.2.3...v1.3.0) (2024-07-10)
 
 
