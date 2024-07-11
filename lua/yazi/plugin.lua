@@ -21,6 +21,10 @@ local M = {}
 ---   build = function(plugin)
 ---     -- this will be called by lazy.nvim after the plugin was updated
 ---     require("yazi.plugin").build_plugin(plugin)
+---
+---     -- if your plugin is not found at the root of the repository, you can
+---     -- specify a subdirectory like this:
+---     require("yazi.plugin").build_plugin({ sub_dir = "my-plugin.yazi" })
 ---   end,
 --- }
 --- ```
@@ -28,7 +32,7 @@ local M = {}
 --- For more information, see the yazi.nvim documentation.
 ---
 ---@param plugin YaziLazyNvimSpec
----@param options? { yazi_dir: string }
+---@param options? { yazi_dir: string, sub_dir?: string }
 function M.build_plugin(plugin, options)
   local yazi_dir = options and options.yazi_dir
     or vim.fn.expand('~/.config/yazi')
@@ -39,11 +43,19 @@ function M.build_plugin(plugin, options)
 
   local to = vim.fs.normalize(vim.fs.joinpath(yazi_plugins_dir, plugin.name))
 
+  if options and options.sub_dir then
+    plugin = {
+      name = plugin.name,
+      dir = vim.fs.joinpath(plugin.dir, options.sub_dir),
+    }
+    to = vim.fs.normalize(vim.fs.joinpath(yazi_plugins_dir, options.sub_dir))
+  end
+
   return M.symlink(plugin, to)
 end
 
 ---@param flavor YaziLazyNvimSpec
----@param options? { yazi_dir: string }
+---@param options? { yazi_dir: string, sub_dir?: string }
 function M.build_flavor(flavor, options)
   local yazi_dir = options and options.yazi_dir
     or vim.fn.expand('~/.config/yazi')
@@ -53,6 +65,14 @@ function M.build_flavor(flavor, options)
   vim.fn.mkdir(yazi_flavors_dir, 'p')
 
   local to = vim.fs.normalize(vim.fs.joinpath(yazi_flavors_dir, flavor.name))
+
+  if options and options.sub_dir then
+    flavor = {
+      name = flavor.name,
+      dir = vim.fs.joinpath(flavor.dir, options.sub_dir),
+    }
+    to = vim.fs.normalize(vim.fs.joinpath(yazi_flavors_dir, options.sub_dir))
+  end
 
   return M.symlink(flavor, to)
 end
