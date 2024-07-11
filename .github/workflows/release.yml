@@ -2,7 +2,7 @@ on:
   workflow_dispatch: # makes it possible to run the workflow manually
   push:
     branches:
-      - master
+      - main
 
 permissions:
   contents: write
