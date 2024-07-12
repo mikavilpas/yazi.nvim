@@ -11,6 +11,7 @@
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig, state: YaziClosedState): nil "a function that will be called when a file is chosen in yazi"
 ---@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
 ---@field public hooks? YaziConfigHooks
+---@field public highlight_groups? YaziConfigHighlightGroups
 ---@field public integrations? YaziConfigIntegrations
 ---@field public floating_window_scaling_factor? number "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
 ---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
@@ -25,7 +26,10 @@
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? fun(directory: string): nil "a function that will be called when the user wants to grep in a directory"
 
----@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent
+---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
+---@field public hovered_buffer_background? vim.api.keyset.highlight # the color of the background of buffer that is hovered over
+
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent
 
 ---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
 ---@field public last_directory Path # the last directory that yazi was in before it was closed
@@ -62,6 +66,10 @@
 ---@field public type "cd"
 ---@field public timestamp string
 ---@field public id string
+---@field public url string
+
+---@class (exact) YaziHoverEvent "The event that is emitted when the user hovers over a file in yazi"
+---@field public type "hover"
 ---@field public url string
 
 ---@class (exact) yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs

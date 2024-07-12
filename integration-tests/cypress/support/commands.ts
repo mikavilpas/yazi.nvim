@@ -54,17 +54,23 @@ Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   })
 })
 
-Cypress.Commands.add("typeIntoTerminal", (text: string) => {
-  // the syntax for keys is described here:
-  // https://docs.cypress.io/api/commands/type
-  cy.get("#app").type(text)
-})
+Cypress.Commands.add(
+  "typeIntoTerminal",
+  (text: string, options?: Partial<Cypress.TypeOptions>) => {
+    // the syntax for keys is described here:
+    // https://docs.cypress.io/api/commands/type
+    cy.get("#app").type(text, options)
+  },
+)
 
 declare global {
   namespace Cypress {
     interface Chainable {
       startNeovim(args?: StartNeovimArguments): Chainable<TestDirectory>
-      typeIntoTerminal(text: string): Chainable<void>
+      typeIntoTerminal(
+        text: string,
+        options?: Partial<Cypress.TypeOptions>,
+      ): Chainable<void>
       task(event: "createTempDir"): Chainable<TestDirectory>
     }
   }

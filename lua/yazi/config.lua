@@ -21,6 +21,10 @@ function M.default()
       yazi_opened_multiple_files = openers.send_files_to_quickfix_list,
     },
 
+    highlight_groups = {
+      hovered_buffer_background = nil,
+    },
+
     integrations = {
       grep_in_directory = function(directory)
         require('telescope.builtin').live_grep({

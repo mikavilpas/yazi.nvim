@@ -27,7 +27,7 @@ function YaziProcess:start(config, path, on_exit)
     )
   )
   self.event_reader = config.use_ya_for_events_reading == true
-      and YaProcess:new(config)
+      and YaProcess.new(config)
     or LegacyEventReadingFromEventFile:new(config)
 
   local yazi_cmd = self.event_reader:get_yazi_command(path)

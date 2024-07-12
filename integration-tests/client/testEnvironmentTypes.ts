@@ -10,7 +10,8 @@ export type StartNeovimServerArguments = {
 } & StartNeovimArguments
 
 export type StartupScriptModification =
-  "modify_yazi_config_to_use_ya_as_event_reader.lua"
+  | "modify_yazi_config_to_use_ya_as_event_reader.lua"
+  | "modify_yazi_config_and_add_hovered_buffer_background.lua"
 
 declare global {
   interface Window {
@@ -54,6 +55,7 @@ export type TestDirectory = {
     ["initial-file.txt"]: FileEntry
     ["test.lua"]: FileEntry
     ["file.txt"]: FileEntry
+    ["modify_yazi_config_to_use_ya_as_event_reader.lua"]: FileEntry
     ["subdirectory/sub.txt"]: FileEntry
     ["routes/posts.$postId/route.tsx"]: FileEntry
     ["routes/posts.$postId/adjacent-file.tsx"]: FileEntry

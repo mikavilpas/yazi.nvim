@@ -46,7 +46,7 @@ io.on("connection", function connection(socket) {
           switch (modification) {
             // execute a lua script after startup, allowing the tests to modify
             // the base config without overriding all of it
-            case "modify_yazi_config_to_use_ya_as_event_reader.lua":
+            case "modify_yazi_config_to_use_ya_as_event_reader.lua": {
               const file = path.join(
                 testDirectory,
                 "config-modifications",
@@ -54,6 +54,16 @@ io.on("connection", function connection(socket) {
               )
               args.push("-c", `lua dofile('${file}')`)
               break
+            }
+            case "modify_yazi_config_and_add_hovered_buffer_background.lua": {
+              const file = path.join(
+                testDirectory,
+                "config-modifications",
+                "modify_yazi_config_and_add_hovered_buffer_background.lua",
+              )
+              args.push("-c", `lua dofile('${file}')`)
+              break
+            }
             default:
               modification satisfies never
               throw new Error(

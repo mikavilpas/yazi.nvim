@@ -128,6 +128,27 @@ function M.parse_events(events_file_lines)
         url = vim.json.decode(data_string)['url'],
       }
       table.insert(events, event)
+    elseif type == 'hover' then
+      -- example of a hover event:
+      -- hover,0,1720375364822700,{"tab":0,"url":"/tmp/test-directory/test"}
+      local data_string = table.concat(parts, ',', 4, #parts)
+      local json = vim.json.decode(data_string, {
+        luanil = {
+          array = true,
+          object = true,
+        },
+      })
+
+      -- sometimes ya sends a hover event without a url, not sure why
+      ---@type string | nil
+      local url = json['url']
+
+      ---@type YaziHoverEvent
+      local event = {
+        type = type,
+        url = url or '',
+      }
+      table.insert(events, event)
     end
   end
 
@@ -163,7 +184,7 @@ function M.get_open_buffers()
     local path = vim.api.nvim_buf_get_name(bufnr)
     local type = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
 
-    local is_ordinary_file = path ~= '' and type == ''
+    local is_ordinary_file = path ~= vim.NIL and path ~= '' and type == ''
     if is_ordinary_file then
       local renameable_buffer = RenameableBuffer.new(bufnr, path)
       open_buffers[#open_buffers + 1] = renameable_buffer
@@ -171,6 +192,30 @@ function M.get_open_buffers()
   end
 
   return open_buffers
+end
+
+---@alias YaziVisibleBuffer { renameable_buffer: RenameableBuffer, window_id: integer }
+
+function M.get_visible_open_buffers()
+  local open_buffers = M.get_open_buffers()
+
+  ---@type YaziVisibleBuffer[]
+  local visible_open_buffers = {}
+  for _, buffer in ipairs(open_buffers) do
+    local windows = vim.api.nvim_tabpage_list_wins(0)
+    for _, window_id in ipairs(windows) do
+      if vim.api.nvim_win_get_buf(window_id) == buffer.bufnr then
+        ---@type YaziVisibleBuffer
+        local data = {
+          renameable_buffer = buffer,
+          window_id = window_id,
+        }
+        visible_open_buffers[#visible_open_buffers + 1] = data
+      end
+    end
+  end
+
+  return visible_open_buffers
 end
 
 ---@param path string
