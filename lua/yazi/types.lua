@@ -29,7 +29,7 @@
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer_background? vim.api.keyset.highlight # the color of the background of buffer that is hovered over
 
----@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
 
 ---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
 ---@field public last_directory Path # the last directory that yazi was in before it was closed
@@ -71,6 +71,10 @@
 ---@class (exact) YaziHoverEvent "The event that is emitted when the user hovers over a file in yazi"
 ---@field public type "hover"
 ---@field public url string
+
+---@class (exact) YaziBulkEvent "Like `rename` and `move` but for bulk renaming"
+---@field public type "bulk"
+---@field public changes table<string, string> # a table of old paths to new paths
 
 ---@class (exact) yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
 ---@field public id number
