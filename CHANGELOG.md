@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.4.0...v1.5.0) (2024-07-12)
+
+
+### Features
+
+* highlight the currently hovered file in yazi (opt-in) ([#180](https://github.com/mikavilpas/yazi.nvim/issues/180)) ([78cb7d2](https://github.com/mikavilpas/yazi.nvim/commit/78cb7d2eb67cefaeed60dd8d1649ccb443dbf154))
+
 ## [1.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.3.0...v1.4.0) (2024-07-11)
 
 
