@@ -21,7 +21,7 @@ vim.opt.rtp:append('.')
 
 local mock_app_versions = {}
 
-describe('the happy path', function()
+describe('the healthcheck', function()
   local snapshot
 
   before_each(function()
