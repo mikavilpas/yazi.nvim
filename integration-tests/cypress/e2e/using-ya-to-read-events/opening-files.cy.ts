@@ -65,30 +65,64 @@ describe("opening files", () => {
     })
   })
 
-  it("can bulk rename files", () => {
-    startNeovimWithYa().then((_dir) => {
-      // in yazi, bulk renaming is done by
-      // - selecting files and pressing "r".
-      // - It opens the editor with the names of the selected files.
-      // - Next, the editor must make changes to the file names and save the
-      //   file.
-      // - Finally, yazi should rename the files to match the new names.
-      cy.typeIntoTerminal("{upArrow}")
-      cy.typeIntoTerminal("{control+a}r")
+  describe("bulk renaming", () => {
+    it("can bulk rename files", () => {
+      startNeovimWithYa().then((_dir) => {
+        // in yazi, bulk renaming is done by
+        // - selecting files and pressing "r".
+        // - It opens the editor with the names of the selected files.
+        // - Next, the editor must make changes to the file names and save the
+        //   file.
+        // - Finally, yazi should rename the files to match the new names.
+        cy.typeIntoTerminal("{upArrow}")
+        cy.typeIntoTerminal("{control+a}r")
 
-      // yazi should now have opened an embedded Neovim. The file name should say
-      // "bulk" somewhere to indicate this
-      cy.contains(new RegExp("yazi/bulk-\\d+"))
+        // yazi should now have opened an embedded Neovim. The file name should say
+        // "bulk" somewhere to indicate this
+        cy.contains(new RegExp("yazi/bulk-\\d+"))
 
-      // edit the name of the first file
-      cy.typeIntoTerminal("xxx")
-      cy.typeIntoTerminal(":xa{enter}")
+        // edit the name of the first file
+        cy.typeIntoTerminal("xxx")
+        cy.typeIntoTerminal(":xa{enter}")
 
-      // yazi must now ask for confirmation
-      cy.contains("Continue to rename? (y/N):")
+        // yazi must now ask for confirmation
+        cy.contains("Continue to rename? (y/N):")
 
-      // answer yes
-      cy.typeIntoTerminal("y{enter}")
+        // answer yes
+        cy.typeIntoTerminal("y{enter}")
+      })
+    })
+
+    it("can rename a buffer that's open in Neovim", () => {
+      startNeovimWithYa().then((_dir) => {
+        cy.typeIntoTerminal("{upArrow}")
+        // select only the current file to make the test easier
+        cy.typeIntoTerminal("v")
+        cy.typeIntoTerminal("r") // start renaming
+
+        // yazi should now have opened an embedded Neovim. The file name should say
+        // "bulk" somewhere to indicate this
+        cy.contains(new RegExp("yazi/bulk-\\d+"))
+
+        // edit the name of the file
+        cy.typeIntoTerminal("cc")
+        cy.typeIntoTerminal("renamed-file.txt{esc}")
+        cy.typeIntoTerminal(":xa{enter}")
+
+        // yazi must now ask for confirmation
+        cy.contains("Continue to rename? (y/N):")
+
+        // answer yes
+        cy.typeIntoTerminal("y{enter}")
+
+        // close yazi
+        cy.typeIntoTerminal("q")
+
+        // the file should now be renamed - ask neovim to confirm this
+        cy.typeIntoTerminal(":buffers{enter}")
+
+        cy.contains("renamed-file.txt")
+      })
     })
   })
 

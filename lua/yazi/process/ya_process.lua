@@ -49,7 +49,7 @@ function YaProcess:wait(timeout)
 end
 
 function YaProcess:start()
-  local ya_command = { 'ya', 'sub', 'rename,delete,trash,move,cd,hover' }
+  local ya_command = { 'ya', 'sub', 'rename,delete,trash,move,cd,hover,bulk' }
   Log:debug(
     string.format(
       'Opening ya with the command: (%s), attempt %s',

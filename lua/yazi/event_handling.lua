@@ -94,6 +94,20 @@ function M.process_events_emitted_from_yazi(events)
           utils.rename_or_close_buffer(instruction)
         end
       end
+    elseif event.type == 'bulk' then
+      ---@cast event YaziBulkEvent
+      for from, to in pairs(event.changes) do
+        lsp_rename.file_renamed(from, to)
+
+        local rename_instructions =
+          M.get_buffers_that_need_renaming_after_yazi_exited({
+            from = from,
+            to = to,
+          })
+        for _, instruction in ipairs(rename_instructions) do
+          utils.rename_or_close_buffer(instruction)
+        end
+      end
     elseif event.type == 'delete' then
       local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziDeleteEvent

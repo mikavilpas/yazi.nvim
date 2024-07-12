@@ -80,10 +80,20 @@ function M.parse_events(events_file_lines)
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
+    elseif type == 'bulk' then
+      -- example of a bulk event:
+      -- bulk,0,1720800121065599,{"changes":{"/tmp/test-directory/test":"/tmp/test-directory/test2"}}
+      local data = vim.json.decode(table.concat(parts, ',', 4, #parts))
+
+      ---@type YaziBulkEvent
+      local event = {
+        type = 'bulk',
+        changes = data['changes'],
+      }
+      table.insert(events, event)
     elseif type == 'delete' then
       -- example of a delete event:
       -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
-
       local timestamp = parts[2]
       local id = parts[3]
       local data_string = table.concat(parts, ',', 4, #parts)
