@@ -7,3 +7,17 @@ updates:
     schedule:
       # Check for updates to GitHub Actions every week
       interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directories:
+      - "/"
+      - "integration-tests/"
+    groups:
+      # Update all npm dependencies together
+      # https://github.blog/2023-08-24-a-faster-way-to-manage-version-updates-with-dependabot/
+      "NPM dependencies":
+        "patterns":
+          - "*"
+
+    schedule:
+      interval: "daily"
