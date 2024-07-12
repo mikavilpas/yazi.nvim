@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.5.0...v1.5.1) (2024-07-12)
+
+
+### Bug Fixes
+
+* not handling bulk renaming events correctly ([607db68](https://github.com/mikavilpas/yazi.nvim/commit/607db68b14b72dc38d235b6ebdb9a6361ba84691))
+
 ## [1.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.4.0...v1.5.0) (2024-07-12)
 
 
