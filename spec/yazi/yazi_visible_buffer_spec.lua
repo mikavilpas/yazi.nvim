@@ -1,7 +1,7 @@
 local utils = require('yazi.utils')
 local assert = require('luassert')
 
-describe('#focus YaziVisibleBuffer', function()
+describe('YaziVisibleBuffer', function()
   before_each(function()
     -- clear all buffers
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
