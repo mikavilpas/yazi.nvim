@@ -19,7 +19,7 @@ const config = {
       "./cypress/tsconfig.json",
     ],
   },
-  ignorePatterns: ["vite.config.js", "cypress.config.ts"],
+  ignorePatterns: ["vite.config.js", "cypress.config.ts", "test-environment/"],
   rules: {
     "no-only-tests/no-only-tests": "error",
     "no-restricted-syntax": [
