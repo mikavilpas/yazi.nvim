@@ -56,13 +56,14 @@ function Log:write_message(level, message)
   end
 end
 
+---@param level yazi.LogLevel
+function Log:active_for_level(level)
+  return self.level and self.level ~= log_levels.OFF and self.level <= level
+end
+
 ---@param message string
 function Log:debug(message)
-  if
-    self.level
-    and self.level ~= log_levels.OFF
-    and self.level <= log_levels.DEBUG
-  then
+  if self:active_for_level(log_levels.DEBUG) then
     self:write_message('DEBUG', message)
   end
 end
