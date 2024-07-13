@@ -13,3 +13,23 @@ provide a fix. To help us diagnose the issue, please follow these steps:
      similar to your configuration until you can reproduce it.
 4. when reporting the issue, attach the contents of your `repro.lua` file to the
    issue report.
+
+## Logging
+
+You can find out a lot of details about what is going on in yazi.nvim by reading
+the log file. To find the log file, execute
+
+```vim
+:checkhealth yazi
+```
+
+It will show where your log file is. It's recommended to "tail" the log file to
+see any new messages as soon as they arrive:
+
+```sh
+tail -F /path/to/logfile
+```
+
+If you want to get fancy, you can use the command line program
+[bat's custom tailing](https://github.com/sharkdp/bat?tab=readme-ov-file#tail--f)
+instructions to get colored output.
