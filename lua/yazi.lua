@@ -163,6 +163,10 @@ function M.setup(opts)
   local Log = require('yazi.log')
   Log.level = M.config.log_level
 
+  pcall(function()
+    require('lsp-file-operations').setup()
+  end)
+
   local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
 
   if M.config.open_for_directories == true then

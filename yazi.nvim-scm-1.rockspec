@@ -6,6 +6,7 @@ source = {
   url = 'git+https://github.com/mikavilpas/yazi.nvim',
 }
 dependencies = {
+  'lua >= 5.1',
   -- Add runtime dependencies here
   -- e.g. "plenary.nvim",
   'plenary.nvim',
@@ -13,9 +14,12 @@ dependencies = {
   -- https://github.com/akinsho/bufferline.nvim
   -- https://luarocks.org/modules/neorocks/bufferline.nvim
   'bufferline.nvim',
+
+  'nvim-lsp-file-operations >= scm',
 }
 test_dependencies = {
   'nlua',
+  'plenary.nvim',
 }
 build = {
   type = 'builtin',
