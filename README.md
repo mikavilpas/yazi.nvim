@@ -139,7 +139,8 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
     -- the log level to use. Off by default, but can be used to diagnose
     -- issues. You can find the location of the log file by running
-    -- `:checkhealth yazi` in Neovim.
+    -- `:checkhealth yazi` in Neovim. Also check out the "reproducing issues"
+    -- section below
     log_level = vim.log.levels.OFF,
 
     -- what Neovim should do a when a file was opened (selected) in yazi.
@@ -218,3 +219,7 @@ I like.
 ## Contributing
 
 Please see [COMMUNITY.md](./COMMUNITY.md) for more information on the project!
+
+## In case there are issues
+
+See [reproducing-issues.md](./documentation/reproducing-issues.md).
