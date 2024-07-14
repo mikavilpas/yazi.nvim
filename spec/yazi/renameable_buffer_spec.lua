@@ -30,6 +30,36 @@ describe('the RenameableBuffer class', function()
     assert.is_false(rename:matches_exactly('/my-tmp/file2'))
   end)
 
+  ---@param suffix string
+  local function create_temp_file(suffix)
+    local file_path = vim.fn.tempname() .. suffix
+    local file, err = io.open(file_path, 'w')
+    assert(file ~= nil, 'Failed to create a temporary file ' .. file_path)
+    assert(
+      err == nil,
+      'Failed to create a temporary file ' .. file_path .. ': ' .. (err or '')
+    )
+    local _, write_err = file:write('hello')
+    assert(
+      write_err == nil,
+      'Failed to write to a temporary file ' .. file_path
+    )
+    file:close()
+
+    return file_path
+  end
+
+  it('#focus matches when the file is a symlink', function()
+    local file1_path = create_temp_file('_file1')
+    local file2_path = vim.fn.tempname() .. '_file2'
+
+    local success, a, b = vim.uv.fs_symlink(file1_path, file2_path)
+    assert(success, vim.inspect({ 'Failed to create a symlink', a, b }))
+
+    local rename = RenameableBuffer.new(1, file1_path)
+    assert.is_true(rename:matches_exactly(file2_path))
+  end)
+
   it('renames a file', function()
     local rename = RenameableBuffer.new(1, '/my-tmp/file1')
     rename:rename('/my-tmp/file2')

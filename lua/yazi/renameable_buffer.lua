@@ -35,8 +35,10 @@ end
 ---@param path string can be a parent directory or an exact file path
 ---@return boolean
 function RenameableBuffer:matches_exactly(path)
-  path = remove_trailing_slash(path)
-  return self.path.filename == path
+  local path_a = vim.uv.fs_realpath(path) or path
+  local path_b = vim.uv.fs_realpath(self.path.filename) or self.path.filename
+
+  return path_a == path_b
 end
 
 ---@param path string
