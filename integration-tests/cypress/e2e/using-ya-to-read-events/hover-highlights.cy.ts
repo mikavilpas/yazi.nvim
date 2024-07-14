@@ -1,10 +1,11 @@
 import { flavors } from "@catppuccin/palette"
+import * as tinycolor2 from "tinycolor2"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 
-const surface0 = flavors.macchiato.colors.surface1.rgb
-const base = flavors.macchiato.colors.base.rgb
+const darkTheme = flavors.macchiato.colors
+const lightTheme = flavors.latte.colors
 
-function rgbify(color: typeof surface0) {
+function rgbify(color: (typeof darkTheme)["surface0"]["rgb"]) {
   return `rgb(${color.r.toString()}, ${color.g.toString()}, ${color.b.toString()})`
 }
 
@@ -13,10 +14,10 @@ describe("highlighting the buffer with 'hover' events", () => {
     cy.visit("http://localhost:5173")
   })
 
-  const backgroundColors = {
-    normal: rgbify(base),
-    hovered: rgbify(surface0),
-  } as const
+  const darkBackgroundColors = {
+    normal: rgbify(darkTheme.base.rgb),
+    hovered: rgbify(darkTheme.surface1.rgb),
+  }
 
   // NOTE: when opening the file, the cursor is placed at the beginning of
   // the file. This causes the web terminal to render multiple elements for the
@@ -45,7 +46,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
         .children()
-        .should("have.css", "background-color", backgroundColors.normal)
+        .should("have.css", "background-color", darkBackgroundColors.normal)
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
@@ -62,7 +63,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("If you see this text, Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.hovered,
+        darkBackgroundColors.hovered,
       )
 
       // close yazi - the highlight should be removed and we should see the
@@ -71,7 +72,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.normal,
+        darkBackgroundColors.normal,
       )
     })
   })
@@ -86,7 +87,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.normal,
+        darkBackgroundColors.normal,
       )
 
       // start yazi
@@ -105,7 +106,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.hovered,
+        darkBackgroundColors.hovered,
       )
 
       // hover another file - the highlight should be removed
@@ -114,7 +115,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.normal,
+        darkBackgroundColors.normal,
       )
     })
   })
@@ -128,7 +129,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
         .children()
-        .should("have.css", "background-color", backgroundColors.normal)
+        .should("have.css", "background-color", darkBackgroundColors.normal)
 
       const testFile = dir.contents["test.lua"].name
       // open an adjacent file and wait for it to be displayed
@@ -144,7 +145,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("how to initialize the test environment").should(
         "have.css",
         "background-color",
-        backgroundColors.hovered,
+        darkBackgroundColors.hovered,
       )
 
       // select the other file - the highlight should move to it
@@ -154,48 +155,87 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("how to initialize the test environment").should(
         "have.css",
         "background-color",
-        backgroundColors.normal,
+        darkBackgroundColors.normal,
       )
       cy.contains("If you see this text, Neovim is ready!").should(
         "have.css",
         "background-color",
-        backgroundColors.hovered,
+        darkBackgroundColors.hovered,
       )
     })
   })
 
-  it("doesn't crash if the user doesn't want to highlight", () => {
-    // "not wanting to highlight" means that the user hasn't enabled the
-    // highlight in their YaziConfig. It is acceptable to opt out of using this
-    // feature, and it shouldn't cause a crash.
+  describe("default colors", () => {
+    // If the user hasn't specified a custom highlight color, yazi.nvim will
+    // create a default color for them. The default colors are created based on
+    // the current colorscheme - by darkening or lightening an existing color.
+    //
+    it("for a dark colorscheme, hovers appear lighter in color", () => {
+      startNeovimWithYa({ startupScriptModifications: [] }).then((dir) => {
+        // wait until text on the start screen is visible
+        cy.contains("If you see this text, Neovim is ready!")
+          .children()
+          .should("have.css", "background-color", darkBackgroundColors.normal)
 
-    // NOTE don't set the startupScriptModifications. This causes the highlight
-    // to not be enabled in the YaziConfig.
-    startNeovimWithYa({ startupScriptModifications: [] }).then((dir) => {
-      // wait until text on the start screen is visible
-      cy.contains("If you see this text, Neovim is ready!")
-        .children()
-        .should("have.css", "background-color", backgroundColors.normal)
+        // start yazi
+        cy.typeIntoTerminal("{upArrow}")
 
-      // start yazi
-      cy.typeIntoTerminal("{upArrow}")
+        hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
+          dir.contents["test.lua"].name,
+        )
 
-      hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-        dir.contents["test.lua"].name,
-      )
+        // yazi is shown and adjacent files should be visible now
+        //
+        // highlight the initial file
+        cy.typeIntoTerminal(`/${dir.contents["initial-file.txt"].name}{enter}`)
+        cy.contains("Error").should("not.exist")
 
-      // yazi is shown and adjacent files should be visible now
-      //
-      // highlight the initial file
-      cy.typeIntoTerminal(`/${dir.contents["initial-file.txt"].name}{enter}`)
-      cy.contains("Error").should("not.exist")
+        // the background color should be different from the default color
+        cy.contains("If you see this text, Neovim is ready!")
+          .should("have.css", "background-color")
+          .should((color) => {
+            expect(tinycolor2(color).getLuminance()).to.be.greaterThan(
+              tinycolor2(darkBackgroundColors.normal).getLuminance(),
+            )
+          })
+      })
+    })
 
-      // no highlight should be visible
-      cy.contains("If you see this text, Neovim is ready!").should(
-        "have.css",
-        "background-color",
-        backgroundColors.normal,
-      )
+    it("for a light colorscheme", () => {
+      const lightBackgroundColors = {
+        normal: rgbify(lightTheme.base.rgb),
+      }
+
+      startNeovimWithYa({
+        startupScriptModifications: ["use_light_neovim_colorscheme.lua"],
+      }).then((dir) => {
+        // wait until text on the start screen is visible
+        cy.contains("If you see this text, Neovim is ready!")
+          .children()
+          .should("have.css", "background-color", lightBackgroundColors.normal)
+
+        // start yazi
+        cy.typeIntoTerminal("{upArrow}")
+
+        hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
+          dir.contents["test.lua"].name,
+        )
+
+        // yazi is shown and adjacent files should be visible now
+        //
+        // highlight the initial file
+        cy.typeIntoTerminal(`/${dir.contents["initial-file.txt"].name}{enter}`)
+        cy.contains("Error").should("not.exist")
+
+        // the background color should be different from the default color
+        cy.contains("If you see this text, Neovim is ready!")
+          .should("have.css", "background-color")
+          .should((color) => {
+            expect(tinycolor2(color).getLuminance()).to.be.lessThan(
+              tinycolor2(lightBackgroundColors.normal).getLuminance(),
+            )
+          })
+      })
     })
   })
 })
