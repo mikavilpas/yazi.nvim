@@ -128,7 +128,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- https://github.com/mikavilpas/yazi.nvim/pull/180
     highlight_groups = {
       -- NOTE: this only works if `use_ya_for_events_reading` is enabled, etc.
-      hovered_buffer_background = nil,
+      hovered_buffer = nil,
     },
 
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.

@@ -26,16 +26,17 @@ function M.highlight_hovered_buffer(url, highlight_config)
   local visible_open_buffers = utils.get_visible_open_buffers()
   for _, buffer in ipairs(visible_open_buffers) do
     if buffer.renameable_buffer:matches_exactly(url) then
-      local hl = window_highlights[buffer.window_id]
-      if hl == nil then
+      local existing_hl = window_highlights[buffer.window_id]
+      if existing_hl == nil then
         Log:debug(
           'highlighting buffer '
             .. buffer.renameable_buffer.bufnr
             .. ' in window '
             .. buffer.window_id
         )
-        hl = DisposableHighlight.new(buffer.window_id, highlight_config)
-        window_highlights[buffer.window_id] = hl
+
+        window_highlights[buffer.window_id] =
+          DisposableHighlight.new(buffer.window_id, highlight_config)
       end
     else
       -- only one file can be hovered at a time, so let's clear
