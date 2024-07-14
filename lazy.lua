@@ -9,6 +9,7 @@
 ---@type LazySpec
 return {
   { 'nvim-lua/plenary.nvim', lazy = true },
+  { 'akinsho/bufferline.nvim', lazy = true },
   {
     'mikavilpas/yazi.nvim',
     ---@type YaziConfig

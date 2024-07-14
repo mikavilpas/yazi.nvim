@@ -27,7 +27,7 @@
 ---@field public grep_in_directory? fun(directory: string): nil "a function that will be called when the user wants to grep in a directory"
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
----@field public hovered_buffer_background? vim.api.keyset.highlight # the color of the background of buffer that is hovered over
+---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi
 
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
 

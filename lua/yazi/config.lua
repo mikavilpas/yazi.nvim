@@ -22,7 +22,7 @@ function M.default()
     },
 
     highlight_groups = {
-      hovered_buffer_background = nil,
+      hovered_buffer = nil,
     },
 
     integrations = {

@@ -42,6 +42,8 @@ return {
     vim.health.info('yazi.nvim log file is at ' .. logfile_location)
     vim.health.info('    hint: use `gf` to open the file path under the cursor')
 
+    -- TODO validate that the highlight_config is present in the configuration
+
     if require('yazi').config.use_ya_for_events_reading == true then
       if vim.fn.executable('ya') ~= 1 then
         vim.health.error(

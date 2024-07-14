@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/express": "4.17.21",
     "@types/node": "20.14.10",
+    "@types/tinycolor2": "1.4.6",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "7.16.0",
     "@typescript-eslint/parser": "7.16.0",
@@ -28,6 +29,7 @@
     "eslint-plugin-no-only-tests": "3.1.0",
     "express": "4.19.2",
     "prettier-plugin-organize-imports": "4.0.0",
+    "tinycolor2": "1.6.0",
     "tsc-watch": "6.2.0",
     "typescript": "5.5.3",
     "vite": "^5.3.1"

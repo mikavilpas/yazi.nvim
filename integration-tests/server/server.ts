@@ -64,6 +64,15 @@ io.on("connection", function connection(socket) {
               args.push("-c", `lua dofile('${file}')`)
               break
             }
+            case "use_light_neovim_colorscheme.lua": {
+              const file = path.join(
+                testDirectory,
+                "config-modifications",
+                "use_light_neovim_colorscheme.lua",
+              )
+              args.push("-c", `lua dofile('${file}')`)
+              break
+            }
             default:
               modification satisfies never
               throw new Error(
