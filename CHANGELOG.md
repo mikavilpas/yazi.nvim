@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.5.1...v2.0.0) (2024-07-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* The optional `hovered_buffer_background` key in the `YaziConfigHighlightGroups` has been renamed to `hovered_buffer`. This change was made to better reflect the purpose of the key.
+
+### Features
+
+* add default colors for hover highlighting ([#194](https://github.com/mikavilpas/yazi.nvim/issues/194)) ([1deeba2](https://github.com/mikavilpas/yazi.nvim/commit/1deeba2fb2ab6a741d1df66a80b08112bae59327))
+
 ## [1.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v1.5.0...v1.5.1) (2024-07-12)
 
 
