@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.0.0...v2.1.0) (2024-07-15)
+
+
+### Features
+
+* **plugin:** overwrite existing symlinks when installing plugins ([#199](https://github.com/mikavilpas/yazi.nvim/issues/199)) ([d09818e](https://github.com/mikavilpas/yazi.nvim/commit/d09818e19d4b43d64a1ca2872d940924ca7b2819))
+
 ## [2.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v1.5.1...v2.0.0) (2024-07-14)
 
 
