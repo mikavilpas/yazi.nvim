@@ -3,6 +3,8 @@
 Yazi.nvim ships with _experimental plugin manager_ support for lazy.nvim. It
 allows you to fully manage your yazi and neovim plugins from inside neovim.
 
+![lazy.nvim showing available updates for yazi.nvim and some yazi plugins](https://github.com/user-attachments/assets/20a922e5-541e-453e-a032-c5456f07fa13)
+
 ## Getting started
 
 In this example, we will install the yazi plugin
