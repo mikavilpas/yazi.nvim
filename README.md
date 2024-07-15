@@ -1,5 +1,12 @@
 # 🎲 A Neovim Plugin for [yazi](https://github.com/sxyazi/yazi.git)
 
+> [!TIP]
+>
+> 2024-07: Some users are experiencing issues updating with lazy.nvim, and have
+> reported uninstalling and reinstalling the plugin seems to work. More
+> information can be found in
+> [#198](https://github.com/mikavilpas/yazi.nvim/pull/198).
+
 <a href="https://dotfyle.com/plugins/mikavilpas/yazi.nvim">
   <img src="https://dotfyle.com/plugins/mikavilpas/yazi.nvim/shield?style=flat-square" alt="shield image for plugin usage" /> </a>
 
