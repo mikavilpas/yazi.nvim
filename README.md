@@ -50,7 +50,7 @@ First, make sure you have the requirements:
 
 ## ⚙️ Configuration
 
-Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+Using [lazy.nvim](https://lazy.folke.io/):
 
 ```lua
 ---@type LazySpec
