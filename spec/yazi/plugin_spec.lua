@@ -40,6 +40,33 @@ describe('installing a plugin', function()
       assert.are.same(plugin_dir, symlink)
     end)
 
+    it('overwrites any existing symlink', function()
+      -- most of the time this is what the user wants anyway
+      local plugin_dir = vim.fs.joinpath(base_dir, 'test-plugin')
+      local yazi_dir = vim.fs.joinpath(base_dir, 'fake-yazi-dir')
+
+      vim.fn.mkdir(plugin_dir)
+      vim.fn.mkdir(yazi_dir)
+      vim.fn.mkdir(vim.fs.joinpath(yazi_dir, 'plugins'))
+
+      -- create a symlink to a different directory
+      vim.uv.fs_symlink(
+        '/different/directory',
+        vim.fs.joinpath(yazi_dir, 'plugins', 'test-plugin')
+      )
+
+      plugin.build_plugin({
+        dir = plugin_dir,
+        name = 'test-plugin',
+      }, { yazi_dir = yazi_dir })
+
+      -- verify that the plugin was symlinked
+      local symlink =
+        vim.uv.fs_readlink(vim.fs.joinpath(yazi_dir, 'plugins', 'test-plugin'))
+
+      assert.are.same(plugin_dir, symlink)
+    end)
+
     it('warns the user if the plugin directory does not exist', function()
       local plugin_dir = vim.fs.joinpath(base_dir, 'test-plugin')
       local yazi_dir = vim.fs.joinpath(base_dir, 'fake-yazi-dir')

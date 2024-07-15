@@ -85,23 +85,13 @@ end
 function M.symlink(spec, to)
   -- Check if the symlink already exists, which will happen on repeated calls
   local existing_stat = vim.uv.fs_lstat(to)
-  if
-    existing_stat
-    and existing_stat.type == 'link'
-    and vim.uv.fs_readlink(to) == spec.dir
-  then
-    ---@type YaziSpecInstallationResultSuccess
-    local result = {
-      message = 'yazi.nvim: already installed ' .. spec.name,
-      from = spec.dir,
-      to = to,
-    }
-    -- don't notify about this as it's a common case
-    return result
+  if existing_stat and existing_stat.type == 'link' then
+    -- try to remove the symlink as we will soon create a new one
+    vim.uv.fs_unlink(to)
   end
 
-  local dir = vim.uv.fs_stat(spec.dir)
-  if dir == nil or dir.type ~= 'directory' then
+  local source_directory = vim.uv.fs_stat(spec.dir)
+  if source_directory == nil or source_directory.type ~= 'directory' then
     ---@type YaziSpecInstallationResultFailure
     local result = {
       error = 'source directory does not exist',
