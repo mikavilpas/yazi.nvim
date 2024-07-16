@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.1.0...v2.2.0) (2024-07-16)
+
+
+### Features
+
+* healthcheck reports yazi nvim version ([#208](https://github.com/mikavilpas/yazi.nvim/issues/208)) ([08ffd84](https://github.com/mikavilpas/yazi.nvim/commit/08ffd84e613d9dbc843188d4a2e3b2f04cd9bc6a))
+
 ## [2.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.0.0...v2.1.0) (2024-07-15)
 
 
