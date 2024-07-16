@@ -2,6 +2,7 @@ local M = {}
 
 -- https://www.reddit.com/r/neovim/comments/tk1hby/get_the_path_to_the_current_lua_script_in_neovim/
 local function is_win()
+  -- selene: allow(incorrect_standard_library_use)
   return package.config:sub(1, 1) == '\\'
 end
 
@@ -35,7 +36,7 @@ function M.yazi_nvim_version()
     local manifest = table.concat(lines, '')
     local json = vim.json.decode(manifest)
     local version = json['.']
-    assert(type(version) == 'string')
+    assert(type(version) == 'string', 'Version is not a string')
 
     return version
   end)
