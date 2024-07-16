@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.0...v2.2.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* symlinked files cannot be highlighted when hovered ([#212](https://github.com/mikavilpas/yazi.nvim/issues/212)) ([85e8d1d](https://github.com/mikavilpas/yazi.nvim/commit/85e8d1d050f5e73bf5f5f3275109a676257f53ae))
+
 ## [2.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.1.0...v2.2.0) (2024-07-16)
 
 
