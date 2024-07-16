@@ -49,7 +49,7 @@ describe('the RenameableBuffer class', function()
     return file_path
   end
 
-  it('#focus matches when the file is a symlink', function()
+  it('matches when the file is a symlink', function()
     local file1_path = create_temp_file('_file1')
     local file2_path = vim.fn.tempname() .. '_file2'
 
