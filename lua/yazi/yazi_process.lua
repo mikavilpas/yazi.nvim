@@ -26,13 +26,19 @@ function YaziProcess:start(config, path, on_exit)
       config.use_ya_for_events_reading
     )
   )
+
+  -- The YAZI_ID of the yazi process, used to uniquely identify this specific
+  -- instance, so that we can communicate with it specifically, instead of
+  -- possibly multiple other yazis that are running on this computer.
+  local yazi_id = string.format('%.0f', vim.uv.hrtime())
+
   self.event_reader = config.use_ya_for_events_reading == true
-      and YaProcess.new(config)
+      and YaProcess.new(config, yazi_id)
     or LegacyEventReadingFromEventFile:new(config)
 
-  local yazi_cmd = self.event_reader:get_yazi_command(path)
+  local yazi_cmd = self.event_reader:get_yazi_command(path, yazi_id)
+  Log:debug(string.format('Opening yazi with the command: (%s).', yazi_cmd))
 
-  Log:debug(string.format('Opening yazi with the command: (%s)', yazi_cmd))
   self.yazi_job_id = vim.fn.termopen(yazi_cmd, {
     on_exit = function(_, code)
       self.event_reader:kill()
