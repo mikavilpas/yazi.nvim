@@ -42,6 +42,9 @@ First, make sure you have the requirements:
 
 - Neovim 0.10.x or later
 - yazi [0.2.5](https://github.com/sxyazi/yazi/releases/tag/v0.2.5) or later
+  - If you want to opt in to using the latest version of yazi, see
+    [here](./documentation/installing-yazi-from-source.md) for how to install it
+    from source
 
 > [!TIP]
 >
