@@ -38,7 +38,7 @@
     "@catppuccin/palette": "1.2.0",
     "@types/uuid": "10.0.0",
     "@types/winston": "2.4.4",
-    "cypress": "13.13.0",
+    "cypress": "13.13.1",
     "node-pty": "1.0.0",
     "socket.io": "4.7.5",
     "socket.io-client": "4.7.5",
