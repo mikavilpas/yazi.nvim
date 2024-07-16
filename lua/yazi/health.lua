@@ -4,6 +4,20 @@ return {
   check = function()
     vim.health.start('yazi')
 
+    local yazi_version = require('yazi.version')
+    local version_number = yazi_version.yazi_nvim_version()
+    if version_number == nil then
+      vim.health.warn(
+        string.format(
+          'Could not find yazi.nvim version. Expected to find it in "%s".',
+          yazi_version.yazi_version_file_path()
+        )
+      )
+    else
+      local msg = string.format('Running yazi.nvim version %s', version_number)
+      vim.health.info(msg)
+    end
+
     if vim.fn.has('nvim-0.10.0') ~= 1 then
       vim.health.warn(
         'yazi.nvim requires Neovim >= 0.10.0. You might have unexpected issues.'
