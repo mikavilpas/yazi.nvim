@@ -213,8 +213,8 @@ Yazi is highly customizable. It features its own plugin and event system,
 themes, and keybindings. This section lists some of the plugins and themes that
 I like.
 
-- <https://github.com/redbeardymcgee/yazi-plugins/tree/main/keyjump.yazi> allows
-  jumping to a line by typing a hint character, much like
+- <https://gitee.com/DreamMaoMao/keyjump.yazi.git> allows jumping to a line by
+  typing a hint character, much like
   [hop.nvim](https://github.com/smoka7/hop.nvim)
 - <https://github.com/Rolv-Apneseth/starship.yazi> is a port of the
   [starship prompt](https://starship.rs) to yazi. It allows reusing the prompt
