@@ -127,4 +127,15 @@ describe('the healthcheck', function()
       )
     end
   )
+
+  it('warns when the yazi version and yazi version are not the same', function()
+    mock_app_versions['yazi'] = 'yazi 0.2.5 (f5a7ace 2024-07-23)'
+    mock_app_versions['ya'] = 'Ya 0.2.4 (f5a7ace 2024-06-23)'
+
+    vim.cmd('checkhealth yazi')
+
+    assert_buffer_contains_text(
+      'WARNING The versions of `yazi` and `ya` do not match.'
+    )
+  end)
 end)
