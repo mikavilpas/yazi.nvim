@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.2](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.1...v2.2.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* **health:** warn when yazi and ya versions do not match ([#221](https://github.com/mikavilpas/yazi.nvim/issues/221)) ([e694c26](https://github.com/mikavilpas/yazi.nvim/commit/e694c2661af2c2443f8636247a1def9a9b398276))
+
 ## [2.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.0...v2.2.1) (2024-07-16)
 
 
