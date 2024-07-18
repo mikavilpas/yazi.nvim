@@ -1,12 +1,8 @@
 {
+  "release-type": "simple",
+  "changelog-path": "CHANGELOG.md",
   "packages": {
     ".": {
-      "changelog-path": "CHANGELOG.md",
-      "release-type": "simple",
-      "bump-minor-pre-major": false,
-      "bump-patch-for-minor-pre-major": false,
-      "draft": false,
-      "prerelease": false,
       "extra-files": [
         "lua/yazi.lua"
       ]
