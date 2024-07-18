@@ -37,19 +37,19 @@ return {
     -- the beginning of the output might contain CSI sequences on some systems. See
     -- https://github.com/mikavilpas/yazi.nvim/pull/73
     -- https://github.com/sxyazi/yazi/commit/4c35f26e
-    local semver = raw_version:match('[Yy]azi (%w+%.%w+%.%w+)')
+    local yazi_semver = raw_version:match('[Yy]azi (%w+%.%w+%.%w+)')
 
-    if semver == nil then
+    if yazi_semver == nil then
       vim.health.warn('yazi --version looks unexpected, saw ' .. raw_version)
     end
 
     local checker = require('vim.version')
-    if not checker.gt(semver, '0.2.4') then
+    if not checker.gt(yazi_semver, '0.2.4') then
       return vim.health.warn(
         'yazi version is too old, please upgrade to 0.2.5 or newer'
       )
     else
-      vim.health.info(('Found `yazi` version `%s` 👍'):format(semver))
+      vim.health.info(('Found `yazi` version `%s` 👍'):format(yazi_semver))
     end
 
     local logfile_location = require('yazi.log'):get_logfile_path()
@@ -85,6 +85,16 @@ return {
         else
           vim.health.info(('Found `ya` version `%s` 👍'):format(ya_semver))
         end
+      end
+
+      if yazi_semver ~= ya_semver then
+        vim.health.warn(
+          string.format(
+            'The versions of `yazi` and `ya` do not match. This is untested - try to make them the same. `yazi` is `%s` and `ya` is `%s`.',
+            yazi_semver,
+            ya_semver
+          )
+        )
       end
     end
 
