@@ -9,8 +9,7 @@ local YaziProcess = require('yazi.yazi_process')
 
 local M = {}
 
--- gets updated automatically by release-please
-M.version = '2.2.1' -- x-release-please-version
+M.version = '2.2.2' -- x-release-please-version
 
 ---@param config? YaziConfig?
 ---@param input_path? string
