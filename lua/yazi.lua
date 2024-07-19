@@ -5,7 +5,7 @@ local utils = require('yazi.utils')
 local configModule = require('yazi.config')
 local event_handling = require('yazi.event_handling')
 local Log = require('yazi.log')
-local YaziProcess = require('yazi.yazi_process')
+local YaziProcess = require('yazi.process.yazi_process')
 
 local M = {}
 

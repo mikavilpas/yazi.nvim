@@ -4,21 +4,21 @@ local assert = require('luassert')
 local mock = require('luassert.mock')
 local match = require('luassert.match')
 local spy = require('luassert.spy')
-package.loaded['yazi.yazi_process'] =
+package.loaded['yazi.process.yazi_process'] =
   require('spec.yazi.helpers.fake_yazi_process')
 local fake_yazi_process = require('spec.yazi.helpers.fake_yazi_process')
-local yazi_process = require('yazi.yazi_process')
+local yazi_process = require('yazi.process.yazi_process')
 
 local plugin = require('yazi')
 
 describe('opening a file', function()
   after_each(function()
-    package.loaded['yazi.yazi_process'] = yazi_process
+    package.loaded['yazi.process.yazi_process'] = yazi_process
   end)
 
   before_each(function()
     mock.revert(fake_yazi_process)
-    package.loaded['yazi.yazi_process'] = mock(fake_yazi_process)
+    package.loaded['yazi.process.yazi_process'] = mock(fake_yazi_process)
     plugin.setup({
       -- set_keymappings_function can only work with a real yazi process
       set_keymappings_function = function() end,
