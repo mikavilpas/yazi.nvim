@@ -36,7 +36,7 @@ function YaziProcess:start(config, path, on_exit)
       and YaProcess.new(config, yazi_id)
     or LegacyEventReadingFromEventFile:new(config)
 
-  local yazi_cmd = self.event_reader:get_yazi_command(path, yazi_id)
+  local yazi_cmd = self.event_reader:get_yazi_command(path)
   Log:debug(string.format('Opening yazi with the command: (%s).', yazi_cmd))
 
   self.yazi_job_id = vim.fn.termopen(yazi_cmd, {
