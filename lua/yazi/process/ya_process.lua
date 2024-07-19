@@ -11,7 +11,7 @@ local highlight_hovered_buffer =
 ---@field public events YaziEvent[] "The events that have been received from yazi"
 ---@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
 ---@field private config YaziConfig
----@field private yazi_id string
+---@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
 local YaProcess = {}
@@ -22,7 +22,11 @@ YaProcess.__index = YaProcess
 ---@param yazi_id string
 function YaProcess.new(config, yazi_id)
   local self = setmetatable({}, YaProcess)
-  self.yazi_id = yazi_id
+
+  if config.use_yazi_client_id_flag == true then
+    self.yazi_id = yazi_id
+  end
+
   self.config = config
   self.events = {}
   self.retries = 0
@@ -31,15 +35,21 @@ function YaProcess.new(config, yazi_id)
 end
 
 ---@param path Path
----@param yazi_id string
----@diagnostic disable-next-line: unused-local
--- selene: allow(unused_variable)
-function YaProcess:get_yazi_command(path, yazi_id)
-  return string.format(
-    'yazi %s --chooser-file "%s"',
-    vim.fn.shellescape(path.filename),
-    self.config.chosen_file_path
-  )
+function YaProcess:get_yazi_command(path)
+  if self.yazi_id then
+    return string.format(
+      'yazi %s --chooser-file "%s" --client-id "%s"',
+      vim.fn.shellescape(path.filename),
+      self.config.chosen_file_path,
+      self.yazi_id
+    )
+  else
+    return string.format(
+      'yazi %s --chooser-file "%s"',
+      vim.fn.shellescape(path.filename),
+      self.config.chosen_file_path
+    )
+  end
 end
 
 function YaProcess:kill()
