@@ -32,12 +32,13 @@ end
 
 ---@param path Path
 ---@param yazi_id string
+---@diagnostic disable-next-line: unused-local
+-- selene: allow(unused_variable)
 function YaProcess:get_yazi_command(path, yazi_id)
   return string.format(
-    'yazi %s --chooser-file "%s" --client-id "%s"',
+    'yazi %s --chooser-file "%s"',
     vim.fn.shellescape(path.filename),
-    self.config.chosen_file_path,
-    yazi_id
+    self.config.chosen_file_path
   )
 end
 
