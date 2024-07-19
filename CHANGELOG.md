@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.2...v2.3.0) (2024-07-19)
+
+
+### Features
+
+* add targeted communication with the yazi instance (opt-in) ([#225](https://github.com/mikavilpas/yazi.nvim/issues/225)) ([8114817](https://github.com/mikavilpas/yazi.nvim/commit/81148178ccdfacd68f302b5c54dec649eb0a1ae3))
+
 ## [2.2.2](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.1...v2.2.2) (2024-07-18)
 
 
