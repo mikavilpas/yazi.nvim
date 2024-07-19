@@ -47,9 +47,22 @@ return {
     vim.health.info('yazi.nvim log file is at ' .. logfile_location)
     vim.health.info('    hint: use `gf` to open the file path under the cursor')
 
+    local config = require('yazi').config
+
+    if config.use_yazi_client_id_flag == true then
+      local output = vim.fn.system('yazi --help')
+
+      if output:find('--client-id', 1, true) == nil then
+        vim.health.warn(
+          'You have enabled `use_yazi_client_id_flag` in your config, which means using the `--client-id` flag with yazi. However, this flag is not found in the `yazi --help` output. Please upgrade to the newest version of yazi or disable `use_yazi_client_id_flag`.'
+        )
+        vim.health.info(string.format('`yazi --help` output: %s', output))
+      end
+    end
+
     -- TODO validate that the highlight_config is present in the configuration
 
-    if require('yazi').config.use_ya_for_events_reading == true then
+    if config.use_ya_for_events_reading == true then
       if vim.fn.executable('ya') ~= 1 then
         vim.health.error(
           'You have opted in to using `ya` for events reading, but `ya` is not found on PATH. Please install `ya` or disable `use_ya_for_events_reading` in your config.'

@@ -12,6 +12,7 @@ function M.default()
     open_for_directories = false,
     -- NOTE: right now this is opt-in, but will be the default in the future
     use_ya_for_events_reading = false,
+    use_yazi_client_id_flag = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
     set_keymappings_function = M.default_set_keymappings_function,

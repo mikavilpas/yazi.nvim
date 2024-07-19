@@ -9,8 +9,9 @@ local highlight_hovered_buffer =
 
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
----@field public new fun(config: YaziConfig): YaProcess
+---@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
 ---@field private config YaziConfig
+---@field private yazi_id string
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
 local YaProcess = {}
@@ -18,8 +19,10 @@ local YaProcess = {}
 YaProcess.__index = YaProcess
 
 ---@param config YaziConfig
-function YaProcess.new(config)
+---@param yazi_id string
+function YaProcess.new(config, yazi_id)
   local self = setmetatable({}, YaProcess)
+  self.yazi_id = yazi_id
   self.config = config
   self.events = {}
   self.retries = 0
@@ -28,11 +31,13 @@ function YaProcess.new(config)
 end
 
 ---@param path Path
-function YaProcess:get_yazi_command(path)
+---@param yazi_id string
+function YaProcess:get_yazi_command(path, yazi_id)
   return string.format(
-    'yazi %s --chooser-file "%s"',
+    'yazi %s --chooser-file "%s" --client-id "%s"',
     vim.fn.shellescape(path.filename),
-    self.config.chosen_file_path
+    self.config.chosen_file_path,
+    yazi_id
   )
 end
 

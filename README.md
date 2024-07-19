@@ -134,6 +134,9 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- https://github.com/mikavilpas/yazi.nvim/pull/152
     use_ya_for_events_reading = false,
 
+    -- an upcoming optional feature
+    use_yazi_client_id_flag = false,
+
     -- an upcoming optional feature. See
     -- https://github.com/mikavilpas/yazi.nvim/pull/180
     highlight_groups = {

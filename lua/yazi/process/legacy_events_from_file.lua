@@ -15,7 +15,7 @@ function LegacyEventReadingFromEventFile:new(config)
 end
 
 ---@param path Path
-function LegacyEventReadingFromEventFile:get_yazi_command(path)
+function LegacyEventReadingFromEventFile:get_yazi_command(path, _)
   return string.format(
     'yazi %s --local-events "rename,delete,trash,move,cd" --chooser-file "%s" > "%s"',
     vim.fn.shellescape(path.filename),
