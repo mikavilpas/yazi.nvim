@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/mikavilpas/yazi.nvim/compare/v2.3.0...v2.3.1) (2024-07-19)
+
+
+### Bug Fixes
+
+* crash without newest yazi ([#227](https://github.com/mikavilpas/yazi.nvim/issues/227)) ([de4e79e](https://github.com/mikavilpas/yazi.nvim/commit/de4e79e07867c29c871a91d464c421ca1f26ba33))
+
 ## [2.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.2.2...v2.3.0) (2024-07-19)
 
 
