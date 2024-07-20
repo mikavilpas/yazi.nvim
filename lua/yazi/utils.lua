@@ -142,6 +142,7 @@ function M.parse_events(events_file_lines)
       -- example of a hover event:
       -- hover,0,1720375364822700,{"tab":0,"url":"/tmp/test-directory/test"}
       local data_string = table.concat(parts, ',', 4, #parts)
+      local yazi_id = parts[3]
       local json = vim.json.decode(data_string, {
         luanil = {
           array = true,
@@ -155,6 +156,7 @@ function M.parse_events(events_file_lines)
 
       ---@type YaziHoverEvent
       local event = {
+        yazi_id = yazi_id,
         type = type,
         url = url or '',
       }

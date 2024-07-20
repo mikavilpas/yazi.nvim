@@ -11,9 +11,12 @@ local M = {}
 
 M.version = '2.3.1' -- x-release-please-version
 
+-- The last known state of yazi when it was closed
+---@type YaziPreviousState
+M.previous_state = {}
+
 ---@param config? YaziConfig?
 ---@param input_path? string
----@diagnostic disable-next-line: redefined-local
 function M.yazi(config, input_path)
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check the documentation for more information')
@@ -47,7 +50,7 @@ function M.yazi(config, input_path)
   local yazi_process = YaziProcess:start(
     config,
     path,
-    function(exit_code, selected_files, events)
+    function(exit_code, selected_files, events, hovered_url)
       if exit_code ~= 0 then
         print(
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
@@ -80,6 +83,13 @@ function M.yazi(config, input_path)
       utils.on_yazi_exited(prev_win, prev_buf, win, config, selected_files, {
         last_directory = event_info.last_directory or path:parent(),
       })
+
+      if hovered_url then
+        -- currently we can't reliably get the hovered_url from ya due to
+        -- https://github.com/sxyazi/yazi/issues/1314 so let's try to at least
+        -- not corrupt the last working hovered state
+        M.previous_state.last_hovered = hovered_url
+      end
     end
   )
 
@@ -97,6 +107,32 @@ function M.yazi(config, input_path)
   vim.schedule(function()
     vim.cmd('startinsert')
   end)
+end
+
+-- Open yazi, continuing from the previously hovered file. If no previous file
+-- was hovered, open yazi with the default path.
+---@param config? YaziConfig?
+function M.toggle(config)
+  assert(
+    (config and config.use_ya_for_events_reading)
+      or M.config.use_ya_for_events_reading,
+    'toggle requires setting `use_ya_for_events_reading`'
+  )
+  assert(
+    (config and config.use_yazi_client_id_flag)
+      or M.config.use_yazi_client_id_flag,
+    'toggle requires setting `use_yazi_client_id_flag`'
+  )
+
+  local path = M.previous_state and M.previous_state.last_hovered or nil
+  if path == nil then
+    Log:debug('No previous file hovered, opening yazi with default path')
+  else
+    Log:debug(
+      string.format('Opening yazi with previous file hovered: %s', path)
+    )
+  end
+  M.yazi(config, path)
 end
 
 M.config = configModule.default()

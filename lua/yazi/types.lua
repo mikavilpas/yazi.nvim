@@ -32,6 +32,9 @@
 
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
 
+---@class (exact) YaziPreviousState # describes the previous state of yazi when it was closed; the last known state
+---@field public last_hovered? string # only works if you set use_ya_for_events_reading
+
 ---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
 ---@field public last_directory Path # the last directory that yazi was in before it was closed
 
@@ -70,6 +73,7 @@
 ---@field public url string
 
 ---@class (exact) YaziHoverEvent "The event that is emitted when the user hovers over a file in yazi"
+---@field public yazi_id string
 ---@field public type "hover"
 ---@field public url string
 
