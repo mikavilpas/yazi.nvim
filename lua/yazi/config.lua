@@ -47,7 +47,8 @@ end
 --- this function as the basis.
 ---@param yazi_buffer integer
 ---@param config YaziConfig
-function M.default_set_keymappings_function(yazi_buffer, config)
+---@param context YaziActiveContext
+function M.default_set_keymappings_function(yazi_buffer, config, context)
   vim.keymap.set({ 't' }, '<c-v>', function()
     keybinding_helpers.open_file_in_vertical_split(config)
   end, { buffer = yazi_buffer })
@@ -86,6 +87,10 @@ function M.default_set_keymappings_function(yazi_buffer, config)
         end
       end,
     })
+  end, { buffer = yazi_buffer })
+
+  vim.keymap.set({ 't' }, '<tab>', function()
+    keybinding_helpers.cycle_open_buffers(context)
   end, { buffer = yazi_buffer })
 end
 

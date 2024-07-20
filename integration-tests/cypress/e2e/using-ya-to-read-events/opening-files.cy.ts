@@ -148,7 +148,7 @@ describe("opening files", () => {
 
       // close yazi just to be sure the file preview is not found instead
       cy.get(
-        dir.contents["routes/posts.$postId/adjacent-file.tsx"].name,
+        dir.contents["routes/posts.$postId/adjacent-file.txt"].name,
       ).should("not.exist")
 
       // the file contents should now be visible

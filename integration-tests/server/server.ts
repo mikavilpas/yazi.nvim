@@ -82,8 +82,18 @@ io.on("connection", function connection(socket) {
         }
       }
       if (startArgs.filename) {
-        const file = path.join(startArgs.directory, startArgs.filename)
-        args.push(file)
+        if (typeof startArgs.filename === "string") {
+          const file = path.join(startArgs.directory, startArgs.filename)
+          args.push(file)
+        } else if (startArgs.filename.openInVerticalSplits.length > 0) {
+          // `-O[N]` Open N vertical windows (default: one per file)
+          args.push("-O")
+
+          for (const file of startArgs.filename.openInVerticalSplits) {
+            const filePath = path.join(startArgs.directory, file)
+            args.push(filePath)
+          }
+        }
       }
 
       const app = TerminalApplication.start({

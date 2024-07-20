@@ -32,6 +32,11 @@ open yazi in a floating window in Neovim.
 - 🆕 Plugin manager for Yazi plugins and flavors
   ([documentation](./documentation/plugin-manager.md)). Please provide your
   feedback!
+- Features available if you are using a development version of yazi (see
+  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md)):
+  - Highlight the currently hovered yazi file in Neovim
+  - Restart the last yazi session with a keybinding
+  - `<tab>` makes yazi jump to the directory of the next open split
 
 For previewing images with yazi, see Yazi's documentation related to Neovim
 [here](https://yazi-rs.github.io/docs/image-preview/#neovim).

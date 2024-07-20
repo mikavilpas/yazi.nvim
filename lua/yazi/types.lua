@@ -10,7 +10,7 @@
 ---@field public use_yazi_client_id_flag? boolean "use the `--client-id` flag with yazi, allowing communication with that specific instance as opposed to all yazis on the system"
 ---@field public enable_mouse_support? boolean
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig, state: YaziClosedState): nil "a function that will be called when a file is chosen in yazi"
----@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
+---@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig, context: YaziActiveContext): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
 ---@field public hooks? YaziConfigHooks
 ---@field public highlight_groups? YaziConfigHighlightGroups
 ---@field public integrations? YaziConfigIntegrations
@@ -18,6 +18,11 @@
 ---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
+
+---@class (exact) YaziActiveContext # context state for a single yazi session
+---@field api YaziProcessApi
+---@field input_path Path the path that is first selected by yazi when it's opened
+---@field cycled_file? RenameableBuffer the last file that was cycled to with e.g. the <tab> key
 
 ---@class (exact) YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil

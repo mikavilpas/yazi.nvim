@@ -94,7 +94,11 @@ function M.yazi(config, input_path)
   )
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
-  config.set_keymappings_function(win.content_buffer, config)
+
+  config.set_keymappings_function(win.content_buffer, config, {
+    api = yazi_process.api,
+    input_path = path,
+  })
 
   win.on_resized = function(event)
     vim.fn.jobresize(

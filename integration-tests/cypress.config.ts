@@ -82,9 +82,14 @@ export default defineConfig({
                   stem: "file",
                   extension: ".txt",
                 },
-                "subdirectory/sub.txt": {
-                  name: "sub.txt",
-                  stem: "sub",
+                "subdirectory/subdirectory-file.txt": {
+                  name: "subdirectory-file.txt",
+                  stem: "subdirectory-file",
+                  extension: ".txt",
+                },
+                ["other-subdirectory/other-sub-file.txt"]: {
+                  name: "other-sub-file.txt",
+                  stem: "other-sub-file",
                   extension: ".txt",
                 },
                 "modify_yazi_config_to_use_ya_as_event_reader.lua": {
@@ -92,10 +97,10 @@ export default defineConfig({
                   stem: "modify_yazi_config_to_use_ya_as_event_reader",
                   extension: ".lua",
                 },
-                "routes/posts.$postId/adjacent-file.tsx": {
-                  name: "adjacent-file.tsx",
+                "routes/posts.$postId/adjacent-file.txt": {
+                  name: "adjacent-file.txt",
                   stem: "adjacent-file",
-                  extension: ".tsx",
+                  extension: ".txt",
                 },
                 "routes/posts.$postId/route.tsx": {
                   name: "route.tsx",
@@ -110,6 +115,7 @@ export default defineConfig({
             execSync(`cp ./test-environment/file.txt ${dir}/`)
             execSync(`cp ./test-environment/test-setup.lua ${dir}/test.lua`)
             execSync(`cp -r ./test-environment/subdirectory ${dir}/`)
+            execSync(`cp -r ./test-environment/other-subdirectory ${dir}/`)
             execSync(`cp -r ./test-environment/config-modifications/ ${dir}/`)
             execSync(`cp -r ./test-environment/routes ${dir}/`)
             console.log(`Created test directory at ${dir}`)
