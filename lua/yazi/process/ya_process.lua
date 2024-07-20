@@ -10,6 +10,7 @@ local highlight_hovered_buffer =
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
 ---@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
+---@field public hovered_url? string "The path that is currently hovered over in this yazi. Only works if `use_yazi_client_id_flag` is set to true."
 ---@field private config YaziConfig
 ---@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
@@ -116,12 +117,18 @@ function YaProcess:start()
       data = vim.split(data, '\n', { plain = true, trimempty = true })
 
       local parsed = utils.safe_parse_events(data)
-      Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
+      -- Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
 
       for _, event in ipairs(parsed) do
         if event.type == 'hover' then
+          ---@cast event YaziHoverEvent
+          if event.yazi_id == self.yazi_id then
+            Log:debug(
+              string.format('Changing the last hovered_url to %s', event.url)
+            )
+            self.hovered_url = event.url
+          end
           vim.schedule(function()
-            ---@cast event YaziHoverEvent
             highlight_hovered_buffer.highlight_hovered_buffer(
               event.url,
               self.config.highlight_groups

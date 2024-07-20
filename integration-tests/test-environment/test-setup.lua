@@ -52,6 +52,12 @@ local plugins = {
           require('yazi').yazi()
         end,
       },
+      {
+        '<c-up>',
+        function()
+          require('yazi').toggle()
+        end,
+      },
     },
     ---@type YaziConfig
     opts = {

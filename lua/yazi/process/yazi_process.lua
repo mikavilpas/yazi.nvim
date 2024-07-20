@@ -3,12 +3,14 @@
 local YaProcess = require('yazi.process.ya_process')
 local Log = require('yazi.log')
 local utils = require('yazi.utils')
+local YaziProcessApi = require('yazi.process.yazi_process_api')
 local LegacyEventReadingFromEventFile =
   require('yazi.process.legacy_events_from_file')
 
 ---@class YaziProcess
----@field private event_reader YaProcess | LegacyEventReadingFromEventFile "The process that reads events from yazi"
+---@field public api YaziProcessApi
 ---@field public yazi_job_id integer
+---@field private event_reader YaProcess | LegacyEventReadingFromEventFile "The process that reads events from yazi"
 local YaziProcess = {}
 
 ---@diagnostic disable-next-line: inject-field
@@ -16,7 +18,7 @@ YaziProcess.__index = YaziProcess
 
 ---@param config YaziConfig
 ---@param path Path
----@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[])
+---@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil)
 function YaziProcess:start(config, path, on_exit)
   os.remove(config.chosen_file_path)
 
@@ -31,6 +33,7 @@ function YaziProcess:start(config, path, on_exit)
   -- instance, so that we can communicate with it specifically, instead of
   -- possibly multiple other yazis that are running on this computer.
   local yazi_id = string.format('%.0f', vim.uv.hrtime())
+  self.api = YaziProcessApi.new(config, yazi_id)
 
   self.event_reader = config.use_ya_for_events_reading == true
       and YaProcess.new(config, yazi_id)
@@ -48,7 +51,7 @@ function YaziProcess:start(config, path, on_exit)
       if utils.file_exists(config.chosen_file_path) == true then
         chosen_files = vim.fn.readfile(config.chosen_file_path)
       end
-      on_exit(code, chosen_files, events)
+      on_exit(code, chosen_files, events, self.event_reader.hovered_url)
     end,
   })
 
