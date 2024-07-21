@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v2.5.0...v2.5.1) (2024-07-21)
+
+
+### Bug Fixes
+
+* buffer cycling small errors ([#234](https://github.com/mikavilpas/yazi.nvim/issues/234)) ([a43465e](https://github.com/mikavilpas/yazi.nvim/commit/a43465efef62b897474808e680fd9248c4ce6c71))
+
 ## [2.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.4.0...v2.5.0) (2024-07-21)
 
 
