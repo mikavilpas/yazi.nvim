@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.4.0...v2.5.0) (2024-07-21)
+
+
+### Features
+
+* pressing `tab` in yazi jumps to dir of next open split ([#232](https://github.com/mikavilpas/yazi.nvim/issues/232)) ([3cbc40c](https://github.com/mikavilpas/yazi.nvim/commit/3cbc40c01ef96c0d1d56b6caa33bb951b7212c0e))
+
 ## [2.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.3.1...v2.4.0) (2024-07-20)
 
 
