@@ -22,11 +22,11 @@ describe("reading events", () => {
     // telescope should now be visible. Let's search for the contents of the
     // file, which we know beforehand
     cy.contains("Grep in")
-    cy.typeIntoTerminal("Hello")
+    cy.typeIntoTerminal("This")
 
     // we should see text indicating the search is limited to the current
     // directory
-    cy.contains("Hello from the subdirectory! 👋")
+    cy.contains("This is other-sub-file.txt")
   })
 
   it("can read 'trash' events and close an open buffer when its file was trashed", () => {

@@ -34,7 +34,7 @@ describe('opening a file', function()
     assert.equals(file, path.filename)
   end
 
-  it('opens yazi with the current file selected', function()
+  it('#focus opens yazi with the current file selected', function()
     fake_yazi_process.setup_created_instances_to_instantly_exit({})
 
     -- the file name should have a space as well as special characters, in order to test that

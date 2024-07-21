@@ -1,7 +1,8 @@
----@class YaziProcessApi
+---@class YaziProcessApi # Provides yazi.nvim -> yazi process interactions
 ---@field private config YaziConfig
 ---@field private yazi_id string
 local YaziProcessApi = {}
+YaziProcessApi.__index = YaziProcessApi
 
 ---@param config YaziConfig
 ---@param yazi_id string

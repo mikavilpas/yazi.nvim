@@ -1,6 +1,12 @@
+export type MultipleFiles = {
+  openInVerticalSplits: File[]
+}
+
+type File = TestDirectoryFile | "."
+
 /** The arguments given from the tests to send to the server */
 export type StartNeovimArguments = {
-  filename?: TestDirectoryFile | "."
+  filename?: File | MultipleFiles
   startupScriptModifications?: StartupScriptModification[]
 }
 
@@ -57,9 +63,10 @@ export type TestDirectory = {
     ["test.lua"]: FileEntry
     ["file.txt"]: FileEntry
     ["modify_yazi_config_to_use_ya_as_event_reader.lua"]: FileEntry
-    ["subdirectory/sub.txt"]: FileEntry
+    ["subdirectory/subdirectory-file.txt"]: FileEntry
+    ["other-subdirectory/other-sub-file.txt"]: FileEntry
     ["routes/posts.$postId/route.tsx"]: FileEntry
-    ["routes/posts.$postId/adjacent-file.tsx"]: FileEntry
+    ["routes/posts.$postId/adjacent-file.txt"]: FileEntry
   }
 }
 
