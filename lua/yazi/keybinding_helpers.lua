@@ -97,15 +97,16 @@ function YaziOpenerActions.cycle_open_buffers(context)
         return b.renameable_buffer.path.filename
           ~= current_cycle_position.filename
       end)
-      assert(
-        next_buffer,
-        vim.inspect({
-          'Could not find next buffer',
-          #visible_buffers,
-          i,
-          next,
-        })
-      )
+
+      if not next_buffer then
+        Log:debug(
+          string.format(
+            'Could not find next buffer for path: "%s", probably only one is open.',
+            context.input_path
+          )
+        )
+        return
+      end
 
       local directory =
         vim.fn.fnamemodify(next_buffer.renameable_buffer.path.filename, ':h')
