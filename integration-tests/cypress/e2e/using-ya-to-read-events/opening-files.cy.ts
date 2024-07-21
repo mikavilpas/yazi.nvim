@@ -57,10 +57,17 @@ describe("opening files", () => {
   it("can send file names to the quickfix list", () => {
     startNeovimWithYa().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
-      cy.typeIntoTerminal("{control+a}{enter}")
+
+      // wait for yazi to open
+      cy.contains(dir.contents["test.lua"].name)
+
+      // select the initial file, the cursor moves one line down to the next file
+      cy.typeIntoTerminal(" ")
+      // also select the next file because multiple files have to be selected
+      cy.typeIntoTerminal(" ")
+      cy.typeIntoTerminal("{enter}")
 
       // items in the quickfix list should now be visible
-      cy.contains(`${dir.contents["file.txt"].name}||`)
       cy.contains(`${dir.contents["initial-file.txt"].name}||`)
     })
   })
