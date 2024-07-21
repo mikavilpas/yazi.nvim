@@ -1,7 +1,7 @@
-# The yazi.nvim plugin manager
+# Yazi plugin management
 
-Yazi.nvim ships with _experimental plugin manager_ support for lazy.nvim. It
-allows you to fully manage your yazi and neovim plugins from inside neovim.
+Yazi.nvim ships with plugin management support when using lazy.nvim. It allows
+you to fully manage your yazi and neovim plugins from inside neovim.
 
 ![lazy.nvim showing available updates for yazi.nvim and some yazi plugins](https://github.com/user-attachments/assets/20a922e5-541e-453e-a032-c5456f07fa13)
 
@@ -82,7 +82,7 @@ The way it works is the following:
 - you manually add any plugin specific Yazi keybindings to your Yazi
   configuration
 
-The benefits of using the yazi.nvim plugin manager are:
+The benefits of using lazy.nvim as a plugin manager are:
 
 - See all installed plugins in one place in the excellent lazy.nvim dashboard
 - Preview incoming updates before installing them
@@ -108,10 +108,6 @@ The benefits of using the yazi.nvim plugin manager are:
 > [!NOTE]
 >
 > Right now, it's not known if it works on Windows. Please report any issues.
-
-As the Yazi plugin system is currently in beta, the yazi.nvim plugin manager is
-subject to change. Users seeking stability are encouraged to use the official
-plugin manager.
 
 ## More technical details and examples
 
