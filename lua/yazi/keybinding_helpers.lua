@@ -71,6 +71,16 @@ function YaziOpenerActions.cycle_open_buffers(context)
   ) or context.input_path
   local visible_buffers = utils.get_visible_open_buffers()
 
+  if #visible_buffers == 0 then
+    Log:debug(
+      string.format(
+        'No visible buffers found for path: "%s"',
+        context.input_path
+      )
+    )
+    return
+  end
+
   for i, buffer in ipairs(visible_buffers) do
     if
       buffer.renameable_buffer:matches_exactly(current_cycle_position.filename)
