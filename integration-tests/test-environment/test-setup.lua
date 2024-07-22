@@ -7,6 +7,7 @@
 
 -- DO NOT change the paths and don't remove the colorscheme
 local root = vim.fn.fnamemodify('./.repro', ':p')
+vim.env.LAZY_STDPATH = '.repro'
 
 -- set stdpaths to use .repro
 for _, name in ipairs({ 'config', 'data', 'state', 'cache' }) do
@@ -41,10 +42,9 @@ vim.o.swapfile = false
 ---@type LazySpec
 local plugins = {
   {
-    'mikavilpas/yazi.nvim',
-    event = 'VeryLazy',
     -- for tests, always use the code from this repository
     dir = '../../',
+    event = 'VeryLazy',
     keys = {
       {
         '<up>',
