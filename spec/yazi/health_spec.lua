@@ -94,8 +94,8 @@ Options:
     yazi.setup({ use_ya_for_events_reading = true })
     vim.cmd('checkhealth yazi')
 
-    assert_buffer_contains_text('Found `yazi` version `0.2.5`')
-    assert_buffer_contains_text('Found `ya` version `0.2.5`')
+    assert_buffer_contains_text('Found `yazi` version `yazi 0.2.5')
+    assert_buffer_contains_text('Found `ya` version `Ya 0.2.5')
     assert_buffer_contains_text('OK yazi')
   end)
 

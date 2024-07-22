@@ -23,8 +23,8 @@ describe("the healthcheck", () => {
     )
 
     // the `yazi` and `ya` applications should be found successfully
-    cy.contains("Found yazi version 0.2.5")
-    cy.contains("Found ya version 0.2.5")
+    cy.contains("Found yazi version Yazi 0.2.5")
+    cy.contains("Found ya version Ya 0.2.5")
     cy.contains("OK yazi")
   })
 })

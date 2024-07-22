@@ -40,7 +40,9 @@ return {
         'yazi version is too old, please upgrade to 0.2.5 or newer'
       )
     else
-      vim.health.info(('Found `yazi` version `%s` 👍'):format(yazi_semver))
+      vim.health.info(
+        ('Found `yazi` version `%s` 👍'):format(raw_version:gsub('\n', ''))
+      )
     end
 
     local logfile_location = require('yazi.log'):get_logfile_path()
@@ -87,7 +89,11 @@ return {
             'The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version.'
           )
         else
-          vim.health.info(('Found `ya` version `%s` 👍'):format(ya_semver))
+          vim.health.info(
+            ('Found `ya` version `%s` 👍'):format(
+              raw_ya_version:gsub('\n', '')
+            )
+          )
         end
       end
 
