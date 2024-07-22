@@ -10,7 +10,8 @@
 ---@field public use_yazi_client_id_flag? boolean "use the `--client-id` flag with yazi, allowing communication with that specific instance as opposed to all yazis on the system"
 ---@field public enable_mouse_support? boolean
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig, state: YaziClosedState): nil "a function that will be called when a file is chosen in yazi"
----@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig, context: YaziActiveContext): nil "the function that will set the keymappings for the yazi floating window. It will be called after the floating window is created."
+---@field public keymaps? YaziKeymaps | false # The keymaps that are available when yazi is open and focused. Set to `false` to disable all default keymaps.
+---@field public set_keymappings_function? fun(buffer: integer, config: YaziConfig, context: YaziActiveContext): nil # Can be used to create new, custom keybindings. In most cases it's recommended to use `keymaps` to customize the keybindings that come with yazi.nvim
 ---@field public hooks? YaziConfigHooks
 ---@field public highlight_groups? YaziConfigHighlightGroups
 ---@field public integrations? YaziConfigIntegrations
@@ -18,6 +19,15 @@
 ---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
+
+---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
+
+---@class YaziKeymaps # The keybindings that are set by yazi, and can be overridden by the user. Will be set to a default value if not given explicitly
+---@field open_file_in_vertical_split? YaziKeymap # When a file is hovered, open it in a vertical split
+---@field open_file_in_horizontal_split? YaziKeymap # When a file is hovered, open it in a horizontal split
+---@field open_file_in_tab? YaziKeymap # When a file is hovered, open it in a new tab
+---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
+---@field cycle_open_buffers? YaziKeymap # When Neovim has multiple splits open and visible, make yazi jump to the directory of the next one
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi

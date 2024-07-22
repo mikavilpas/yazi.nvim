@@ -15,7 +15,14 @@ function M.default()
     use_yazi_client_id_flag = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
-    set_keymappings_function = M.default_set_keymappings_function,
+    keymaps = {
+      open_file_in_vertical_split = '<c-v>',
+      open_file_in_horizontal_split = '<c-x>',
+      open_file_in_tab = '<c-t>',
+      grep_in_directory = '<c-s>',
+      cycle_open_buffers = '<tab>',
+    },
+    set_keymappings_function = nil,
     hooks = {
       yazi_opened = function() end,
       yazi_closed_successfully = function() end,
@@ -42,56 +49,80 @@ function M.default()
   }
 end
 
---- This sets the default keymappings for yazi. If you want to use your own
---- keymappings, you can set the set_keymappings_function in your config. Copy
---- this function as the basis.
 ---@param yazi_buffer integer
 ---@param config YaziConfig
 ---@param context YaziActiveContext
-function M.default_set_keymappings_function(yazi_buffer, config, context)
-  vim.keymap.set({ 't' }, '<c-v>', function()
-    keybinding_helpers.open_file_in_vertical_split(config)
-  end, { buffer = yazi_buffer })
-  vim.keymap.set('t', '<esc>', '<esc>', { buffer = yazi_buffer })
+function M.set_keymappings(yazi_buffer, config, context)
+  if config.keymaps == false then
+    return
+  end
 
-  -- LazyVim sets <esc><esc> to forcibly enter normal mode. This has been
-  -- confusing for some users. Let's disable it when using yazi.nvim only.
-  vim.keymap.set({ 't' }, '<esc><esc>', '<Nop>', { buffer = yazi_buffer })
-
-  vim.keymap.set({ 't' }, '<c-x>', function()
-    keybinding_helpers.open_file_in_horizontal_split(config)
-  end, { buffer = yazi_buffer })
-
-  vim.keymap.set({ 't' }, '<c-t>', function()
-    keybinding_helpers.open_file_in_tab(config)
-  end, { buffer = yazi_buffer })
-
-  vim.keymap.set({ 't' }, '<c-s>', function()
-    keybinding_helpers.select_current_file_and_close_yazi(config, {
-      on_file_opened = function(_, _, state)
-        if config.integrations.grep_in_directory == nil then
-          return
-        end
-
-        local success, result_or_error = pcall(
-          config.integrations.grep_in_directory,
-          state.last_directory.filename
-        )
-
-        if not success then
-          local message = 'yazi.nvim: error searching with telescope.'
-          vim.notify(message, vim.log.levels.WARN)
-          require('yazi.log'):debug(
-            vim.inspect({ message = message, error = result_or_error })
-          )
-        end
+  if config.keymaps.open_file_in_vertical_split ~= false then
+    vim.keymap.set(
+      { 't' },
+      config.keymaps.open_file_in_vertical_split,
+      function()
+        keybinding_helpers.open_file_in_vertical_split(config)
       end,
-    })
-  end, { buffer = yazi_buffer })
+      { buffer = yazi_buffer }
+    )
+  end
 
-  vim.keymap.set({ 't' }, '<tab>', function()
-    keybinding_helpers.cycle_open_buffers(context)
-  end, { buffer = yazi_buffer })
+  if config.keymaps.open_file_in_horizontal_split ~= false then
+    vim.keymap.set(
+      { 't' },
+      config.keymaps.open_file_in_horizontal_split,
+      function()
+        keybinding_helpers.open_file_in_horizontal_split(config)
+      end,
+      { buffer = yazi_buffer }
+    )
+  end
+
+  if config.keymaps.grep_in_directory ~= false then
+    vim.keymap.set({ 't' }, '<c-s>', function()
+      keybinding_helpers.select_current_file_and_close_yazi(config, {
+        on_file_opened = function(_, _, state)
+          if config.integrations.grep_in_directory == nil then
+            return
+          end
+
+          local success, result_or_error = pcall(
+            config.integrations.grep_in_directory,
+            state.last_directory.filename
+          )
+
+          if not success then
+            local message = 'yazi.nvim: error searching with telescope.'
+            vim.notify(message, vim.log.levels.WARN)
+            require('yazi.log'):debug(
+              vim.inspect({ message = message, error = result_or_error })
+            )
+          end
+        end,
+      })
+    end, { buffer = yazi_buffer })
+  end
+
+  if config.keymaps.open_file_in_tab ~= false then
+    vim.keymap.set({ 't' }, config.keymaps.open_file_in_tab, function()
+      keybinding_helpers.open_file_in_tab(config)
+    end, { buffer = yazi_buffer })
+  end
+
+  if config.keymaps.cycle_open_buffers ~= false then
+    vim.keymap.set({ 't' }, config.keymaps.cycle_open_buffers, function()
+      keybinding_helpers.cycle_open_buffers(context)
+    end, { buffer = yazi_buffer })
+  end
+end
+
+---@param yazi_buffer integer
+---@param config YaziConfig
+---@param context YaziActiveContext
+---@deprecated Prefer using `keymaps` in the config instead of this function. It's a clearer way of doing the exact same thing.
+function M.default_set_keymappings_function(yazi_buffer, config, context)
+  return M.set_keymappings(yazi_buffer, config, context)
 end
 
 return M

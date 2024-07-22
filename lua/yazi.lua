@@ -95,10 +95,25 @@ function M.yazi(config, input_path)
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
-  config.set_keymappings_function(win.content_buffer, config, {
-    api = yazi_process.api,
-    input_path = path,
-  })
+  local yazi_buffer = win.content_buffer
+  if config.set_keymappings_function ~= nil then
+    config.set_keymappings_function(yazi_buffer, config, {
+      api = yazi_process.api,
+      input_path = path,
+    })
+  end
+
+  if config.keymaps ~= false then
+    require('yazi.config').set_keymappings(yazi_buffer, config, {
+      api = yazi_process.api,
+      input_path = path,
+    })
+  end
+
+  -- LazyVim sets <esc><esc> to forcibly enter normal mode. This has been
+  -- confusing for some users. Let's disable it when using yazi.nvim only.
+  vim.keymap.set('t', '<esc>', '<esc>', { buffer = yazi_buffer })
+  vim.keymap.set({ 't' }, '<esc><esc>', '<Nop>', { buffer = yazi_buffer })
 
   win.on_resized = function(event)
     vim.fn.jobresize(

@@ -16,13 +16,13 @@ end
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
+if not (vim.uv).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
-    '--branch=stable',
+    '--branch=v11.12.0',
     lazyrepo,
     lazypath,
   })
@@ -42,8 +42,9 @@ vim.o.swapfile = false
 ---@type LazySpec
 local plugins = {
   {
+    'mikavilpas/yazi.nvim',
     -- for tests, always use the code from this repository
-    dir = '../../',
+    dir = '../..',
     event = 'VeryLazy',
     keys = {
       {
