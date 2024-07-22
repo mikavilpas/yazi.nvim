@@ -60,6 +60,25 @@ describe("opening files", () => {
     })
   })
 
+  it("can open a file in a new tab", () => {
+    startNeovimWithYa().then((dir) => {
+      cy.typeIntoTerminal("{upArrow}")
+      cy.typeIntoTerminal("/test.lua{enter}")
+      cy.typeIntoTerminal("{control+t}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      cy.contains("defines how to")
+      cy.typeIntoTerminal(":tabnext{enter}")
+
+      cy.contains("If you see this text, Neovim is ready!")
+
+      cy.contains(dir.contents["test.lua"].name)
+      cy.contains(dir.contents["initial-file.txt"].name)
+    })
+  })
+
   it("can send file names to the quickfix list", () => {
     startNeovimWithYa().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
