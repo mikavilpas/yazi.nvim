@@ -34,6 +34,9 @@ describe("opening files", () => {
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+v}")
 
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
       // the file path must be visible at the bottom
       cy.contains(dir.contents["test.lua"].name)
       cy.contains(dir.contents["initial-file.txt"].name)
@@ -45,6 +48,9 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+x}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
 
       // the file path must be visible at the bottom
       cy.contains(dir.contents["test.lua"].name)
@@ -64,6 +70,9 @@ describe("opening files", () => {
       // also select the next file because multiple files have to be selected
       cy.typeIntoTerminal(" ")
       cy.typeIntoTerminal("{enter}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
 
       // items in the quickfix list should now be visible
       cy.contains(`${dir.contents["initial-file.txt"].name}||`)
