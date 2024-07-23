@@ -25,6 +25,7 @@ function M.yazi(config, input_path)
 
   config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
+  Log.level = config.log_level
 
   if
     config.use_ya_for_events_reading == true
