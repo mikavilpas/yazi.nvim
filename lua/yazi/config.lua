@@ -80,7 +80,7 @@ function M.set_keymappings(yazi_buffer, config, context)
   end
 
   if config.keymaps.grep_in_directory ~= false then
-    vim.keymap.set({ 't' }, '<c-s>', function()
+    vim.keymap.set({ 't' }, config.keymaps.grep_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
         on_file_opened = function(_, _, state)
           if config.integrations.grep_in_directory == nil then
