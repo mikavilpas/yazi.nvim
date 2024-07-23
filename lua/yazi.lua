@@ -9,7 +9,7 @@ local YaziProcess = require('yazi.process.yazi_process')
 
 local M = {}
 
-M.version = '2.6.0' -- x-release-please-version
+M.version = '3.0.0' -- x-release-please-version
 
 -- The last known state of yazi when it was closed
 ---@type YaziPreviousState

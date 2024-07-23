@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.6.0...v3.0.0) (2024-07-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* If you, for some reason, relied on the fact that `set_keymappings_function` removed all the built-in keymappings, you will need to change your configuration. You can get the same behaviour by setting `keymaps = false`. But realistically I think almost nobody has done this, so it should be fine.
+
+### Features
+
+* allow customizing keymaps more clearly ([#244](https://github.com/mikavilpas/yazi.nvim/issues/244)) ([f511e64](https://github.com/mikavilpas/yazi.nvim/commit/f511e64197bf29b5e1eda792791f0541fadc1c32))
+
 ## [2.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.5.1...v2.6.0) (2024-07-22)
 
 
