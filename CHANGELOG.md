@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v3.0.0...v3.0.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* not being able to override the log level per invocation ([f5c7b73](https://github.com/mikavilpas/yazi.nvim/commit/f5c7b73f30cf0ca19935dd7c92999e1e3549a128))
+
 ## [3.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v2.6.0...v3.0.0) (2024-07-23)
 
 
