@@ -17,7 +17,21 @@ provide a fix. To help us diagnose the issue, please follow these steps:
 ## Logging
 
 You can find out a lot of details about what is going on in yazi.nvim by reading
-the log file. To find the log file, execute
+the log file.
+
+### Enabling logging
+
+To enable logging, you can do one of the following:
+
+- set `log_level = vim.log.levels.DEBUG,` in your yazi configuration
+- or, call yazi manually with logging on by running
+  ```vim
+  :lua require('yazi').yazi({log_level = vim.log.levels.DEBUG})
+  ```
+
+### Reading the log file
+
+To find the log file, execute
 
 ```vim
 :checkhealth yazi
