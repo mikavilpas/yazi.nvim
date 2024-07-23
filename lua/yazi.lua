@@ -95,10 +95,20 @@ function M.yazi(config, input_path)
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
-  config.set_keymappings_function(win.content_buffer, config, {
-    api = yazi_process.api,
-    input_path = path,
-  })
+  local yazi_buffer = win.content_buffer
+  if config.set_keymappings_function ~= nil then
+    config.set_keymappings_function(yazi_buffer, config, {
+      api = yazi_process.api,
+      input_path = path,
+    })
+  end
+
+  if config.keymaps ~= false then
+    require('yazi.config').set_keymappings(yazi_buffer, config, {
+      api = yazi_process.api,
+      input_path = path,
+    })
+  end
 
   win.on_resized = function(event)
     vim.fn.jobresize(

@@ -30,7 +30,7 @@ open yazi in a floating window in Neovim.
   - The files are also kept in sync with currently running LSP servers
 - Customizable keybindings
 - 🆕 Plugin management for Yazi plugins and flavors
-  ([documentation](./documentation/plugin-manager.md)). Please provide your
+  ([documentation](./documentation/plugin-management.md)). Please provide your
   feedback!
 - Features available if you are using a development version of yazi (see
   [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md)):
@@ -176,11 +176,23 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
     -- what Neovim should do a when a file was opened (selected) in yazi.
     -- Defaults to simply opening the file.
-    open_file_function = function(chosen_file, config) end,
+    open_file_function = function(chosen_file, config, state) end,
+
+    -- customize the keymaps that are active when yazi is open and focused. The
+    -- defaults are listed below. Also:
+    -- - use e.g. `open_file_in_tab = false` to disable a keymap
+    -- - you can customize only some of the keymaps if you want
+    keymaps = {
+      open_file_in_vertical_split = '<c-v>',
+      open_file_in_horizontal_split = '<c-x>',
+      open_file_in_tab = '<c-t>',
+      grep_in_directory = '<c-s>',
+      cycle_open_buffers = '<tab>',
+    },
 
     -- completely override the keymappings for yazi. This function will be
     -- called in the context of the yazi terminal buffer.
-    set_keymappings_function = function(yazi_buffer_id, config) end,
+    set_keymappings_function = function(yazi_buffer_id, config, context) end,
 
     -- the type of border to use for the floating window. Can be many values,
     -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
@@ -196,7 +208,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
       end,
 
       -- when yazi was successfully closed
-      yazi_closed_successfully = function(chosen_file, config) end,
+      yazi_closed_successfully = function(chosen_file, config, state) end,
 
       -- when yazi opened multiple files. The default is to send them to the
       -- quickfix list, but if you want to change that, you can define it here

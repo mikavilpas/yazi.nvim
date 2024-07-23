@@ -111,6 +111,11 @@ function YaziFloatingWindow:open_and_display()
     end,
   })
 
+  -- LazyVim sets <esc><esc> to forcibly enter normal mode. This has been
+  -- confusing for some users. Let's disable it when using yazi.nvim only.
+  vim.keymap.set('t', '<esc>', '<esc>', { buffer = yazi_buffer })
+  vim.keymap.set({ 't' }, '<esc><esc>', '<Nop>', { buffer = yazi_buffer })
+
   return self
 end
 

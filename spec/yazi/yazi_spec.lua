@@ -20,8 +20,8 @@ describe('opening a file', function()
     mock.revert(fake_yazi_process)
     package.loaded['yazi.process.yazi_process'] = mock(fake_yazi_process)
     plugin.setup({
-      -- set_keymappings_function can only work with a real yazi process
-      set_keymappings_function = function() end,
+      -- keymaps can only work with a real yazi process
+      keymaps = false,
     })
   end)
 
@@ -34,7 +34,7 @@ describe('opening a file', function()
     assert.equals(file, path.filename)
   end
 
-  it('#focus opens yazi with the current file selected', function()
+  it('opens yazi with the current file selected', function()
     fake_yazi_process.setup_created_instances_to_instantly_exit({})
 
     -- the file name should have a space as well as special characters, in order to test that
