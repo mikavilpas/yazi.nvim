@@ -1,5 +1,6 @@
 require('yazi')
 
+-- selene: allow(unused_variable)
 function CountYaziModules()
   ---@type string[]
   local yazi_modules = {}
