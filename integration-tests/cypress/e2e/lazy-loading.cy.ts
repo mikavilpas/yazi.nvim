@@ -6,7 +6,7 @@ describe("lazy loading yazi.nvim", () => {
   // because some users don't use a package manager like lazy.nvim that
   // supports lazy loading modules by default.
 
-  it("can run the :healthcheck for yazi.nvim", () => {
+  it("delays loading of many source code files", () => {
     // Not sure what would be a good way to test lazy loading. For now, just
     // load the plugin and see how many modules have been loaded.
     //
@@ -17,6 +17,10 @@ describe("lazy loading yazi.nvim", () => {
     })
 
     cy.typeIntoTerminal(":=CountYaziModules(){enter}")
+
+    // NOTE: if this number changes in the future, it's ok. This test is just
+    // to make sure that we don't accidentally load all modules up front due to
+    // an unrelated change.
     cy.contains("Loaded 7 modules")
   })
 })
