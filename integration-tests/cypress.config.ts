@@ -5,7 +5,7 @@ import { constants } from "fs"
 import { access, mkdir, mkdtemp, readdir, readFile, rm } from "fs/promises"
 import path from "path"
 import { fileURLToPath } from "url"
-import type { TestDirectory } from "./cypress/support/commands"
+import type { TestDirectory } from "./client/testEnvironmentTypes"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
@@ -21,12 +21,14 @@ const yaziLogFile = path.join(
 
 console.log(`yaziLogFile: ${yaziLogFile}`)
 
+const testEnvironmentDir = path.join(__dirname, "test-environment")
+const testdirs = path.join(testEnvironmentDir, "testdirs")
+
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, _config) {
       on("after:browser:launch", async (): Promise<void> => {
         // delete everything under the ./test-environment/testdirs/ directory
-        const testdirs = path.join(__dirname, "test-environment", "testdirs")
         await mkdir(testdirs, { recursive: true })
         const files = await readdir(testdirs)
 
@@ -65,7 +67,11 @@ export default defineConfig({
             const dir = await createUniqueDirectory()
 
             const directory: TestDirectory = {
-              rootPath: dir,
+              rootPathAbsolute: dir,
+              rootPathRelativeToTestEnvironmentDir: path.relative(
+                testEnvironmentDir,
+                dir,
+              ),
               contents: {
                 "initial-file.txt": {
                   name: "initial-file.txt",

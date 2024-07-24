@@ -27,6 +27,7 @@
 ---@field open_file_in_horizontal_split? YaziKeymap # When a file is hovered, open it in a horizontal split
 ---@field open_file_in_tab? YaziKeymap # When a file is hovered, open it in a new tab
 ---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
+---@field replace_in_directory? YaziKeymap # Close yazi and open a replacer (default: grug-far.nvim) narrowed to the directory yazi is in
 ---@field cycle_open_buffers? YaziKeymap # When Neovim has multiple splits open and visible, make yazi jump to the directory of the next one
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
@@ -41,6 +42,7 @@
 
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? fun(directory: string): nil "a function that will be called when the user wants to grep in a directory"
+---@field public replace_in_directory? fun(directory: Path): nil "called to start a replacement operation on some directory; by default grug-far.nvim"
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi
