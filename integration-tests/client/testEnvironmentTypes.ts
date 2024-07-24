@@ -60,7 +60,7 @@ export type TestDirectory = {
 
   /** The path to the unique test directory, relative to the root of the
    * test-environment directory. */
-  rootPathRelativeToTestEnvironmentDirToTestEnvironmentDir: string
+  rootPathRelativeToTestEnvironmentDir: string
 
   contents: {
     ["initial-file.txt"]: FileEntry
