@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.0...v3.1.1) (2024-07-24)
+
+
+### Performance Improvements
+
+* lazy load yazi.nvim modules by default ([#253](https://github.com/mikavilpas/yazi.nvim/issues/253)) ([f832c3c](https://github.com/mikavilpas/yazi.nvim/commit/f832c3cc50aab5bb3aad1a14b03850295628bc6d))
+
 ## [3.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.0.1...v3.1.0) (2024-07-24)
 
 
