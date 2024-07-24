@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.0.1...v3.1.0) (2024-07-24)
+
+
+### Features
+
+* add optional search and replace integration (grug-far.nvim) ([#250](https://github.com/mikavilpas/yazi.nvim/issues/250)) ([b512d38](https://github.com/mikavilpas/yazi.nvim/commit/b512d3898d7d37273fdad43e6ad697cf29839a28))
+
 ## [3.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v3.0.0...v3.0.1) (2024-07-23)
 
 
