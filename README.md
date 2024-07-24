@@ -187,6 +187,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
       open_file_in_horizontal_split = '<c-x>',
       open_file_in_tab = '<c-t>',
       grep_in_directory = '<c-s>',
+      replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
     },
 
