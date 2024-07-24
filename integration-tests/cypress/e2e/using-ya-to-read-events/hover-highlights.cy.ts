@@ -102,9 +102,12 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       const testFile = dir.contents["test.lua"].name
       // open an adjacent file and wait for it to be displayed
-      cy.typeIntoTerminal(`:vsplit ${dir.rootPathAbsolute}/${testFile}{enter}`, {
-        delay: 1,
-      })
+      cy.typeIntoTerminal(
+        `:vsplit ${dir.rootPathAbsolute}/${testFile}{enter}`,
+        {
+          delay: 1,
+        },
+      )
       cy.contains("how to initialize the test environment")
 
       // start yazi - the initial file should be highlighted
