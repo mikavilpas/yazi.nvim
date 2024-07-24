@@ -58,7 +58,9 @@ First, make sure you have the requirements:
 
 ## ⚙️ Configuration
 
-Using [lazy.nvim](https://lazy.folke.io/):
+### Using [lazy.nvim](https://lazy.folke.io/)
+
+This is the preferred installation method.
 
 ```lua
 ---@type LazySpec
@@ -104,8 +106,24 @@ Using [lazy.nvim](https://lazy.folke.io/):
 }
 ```
 
+### Without a package manager
+
+<details>
+<summary>Instructions</summary>
+
 If you are not using lazy.nvim, see [lazy.lua](./lazy.lua) for what dependencies
 are required.
+
+```lua
+-- (Obtain yazi.nvim and its dependencies using your preferred method first)
+--
+-- Next, map a key to open yazi.nvim
+vim.keymap.set("n", "<leader>-", function()
+  require("yazi").yazi()
+end)
+```
+
+</details>
 
 ### ⚙️⚙️ Advanced configuration
 
