@@ -20,6 +20,7 @@ function M.default()
       open_file_in_horizontal_split = '<c-x>',
       open_file_in_tab = '<c-t>',
       grep_in_directory = '<c-s>',
+      replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
     },
     set_keymappings_function = nil,
@@ -39,6 +40,15 @@ function M.default()
           search = '',
           prompt_title = 'Grep in ' .. directory,
           cwd = directory,
+        })
+      end,
+      replace_in_directory = function(directory)
+        -- limit the search to the given path, based on cwd
+        local filter = directory:joinpath('**'):make_relative(vim.uv.cwd())
+        require('grug-far').grug_far({
+          prefills = {
+            filesFilter = filter,
+          },
         })
       end,
     },
@@ -113,6 +123,31 @@ function M.set_keymappings(yazi_buffer, config, context)
   if config.keymaps.cycle_open_buffers ~= false then
     vim.keymap.set({ 't' }, config.keymaps.cycle_open_buffers, function()
       keybinding_helpers.cycle_open_buffers(context)
+    end, { buffer = yazi_buffer })
+  end
+
+  if config.keymaps.replace_in_directory ~= false then
+    vim.keymap.set({ 't' }, config.keymaps.replace_in_directory, function()
+      keybinding_helpers.select_current_file_and_close_yazi(config, {
+        on_file_opened = function(_, _, state)
+          if config.integrations.replace_in_directory == nil then
+            return
+          end
+
+          local success, result_or_error = pcall(
+            config.integrations.replace_in_directory,
+            state.last_directory
+          )
+
+          if not success then
+            local message = 'yazi.nvim: error replacing with grug-far.nvim.'
+            vim.notify(message, vim.log.levels.WARN)
+            require('yazi.log'):debug(
+              vim.inspect({ message = message, error = result_or_error })
+            )
+          end
+        end,
+      })
     end, { buffer = yazi_buffer })
   end
 end

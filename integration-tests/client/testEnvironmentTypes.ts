@@ -55,8 +55,12 @@ export type FileEntry = {
  * actually found. Otherwise the tests are brittle and can break easily.
  */
 export type TestDirectory = {
-  /** The path to the unique test directory itself (the root). */
-  rootPath: string
+  /** The path to the unique test directory (the root). */
+  rootPathAbsolute: string
+
+  /** The path to the unique test directory, relative to the root of the
+   * test-environment directory. */
+  rootPathRelativeToTestEnvironmentDirToTestEnvironmentDir: string
 
   contents: {
     ["initial-file.txt"]: FileEntry
