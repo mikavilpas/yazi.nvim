@@ -73,6 +73,15 @@ io.on("connection", function connection(socket) {
               args.push("-c", `lua dofile('${file}')`)
               break
             }
+            case "report_loaded_yazi_modules.lua": {
+              const file = path.join(
+                testDirectory,
+                "config-modifications",
+                "report_loaded_yazi_modules.lua",
+              )
+              args.push("-c", `lua dofile('${file}')`)
+              break
+            }
             default:
               modification satisfies never
               throw new Error(

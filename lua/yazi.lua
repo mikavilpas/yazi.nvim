@@ -1,11 +1,6 @@
 ---@module "plenary"
 
-local window = require('yazi.window')
-local utils = require('yazi.utils')
 local configModule = require('yazi.config')
-local event_handling = require('yazi.event_handling')
-local Log = require('yazi.log')
-local YaziProcess = require('yazi.process.yazi_process')
 
 local M = {}
 
@@ -18,6 +13,10 @@ M.previous_state = {}
 ---@param config? YaziConfig?
 ---@param input_path? string
 function M.yazi(config, input_path)
+  local utils = require('yazi.utils')
+  local YaziProcess = require('yazi.process.yazi_process')
+  local event_handling = require('yazi.event_handling')
+
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check the documentation for more information')
     return
@@ -25,6 +24,8 @@ function M.yazi(config, input_path)
 
   config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
+
+  local Log = require('yazi.log')
   Log.level = config.log_level
 
   if
@@ -45,7 +46,7 @@ function M.yazi(config, input_path)
   config.chosen_file_path = config.chosen_file_path or vim.fn.tempname()
   config.events_file_path = config.events_file_path or vim.fn.tempname()
 
-  local win = window.YaziFloatingWindow.new(config)
+  local win = require('yazi.window').YaziFloatingWindow.new(config)
   win:open_and_display()
 
   local yazi_process = YaziProcess:start(
@@ -140,6 +141,8 @@ function M.toggle(config)
   )
 
   local path = M.previous_state and M.previous_state.last_hovered or nil
+
+  local Log = require('yazi.log')
   if path == nil then
     Log:debug('No previous file hovered, opening yazi with default path')
   else
@@ -157,6 +160,7 @@ function M.setup(opts)
   M.config =
     vim.tbl_deep_extend('force', configModule.default(), M.config, opts or {})
 
+  local Log = require('yazi.log')
   Log.level = M.config.log_level
 
   local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
