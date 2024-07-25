@@ -19,5 +19,6 @@ jobs:
           level: Information
           libraries:
             # space separated
+            # TODO enable later
+            # https://github.com/antosha417/nvim-lsp-file-operations
             https://github.com/nvim-lua/plenary.nvim
-            https://github.com/antosha417/nvim-lsp-file-operations

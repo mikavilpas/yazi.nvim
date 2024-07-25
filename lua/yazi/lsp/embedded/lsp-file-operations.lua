@@ -1,6 +1,6 @@
 local M = {}
 
-local log = require("lsp-file-operations.log")
+local log = require("yazi.lsp.embedded.lsp-file-operations.log")
 
 local default_config = {
   debug = false,
@@ -16,12 +16,12 @@ local default_config = {
 }
 
 local modules = {
-  willRenameFiles = "lsp-file-operations.will-rename",
-  didRenameFiles = "lsp-file-operations.did-rename",
-  willCreateFiles = "lsp-file-operations.will-create",
-  didCreateFiles = "lsp-file-operations.did-create",
-  willDeleteFiles = "lsp-file-operations.will-delete",
-  didDeleteFiles = "lsp-file-operations.did-delete",
+  willRenameFiles = "yazi.lsp.embedded.lsp-file-operations.will-rename",
+  didRenameFiles = "yazi.lsp.embedded.lsp-file-operations.did-rename",
+  willCreateFiles = "yazi.lsp.embedded.lsp-file-operations.will-create",
+  didCreateFiles = "yazi.lsp.embedded.lsp-file-operations.did-create",
+  willDeleteFiles = "yazi.lsp.embedded.lsp-file-operations.will-delete",
+  didDeleteFiles = "yazi.lsp.embedded.lsp-file-operations.did-delete",
 }
 
 local capabilities = {

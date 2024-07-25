@@ -1,6 +1,6 @@
 local Path = require("plenary").path
 
-local log = require("lsp-file-operations.log")
+local log = require("yazi.lsp.embedded.lsp-file-operations.log")
 
 local M = {}
 

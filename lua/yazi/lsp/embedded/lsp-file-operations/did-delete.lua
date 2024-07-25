@@ -1,5 +1,5 @@
-local utils = require("lsp-file-operations.utils")
-local log = require("lsp-file-operations.log")
+local utils = require("yazi.lsp.embedded.lsp-file-operations.utils")
+local log = require("yazi.lsp.embedded.lsp-file-operations.log")
 
 local M = {}
 

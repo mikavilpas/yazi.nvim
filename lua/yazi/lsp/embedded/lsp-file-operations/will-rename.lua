@@ -1,5 +1,5 @@
-local utils = require("lsp-file-operations.utils")
-local log = require("lsp-file-operations.log")
+local utils = require("yazi.lsp.embedded.lsp-file-operations.utils")
+local log = require("yazi.lsp.embedded.lsp-file-operations.log")
 
 local M = {}
 
@@ -13,7 +13,7 @@ local function getWorkspaceEdit(client, old_name, new_name)
     },
   }
   log.debug("Sending workspace/willRenameFiles request", will_rename_params)
-  local timeout_ms = require("lsp-file-operations").config.timeout_ms
+  local timeout_ms = require("yazi.lsp.embedded.lsp-file-operations").config.timeout_ms
   local success, resp = pcall(client.request_sync, "workspace/willRenameFiles", will_rename_params, timeout_ms)
   log.debug("Got workspace/willRenameFiles response", resp)
   if not success then

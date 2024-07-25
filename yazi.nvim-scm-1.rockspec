@@ -14,8 +14,6 @@ dependencies = {
   -- https://github.com/akinsho/bufferline.nvim
   -- https://luarocks.org/modules/neorocks/bufferline.nvim
   'bufferline.nvim',
-
-  'nvim-lsp-file-operations >= scm',
 }
 test_dependencies = {
   'nlua',

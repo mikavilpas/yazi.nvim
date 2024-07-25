@@ -1,5 +1,5 @@
-local will_rename = require('lsp-file-operations.will-rename')
-local did_rename = require('lsp-file-operations.did-rename')
+local will_rename = require('yazi.lsp.embedded.lsp-file-operations.will-rename')
+local did_rename = require('yazi.lsp.embedded.lsp-file-operations.did-rename')
 
 local M = {}
 
