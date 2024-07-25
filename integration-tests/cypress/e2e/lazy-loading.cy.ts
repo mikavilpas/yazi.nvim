@@ -21,6 +21,6 @@ describe("lazy loading yazi.nvim", () => {
     // NOTE: if this number changes in the future, it's ok. This test is just
     // to make sure that we don't accidentally load all modules up front due to
     // an unrelated change.
-    cy.contains("Loaded 7 modules")
+    cy.contains("Loaded 4 modules")
   })
 })
