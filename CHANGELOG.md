@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.3...v3.1.4) (2024-07-25)
+
+
+### Bug Fixes
+
+* renaming a file twice not updating the buffer name ([#259](https://github.com/mikavilpas/yazi.nvim/issues/259)) ([98caf39](https://github.com/mikavilpas/yazi.nvim/commit/98caf394dc998793dbb4987cbfefa5182ac4a65a))
+
 ## [3.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.2...v3.1.3) (2024-07-25)
 
 
