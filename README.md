@@ -265,7 +265,7 @@ Yazi is highly customizable. It features its own plugin and event system,
 themes, and keybindings. This section lists some of the plugins and themes that
 I like.
 
-- <https://gitee.com/DreamMaoMao/keyjump.yazi.git> allows jumping to a line by
+- <https://gitee.com/DreamMaoMao/easyjump.yazi.git> allows jumping to a line by
   typing a hint character, much like
   [hop.nvim](https://github.com/smoka7/hop.nvim)
 - <https://github.com/Rolv-Apneseth/starship.yazi> is a port of the
