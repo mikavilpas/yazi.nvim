@@ -48,7 +48,7 @@ function M.default()
         local filter = directory:make_relative(vim.uv.cwd())
         require('grug-far').grug_far({
           prefills = {
-            flags = filter,
+            paths = filter,
           },
         })
       end,
