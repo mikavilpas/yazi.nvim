@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.4...v3.1.5) (2024-07-25)
+
+
+### Bug Fixes
+
+* grug-far appending extra text at the end of replaced files ([#263](https://github.com/mikavilpas/yazi.nvim/issues/263)) ([be2ac43](https://github.com/mikavilpas/yazi.nvim/commit/be2ac43a530b9b8c8b1a6185f07fac13f128f046))
+
 ## [3.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.3...v3.1.4) (2024-07-25)
 
 
