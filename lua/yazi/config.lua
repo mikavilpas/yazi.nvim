@@ -41,11 +41,14 @@ function M.default()
         })
       end,
       replace_in_directory = function(directory)
-        -- limit the search to the given path, based on cwd
-        local filter = directory:joinpath('**'):make_relative(vim.uv.cwd())
+        -- limit the search to the given path
+        --
+        -- `prefills.flags` get passed to ripgrep as is
+        -- https://github.com/MagicDuck/grug-far.nvim/issues/146
+        local filter = directory:make_relative(vim.uv.cwd())
         require('grug-far').grug_far({
           prefills = {
-            filesFilter = filter,
+            flags = filter,
           },
         })
       end,
