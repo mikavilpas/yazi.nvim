@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.2...v3.1.3) (2024-07-25)
+
+
+### Bug Fixes
+
+* LSP renaming did not work in some cases ([#260](https://github.com/mikavilpas/yazi.nvim/issues/260)) ([6afe997](https://github.com/mikavilpas/yazi.nvim/commit/6afe997df07ba668fb443bc6e20b3c024078d8cb))
+
 ## [3.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.1...v3.1.2) (2024-07-25)
 
 
