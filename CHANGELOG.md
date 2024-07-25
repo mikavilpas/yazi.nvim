@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.1...v3.1.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* grug-far integration not being able to search outside of the cwd ([#256](https://github.com/mikavilpas/yazi.nvim/issues/256)) ([f446cb8](https://github.com/mikavilpas/yazi.nvim/commit/f446cb8734b839ee3bd971dd44abdf5dcd4ce0db))
+
+
+### Performance Improvements
+
+* improve lazy loading to 7 -&gt; 4 modules ([#255](https://github.com/mikavilpas/yazi.nvim/issues/255)) ([e29f633](https://github.com/mikavilpas/yazi.nvim/commit/e29f633e2d74e0e54f6580b5b4cf03a5f249fa85))
+
 ## [3.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.0...v3.1.1) (2024-07-24)
 
 
