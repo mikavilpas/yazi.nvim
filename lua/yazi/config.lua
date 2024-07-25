@@ -1,11 +1,9 @@
 ---@module "plenary.path"
 
-local openers = require('yazi.openers')
-local keybinding_helpers = require('yazi.keybinding_helpers')
-
 local M = {}
 
 function M.default()
+  local openers = require('yazi.openers')
   ---@type YaziConfig
   return {
     log_level = vim.log.levels.OFF,
@@ -63,6 +61,8 @@ end
 ---@param config YaziConfig
 ---@param context YaziActiveContext
 function M.set_keymappings(yazi_buffer, config, context)
+  local keybinding_helpers = require('yazi.keybinding_helpers')
+
   if config.keymaps == false then
     return
   end
