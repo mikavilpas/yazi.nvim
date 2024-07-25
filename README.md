@@ -240,6 +240,10 @@ You can optionally configure yazi.nvim by setting any of the options below.
       grep_in_directory = function(directory)
         -- the default implementation uses telescope if available, otherwise nothing
       end,
+      --- Similarly, search and replace in the files in the directory
+      replace_in_directory = function(directory)
+        -- default: grug-far.nvim
+      end,
     },
   },
 }
@@ -252,12 +256,13 @@ These are the default keybindings that are available when yazi is open:
 - `<c-v>`: open the selected file in a vertical split
 - `<c-x>`: open the selected file in a horizontal split
 - `<c-t>`: open the selected file in a new tab
-- `<c-s>`: close the current yazi directory using
-  [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`.
-  If telescope is not available, nothing happens. You can customize the search
-  action in your configuration.
-
-Notice that these are also the defaults for telescope.
+- There are also integrations to other plugins, which you need to install
+  separately:
+  - `<c-s>`: search in the current yazi directory using
+    [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`,
+    if available.
+  - `<c-g>`: search and replace in the current yazi directory using
+    [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
 
 ## 🪛 Customizing yazi
 
