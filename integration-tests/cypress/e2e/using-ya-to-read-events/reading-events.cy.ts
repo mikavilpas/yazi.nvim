@@ -84,6 +84,12 @@ describe("reading events", () => {
       cy.contains("If you see this text, Neovim is ready").should("not.exist")
     })
   })
+})
+
+describe("'rename' events", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:5173")
+  })
 
   it("can read 'rename' events and update the buffer name when the file was renamed", () => {
     startNeovimWithYa().then((dir) => {
@@ -110,6 +116,46 @@ describe("reading events", () => {
 
       // the buffer name should now be updated
       cy.contains(`${file.stem}2${file.extension}`)
+    })
+  })
+
+  it("can rename twice and keep track of the correct file name", () => {
+    startNeovimWithYa().then((dir) => {
+      // the default file should already be open
+      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+
+      // start file renaming
+      cy.typeIntoTerminal("r")
+      cy.contains("Rename:")
+      cy.typeIntoTerminal("2{enter}")
+
+      cy.get("Rename").should("not.exist")
+
+      // yazi should be showing the new file name
+      const file = dir.contents["initial-file.txt"]
+      cy.contains(`${file.stem}2${file.extension}`)
+
+      // close yazi
+      cy.typeIntoTerminal("q")
+
+      const newName = `${file.stem}2${file.extension}`
+      // the buffer name should now be updated
+      cy.contains(newName)
+
+      // rename a second time, returning to the original name
+      cy.typeIntoTerminal("{upArrow}")
+      cy.typeIntoTerminal("r")
+      cy.contains("Rename:")
+      cy.typeIntoTerminal("{backspace}")
+      cy.contains(`${file.stem}${file.extension}`)
+      cy.typeIntoTerminal("{enter}")
+
+      cy.typeIntoTerminal("q")
+      cy.contains(newName).should("not.exist")
     })
   })
 })
