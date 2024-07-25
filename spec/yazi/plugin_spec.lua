@@ -83,7 +83,7 @@ describe('installing a plugin', function()
 
     it('can install a plugin from a monorepo subdirectory', function()
       local plugin_monorepo_dir = vim.fs.joinpath(base_dir, 'yazi-plugins')
-      local plugin_dir = vim.fs.joinpath(plugin_monorepo_dir, 'keyjump.yazi')
+      local plugin_dir = vim.fs.joinpath(plugin_monorepo_dir, 'easyjump.yazi')
       local yazi_dir = vim.fs.joinpath(base_dir, 'fake-yazi-dir')
 
       vim.fn.mkdir(plugin_monorepo_dir)
@@ -94,11 +94,11 @@ describe('installing a plugin', function()
       plugin.build_plugin({
         dir = plugin_monorepo_dir,
         name = 'yazi-plugins',
-      }, { yazi_dir = yazi_dir, sub_dir = 'keyjump.yazi' })
+      }, { yazi_dir = yazi_dir, sub_dir = 'easyjump.yazi' })
 
       -- verify that the plugin was symlinked
       local symlink =
-        vim.uv.fs_readlink(vim.fs.joinpath(yazi_dir, 'plugins', 'keyjump.yazi'))
+        vim.uv.fs_readlink(vim.fs.joinpath(yazi_dir, 'plugins', 'easyjump.yazi'))
 
       assert.are.same(plugin_dir, symlink)
     end)

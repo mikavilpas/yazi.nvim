@@ -129,7 +129,7 @@ return {
       -- This is a plugin like flash.nvim in neovim - it allows you to jump to
       -- a line by typing the first few characters of the line.
       -- https://github.com/redbeardymcgee/yazi-plugins
-      require("yazi.plugin").build_plugin(plugin, { sub_dir = "keyjump.yazi" })
+      require("yazi.plugin").build_plugin(plugin, { sub_dir = "easyjump.yazi" })
     end,
   },
   {
