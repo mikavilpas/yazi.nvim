@@ -249,10 +249,14 @@ function M.rename_or_close_buffer(instruction)
   -- If the target buffer is already open in neovim, just close the old buffer.
   -- It causes an error to try to rename to a buffer that's already open.
   if M.is_buffer_open(instruction.path.filename) then
-    vim.api.nvim_buf_delete(instruction.bufnr, {})
-  else
-    vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
+    pcall(function()
+      vim.api.nvim_buf_delete(instruction.bufnr, { force = true })
+    end)
   end
+
+  pcall(function()
+    vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
+  end)
 end
 
 ---@param prev_win integer
