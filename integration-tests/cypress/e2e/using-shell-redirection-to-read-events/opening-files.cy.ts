@@ -31,6 +31,7 @@ describe("opening files", () => {
   it("can open a file in a vertical split", () => {
     cy.startNeovim().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+v}")
 
@@ -46,6 +47,7 @@ describe("opening files", () => {
   it("can open a file in a horizontal split", () => {
     cy.startNeovim().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+x}")
 
@@ -61,6 +63,7 @@ describe("opening files", () => {
   it("can open a file in a new tab", () => {
     cy.startNeovim().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+t}")
 
@@ -101,6 +104,7 @@ describe("opening files", () => {
   it("can open files with complex characters in their name", () => {
     cy.startNeovim().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
 
       // enter the routes/ directory
       cy.typeIntoTerminal("/routes{enter}")

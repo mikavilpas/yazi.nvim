@@ -14,6 +14,7 @@ const testDirectory = path.join(__dirname, "..", "test-environment/")
 export type StdinMessage = "stdin"
 export type StdoutMessage = "stdout"
 export type StartNeovimMessage = "startNeovim"
+export type MouseEventMessage = "mouseEvent"
 
 const expressApp = express()
 const server = createServer(expressApp)
@@ -139,6 +140,13 @@ io.on("connection", function connection(socket) {
         assert(typeof data === "string", "stdin message must be a string")
         app.write(data)
       })
+
+      socket.on(
+        "mouseEvent" satisfies MouseEventMessage,
+        function (data: string) {
+          app.write(data)
+        },
+      )
     },
   )
 })

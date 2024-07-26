@@ -6,14 +6,17 @@ import { FitAddon } from "@xterm/addon-fit"
 import { Terminal } from "@xterm/xterm"
 import io from "socket.io-client"
 import type {
+  MouseEventMessage,
   StartNeovimMessage,
   StdinMessage,
   StdoutMessage,
 } from "../server/server"
+
 import type {
   StartNeovimArguments,
   StartNeovimServerArguments,
 } from "./testEnvironmentTypes"
+import { validateMouseEvent } from "./validateMouseEvent"
 
 const app = document.querySelector<HTMLDivElement>("#app")
 if (!app) {
@@ -24,7 +27,6 @@ const terminal = new Terminal({
   cursorBlink: false,
   convertEol: true,
   fontSize: 13,
-  // letterSpacing: 0.5,
 })
 {
   const colors = flavors.macchiato.colors
@@ -111,4 +113,18 @@ socket.on(
 
 terminal.onKey((event) => {
   socket.emit("stdin" satisfies StdinMessage, event.key)
+})
+
+terminal.onData((data) => {
+  // this gets called for mouse events. However, some mouse events seem to
+  // confuse Neovim, so for now let's just send click events
+
+  if (typeof data !== "string") {
+    throw new Error(`unexpected onData message type: '${JSON.stringify(data)}'`)
+  }
+
+  const mouseEvent = validateMouseEvent(data)
+  if (mouseEvent) {
+    socket.emit("mouseEvent" satisfies MouseEventMessage, data)
+  }
 })

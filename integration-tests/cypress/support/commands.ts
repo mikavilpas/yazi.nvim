@@ -59,7 +59,7 @@ Cypress.Commands.add(
   (text: string, options?: Partial<Cypress.TypeOptions>) => {
     // the syntax for keys is described here:
     // https://docs.cypress.io/api/commands/type
-    cy.get("#app").type(text, options)
+    cy.get("textarea").focus().type(text, options)
   },
 )
 

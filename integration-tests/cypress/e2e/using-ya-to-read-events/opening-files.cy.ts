@@ -33,6 +33,7 @@ describe("opening files", () => {
   it("can open a file in a vertical split", () => {
     startNeovimWithYa().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+v}")
 
@@ -48,6 +49,7 @@ describe("opening files", () => {
   it("can open a file in a horizontal split", () => {
     startNeovimWithYa().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+x}")
 
@@ -63,6 +65,7 @@ describe("opening files", () => {
   it("can open a file in a new tab", () => {
     startNeovimWithYa().then((dir) => {
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test.lua"].name)
       cy.typeIntoTerminal("/test.lua{enter}")
       cy.typeIntoTerminal("{control+t}")
 
@@ -102,7 +105,7 @@ describe("opening files", () => {
 
   describe("bulk renaming", () => {
     it("can bulk rename files", () => {
-      startNeovimWithYa().then((_dir) => {
+      startNeovimWithYa().then((dir) => {
         // in yazi, bulk renaming is done by
         // - selecting files and pressing "r".
         // - It opens the editor with the names of the selected files.
@@ -110,6 +113,7 @@ describe("opening files", () => {
         //   file.
         // - Finally, yazi should rename the files to match the new names.
         cy.typeIntoTerminal("{upArrow}")
+        cy.contains(dir.contents["test.lua"].name)
         cy.typeIntoTerminal("{control+a}r")
 
         // yazi should now have opened an embedded Neovim. The file name should say
@@ -129,8 +133,9 @@ describe("opening files", () => {
     })
 
     it("can rename a buffer that's open in Neovim", () => {
-      startNeovimWithYa().then((_dir) => {
+      startNeovimWithYa().then((dir) => {
         cy.typeIntoTerminal("{upArrow}")
+        cy.contains(dir.contents["test.lua"].name)
         // select only the current file to make the test easier
         cy.typeIntoTerminal("v")
         cy.typeIntoTerminal("r") // start renaming
@@ -166,6 +171,7 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // enter the routes/ directory
+      cy.contains("routes")
       cy.typeIntoTerminal("/routes{enter}")
       cy.typeIntoTerminal("{rightArrow}")
       cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
