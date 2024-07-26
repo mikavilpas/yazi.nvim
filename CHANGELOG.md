@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.6](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.5...v3.1.6) (2024-07-26)
+
+
+### Bug Fixes
+
+* escape spaces in paths for grug-far integration ([#267](https://github.com/mikavilpas/yazi.nvim/issues/267)) ([f265e95](https://github.com/mikavilpas/yazi.nvim/commit/f265e957399ae80ffbbd63d75cef35c9f6b574ab))
+
 ## [3.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.4...v3.1.5) (2024-07-25)
 
 
