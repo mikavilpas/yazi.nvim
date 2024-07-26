@@ -55,6 +55,13 @@ export default [
         },
       ],
 
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        {
+          allowNumber: true,
+          allowBoolean: true,
+        },
+      ],
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/explicit-module-boundary-types": ["warn"],

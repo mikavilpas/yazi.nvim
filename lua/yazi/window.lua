@@ -86,6 +86,13 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
   vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
 
+  vim.api.nvim_create_autocmd({ 'WinLeave', 'TermLeave' }, {
+    buffer = yazi_buffer,
+    callback = function()
+      self:close()
+    end,
+  })
+
   if self.config.enable_mouse_support == true then
     self:add_hacky_mouse_support(yazi_buffer)
   end
