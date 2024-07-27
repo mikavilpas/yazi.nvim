@@ -20,6 +20,7 @@ export type StartupScriptModification =
   | "modify_yazi_config_and_add_hovered_buffer_background.lua"
   | "use_light_neovim_colorscheme.lua"
   | "report_loaded_yazi_modules.lua"
+  | "modify_yazi_config_and_set_help_key.lua"
 
 declare global {
   interface Window {

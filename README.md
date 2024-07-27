@@ -20,7 +20,7 @@ open yazi in a floating window in Neovim.
 
 ## ✨ Features
 
-- Open yazi in a floating window
+- Open yazi in a floating window. Press `<f1>` to display all keymaps!
 - Files can be selected in yazi and opened in the current buffer, a vertical
   split, a horizontal split, or a new tab
 - If multiple files are selected, they can be sent to the quickfix list
@@ -102,6 +102,10 @@ This is the preferred installation method.
     -- enable these if you are using the latest version of yazi
     -- use_ya_for_events_reading = true,
     -- use_yazi_client_id_flag = true,
+
+    keymaps = {
+      show_help = '<f1>',
+    },
   },
 }
 ```
@@ -201,6 +205,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- - use e.g. `open_file_in_tab = false` to disable a keymap
     -- - you can customize only some of the keymaps if you want
     keymaps = {
+      show_help = '<f1>',
       open_file_in_vertical_split = '<c-v>',
       open_file_in_horizontal_split = '<c-x>',
       open_file_in_tab = '<c-t>',
