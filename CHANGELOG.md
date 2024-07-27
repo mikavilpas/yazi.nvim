@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.8](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.7...v3.1.8) (2024-07-27)
+
+
+### Bug Fixes
+
+* not being able to open directories with enter ([#272](https://github.com/mikavilpas/yazi.nvim/issues/272)) ([d70bb91](https://github.com/mikavilpas/yazi.nvim/commit/d70bb91569a472e5d9876bf445b161e7be087831))
+
 ## [3.1.7](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.6...v3.1.7) (2024-07-26)
 
 
