@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.2.0...v3.3.0) (2024-07-27)
+
+
+### Features
+
+* can limit search and replace to selected files only ([#277](https://github.com/mikavilpas/yazi.nvim/issues/277)) ([5a12444](https://github.com/mikavilpas/yazi.nvim/commit/5a12444e811925f8454483061a8313211a6d618c))
+
 ## [3.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.8...v3.2.0) (2024-07-27)
 
 
