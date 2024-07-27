@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.8...v3.2.0) (2024-07-27)
+
+
+### Features
+
+* can toggle help menu with `&lt;f1&gt;` key in the yazi window ([#275](https://github.com/mikavilpas/yazi.nvim/issues/275)) ([cc65bb5](https://github.com/mikavilpas/yazi.nvim/commit/cc65bb57abb970b7f5c1ce8db498f9712c3462cf))
+
 ## [3.1.8](https://github.com/mikavilpas/yazi.nvim/compare/v3.1.7...v3.1.8) (2024-07-27)
 
 
