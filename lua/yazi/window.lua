@@ -1,3 +1,5 @@
+local Log = require('yazi.log')
+
 local M = {}
 
 ---@class (exact) YaziFloatingWindow
@@ -38,6 +40,13 @@ function YaziFloatingWindow:close()
 
   if vim.api.nvim_win_is_valid(self.win) then
     vim.api.nvim_win_close(self.win, true)
+    Log:debug(
+      string.format(
+        'YaziFloatingWindow closing (content_buffer: %s, win: %s)',
+        self.content_buffer,
+        self.win
+      )
+    )
   end
 end
 
@@ -77,6 +86,13 @@ function YaziFloatingWindow:open_and_display()
   local win = vim.api.nvim_open_win(yazi_buffer, true, opts)
   self.win = win
   self.content_buffer = yazi_buffer
+  Log:debug(
+    string.format(
+      'YaziFloatingWindow opening (content_buffer: %s, win: %s)',
+      self.content_buffer,
+      self.win
+    )
+  )
 
   vim.bo[yazi_buffer].filetype = 'yazi'
 
@@ -86,7 +102,7 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
   vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
 
-  vim.api.nvim_create_autocmd({ 'WinLeave', 'TermLeave' }, {
+  vim.api.nvim_create_autocmd({ 'WinLeave' }, {
     buffer = yazi_buffer,
     callback = function()
       self:close()

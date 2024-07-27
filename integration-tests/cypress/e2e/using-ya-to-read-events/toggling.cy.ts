@@ -25,20 +25,20 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       // saved as the "last hovered file"
 
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-        dir.contents["test.lua"].name,
+        dir.contents["test-setup.lua"].name,
       )
 
       // close yazi
       cy.typeIntoTerminal("q")
 
       // the hovered file should not be visible any longer
-      cy.contains(dir.contents["test.lua"].name).should("not.exist")
+      cy.contains(dir.contents["test-setup.lua"].name).should("not.exist")
 
       // start yazi again by toggling it
       cy.typeIntoTerminal("{control+upArrow}")
 
       // the previously hovered file should be visible again
-      cy.contains(dir.contents["test.lua"].name)
+      cy.contains(dir.contents["test-setup.lua"].name)
     })
   })
 
@@ -51,7 +51,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       cy.typeIntoTerminal("{control+upArrow}")
 
       // yazi should be visible, showing other files
-      cy.contains(dir.contents["test.lua"].name)
+      cy.contains(dir.contents["test-setup.lua"].name)
     })
   })
 })

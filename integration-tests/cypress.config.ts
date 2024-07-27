@@ -78,9 +78,9 @@ export default defineConfig({
                   stem: "initial-file",
                   extension: ".txt",
                 },
-                "test.lua": {
-                  name: "test.lua",
-                  stem: "test",
+                "test-setup.lua": {
+                  name: "test-setup.lua",
+                  stem: "test-setup",
                   extension: ".lua",
                 },
                 "file.txt": {
@@ -119,7 +119,9 @@ export default defineConfig({
 
             execSync(`cp ./test-environment/initial-file.txt ${dir}/`)
             execSync(`cp ./test-environment/file.txt ${dir}/`)
-            execSync(`cp ./test-environment/test-setup.lua ${dir}/test.lua`)
+            execSync(
+              `cp ./test-environment/test-setup.lua ${dir}/test-setup.lua`,
+            )
             execSync(`cp -r ./test-environment/subdirectory ${dir}/`)
             execSync(`cp -r ./test-environment/other-subdirectory ${dir}/`)
             execSync(`cp -r ./test-environment/config-modifications/ ${dir}/`)

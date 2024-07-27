@@ -65,7 +65,7 @@ export type TestDirectory = {
 
   contents: {
     ["initial-file.txt"]: FileEntry
-    ["test.lua"]: FileEntry
+    ["test-setup.lua"]: FileEntry
     ["file.txt"]: FileEntry
     ["modify_yazi_config_to_use_ya_as_event_reader.lua"]: FileEntry
     ["subdirectory/subdirectory-file.txt"]: FileEntry
