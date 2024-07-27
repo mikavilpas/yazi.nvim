@@ -9,8 +9,9 @@ describe("opening directories", () => {
       filename: ".",
     }).then((dir) => {
       // yazi should now be visible, showing the names of adjacent files
-      cy.contains(dir.contents["file.txt"].name)
-      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains(dir.contents["test-setup.lua"].name)
+
+      cy.typeIntoTerminal("{downArrow}")
     })
   })
 })

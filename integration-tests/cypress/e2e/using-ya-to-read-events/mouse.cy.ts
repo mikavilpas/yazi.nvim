@@ -14,7 +14,7 @@ describe("mouse support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should be showing adjacent files
-      cy.contains(dir.contents["test.lua"].name)
+      cy.contains(dir.contents["test-setup.lua"].name)
 
       // click outside of the yazi floating window. This should close it
       // because it's designed to close when it loses focus

@@ -73,7 +73,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi is shown and adjacent files should be visible now
-      cy.contains(dir.contents["test.lua"].name)
+      cy.contains(dir.contents["test-setup.lua"].name)
 
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
         dir.contents["initial-file.txt"].name,
@@ -85,7 +85,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       isHovered("If you see this text, Neovim is ready!")
 
       // hover another file - the highlight should be removed
-      cy.typeIntoTerminal(`/^${dir.contents["test.lua"].name}{enter}`)
+      cy.typeIntoTerminal(`/^${dir.contents["test-setup.lua"].name}{enter}`)
 
       isNotHovered("If you see this text, Neovim is ready!")
     })
@@ -100,7 +100,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       // wait until text on the start screen is visible
       isNotHovered("f you see this text, Neovim is ready!")
 
-      const testFile = dir.contents["test.lua"].name
+      const testFile = dir.contents["test-setup.lua"].name
       // open an adjacent file and wait for it to be displayed
       cy.typeIntoTerminal(
         `:vsplit ${dir.rootPathAbsolute}/${testFile}{enter}`,
@@ -139,7 +139,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         cy.typeIntoTerminal("{upArrow}")
 
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-          dir.contents["test.lua"].name,
+          dir.contents["test-setup.lua"].name,
         )
 
         // yazi is shown and adjacent files should be visible now
@@ -172,7 +172,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         cy.typeIntoTerminal("{upArrow}")
 
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-          dir.contents["test.lua"].name,
+          dir.contents["test-setup.lua"].name,
         )
 
         // yazi is shown and adjacent files should be visible now
