@@ -268,6 +268,8 @@ These are the default keybindings that are available when yazi is open:
     if available.
   - `<c-g>`: search and replace in the current yazi directory using
     [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
+    - if multiple files/directories are selected in yazi, the search and replace
+      will only be done in the selected files/directories
 
 ## 🪛 Customizing yazi
 

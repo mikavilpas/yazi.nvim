@@ -205,7 +205,7 @@ function M.set_keymappings(yazi_buffer, config, context)
         relative = 'win',
         bufpos = { 5, 30 },
         noautocmd = true,
-        width = math.min(40, math.floor(w * 0.5)),
+        width = math.min(46, math.floor(w * 0.5)),
         height = math.min(11, math.floor(h * 0.5)),
         border = config.yazi_floating_window_border,
       })
@@ -223,7 +223,9 @@ function M.set_keymappings(yazi_buffer, config, context)
           .. config.keymaps.open_file_in_vertical_split
           .. ' - open file in vertical split',
         '' .. config.keymaps.grep_in_directory .. ' - search in directory',
-        '' .. config.keymaps.replace_in_directory .. ' - replace in directory',
+        ''
+          .. config.keymaps.replace_in_directory
+          .. ' - replace in directory / selected files',
         '' .. config.keymaps.cycle_open_buffers .. ' - cycle open buffers',
         '' .. config.keymaps.show_help .. ' - show this help',
         '',
