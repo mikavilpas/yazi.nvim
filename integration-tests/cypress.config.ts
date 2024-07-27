@@ -113,6 +113,11 @@ export default defineConfig({
                   stem: "route",
                   extension: ".tsx",
                 },
+                "routes/posts.$postId/should-be-excluded-file.txt": {
+                  name: "should-be-excluded-file.txt",
+                  stem: "should-be-excluded-file",
+                  extension: ".txt",
+                },
               },
             }
             directory satisfies Serializable // required by cypress

@@ -1,12 +1,12 @@
 export type MultipleFiles = {
-  openInVerticalSplits: File[]
+  openInVerticalSplits: IntegrationTestFile[]
 }
 
-type File = TestDirectoryFile | "."
+export type IntegrationTestFile = TestDirectoryFile | "."
 
 /** The arguments given from the tests to send to the server */
 export type StartNeovimArguments = {
-  filename?: File | MultipleFiles
+  filename?: IntegrationTestFile | MultipleFiles
   startupScriptModifications?: StartupScriptModification[]
 }
 
@@ -73,6 +73,7 @@ export type TestDirectory = {
     ["other-subdirectory/other-sub-file.txt"]: FileEntry
     ["routes/posts.$postId/route.tsx"]: FileEntry
     ["routes/posts.$postId/adjacent-file.txt"]: FileEntry
+    ["routes/posts.$postId/should-be-excluded-file.txt"]: FileEntry
   }
 }
 
