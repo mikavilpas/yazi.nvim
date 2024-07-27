@@ -20,6 +20,7 @@ function M.default()
       grep_in_directory = '<c-s>',
       replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
+      show_help = '<f1>',
     },
     set_keymappings_function = nil,
     hooks = {
@@ -151,6 +152,53 @@ function M.set_keymappings(yazi_buffer, config, context)
           end
         end,
       })
+    end, { buffer = yazi_buffer })
+  end
+
+  if config.keymaps.show_help ~= false then
+    vim.keymap.set({ 't' }, config.keymaps.show_help, function()
+      local w = vim.api.nvim_win_get_width(0)
+      local h = vim.api.nvim_win_get_height(0)
+
+      local help_buffer = vim.api.nvim_create_buf(false, true)
+      local win = vim.api.nvim_open_win(help_buffer, true, {
+        style = 'minimal',
+        relative = 'win',
+        bufpos = { 5, 30 },
+        noautocmd = true,
+        width = math.min(40, math.floor(w * 0.5)),
+        height = math.min(11, math.floor(h * 0.5)),
+        border = config.yazi_floating_window_border,
+      })
+
+      -- write the help text. Hopefully the vim help syntax is always bundled
+      -- and available so that nice highlights can be shown.
+      vim.api.nvim_buf_set_lines(help_buffer, 0, -1, false, {
+        'yazi.nvim help (`q` to close):',
+        '',
+        '' .. config.keymaps.open_file_in_tab .. ' - open file in tab',
+        ''
+          .. config.keymaps.open_file_in_horizontal_split
+          .. ' - open file in horizontal split',
+        ''
+          .. config.keymaps.open_file_in_vertical_split
+          .. ' - open file in vertical split',
+        '' .. config.keymaps.grep_in_directory .. ' - search in directory',
+        '' .. config.keymaps.replace_in_directory .. ' - replace in directory',
+        '' .. config.keymaps.cycle_open_buffers .. ' - cycle open buffers',
+        '' .. config.keymaps.show_help .. ' - show this help',
+        '',
+        'version *' .. require('yazi').version .. '*',
+      })
+
+      vim.api.nvim_set_option_value('filetype', 'help', { buf = help_buffer })
+      vim.api.nvim_set_option_value('modifiable', false, { buf = help_buffer })
+
+      -- exit with q
+      vim.keymap.set({ 'n' }, 'q', function()
+        vim.api.nvim_win_close(win, true)
+        vim.cmd('startinsert')
+      end, { buffer = help_buffer })
     end, { buffer = yazi_buffer })
   end
 end
