@@ -43,7 +43,8 @@
 
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? fun(directory: string): nil "a function that will be called when the user wants to grep in a directory"
----@field public replace_in_directory? fun(directory: Path): nil "called to start a replacement operation on some directory; by default grug-far.nvim"
+---@field public replace_in_directory? fun(directory: Path, selected_files?: Path[]): nil "called to start a replacement operation on some directory; by default uses grug-far.nvim"
+---@field public replace_in_selected_files? fun(selected_files?: Path[]): nil "called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim"
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi

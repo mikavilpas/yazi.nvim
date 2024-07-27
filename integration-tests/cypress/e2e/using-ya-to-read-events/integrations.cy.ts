@@ -1,7 +1,8 @@
 import path = require("path")
+import type { IntegrationTestFile } from "../../../client/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 
-describe("integrations to other tools", () => {
+describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173")
   })
@@ -12,6 +13,7 @@ describe("integrations to other tools", () => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.typeIntoTerminal("/routes{enter}")
+      cy.contains("posts.$postId") // contents of the directory should be visible
       cy.typeIntoTerminal("{rightArrow}")
 
       // contents in the directory should be visible in yazi
@@ -33,6 +35,39 @@ describe("integrations to other tools", () => {
       // maybe we don't want to make too many assertions on code we don't own
       // though, so for now we trust that it works in CI, and can verify it
       // works locally
+    })
+  })
+
+  it("can search and replace, limited to selected files only", () => {
+    startNeovimWithYa({
+      filename: "routes/posts.$postId/adjacent-file.txt",
+    }).then((dir) => {
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+
+      // select the current file and the file below. There are three files in
+      // this directory so two will be selected and one will be left
+      // unselected
+      cy.typeIntoTerminal("vj")
+      cy.typeIntoTerminal("{control+g}")
+
+      cy.typeIntoTerminal("ithis")
+      cy.typeIntoTerminal("{esc}")
+
+      // close the split on the right so we can get some more space
+      cy.typeIntoTerminal(":only{enter}")
+
+      // the selected files should be visible in the view, used as the files to
+      // whitelist into the search and replace operation
+      type File = IntegrationTestFile
+      cy.contains("routes/posts.$postId/adjacent-file.txt" satisfies File)
+      cy.contains("routes/posts.$postId/route.tsx" satisfies File)
+
+      // the files in the same directory that were not selected should not be
+      // visible in the view
+      cy.contains(
+        "routes/posts.$postId/should-be-excluded-file.txt" satisfies File,
+      ).should("not.exist")
     })
   })
 })
