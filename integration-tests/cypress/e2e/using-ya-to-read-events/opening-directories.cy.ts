@@ -28,4 +28,26 @@ describe("opening directories", () => {
       cy.contains(dir.contents["test-setup.lua"].name)
     })
   })
+
+  it("can open a directory when pressing enter on a directory in yazi", () => {
+    cy.visit("http://localhost:5173")
+    startNeovimWithYa().then((dir) => {
+      // yazi should now be visible, showing the names of adjacent files
+      cy.contains(dir.contents["initial-file.txt"].name)
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test-setup.lua"].name)
+
+      // select a directory
+      cy.typeIntoTerminal("/routes{enter}")
+      // the contents of the directory should now be visible
+      cy.contains("posts.$postId")
+
+      // open the directory
+      cy.typeIntoTerminal("{enter}")
+
+      // yazi should now be visible in the new directory
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+    })
+  })
 })
