@@ -229,26 +229,32 @@ function M.set_keymappings(yazi_buffer, config, context)
         border = config.yazi_floating_window_border,
       })
 
+      local function show(key)
+        return key or '<Nop>'
+      end
+
       -- write the help text. Hopefully the vim help syntax is always bundled
       -- and available so that nice highlights can be shown.
       vim.api.nvim_buf_set_lines(help_buffer, 0, -1, false, {
         'yazi.nvim help (`q` to close):',
         '',
-        '' .. config.keymaps.open_file_in_tab .. ' - open file in tab',
+        '' .. show(config.keymaps.open_file_in_tab) .. ' - open file in tab',
         ''
-          .. config.keymaps.open_file_in_horizontal_split
+          .. show(config.keymaps.open_file_in_horizontal_split)
           .. ' - open file in horizontal split',
         ''
-          .. config.keymaps.open_file_in_vertical_split
+          .. show(config.keymaps.open_file_in_vertical_split)
           .. ' - open file in vertical split',
         ''
-          .. config.keymaps.grep_in_directory
+          .. show(config.keymaps.grep_in_directory)
           .. ' - search in directory / selected files',
         ''
-          .. config.keymaps.replace_in_directory
+          .. show(config.keymaps.replace_in_directory)
           .. ' - replace in directory / selected files',
-        '' .. config.keymaps.cycle_open_buffers .. ' - cycle open buffers',
-        '' .. config.keymaps.show_help .. ' - show this help',
+        ''
+          .. show(config.keymaps.cycle_open_buffers)
+          .. ' - cycle open buffers',
+        '' .. show(config.keymaps.show_help) .. ' - show this help',
         '',
         'version *' .. require('yazi').version .. '*',
       })

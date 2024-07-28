@@ -21,6 +21,7 @@ export type StartupScriptModification =
   | "use_light_neovim_colorscheme.lua"
   | "report_loaded_yazi_modules.lua"
   | "modify_yazi_config_and_set_help_key.lua"
+  | "disable_a_keybinding.lua"
 
 declare global {
   interface Window {

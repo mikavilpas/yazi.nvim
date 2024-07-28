@@ -92,6 +92,15 @@ io.on("connection", function connection(socket) {
               args.push("-c", `lua dofile('${file}')`)
               break
             }
+            case "disable_a_keybinding.lua": {
+              const file = path.join(
+                testDirectory,
+                "config-modifications",
+                "disable_a_keybinding.lua",
+              )
+              args.push("-c", `lua dofile('${file}')`)
+              break
+            }
             default:
               modification satisfies never
               throw new Error(
