@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.0.1...v4.1.0) (2024-07-28)
+
+
+### Features
+
+* `&lt;c-y&gt;` to copy relative path to selected file(s) ([#287](https://github.com/mikavilpas/yazi.nvim/issues/287)) ([dd8995e](https://github.com/mikavilpas/yazi.nvim/commit/dd8995e9783c7a424cdbb37fab4c072177355bcc))
+
 ## [4.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v4.0.0...v4.0.1) (2024-07-28)
 
 
