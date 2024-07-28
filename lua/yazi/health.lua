@@ -108,6 +108,12 @@ return {
       end
     end
 
+    if config.open_for_directories == true then
+      vim.health.info(
+        'You have enabled `open_for_directories` in your config. Because of this, please make sure you are loading yazi when Neovim starts.'
+      )
+    end
+
     vim.health.ok('yazi')
   end,
 }
