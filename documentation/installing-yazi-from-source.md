@@ -11,6 +11,14 @@ If you need the latest version of yazi, you can install it from source. This is
 useful if you want to try out the latest features or if you want to contribute
 to the project.
 
+> [!WARNING]
+>
+> yazi.nvim tracks a recent version of yazi, but it might not always be the very
+> latest version. Most of the time, the latest yazi version is compatible with
+> yazi.nvim, but there might be exceptions. If you run into issues, you can try
+> installing the version used in testing. The version can be found in
+> [test.yml](../.github/workflows/test.yml).
+
 > [!NOTE]
 >
 > Keep in mind that installing from source might be more complex than installing
