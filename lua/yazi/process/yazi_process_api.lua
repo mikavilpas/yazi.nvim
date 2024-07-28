@@ -19,10 +19,9 @@ function YaziProcessApi:cd(path)
     self.config.use_ya_for_events_reading == true
     and self.config.use_yazi_client_id_flag == true
   then
-    -- ya pub --str "/" dds-cd 1760127405452166
     assert(path, 'path is required')
     vim.system(
-      { 'ya', 'pub', '--str', path, 'dds-cd', self.yazi_id },
+      { 'ya', 'pub-to', self.yazi_id, '--str', path, 'dds-cd' },
       { timeout = 1000 }
     )
   end

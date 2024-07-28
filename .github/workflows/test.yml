@@ -29,9 +29,9 @@ jobs:
           # yazi-fm is the `yazi` executable
           crate: yazi-fm
           git: https://github.com/sxyazi/yazi
-          # refactor: reimplement the signal system (#1307)
-          # https://github.com/sxyazi/yazi/commit/d6081fbe6f57
-          commit: d6081fbe6f57
+          # feat: new extract builtin plugin for archive extracting (#1321)
+          # https://github.com/sxyazi/yazi/commit/bce0fc1175c855ecb2dbee6f8575857b1e9616d4
+          commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
 
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3
@@ -39,9 +39,9 @@ jobs:
           # yazi-cli is the `ya` command line interface
           crate: yazi-cli
           git: https://github.com/sxyazi/yazi
-          # refactor: reimplement the signal system (#1307)
-          # https://github.com/sxyazi/yazi/commit/d6081fbe6f57
-          commit: d6081fbe6f57
+          # feat: new extract builtin plugin for archive extracting (#1321)
+          # https://github.com/sxyazi/yazi/commit/bce0fc1175c855ecb2dbee6f8575857b1e9616d4
+          commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1
