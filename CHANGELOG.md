@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v4.0.0...v4.0.1) (2024-07-28)
+
+
+### Bug Fixes
+
+* help menu crashing when a keybinding is disabled ([#285](https://github.com/mikavilpas/yazi.nvim/issues/285)) ([dca52dd](https://github.com/mikavilpas/yazi.nvim/commit/dca52dd35ab76b6b6a994c1e7f2dc908cf15957d))
+
 ## [4.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.5.0...v4.0.0) (2024-07-28)
 
 
