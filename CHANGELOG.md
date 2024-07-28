@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.3.0...v3.4.0) (2024-07-28)
+
+
+### Features
+
+* allow searching in selected files with telescope ([#279](https://github.com/mikavilpas/yazi.nvim/issues/279)) ([55e98d8](https://github.com/mikavilpas/yazi.nvim/commit/55e98d867104490ab7a139f55578d0300d4c8f1d))
+
 ## [3.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.2.0...v3.3.0) (2024-07-27)
 
 
