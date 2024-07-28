@@ -241,12 +241,17 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
     integrations = {
       --- What should be done when the user wants to grep in a directory
-      ---@param directory string
       grep_in_directory = function(directory)
         -- the default implementation uses telescope if available, otherwise nothing
       end,
+      grep_in_selected_files = function(selected_files)
+        -- similar to grep_in_directory, but for selected files
+      end,
       --- Similarly, search and replace in the files in the directory
       replace_in_directory = function(directory)
+        -- default: grug-far.nvim
+      end,
+      replace_in_selected_files = function(selected_files)
         -- default: grug-far.nvim
       end,
     },
@@ -266,10 +271,12 @@ These are the default keybindings that are available when yazi is open:
   - `<c-s>`: search in the current yazi directory using
     [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`,
     if available.
-  - `<c-g>`: search and replace in the current yazi directory using
-    [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
     - if multiple files/directories are selected in yazi, the search and replace
       will only be done in the selected files/directories
+  - `<c-g>`: search and replace in the current yazi directory using
+    [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
+    - if multiple files/directories are selected in yazi, the operation is
+      limited to those only
 
 ## 🪛 Customizing yazi
 

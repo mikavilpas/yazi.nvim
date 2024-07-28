@@ -41,6 +41,19 @@ function M.default()
           cwd = directory,
         })
       end,
+      grep_in_selected_files = function(selected_files)
+        ---@type string[]
+        local files = {}
+        for _, path in ipairs(selected_files) do
+          files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(' ', '\\ ')
+        end
+
+        require('telescope.builtin').live_grep({
+          search = '',
+          prompt_title = string.format('Grep in %d paths', #files),
+          search_dirs = files,
+        })
+      end,
       replace_in_directory = function(directory)
         -- limit the search to the given path
         --
@@ -114,18 +127,20 @@ function M.set_keymappings(yazi_buffer, config, context)
             return
           end
 
-          local success, result_or_error = pcall(
-            config.integrations.grep_in_directory,
-            state.last_directory.filename
-          )
-
-          if not success then
-            local message = 'yazi.nvim: error searching with telescope.'
-            vim.notify(message, vim.log.levels.WARN)
-            require('yazi.log'):debug(
-              vim.inspect({ message = message, error = result_or_error })
-            )
+          config.integrations.grep_in_directory(state.last_directory.filename)
+        end,
+        on_multiple_files_opened = function(chosen_files)
+          if config.integrations.grep_in_selected_files == nil then
+            return
           end
+
+          local plenary_path = require('plenary.path')
+          local paths = {}
+          for _, path in ipairs(chosen_files) do
+            table.insert(paths, plenary_path:new(path))
+          end
+
+          config.integrations.grep_in_selected_files(paths)
         end,
       })
     end, { buffer = yazi_buffer })
@@ -144,13 +159,13 @@ function M.set_keymappings(yazi_buffer, config, context)
   end
 
   if config.keymaps.replace_in_directory ~= false then
-    if config.integrations.replace_in_directory == nil then
-      return
-    end
-
     vim.keymap.set({ 't' }, config.keymaps.replace_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
         on_file_opened = function(_, _, state)
+          if config.integrations.replace_in_directory == nil then
+            return
+          end
+
           -- search and replace in the directory
           local success, result_or_error = pcall(
             config.integrations.replace_in_directory,
@@ -169,6 +184,10 @@ function M.set_keymappings(yazi_buffer, config, context)
           end
         end,
         on_multiple_files_opened = function(chosen_files)
+          if config.integrations.replace_in_selected_files == nil then
+            return
+          end
+
           -- limit the replace operation to the selected files only
           local plenary_path = require('plenary.path')
           local paths = {}
@@ -222,7 +241,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         ''
           .. config.keymaps.open_file_in_vertical_split
           .. ' - open file in vertical split',
-        '' .. config.keymaps.grep_in_directory .. ' - search in directory',
+        ''
+          .. config.keymaps.grep_in_directory
+          .. ' - search in directory / selected files',
         ''
           .. config.keymaps.replace_in_directory
           .. ' - replace in directory / selected files',
