@@ -1,15 +1,57 @@
-local fn = vim.fn
 local RenameableBuffer = require('yazi.renameable_buffer')
 local plenary_path = require('plenary.path')
 
 local M = {}
 
+---@param config YaziConfig
+---@param current_file_dir string
+---@param selected_file string
+---@return string
+function M.relative_path(config, current_file_dir, selected_file)
+  local command = config.integrations.resolve_relative_path_application
+
+  if vim.fn.executable(command) == 0 then
+    local msg =
+      'error copying relative_path. Try running `:healthcheck yazi` for more information.'
+    vim.notify(msg)
+    error(msg)
+  end
+
+  assert(command ~= nil, 'realpath command must be set')
+
+  ---@type Path
+  local start_path = plenary_path:new(current_file_dir)
+  local start_directory = nil
+  if start_path:is_dir() then
+    start_directory = start_path
+  else
+    start_directory = start_path:parent()
+  end
+
+  local stdout, exit_code, stderr = require('plenary.job')
+    :new({
+      command = command,
+      args = { '--relative-to', start_directory.filename, selected_file },
+    })
+    :sync()
+
+  if exit_code ~= 0 or stdout == nil or stdout == '' then
+    vim.notify('error copying relative_path, exit code ' .. exit_code)
+    error('error running command, exit code ' .. exit_code)
+    print(vim.inspect(stderr))
+  end
+
+  local path = stdout[1]
+
+  return path
+end
+
 function M.is_yazi_available()
-  return fn.executable('yazi') == 1
+  return vim.fn.executable('yazi') == 1
 end
 
 function M.is_ya_available()
-  return fn.executable('ya') == 1
+  return vim.fn.executable('ya') == 1
 end
 
 function M.file_exists(name)

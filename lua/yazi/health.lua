@@ -114,6 +114,22 @@ return {
       )
     end
 
+    local resolver = config.integrations.resolve_relative_path_application
+    if
+      config.keymaps.copy_relative_path_to_selected_files ~= false
+      and vim.fn.executable(resolver) ~= 1
+    then
+      vim.health.warn(
+        string.format(
+          'The `resolve_relative_path_application` (`%s`) is not found on PATH. Please either install it, make sure it is on your PATH, or set `config.keymaps.copy_relative_path_to_selected_files = nil` in your configuration.',
+          resolver
+        )
+      )
+      vim.health.info(
+        'The default application (realpath) should be installed on most linux systems by default. On OSX, the default (grealpath) can be found in https://formulae.brew.sh/formula/coreutils'
+      )
+    end
+
     vim.health.ok('yazi')
   end,
 }

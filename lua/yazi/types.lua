@@ -19,17 +19,19 @@
 ---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
+---@field public clipboard_register? string the register to use for copying. Defaults to "*", the system clipboard
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
 ---@class YaziKeymaps # The keybindings that are set by yazi, and can be overridden by the user. Will be set to a default value if not given explicitly
+---@field show_help? YaziKeymap # Show a help menu with all the keybindings
 ---@field open_file_in_vertical_split? YaziKeymap # When a file is hovered, open it in a vertical split
 ---@field open_file_in_horizontal_split? YaziKeymap # When a file is hovered, open it in a horizontal split
 ---@field open_file_in_tab? YaziKeymap # When a file is hovered, open it in a new tab
 ---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
 ---@field replace_in_directory? YaziKeymap # Close yazi and open a replacer (default: grug-far.nvim) narrowed to the directory yazi is in
 ---@field cycle_open_buffers? YaziKeymap # When Neovim has multiple splits open and visible, make yazi jump to the directory of the next one
----@field show_help? YaziKeymap # Show a help menu with all the keybindings
+---@field copy_relative_path_to_selected_files? YaziKeymap # Copy the relative paths of the selected files to the clipboard
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi
@@ -46,6 +48,7 @@
 ---@field public grep_in_selected_files? fun(selected_files: Path[]): nil"called to grep on files that were selected in yazi"
 ---@field public replace_in_directory? fun(directory: Path, selected_files?: Path[]): nil "called to start a replacement operation on some directory; by default uses grug-far.nvim"
 ---@field public replace_in_selected_files? fun(selected_files?: Path[]): nil "called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim"
+---@field public resolve_relative_path_application? string "the application that will be used to resolve relative paths. By default, this is GNU `realpath` on Linux and `grealpath` on macOS"
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi

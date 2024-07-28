@@ -212,6 +212,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
       grep_in_directory = '<c-s>',
       replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
+      copy_relative_path_to_selected_files = '<c-y>',
     },
 
     -- completely override the keymappings for yazi. This function will be
@@ -222,6 +223,10 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
     -- more information, see :h nvim_open_win
     yazi_floating_window_border = 'rounded',
+
+    -- some yazi.nvim commands copy text to the clipboard. This is the register
+    -- yazi.nvim should use for copying. Defaults to "*", the system clipboard
+    clipboard_register = "*",
 
     hooks = {
       -- if you want to execute a custom action when yazi has been opened,
@@ -254,6 +259,8 @@ You can optionally configure yazi.nvim by setting any of the options below.
       replace_in_selected_files = function(selected_files)
         -- default: grug-far.nvim
       end,
+      -- `grealpath` on OSX, (GNU) `realpath` otherwise
+      resolve_relative_path_application = ""
     },
   },
 }

@@ -7,7 +7,8 @@ describe('installing a plugin', function()
 
   before_each(function()
     stub(vim, 'notify')
-    -- convert the unique name from a file to a directory
+
+    -- refuse to remove anything outside of /tmp/
     assert(base_dir:match('/tmp/'), 'Failed to create a temporary directory')
     os.remove(base_dir)
     vim.fn.mkdir(base_dir, 'p')
@@ -97,8 +98,9 @@ describe('installing a plugin', function()
       }, { yazi_dir = yazi_dir, sub_dir = 'easyjump.yazi' })
 
       -- verify that the plugin was symlinked
-      local symlink =
-        vim.uv.fs_readlink(vim.fs.joinpath(yazi_dir, 'plugins', 'easyjump.yazi'))
+      local symlink = vim.uv.fs_readlink(
+        vim.fs.joinpath(yazi_dir, 'plugins', 'easyjump.yazi')
+      )
 
       assert.are.same(plugin_dir, symlink)
     end)

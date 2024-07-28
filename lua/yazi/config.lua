@@ -4,6 +4,14 @@ local M = {}
 
 function M.default()
   local openers = require('yazi.openers')
+
+  local relpath = nil
+  if vim.uv.os_uname().sysname == 'Darwin' then
+    relpath = 'grealpath'
+  else
+    relpath = 'realpath'
+  end
+
   ---@type YaziConfig
   return {
     log_level = vim.log.levels.OFF,
@@ -13,14 +21,16 @@ function M.default()
     use_yazi_client_id_flag = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
+    clipboard_register = '*',
     keymaps = {
+      show_help = '<f1>',
       open_file_in_vertical_split = '<c-v>',
       open_file_in_horizontal_split = '<c-x>',
       open_file_in_tab = '<c-t>',
       grep_in_directory = '<c-s>',
       replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
-      show_help = '<f1>',
+      copy_relative_path_to_selected_files = '<c-y>',
     },
     set_keymappings_function = nil,
     hooks = {
@@ -32,7 +42,6 @@ function M.default()
     highlight_groups = {
       hovered_buffer = nil,
     },
-
     integrations = {
       grep_in_directory = function(directory)
         require('telescope.builtin').live_grep({
@@ -79,6 +88,7 @@ function M.default()
           },
         })
       end,
+      resolve_relative_path_application = relpath,
     },
 
     floating_window_scaling_factor = 0.9,
@@ -225,7 +235,7 @@ function M.set_keymappings(yazi_buffer, config, context)
         bufpos = { 5, 30 },
         noautocmd = true,
         width = math.min(46, math.floor(w * 0.5)),
-        height = math.min(11, math.floor(h * 0.5)),
+        height = math.min(12, math.floor(h * 0.5)),
         border = config.yazi_floating_window_border,
       })
 
@@ -254,6 +264,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         ''
           .. show(config.keymaps.cycle_open_buffers)
           .. ' - cycle open buffers',
+        ''
+          .. show(config.keymaps.copy_relative_path_to_selected_files)
+          .. ' - copy relative path to selected file(s)',
         '' .. show(config.keymaps.show_help) .. ' - show this help',
         '',
         'version *' .. require('yazi').version .. '*',
@@ -268,6 +281,44 @@ function M.set_keymappings(yazi_buffer, config, context)
         vim.cmd('startinsert')
       end, { buffer = help_buffer })
     end, { buffer = yazi_buffer })
+  end
+
+  if config.keymaps.copy_relative_path_to_selected_files ~= false then
+    vim.keymap.set(
+      { 't' },
+      config.keymaps.copy_relative_path_to_selected_files,
+      function()
+        keybinding_helpers.select_current_file_and_close_yazi(config, {
+          on_file_opened = function(chosen_file)
+            local relative_path = require('yazi.utils').relative_path(
+              config,
+              context.input_path.filename,
+              chosen_file
+            )
+
+            vim.fn.setreg(config.clipboard_register, relative_path, 'c')
+          end,
+          on_multiple_files_opened = function(chosen_files)
+            local relative_paths = {}
+            for _, path in ipairs(chosen_files) do
+              relative_paths[#relative_paths + 1] =
+                require('yazi.utils').relative_path(
+                  config,
+                  context.input_path.filename,
+                  path
+                )
+            end
+
+            vim.fn.setreg(
+              config.clipboard_register,
+              table.concat(relative_paths, '\n'),
+              'c'
+            )
+          end,
+        })
+      end,
+      { buffer = yazi_buffer }
+    )
   end
 end
 
