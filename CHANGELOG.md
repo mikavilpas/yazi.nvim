@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.4.0...v3.5.0) (2024-07-28)
+
+
+### Features
+
+* **health:** add instructions for `open_for_directories` ([#281](https://github.com/mikavilpas/yazi.nvim/issues/281)) ([0df9393](https://github.com/mikavilpas/yazi.nvim/commit/0df939302b632368317f3d074590b72795c63334))
+
 ## [3.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.3.0...v3.4.0) (2024-07-28)
 
 
