@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.5.0...v4.0.0) (2024-07-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* If you use `use_ya_for_events_reading = true` in your yazi.nvim config, you need to upgrade your yazi version to the currently latest version:
+
+### Miscellaneous Chores
+
+* update to the latest commit of yazi ([#283](https://github.com/mikavilpas/yazi.nvim/issues/283)) ([c1b4e9a](https://github.com/mikavilpas/yazi.nvim/commit/c1b4e9a3136092db473708d807db5a495d38d7ce))
+
 ## [3.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v3.4.0...v3.5.0) (2024-07-28)
 
 
