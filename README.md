@@ -224,6 +224,10 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- more information, see :h nvim_open_win
     yazi_floating_window_border = 'rounded',
 
+    -- some yazi.nvim commands copy text to the clipboard. This is the register
+    -- yazi.nvim should use for copying. Defaults to "*", the system clipboard
+    clipboard_register = "*",
+
     hooks = {
       -- if you want to execute a custom action when yazi has been opened,
       -- you can define it here.
