@@ -5,7 +5,10 @@ describe("the help menu", () => {
   it("can show help with a keymap", () => {
     cy.visit("http://localhost:5173")
     startNeovimWithYa({
-      startupScriptModifications: ["modify_yazi_config_and_set_help_key.lua"],
+      startupScriptModifications: [
+        "modify_yazi_config_and_set_help_key.lua",
+        "disable_a_keybinding.lua",
+      ],
     }).then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
