@@ -1,3 +1,4 @@
+import type { IntegrationTestFile } from "../../../client/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 
 describe("opening files", () => {
@@ -194,6 +195,92 @@ describe("opening files", () => {
 
       // the file contents should now be visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
+    })
+  })
+
+  it("can copy the relative path to the initial file", () => {
+    // the copied path should be relative to the file/directory yazi was
+    // started in (the initial file)
+
+    cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test-setup.lua"].name)
+
+      // enter another directory and select a file
+      cy.typeIntoTerminal("/routes{enter}")
+      cy.contains("posts.$postId")
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.typeIntoTerminal(
+        `/${dir.contents["routes/posts.$postId/adjacent-file.txt"].name}{enter}`,
+      )
+
+      // the file contents should now be visible
+      cy.contains("this file is adjacent-file.txt")
+
+      cy.typeIntoTerminal("{control+y}")
+
+      // yazi should now be closed
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name).should(
+        "not.exist",
+      )
+
+      // the relative path should now be in the clipboard. Let's paste it to
+      // the file to verify this.
+      // NOTE: the test-setup configures the `"` register to be the clipboard
+      cy.typeIntoTerminal("o{enter}{esc}")
+      cy.typeIntoTerminal(':normal ""p{enter}')
+
+      cy.contains(
+        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
+      )
+    })
+  })
+
+  it("can copy the relative paths of multiple selected files", () => {
+    // similarly, the copied path should be relative to the file/directory yazi
+    // was started in (the initial file)
+
+    cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["test-setup.lua"].name)
+
+      // enter another directory and select a file
+      cy.typeIntoTerminal("/routes{enter}")
+      cy.contains("posts.$postId")
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.typeIntoTerminal("{control+a}")
+
+      cy.typeIntoTerminal("{control+y}")
+
+      // yazi should now be closed
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name).should(
+        "not.exist",
+      )
+
+      // the relative path should now be in the clipboard. Let's paste it to
+      // the file to verify this.
+      // NOTE: the test-setup configures the `"` register to be the clipboard
+      cy.typeIntoTerminal("o{enter}{esc}")
+      cy.typeIntoTerminal(':normal ""p{enter}')
+
+      // all selected files should now be visible
+      cy.contains(
+        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
+      )
+      cy.contains(
+        "routes/posts.$postId/route.tsx" satisfies IntegrationTestFile,
+      )
+      cy.contains(
+        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
+      )
     })
   })
 })

@@ -16,11 +16,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up ripgrep
-        # it's a telescope dependency
+      - name: Set up dependencies
         run: |
+          # ripgrep is a telescope dependency
           which rg || {
             sudo apt-get install ripgrep
+          }
+
+          # realpath is used to resolve relative paths
+          which realpath || {
+            # just fail with an error message if realpath is not found
+            echo "realpath is not installed, but it should be part of GNU coreutils and included in Ubuntu"
+            exit 1
           }
 
       - name: Compile and install `yazi-fm` from source

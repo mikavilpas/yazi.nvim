@@ -144,12 +144,10 @@ Options:
         end
       end)
 
-      require('yazi').setup(
-        ---@type YaziConfig
-        {
-          use_ya_for_events_reading = true,
-        }
-      )
+      ---@type YaziConfig
+      yazi.setup({
+        use_ya_for_events_reading = true,
+      })
 
       vim.cmd('checkhealth yazi')
 
@@ -195,7 +193,7 @@ Options:
       function()
         mock_app_versions['yazi --help'] =
           yazi_help_output_with_client_id_flag_missing
-        require('yazi').setup({ use_yazi_client_id_flag = true })
+        yazi.setup({ use_yazi_client_id_flag = true })
         vim.cmd('checkhealth yazi')
 
         assert_buffer_contains_text(
@@ -209,7 +207,7 @@ Options:
       function()
         mock_app_versions['yazi --help'] =
           yazi_help_output_with_client_id_flag_missing
-        require('yazi').setup({ use_yazi_client_id_flag = false })
+        yazi.setup({ use_yazi_client_id_flag = false })
         vim.cmd('checkhealth yazi')
 
         assert_buffer_does_not_contain_text('use_yazi_client_id_flag')
@@ -219,7 +217,7 @@ Options:
     it(
       'does not warn when the `--client-id` flag is found in the yazi --help output',
       function()
-        require('yazi').setup({ use_yazi_client_id_flag = true })
+        yazi.setup({ use_yazi_client_id_flag = true })
         vim.cmd('checkhealth yazi')
 
         assert_buffer_does_not_contain_text('use_yazi_client_id_flag')
@@ -231,7 +229,7 @@ Options:
     it(
       'instructs the user to load yazi on startup when `open_for_directories` is set',
       function()
-        require('yazi').setup({ open_for_directories = true })
+        yazi.setup({ open_for_directories = true })
         vim.cmd('checkhealth yazi')
 
         assert_buffer_contains_text(
@@ -243,10 +241,47 @@ Options:
     it(
       'does not instruct the user to load yazi on startup when `open_for_directories` is not set',
       function()
-        require('yazi').setup({ open_for_directories = false })
+        yazi.setup({ open_for_directories = false })
         vim.cmd('checkhealth yazi')
 
         assert_buffer_does_not_contain_text('open_for_directories')
+      end
+    )
+  end)
+
+  describe('the checks for resolve_relative_path_application', function()
+    it(
+      'warns when the keymap for this integration is set but the resolver is missing',
+      function()
+        yazi.setup({
+          integrations = {
+            resolve_relative_path_application = 'missing-nonexistent',
+          },
+        })
+
+        vim.cmd('checkhealth yazi')
+
+        assert_buffer_contains_text(
+          'WARNING The `resolve_relative_path_application` (`missing-nonexistent`) is not found on PATH.'
+        )
+      end
+    )
+
+    it(
+      'does not warn when the keymap for this integration is not set',
+      function()
+        yazi.setup({
+          keymaps = {
+            copy_relative_path_to_selected_files = false,
+          },
+          integrations = {
+            resolve_relative_path_application = 'missing-nonexistent',
+          },
+        })
+
+        vim.cmd('checkhealth yazi')
+
+        assert_buffer_does_not_contain_text('resolve_relative_path_application')
       end
     )
   end)

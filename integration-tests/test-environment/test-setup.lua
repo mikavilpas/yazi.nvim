@@ -63,6 +63,10 @@ local plugins = {
     ---@type YaziConfig
     opts = {
       open_for_directories = true,
+      -- use different register than the system clipboard for yanking, so that
+      -- the developers can work on the code while the tests run without any
+      -- disturbances
+      clipboard_register = '"',
       -- allows logging debug data, which can be shown in CI when cypress tests fail
       log_level = vim.log.levels.DEBUG,
       integrations = {
