@@ -17,6 +17,8 @@ function M.relative_path(config, current_file_dir, selected_file)
     error(msg)
   end
 
+  assert(command ~= nil, 'realpath command must be set')
+
   ---@type Path
   local start_path = plenary_path:new(current_file_dir)
   local start_directory = nil
@@ -28,7 +30,7 @@ function M.relative_path(config, current_file_dir, selected_file)
 
   local stdout, exit_code, stderr = require('plenary.job')
     :new({
-      command = 'grealpath',
+      command = command,
       args = { '--relative-to', start_directory.filename, selected_file },
     })
     :sync()
