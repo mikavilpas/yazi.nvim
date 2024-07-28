@@ -226,4 +226,28 @@ Options:
       end
     )
   end)
+
+  describe('the checks for `open_for_directories`', function()
+    it(
+      'instructs the user to load yazi on startup when `open_for_directories` is set',
+      function()
+        require('yazi').setup({ open_for_directories = true })
+        vim.cmd('checkhealth yazi')
+
+        assert_buffer_contains_text(
+          'You have enabled `open_for_directories` in your config. Because of this, please make sure you are loading yazi when Neovim starts.'
+        )
+      end
+    )
+
+    it(
+      'does not instruct the user to load yazi on startup when `open_for_directories` is not set',
+      function()
+        require('yazi').setup({ open_for_directories = false })
+        vim.cmd('checkhealth yazi')
+
+        assert_buffer_does_not_contain_text('open_for_directories')
+      end
+    )
+  end)
 end)
