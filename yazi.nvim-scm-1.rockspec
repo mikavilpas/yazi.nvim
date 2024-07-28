@@ -6,6 +6,7 @@ source = {
   url = 'git+https://github.com/mikavilpas/yazi.nvim',
 }
 dependencies = {
+  'lua >= 5.1',
   -- Add runtime dependencies here
   -- e.g. "plenary.nvim",
   'plenary.nvim',
@@ -16,6 +17,7 @@ dependencies = {
 }
 test_dependencies = {
   'nlua',
+  'plenary.nvim',
 }
 build = {
   type = 'builtin',

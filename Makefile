@@ -13,6 +13,7 @@ COLOR_WHITE := \033[1;37m
 # install development and testing dependencies
 init:
 	luarocks init --no-gitignore
+	luarocks build --local --only-deps --dev
 	luarocks install busted 2.2.0-1
 
 	@echo ""
