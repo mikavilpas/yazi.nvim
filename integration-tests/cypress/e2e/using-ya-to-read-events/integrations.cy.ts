@@ -71,3 +71,35 @@ describe("grug-far integration (search and replace)", () => {
     })
   })
 })
+
+describe("telescope integration (search)", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:5173")
+  })
+
+  it("can use telescope.nvim to search, limited to the selected files only", () => {
+    startNeovimWithYa({
+      filename: "routes/posts.$postId/adjacent-file.txt",
+    }).then((dir) => {
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+
+      // select the current file and the file below. There are three files in
+      // this directory so two will be selected and one will be left
+      // unselected
+      cy.typeIntoTerminal("vj")
+      cy.typeIntoTerminal("{control+s}")
+
+      // telescope should be open now
+      cy.contains("Grep Preview")
+      cy.contains("Grep in 2 paths")
+
+      // search for some file content. This should match
+      // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
+      cy.typeIntoTerminal("this")
+
+      // verify this manually for now as I'm a bit scared this will be too
+      // flaky
+    })
+  })
+})
