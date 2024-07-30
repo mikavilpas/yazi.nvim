@@ -46,7 +46,6 @@ import type {
 
 Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   cy.window().then((win) => {
-    // eslint-disable-next-line @typescript-eslint/require-await
     cy.task("createTempDir").then(async (dir) => {
       void win.startNeovim(dir.rootPathAbsolute, startArguments)
       return dir

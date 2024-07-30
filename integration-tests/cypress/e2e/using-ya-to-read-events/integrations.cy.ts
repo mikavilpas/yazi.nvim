@@ -7,18 +7,17 @@ describe("grug-far integration (search and replace)", () => {
     cy.visit("http://localhost:5173")
   })
 
-  it("can use grug-far.nvim to search and replace in the cwd", () => {
-    startNeovimWithYa().then((dir) => {
+  it("can use grug-far.nvim to search and replace in the directory of the hovered file", () => {
+    startNeovimWithYa({
+      filename: "routes/posts.$postId/adjacent-file.txt",
+    }).then((dir) => {
       // wait until text on the start screen is visible
-      cy.contains("If you see this text, Neovim is ready!")
+      cy.contains("this file is adjacent-file.txt")
+
       cy.typeIntoTerminal("{upArrow}")
-      cy.typeIntoTerminal("/routes{enter}")
-      cy.contains("posts.$postId") // contents of the directory should be visible
-      cy.typeIntoTerminal("{rightArrow}")
-
-      // contents in the directory should be visible in yazi
-      cy.contains(dir.contents["routes/posts.$postId/adjacent-file.txt"].name)
-
+      cy.contains(
+        dir.contents["routes/posts.$postId/should-be-excluded-file.txt"].name,
+      )
       // close yazi and start grug-far.nvim
       cy.typeIntoTerminal("{control+g}")
       cy.contains("Grug FAR")
@@ -42,6 +41,7 @@ describe("grug-far integration (search and replace)", () => {
     startNeovimWithYa({
       filename: "routes/posts.$postId/adjacent-file.txt",
     }).then((dir) => {
+      cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
 
@@ -81,6 +81,7 @@ describe("telescope integration (search)", () => {
     startNeovimWithYa({
       filename: "routes/posts.$postId/adjacent-file.txt",
     }).then((dir) => {
+      cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
 

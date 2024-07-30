@@ -5,7 +5,7 @@ describe("mouse support", () => {
     cy.visit("http://localhost:5173")
   })
 
-  it("can use grug-far.nvim to search and replace in the cwd", () => {
+  it("can close the YaziFloatingWindow when clicked outside of it", () => {
     startNeovimWithYa().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
