@@ -80,6 +80,21 @@ function M.selected_file_path(path)
   return plenary_path:new(path)
 end
 
+---@param file_path string
+---@return Path
+function M.dir_of(file_path)
+  ---@type Path
+  local path = plenary_path:new(file_path)
+  if path:is_dir() then
+    return path
+  else
+    local parent = path:parent()
+    assert(type(parent) == 'table', 'parent must be a table')
+
+    return parent
+  end
+end
+
 -- Returns parsed events from the yazi events file
 ---@param events_file_lines string[]
 function M.parse_events(events_file_lines)
