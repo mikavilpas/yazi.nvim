@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.0...v4.1.1) (2024-07-30)
+
+
+### Bug Fixes
+
+* grepping or replacing in cwd instead of the directory of the file ([#293](https://github.com/mikavilpas/yazi.nvim/issues/293)) ([aee19fb](https://github.com/mikavilpas/yazi.nvim/commit/aee19fb1b6ef17d961237a0682358d5ec02fe50f))
+
 ## [4.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.0.1...v4.1.0) (2024-07-28)
 
 
