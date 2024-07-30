@@ -132,4 +132,80 @@ function YaziOpenerActions.cycle_open_buffers(context)
   )
 end
 
+---@param config YaziConfig
+---@param chosen_file string
+---@return nil
+function YaziOpenerActions.grep_in_directory(config, chosen_file)
+  if config.integrations.grep_in_directory == nil then
+    return
+  end
+  local last_directory = utils.dir_of(chosen_file).filename
+  config.integrations.grep_in_directory(last_directory)
+end
+
+---@param config YaziConfig
+---@param chosen_files string[]
+function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
+  if config.integrations.grep_in_selected_files == nil then
+    return
+  end
+
+  local plenary_path = require('plenary.path')
+  local paths = {}
+  for _, path in ipairs(chosen_files) do
+    table.insert(paths, plenary_path:new(path))
+  end
+
+  config.integrations.grep_in_selected_files(paths)
+end
+
+---@param config YaziConfig
+---@param chosen_file string
+function YaziOpenerActions.replace_in_directory(config, chosen_file)
+  if config.integrations.replace_in_directory == nil then
+    return
+  end
+
+  local last_directory = utils.dir_of(chosen_file)
+  -- search and replace in the directory
+  local success, result_or_error =
+    pcall(config.integrations.replace_in_directory, last_directory)
+
+  if not success then
+    local detail = vim.inspect({
+      message = 'yazi.nvim: error replacing with grug-far.nvim.',
+      error = result_or_error,
+    })
+    vim.notify(detail, vim.log.levels.WARN)
+    Log:debug(vim.inspect({ message = detail, error = result_or_error }))
+  end
+end
+
+---@param config YaziConfig
+---@param chosen_files string[]
+function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
+  if config.integrations.replace_in_selected_files == nil then
+    return
+  end
+
+  -- limit the replace operation to the selected files only
+  local plenary_path = require('plenary.path')
+  local paths = {}
+  for _, path in ipairs(chosen_files) do
+    table.insert(paths, plenary_path:new(path))
+  end
+
+  local success, result_or_error =
+    pcall(config.integrations.replace_in_selected_files, paths)
+
+  if not success then
+    local detail = vim.inspect({
+      message = 'yazi.nvim: error replacing with grug-far.nvim.',
+      error = result_or_error,
+    })
+    vim.notify(detail, vim.log.levels.WARN)
+    Log:debug(vim.inspect({ message = detail, error = result_or_error }))
+  end
+end
+
 return YaziOpenerActions

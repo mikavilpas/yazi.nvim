@@ -132,25 +132,11 @@ function M.set_keymappings(yazi_buffer, config, context)
   if config.keymaps.grep_in_directory ~= false then
     vim.keymap.set({ 't' }, config.keymaps.grep_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
-        on_file_opened = function(_, _, state)
-          if config.integrations.grep_in_directory == nil then
-            return
-          end
-
-          config.integrations.grep_in_directory(state.last_directory.filename)
+        on_file_opened = function(chosen_file, _, _)
+          keybinding_helpers.grep_in_directory(config, chosen_file)
         end,
         on_multiple_files_opened = function(chosen_files)
-          if config.integrations.grep_in_selected_files == nil then
-            return
-          end
-
-          local plenary_path = require('plenary.path')
-          local paths = {}
-          for _, path in ipairs(chosen_files) do
-            table.insert(paths, plenary_path:new(path))
-          end
-
-          config.integrations.grep_in_selected_files(paths)
+          keybinding_helpers.grep_in_selected_files(config, chosen_files)
         end,
       })
     end, { buffer = yazi_buffer })
@@ -171,53 +157,11 @@ function M.set_keymappings(yazi_buffer, config, context)
   if config.keymaps.replace_in_directory ~= false then
     vim.keymap.set({ 't' }, config.keymaps.replace_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
-        on_file_opened = function(_, _, state)
-          if config.integrations.replace_in_directory == nil then
-            return
-          end
-
-          -- search and replace in the directory
-          local success, result_or_error = pcall(
-            config.integrations.replace_in_directory,
-            state.last_directory
-          )
-
-          if not success then
-            local detail = vim.inspect({
-              message = 'yazi.nvim: error replacing with grug-far.nvim.',
-              error = result_or_error,
-            })
-            vim.notify(detail, vim.log.levels.WARN)
-            require('yazi.log'):debug(
-              vim.inspect({ message = detail, error = result_or_error })
-            )
-          end
+        on_file_opened = function(chosen_file)
+          keybinding_helpers.replace_in_directory(config, chosen_file)
         end,
         on_multiple_files_opened = function(chosen_files)
-          if config.integrations.replace_in_selected_files == nil then
-            return
-          end
-
-          -- limit the replace operation to the selected files only
-          local plenary_path = require('plenary.path')
-          local paths = {}
-          for _, path in ipairs(chosen_files) do
-            table.insert(paths, plenary_path:new(path))
-          end
-
-          local success, result_or_error =
-            pcall(config.integrations.replace_in_selected_files, paths)
-
-          if not success then
-            local detail = vim.inspect({
-              message = 'yazi.nvim: error replacing with grug-far.nvim.',
-              error = result_or_error,
-            })
-            vim.notify(detail, vim.log.levels.WARN)
-            require('yazi.log'):debug(
-              vim.inspect({ message = detail, error = result_or_error })
-            )
-          end
+          keybinding_helpers.replace_in_selected_files(config, chosen_files)
         end,
       })
     end, { buffer = yazi_buffer })
