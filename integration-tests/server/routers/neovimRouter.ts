@@ -2,16 +2,9 @@ import { observable } from "@trpc/server/observable"
 import { startNeovimServerArguments } from "client/testEnvironmentTypes"
 import assert from "node:assert"
 import { trpc } from "server/connection/trpc"
-import { eventEmitter } from "server/server"
-import type { StdoutMessage } from "server/utilities/DisposeableSingleApplication"
-import { DisposeableSingleApplication } from "server/utilities/DisposeableSingleApplication"
+import { application, eventEmitter } from "server/server"
+import type { StdoutMessage } from "server/utilities/DisposableSingleApplication"
 import z from "zod"
-
-const application = new DisposeableSingleApplication()
-
-export async function cleanup(): Promise<void> {
-  await application.killCurrent()
-}
 
 export const neovimRouter = trpc.router({
   start: trpc.procedure
@@ -19,6 +12,7 @@ export const neovimRouter = trpc.router({
     .mutation(async (startArgs) => {
       await application.startNextAndKillCurrent(startArgs.input)
 
+      assert(application.processId() !== undefined)
       console.log(`🚀 Started Neovim instance ${application.processId()}`)
     }),
 

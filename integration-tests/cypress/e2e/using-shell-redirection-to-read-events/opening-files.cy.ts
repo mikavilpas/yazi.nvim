@@ -26,6 +26,9 @@ describe("opening files", () => {
       cy.typeIntoTerminal("gg/file.txt{enter}")
       cy.typeIntoTerminal("{enter}")
 
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
       // the file content should now be visible
       cy.contains("Hello 👋")
     })

@@ -1,10 +1,13 @@
 import { applyWSSHandler } from "@trpc/server/adapters/ws"
-import EventEmitter from "events"
+import EventEmitter, { once } from "events"
 import { WebSocketServer } from "ws"
 import { createContext, trpc } from "./connection/trpc"
-import { cleanup, neovimRouter } from "./routers/neovimRouter"
+import { neovimRouter } from "./routers/neovimRouter"
+import { DisposableSingleApplication } from "./utilities/DisposableSingleApplication"
 
-//
+await using application = new DisposableSingleApplication()
+export { application }
+
 console.log("🚀 Server starting")
 export type AppRouter = typeof appRouter
 const PORT = 3000
@@ -38,16 +41,14 @@ wss.on("connection", (socket) => {
 })
 console.log(`✅ WebSocket Server listening on ws://localhost:${PORT}`)
 
-process.on("SIGTERM", () => {
-  console.log("Received SIGTERM, shutting down...")
-  void cleanup()
-  handler.broadcastReconnectNotification()
-  wss.close((error) => {
-    if (error) {
-      console.error("Error closing WebSocket server", error)
-      process.exit(1)
-    }
-    console.log("WebSocket server closed")
-    process.exit(0)
-  })
+await Promise.race([once(process, "SIGTERM"), once(process, "SIGINT")])
+console.log("Shutting down...")
+handler.broadcastReconnectNotification()
+wss.close((error) => {
+  if (error) {
+    console.error("Error closing WebSocket server", error)
+    process.exit(1)
+  }
+  console.log("WebSocket server closed")
+  process.exit(0)
 })

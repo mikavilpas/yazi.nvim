@@ -13,7 +13,7 @@ export type MouseEventMessage = "mouseEvent"
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 const testDirectory = path.join(__dirname, "..", "..", "test-environment/")
 
-export class DisposeableSingleApplication {
+export class DisposableSingleApplication implements AsyncDisposable {
   private application: TerminalApplication | undefined
 
   public async startNextAndKillCurrent(
@@ -74,7 +74,15 @@ export class DisposeableSingleApplication {
     return this.application?.write(input)
   }
 
-  public processId(): number {
-    return this.application?.processId ?? -1
+  public processId(): number | undefined {
+    return this.application?.processId
+  }
+
+  async [Symbol.asyncDispose](): Promise<void> {
+    if (this.processId() === undefined) {
+      return
+    }
+    console.log(`Killing current application ${this.processId()}...`)
+    await this.killCurrent()
   }
 }
