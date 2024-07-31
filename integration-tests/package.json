@@ -1,17 +1,28 @@
 {
   "name": "@yazi.nvim/integration-tests",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
+    "build": "tsc && vite build",
+    "cy:open": "cypress open --e2e",
+    "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
     "dev": "concurrently --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'npm run cy:open'",
     "dev:client": "vite",
     "dev:server": "tsc-watch --noClear --onSuccess 'npx tsx ./server/server.ts'",
-    "cy:open": "cypress open --e2e",
-    "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
-    "build": "tsc && vite build",
     "eslint": "eslint --max-warnings=0 .",
     "preview": "vite preview"
+  },
+  "dependencies": {
+    "@catppuccin/palette": "1.2.0",
+    "@trpc/client": "11.0.0-rc.467",
+    "@trpc/server": "11.0.0-rc.467",
+    "@types/uuid": "10.0.0",
+    "cypress": "13.13.1",
+    "node-pty": "1.0.0",
+    "tsx": "4.16.2",
+    "wait-on": "7.2.0",
+    "winston": "3.13.1"
   },
   "devDependencies": {
     "@types/express": "4.17.21",
@@ -33,16 +44,5 @@
     "tsc-watch": "6.2.0",
     "typescript": "5.5.4",
     "vite": "5.3.5"
-  },
-  "dependencies": {
-    "@catppuccin/palette": "1.2.0",
-    "@trpc/client": "11.0.0-rc.467",
-    "@trpc/server": "11.0.0-rc.467",
-    "@types/uuid": "10.0.0",
-    "cypress": "13.13.1",
-    "node-pty": "1.0.0",
-    "tsx": "4.16.2",
-    "wait-on": "7.2.0",
-    "winston": "3.13.1"
   }
 }
