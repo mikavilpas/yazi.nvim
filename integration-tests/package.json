@@ -39,7 +39,6 @@
     "@trpc/client": "11.0.0-rc.467",
     "@trpc/server": "11.0.0-rc.467",
     "@types/uuid": "10.0.0",
-    "@types/winston": "2.4.4",
     "cypress": "13.13.1",
     "node-pty": "1.0.0",
     "tsx": "4.16.2",
