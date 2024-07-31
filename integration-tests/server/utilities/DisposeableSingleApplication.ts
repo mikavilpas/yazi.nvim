@@ -58,6 +58,7 @@ export class DisposeableSingleApplication {
 
       cwd: testDirectory,
       env: process.env,
+      dimensions: startArgs.terminalDimensions,
 
       onStdoutOrStderr(data: string) {
         eventEmitter.emit("stdout" satisfies StdoutMessage, data)

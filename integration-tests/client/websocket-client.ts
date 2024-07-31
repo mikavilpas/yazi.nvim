@@ -73,10 +73,12 @@ window.startNeovim = async function startApp(
   directory: string,
   startArgs?: StartNeovimArguments,
 ) {
+  const terminalDimensions = { cols: terminal.cols, rows: terminal.rows }
   await trpc.neovim.start.mutate({
     directory,
     filename: startArgs?.filename ?? "initial-file.txt",
     startupScriptModifications: startArgs?.startupScriptModifications,
+    terminalDimensions,
   })
 
   terminal.onData((data) => {
