@@ -35,8 +35,9 @@ export class TerminalApplication {
     subProcess.onExit(({ exitCode, signal }) => {
       this.finishedPromise.resolve(exitCode)
       this.logger.debug(
-        `Child process exited with code ${String(exitCode)} and signal ${String(signal)}`,
+        `Child process ${this.processId} exited with code ${String(exitCode)} and signal ${String(signal)}`,
       )
+      void this.killAndWait()
     })
   }
 
@@ -52,7 +53,7 @@ export class TerminalApplication {
     command: string
     args: string[]
     cwd: string
-    env: NodeJS.ProcessEnv
+    env?: NodeJS.ProcessEnv
   }): TerminalApplication {
     // NOTE the size for the terminal was chosen so that it looks good in the
     // cypress test preview
@@ -79,32 +80,10 @@ export class TerminalApplication {
     this.subProcess.write(data)
   }
 
-  // handle manual cleanup on demand
-  public async waitUntilCleanedUp(): Promise<void> {
-    // in the constructor we set up a promise that resolves when the process exits
+  public async killAndWait(): Promise<void> {
+    console.log(`Killing Neovim instance ${this.processId}`)
     this.subProcess.kill()
     await this.finishedPromise.promise
-  }
-
-  // handle automatic cleanup, called automatically when the reference to this
-  // object is disposed
-  public [Symbol.dispose](): void {
-    try {
-      if (!this.subProcess.pid && process.connected) {
-        this.logger.warn(
-          "TerminalApplication process has no pid. Something is wrong - refusing to dispose.",
-        )
-        return
-      }
-      this.logger.debug(`disposing`)
-
-      this.subProcess.kill()
-      this.logger.debug(
-        `disposed. Killing ${String(this.subProcess.pid)} succeeded.`,
-      )
-    } finally {
-      this.finishedPromise.resolve(0)
-      this.logger.debug(`finished`)
-    }
+    console.log(`💥 Killed Neovim instance ${this.processId}`)
   }
 }

@@ -8,6 +8,7 @@ describe("opening files", () => {
 
   it("can display yazi in a floating terminal", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
@@ -19,6 +20,7 @@ describe("opening files", () => {
 
   it("can open a file that was selected in yazi", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["file.txt"].name)
 
@@ -33,6 +35,7 @@ describe("opening files", () => {
 
   it("can open a file in a vertical split", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -49,6 +52,7 @@ describe("opening files", () => {
 
   it("can open a file in a horizontal split", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -65,6 +69,7 @@ describe("opening files", () => {
 
   it("can open a file in a new tab", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -85,6 +90,7 @@ describe("opening files", () => {
 
   it("can send file names to the quickfix list", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open
@@ -107,6 +113,7 @@ describe("opening files", () => {
   describe("bulk renaming", () => {
     it("can bulk rename files", () => {
       startNeovimWithYa().then((dir) => {
+        cy.contains("If you see this text, Neovim is ready!")
         // in yazi, bulk renaming is done by
         // - selecting files and pressing "r".
         // - It opens the editor with the names of the selected files.
@@ -135,6 +142,7 @@ describe("opening files", () => {
 
     it("can rename a buffer that's open in Neovim", () => {
       startNeovimWithYa().then((dir) => {
+        cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
         cy.contains(dir.contents["test-setup.lua"].name)
         // select only the current file to make the test easier
@@ -169,6 +177,7 @@ describe("opening files", () => {
 
   it("can open files with complex characters in their name", () => {
     startNeovimWithYa().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
       // enter the routes/ directory

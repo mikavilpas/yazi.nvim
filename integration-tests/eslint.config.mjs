@@ -36,16 +36,13 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: [
-          "tsconfig.json",
-          "./client/tsconfig.json",
-          "./cypress/tsconfig.json",
-        ],
+        project: ["tsconfig.json", "./cypress/tsconfig.json"],
       },
     },
 
     rules: {
       "no-only-tests/no-only-tests": "error",
+      "@typescript-eslint/require-await": "off",
 
       "no-restricted-syntax": [
         "error",

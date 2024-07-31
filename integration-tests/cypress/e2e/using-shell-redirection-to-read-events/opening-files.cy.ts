@@ -18,6 +18,7 @@ describe("opening files", () => {
 
   it("can open a file that was selected in yazi", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["file.txt"].name)
 
@@ -32,6 +33,7 @@ describe("opening files", () => {
 
   it("can open a file in a vertical split", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -48,6 +50,7 @@ describe("opening files", () => {
 
   it("can open a file in a horizontal split", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -64,6 +67,7 @@ describe("opening files", () => {
 
   it("can open a file in a new tab", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
       cy.typeIntoTerminal("/test-setup.lua{enter}")
@@ -84,6 +88,7 @@ describe("opening files", () => {
 
   it("can send file names to the quickfix list", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open
@@ -105,6 +110,7 @@ describe("opening files", () => {
 
   it("can open files with complex characters in their name", () => {
     cy.startNeovim().then((dir) => {
+      cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
 

@@ -9,6 +9,10 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.3
+        with:
+          node-version-file: .nvmrc
+      - run: npm run clean-install:all
       - uses: reviewdog/action-eslint@v1
         with:
           workdir: integration-tests
