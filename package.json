@@ -7,6 +7,7 @@
   "description": "I forked this from https://github.com/DreamMaoMao/yazi.nvim for my own use.",
   "scripts": {
     "install:all": "npm install --workspaces --include-workspace-root",
+    "clean-install:all": "npm clean-install --workspaces --include-workspace-root",
     "prettier": "prettier --check .",
     "cy:run": "npm run cy:run:ci --workspace integration-tests",
     "markdownlint": "markdownlint-cli2 README.md"
