@@ -49,6 +49,12 @@ export type StartNeovimServerArguments = z.infer<
 export const startNeovimServerArguments = z.intersection(
   z.object({
     directory: z.string(),
+    terminalDimensions: z
+      .object({
+        cols: z.number(),
+        rows: z.number(),
+      })
+      .optional(),
   }),
   startNeovimArguments,
 )

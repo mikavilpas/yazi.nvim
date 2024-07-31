@@ -1,8 +1,13 @@
 import winston from "winston"
 import { ExternallyResolvablePromise } from "./ExternallyResolvablePromise.ts"
 
+import type { ITerminalDimensions } from "@xterm/addon-fit"
 import type { IPty } from "node-pty"
 import pty from "node-pty"
+
+// NOTE the size for the terminal was chosen so that it looks good in my
+// cypress test preview
+const defaultDimensions: ITerminalDimensions = { cols: 125, rows: 43 }
 
 // NOTE separating stdout and stderr is not supported by node-pty
 // https://github.com/microsoft/node-pty/issues/71
@@ -48,22 +53,24 @@ export class TerminalApplication {
     args,
     cwd,
     env,
+    dimensions: givenDimensions,
   }: {
     onStdoutOrStderr: (data: string) => void
     command: string
     args: string[]
     cwd: string
     env?: NodeJS.ProcessEnv
+    dimensions?: ITerminalDimensions
   }): TerminalApplication {
-    // NOTE the size for the terminal was chosen so that it looks good in the
-    // cypress test preview
+    const dimensions = givenDimensions ?? defaultDimensions
+
     console.log(`Starting '${command} ${args.join(" ")}' in cwd '${cwd}'`)
     const ptyProcess = pty.spawn(command, args, {
       name: "xterm-color",
       cwd,
       env,
-      cols: 125,
-      rows: 43,
+      cols: dimensions.cols,
+      rows: dimensions.rows,
     })
 
     const processId = ptyProcess.pid
