@@ -190,7 +190,7 @@ function M.set_keymappings(yazi_buffer, config, context)
       -- write the help text. Hopefully the vim help syntax is always bundled
       -- and available so that nice highlights can be shown.
       vim.api.nvim_buf_set_lines(help_buffer, 0, -1, false, {
-        'yazi.nvim help (`q` to close):',
+        'yazi.nvim help (`q` or ' .. config.keymaps.show_help .. ' to close):',
         '',
         '' .. show(config.keymaps.open_file_in_tab) .. ' - open file in tab',
         ''
@@ -219,10 +219,17 @@ function M.set_keymappings(yazi_buffer, config, context)
       vim.api.nvim_set_option_value('filetype', 'help', { buf = help_buffer })
       vim.api.nvim_set_option_value('modifiable', false, { buf = help_buffer })
 
-      -- exit with q
-      vim.keymap.set({ 'n' }, 'q', function()
+      local function close_help()
         vim.api.nvim_win_close(win, true)
         vim.cmd('startinsert')
+      end
+
+      -- exit with q and the help menu key
+      vim.keymap.set({ 'n' }, 'q', function()
+        close_help()
+      end, { buffer = help_buffer })
+      vim.keymap.set({ 'n' }, config.keymaps.show_help, function()
+        close_help()
       end, { buffer = help_buffer })
     end, { buffer = yazi_buffer })
   end
