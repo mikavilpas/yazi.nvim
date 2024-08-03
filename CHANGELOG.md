@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.3...v4.2.0) (2024-08-03)
+
+
+### Features
+
+* **help:** allow closing help menu with the help key ([#314](https://github.com/mikavilpas/yazi.nvim/issues/314)) ([7dbda3c](https://github.com/mikavilpas/yazi.nvim/commit/7dbda3cb8b25183454404f2ee719305179e19088))
+
 ## [4.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.2...v4.1.3) (2024-08-03)
 
 
