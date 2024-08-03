@@ -44,6 +44,12 @@ describe("the help menu", () => {
       cy.typeIntoTerminal("q")
       cy.contains("yazi.nvim help").should("not.exist")
 
+      // verify that the help menu can be closed with the help key
+      cy.typeIntoTerminal("{del}")
+      cy.contains("yazi.nvim help")
+      cy.typeIntoTerminal("{del}")
+      cy.contains("yazi.nvim help").should("not.exist")
+
       // it should now be possible to close yazi, since it's in insert mode
       // and ready to accept commands
       cy.contains(dir.contents["test-setup.lua"].name)
