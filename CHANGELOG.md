@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.2...v4.1.3) (2024-08-03)
+
+
+### Bug Fixes
+
+* pressing &lt;esc&gt; has a 1 second delay ([#311](https://github.com/mikavilpas/yazi.nvim/issues/311)) ([c38ca8f](https://github.com/mikavilpas/yazi.nvim/commit/c38ca8f1af71e87ac79abedb3bacee482200a3d8))
+
 ## [4.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.1...v4.1.2) (2024-08-03)
 
 
