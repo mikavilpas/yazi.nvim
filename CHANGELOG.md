@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.1...v4.1.2) (2024-08-03)
+
+
+### Bug Fixes
+
+* `open_yazi_in_directory` error in nvim 0.10.1 & nightly ([#309](https://github.com/mikavilpas/yazi.nvim/issues/309)) ([7eb5f93](https://github.com/mikavilpas/yazi.nvim/commit/7eb5f933c863591411013a7944b0f02e80edeefc))
+
 ## [4.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.0...v4.1.1) (2024-07-30)
 
 
