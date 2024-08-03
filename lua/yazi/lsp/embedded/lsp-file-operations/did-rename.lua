@@ -4,7 +4,8 @@ local log = require('yazi.lsp.embedded.lsp-file-operations.log')
 local M = {}
 
 M.callback = function(data)
-  for _, client in pairs(vim.lsp.get_active_clients()) do
+  local clients = vim.lsp.get_clients or vim.lsp.get_active_clients
+  for _, client in pairs(clients()) do
     local did_rename = utils.get_nested_path(
       client,
       { 'server_capabilities', 'workspace', 'fileOperations', 'didRename' }
