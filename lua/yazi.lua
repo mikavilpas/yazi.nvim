@@ -170,42 +170,8 @@ function M.setup(opts)
   local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
 
   if M.config.open_for_directories == true then
-    ---@param file string
-    ---@param bufnr number
-    local function open_yazi_in_directory(file, bufnr)
-      if vim.fn.isdirectory(file) == 1 then
-        -- A buffer was opened for a directory.
-        -- Remove the buffer as we want to show yazi instead
-        vim.api.nvim_buf_delete(bufnr, { force = true })
-        M.yazi(M.config, file)
-
-        -- HACK: for some reason, the cursor is not in insert mode when opening
-        -- yazi, so just simulate pressing "i" to enter insert mode :)
-        -- It did nothing when when I tried using vim.cmd('startinsert') or vim.cmd('normal! i')
-        vim.api.nvim_feedkeys('i', 'n', false)
-      end
-    end
-
-    -- disable netrw, the built-in file explorer
-    vim.cmd('silent! autocmd! FileExplorer *')
-
-    -- executed before starting to edit a new buffer.
-    vim.api.nvim_create_autocmd('BufAdd', {
-      pattern = '*',
-      ---@param ev yazi.AutoCmdEvent
-      callback = function(ev)
-        open_yazi_in_directory(ev.file, ev.buf)
-      end,
-      group = yazi_augroup,
-    })
-
-    -- When opening neovim with "nvim ." or "nvim <directory>", the current
-    -- buffer is already open at this point. If we have already opened a
-    -- directory, display yazi instead.
-    open_yazi_in_directory(
-      vim.b.netrw_curdir or vim.fn.expand('%:p'),
-      vim.api.nvim_get_current_buf()
-    )
+    Log:debug('Hijacking netrw to open yazi for directories')
+    require('yazi.hijack_netrw').hijack_netrw(yazi_augroup)
   end
 end
 
