@@ -36,7 +36,7 @@ function M.default()
     hooks = {
       yazi_opened = function() end,
       yazi_closed_successfully = function() end,
-      yazi_opened_multiple_files = openers.send_files_to_quickfix_list,
+      yazi_opened_multiple_files = openers.open_multiple_files,
     },
 
     highlight_groups = {

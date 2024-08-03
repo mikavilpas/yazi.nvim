@@ -21,6 +21,11 @@ function M.open_file_in_tab(chosen_file)
 end
 
 ---@param chosen_files string[]
+function M.open_multiple_files(chosen_files)
+  vim.cmd('args' .. table.concat(chosen_files, ' '))
+end
+
+---@param chosen_files string[]
 function M.send_files_to_quickfix_list(chosen_files)
   vim.fn.setqflist({}, 'r', {
     title = 'Yazi',
