@@ -1,5 +1,4 @@
 import winston from "winston"
-import { ExternallyResolvablePromise } from "./ExternallyResolvablePromise.ts"
 
 import type { ITerminalDimensions } from "@xterm/addon-fit"
 import type { IPty } from "node-pty"
@@ -14,7 +13,6 @@ const defaultDimensions: ITerminalDimensions = { cols: 125, rows: 43 }
 export class TerminalApplication {
   public readonly processId: number
 
-  public readonly finishedPromise: ExternallyResolvablePromise<unknown>
   public readonly logger: winston.Logger
 
   private constructor(
@@ -22,7 +20,6 @@ export class TerminalApplication {
     private readonly onStdoutOrStderr: (data: string) => void,
   ) {
     this.processId = subProcess.pid
-    this.finishedPromise = new ExternallyResolvablePromise()
 
     this.logger = winston.createLogger({
       transports: [new winston.transports.Console()],
@@ -38,11 +35,9 @@ export class TerminalApplication {
     subProcess.onData(this.onStdoutOrStderr)
 
     subProcess.onExit(({ exitCode, signal }) => {
-      this.finishedPromise.resolve(exitCode)
       this.logger.debug(
         `Child process ${this.processId} exited with code ${String(exitCode)} and signal ${String(signal)}`,
       )
-      void this.killAndWait()
     })
   }
 
@@ -88,9 +83,8 @@ export class TerminalApplication {
   }
 
   public async killAndWait(): Promise<void> {
-    console.log(`Killing Neovim instance ${this.processId}`)
+    console.log(`💣 Killing process ${this.processId}`)
     this.subProcess.kill()
-    await this.finishedPromise.promise
-    console.log(`💥 Killed Neovim instance ${this.processId}`)
+    console.log(`💥 Killed process ${this.processId}`)
   }
 }
