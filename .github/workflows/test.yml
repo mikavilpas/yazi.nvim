@@ -15,7 +15,7 @@ jobs:
         neovim_version: ["nightly", "stable"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.6
       - name: Set up dependencies
         run: |
           # ripgrep is a telescope dependency
@@ -31,7 +31,7 @@ jobs:
           }
 
       - name: Compile and install `yazi-fm` from source
-        uses: baptiste0928/cargo-install@v3
+        uses: baptiste0928/cargo-install@v3.1.1
         with:
           # yazi-fm is the `yazi` executable
           crate: yazi-fm
@@ -41,7 +41,7 @@ jobs:
           commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
 
       - name: Compile and install yazi from source
-        uses: baptiste0928/cargo-install@v3
+        uses: baptiste0928/cargo-install@v3.1.1
         with:
           # yazi-cli is the `ya` command line interface
           crate: yazi-cli
@@ -51,7 +51,7 @@ jobs:
           commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@v1
+        uses: nvim-neorocks/nvim-busted-action@v1.0.1
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
@@ -61,7 +61,7 @@ jobs:
         with:
           command: npm run cy:run
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.3.5
         # add the line below to store screenshots only on failures
         # if: failure()
         if: failure()
