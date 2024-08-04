@@ -54,6 +54,26 @@ function M.build_plugin(plugin, options)
   return M.symlink(plugin, to)
 end
 
+--- Helper utility for compatibility with
+--- [lazy.nvim](https://github.com/folke/lazy.nvim).
+---
+--- Example: installing a flavor from the
+--- [yazi-rs/flavors](https://github.com/yazi-rs/flavors) repository:
+---
+--- ```lua
+--- ---@type LazyPlugin
+--- {
+---   "yazi-rs/flavors",
+---   name = "yazi-flavor-catppuccino-macchiato",
+---   lazy = true,
+---   build = function(spec)
+---     require("yazi.plugin").build_flavor(spec, {
+---       sub_dir = "catppuccin-macchiato.yazi",
+---     })
+---   end,
+--- },
+--- ```
+---
 ---@param flavor YaziLazyNvimSpec
 ---@param options? { yazi_dir: string, sub_dir?: string }
 function M.build_flavor(flavor, options)
