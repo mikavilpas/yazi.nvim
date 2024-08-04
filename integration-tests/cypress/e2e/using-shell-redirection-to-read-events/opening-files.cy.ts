@@ -101,7 +101,7 @@ describe("opening files", () => {
       cy.typeIntoTerminal(" ")
       // also select the next file because multiple files have to be selected
       cy.typeIntoTerminal(" ")
-      cy.typeIntoTerminal("{enter}")
+      cy.typeIntoTerminal("{control+q}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
