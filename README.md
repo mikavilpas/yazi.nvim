@@ -221,6 +221,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
       replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
       copy_relative_path_to_selected_files = '<c-y>',
+      send_to_quickfix_list = '<c-q>',
     },
 
     -- completely override the keymappings for yazi. This function will be
@@ -278,9 +279,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
 These are the default keybindings that are available when yazi is open:
 
-- `<c-v>`: open the selected file in a vertical split
-- `<c-x>`: open the selected file in a horizontal split
-- `<c-t>`: open the selected file in a new tab
+- `<f1>`: show the help menu
+- `<c-v>`: open the selected file(s) in vertical splits
+- `<c-x>`: open the selected file(s) in horizontal splits
+- `<c-t>`: open the selected file(s) in new tabs
+- `<c-q>`: send the selected file(s) to the quickfix list
 - There are also integrations to other plugins, which you need to install
   separately:
   - `<c-s>`: search in the current yazi directory using
@@ -292,6 +295,11 @@ These are the default keybindings that are available when yazi is open:
     [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
     - if multiple files/directories are selected in yazi, the operation is
       limited to those only
+  - `<c-y>`: copy the relative path of the selected file(s) to the clipboard.
+    Requires GNU `realpath` or `grealpath` on OSX
+  - `<tab>`: cycle through the open buffers in Neovim. See
+    [#232](https://github.com/mikavilpas/yazi.nvim/pull/232) for more
+    information
 
 ## 🪛 Customizing yazi
 

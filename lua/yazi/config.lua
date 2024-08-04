@@ -31,12 +31,13 @@ function M.default()
       replace_in_directory = '<c-g>',
       cycle_open_buffers = '<tab>',
       copy_relative_path_to_selected_files = '<c-y>',
+      send_to_quickfix_list = '<c-q>',
     },
     set_keymappings_function = nil,
     hooks = {
       yazi_opened = function() end,
       yazi_closed_successfully = function() end,
-      yazi_opened_multiple_files = openers.send_files_to_quickfix_list,
+      yazi_opened_multiple_files = openers.open_multiple_files,
     },
 
     highlight_groups = {
@@ -167,6 +168,18 @@ function M.set_keymappings(yazi_buffer, config, context)
     end, { buffer = yazi_buffer })
   end
 
+  if config.keymaps.send_to_quickfix_list ~= false then
+    vim.keymap.set({ 't' }, config.keymaps.send_to_quickfix_list, function()
+      local openers = require('yazi.openers')
+      keybinding_helpers.select_current_file_and_close_yazi(config, {
+        on_multiple_files_opened = openers.send_files_to_quickfix_list,
+        on_file_opened = function(chosen_file)
+          openers.send_files_to_quickfix_list({ chosen_file })
+        end,
+      })
+    end, { buffer = yazi_buffer })
+  end
+
   if config.keymaps.show_help ~= false then
     vim.keymap.set({ 't' }, config.keymaps.show_help, function()
       local w = vim.api.nvim_win_get_width(0)
@@ -179,7 +192,7 @@ function M.set_keymappings(yazi_buffer, config, context)
         bufpos = { 5, 30 },
         noautocmd = true,
         width = math.min(46, math.floor(w * 0.5)),
-        height = math.min(12, math.floor(h * 0.5)),
+        height = math.min(13, math.floor(h * 0.5)),
         border = config.yazi_floating_window_border,
       })
 
@@ -199,6 +212,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         ''
           .. show(config.keymaps.open_file_in_vertical_split)
           .. ' - open file in vertical split',
+        ''
+          .. show(config.keymaps.send_to_quickfix_list)
+          .. ' - send to the quickfix list',
         ''
           .. show(config.keymaps.grep_in_directory)
           .. ' - search in directory / selected files',
