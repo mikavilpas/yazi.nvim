@@ -44,6 +44,13 @@ describe("opening directories", () => {
 
       // yazi should now be visible in the new directory
       cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+
+      // yazi should now be in insert mode. This means pressing q should exit.
+      cy.typeIntoTerminal("q")
+
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name).should(
+        "not.exist",
+      )
     })
   })
 })
