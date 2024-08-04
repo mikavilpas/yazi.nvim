@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.2.0...v5.0.0) (2024-08-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **openers:** when multiple files were selected in yazi, the previous behaviour was to open them as items in the quickfix list. This has been changed to open them as buffers instead. The previous behaviour can be restored by setting `config.hooks.yazi_opened_multiple_files` to `openers.send_files_to_quickfix_list`.
+
+### Features
+
+* **openers:** multiple files are opened as buffers by default ([5cd3ad7](https://github.com/mikavilpas/yazi.nvim/commit/5cd3ad7ef02053d1360b9521d473f8f5a7ac7c3f))
+
 ## [4.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.1.3...v4.2.0) (2024-08-03)
 
 
