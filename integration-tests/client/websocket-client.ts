@@ -3,9 +3,9 @@ import { createTRPCClient, createWSClient, wsLink } from "@trpc/client"
 import { FitAddon } from "@xterm/addon-fit"
 import { Terminal } from "@xterm/xterm"
 import "@xterm/xterm/css/xterm.css"
+import type { StartNeovimArguments } from "../server/application/neovim/testEnvironmentTypes.ts"
 import type { AppRouter } from "../server/server"
 import "./style.css"
-import type { StartNeovimArguments } from "./testEnvironmentTypes"
 import { validateMouseEvent } from "./validateMouseEvent"
 
 const wsClient = createWSClient({
@@ -69,10 +69,10 @@ trpc.neovim.onStdout.subscribe(undefined, {
 })
 
 /** Entrypoint for the test runner (cypress) */
-window.startNeovim = async function startApp(
+window.startNeovim = async function (
   directory: string,
   startArgs?: StartNeovimArguments,
-) {
+): Promise<void> {
   const terminalDimensions = { cols: terminal.cols, rows: terminal.rows }
   await trpc.neovim.start.mutate({
     directory,
@@ -103,6 +103,5 @@ window.startNeovim = async function startApp(
 }
 
 terminal.onKey((event) => {
-  console.log(event.key)
   void trpc.neovim.stdin.mutate(event.key)
 })

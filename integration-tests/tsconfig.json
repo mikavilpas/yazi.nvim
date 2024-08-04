@@ -13,7 +13,7 @@
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "outDir": "dist",
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "ESNext.Disposable"],
     "types": ["node"],
     "baseUrl": "./",
 

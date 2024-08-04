@@ -1,12 +1,18 @@
+import "core-js/proposals/async-explicit-resource-management"
+
 import { applyWSSHandler } from "@trpc/server/adapters/ws"
 import EventEmitter, { once } from "events"
 import { WebSocketServer } from "ws"
+import { neovim, neovimRouter } from "./application/neovim/neovimRouter"
 import { createContext, trpc } from "./connection/trpc"
-import { neovimRouter } from "./routers/neovimRouter"
-import { DisposableSingleApplication } from "./utilities/DisposableSingleApplication"
 
-await using application = new DisposableSingleApplication()
-export { application }
+/** Stack for managing resources that need to be disposed of when the server
+ * shuts down */
+await using stack = new AsyncDisposableStack()
+stack.use(neovim)
+stack.defer(() => {
+  console.log("Closing any open test applications")
+})
 
 console.log("🚀 Server starting")
 export type AppRouter = typeof appRouter

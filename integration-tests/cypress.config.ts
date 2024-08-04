@@ -5,7 +5,6 @@ import { constants } from "fs"
 import { access, mkdir, mkdtemp, readdir, readFile, rm } from "fs/promises"
 import path from "path"
 import { fileURLToPath } from "url"
-import type { TestDirectory } from "./client/testEnvironmentTypes"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 

@@ -1,19 +1,21 @@
 import { observable } from "@trpc/server/observable"
-import { startNeovimServerArguments } from "client/testEnvironmentTypes"
 import assert from "node:assert"
+import { Neovim, type StdoutMessage } from "server/application/neovim/Neovim"
+import { startNeovimServerArguments } from "server/application/neovim/testEnvironmentTypes"
 import { trpc } from "server/connection/trpc"
-import { application, eventEmitter } from "server/server"
-import type { StdoutMessage } from "server/utilities/DisposableSingleApplication"
+import { eventEmitter } from "server/server"
 import z from "zod"
+
+export const neovim = new Neovim()
 
 export const neovimRouter = trpc.router({
   start: trpc.procedure
     .input(startNeovimServerArguments)
     .mutation(async (startArgs) => {
-      await application.startNextAndKillCurrent(startArgs.input)
+      await neovim.startNextAndKillCurrent(startArgs.input)
 
-      assert(application.processId() !== undefined)
-      console.log(`🚀 Started Neovim instance ${application.processId()}`)
+      assert(neovim.processId() !== undefined)
+      console.log(`🚀 Started Neovim instance ${neovim.processId()}`)
     }),
 
   onStdout: trpc.procedure.subscription(() => {
@@ -32,6 +34,6 @@ export const neovimRouter = trpc.router({
   }),
 
   stdin: trpc.procedure.input(z.string()).mutation(async (options) => {
-    await application.write(options.input)
+    await neovim.write(options.input)
   }),
 })
