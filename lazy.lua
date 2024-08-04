@@ -37,5 +37,10 @@ return {
     'mikavilpas/yazi.nvim',
     ---@type YaziConfig
     opts = {},
+    cmd = {
+      'Yazi',
+      'Yazi cwd',
+      'Yazi toggle',
+    },
   },
 }
