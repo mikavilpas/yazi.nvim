@@ -20,7 +20,7 @@ const testDirectory = path.join(
   "test-environment/",
 )
 
-export class Neovim extends DisposableSingleApplication<StartNeovimServerArguments> {
+export class Neovim extends DisposableSingleApplication {
   public async startNextAndKillCurrent(
     startArgs: StartNeovimServerArguments,
   ): Promise<void> {

@@ -4,15 +4,13 @@ import type { TerminalApplication } from "./TerminalApplication"
  * single instance of this interface, only a single instance can be running at
  * a time (1 to 1 mapping).
  */
-export abstract class DisposableSingleApplication<TStart>
-  implements AsyncDisposable
-{
+export abstract class DisposableSingleApplication implements AsyncDisposable {
   protected application: TerminalApplication | undefined
 
   /**
    * Kill the current application and start a new one with the given arguments.
    */
-  abstract startNextAndKillCurrent(startArgs: TStart): Promise<void>
+  abstract startNextAndKillCurrent(startArgs: unknown): Promise<void>
 
   public async killCurrent(): Promise<void> {
     return this.application?.killAndWait()
