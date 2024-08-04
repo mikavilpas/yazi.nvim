@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.0.0...v5.0.1) (2024-08-04)
+
+
+### Bug Fixes
+
+* not being in insert mode when opening a dir from the command line ([#321](https://github.com/mikavilpas/yazi.nvim/issues/321)) ([c44ad14](https://github.com/mikavilpas/yazi.nvim/commit/c44ad14b71b30fa19ede4795158b010eb40a407a))
+
 ## [5.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v4.2.0...v5.0.0) (2024-08-04)
 
 
