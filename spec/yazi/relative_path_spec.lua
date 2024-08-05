@@ -3,6 +3,7 @@
 local assert = require('luassert')
 local utils = require('yazi.utils')
 local yazi = require('yazi')
+local stub = require('luassert.stub')
 
 local function create_file(path)
   local file = io.open(path, 'w')
@@ -12,11 +13,19 @@ local function create_file(path)
 end
 
 describe('relative_path', function()
+  local snapshot
   local base_dir = os.tmpname() -- create a temporary file with a unique name
 
   before_each(function()
+    snapshot = assert:snapshot()
     -- use the defaults, which set realpath and grealpath depending on the OS
     yazi.setup()
+
+    stub(vim.fn, 'executable', function(command)
+      if command == 'realpath' or command == 'grealpath' then
+        return 1
+      end
+    end)
 
     assert(
       base_dir:match('/tmp/'),
@@ -28,6 +37,7 @@ describe('relative_path', function()
 
   after_each(function()
     vim.fn.delete(base_dir, 'rf')
+    snapshot:revert()
   end)
 
   -- test basic cases, not necessarily the entire feature set of GNU realpath
