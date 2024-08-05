@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.0.1...v5.1.0) (2024-08-05)
+
+
+### Features
+
+* keymaps can now be done with "&lt;cmd&gt;Yazi<cr>" etc. ([b038b35](https://github.com/mikavilpas/yazi.nvim/commit/b038b35f13caa468fd7df37ff5b65c293e251323))
+
 ## [5.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.0.0...v5.0.1) (2024-08-04)
 
 
