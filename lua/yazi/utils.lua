@@ -11,8 +11,11 @@ function M.relative_path(config, current_file_dir, selected_file)
   local command = config.integrations.resolve_relative_path_application
 
   if vim.fn.executable(command) == 0 then
-    local msg =
-      'error copying relative_path. Try running `:healthcheck yazi` for more information.'
+    local msg = string.format(
+      'error copying relative_path - the executable `%s` was not found. Try running `:healthcheck yazi` for more information.',
+      command
+    )
+
     vim.notify(msg)
     error(msg)
   end

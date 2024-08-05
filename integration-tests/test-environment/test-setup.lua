@@ -47,18 +47,8 @@ local plugins = {
     dir = '../..',
     event = 'VeryLazy',
     keys = {
-      {
-        '<up>',
-        function()
-          require('yazi').yazi()
-        end,
-      },
-      {
-        '<c-up>',
-        function()
-          require('yazi').toggle()
-        end,
-      },
+      { '<up>', '<cmd>Yazi<cr>' },
+      { '<c-up>', '<cmd>Yazi toggle<cr>' },
     },
     ---@type YaziConfig
     opts = {

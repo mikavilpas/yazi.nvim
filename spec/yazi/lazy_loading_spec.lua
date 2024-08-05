@@ -31,6 +31,7 @@ describe('YaziVisibleBuffer', function()
     table.sort(yazi_modules)
     assert.are.same(yazi_modules, {
       'yazi',
+      'yazi.commands',
       'yazi.config',
       'yazi.log',
       'yazi.lsp.embedded.lsp-file-operations',
