@@ -15,7 +15,7 @@ jobs:
         neovim_version: ["nightly", "stable"]
 
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Set up dependencies
         run: |
           # ripgrep is a telescope dependency
