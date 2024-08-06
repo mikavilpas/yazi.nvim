@@ -57,6 +57,11 @@ M.setup = function(opts)
     log.level = 'debug'
   end
 
+  if true then
+    -- in yazi.nvim, we don't need to do anything here
+    return
+  end
+
   -- nvim-tree integration
   local ok_nvim_tree, nvim_tree_api = pcall(require, 'nvim-tree.api')
   if ok_nvim_tree then
