@@ -36,7 +36,7 @@ export default [
       sourceType: "module",
 
       parserOptions: {
-        project: ["tsconfig.json", "./cypress/tsconfig.json"],
+        project: ["tsconfig.json"],
       },
     },
 

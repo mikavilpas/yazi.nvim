@@ -1,4 +1,4 @@
-import assert = require("assert")
+import * as assert from "assert"
 import { startNeovimWithYa } from "./using-ya-to-read-events/startNeovimWithYa"
 
 describe("the help menu", () => {
@@ -27,10 +27,10 @@ describe("the help menu", () => {
       // the version of yazi.nvim should be shown
       cy.readFile("../.release-please-manifest.json").then(
         (yaziNvimManifest: unknown) => {
-          assert(typeof yaziNvimManifest === "object")
-          assert(yaziNvimManifest)
-          assert("." in yaziNvimManifest)
-          assert(typeof yaziNvimManifest["."] === "string")
+          assert.ok(typeof yaziNvimManifest === "object")
+          assert.ok(yaziNvimManifest)
+          assert.ok("." in yaziNvimManifest)
+          assert.ok(typeof yaziNvimManifest["."] === "string")
           cy.contains(`version ${yaziNvimManifest["."]}`)
         },
       )
