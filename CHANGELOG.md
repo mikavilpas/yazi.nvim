@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.1.0...v5.1.1) (2024-08-06)
+
+
+### Performance Improvements
+
+* don't set up nvim-tree and neo-tree in lsp-file-operations ([#332](https://github.com/mikavilpas/yazi.nvim/issues/332)) ([604f3d1](https://github.com/mikavilpas/yazi.nvim/commit/604f3d1035b5d186befb6f159cf9d59007aac61e))
+
 ## [5.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.0.1...v5.1.0) (2024-08-05)
 
 
