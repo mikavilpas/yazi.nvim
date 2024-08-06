@@ -12,7 +12,7 @@ dependencies = {
 
   -- https://github.com/akinsho/bufferline.nvim
   -- https://luarocks.org/modules/neorocks/bufferline.nvim
-  'bufferline.nvim',
+  -- 'bufferline.nvim',
 }
 test_dependencies = {
   'nlua',

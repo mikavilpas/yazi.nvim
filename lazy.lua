@@ -21,7 +21,7 @@ return {
   -- itself is never actually loaded, only some utilities that it comes with.
   --
   -- https://github.com/akinsho/bufferline.nvim
-  { 'akinsho/bufferline.nvim', lazy = true },
+  -- { 'akinsho/bufferline.nvim', lazy = true },
 
   --
   -- TODO enable after https://github.com/nvim-neorocks/nvim-busted-action/issues/4 is resolved

@@ -9,7 +9,8 @@ DisposableHighlight.__index = DisposableHighlight
 local function create_hover_color_from_theme()
   -- the user has not defined a custom highlight color, so let's create one
   -- for them
-  local colors = require('bufferline.colors')
+  -- local colors = require('bufferline.colors')
+  local colors = require('yazi.buffer_highlighting.colors')
   local hex = colors.get_color
 
   local bg = hex({ name = 'Normal', attribute = 'bg' })
