@@ -1,4 +1,4 @@
-import * as tinycolor2 from "tinycolor2"
+import tinycolor2 from "tinycolor2"
 import {
   darkBackgroundColors,
   isHovered,

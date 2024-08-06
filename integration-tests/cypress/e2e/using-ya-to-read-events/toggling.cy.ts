@@ -13,7 +13,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
     cy.typeIntoTerminal(`/${file}{enter}`)
   }
 
-  it("can highlight the buffer when hovered", () => {
+  it("can restore yazi hovering on the previously hovered file", () => {
     startNeovimWithYa().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
@@ -42,7 +42,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
     })
   })
 
-  it("can start yazi even if no previous session exists", () => {
+  it("can toggle yazi even if no previous session exists", () => {
     startNeovimWithYa().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")

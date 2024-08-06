@@ -1,5 +1,5 @@
-import path = require("path")
-import type { IntegrationTestFile } from "../../../client/testEnvironmentTypes"
+import path from "path"
+import type { IntegrationTestFile } from "server/application/neovim/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 
 describe("grug-far integration (search and replace)", () => {
