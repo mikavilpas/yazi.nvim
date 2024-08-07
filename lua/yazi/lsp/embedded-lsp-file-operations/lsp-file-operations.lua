@@ -1,6 +1,7 @@
 local M = {}
 
-local log = require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log')
+local log =
+  require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log')
 
 local default_config = {
   debug = false,
