@@ -7,22 +7,29 @@ local DisposableHighlight = {}
 DisposableHighlight.__index = DisposableHighlight
 
 local function create_hover_color_from_theme()
-  -- the user has not defined a custom highlight color, so let's create one
-  -- for them
-  -- local colors = require('bufferline.colors')
+  -- the user has not defined a custom highlight color, so let's create one for
+  -- them
   local colors = require('yazi.buffer_highlighting.colors')
-  local hex = colors.get_color
+  local hl = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
 
-  local bg = hex({ name = 'Normal', attribute = 'bg' })
-
-  if bg == nil then
+  if (not hl) or not hl.bg then
+    vim.notify(
+      'Could not find a background color for a hovered_buffer, not highlighting',
+      vim.log.levels.ERROR
+    )
     return
   end
 
-  if colors.color_is_bright(bg) then
-    return { bg = colors.shade_color(bg, -20), force = true }
+  local bg_hex = colors.rgb2hex(hl.bg)
+  local r, g, b = colors.hex2rgb(bg_hex)
+
+  if colors.color_is_bright(r, g, b) then
+    local bg = colors.darken_or_lighten_percent(bg_hex, -20)
+    return { bg = bg, force = true }
   else
-    return { bg = colors.shade_color(bg, 60), force = true }
+    vim.notify(vim.inspect({ r, g, b }))
+    local bg = colors.darken_or_lighten_percent(bg_hex, 60)
+    return { bg = bg, force = true }
   end
 end
 
