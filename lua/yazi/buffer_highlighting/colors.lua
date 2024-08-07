@@ -26,12 +26,15 @@ function M.darken_or_lighten_percent(color, percent)
   local r, g, b = M.hex2rgb(color)
   r = M.alter(r, percent)
   r = math.min(r, 255)
+  r = math.max(r, 0)
 
   g = M.alter(g, percent)
   g = math.min(g, 255)
+  g = math.max(g, 0)
 
   b = M.alter(b, percent)
   b = math.min(b, 255)
+  b = math.max(b, 0)
 
   return ('#%02x%02x%02x'):format(r, g, b)
 end

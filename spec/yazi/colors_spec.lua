@@ -100,10 +100,10 @@ describe('color modification', function()
     end)
 
     it("limits the color's value to 0, the min value", function()
-      local color = '#000000'
-      assert.same('00', rgb_to_hex(0))
+      local color = '#010101'
+      assert.same('01', rgb_to_hex(1))
 
-      local modified = colors.darken_or_lighten_percent(color, -100)
+      local modified = colors.darken_or_lighten_percent(color, -200)
 
       assert.same('#000000', modified)
       assert.same('#000000', modified)
