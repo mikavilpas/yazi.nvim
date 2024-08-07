@@ -1,5 +1,5 @@
 local assert = require('luassert')
-local event_handling = require('yazi.event_handling')
+local yazi_event_handling = require('yazi.event_handling.yazi_event_handling')
 local utils = require('yazi.utils')
 
 describe('get_buffers_that_need_renaming_after_yazi_exited', function()
@@ -22,7 +22,7 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     vim.fn.bufadd('/my-tmp/file_A')
 
     local rename_instructions =
-      event_handling.get_buffers_that_need_renaming_after_yazi_exited(
+      yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
         rename_event
       )
 
@@ -46,7 +46,7 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
       vim.fn.bufadd('/my-tmp/dir1/file')
 
       local rename_instructions =
-        event_handling.get_buffers_that_need_renaming_after_yazi_exited(
+        yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
           rename_event
         )
 
@@ -67,7 +67,7 @@ describe('get_buffers_that_need_renaming_after_yazi_exited', function()
     vim.fn.bufadd('/my-tmp/dir1/file')
 
     local rename_instructions =
-      event_handling.get_buffers_that_need_renaming_after_yazi_exited(
+      yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
         rename_event
       )
 
@@ -98,7 +98,7 @@ describe('process_events_emitted_from_yazi', function()
       id = '123',
     }
 
-    event_handling.process_events_emitted_from_yazi({ event })
+    yazi_event_handling.process_events_emitted_from_yazi({ event })
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
@@ -125,7 +125,7 @@ describe('process_events_emitted_from_yazi', function()
       },
     }
 
-    event_handling.process_events_emitted_from_yazi({ event })
+    yazi_event_handling.process_events_emitted_from_yazi({ event })
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
