@@ -34,8 +34,8 @@ describe('YaziVisibleBuffer', function()
       'yazi.commands',
       'yazi.config',
       'yazi.log',
-      'yazi.lsp.embedded.lsp-file-operations',
-      'yazi.lsp.embedded.lsp-file-operations.log',
+      'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations',
+      'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log',
       'yazi.openers',
     })
   end)

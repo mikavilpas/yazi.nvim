@@ -164,7 +164,7 @@ function M.setup(opts)
   Log.level = M.config.log_level
 
   pcall(function()
-    require('yazi.lsp.embedded.lsp-file-operations').setup()
+    require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations').setup()
   end)
 
   local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })

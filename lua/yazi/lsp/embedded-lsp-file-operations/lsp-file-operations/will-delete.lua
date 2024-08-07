@@ -1,5 +1,5 @@
-local utils = require('yazi.lsp.embedded.lsp-file-operations.utils')
-local log = require('yazi.lsp.embedded.lsp-file-operations.log')
+local utils = require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.utils')
+local log = require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log')
 
 local M = {}
 
@@ -13,7 +13,7 @@ local function getWorkspaceEdit(client, fname)
   }
   log.debug('Sending workspace/willDeleteFiles request', will_delete_params)
   local timeout_ms =
-    require('yazi.lsp.embedded.lsp-file-operations').config.timeout_ms
+    require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations').config.timeout_ms
   local success, resp = pcall(
     client.request_sync,
     'workspace/willDeleteFiles',
