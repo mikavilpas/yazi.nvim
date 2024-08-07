@@ -28,27 +28,29 @@ vim.g.mapleader = ' '
 -- install the following plugins
 ---@type LazySpec
 local plugins = {
-  'folke/tokyonight.nvim',
+  { 'catppuccin/nvim', name = 'catppuccin', opts = { flavour = 'macchiato' } },
   {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',
     keys = {
-      '<leader>-',
-      '<cmd>Yazi<cr>',
-      desc = 'Open yazi at the current file',
-    },
-    {
-      -- Open in the current working directory
-      '<leader>cw',
-      '<cmd>Yazi cwd<cr>',
-      desc = "Open the file manager in nvim's working directory",
-    },
-    {
-      -- NOTE: this requires a version of yazi that includes
-      -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
-      '<c-up>',
-      '<cmd>Yazi toggle<cr>',
-      desc = 'Resume the last yazi session',
+      {
+        '<leader>-',
+        '<cmd>Yazi<cr>',
+        desc = 'Open yazi at the current file',
+      },
+      {
+        -- Open in the current working directory
+        '<leader>cw',
+        '<cmd>Yazi cwd<cr>',
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        -- NOTE: this requires a version of yazi that includes
+        -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
+        '<c-up>',
+        '<cmd>Yazi toggle<cr>',
+        desc = 'Resume the last yazi session',
+      },
     },
     ---@type YaziConfig
     opts = {
@@ -58,7 +60,8 @@ local plugins = {
 }
 require('lazy').setup(plugins, {
   root = root .. '/plugins',
+  install = { colorscheme = { 'catppuccin' } },
 })
 
-vim.cmd.colorscheme('tokyonight')
+vim.cmd.colorscheme('catppuccin')
 -- add anything else here
