@@ -9,10 +9,6 @@ dependencies = {
   -- Add runtime dependencies here
   -- e.g. "plenary.nvim",
   'plenary.nvim',
-
-  -- https://github.com/akinsho/bufferline.nvim
-  -- https://luarocks.org/modules/neorocks/bufferline.nvim
-  'bufferline.nvim',
 }
 test_dependencies = {
   'nlua',

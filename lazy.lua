@@ -16,13 +16,6 @@ return {
   -- https://github.com/nvim-lua/plenary.nvim/
   { 'nvim-lua/plenary.nvim', lazy = true },
 
-  -- Needed to calculate a good buffer background color that fits the current
-  -- theme when yazi hovers over a file in an open window/split. The plugin
-  -- itself is never actually loaded, only some utilities that it comes with.
-  --
-  -- https://github.com/akinsho/bufferline.nvim
-  { 'akinsho/bufferline.nvim', lazy = true },
-
   --
   -- TODO enable after https://github.com/nvim-neorocks/nvim-busted-action/issues/4 is resolved
   --
