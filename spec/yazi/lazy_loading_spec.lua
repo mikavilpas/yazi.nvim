@@ -1,6 +1,6 @@
 local assert = require('luassert')
 
-describe('YaziVisibleBuffer', function()
+describe('lazy loading', function()
   before_each(function()
     -- clear all buffers
     for k, _ in pairs(package.loaded) do
@@ -34,8 +34,8 @@ describe('YaziVisibleBuffer', function()
       'yazi.commands',
       'yazi.config',
       'yazi.log',
-      'yazi.lsp.embedded.lsp-file-operations',
-      'yazi.lsp.embedded.lsp-file-operations.log',
+      'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations',
+      'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log',
       'yazi.openers',
     })
   end)
