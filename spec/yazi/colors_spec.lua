@@ -2,7 +2,7 @@ local assert = require('luassert')
 local colors = require('yazi.buffer_highlighting.colors')
 
 local function rgb_to_hex(i)
-  return string.format('%x', i)
+  return string.format('%02x', i)
 end
 
 describe('color modification', function()
@@ -87,6 +87,26 @@ describe('color modification', function()
           .. rgb_to_hex(100 * 0.9),
         modified
       )
+    end)
+
+    it("limits the color's value to 255, the max value", function()
+      local color = '#ffffff'
+      assert.same('ff', rgb_to_hex(255))
+
+      local modified = colors.darken_or_lighten_percent(color, 100)
+
+      assert.same('#ffffff', modified)
+      assert.same('#ffffff', modified)
+    end)
+
+    it("limits the color's value to 0, the min value", function()
+      local color = '#000000'
+      assert.same('00', rgb_to_hex(0))
+
+      local modified = colors.darken_or_lighten_percent(color, -100)
+
+      assert.same('#000000', modified)
+      assert.same('#000000', modified)
     end)
   end)
 

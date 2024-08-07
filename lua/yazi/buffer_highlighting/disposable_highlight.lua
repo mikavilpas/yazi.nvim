@@ -27,7 +27,6 @@ local function create_hover_color_from_theme()
     local bg = colors.darken_or_lighten_percent(bg_hex, -20)
     return { bg = bg, force = true }
   else
-    vim.notify(vim.inspect({ r, g, b }))
     local bg = colors.darken_or_lighten_percent(bg_hex, 60)
     return { bg = bg, force = true }
   end
