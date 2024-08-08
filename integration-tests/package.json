@@ -21,9 +21,9 @@
     "core-js": "3.38.0",
     "cypress": "13.13.2",
     "node-pty": "1.0.0",
-    "tsx": "4.16.5",
+    "tsx": "4.17.0",
     "wait-on": "7.2.0",
-    "winston": "3.13.1"
+    "winston": "3.14.1"
   },
   "devDependencies": {
     "@types/express": "4.17.21",
@@ -44,6 +44,6 @@
     "tinycolor2": "1.6.0",
     "tsc-watch": "6.2.0",
     "typescript": "5.5.4",
-    "vite": "5.3.5"
+    "vite": "5.4.0"
   }
 }
