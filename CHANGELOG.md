@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.1.1...v5.2.0) (2024-08-08)
+
+### Features
+
+* feat: add support for external integrations to hover events ([#341](https://github.com/mikavilpas/yazi.nvim/issues/341)) ([ed00655](https://github.com/mikavilpas/yazi.nvim/commit/ed00655f7047ada4fa03a1f255f66507b49f4f45))
+
+### Miscellaneous Chores
+
+* release 5.2.0 ([a801cb0](https://github.com/mikavilpas/yazi.nvim/commit/a801cb09854cd94a7ba2cc97f759cc42972c1325))
+
 ## [5.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.1.0...v5.1.1) (2024-08-06)
 
 
