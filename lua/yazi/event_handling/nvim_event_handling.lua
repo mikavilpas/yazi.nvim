@@ -8,7 +8,7 @@ local M = {}
 ---@param event_name YaziNeovimEvent
 ---@param event_data table
 function M.emit(event_name, event_data)
-  vim.api.nvim_exec_autocmds('User', {
+  vim.api.nvim_exec_autocmds("User", {
     pattern = event_name,
     data = event_data,
   })

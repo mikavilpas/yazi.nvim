@@ -1,4 +1,4 @@
-local Log = require('yazi.log')
+local Log = require("yazi.log")
 
 ---@class yazi.DisposableHighlight
 ---@field private old_winhighlight string
@@ -9,12 +9,12 @@ DisposableHighlight.__index = DisposableHighlight
 local function create_hover_color_from_theme()
   -- the user has not defined a custom highlight color, so let's create one for
   -- them
-  local colors = require('yazi.buffer_highlighting.colors')
-  local hl = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+  local colors = require("yazi.buffer_highlighting.colors")
+  local hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
 
   if (not hl) or not hl.bg then
     vim.notify(
-      'Could not find a background color for a hovered_buffer, not highlighting',
+      "Could not find a background color for a hovered_buffer, not highlighting",
       vim.log.levels.ERROR
     )
     return
@@ -42,22 +42,22 @@ function DisposableHighlight.new(window_id, highlight_config)
   -- `force = true` overrides the existing highlight group - so that the user
   -- can see the correct color if they switch colorschemes without restarting
   if highlight_config.hovered_buffer ~= nil then
-    vim.api.nvim_set_hl(0, 'YaziBufferHovered', highlight_config.hovered_buffer)
+    vim.api.nvim_set_hl(0, "YaziBufferHovered", highlight_config.hovered_buffer)
   else
     local color = create_hover_color_from_theme()
     if color == nil then
       Log:debug(
-        'Could not find a background color for a hovered_buffer, not highlighting'
+        "Could not find a background color for a hovered_buffer, not highlighting"
       )
 
       return
     end
-    vim.api.nvim_set_hl(0, 'YaziBufferHovered', color)
+    vim.api.nvim_set_hl(0, "YaziBufferHovered", color)
   end
 
   vim.api.nvim_set_option_value(
-    'winhighlight',
-    'Normal:YaziBufferHovered',
+    "winhighlight",
+    "Normal:YaziBufferHovered",
     { win = window_id }
   )
 
@@ -69,11 +69,11 @@ function DisposableHighlight:dispose()
     -- Revert winhighlight to its old value
     Log:debug(
       string.format(
-        'Disposing of the DisposableHighlight for window_id %s',
+        "Disposing of the DisposableHighlight for window_id %s",
         self.window_id
       )
     )
-    vim.api.nvim_set_option_value('winhighlight', self.old_winhighlight, {
+    vim.api.nvim_set_option_value("winhighlight", self.old_winhighlight, {
       win = self.window_id,
     })
   end

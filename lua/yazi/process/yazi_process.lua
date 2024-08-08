@@ -1,11 +1,11 @@
 ---@module "plenary.path"
 
-local YaProcess = require('yazi.process.ya_process')
-local Log = require('yazi.log')
-local utils = require('yazi.utils')
-local YaziProcessApi = require('yazi.process.yazi_process_api')
+local YaProcess = require("yazi.process.ya_process")
+local Log = require("yazi.log")
+local utils = require("yazi.utils")
+local YaziProcessApi = require("yazi.process.yazi_process_api")
 local LegacyEventReadingFromEventFile =
-  require('yazi.process.legacy_events_from_file')
+  require("yazi.process.legacy_events_from_file")
 
 ---@class YaziProcess
 ---@field public api YaziProcessApi
@@ -24,7 +24,7 @@ function YaziProcess:start(config, path, on_exit)
 
   Log:debug(
     string.format(
-      'use_ya_for_events_reading: %s',
+      "use_ya_for_events_reading: %s",
       config.use_ya_for_events_reading
     )
   )
@@ -32,7 +32,7 @@ function YaziProcess:start(config, path, on_exit)
   -- The YAZI_ID of the yazi process, used to uniquely identify this specific
   -- instance, so that we can communicate with it specifically, instead of
   -- possibly multiple other yazis that are running on this computer.
-  local yazi_id = string.format('%.0f', vim.uv.hrtime())
+  local yazi_id = string.format("%.0f", vim.uv.hrtime())
   self.api = YaziProcessApi.new(config, yazi_id)
 
   self.event_reader = config.use_ya_for_events_reading == true
@@ -40,7 +40,7 @@ function YaziProcess:start(config, path, on_exit)
     or LegacyEventReadingFromEventFile:new(config)
 
   local yazi_cmd = self.event_reader:get_yazi_command(path)
-  Log:debug(string.format('Opening yazi with the command: (%s).', yazi_cmd))
+  Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
 
   self.yazi_job_id = vim.fn.termopen(yazi_cmd, {
     on_exit = function(_, code)

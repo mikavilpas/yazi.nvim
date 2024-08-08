@@ -1,9 +1,9 @@
 ---@module "plenary.path"
 
-local Log = require('yazi.log')
-local utils = require('yazi.utils')
+local Log = require("yazi.log")
+local utils = require("yazi.utils")
 local highlight_hovered_buffer =
-  require('yazi.buffer_highlighting.highlight_hovered_buffer')
+  require("yazi.buffer_highlighting.highlight_hovered_buffer")
 
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
@@ -52,23 +52,23 @@ function YaProcess:get_yazi_command(path)
 end
 
 function YaProcess:kill()
-  Log:debug('Killing ya process')
-  pcall(self.ya_process.kill, self.ya_process, 'sigterm')
+  Log:debug("Killing ya process")
+  pcall(self.ya_process.kill, self.ya_process, "sigterm")
   highlight_hovered_buffer.clear_highlights()
 end
 
 function YaProcess:wait(timeout)
-  Log:debug('Waiting for ya process to exit')
+  Log:debug("Waiting for ya process to exit")
   self.ya_process:wait(timeout)
   return self.events
 end
 
 function YaProcess:start()
-  local ya_command = { 'ya', 'sub', 'rename,delete,trash,move,cd,hover,bulk' }
+  local ya_command = { "ya", "sub", "rename,delete,trash,move,cd,hover,bulk" }
   Log:debug(
     string.format(
-      'Opening ya with the command: (%s), attempt %s',
-      table.concat(ya_command, ' '),
+      "Opening ya with the command: (%s), attempt %s",
+      table.concat(ya_command, " "),
       self.retries
     )
   )
@@ -89,17 +89,17 @@ function YaProcess:start()
 
       Log:debug(string.format("ya stderr: '%s'", data))
 
-      if data:find('No running Yazi instance found') then
+      if data:find("No running Yazi instance found") then
         if self.retries < 5 then
           Log:debug(
-            'Looks like starting ya failed because yazi had not started yet. Retrying to open ya...'
+            "Looks like starting ya failed because yazi had not started yet. Retrying to open ya..."
           )
           self.retries = self.retries + 1
           vim.defer_fn(function()
             self:start()
           end, 50)
         else
-          Log:debug('Failed to open ya after 5 retries')
+          Log:debug("Failed to open ya after 5 retries")
         end
       end
     end,
@@ -108,21 +108,21 @@ function YaProcess:start()
       if err then
         Log:debug(string.format("ya stdout error: '%s'", data))
       end
-      data = data or ''
+      data = data or ""
 
       Log:debug(string.format("ya stdout: '%s'", data))
 
-      data = vim.split(data, '\n', { plain = true, trimempty = true })
+      data = vim.split(data, "\n", { plain = true, trimempty = true })
 
       local parsed = utils.safe_parse_events(data)
       -- Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
 
       for _, event in ipairs(parsed) do
-        if event.type == 'hover' then
+        if event.type == "hover" then
           ---@cast event YaziHoverEvent
           if event.yazi_id == self.yazi_id then
             Log:debug(
-              string.format('Changing the last hovered_url to %s', event.url)
+              string.format("Changing the last hovered_url to %s", event.url)
             )
             self.hovered_url = event.url
           end
@@ -133,8 +133,8 @@ function YaProcess:start()
             )
 
             local event_handling =
-              require('yazi.event_handling.nvim_event_handling')
-            event_handling.emit('YaziDDSHover', event)
+              require("yazi.event_handling.nvim_event_handling")
+            event_handling.emit("YaziDDSHover", event)
           end)
         else
           self.events[#self.events + 1] = event
@@ -144,7 +144,7 @@ function YaProcess:start()
 
     ---@param obj vim.SystemCompleted
     on_exit = function(obj)
-      Log:debug(string.format('ya process exited with code: %s', obj.code))
+      Log:debug(string.format("ya process exited with code: %s", obj.code))
     end,
   })
 

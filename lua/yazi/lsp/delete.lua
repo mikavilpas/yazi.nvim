@@ -1,8 +1,8 @@
 local will_delete = require(
-  'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.will-delete'
+  "yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.will-delete"
 )
 local did_delete = require(
-  'yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.did-delete'
+  "yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.did-delete"
 )
 
 local M = {}

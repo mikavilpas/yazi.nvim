@@ -1,7 +1,7 @@
 local utils =
-  require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.utils')
+  require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.utils")
 local log =
-  require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log')
+  require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log")
 
 local M = {}
 
@@ -10,7 +10,7 @@ M.callback = function(data)
   for _, client in pairs(clients()) do
     local did_rename = utils.get_nested_path(
       client,
-      { 'server_capabilities', 'workspace', 'fileOperations', 'didRename' }
+      { "server_capabilities", "workspace", "fileOperations", "didRename" }
     )
     if did_rename ~= nil then
       local filters = did_rename.filters or {}
@@ -23,8 +23,8 @@ M.callback = function(data)
             },
           },
         }
-        client.notify('workspace/didRenameFiles', params)
-        log.debug('Sending workspace/didRenameFiles notification', params)
+        client.notify("workspace/didRenameFiles", params)
+        log.debug("Sending workspace/didRenameFiles notification", params)
       end
     end
   end

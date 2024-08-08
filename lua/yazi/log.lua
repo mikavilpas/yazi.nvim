@@ -1,4 +1,4 @@
-local plenary_path = require('plenary.path')
+local plenary_path = require("plenary.path")
 
 ---@class (exact) yazi.Log
 ---@field level yazi.LogLevel
@@ -21,11 +21,11 @@ Log.level = log_levels.OFF
 
 ---@return string
 function Log:get_logfile_path()
-  local ok, stdpath = pcall(vim.fn.stdpath, 'log')
+  local ok, stdpath = pcall(vim.fn.stdpath, "log")
   if not ok then
-    stdpath = vim.fn.stdpath('cache')
+    stdpath = vim.fn.stdpath("cache")
   end
-  return plenary_path:new(stdpath, 'yazi.log'):absolute()
+  return plenary_path:new(stdpath, "yazi.log"):absolute()
 end
 
 Log.path = Log:get_logfile_path()
@@ -38,7 +38,7 @@ local file = nil
 function Log:write_message(level, message)
   -- initialize if needed
   if not file then
-    local logfile, err = io.open(self.path, 'a+')
+    local logfile, err = io.open(self.path, "a+")
     file = logfile
 
     if not file then
@@ -49,9 +49,9 @@ function Log:write_message(level, message)
   end
 
   if file ~= nil then
-    local timestamp = os.date('%Y-%m-%d %H:%M:%S')
-    local msg = string.format('[%s] %s %s', timestamp, level, message)
-    file:write(msg .. '\n')
+    local timestamp = os.date("%Y-%m-%d %H:%M:%S")
+    local msg = string.format("[%s] %s %s", timestamp, level, message)
+    file:write(msg .. "\n")
     file:flush()
   end
 end
@@ -64,7 +64,7 @@ end
 ---@param message string
 function Log:debug(message)
   if self:active_for_level(log_levels.DEBUG) then
-    self:write_message('DEBUG', message)
+    self:write_message("DEBUG", message)
   end
 end
 

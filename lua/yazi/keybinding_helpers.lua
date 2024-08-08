@@ -1,8 +1,8 @@
 ---@module "plenary.path"
 
-local openers = require('yazi.openers')
-local Log = require('yazi.log')
-local utils = require('yazi.utils')
+local openers = require("yazi.openers")
+local Log = require("yazi.log")
+local utils = require("yazi.utils")
 
 --- Hacky actions that can be used when yazi is open. They typically select the
 --- current file and execute some useful operation on the selected file.
@@ -55,16 +55,16 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
   config.hooks.yazi_opened_multiple_files = callbacks.on_multiple_files_opened
 
   vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes('<enter>', true, false, true),
-    'n',
+    vim.api.nvim_replace_termcodes("<enter>", true, false, true),
+    "n",
     true
   )
 end
 
 ---@param context YaziActiveContext
 function YaziOpenerActions.cycle_open_buffers(context)
-  assert(context.input_path, 'No input path found')
-  assert(context.input_path.filename, 'No input path filename found')
+  assert(context.input_path, "No input path found")
+  assert(context.input_path.filename, "No input path filename found")
 
   local current_cycle_position = (
     context.cycled_file and context.cycled_file.path
@@ -109,7 +109,7 @@ function YaziOpenerActions.cycle_open_buffers(context)
       end
 
       local directory =
-        vim.fn.fnamemodify(next_buffer.renameable_buffer.path.filename, ':h')
+        vim.fn.fnamemodify(next_buffer.renameable_buffer.path.filename, ":h")
       assert(
         directory,
         string.format(
@@ -150,7 +150,7 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
     return
   end
 
-  local plenary_path = require('plenary.path')
+  local plenary_path = require("plenary.path")
   local paths = {}
   for _, path in ipairs(chosen_files) do
     table.insert(paths, plenary_path:new(path))
@@ -173,7 +173,7 @@ function YaziOpenerActions.replace_in_directory(config, chosen_file)
 
   if not success then
     local detail = vim.inspect({
-      message = 'yazi.nvim: error replacing with grug-far.nvim.',
+      message = "yazi.nvim: error replacing with grug-far.nvim.",
       error = result_or_error,
     })
     vim.notify(detail, vim.log.levels.WARN)
@@ -189,7 +189,7 @@ function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
   end
 
   -- limit the replace operation to the selected files only
-  local plenary_path = require('plenary.path')
+  local plenary_path = require("plenary.path")
   local paths = {}
   for _, path in ipairs(chosen_files) do
     table.insert(paths, plenary_path:new(path))
@@ -200,7 +200,7 @@ function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
 
   if not success then
     local detail = vim.inspect({
-      message = 'yazi.nvim: error replacing with grug-far.nvim.',
+      message = "yazi.nvim: error replacing with grug-far.nvim.",
       error = result_or_error,
     })
     vim.notify(detail, vim.log.levels.WARN)

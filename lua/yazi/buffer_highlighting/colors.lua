@@ -2,7 +2,7 @@ local M = {}
 
 ---@param color string
 function M.hex2rgb(color)
-  color = color:gsub('#', '')
+  color = color:gsub("#", "")
   local r = color:sub(1, 2)
   local g = color:sub(3, 4)
   local b = color:sub(5, 6)
@@ -11,7 +11,7 @@ end
 
 ---@param i integer
 function M.rgb2hex(i)
-  return string.format('%06x', i)
+  return string.format("%06x", i)
 end
 
 ---@param attr number
@@ -36,7 +36,7 @@ function M.darken_or_lighten_percent(color, percent)
   b = math.min(b, 255)
   b = math.max(b, 0)
 
-  return ('#%02x%02x%02x'):format(r, g, b)
+  return ("#%02x%02x%02x"):format(r, g, b)
 end
 
 -- from https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/utils/colors.lua#L75C1-L83C4
