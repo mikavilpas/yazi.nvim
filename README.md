@@ -179,11 +179,12 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- an upcoming optional feature
     use_yazi_client_id_flag = false,
 
-    -- an upcoming optional feature. See
-    -- https://github.com/mikavilpas/yazi.nvim/pull/180
+    -- NOTE: these only work if `use_ya_for_events_reading` is enabled, etc.
     highlight_groups = {
-      -- NOTE: this only works if `use_ya_for_events_reading` is enabled, etc.
+      -- See https://github.com/mikavilpas/yazi.nvim/pull/180
       hovered_buffer = nil,
+      -- See https://github.com/mikavilpas/yazi.nvim/pull/351
+      hovered_buffer_in_same_directory = nil,
     },
 
     -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
@@ -246,6 +247,9 @@ You can optionally configure yazi.nvim by setting any of the options below.
       -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = function(chosen_files, config, state) end,
     },
+
+    -- highlight buffers in the same directory as the hovered buffer
+    highlight_hovered_buffers_in_same_directory = true,
 
     integrations = {
       --- What should be done when the user wants to grep in a directory

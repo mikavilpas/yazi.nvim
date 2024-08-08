@@ -77,4 +77,39 @@ describe("the RenameableBuffer class", function()
     -- does not change the original path
     assert.are.equal("/my-tmp/file1", buffer.original_path)
   end)
+
+  describe("is_sibling_of", function()
+    local base_dir
+
+    before_each(function()
+      base_dir = os.tmpname()
+      -- refuse to remove anything outside of /tmp/
+      assert(base_dir:match("/tmp/"), "Failed to create a temporary directory")
+
+      os.remove(base_dir)
+      vim.fn.mkdir(base_dir, "p")
+    end)
+
+    it("returns true for files in the same directory (happy path)", function()
+      local parent_directory = vim.fs.joinpath(base_dir, "parent_directory")
+      vim.fn.mkdir(parent_directory)
+
+      local buffer =
+        RenameableBuffer.new(1, vim.fs.joinpath(parent_directory, "file1"))
+      assert.is_true(
+        buffer:is_sibling_of(vim.fs.joinpath(parent_directory, "file2"))
+      )
+    end)
+
+    it("returns false for files in different directories", function()
+      local dir1 = vim.fs.joinpath(base_dir, "dir1")
+      vim.fn.mkdir(dir1)
+
+      local dir2 = vim.fs.joinpath(base_dir, "dir2")
+      vim.fn.mkdir(dir2)
+
+      local buffer = RenameableBuffer.new(1, vim.fs.joinpath(dir1, "file1"))
+      assert.is_false(buffer:is_sibling_of(vim.fs.joinpath(dir2, "file2")))
+    end)
+  end)
 end)

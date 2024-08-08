@@ -1,14 +1,7 @@
 import { z } from "zod"
 
-export type MultipleFiles = {
-  openInVerticalSplits: IntegrationTestFile[]
-}
-
-export const multipleFiles = z.object({
-  openInVerticalSplits: z.array(z.string()),
-})
-
 export const testDirectoryFile = z.enum([
+  "file.txt",
   "initial-file.txt",
   "file.txt",
   "test-setup.lua",
@@ -33,10 +26,19 @@ export const startupScriptModification = z.enum([
   "modify_yazi_config_and_set_help_key.lua",
   "disable_a_keybinding.lua",
   "notify_hover_events.lua",
+  "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
 ])
 export type StartupScriptModification = z.infer<
   typeof startupScriptModification
 >
+
+export type MultipleFiles = {
+  openInVerticalSplits: IntegrationTestFile[]
+}
+
+export const multipleFiles = z.object({
+  openInVerticalSplits: z.array(integrationTestFile),
+})
 
 /** The arguments given from the tests to send to the server */
 export const startNeovimArguments = z.object({

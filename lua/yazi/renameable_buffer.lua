@@ -54,6 +54,16 @@ function RenameableBuffer:matches_parent(path)
   return found ~= nil
 end
 
+--- Check if the given `other` path is in the same directory as the buffer's path.
+---@param other string
+function RenameableBuffer:is_sibling_of(other)
+  other = remove_trailing_slash(other)
+  local my_dir = require("yazi.utils").dir_of(self.path.filename)
+  local other_dir = require("yazi.utils").dir_of(other)
+
+  return my_dir.filename == other_dir.filename
+end
+
 ---@param path string
 ---@return nil
 function RenameableBuffer:rename(path)
