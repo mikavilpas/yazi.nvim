@@ -39,9 +39,10 @@ function M.default()
       yazi_closed_successfully = function() end,
       yazi_opened_multiple_files = openers.open_multiple_files,
     },
-
+    highlight_hovered_buffers_in_same_directory = true,
     highlight_groups = {
       hovered_buffer = nil,
+      hovered_buffer_in_same_directory = nil,
     },
     integrations = {
       grep_in_directory = function(directory)

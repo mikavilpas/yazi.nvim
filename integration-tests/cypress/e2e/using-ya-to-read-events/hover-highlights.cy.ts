@@ -1,11 +1,11 @@
 import tinycolor2 from "tinycolor2"
+import { startNeovimWithYa } from "./startNeovimWithYa"
 import {
   darkBackgroundColors,
   isHovered,
   isNotHovered,
   lightBackgroundColors,
-} from "./hover-utils"
-import { startNeovimWithYa } from "./startNeovimWithYa"
+} from "./utils/hover-utils"
 
 describe("highlighting the buffer with 'hover' events", () => {
   beforeEach(() => {
@@ -227,6 +227,41 @@ describe("highlighting the buffer with 'hover' events", () => {
       // some event data should be visible. See the lua type YaziHoverEvent for
       // the structure
       cy.contains(`type = "hover"`)
+    })
+  })
+
+  it("can highlight buffers that are open in the current yazi directory", () => {
+    startNeovimWithYa({
+      startupScriptModifications: [
+        "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
+      ],
+      filename: {
+        openInVerticalSplits: ["initial-file.txt", "file.txt"],
+      },
+    }).then((dir) => {
+      // wait until text on the start screen is visible
+      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHovered("Hello")
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+
+      // yazi should be visible now
+      cy.contains(dir.contents["test-setup.lua"].name)
+      hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
+        dir.contents["test-setup.lua"].name,
+      )
+
+      isHovered(
+        "f you see this text, Neovim is ready!",
+        darkBackgroundColors.hoveredInSameDirectory,
+      )
+      isHovered("Hello", darkBackgroundColors.hoveredInSameDirectory)
+
+      // highlights are cleared when yazi is closed
+      cy.typeIntoTerminal("q")
+      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHovered("Hello")
     })
   })
 })

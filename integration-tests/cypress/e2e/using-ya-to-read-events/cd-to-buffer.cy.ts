@@ -1,5 +1,5 @@
-import { isHovered, isNotHovered } from "./hover-utils"
 import { startNeovimWithYa } from "./startNeovimWithYa"
+import { isHovered, isNotHovered } from "./utils/hover-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
 // https://docs.cypress.io/api/commands/type#Typing-tab-key-does-not-work

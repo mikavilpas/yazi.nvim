@@ -20,6 +20,7 @@
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
 ---@field public log_level? yazi.LogLevel
 ---@field public clipboard_register? string the register to use for copying. Defaults to "*", the system clipboard
+---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
@@ -53,6 +54,7 @@
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi
+---@field public hovered_buffer_in_same_directory? vim.api.keyset.highlight # the color of a buffer that is in the same directory as the hovered buffer
 
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
 

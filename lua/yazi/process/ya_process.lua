@@ -2,8 +2,8 @@
 
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
-local highlight_hovered_buffer =
-  require("yazi.buffer_highlighting.highlight_hovered_buffer")
+local YaziSessionHighlighter =
+  require("yazi.buffer_highlighting.yazi_session_highlighter")
 
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
@@ -13,6 +13,7 @@ local highlight_hovered_buffer =
 ---@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
+---@field private highlighter YaziSessionHighlighter
 local YaProcess = {}
 ---@diagnostic disable-next-line: inject-field
 YaProcess.__index = YaProcess
@@ -29,6 +30,7 @@ function YaProcess.new(config, yazi_id)
   self.config = config
   self.events = {}
   self.retries = 0
+  self.highlighter = YaziSessionHighlighter.new()
 
   return self
 end
@@ -54,7 +56,7 @@ end
 function YaProcess:kill()
   Log:debug("Killing ya process")
   pcall(self.ya_process.kill, self.ya_process, "sigterm")
-  highlight_hovered_buffer.clear_highlights()
+  self.highlighter:clear_highlights()
 end
 
 function YaProcess:wait(timeout)
@@ -127,9 +129,9 @@ function YaProcess:start()
             self.hovered_url = event.url
           end
           vim.schedule(function()
-            highlight_hovered_buffer.highlight_hovered_buffer(
+            self.highlighter:highlight_buffers_when_hovered(
               event.url,
-              self.config.highlight_groups
+              self.config
             )
 
             local event_handling =
