@@ -1,7 +1,7 @@
 local utils =
-  require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.utils')
+  require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.utils")
 local log =
-  require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log')
+  require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log")
 
 local M = {}
 
@@ -10,7 +10,7 @@ M.callback = function(data)
   for _, client in pairs(clients()) do
     local did_create = utils.get_nested_path(
       client,
-      { 'server_capabilities', 'workspace', 'fileOperations', 'didCreate' }
+      { "server_capabilities", "workspace", "fileOperations", "didCreate" }
     )
     if did_create ~= nil then
       local filters = did_create.filters or {}
@@ -20,8 +20,8 @@ M.callback = function(data)
             { uri = vim.uri_from_fname(data.fname) },
           },
         }
-        client.notify('workspace/didCreateFiles', params)
-        log.debug('Sending workspace/didCreateFiles notification', params)
+        client.notify("workspace/didCreateFiles", params)
+        log.debug("Sending workspace/didCreateFiles notification", params)
       end
     end
   end

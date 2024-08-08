@@ -1,7 +1,7 @@
-local Log = require('yazi.log')
-local utils = require('yazi.utils')
+local Log = require("yazi.log")
+local utils = require("yazi.utils")
 local DisposableHighlight =
-  require('yazi.buffer_highlighting.disposable_highlight')
+  require("yazi.buffer_highlighting.disposable_highlight")
 
 local M = {}
 
@@ -23,7 +23,7 @@ end
 ---@param url string
 ---@param highlight_config YaziConfigHighlightGroups
 function M.highlight_hovered_buffer(url, highlight_config)
-  assert(highlight_config, 'highlight_config is required')
+  assert(highlight_config, "highlight_config is required")
 
   local visible_open_buffers = utils.get_visible_open_buffers()
   for _, buffer in ipairs(visible_open_buffers) do
@@ -31,9 +31,9 @@ function M.highlight_hovered_buffer(url, highlight_config)
       local existing_hl = window_highlights[buffer.window_id]
       if existing_hl == nil then
         Log:debug(
-          'highlighting buffer '
+          "highlighting buffer "
             .. buffer.renameable_buffer.bufnr
-            .. ' in window '
+            .. " in window "
             .. buffer.window_id
         )
 
@@ -49,16 +49,16 @@ function M.highlight_hovered_buffer(url, highlight_config)
         window_highlights[buffer.window_id] = nil
         if success then
           Log:debug(
-            'disposed of highlight for buffer '
+            "disposed of highlight for buffer "
               .. buffer.renameable_buffer.bufnr
-              .. ' in window '
+              .. " in window "
               .. buffer.renameable_buffer.bufnr
           )
         else
           Log:debug(
-            'failed to dispose of highlight for buffer '
+            "failed to dispose of highlight for buffer "
               .. buffer.renameable_buffer.bufnr
-              .. ' in window '
+              .. " in window "
               .. buffer.window_id
           )
         end

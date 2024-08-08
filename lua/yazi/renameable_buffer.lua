@@ -1,9 +1,9 @@
-local plenary_path = require('plenary.path')
-local plenary_iterators = require('plenary.iterators')
+local plenary_path = require("plenary.path")
+local plenary_iterators = require("plenary.iterators")
 
 ---@param path string
 local function remove_trailing_slash(path)
-  if path:sub(-1) == '/' then
+  if path:sub(-1) == "/" then
     return path:sub(1, -2)
   end
 

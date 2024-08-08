@@ -1,10 +1,10 @@
 ---@module "plenary"
 
-local configModule = require('yazi.config')
+local configModule = require("yazi.config")
 
 local M = {}
 
-M.version = '5.2.0' -- x-release-please-version
+M.version = "5.2.0" -- x-release-please-version
 
 -- The last known state of yazi when it was closed
 ---@type YaziPreviousState
@@ -13,19 +13,19 @@ M.previous_state = {}
 ---@param config? YaziConfig?
 ---@param input_path? string
 function M.yazi(config, input_path)
-  local utils = require('yazi.utils')
-  local YaziProcess = require('yazi.process.yazi_process')
-  local yazi_event_handling = require('yazi.event_handling.yazi_event_handling')
+  local utils = require("yazi.utils")
+  local YaziProcess = require("yazi.process.yazi_process")
+  local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   if utils.is_yazi_available() ~= true then
-    print('Please install yazi. Check the documentation for more information')
+    print("Please install yazi. Check the documentation for more information")
     return
   end
 
   config =
-    vim.tbl_deep_extend('force', configModule.default(), M.config, config or {})
+    vim.tbl_deep_extend("force", configModule.default(), M.config, config or {})
 
-  local Log = require('yazi.log')
+  local Log = require("yazi.log")
   Log.level = config.log_level
 
   if
@@ -33,7 +33,7 @@ function M.yazi(config, input_path)
     and utils.is_ya_available() ~= true
   then
     print(
-      'Please install ya (the yazi command line utility). Check the documentation for more information'
+      "Please install ya (the yazi command line utility). Check the documentation for more information"
     )
     return
   end
@@ -46,7 +46,7 @@ function M.yazi(config, input_path)
   config.chosen_file_path = config.chosen_file_path or vim.fn.tempname()
   config.events_file_path = config.events_file_path or vim.fn.tempname()
 
-  local win = require('yazi.window').YaziFloatingWindow.new(config)
+  local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
 
   local yazi_process = YaziProcess:start(
@@ -58,14 +58,14 @@ function M.yazi(config, input_path)
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
         )
         Log:debug(
-          string.format('yazi.nvim: had trouble opening yazi: %s', exit_code)
+          string.format("yazi.nvim: had trouble opening yazi: %s", exit_code)
         )
         return
       end
 
       Log:debug(
         string.format(
-          'yazi process exited successfully with code: %s, selected_files %s, and events %s',
+          "yazi process exited successfully with code: %s, selected_files %s, and events %s",
           exit_code,
           vim.inspect(selected_files),
           vim.inspect(events)
@@ -107,7 +107,7 @@ function M.yazi(config, input_path)
   end
 
   if config.keymaps ~= false then
-    require('yazi.config').set_keymappings(yazi_buffer, config, {
+    require("yazi.config").set_keymappings(yazi_buffer, config, {
       api = yazi_process.api,
       input_path = path,
     })
@@ -122,7 +122,7 @@ function M.yazi(config, input_path)
   end
 
   vim.schedule(function()
-    vim.cmd('startinsert')
+    vim.cmd("startinsert")
   end)
 end
 
@@ -133,22 +133,22 @@ function M.toggle(config)
   assert(
     (config and config.use_ya_for_events_reading)
       or M.config.use_ya_for_events_reading,
-    'toggle requires setting `use_ya_for_events_reading`'
+    "toggle requires setting `use_ya_for_events_reading`"
   )
   assert(
     (config and config.use_yazi_client_id_flag)
       or M.config.use_yazi_client_id_flag,
-    'toggle requires setting `use_yazi_client_id_flag`'
+    "toggle requires setting `use_yazi_client_id_flag`"
   )
 
   local path = M.previous_state and M.previous_state.last_hovered or nil
 
-  local Log = require('yazi.log')
+  local Log = require("yazi.log")
   if path == nil then
-    Log:debug('No previous file hovered, opening yazi with default path')
+    Log:debug("No previous file hovered, opening yazi with default path")
   else
     Log:debug(
-      string.format('Opening yazi with previous file hovered: %s', path)
+      string.format("Opening yazi with previous file hovered: %s", path)
     )
   end
   M.yazi(config, path)
@@ -159,23 +159,23 @@ M.config = configModule.default()
 ---@param opts YaziConfig?
 function M.setup(opts)
   M.config =
-    vim.tbl_deep_extend('force', configModule.default(), M.config, opts or {})
+    vim.tbl_deep_extend("force", configModule.default(), M.config, opts or {})
 
-  local Log = require('yazi.log')
+  local Log = require("yazi.log")
   Log.level = M.config.log_level
 
   pcall(function()
-    require('yazi.lsp.embedded-lsp-file-operations.lsp-file-operations').setup()
+    require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations").setup()
   end)
 
-  local yazi_augroup = vim.api.nvim_create_augroup('yazi', { clear = true })
+  local yazi_augroup = vim.api.nvim_create_augroup("yazi", { clear = true })
 
   if M.config.open_for_directories == true then
-    Log:debug('Hijacking netrw to open yazi for directories')
-    require('yazi.hijack_netrw').hijack_netrw(yazi_augroup)
+    Log:debug("Hijacking netrw to open yazi for directories")
+    require("yazi.hijack_netrw").hijack_netrw(yazi_augroup)
   end
 
-  require('yazi.commands').create_yazi_commands()
+  require("yazi.commands").create_yazi_commands()
 end
 
 return M

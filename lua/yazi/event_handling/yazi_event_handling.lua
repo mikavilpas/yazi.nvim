@@ -1,10 +1,10 @@
 -- This file is about handling events that are sent from yazi
 
-local utils = require('yazi.utils')
-local plenaryIterators = require('plenary.iterators')
-local plenary_path = require('plenary.path')
-local lsp_delete = require('yazi.lsp.delete')
-local lsp_rename = require('yazi.lsp.rename')
+local utils = require("yazi.utils")
+local plenaryIterators = require("plenary.iterators")
+local plenary_path = require("plenary.path")
+local lsp_delete = require("yazi.lsp.delete")
+local lsp_rename = require("yazi.lsp.rename")
 
 local M = {}
 
@@ -24,7 +24,7 @@ function M.process_delete_event(event, remaining_events)
           :find(
             ---@param e YaziEvent
             function(e)
-              return e.type == 'rename' and e.data.to == url
+              return e.type == "rename" and e.data.to == url
             end
           )
 
@@ -76,7 +76,7 @@ function M.process_events_emitted_from_yazi(events)
   local last_directory = nil
 
   for i, event in ipairs(events) do
-    if event.type == 'rename' then
+    if event.type == "rename" then
       ---@cast event YaziRenameEvent
       lsp_rename.file_renamed(event.data.from, event.data.to)
 
@@ -85,7 +85,7 @@ function M.process_events_emitted_from_yazi(events)
       for _, instruction in ipairs(rename_instructions) do
         utils.rename_or_close_buffer(instruction)
       end
-    elseif event.type == 'move' then
+    elseif event.type == "move" then
       ---@cast event YaziMoveEvent
       for _, item in ipairs(event.data.items) do
         lsp_rename.file_renamed(item.from, item.to)
@@ -96,7 +96,7 @@ function M.process_events_emitted_from_yazi(events)
           utils.rename_or_close_buffer(instruction)
         end
       end
-    elseif event.type == 'bulk' then
+    elseif event.type == "bulk" then
       ---@cast event YaziBulkEvent
       for from, to in pairs(event.changes) do
         lsp_rename.file_renamed(from, to)
@@ -110,18 +110,18 @@ function M.process_events_emitted_from_yazi(events)
           utils.rename_or_close_buffer(instruction)
         end
       end
-    elseif event.type == 'delete' then
+    elseif event.type == "delete" then
       local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziDeleteEvent
       M.process_delete_event(event, remaining_events)
-    elseif event.type == 'trash' then
+    elseif event.type == "trash" then
       -- selene: allow(if_same_then_else)
       local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziTrashEvent
       M.process_delete_event(event, remaining_events)
-    elseif event.type == 'cd' then
+    elseif event.type == "cd" then
       ---@cast event YaziChangeDirectoryEvent
-      if event.url ~= nil and event.url ~= '' then
+      if event.url ~= nil and event.url ~= "" then
         last_directory = plenary_path:new(event.url)
       end
     end

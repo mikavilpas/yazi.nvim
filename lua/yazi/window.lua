@@ -1,4 +1,4 @@
-local Log = require('yazi.log')
+local Log = require("yazi.log")
 
 local M = {}
 
@@ -42,7 +42,7 @@ function YaziFloatingWindow:close()
     vim.api.nvim_win_close(self.win, true)
     Log:debug(
       string.format(
-        'YaziFloatingWindow closing (content_buffer: %s, win: %s)',
+        "YaziFloatingWindow closing (content_buffer: %s, win: %s)",
         self.content_buffer,
         self.win
       )
@@ -72,8 +72,8 @@ function YaziFloatingWindow:open_and_display()
 
   ---@type vim.api.keyset.win_config
   local opts = {
-    style = 'minimal',
-    relative = 'editor',
+    style = "minimal",
+    relative = "editor",
     row = dimensions.row,
     col = dimensions.col,
     width = dimensions.width,
@@ -88,21 +88,21 @@ function YaziFloatingWindow:open_and_display()
   self.content_buffer = yazi_buffer
   Log:debug(
     string.format(
-      'YaziFloatingWindow opening (content_buffer: %s, win: %s)',
+      "YaziFloatingWindow opening (content_buffer: %s, win: %s)",
       self.content_buffer,
       self.win
     )
   )
 
-  vim.bo[yazi_buffer].filetype = 'yazi'
+  vim.bo[yazi_buffer].filetype = "yazi"
 
-  vim.cmd('setlocal bufhidden=hide')
-  vim.cmd('setlocal nocursorcolumn')
-  vim.api.nvim_set_hl(0, 'YaziFloat', { link = 'Normal', default = true })
-  vim.cmd('setlocal winhl=NormalFloat:YaziFloat')
-  vim.cmd('set winblend=' .. self.config.yazi_floating_window_winblend)
+  vim.cmd("setlocal bufhidden=hide")
+  vim.cmd("setlocal nocursorcolumn")
+  vim.api.nvim_set_hl(0, "YaziFloat", { link = "Normal", default = true })
+  vim.cmd("setlocal winhl=NormalFloat:YaziFloat")
+  vim.cmd("set winblend=" .. self.config.yazi_floating_window_winblend)
 
-  vim.api.nvim_create_autocmd({ 'WinLeave' }, {
+  vim.api.nvim_create_autocmd({ "WinLeave" }, {
     buffer = yazi_buffer,
     callback = function()
       self:close()
@@ -113,7 +113,7 @@ function YaziFloatingWindow:open_and_display()
     self:add_hacky_mouse_support(yazi_buffer)
   end
 
-  vim.api.nvim_create_autocmd({ 'VimResized' }, {
+  vim.api.nvim_create_autocmd({ "VimResized" }, {
     buffer = yazi_buffer,
     callback = function()
       local dims = get_window_dimensions(self.config)
@@ -123,8 +123,8 @@ function YaziFloatingWindow:open_and_display()
         height = dims.height,
         row = dims.row,
         col = dims.col,
-        relative = 'editor',
-        style = 'minimal',
+        relative = "editor",
+        style = "minimal",
       })
 
       self.on_resized({
@@ -136,7 +136,7 @@ function YaziFloatingWindow:open_and_display()
 
   -- Prevents a bug with lazyvim involving which-key.nvim: pressing <esc> in
   -- the terminal window opens which-key and ignores the keypress.
-  vim.keymap.set('t', '<esc>', '<esc>', { buffer = yazi_buffer })
+  vim.keymap.set("t", "<esc>", "<esc>", { buffer = yazi_buffer })
 
   return self
 end
@@ -145,22 +145,22 @@ end
 function YaziFloatingWindow:add_hacky_mouse_support(yazi_buffer)
   -- Disable nvim mouse support so that yazi can handle mouse events instead
   local original_mouse_settings = vim.o.mouse
-  vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+  vim.api.nvim_create_autocmd({ "TermEnter", "WinEnter" }, {
     buffer = yazi_buffer,
     callback = function()
-      vim.api.nvim_set_option_value('mouse', '', {})
+      vim.api.nvim_set_option_value("mouse", "", {})
     end,
   })
 
   -- Extra mouse fix for tmux
   -- If tmux mouse mode is enabled
-  if os.getenv('TMUX') then
+  if os.getenv("TMUX") then
     local output = vim.fn.system('tmux display -p "#{mouse}"')
-    if output:sub(1, 1) == '1' then
-      vim.api.nvim_create_autocmd({ 'TermEnter', 'WinEnter' }, {
+    if output:sub(1, 1) == "1" then
+      vim.api.nvim_create_autocmd({ "TermEnter", "WinEnter" }, {
         buffer = yazi_buffer,
         callback = function()
-          vim.fn.system('tmux set mouse off')
+          vim.fn.system("tmux set mouse off")
         end,
       })
     end
@@ -168,9 +168,9 @@ function YaziFloatingWindow:add_hacky_mouse_support(yazi_buffer)
 
   self.cleanup = function()
     -- Restore mouse mode on exiting
-    vim.api.nvim_set_option_value('mouse', original_mouse_settings, {})
-    if os.getenv('TMUX') then
-      vim.fn.system('tmux set mouse on')
+    vim.api.nvim_set_option_value("mouse", original_mouse_settings, {})
+    if os.getenv("TMUX") then
+      vim.fn.system("tmux set mouse on")
     end
   end
 end

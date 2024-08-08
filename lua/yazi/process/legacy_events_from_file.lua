@@ -1,4 +1,4 @@
-local utils = require('yazi.utils')
+local utils = require("yazi.utils")
 
 -- The legacy way of reading events. Reads events from a file in one go after
 -- the `yazi` process exits.

@@ -1,5 +1,5 @@
-local RenameableBuffer = require('yazi.renameable_buffer')
-local plenary_path = require('plenary.path')
+local RenameableBuffer = require("yazi.renameable_buffer")
+local plenary_path = require("plenary.path")
 
 local M = {}
 
@@ -12,7 +12,7 @@ function M.relative_path(config, current_file_dir, selected_file)
 
   if vim.fn.executable(command) == 0 then
     local msg = string.format(
-      'error copying relative_path - the executable `%s` was not found. Try running `:healthcheck yazi` for more information.',
+      "error copying relative_path - the executable `%s` was not found. Try running `:healthcheck yazi` for more information.",
       command
     )
 
@@ -20,7 +20,7 @@ function M.relative_path(config, current_file_dir, selected_file)
     error(msg)
   end
 
-  assert(command ~= nil, 'realpath command must be set')
+  assert(command ~= nil, "realpath command must be set")
 
   ---@type Path
   local start_path = plenary_path:new(current_file_dir)
@@ -31,16 +31,16 @@ function M.relative_path(config, current_file_dir, selected_file)
     start_directory = start_path:parent()
   end
 
-  local stdout, exit_code, stderr = require('plenary.job')
+  local stdout, exit_code, stderr = require("plenary.job")
     :new({
       command = command,
-      args = { '--relative-to', start_directory.filename, selected_file },
+      args = { "--relative-to", start_directory.filename, selected_file },
     })
     :sync()
 
-  if exit_code ~= 0 or stdout == nil or stdout == '' then
-    vim.notify('error copying relative_path, exit code ' .. exit_code)
-    error('error running command, exit code ' .. exit_code)
+  if exit_code ~= 0 or stdout == nil or stdout == "" then
+    vim.notify("error copying relative_path, exit code " .. exit_code)
+    error("error running command, exit code " .. exit_code)
     print(vim.inspect(stderr))
   end
 
@@ -50,15 +50,15 @@ function M.relative_path(config, current_file_dir, selected_file)
 end
 
 function M.is_yazi_available()
-  return vim.fn.executable('yazi') == 1
+  return vim.fn.executable("yazi") == 1
 end
 
 function M.is_ya_available()
-  return vim.fn.executable('ya') == 1
+  return vim.fn.executable("ya") == 1
 end
 
 function M.file_exists(name)
-  local f = io.open(name, 'r')
+  local f = io.open(name, "r")
   if f ~= nil then
     io.close(f)
     return true
@@ -70,14 +70,14 @@ end
 ---@param path string?
 ---@return Path
 function M.selected_file_path(path)
-  if path == '' or path == nil then
-    path = vim.fn.expand('%:p')
+  if path == "" or path == nil then
+    path = vim.fn.expand("%:p")
   end
-  if path == '' or path == nil then
-    path = vim.fn.expand('%:p:h')
+  if path == "" or path == nil then
+    path = vim.fn.expand("%:p:h")
   end
-  if path == '' or path == nil then
-    path = vim.fn.expand('%:p')
+  if path == "" or path == nil then
+    path = vim.fn.expand("%:p")
   end
 
   return plenary_path:new(path)
@@ -92,7 +92,7 @@ function M.dir_of(file_path)
     return path
   else
     local parent = path:parent()
-    assert(type(parent) == 'table', 'parent must be a table')
+    assert(type(parent) == "table", "parent must be a table")
 
     return parent
   end
@@ -105,17 +105,17 @@ function M.parse_events(events_file_lines)
   local events = {}
 
   for _, line in ipairs(events_file_lines) do
-    local parts = vim.split(line, ',')
+    local parts = vim.split(line, ",")
     local type = parts[1]
 
     -- selene: allow(if_same_then_else)
-    if type == 'rename' then
+    if type == "rename" then
       -- example of a rename event:
 
       -- rename,1712242143209837,1712242143209837,{"tab":0,"from":"/Users/mikavilpas/git/yazi/LICENSE","to":"/Users/mikavilpas/git/yazi/LICENSE2"}
       local timestamp = parts[2]
       local id = parts[3]
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziRenameEvent
       local event = {
@@ -125,12 +125,12 @@ function M.parse_events(events_file_lines)
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
-    elseif type == 'move' then
+    elseif type == "move" then
       -- example of a move event:
       -- move,1712854829131439,1712854829131439,{"items":[{"from":"/tmp/test/test","to":"/tmp/test"}]}
       local timestamp = parts[2]
       local id = parts[3]
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziMoveEvent
       local event = {
@@ -140,23 +140,23 @@ function M.parse_events(events_file_lines)
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
-    elseif type == 'bulk' then
+    elseif type == "bulk" then
       -- example of a bulk event:
       -- bulk,0,1720800121065599,{"changes":{"/tmp/test-directory/test":"/tmp/test-directory/test2"}}
-      local data = vim.json.decode(table.concat(parts, ',', 4, #parts))
+      local data = vim.json.decode(table.concat(parts, ",", 4, #parts))
 
       ---@type YaziBulkEvent
       local event = {
-        type = 'bulk',
-        changes = data['changes'],
+        type = "bulk",
+        changes = data["changes"],
       }
       table.insert(events, event)
-    elseif type == 'delete' then
+    elseif type == "delete" then
       -- example of a delete event:
       -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
       local timestamp = parts[2]
       local id = parts[3]
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziDeleteEvent
       local event = {
@@ -166,13 +166,13 @@ function M.parse_events(events_file_lines)
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
-    elseif type == 'trash' then
+    elseif type == "trash" then
       -- example of a trash event:
       -- trash,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
 
       local timestamp = parts[2]
       local id = parts[3]
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziTrashEvent
       local event = {
@@ -182,26 +182,26 @@ function M.parse_events(events_file_lines)
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
-    elseif type == 'cd' then
+    elseif type == "cd" then
       -- example of a change directory (cd) event:
       -- cd,1716307611001689,1716307611001689,{"tab":0,"url":"/tmp/test-directory"}
 
       local timestamp = parts[2]
       local id = parts[3]
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziChangeDirectoryEvent
       local event = {
         type = type,
         timestamp = timestamp,
         id = id,
-        url = vim.json.decode(data_string)['url'],
+        url = vim.json.decode(data_string)["url"],
       }
       table.insert(events, event)
-    elseif type == 'hover' then
+    elseif type == "hover" then
       -- example of a hover event:
       -- hover,0,1720375364822700,{"tab":0,"url":"/tmp/test-directory/test"}
-      local data_string = table.concat(parts, ',', 4, #parts)
+      local data_string = table.concat(parts, ",", 4, #parts)
       local yazi_id = parts[3]
       local json = vim.json.decode(data_string, {
         luanil = {
@@ -212,13 +212,13 @@ function M.parse_events(events_file_lines)
 
       -- sometimes ya sends a hover event without a url, not sure why
       ---@type string | nil
-      local url = json['url']
+      local url = json["url"]
 
       ---@type YaziHoverEvent
       local event = {
         yazi_id = yazi_id,
         type = type,
-        url = url or '',
+        url = url or "",
       }
       table.insert(events, event)
     end
@@ -254,9 +254,9 @@ function M.get_open_buffers()
   local open_buffers = {}
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
     local path = vim.api.nvim_buf_get_name(bufnr)
-    local type = vim.api.nvim_get_option_value('buftype', { buf = bufnr })
+    local type = vim.api.nvim_get_option_value("buftype", { buf = bufnr })
 
-    local is_ordinary_file = path ~= vim.NIL and path ~= '' and type == ''
+    local is_ordinary_file = path ~= vim.NIL and path ~= "" and type == ""
     if is_ordinary_file then
       local renameable_buffer = RenameableBuffer.new(bufnr, path)
       open_buffers[#open_buffers + 1] = renameable_buffer
@@ -333,7 +333,7 @@ function M.on_yazi_exited(
   selected_files,
   state
 )
-  vim.cmd('silent! :checktime')
+  vim.cmd("silent! :checktime")
 
   -- open the file that was chosen
   if not vim.api.nvim_win_is_valid(prev_win) then
