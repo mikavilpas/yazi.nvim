@@ -1,7 +1,5 @@
 ---@module "plenary.path"
 
----@alias WindowId integer
-
 local Log = require('yazi.log')
 local utils = require('yazi.utils')
 local highlight_hovered_buffer =
@@ -133,6 +131,10 @@ function YaProcess:start()
               event.url,
               self.config.highlight_groups
             )
+
+            local event_handling =
+              require('yazi.event_handling.nvim_event_handling')
+            event_handling.emit('YaziDDSHover', event)
           end)
         else
           self.events[#self.events + 1] = event

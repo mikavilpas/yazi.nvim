@@ -42,6 +42,8 @@ describe("highlighting the buffer with 'hover' events", () => {
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
 
+      // yazi should be visible now
+      cy.contains(dir.contents["test-setup.lua"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
         dir.contents["initial-file.txt"].name,
       )
@@ -113,6 +115,8 @@ describe("highlighting the buffer with 'hover' events", () => {
       // start yazi - the initial file should be highlighted
       cy.typeIntoTerminal("{upArrow}")
 
+      // yazi should be visible now
+      cy.contains(dir.contents["test-setup.lua"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(testFile)
       isHovered("how to initialize the test environment")
 
@@ -138,6 +142,8 @@ describe("highlighting the buffer with 'hover' events", () => {
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
 
+        // yazi should be visible now
+        cy.contains(dir.contents["test-setup.lua"].name)
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
           dir.contents["test-setup.lua"].name,
         )
@@ -171,6 +177,8 @@ describe("highlighting the buffer with 'hover' events", () => {
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
 
+        // yazi should be visible now
+        cy.contains(dir.contents["test-setup.lua"].name)
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
           dir.contents["test-setup.lua"].name,
         )
@@ -190,6 +198,35 @@ describe("highlighting the buffer with 'hover' events", () => {
             )
           })
       })
+    })
+  })
+
+  it("supports external integrations to hover events", () => {
+    startNeovimWithYa({
+      startupScriptModifications: ["notify_hover_events.lua"],
+    }).then((dir) => {
+      // wait until text on the start screen is visible
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+
+      // yazi should be visible now
+      cy.contains(dir.contents["test-setup.lua"].name)
+      hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
+        dir.contents["test-setup.lua"].name,
+      )
+
+      // Hovering a new file should have triggered the integration
+      //
+      // the main message from the integration in the
+      // startupScriptModifications script should be visible. Check the file
+      // to see the full integration.
+      cy.contains("Just received a YaziDDSHover event!")
+
+      // some event data should be visible. See the lua type YaziHoverEvent for
+      // the structure
+      cy.contains(`type = "hover"`)
     })
   })
 })

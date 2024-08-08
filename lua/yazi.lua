@@ -15,7 +15,7 @@ M.previous_state = {}
 function M.yazi(config, input_path)
   local utils = require('yazi.utils')
   local YaziProcess = require('yazi.process.yazi_process')
-  local event_handling = require('yazi.event_handling')
+  local yazi_event_handling = require('yazi.event_handling.yazi_event_handling')
 
   if utils.is_yazi_available() ~= true then
     print('Please install yazi. Check the documentation for more information')
@@ -72,7 +72,8 @@ function M.yazi(config, input_path)
         )
       )
 
-      local event_info = event_handling.process_events_emitted_from_yazi(events)
+      local event_info =
+        yazi_event_handling.process_events_emitted_from_yazi(events)
 
       local last_directory = event_info.last_directory
       if last_directory == nil then

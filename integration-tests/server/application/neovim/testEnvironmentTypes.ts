@@ -29,6 +29,7 @@ export const startupScriptModification = z.enum([
   "use_light_neovim_colorscheme.lua",
   "modify_yazi_config_and_set_help_key.lua",
   "disable_a_keybinding.lua",
+  "notify_hover_events.lua",
 ])
 export type StartupScriptModification = z.infer<
   typeof startupScriptModification

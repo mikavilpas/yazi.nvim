@@ -1,3 +1,5 @@
+-- This file is about handling events that are sent from yazi
+
 local utils = require('yazi.utils')
 local plenaryIterators = require('plenary.iterators')
 local plenary_path = require('plenary.path')

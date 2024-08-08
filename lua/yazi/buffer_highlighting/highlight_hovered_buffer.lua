@@ -5,6 +5,8 @@ local DisposableHighlight =
 
 local M = {}
 
+---@alias WindowId integer
+
 -- The currently highlighted windows. Global because there can only be one yazi
 -- at a time.
 ---@type table<WindowId, yazi.DisposableHighlight>

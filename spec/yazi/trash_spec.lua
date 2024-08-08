@@ -1,5 +1,5 @@
 local assert = require('luassert')
-local event_handling = require('yazi.event_handling')
+local yazi_event_handling = require('yazi.event_handling.yazi_event_handling')
 
 describe('process_trash_event', function()
   before_each(function()
@@ -20,7 +20,7 @@ describe('process_trash_event', function()
       data = { urls = { '/abc/def' } },
     }
 
-    event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -40,7 +40,7 @@ describe('process_trash_event', function()
       data = { urls = { '/abc' } },
     }
 
-    event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -60,7 +60,7 @@ describe('process_trash_event', function()
       data = { urls = { '/abc/ghi' } },
     }
 
-    local deletions = event_handling.process_delete_event(event, {})
+    local deletions = yazi_event_handling.process_delete_event(event, {})
     assert.are.same({}, deletions)
   end)
 
@@ -84,7 +84,7 @@ describe('process_trash_event', function()
     }
 
     local deletions =
-      event_handling.process_delete_event(delete_event, { rename_event })
+      yazi_event_handling.process_delete_event(delete_event, { rename_event })
     assert.are.same({}, deletions)
   end)
 end)
