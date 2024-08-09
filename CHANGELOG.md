@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.2.0...v5.2.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* opening multiple files in a directory with spaces ([#347](https://github.com/mikavilpas/yazi.nvim/issues/347)) ([f7be6c1](https://github.com/mikavilpas/yazi.nvim/commit/f7be6c1f7b5cec69baf8f5d610f9d2a2a0ff5d20))
+
 ## [5.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.1.1...v5.2.0) (2024-08-08)
 
 ### Features
