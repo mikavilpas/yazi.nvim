@@ -5,6 +5,7 @@ import { constants } from "fs"
 import { access, mkdir, mkdtemp, readdir, readFile, rm } from "fs/promises"
 import path from "path"
 import { fileURLToPath } from "url"
+import type { TestDirectory } from "./server/application/neovim/testEnvironmentTypes"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
@@ -77,6 +78,16 @@ export default defineConfig({
                   stem: "initial-file",
                   extension: ".txt",
                 },
+                "dir with spaces/file1.txt": {
+                  name: "file1.txt",
+                  stem: "file1",
+                  extension: ".txt",
+                },
+                "dir with spaces/file2.txt": {
+                  name: "file2.txt",
+                  stem: "file2",
+                  extension: ".txt",
+                },
                 "test-setup.lua": {
                   name: "test-setup.lua",
                   stem: "test-setup",
@@ -126,6 +137,7 @@ export default defineConfig({
             execSync(
               `cp ./test-environment/test-setup.lua ${dir}/test-setup.lua`,
             )
+            execSync(`cp -r "./test-environment/dir with spaces" ${dir}/`)
             execSync(`cp -r ./test-environment/subdirectory ${dir}/`)
             execSync(`cp -r ./test-environment/other-subdirectory ${dir}/`)
             execSync(`cp -r ./test-environment/config-modifications/ ${dir}/`)

@@ -211,7 +211,7 @@ describe("opening files", () => {
     // the copied path should be relative to the file/directory yazi was
     // started in (the initial file)
 
-    cy.startNeovim().then((dir) => {
+    startNeovimWithYa().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -253,7 +253,7 @@ describe("opening files", () => {
     // similarly, the copied path should be relative to the file/directory yazi
     // was started in (the initial file)
 
-    cy.startNeovim().then((dir) => {
+    startNeovimWithYa().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -290,6 +290,25 @@ describe("opening files", () => {
       cy.contains(
         "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
       )
+    })
+  })
+
+  it("can open multiple files in a directory whose name contains a space character", () => {
+    startNeovimWithYa({ filename: "dir with spaces/file1.txt" }).then((dir) => {
+      cy.contains("this is file1.txt")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["dir with spaces/file2.txt"].name)
+
+      // select all files and open them
+      cy.typeIntoTerminal("{control+a}")
+      cy.typeIntoTerminal("{enter}")
+
+      cy.typeIntoTerminal(":buffers{enter}")
+
+      // all files should now be visible
+      cy.contains("dir with spaces/file1.txt" satisfies IntegrationTestFile)
+      cy.contains("dir with spaces/file2.txt" satisfies IntegrationTestFile)
     })
   })
 })

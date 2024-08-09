@@ -22,7 +22,8 @@ end
 
 ---@param chosen_files string[]
 function M.open_multiple_files(chosen_files)
-  vim.cmd("args" .. table.concat(chosen_files, " "))
+  local quoted = vim.tbl_map(vim.fn.fnameescape, chosen_files)
+  vim.cmd("args" .. table.concat(quoted, " "))
 end
 
 ---@param chosen_files string[]
