@@ -78,7 +78,7 @@ describe("the RenameableBuffer class", function()
     assert.are.equal("/my-tmp/file1", buffer.original_path)
   end)
 
-  describe("is_sibling_of", function()
+  describe("is_sibling_of_hovered", function()
     local base_dir
 
     before_each(function()
@@ -97,7 +97,7 @@ describe("the RenameableBuffer class", function()
       local buffer =
         RenameableBuffer.new(1, vim.fs.joinpath(parent_directory, "file1"))
       assert.is_true(
-        buffer:is_sibling_of(vim.fs.joinpath(parent_directory, "file2"))
+        buffer:is_sibling_of_hovered(vim.fs.joinpath(parent_directory, "file2"))
       )
     end)
 
@@ -109,7 +109,29 @@ describe("the RenameableBuffer class", function()
       vim.fn.mkdir(dir2)
 
       local buffer = RenameableBuffer.new(1, vim.fs.joinpath(dir1, "file1"))
-      assert.is_false(buffer:is_sibling_of(vim.fs.joinpath(dir2, "file2")))
+      assert.is_false(
+        buffer:is_sibling_of_hovered(vim.fs.joinpath(dir2, "file2"))
+      )
+    end)
+
+    it("can recognize the siblings of hovered directories", function()
+      -- when yazi hovers the helpers/ directory, it should highlight buffers
+      -- in this directory (`.`), not buffers in helpers/
+      --
+      --   󰉋 helpers
+      --    file.lua
+      --
+
+      local this_dir = vim.fs.joinpath(base_dir, "this_directory")
+      local helpers_dir = vim.fs.joinpath(this_dir, "helpers")
+
+      vim.fn.mkdir(this_dir, "p")
+      vim.fn.mkdir(helpers_dir, "p")
+
+      local file_path = vim.fs.joinpath(this_dir, "file.lua")
+
+      local buffer = RenameableBuffer.new(1, file_path)
+      assert.is_true(buffer:is_sibling_of_hovered(helpers_dir))
     end)
   end)
 end)
