@@ -9,7 +9,7 @@
     "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
     "dev": "concurrently --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'npm run cy:open'",
     "dev:client": "vite",
-    "dev:server": "tsc-watch --noClear --onSuccess 'npx tsx ./server/server.ts'",
+    "dev:server": "nodemon --watch ./server --ext '*' --exec 'npx tsx ./server/server.ts'",
     "eslint": "eslint --max-warnings=0 .",
     "preview": "vite preview"
   },
@@ -40,9 +40,9 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-no-only-tests": "3.1.0",
     "express": "4.19.2",
+    "nodemon": "3.1.4",
     "prettier-plugin-organize-imports": "4.0.0",
     "tinycolor2": "1.6.0",
-    "tsc-watch": "6.2.0",
     "typescript": "5.5.4",
     "vite": "5.4.0"
   }
