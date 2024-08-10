@@ -17,9 +17,9 @@ local YaziProcess = {}
 YaziProcess.__index = YaziProcess
 
 ---@param config YaziConfig
----@param path Path
+---@param paths Path[]
 ---@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil)
-function YaziProcess:start(config, path, on_exit)
+function YaziProcess:start(config, paths, on_exit)
   os.remove(config.chosen_file_path)
 
   Log:debug(
@@ -39,7 +39,7 @@ function YaziProcess:start(config, path, on_exit)
       and YaProcess.new(config, yazi_id)
     or LegacyEventReadingFromEventFile:new(config)
 
-  local yazi_cmd = self.event_reader:get_yazi_command(path)
+  local yazi_cmd = self.event_reader:get_yazi_command(paths)
   Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
 
   self.yazi_job_id = vim.fn.termopen(yazi_cmd, {

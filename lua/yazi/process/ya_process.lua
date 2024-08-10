@@ -35,22 +35,27 @@ function YaProcess.new(config, yazi_id)
   return self
 end
 
----@param path Path
-function YaProcess:get_yazi_command(path)
-  if self.yazi_id then
-    return string.format(
-      'yazi %s --chooser-file "%s" --client-id "%s"',
-      vim.fn.shellescape(path.filename),
-      self.config.chosen_file_path,
-      self.yazi_id
-    )
+---@param paths Path[]
+function YaProcess:get_yazi_command(paths)
+  local command_words = { "yazi" }
+
+  if self.config.open_multiple_tabs == true then
+    for _, path in ipairs(paths) do
+      table.insert(command_words, vim.fn.shellescape(path.filename))
+    end
   else
-    return string.format(
-      'yazi %s --chooser-file "%s"',
-      vim.fn.shellescape(path.filename),
-      self.config.chosen_file_path
-    )
+    table.insert(command_words, vim.fn.shellescape(paths[1].filename))
   end
+
+  table.insert(command_words, "--chooser-file")
+  table.insert(command_words, self.config.chosen_file_path)
+
+  if self.yazi_id then
+    table.insert(command_words, "--client-id")
+    table.insert(command_words, self.yazi_id)
+  end
+
+  return table.concat(command_words, " ")
 end
 
 function YaProcess:kill()

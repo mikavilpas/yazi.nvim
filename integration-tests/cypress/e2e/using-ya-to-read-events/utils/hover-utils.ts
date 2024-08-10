@@ -3,7 +3,7 @@ import { flavors } from "@catppuccin/palette"
 const darkTheme = flavors.macchiato.colors
 const lightTheme = flavors.latte.colors
 
-function rgbify(color: (typeof darkTheme)["surface0"]["rgb"]) {
+export function rgbify(color: (typeof darkTheme)["surface0"]["rgb"]): string {
   return `rgb(${color.r.toString()}, ${color.g.toString()}, ${color.b.toString()})`
 }
 
@@ -21,7 +21,7 @@ export const lightBackgroundColors = {
 }
 
 // only works for the dark colorscheme for now
-export function isHovered(text: string, color?: string): void {
+export function isHoveredInNeovim(text: string, color?: string): void {
   cy.contains(text).should(
     "have.css",
     "background-color",
@@ -30,7 +30,7 @@ export function isHovered(text: string, color?: string): void {
 }
 
 // only works for the dark colorscheme for now
-export function isNotHovered(text: string): void {
+export function isNotHoveredInNeovim(text: string): void {
   cy.contains(text).should(
     "have.css",
     "background-color",

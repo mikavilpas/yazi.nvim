@@ -25,13 +25,24 @@ describe("opening a file", function()
     })
   end)
 
-  ---@param file string
-  local function assert_opened_yazi_with_file(file)
+  ---@param files string[]
+  local function assert_opened_yazi_with_files(files)
     local call = mock(fake_yazi_process).start.calls[1]
 
-    ---@type Path
-    local path = call.vals[3]
-    assert.equals(file, path.filename)
+    ---@type Path[]
+    local actual_files = call.vals[3]
+    assert.is_equal(type(actual_files), "table")
+
+    local file_names = vim.tbl_map(function(file)
+      return file.filename
+    end, actual_files)
+
+    for _, file in ipairs(files) do
+      print("opened file: " .. file)
+      assert.is_true(type(file) == "string")
+    end
+
+    assert.is(files, file_names)
   end
 
   it("opens yazi with the current file selected", function()
@@ -44,7 +55,7 @@ describe("opening a file", function()
       events_file_path = "/tmp/yazi.nvim.events.txt",
     })
 
-    assert_opened_yazi_with_file("/abc/test file-$1.txt")
+    assert_opened_yazi_with_files({ "/abc/test file-$1.txt" })
   end)
 
   it("opens yazi with the current directory selected", function()
@@ -57,7 +68,7 @@ describe("opening a file", function()
       events_file_path = "/tmp/yazi.nvim.events.txt",
     })
 
-    assert_opened_yazi_with_file("/tmp/")
+    assert_opened_yazi_with_files({ "/tmp/" })
   end)
 
   it(

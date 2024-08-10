@@ -38,7 +38,8 @@ function M.yazi(config, input_path)
     return
   end
 
-  local path = utils.selected_file_path(input_path)
+  local paths = utils.selected_file_paths(input_path)
+  local path = paths[1]
 
   local prev_win = vim.api.nvim_get_current_win()
   local prev_buf = vim.api.nvim_get_current_buf()
@@ -51,7 +52,7 @@ function M.yazi(config, input_path)
 
   local yazi_process = YaziProcess:start(
     config,
-    path,
+    paths,
     function(exit_code, selected_files, events, hovered_url)
       if exit_code ~= 0 then
         print(

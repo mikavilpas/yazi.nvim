@@ -1,0 +1,58 @@
+local assert = require("luassert")
+local utils = require("yazi.utils")
+
+describe("choosing the correct files when starting yazi", function()
+  before_each(function()
+    -- clear all buffers
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+  end)
+
+  describe(" selected_file_path", function()
+    it("when given a file, returns that file", function()
+      vim.fn.bufadd("/my-tmp/file1")
+
+      local result = utils.selected_file_path("/my-tmp/file1")
+
+      assert.is_equal("/my-tmp/file1", result.filename)
+    end)
+
+    it("when no file is loaded, returns the current directory", function()
+      local result = utils.selected_file_path()
+
+      assert.is_equal(result.filename, vim.fn.getcwd())
+    end)
+  end)
+
+  describe(" selected_files", function()
+    it("when no file is loaded, returns the current directory", function()
+      local result = utils.selected_file_paths()
+      assert.is_equal(result[1].filename, vim.fn.getcwd())
+    end)
+
+    it("when given a file, returns that file", function()
+      vim.fn.bufadd("/my-tmp/file1")
+
+      local result = utils.selected_file_paths("/my-tmp/file1")
+
+      assert.is_equal("/my-tmp/file1", result[1].filename)
+      assert.is_equal(1, #result)
+    end)
+
+    it(
+      "when there is another file open in a split, includes that file",
+      function()
+        vim.fn.bufadd("/my-tmp/file1")
+        vim.cmd("vsplit /my-tmp/file2")
+
+        local result = utils.selected_file_paths("/my-tmp/file1")
+
+        assert.is_equal(#result, 2)
+
+        assert.is_equal("/my-tmp/file1", result[1].filename)
+        assert.is_equal("/my-tmp/file2", result[2].filename)
+      end
+    )
+  end)
+end)

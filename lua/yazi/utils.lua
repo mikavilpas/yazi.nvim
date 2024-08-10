@@ -68,19 +68,47 @@ function M.file_exists(name)
 end
 
 ---@param path string?
----@return Path
 function M.selected_file_path(path)
-  if path == "" or path == nil then
-    path = vim.fn.expand("%:p")
-  end
-  if path == "" or path == nil then
-    path = vim.fn.expand("%:p:h")
-  end
+  -- make sure the path is a full path
   if path == "" or path == nil then
     path = vim.fn.expand("%:p")
   end
 
+  -- if the path is still empty (no file loaded / invalid buffer), try to get
+  -- the directory of the current file.
+  if path == "" or path == nil then
+    path = vim.fn.expand("%:p:h")
+  end
+
+  -- if the path is still empty, try to get the current file
+  if path == "" or path == nil then
+    path = vim.fn.expand("%:p")
+  end
+
+  ---@type Path
   return plenary_path:new(path)
+end
+
+---@param path string?
+function M.selected_file_paths(path)
+  local selected_file_path = M.selected_file_path(path)
+  ---@type Path[]
+  local paths = { selected_file_path }
+
+  for _, buffer in ipairs(M.get_visible_open_buffers()) do
+    -- NOTE: yazi can only display up to 9 paths, and it's an error to give any
+    -- more
+    if
+      #paths < 9
+      and not buffer.renameable_buffer:matches_exactly(
+        selected_file_path.filename
+      )
+    then
+      table.insert(paths, buffer.renameable_buffer.path)
+    end
+  end
+
+  return paths
 end
 
 ---@param file_path string

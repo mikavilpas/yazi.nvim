@@ -1,1 +1,1 @@
-this is file2.txt
+this is the second file

@@ -1,5 +1,9 @@
 import type { IntegrationTestFile } from "server/application/neovim/environment/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
+import {
+  isFileNotSelectedInYazi,
+  isFileSelectedInYazi,
+} from "./utils/yazi-utils"
 
 describe("opening files", () => {
   beforeEach(() => {
@@ -295,7 +299,7 @@ describe("opening files", () => {
 
   it("can open multiple files in a directory whose name contains a space character", () => {
     startNeovimWithYa({ filename: "dir with spaces/file1.txt" }).then((dir) => {
-      cy.contains("this is file1.txt")
+      cy.contains("this is the first file")
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["dir with spaces/file2.txt"].name)
@@ -309,6 +313,44 @@ describe("opening files", () => {
       // all files should now be visible
       cy.contains("dir with spaces/file1.txt" satisfies IntegrationTestFile)
       cy.contains("dir with spaces/file2.txt" satisfies IntegrationTestFile)
+    })
+  })
+
+  it("can open multiple open files in yazi tabs", () => {
+    startNeovimWithYa({
+      filename: {
+        openInVerticalSplits: [
+          "file.txt",
+          "test-setup.lua",
+          "dir with spaces/file1.txt",
+        ],
+      },
+      startupScriptModifications: [
+        "modify_yazi_config_and_open_multiple_files.lua",
+      ],
+    }).then((dir) => {
+      cy.contains("Hello")
+
+      // now that multiple files are open, and the configuration has been set
+      // to open multiple files in yazi tabs, opening yazi should show the
+      // tabs
+      cy.typeIntoTerminal("{upArrow}")
+
+      // this is the first yazi tab (1)
+      isFileSelectedInYazi(dir.contents["file.txt"].name)
+      isFileNotSelectedInYazi(dir.contents["test-setup.lua"].name)
+
+      // next, move to the second tab (2)
+      cy.typeIntoTerminal("2")
+      isFileSelectedInYazi(dir.contents["test-setup.lua"].name)
+      isFileNotSelectedInYazi(dir.contents["file.txt"].name)
+
+      // next, move to the third tab (3). This tab should be in a different
+      // directory, so other adjacent files should be visible than before
+      cy.typeIntoTerminal("3")
+      cy.contains(dir.contents["dir with spaces/file1.txt"].name)
+      isFileSelectedInYazi(dir.contents["dir with spaces/file1.txt"].name)
+      isFileNotSelectedInYazi(dir.contents["dir with spaces/file2.txt"].name)
     })
   })
 })

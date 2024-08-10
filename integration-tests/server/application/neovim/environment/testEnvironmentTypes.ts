@@ -27,6 +27,7 @@ export const startupScriptModification = z.enum([
   "disable_a_keybinding.lua",
   "notify_hover_events.lua",
   "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
+  "modify_yazi_config_and_open_multiple_files.lua",
 ])
 export type StartupScriptModification = z.infer<
   typeof startupScriptModification
