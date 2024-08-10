@@ -1,4 +1,4 @@
-import type { IntegrationTestFile } from "server/application/neovim/testEnvironmentTypes"
+import type { IntegrationTestFile } from "server/application/neovim/environment/testEnvironmentTypes"
 
 describe("opening files", () => {
   beforeEach(() => {

@@ -8,11 +8,11 @@ import { createContext, trpc } from "./connection/trpc"
 
 /** Stack for managing resources that need to be disposed of when the server
  * shuts down */
-await using stack = new AsyncDisposableStack()
-stack.defer(() => {
+await using autocleanup = new AsyncDisposableStack()
+autocleanup.defer(() => {
   console.log("Closing any open test applications")
 })
-export { stack }
+export { autocleanup }
 
 console.log("🚀 Server starting")
 export type AppRouter = typeof appRouter
