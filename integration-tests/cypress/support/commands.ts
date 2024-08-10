@@ -42,14 +42,11 @@ import "../../client/__global.ts"
 import type {
   StartNeovimArguments,
   TestDirectory,
-} from "../../server/application/neovim/testEnvironmentTypes"
+} from "../../server/application/neovim/environment/testEnvironmentTypes.ts"
 
 Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   cy.window().then((win) => {
-    cy.task("createTempDir").then(async (dir) => {
-      void win.startNeovim(dir.rootPathAbsolute, startArguments)
-      return dir
-    })
+    return win.startNeovim(startArguments)
   })
 })
 

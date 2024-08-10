@@ -3,7 +3,10 @@ import { createTRPCClient, createWSClient, wsLink } from "@trpc/client"
 import { FitAddon } from "@xterm/addon-fit"
 import { Terminal } from "@xterm/xterm"
 import "@xterm/xterm/css/xterm.css"
-import type { StartNeovimArguments } from "../server/application/neovim/testEnvironmentTypes.ts"
+import type {
+  StartNeovimArguments,
+  TestDirectory,
+} from "../server/application/neovim/environment/testEnvironmentTypes.ts"
 import type { AppRouter } from "../server/server"
 import "./style.css"
 import { validateMouseEvent } from "./validateMouseEvent"
@@ -70,12 +73,10 @@ trpc.neovim.onStdout.subscribe(undefined, {
 
 /** Entrypoint for the test runner (cypress) */
 window.startNeovim = async function (
-  directory: string,
   startArgs?: StartNeovimArguments,
-): Promise<void> {
+): Promise<TestDirectory> {
   const terminalDimensions = { cols: terminal.cols, rows: terminal.rows }
-  await trpc.neovim.start.mutate({
-    directory,
+  const dir: TestDirectory = await trpc.neovim.start.mutate({
     filename: startArgs?.filename ?? "initial-file.txt",
     startupScriptModifications: startArgs?.startupScriptModifications,
     terminalDimensions,
@@ -100,6 +101,8 @@ window.startNeovim = async function (
       })
     }
   })
+
+  return dir
 }
 
 terminal.onKey((event) => {

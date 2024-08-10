@@ -1,10 +1,10 @@
-import type { StartNeovimArguments } from "server/application/neovim/testEnvironmentTypes"
+import type {
+  StartNeovimArguments,
+  TestDirectory,
+} from "server/application/neovim/environment/testEnvironmentTypes"
 
 declare global {
   interface Window {
-    startNeovim(
-      directory: string,
-      startArguments?: StartNeovimArguments,
-    ): Promise<void>
+    startNeovim(startArguments?: StartNeovimArguments): Promise<TestDirectory>
   }
 }

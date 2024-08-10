@@ -1,11 +1,7 @@
-import assert from "assert"
-import { execSync, Serializable } from "child_process"
 import { defineConfig } from "cypress"
-import { constants } from "fs"
-import { access, mkdir, mkdtemp, readdir, readFile, rm } from "fs/promises"
+import { mkdir, readdir, readFile, rm } from "fs/promises"
 import path from "path"
 import { fileURLToPath } from "url"
-import type { TestDirectory } from "./server/application/neovim/testEnvironmentTypes"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
@@ -42,7 +38,7 @@ export default defineConfig({
       })
 
       on("task", {
-        async removeYaziLog() {
+        async removeYaziLog(): Promise<null> {
           try {
             await rm(yaziLogFile)
           } catch (err) {
@@ -52,7 +48,7 @@ export default defineConfig({
           }
           return null // something must be returned
         },
-        async showYaziLog() {
+        async showYaziLog(): Promise<null> {
           try {
             const log = await readFile(yaziLogFile, "utf-8")
             console.log(`${yaziLogFile}`, log.split("\n"))
@@ -60,94 +56,6 @@ export default defineConfig({
           } catch (err) {
             console.error(err)
             return null // something must be returned
-          }
-        },
-        async createTempDir(): Promise<TestDirectory> {
-          try {
-            const dir = await createUniqueDirectory()
-
-            const directory: TestDirectory = {
-              rootPathAbsolute: dir,
-              rootPathRelativeToTestEnvironmentDir: path.relative(
-                testEnvironmentDir,
-                dir,
-              ),
-              contents: {
-                "initial-file.txt": {
-                  name: "initial-file.txt",
-                  stem: "initial-file",
-                  extension: ".txt",
-                },
-                "dir with spaces/file1.txt": {
-                  name: "file1.txt",
-                  stem: "file1",
-                  extension: ".txt",
-                },
-                "dir with spaces/file2.txt": {
-                  name: "file2.txt",
-                  stem: "file2",
-                  extension: ".txt",
-                },
-                "test-setup.lua": {
-                  name: "test-setup.lua",
-                  stem: "test-setup",
-                  extension: ".lua",
-                },
-                "file.txt": {
-                  name: "file.txt",
-                  stem: "file",
-                  extension: ".txt",
-                },
-                "subdirectory/subdirectory-file.txt": {
-                  name: "subdirectory-file.txt",
-                  stem: "subdirectory-file",
-                  extension: ".txt",
-                },
-                ["other-subdirectory/other-sub-file.txt"]: {
-                  name: "other-sub-file.txt",
-                  stem: "other-sub-file",
-                  extension: ".txt",
-                },
-                "modify_yazi_config_to_use_ya_as_event_reader.lua": {
-                  name: "modify_yazi_config_to_use_ya_as_event_reader.lua",
-                  stem: "modify_yazi_config_to_use_ya_as_event_reader",
-                  extension: ".lua",
-                },
-                "routes/posts.$postId/adjacent-file.txt": {
-                  name: "adjacent-file.txt",
-                  stem: "adjacent-file",
-                  extension: ".txt",
-                },
-                "routes/posts.$postId/route.tsx": {
-                  name: "route.tsx",
-                  stem: "route",
-                  extension: ".tsx",
-                },
-                "routes/posts.$postId/should-be-excluded-file.txt": {
-                  name: "should-be-excluded-file.txt",
-                  stem: "should-be-excluded-file",
-                  extension: ".txt",
-                },
-              },
-            }
-            directory satisfies Serializable // required by cypress
-
-            execSync(`cp ./test-environment/initial-file.txt ${dir}/`)
-            execSync(`cp ./test-environment/file.txt ${dir}/`)
-            execSync(
-              `cp ./test-environment/test-setup.lua ${dir}/test-setup.lua`,
-            )
-            execSync(`cp -r "./test-environment/dir with spaces" ${dir}/`)
-            execSync(`cp -r ./test-environment/subdirectory ${dir}/`)
-            execSync(`cp -r ./test-environment/other-subdirectory ${dir}/`)
-            execSync(`cp -r ./test-environment/config-modifications/ ${dir}/`)
-            execSync(`cp -r ./test-environment/routes ${dir}/`)
-            console.log(`Created test directory at ${dir}`)
-
-            return directory
-          } catch (err) {
-            console.error(err)
-            throw err
           }
         },
       })
@@ -158,17 +66,3 @@ export default defineConfig({
     },
   },
 })
-
-async function createUniqueDirectory(): Promise<string> {
-  const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
-  const testdirs = path.join(__dirname, "test-environment", "testdirs")
-  try {
-    await access(testdirs, constants.F_OK)
-  } catch {
-    await mkdir(testdirs)
-  }
-  const dir = await mkdtemp(path.join(testdirs, "dir-"))
-  assert(typeof dir === "string")
-
-  return dir
-}
