@@ -64,7 +64,7 @@ function YaziSessionHighlighter:highlight_buffers_when_hovered(url, config)
         { when_light = -25, when_dark = 65 }
       )
     elseif
-      buffer.renameable_buffer:is_sibling_of(url)
+      buffer.renameable_buffer:is_sibling_of_hovered(url)
       and config.highlight_hovered_buffers_in_same_directory == true
     then
       Log:debug(

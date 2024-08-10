@@ -54,12 +54,22 @@ function RenameableBuffer:matches_parent(path)
   return found ~= nil
 end
 
---- Check if the given `other` path is in the same directory as the buffer's path.
+--- When hovering over a file or a directory `other`, return true if this
+--- buffer is in the same directory as `other`.
 ---@param other string
-function RenameableBuffer:is_sibling_of(other)
+function RenameableBuffer:is_sibling_of_hovered(other)
   other = remove_trailing_slash(other)
-  local my_dir = require("yazi.utils").dir_of(self.path.filename)
-  local other_dir = require("yazi.utils").dir_of(other)
+  local utils = require("yazi.utils")
+
+  ---@type Path
+  local other_path = plenary_path:new(other)
+
+  local my_dir = utils.dir_of(self.path.filename)
+  local other_dir = utils.dir_of(other)
+
+  if other_path:is_dir() then
+    return my_dir.filename == other_dir:parent().filename
+  end
 
   return my_dir.filename == other_dir.filename
 end
