@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.2.1...v5.3.0) (2024-08-10)
+
+
+### Features
+
+* highlight buffers in the same directory (opt-out) ([#351](https://github.com/mikavilpas/yazi.nvim/issues/351)) ([879984b](https://github.com/mikavilpas/yazi.nvim/commit/879984b9181cb2489699edeac78ee2203f502c9e))
+
 ## [5.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.2.0...v5.2.1) (2024-08-09)
 
 
