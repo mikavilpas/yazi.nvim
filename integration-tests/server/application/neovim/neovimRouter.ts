@@ -3,19 +3,24 @@ import assert from "node:assert"
 import { Neovim, type StdoutMessage } from "server/application/neovim/Neovim"
 import { startNeovimServerArguments } from "server/application/neovim/testEnvironmentTypes"
 import { trpc } from "server/connection/trpc"
-import { eventEmitter } from "server/server"
+import { eventEmitter, stack } from "server/server"
 import z from "zod"
+import { Lazy } from "../../utilities/Lazy"
 
-export const neovim = new Neovim()
+export const neovim = new Lazy(() => {
+  const instance = new Neovim()
+  stack.use(instance)
+  return instance
+})
 
 export const neovimRouter = trpc.router({
   start: trpc.procedure
     .input(startNeovimServerArguments)
     .mutation(async (startArgs) => {
-      await neovim.startNextAndKillCurrent(startArgs.input)
+      await neovim.get().startNextAndKillCurrent(startArgs.input)
 
-      assert(neovim.processId() !== undefined)
-      console.log(`🚀 Started Neovim instance ${neovim.processId()}`)
+      assert(neovim.get().processId() !== undefined)
+      console.log(`🚀 Started Neovim instance ${neovim.get().processId()}`)
     }),
 
   onStdout: trpc.procedure.subscription(() => {
@@ -34,6 +39,6 @@ export const neovimRouter = trpc.router({
   }),
 
   stdin: trpc.procedure.input(z.string()).mutation(async (options) => {
-    await neovim.write(options.input)
+    await neovim.get().write(options.input)
   }),
 })
