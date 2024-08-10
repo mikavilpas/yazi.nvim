@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.3.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.3.0...v5.3.1) (2024-08-10)
+
+
+### Bug Fixes
+
+* highlighting siblings of hovered directories ([#357](https://github.com/mikavilpas/yazi.nvim/issues/357)) ([ed31153](https://github.com/mikavilpas/yazi.nvim/commit/ed31153bb80205e556fb40cc9284dd00d5e32b72))
+* **tests:** changing the tests had delay in restarting the test ([#355](https://github.com/mikavilpas/yazi.nvim/issues/355)) ([d5f170d](https://github.com/mikavilpas/yazi.nvim/commit/d5f170d4a75a8007c657ecb55c8c2adadbdb6074))
+
 ## [5.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.2.1...v5.3.0) (2024-08-10)
 
 
