@@ -12,6 +12,7 @@
   "scripts": {
     "clean-install:all": "npm clean-install --workspaces --include-workspace-root",
     "cy:run": "npm run cy:run:ci --workspace integration-tests",
+    "dev": "npm run dev --workspace integration-tests",
     "install:all": "npm install --workspaces --include-workspace-root",
     "markdownlint": "markdownlint-cli2 README.md",
     "prettier": "prettier --check ."
