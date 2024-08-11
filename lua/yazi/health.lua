@@ -108,6 +108,22 @@ return {
       end
     end
 
+    if
+      checker.ge(yazi_semver, "0.3.0") and not config.use_ya_for_events_reading
+    then
+      vim.health.info(
+        "You can enable `use_ya_for_events_reading` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
+      )
+    end
+
+    if
+      checker.ge(yazi_semver, "0.3.0") and not config.use_yazi_client_id_flag
+    then
+      vim.health.info(
+        "You can enable `use_yazi_client_id_flag` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
+      )
+    end
+
     if config.open_for_directories == true then
       vim.health.info(
         "You have enabled `open_for_directories` in your config. Because of this, please make sure you are loading yazi when Neovim starts."
