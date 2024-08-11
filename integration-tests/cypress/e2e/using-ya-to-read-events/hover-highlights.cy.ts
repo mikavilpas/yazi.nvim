@@ -217,6 +217,9 @@ describe("highlighting the buffer with 'hover' events", () => {
         dir.contents["test-setup.lua"].name,
       )
 
+      cy.typeIntoTerminal("q")
+      cy.typeIntoTerminal(":messages{enter}")
+
       // Hovering a new file should have triggered the integration
       //
       // the main message from the integration in the
