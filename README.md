@@ -20,9 +20,21 @@ open yazi in a floating window in Neovim.
 
 ## ✨ Features
 
-- Open yazi in a floating window. Press `<f1>` to display all keymaps!
-- Files can be selected in yazi and opened in the current buffer, a vertical
-  split, a horizontal split, or a new tab
+- Press `<f1>` to display all keymaps!
+- Open yazi in a floating window. All visible splits are opened as yazi tabs for
+  easy and fast navigation.
+- Files that are hovered in yazi are highlighted in Neovim to intuitively show
+  where you are in relation to your Neovim session. Currently this works for
+  splits that you have open.
+- Files selected in yazi can be opened in various ways: as the current buffer, a
+  vertical split, a horizontal split, a new tab, as quickfix items...
+- Integrations to other plugins, if they are installed:
+
+  - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): you
+    can grep/search in the directory yazi is in
+  - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can
+    search and replace in the directory yazi is in
+
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open
@@ -30,13 +42,7 @@ open yazi in a floating window in Neovim.
   - The files are also kept in sync with currently running LSP servers
 - Customizable keybindings
 - 🆕 Plugin management for Yazi plugins and flavors
-  ([documentation](./documentation/plugin-management.md)). Please provide your
-  feedback!
-- Features available if you are using a development version of yazi (see
-  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md)):
-  - Highlight the currently hovered yazi file in Neovim
-  - Restart the last yazi session with a keybinding
-  - `<tab>` makes yazi jump to the directory of the next open split
+  ([documentation](./documentation/plugin-management.md))
 
 For previewing images with yazi, see Yazi's documentation related to Neovim
 [here](https://yazi-rs.github.io/docs/image-preview/#neovim).
@@ -47,9 +53,8 @@ First, make sure you have the requirements:
 
 - Neovim 0.10.x or later
 - yazi [0.2.5](https://github.com/sxyazi/yazi/releases/tag/v0.2.5) or later
-  - If you want to opt in to using the latest version of yazi, see
-    [here](./documentation/installing-yazi-from-source.md) for how to install it
-    from source
+- New features might require a recent version of yazi (see
+  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md)):
 
 > [!TIP]
 >
