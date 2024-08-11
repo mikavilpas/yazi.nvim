@@ -2,8 +2,8 @@ import tinycolor2 from "tinycolor2"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 import {
   darkBackgroundColors,
-  isHovered,
-  isNotHovered,
+  isHoveredInNeovim,
+  isNotHoveredInNeovim,
   lightBackgroundColors,
 } from "./utils/hover-utils"
 
@@ -37,7 +37,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       ],
     }).then((dir) => {
       // wait until text on the start screen is visible
-      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
@@ -53,12 +53,12 @@ describe("highlighting the buffer with 'hover' events", () => {
       // the current file is highlighted by default when
       // opening yazi. This should have sent the 'hover' event and caused the
       // Neovim window to be shown with a different background color
-      isHovered("If you see this text, Neovim is ready!")
+      isHoveredInNeovim("If you see this text, Neovim is ready!")
 
       // close yazi - the highlight should be removed and we should see the
       // same color as before
       cy.typeIntoTerminal("q")
-      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
     })
   })
 
@@ -69,7 +69,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       ],
     }).then((dir) => {
       // wait until text on the start screen is visible
-      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
@@ -84,12 +84,12 @@ describe("highlighting the buffer with 'hover' events", () => {
       // the current file is highlighted by default when
       // opening yazi. This should have sent the 'hover' event and caused the
       // Neovim window to be shown with a different background color
-      isHovered("If you see this text, Neovim is ready!")
+      isHoveredInNeovim("If you see this text, Neovim is ready!")
 
       // hover another file - the highlight should be removed
       cy.typeIntoTerminal(`/^${dir.contents["test-setup.lua"].name}{enter}`)
 
-      isNotHovered("If you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("If you see this text, Neovim is ready!")
     })
   })
 
@@ -100,7 +100,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       ],
     }).then((dir) => {
       // wait until text on the start screen is visible
-      isNotHovered("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
       const testFile = dir.contents["test-setup.lua"].name
       // open an adjacent file and wait for it to be displayed
@@ -118,14 +118,14 @@ describe("highlighting the buffer with 'hover' events", () => {
       // yazi should be visible now
       cy.contains(dir.contents["test-setup.lua"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(testFile)
-      isHovered("how to initialize the test environment")
+      isHoveredInNeovim("how to initialize the test environment")
 
       // select the other file - the highlight should move to it
       cy.typeIntoTerminal(`/^${dir.contents["initial-file.txt"].name}{enter}`, {
         delay: 1,
       })
-      isNotHovered("how to initialize the test environment")
-      isHovered("If you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("how to initialize the test environment")
+      isHoveredInNeovim("If you see this text, Neovim is ready!")
     })
   })
 
@@ -137,7 +137,7 @@ describe("highlighting the buffer with 'hover' events", () => {
     it("for a dark colorscheme, hovers appear lighter in color", () => {
       startNeovimWithYa({ startupScriptModifications: [] }).then((dir) => {
         // wait until text on the start screen is visible
-        isNotHovered("f you see this text, Neovim is ready!")
+        isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
@@ -240,8 +240,8 @@ describe("highlighting the buffer with 'hover' events", () => {
       },
     }).then((dir) => {
       // wait until text on the start screen is visible
-      isNotHovered("f you see this text, Neovim is ready!")
-      isNotHovered("Hello")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("Hello")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
@@ -252,16 +252,16 @@ describe("highlighting the buffer with 'hover' events", () => {
         dir.contents["test-setup.lua"].name,
       )
 
-      isHovered(
+      isHoveredInNeovim(
         "f you see this text, Neovim is ready!",
         darkBackgroundColors.hoveredInSameDirectory,
       )
-      isHovered("Hello", darkBackgroundColors.hoveredInSameDirectory)
+      isHoveredInNeovim("Hello", darkBackgroundColors.hoveredInSameDirectory)
 
       // highlights are cleared when yazi is closed
       cy.typeIntoTerminal("q")
-      isNotHovered("f you see this text, Neovim is ready!")
-      isNotHovered("Hello")
+      isNotHoveredInNeovim("f you see this text, Neovim is ready!")
+      isNotHoveredInNeovim("Hello")
     })
   })
 })

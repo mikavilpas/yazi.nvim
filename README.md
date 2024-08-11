@@ -179,6 +179,10 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- an upcoming optional feature
     use_yazi_client_id_flag = false,
 
+    -- open visible splits as yazi tabs for easy navigation. Requires a yazi
+    -- version more recent than 2024-08-10
+    open_multiple_tabs = false,
+
     -- NOTE: these only work if `use_ya_for_events_reading` is enabled, etc.
     highlight_groups = {
       -- See https://github.com/mikavilpas/yazi.nvim/pull/180

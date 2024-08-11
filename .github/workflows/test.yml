@@ -36,9 +36,9 @@ jobs:
           # yazi-fm is the `yazi` executable
           crate: yazi-fm
           git: https://github.com/sxyazi/yazi
-          # feat: new extract builtin plugin for archive extracting (#1321)
-          # https://github.com/sxyazi/yazi/commit/bce0fc1175c855ecb2dbee6f8575857b1e9616d4
-          commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
+          # feat: start with multiple tabs with different paths (#1443)
+          # https://github.com/sxyazi/yazi/commit/dac72eb39a846d15db7f1a7c54e9261675a90e53
+          commit: dac72eb39a846d15db7f1a7c54e9261675a90e53
 
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3.1.1
@@ -46,9 +46,9 @@ jobs:
           # yazi-cli is the `ya` command line interface
           crate: yazi-cli
           git: https://github.com/sxyazi/yazi
-          # feat: new extract builtin plugin for archive extracting (#1321)
-          # https://github.com/sxyazi/yazi/commit/bce0fc1175c855ecb2dbee6f8575857b1e9616d4
-          commit: bce0fc1175c855ecb2dbee6f8575857b1e9616d4
+          # feat: start with multiple tabs with different paths (#1443)
+          # https://github.com/sxyazi/yazi/commit/dac72eb39a846d15db7f1a7c54e9261675a90e53
+          commit: dac72eb39a846d15db7f1a7c54e9261675a90e53
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1.0.1
