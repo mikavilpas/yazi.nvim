@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.3.1...v5.4.0) (2024-08-11)
+
+
+### Features
+
+* open currently visible splits as yazi tabs (opt-in) ([#359](https://github.com/mikavilpas/yazi.nvim/issues/359)) ([c57a4ea](https://github.com/mikavilpas/yazi.nvim/commit/c57a4ea81d2a08a615e27c77fc03bd941ad2b8e1))
+
 ## [5.3.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.3.0...v5.3.1) (2024-08-10)
 
 
