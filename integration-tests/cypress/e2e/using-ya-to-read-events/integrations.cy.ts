@@ -1,5 +1,5 @@
+import type { IntegrationTestFile } from "library/server/application/neovim/environment/testEnvironmentTypes"
 import path from "path"
-import type { IntegrationTestFile } from "server/application/neovim/environment/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 
 describe("grug-far integration (search and replace)", () => {

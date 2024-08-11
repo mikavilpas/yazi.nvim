@@ -1,4 +1,4 @@
-import type { IntegrationTestFile } from "server/application/neovim/environment/testEnvironmentTypes"
+import type { IntegrationTestFile } from "library/server/application/neovim/environment/testEnvironmentTypes"
 import { startNeovimWithYa } from "./startNeovimWithYa"
 import {
   isFileNotSelectedInYazi,
