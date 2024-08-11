@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.4.0...v5.5.0) (2024-08-11)
+
+
+### Features
+
+* **health:** suggest enabling new features for yazi &gt;= 0.3.0 ([#362](https://github.com/mikavilpas/yazi.nvim/issues/362)) ([8cd2f71](https://github.com/mikavilpas/yazi.nvim/commit/8cd2f712461ae69e25e2ef99b9ced5edb0cefc26))
+
 ## [5.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.3.1...v5.4.0) (2024-08-11)
 
 
