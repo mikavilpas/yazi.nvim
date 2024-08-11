@@ -16,7 +16,7 @@ export class NeovimTestDirectory implements AsyncDisposable {
   }
 
   public static testEnvironmentDir = path.join(
-    path.join(__dirname, "..", "..", "..", ".."),
+    path.join(__dirname, "..", "..", "..", "..", ".."),
     "test-environment/",
   )
 

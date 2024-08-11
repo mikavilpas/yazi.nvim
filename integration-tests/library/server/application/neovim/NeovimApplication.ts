@@ -1,11 +1,13 @@
 import { existsSync } from "fs"
+import { eventEmitter } from "library/server/server"
 import path from "path"
-import type { StartNeovimServerArguments } from "server/application/neovim/environment/testEnvironmentTypes"
-import { eventEmitter } from "server/server"
 import { DisposableSingleApplication } from "../../utilities/DisposableSingleApplication"
 import { TerminalApplication } from "../../utilities/TerminalApplication"
 import { NeovimTestDirectory } from "./environment/NeovimTestEnvironment"
-import type { TestDirectory } from "./environment/testEnvironmentTypes"
+import type {
+  StartNeovimServerArguments,
+  TestDirectory,
+} from "./environment/testEnvironmentTypes"
 
 export type StdinMessage = "stdin"
 export type StdoutMessage = "stdout"

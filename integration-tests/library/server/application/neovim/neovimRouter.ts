@@ -1,14 +1,12 @@
 import { observable } from "@trpc/server/observable"
+import { trpc } from "library/server/connection/trpc"
+import { autocleanup, eventEmitter } from "library/server/server"
 import assert from "node:assert"
-import {
-  NeovimApplication,
-  type StdoutMessage,
-} from "server/application/neovim/NeovimApplication"
-import { startNeovimServerArguments } from "server/application/neovim/environment/testEnvironmentTypes"
-import { trpc } from "server/connection/trpc"
-import { autocleanup, eventEmitter } from "server/server"
 import z from "zod"
 import { Lazy } from "../../utilities/Lazy"
+import { startNeovimServerArguments } from "./environment/testEnvironmentTypes"
+import type { StdoutMessage } from "./NeovimApplication"
+import { NeovimApplication } from "./NeovimApplication"
 
 // Right now only one test instance is supported at a time. In the future, we
 // might want to support multiple test instances running in parallel

@@ -42,7 +42,7 @@ import "../../client/__global.ts"
 import type {
   StartNeovimArguments,
   TestDirectory,
-} from "../../server/application/neovim/environment/testEnvironmentTypes.ts"
+} from "../../library/server/application/neovim/environment/testEnvironmentTypes"
 
 Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   cy.window().then((win) => {
@@ -67,7 +67,6 @@ declare global {
         text: string,
         options?: Partial<Cypress.TypeOptions>,
       ): Chainable<void>
-      task(event: "createTempDir"): Chainable<TestDirectory>
     }
   }
 }
