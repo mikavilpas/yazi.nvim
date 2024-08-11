@@ -285,4 +285,78 @@ Options:
       end
     )
   end)
+
+  describe("suggestions for `use_ya_for_events_reading`", function()
+    it(
+      "suggests enabling `use_ya_for_events_reading` when yazi version is >= 0.3.0",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_ya_for_events_reading = false })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_contains_text(
+          "You can enable `use_ya_for_events_reading` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
+        )
+      end
+    )
+
+    it(
+      "does not suggest enabling `use_ya_for_events_reading` when yazi version is < 0.3.0",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.2.5 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_ya_for_events_reading = false })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("use_ya_for_events_reading")
+      end
+    )
+
+    it(
+      "does not suggest enabling `use_ya_for_events_reading` when it is already enabled",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_ya_for_events_reading = true })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("use_ya_for_events_reading")
+      end
+    )
+  end)
+
+  describe("suggestions for `use_yazi_client_id_flag`", function()
+    it(
+      "suggests enabling `use_yazi_client_id_flag` when yazi version is >= 0.3.0",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_yazi_client_id_flag = false })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_contains_text(
+          "You can enable `use_yazi_client_id_flag` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
+        )
+      end
+    )
+
+    it(
+      "does not suggest enabling `use_yazi_client_id_flag` when yazi version is < 0.3.0",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.2.5 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_yazi_client_id_flag = false })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
+      end
+    )
+
+    it(
+      "does not suggest enabling `use_yazi_client_id_flag` when it is already enabled",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
+        yazi.setup({ use_yazi_client_id_flag = true })
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
+      end
+    )
+  end)
 end)
