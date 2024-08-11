@@ -1,6 +1,6 @@
 ---@module "yazi"
 
-require('yazi').setup(
+require("yazi").setup(
   ---@type YaziConfig
   {
     keymaps = {

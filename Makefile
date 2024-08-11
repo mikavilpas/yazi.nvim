@@ -50,4 +50,4 @@ test-focus:
 	luarocks test --local -- --filter=focus
 
 format:
-	stylua lua/ spec/
+	stylua lua/ spec/ integration-tests/

@@ -4,11 +4,11 @@
 -- current test runner, does not natively support function keys such as <f1>
 -- https://docs.cypress.io/api/commands/type#Arguments
 
-require('yazi').setup(
+require("yazi").setup(
   ---@type YaziConfig
   {
     keymaps = {
-      show_help = '<del>',
+      show_help = "<del>",
     },
   }
 )
