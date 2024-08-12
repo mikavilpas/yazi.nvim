@@ -15,7 +15,6 @@ describe("YaziVisibleBuffer", function()
   end)
 
   it("is found for a visible buffer editing a file", function()
-    --
     vim.cmd("edit file1")
     vim.fn.bufadd("/YaziVisibleBuffer/file1")
 
