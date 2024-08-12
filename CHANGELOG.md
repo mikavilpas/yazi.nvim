@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.5.0...v5.5.1) (2024-08-12)
+
+
+### Bug Fixes
+
+* don't open duplicate tabs when opening files ([#367](https://github.com/mikavilpas/yazi.nvim/issues/367)) ([1c1ac86](https://github.com/mikavilpas/yazi.nvim/commit/1c1ac86293bb2429b0f69280abfcba165847bbbc))
+
 ## [5.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.4.0...v5.5.0) (2024-08-11)
 
 
