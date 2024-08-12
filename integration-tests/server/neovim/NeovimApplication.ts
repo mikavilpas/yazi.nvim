@@ -1,8 +1,8 @@
 import { existsSync } from "fs"
-import { eventEmitter } from "library/server/server"
+import { eventEmitter } from "library/server"
+import { DisposableSingleApplication } from "library/server/utilities/DisposableSingleApplication"
+import { TerminalApplication } from "library/server/utilities/TerminalApplication"
 import path from "path"
-import { DisposableSingleApplication } from "../../utilities/DisposableSingleApplication"
-import { TerminalApplication } from "../../utilities/TerminalApplication"
 import { NeovimTestDirectory } from "./environment/NeovimTestEnvironment"
 import type {
   StartNeovimServerArguments,

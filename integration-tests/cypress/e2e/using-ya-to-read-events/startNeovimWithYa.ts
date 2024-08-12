@@ -1,7 +1,7 @@
 import type {
   StartNeovimArguments,
   TestDirectory,
-} from "library/server/application/neovim/environment/testEnvironmentTypes"
+} from "server/neovim/environment/testEnvironmentTypes"
 
 /** NOTE: always uses the `modify_yazi_config_to_use_ya_as_event_reader.lua` as
  * that is implied by the name of the function.
