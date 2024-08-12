@@ -28,12 +28,17 @@ open yazi in a floating window in Neovim.
   splits that you have open.
 - Files selected in yazi can be opened in various ways: as the current buffer, a
   vertical split, a horizontal split, a new tab, as quickfix items...
-- Integrations to other plugins, if they are installed:
+- Integrations to other plugins and tools, if they are installed:
 
   - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): you
     can grep/search in the directory yazi is in
   - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can
     search and replace in the directory yazi is in
+  - Copy the relative path from the start file to the currently hovered file.
+    Requires
+    [realpath (1)](https://www.man7.org/linux/man-pages/man1/realpath.1.html) on
+    linux and windows, or
+    [grealpath](https://formulae.brew.sh/formula/coreutils) on osx
 
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
