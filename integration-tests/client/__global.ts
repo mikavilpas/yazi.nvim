@@ -1,7 +1,7 @@
 import type {
   StartNeovimArguments,
   TestDirectory,
-} from "../library/server/application/neovim/environment/testEnvironmentTypes.ts"
+} from "server/neovim/environment/testEnvironmentTypes"
 
 // This defines a way for the test runner to start Neovim
 declare global {

@@ -95,7 +95,6 @@ export async function createTempDir(): Promise<TestDirectory> {
 async function createUniqueDirectory(): Promise<string> {
   const testdirs = path.join(NeovimTestDirectory.testEnvironmentDir, "testdirs")
   try {
-    // await access(testdirs, constants.F_OK)
     await access(testdirs, constants.F_OK)
   } catch {
     await mkdir(testdirs)

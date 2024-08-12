@@ -38,11 +38,11 @@
 //   }
 // }
 
-import "../../client/__global.ts"
 import type {
   StartNeovimArguments,
   TestDirectory,
-} from "../../library/server/application/neovim/environment/testEnvironmentTypes"
+} from "server/neovim/environment/testEnvironmentTypes.ts"
+import "../../client/__global.ts"
 
 Cypress.Commands.add("startNeovim", (startArguments?: StartNeovimArguments) => {
   cy.window().then((win) => {

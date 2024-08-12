@@ -24,5 +24,11 @@
     "noFallthroughCasesInSwitch": true
   },
 
-  "include": ["./library", "./client", "./cypress", "./eslint.config.mjs"]
+  "include": [
+    "./library",
+    "./client",
+    "./server",
+    "./cypress",
+    "./eslint.config.mjs"
+  ]
 }
