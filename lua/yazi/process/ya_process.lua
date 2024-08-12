@@ -35,6 +35,20 @@ function YaProcess.new(config, yazi_id)
   return self
 end
 
+---@param items string[]
+local function remove_duplicates(items)
+  local seen = {}
+  local result = {}
+  for _, word in ipairs(items) do
+    if not seen[word] then
+      seen[word] = true
+      result[#result + 1] = word
+    end
+  end
+
+  return result
+end
+
 ---@param paths Path[]
 function YaProcess:get_yazi_command(paths)
   local command_words = { "yazi" }
@@ -54,6 +68,8 @@ function YaProcess:get_yazi_command(paths)
     table.insert(command_words, "--client-id")
     table.insert(command_words, self.yazi_id)
   end
+
+  command_words = remove_duplicates(command_words)
 
   return table.concat(command_words, " ")
 end

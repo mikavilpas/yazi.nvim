@@ -38,7 +38,6 @@ describe("opening a file", function()
     end, actual_files)
 
     for _, file in ipairs(files) do
-      print("opened file: " .. file)
       assert.is_true(type(file) == "string")
     end
 
