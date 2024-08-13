@@ -146,6 +146,13 @@ return {
       )
     end
 
+    vim.health.start("yazi.config")
+    vim.health.info(table.concat({
+      "hint: execute the following command to see your configuration: >",
+      ":lua =require('yazi').config",
+      "",
+    }, "\n"))
+
     vim.health.ok("yazi")
   end,
 }
