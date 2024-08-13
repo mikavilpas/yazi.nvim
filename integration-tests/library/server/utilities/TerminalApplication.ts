@@ -17,7 +17,7 @@ export class TerminalApplication {
 
   private constructor(
     private readonly subProcess: IPty,
-    private readonly onStdoutOrStderr: (data: string) => void,
+    public readonly onStdoutOrStderr: (data: string) => void,
   ) {
     this.processId = subProcess.pid
 
