@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.5.1...v5.6.0) (2024-08-13)
+
+
+### Features
+
+* **health:** show a command for double checking the configuration ([#374](https://github.com/mikavilpas/yazi.nvim/issues/374)) ([d66dbef](https://github.com/mikavilpas/yazi.nvim/commit/d66dbef2303e75ead47384171a51af5726b8947c))
+
 ## [5.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.5.0...v5.5.1) (2024-08-12)
 
 
