@@ -34,7 +34,7 @@ init:
 	@echo "$(COLOR_WHITE)    Reformat all code$(COLOR_RESET)"
 
 lint:
-	selene ./lua/ ./spec/
+	selene ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
 	@if grep -r -e "#focus" --include \*.lua ./spec/; then \
 			echo "\n"; \
 			echo "Error: ${COLOR_GREEN}#focus${COLOR_RESET} tags found in the codebase.\n"; \
