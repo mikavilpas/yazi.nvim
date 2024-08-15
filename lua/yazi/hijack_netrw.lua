@@ -34,6 +34,7 @@ function M.hijack_netrw(yazi_augroup)
         )
 
         vim.api.nvim_buf_delete(bufnr, { force = true })
+        vim.api.nvim_buf_delete(empty_buffer, { force = true })
         Log:debug(
           string.format("Deleted buffer %s for directory %s", bufnr, file)
         )
