@@ -18,7 +18,9 @@ describe("opening directories", () => {
 
   it("can open a directory with `:edit .`", () => {
     cy.visit("http://localhost:5173")
-    startNeovimWithYa().then((dir) => {
+    startNeovimWithYa({
+      startupScriptModifications: ["add_command_to_count_open_buffers.lua"],
+    }).then((dir) => {
       cy.contains(dir.contents["initial-file.txt"].name)
 
       // open the current directory using a command
@@ -27,6 +29,13 @@ describe("opening directories", () => {
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
       cy.contains(dir.contents["test-setup.lua"].name)
+
+      cy.typeIntoTerminal("q")
+
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      cy.typeIntoTerminal(":CountBuffers{enter}")
+      cy.contains("Number of open buffers: 1")
     })
   })
 
