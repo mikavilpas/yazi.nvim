@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.7.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.7.0...v5.7.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* leaving an empty buffer when opening a directory with `:edit .` ([#379](https://github.com/mikavilpas/yazi.nvim/issues/379)) ([ebe93e5](https://github.com/mikavilpas/yazi.nvim/commit/ebe93e5136091d7de001432089a3c8d9a6c52548))
+
 ## [5.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.6.0...v5.7.0) (2024-08-15)
 
 
