@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.6.0...v5.7.0) (2024-08-15)
+
+
+### Features
+
+* allow using :Yazi commands automatically by default ([#377](https://github.com/mikavilpas/yazi.nvim/issues/377)) ([9a07ed5](https://github.com/mikavilpas/yazi.nvim/commit/9a07ed5dedabfe6f93f25eadb3d05cf1d5ca41ea))
+
 ## [5.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.5.1...v5.6.0) (2024-08-13)
 
 
