@@ -175,8 +175,6 @@ function M.setup(opts)
     Log:debug("Hijacking netrw to open yazi for directories")
     require("yazi.hijack_netrw").hijack_netrw(yazi_augroup)
   end
-
-  require("yazi.commands").create_yazi_commands()
 end
 
 return M
