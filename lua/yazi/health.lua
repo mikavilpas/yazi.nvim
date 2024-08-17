@@ -20,7 +20,7 @@ return {
     end
 
     -- example data:
-    -- 'yazi 0.2.4 (411ba2f 2024-03-15)'
+    -- Yazi 0.3.1 (4112bf4 2024-08-15)
     local raw_version = vim.fn.system("yazi --version")
 
     -- parse the version
@@ -35,9 +35,9 @@ return {
     end
 
     local checker = require("vim.version")
-    if not checker.gt(yazi_semver, "0.2.4") then
+    if not checker.ge(yazi_semver, "0.3.0") then
       return vim.health.warn(
-        "yazi version is too old, please upgrade to 0.2.5 or newer"
+        "your yazi version is too old, please upgrade to the newest version of yazi"
       )
     else
       vim.health.info(
@@ -51,76 +51,43 @@ return {
 
     local config = require("yazi").config
 
-    if config.use_yazi_client_id_flag == true then
-      local output = vim.fn.system("yazi --help")
-
-      if output:find("--client-id", 1, true) == nil then
-        vim.health.warn(
-          "You have enabled `use_yazi_client_id_flag` in your config, which means using the `--client-id` flag with yazi. However, this flag is not found in the `yazi --help` output. Please upgrade to the newest version of yazi or disable `use_yazi_client_id_flag`."
-        )
-        vim.health.info(string.format("`yazi --help` output: %s", output))
-      end
-    end
-
     -- TODO validate that the highlight_config is present in the configuration
 
-    if config.use_ya_for_events_reading == true then
-      if vim.fn.executable("ya") ~= 1 then
-        vim.health.error(
-          "You have opted in to using `ya` for events reading, but `ya` is not found on PATH. Please install `ya` or disable `use_ya_for_events_reading` in your config."
-        )
-        return
-      end
+    if vim.fn.executable("ya") ~= 1 then
+      vim.health.error("`ya` is not found on PATH. Please install `ya`.")
+      return
+    end
 
-      -- example data:
-      -- Ya 0.2.5 (f5a7ace 2024-06-23)
-      local raw_ya_version = vim.fn.system("ya --version") or ""
-      local ya_semver = raw_ya_version:match("[Yy]a (%w+%.%w+%.%w+)")
-      if ya_semver == nil then
+    -- example data:
+    -- Ya 0.3.1 (4112bf4 2024-08-15)
+    local raw_ya_version = vim.fn.system("ya --version") or ""
+    local ya_semver = raw_ya_version:match("[Yy]a (%w+%.%w+%.%w+)")
+    if ya_semver == nil then
+      vim.health.warn(
+        string.format(
+          "`ya --version` looks unexpected, saw `%s` 🤔",
+          raw_ya_version
+        )
+      )
+    else
+      if not checker.ge(ya_semver, "0.3.0") then
         vim.health.warn(
-          string.format(
-            "`ya --version` looks unexpected, saw `%s` 🤔",
-            raw_ya_version
-          )
+          "The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version."
         )
       else
-        if not checker.gt(ya_semver, "0.2.4") then
-          vim.health.warn(
-            "The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version."
-          )
-        else
-          vim.health.info(
-            ("Found `ya` version `%s` 👍"):format(
-              raw_ya_version:gsub("\n", "")
-            )
-          )
-        end
-      end
-
-      if yazi_semver ~= ya_semver then
-        vim.health.warn(
-          string.format(
-            "The versions of `yazi` and `ya` do not match. This is untested - try to make them the same. `yazi` is `%s` and `ya` is `%s`.",
-            yazi_semver,
-            ya_semver
-          )
+        vim.health.info(
+          ("Found `ya` version `%s` 👍"):format(raw_ya_version:gsub("\n", ""))
         )
       end
     end
 
-    if
-      checker.ge(yazi_semver, "0.3.0") and not config.use_ya_for_events_reading
-    then
-      vim.health.info(
-        "You can enable `use_ya_for_events_reading` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
-      )
-    end
-
-    if
-      checker.ge(yazi_semver, "0.3.0") and not config.use_yazi_client_id_flag
-    then
-      vim.health.info(
-        "You can enable `use_yazi_client_id_flag` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
+    if yazi_semver ~= ya_semver then
+      vim.health.warn(
+        string.format(
+          "The versions of `yazi` and `ya` do not match. This is untested - try to make them the same. `yazi` is `%s` and `ya` is `%s`.",
+          yazi_semver,
+          ya_semver
+        )
       )
     end
 

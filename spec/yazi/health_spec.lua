@@ -40,7 +40,7 @@ describe("the healthcheck", function()
   before_each(function()
     snapshot = assert:snapshot()
     mock_app_versions = {
-      ["yazi"] = "yazi 0.2.5 (f5a7ace 2024-06-23)",
+      ["yazi"] = "Yazi 0.3.0 (4112bf4 2024-08-15)",
       ["yazi --help"] = [[Usage: yazi [OPTIONS] [ENTRY]
 
 Arguments:
@@ -57,7 +57,7 @@ Options:
   -V, --version                        Print version
   -h, --help                           Print help
       ]],
-      ["ya"] = "Ya 0.2.5 (f5a7ace 2024-06-23)",
+      ["ya"] = "Ya 0.3.0 (4112bf4 2024-08-15)",
       ["nvim-0.10.0"] = true,
     }
 
@@ -91,11 +91,10 @@ Options:
   end)
 
   it("reports everything is ok", function()
-    yazi.setup({ use_ya_for_events_reading = true })
     vim.cmd("checkhealth yazi")
 
-    assert_buffer_contains_text("Found `yazi` version `yazi 0.2.5")
-    assert_buffer_contains_text("Found `ya` version `Ya 0.2.5")
+    assert_buffer_contains_text("Found `yazi` version `Yazi 0.3.0")
+    assert_buffer_contains_text("Found `ya` version `Ya 0.3.0")
     assert_buffer_contains_text("OK yazi")
   end)
 
@@ -104,12 +103,11 @@ Options:
     vim.cmd("checkhealth yazi")
 
     assert_buffer_contains_text(
-      "yazi version is too old, please upgrade to 0.2.5 or newer"
+      "yazi version is too old, please upgrade to the newest version of yazi"
     )
   end)
 
   it("warns if the ya version is too old", function()
-    yazi.setup({ use_ya_for_events_reading = true })
     mock_app_versions["ya"] = "Ya 0.2.4 (f5a7ace 2024-06-23)"
 
     vim.cmd("checkhealth yazi")
@@ -133,95 +131,32 @@ Options:
     )
   end)
 
-  it(
-    "warns when `ya` cannot be found but is set as the event_reader",
-    function()
-      stub(vim.fn, "executable", function(command)
-        if command == "ya" then
-          return 0
-        else
-          return 1
-        end
-      end)
+  it("warns when `ya` cannot be found", function()
+    stub(vim.fn, "executable", function(command)
+      if command == "ya" then
+        return 0
+      else
+        return 1
+      end
+    end)
 
-      ---@type YaziConfig
-      yazi.setup({
-        use_ya_for_events_reading = true,
-      })
+    yazi.setup({})
 
-      vim.cmd("checkhealth yazi")
+    vim.cmd("checkhealth yazi")
 
-      assert_buffer_contains_text(
-        "ERROR You have opted in to using `ya` for events reading, but `ya` is not found on PATH."
-      )
-    end
-  )
+    assert_buffer_contains_text(
+      "ERROR `ya` is not found on PATH. Please install `ya`."
+    )
+  end)
 
   it("warns when the yazi version and yazi version are not the same", function()
-    mock_app_versions["yazi"] = "yazi 0.2.5 (f5a7ace 2024-07-23)"
-    mock_app_versions["ya"] = "Ya 0.2.4 (f5a7ace 2024-06-23)"
+    mock_app_versions["yazi"] = "yazi 0.3.5 (f5a7ace 2024-07-23)"
+    mock_app_versions["ya"] = "Ya 0.3.4 (f5a7ace 2024-06-23)"
 
     vim.cmd("checkhealth yazi")
 
     assert_buffer_contains_text(
       "WARNING The versions of `yazi` and `ya` do not match."
-    )
-  end)
-
-  describe("the checks for `use_yazi_client_id_flag`", function()
-    local yazi_help_output_with_client_id_flag_missing =
-      [[Usage: yazi [OPTIONS] [ENTRY]
-
-Arguments:
-  [ENTRY]  Set the current working entry
-
-Options:
-      --cwd-file <CWD_FILE>            Write the cwd on exit to this file
-      --chooser-file <CHOOSER_FILE>    Write the selected files to this file on open fired
-      --clear-cache                    Clear the cache directory
-      --local-events <LOCAL_EVENTS>    Report the specified local events to stdout
-      --remote-events <REMOTE_EVENTS>  Report the specified remote events to stdout
-      --debug                          Print debug information
-  -V, --version                        Print version
-  -h, --help                           Print help
-      ]]
-
-    before_each(function() end)
-
-    it(
-      "warns when the `--client-id` flag is not found in the yazi --help output",
-      function()
-        mock_app_versions["yazi --help"] =
-          yazi_help_output_with_client_id_flag_missing
-        yazi.setup({ use_yazi_client_id_flag = true })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_contains_text(
-          "You have enabled `use_yazi_client_id_flag` in your config, which means using the `--client-id` flag with yazi. However, this flag is not found in the `yazi --help` output. Please upgrade to the newest version of yazi or disable `use_yazi_client_id_flag`."
-        )
-      end
-    )
-
-    it(
-      "does not warn when `use_yazi_client_id_flag` is not set and yazi doesn't support --client-id",
-      function()
-        mock_app_versions["yazi --help"] =
-          yazi_help_output_with_client_id_flag_missing
-        yazi.setup({ use_yazi_client_id_flag = false })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
-      end
-    )
-
-    it(
-      "does not warn when the `--client-id` flag is found in the yazi --help output",
-      function()
-        yazi.setup({ use_yazi_client_id_flag = true })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
-      end
     )
   end)
 
@@ -282,80 +217,6 @@ Options:
         vim.cmd("checkhealth yazi")
 
         assert_buffer_does_not_contain_text("resolve_relative_path_application")
-      end
-    )
-  end)
-
-  describe("suggestions for `use_ya_for_events_reading`", function()
-    it(
-      "suggests enabling `use_ya_for_events_reading` when yazi version is >= 0.3.0",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_ya_for_events_reading = false })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_contains_text(
-          "You can enable `use_ya_for_events_reading` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
-        )
-      end
-    )
-
-    it(
-      "does not suggest enabling `use_ya_for_events_reading` when yazi version is < 0.3.0",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.2.5 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_ya_for_events_reading = false })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_ya_for_events_reading")
-      end
-    )
-
-    it(
-      "does not suggest enabling `use_ya_for_events_reading` when it is already enabled",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_ya_for_events_reading = true })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_ya_for_events_reading")
-      end
-    )
-  end)
-
-  describe("suggestions for `use_yazi_client_id_flag`", function()
-    it(
-      "suggests enabling `use_yazi_client_id_flag` when yazi version is >= 0.3.0",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_yazi_client_id_flag = false })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_contains_text(
-          "You can enable `use_yazi_client_id_flag` in your config to get access to new features. This is available for yazi versions >= 0.3.0."
-        )
-      end
-    )
-
-    it(
-      "does not suggest enabling `use_yazi_client_id_flag` when yazi version is < 0.3.0",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.2.5 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_yazi_client_id_flag = false })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
-      end
-    )
-
-    it(
-      "does not suggest enabling `use_yazi_client_id_flag` when it is already enabled",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.3.0 (f5a7ace 2024-06-23)"
-        yazi.setup({ use_yazi_client_id_flag = true })
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("use_yazi_client_id_flag")
       end
     )
   end)

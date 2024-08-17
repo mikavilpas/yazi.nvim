@@ -15,16 +15,11 @@ end
 
 ---@param path string
 function YaziProcessApi:cd(path)
-  if
-    self.config.use_ya_for_events_reading == true
-    and self.config.use_yazi_client_id_flag == true
-  then
-    assert(path, "path is required")
-    vim.system(
-      { "ya", "pub-to", self.yazi_id, "--str", path, "dds-cd" },
-      { timeout = 1000 }
-    )
-  end
+  assert(path, "path is required")
+  vim.system(
+    { "ya", "pub-to", self.yazi_id, "--str", path, "dds-cd" },
+    { timeout = 1000 }
+  )
 end
 
 return YaziProcessApi

@@ -17,7 +17,7 @@ describe("the get_yazi_command() function", function()
     local command = ya:get_yazi_command(paths)
 
     assert.are.same(
-      "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path",
+      "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
       command
     )
   end)
@@ -39,7 +39,7 @@ describe("the get_yazi_command() function", function()
       local command = ya:get_yazi_command(paths)
 
       assert.are.same(
-        "yazi 'file1' --chooser-file /tmp/chosen_file_path",
+        "yazi 'file1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
         command
       )
     end
@@ -65,7 +65,7 @@ describe("the get_yazi_command() function", function()
     local command = ya:get_yazi_command(paths)
 
     assert.are.same(
-      "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path",
+      "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
       command
     )
   end)

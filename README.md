@@ -57,9 +57,9 @@ For previewing images with yazi, see Yazi's documentation related to Neovim
 First, make sure you have the requirements:
 
 - Neovim 0.10.x or later
-- yazi [0.2.5](https://github.com/sxyazi/yazi/releases/tag/v0.2.5) or later
+- yazi [0.3.0](https://github.com/sxyazi/yazi/releases/tag/v0.3.0) or later
 - New features might require a recent version of yazi (see
-  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md)):
+  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md))
 
 > [!TIP]
 >
@@ -102,11 +102,6 @@ This is the preferred installation method.
   opts = {
     -- if you want to open yazi instead of netrw, see below for more info
     open_for_directories = false,
-
-    -- enable these if you are using the latest version of yazi
-    -- use_ya_for_events_reading = true,
-    -- use_yazi_client_id_flag = true,
-
     keymaps = {
       show_help = '<f1>',
     },
@@ -182,19 +177,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- }
     open_for_directories = false,
 
-    -- an upcoming optional feature. See
-    -- https://github.com/mikavilpas/yazi.nvim/pull/152
-    use_ya_for_events_reading = false,
-
-    -- an upcoming optional feature
-    use_yazi_client_id_flag = false,
-
     -- open visible splits as yazi tabs for easy navigation. Requires a yazi
     -- version more recent than 2024-08-11
     -- https://github.com/mikavilpas/yazi.nvim/pull/359
     open_multiple_tabs = false,
 
-    -- NOTE: these only work if `use_ya_for_events_reading` is enabled, etc.
     highlight_groups = {
       -- See https://github.com/mikavilpas/yazi.nvim/pull/180
       hovered_buffer = nil,

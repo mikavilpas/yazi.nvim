@@ -1,5 +1,4 @@
 import tinycolor2 from "tinycolor2"
-import { startNeovimWithYa } from "./startNeovimWithYa"
 import {
   darkBackgroundColors,
   isHoveredInNeovim,
@@ -31,7 +30,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   }
 
   it("can highlight the buffer when hovered", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
       ],
@@ -63,7 +62,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   })
 
   it("can remove the highlight when the cursor is moved away", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
       ],
@@ -94,7 +93,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   })
 
   it("can move the highlight to another buffer when hovering over it", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
       ],
@@ -135,7 +134,7 @@ describe("highlighting the buffer with 'hover' events", () => {
     // the current colorscheme - by darkening or lightening an existing color.
     //
     it("for a dark colorscheme, hovers appear lighter in color", () => {
-      startNeovimWithYa({ startupScriptModifications: [] }).then((dir) => {
+      cy.startNeovim({ startupScriptModifications: [] }).then((dir) => {
         // wait until text on the start screen is visible
         isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
@@ -166,7 +165,7 @@ describe("highlighting the buffer with 'hover' events", () => {
     })
 
     it("for a light colorscheme", () => {
-      startNeovimWithYa({
+      cy.startNeovim({
         startupScriptModifications: ["use_light_neovim_colorscheme.lua"],
       }).then((dir) => {
         // wait until text on the start screen is visible
@@ -202,7 +201,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   })
 
   it("supports external integrations to hover events", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: ["notify_hover_events.lua"],
     }).then((dir) => {
       // wait until text on the start screen is visible
@@ -234,7 +233,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   })
 
   it("can highlight buffers that are open in the current yazi directory", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
       ],

@@ -91,6 +91,10 @@ export class NeovimApplication extends DisposableSingleApplication<TestDirectory
       }
     }
 
+    if (!startArgs.filename) {
+      startArgs.filename = "initial-file.txt"
+    }
+
     if (typeof startArgs.filename === "string") {
       const file = path.join(
         this.testDirectory.directory.rootPathAbsolute,

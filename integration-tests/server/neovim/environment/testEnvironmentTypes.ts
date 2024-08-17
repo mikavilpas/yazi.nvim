@@ -6,7 +6,6 @@ export const testDirectoryFile = z.enum([
   "initial-file.txt",
   "file.txt",
   "test-setup.lua",
-  "modify_yazi_config_to_use_ya_as_event_reader.lua",
   "subdirectory/subdirectory-file.txt",
   "other-subdirectory/other-sub-file.txt",
   "dir with spaces/file1.txt",
@@ -21,7 +20,6 @@ export const integrationTestFile = z.union([z.literal("."), testDirectoryFile])
 export type IntegrationTestFile = z.infer<typeof integrationTestFile>
 
 export const startupScriptModification = z.enum([
-  "modify_yazi_config_to_use_ya_as_event_reader.lua",
   "modify_yazi_config_and_add_hovered_buffer_background.lua",
   "use_light_neovim_colorscheme.lua",
   "modify_yazi_config_and_set_help_key.lua",
@@ -45,7 +43,7 @@ export const multipleFiles = z.object({
 
 /** The arguments given from the tests to send to the server */
 export const startNeovimArguments = z.object({
-  filename: z.union([integrationTestFile, multipleFiles]),
+  filename: z.union([integrationTestFile, multipleFiles]).optional(),
   startupScriptModifications: z.array(startupScriptModification).optional(),
 })
 export type StartNeovimArguments = z.infer<typeof startNeovimArguments>
