@@ -1,12 +1,10 @@
-import { startNeovimWithYa } from "./startNeovimWithYa"
-
 describe("reading events", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173")
   })
 
   it("can read 'cd' events and use telescope in the latest directory", () => {
-    startNeovimWithYa()
+    cy.startNeovim()
     // wait until text on the start screen is visible
     cy.contains("If you see this text, Neovim is ready!")
     // start yazi
@@ -32,7 +30,7 @@ describe("reading events", () => {
   it("can read 'trash' events and close an open buffer when its file was trashed", () => {
     // NOTE: trash means moving a file to the trash, not deleting it permanently
 
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -60,7 +58,7 @@ describe("reading events", () => {
   it("can read 'delete' events and close an open buffer when its file was deleted", () => {
     // NOTE: delete means permanently deleting a file (not moving it to the trash)
 
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -92,7 +90,7 @@ describe("'rename' events", () => {
   })
 
   it("can read 'rename' events and update the buffer name when the file was renamed", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -120,7 +118,7 @@ describe("'rename' events", () => {
   })
 
   it("can rename twice and keep track of the correct file name", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")

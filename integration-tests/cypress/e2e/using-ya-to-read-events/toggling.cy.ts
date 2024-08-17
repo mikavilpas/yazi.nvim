@@ -1,5 +1,3 @@
-import { startNeovimWithYa } from "./startNeovimWithYa"
-
 describe("toggling yazi to pseudo-continue the previous session", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173")
@@ -14,7 +12,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
   }
 
   it("can restore yazi hovering on the previously hovered file", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -43,7 +41,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
   })
 
   it("can toggle yazi even if no previous session exists", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 

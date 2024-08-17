@@ -1,12 +1,10 @@
-import { startNeovimWithYa } from "./startNeovimWithYa"
-
 describe("mouse support", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173")
   })
 
   it("can close the YaziFloatingWindow when clicked outside of it", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 

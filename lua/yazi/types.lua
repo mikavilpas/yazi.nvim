@@ -6,8 +6,6 @@
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
 ---@field public events_file_path? string "the path to a temporary file that will be created by yazi to store events. A random path will be used by default"
----@field public use_ya_for_events_reading? boolean "use `ya`, the yazi command line application to read events from the yazi process. Right now this is opt-in, but will be the default in the future"
----@field public use_yazi_client_id_flag? boolean "use the `--client-id` flag with yazi, allowing communication with that specific instance as opposed to all yazis on the system"
 ---@field public open_multiple_tabs? boolean "open multiple open files in yazi tabs when opening yazi"
 ---@field public enable_mouse_support? boolean
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig, state: YaziClosedState): nil "a function that will be called when a file is chosen in yazi"
@@ -60,7 +58,7 @@
 ---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
 
 ---@class (exact) YaziPreviousState # describes the previous state of yazi when it was closed; the last known state
----@field public last_hovered? string # only works if you set use_ya_for_events_reading
+---@field public last_hovered? string
 
 ---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
 ---@field public last_directory Path # the last directory that yazi was in before it was closed

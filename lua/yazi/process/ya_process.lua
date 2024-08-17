@@ -8,7 +8,7 @@ local YaziSessionHighlighter =
 ---@class (exact) YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
 ---@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
----@field public hovered_url? string "The path that is currently hovered over in this yazi. Only works if `use_yazi_client_id_flag` is set to true."
+---@field public hovered_url? string "The path that is currently hovered over in this yazi."
 ---@field private config YaziConfig
 ---@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
@@ -23,10 +23,7 @@ YaProcess.__index = YaProcess
 function YaProcess.new(config, yazi_id)
   local self = setmetatable({}, YaProcess)
 
-  if config.use_yazi_client_id_flag == true then
-    self.yazi_id = yazi_id
-  end
-
+  self.yazi_id = yazi_id
   self.config = config
   self.events = {}
   self.retries = 0

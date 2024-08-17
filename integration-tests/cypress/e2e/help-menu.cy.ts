@@ -1,10 +1,9 @@
 import * as assert from "assert"
-import { startNeovimWithYa } from "./using-ya-to-read-events/startNeovimWithYa"
 
 describe("the help menu", () => {
   it("can show help with a keymap", () => {
     cy.visit("http://localhost:5173")
-    startNeovimWithYa({
+    cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_set_help_key.lua",
         "disable_a_keybinding.lua",

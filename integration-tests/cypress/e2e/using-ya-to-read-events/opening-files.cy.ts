@@ -1,5 +1,4 @@
 import type { IntegrationTestFile } from "server/neovim/environment/testEnvironmentTypes"
-import { startNeovimWithYa } from "./startNeovimWithYa"
 import {
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
@@ -11,7 +10,7 @@ describe("opening files", () => {
   })
 
   it("can display yazi in a floating terminal", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
@@ -23,7 +22,7 @@ describe("opening files", () => {
   })
 
   it("can open a file that was selected in yazi", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["file.txt"].name)
@@ -38,7 +37,7 @@ describe("opening files", () => {
   })
 
   it("can open a file in a vertical split", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
@@ -55,7 +54,7 @@ describe("opening files", () => {
   })
 
   it("can open a file in a horizontal split", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
@@ -72,7 +71,7 @@ describe("opening files", () => {
   })
 
   it("can open a file in a new tab", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["test-setup.lua"].name)
@@ -93,7 +92,7 @@ describe("opening files", () => {
   })
 
   it("can send file names to the quickfix list", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
@@ -116,7 +115,7 @@ describe("opening files", () => {
 
   describe("bulk renaming", () => {
     it("can bulk rename files", () => {
-      startNeovimWithYa().then((dir) => {
+      cy.startNeovim().then((dir) => {
         cy.contains("If you see this text, Neovim is ready!")
         // in yazi, bulk renaming is done by
         // - selecting files and pressing "r".
@@ -145,7 +144,7 @@ describe("opening files", () => {
     })
 
     it("can rename a buffer that's open in Neovim", () => {
-      startNeovimWithYa().then((dir) => {
+      cy.startNeovim().then((dir) => {
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
         cy.contains(dir.contents["test-setup.lua"].name)
@@ -180,7 +179,7 @@ describe("opening files", () => {
   })
 
   it("can open files with complex characters in their name", () => {
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
@@ -215,7 +214,7 @@ describe("opening files", () => {
     // the copied path should be relative to the file/directory yazi was
     // started in (the initial file)
 
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -257,7 +256,7 @@ describe("opening files", () => {
     // similarly, the copied path should be relative to the file/directory yazi
     // was started in (the initial file)
 
-    startNeovimWithYa().then((dir) => {
+    cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -298,7 +297,7 @@ describe("opening files", () => {
   })
 
   it("can open multiple files in a directory whose name contains a space character", () => {
-    startNeovimWithYa({ filename: "dir with spaces/file1.txt" }).then((dir) => {
+    cy.startNeovim({ filename: "dir with spaces/file1.txt" }).then((dir) => {
       cy.contains("this is the first file")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -317,7 +316,7 @@ describe("opening files", () => {
   })
 
   it("can open multiple open files in yazi tabs", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: {
         openInVerticalSplits: [
           "file.txt",

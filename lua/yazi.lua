@@ -28,10 +28,7 @@ function M.yazi(config, input_path)
   local Log = require("yazi.log")
   Log.level = config.log_level
 
-  if
-    config.use_ya_for_events_reading == true
-    and utils.is_ya_available() ~= true
-  then
+  if utils.is_ya_available() ~= true then
     print(
       "Please install ya (the yazi command line utility). Check the documentation for more information"
     )
@@ -131,17 +128,6 @@ end
 -- was hovered, open yazi with the default path.
 ---@param config? YaziConfig?
 function M.toggle(config)
-  assert(
-    (config and config.use_ya_for_events_reading)
-      or M.config.use_ya_for_events_reading,
-    "toggle requires setting `use_ya_for_events_reading`"
-  )
-  assert(
-    (config and config.use_yazi_client_id_flag)
-      or M.config.use_yazi_client_id_flag,
-    "toggle requires setting `use_yazi_client_id_flag`"
-  )
-
   local path = M.previous_state and M.previous_state.last_hovered or nil
 
   local Log = require("yazi.log")

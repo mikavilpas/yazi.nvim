@@ -52,11 +52,6 @@ export async function createTempDir(): Promise<TestDirectory> {
           stem: "other-sub-file",
           extension: ".txt",
         },
-        "modify_yazi_config_to_use_ya_as_event_reader.lua": {
-          name: "modify_yazi_config_to_use_ya_as_event_reader.lua",
-          stem: "modify_yazi_config_to_use_ya_as_event_reader",
-          extension: ".lua",
-        },
         "routes/posts.$postId/adjacent-file.txt": {
           name: "adjacent-file.txt",
           stem: "adjacent-file",

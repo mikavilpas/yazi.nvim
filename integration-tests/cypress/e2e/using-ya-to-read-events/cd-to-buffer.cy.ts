@@ -1,4 +1,3 @@
-import { startNeovimWithYa } from "./startNeovimWithYa"
 import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
@@ -19,7 +18,7 @@ describe("'cd' to another buffer's directory", () => {
       rightFile: { text: "ello from the subdirectory!" },
     } as const
 
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: {
         openInVerticalSplits: [
           "subdirectory/subdirectory-file.txt",
@@ -78,7 +77,7 @@ describe("'cd' to another buffer's directory", () => {
       rightFile: { text: "This is other-sub-file.txt" },
     } as const
 
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: {
         openInVerticalSplits: [
           // open the same file in two splits

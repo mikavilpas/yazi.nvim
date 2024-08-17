@@ -1,6 +1,5 @@
 import path from "path"
 import type { IntegrationTestFile } from "server/neovim/environment/testEnvironmentTypes"
-import { startNeovimWithYa } from "./startNeovimWithYa"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
@@ -8,7 +7,7 @@ describe("grug-far integration (search and replace)", () => {
   })
 
   it("can use grug-far.nvim to search and replace in the directory of the hovered file", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
     }).then((dir) => {
       // wait until text on the start screen is visible
@@ -38,7 +37,7 @@ describe("grug-far integration (search and replace)", () => {
   })
 
   it("can search and replace, limited to selected files only", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
     }).then((dir) => {
       cy.contains("this file is adjacent-file.txt")
@@ -78,7 +77,7 @@ describe("telescope integration (search)", () => {
   })
 
   it("can use telescope.nvim to search, limited to the selected files only", () => {
-    startNeovimWithYa({
+    cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
     }).then((dir) => {
       cy.contains("this file is adjacent-file.txt")
