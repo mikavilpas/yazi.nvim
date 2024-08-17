@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.7.1...v6.0.0) (2024-08-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* yazi 0.3 is now required. Currently the version of yazi is 0.3.1 https://yazi-rs.github.io/docs/installation/
+
+### Features
+
+* enable yazi 0.3 features by default ([#386](https://github.com/mikavilpas/yazi.nvim/issues/386)) ([7ecfdd7](https://github.com/mikavilpas/yazi.nvim/commit/7ecfdd76a4016a0ccf7f9d1987b5c30661829519))
+
 ## [5.7.1](https://github.com/mikavilpas/yazi.nvim/compare/v5.7.0...v5.7.1) (2024-08-15)
 
 
