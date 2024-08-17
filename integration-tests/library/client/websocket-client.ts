@@ -2,6 +2,8 @@ import { flavors } from "@catppuccin/palette"
 import { FitAddon } from "@xterm/addon-fit"
 import { Terminal } from "@xterm/xterm"
 import "@xterm/xterm/css/xterm.css"
+import type { TabId } from "library/server/utilities/tabId"
+import z from "zod"
 import { validateMouseEvent } from "./validateMouseEvent"
 
 export type StartTerminalOptions = {
@@ -50,6 +52,7 @@ export function startTerminal(
   })
 
   terminal.onData((data) => {
+    data satisfies string
     // Send mouse clicks to the terminal application
     //
     // this gets called for mouse events. However, some mouse events seem to
@@ -72,4 +75,18 @@ export function startTerminal(
   })
 
   return terminal
+}
+
+/** An identifier unique to a browser tab, so that each tab can have its own
+ * unique session that persists across page reloads. */
+export function getTabId(): TabId {
+  // Other tabs will have a different id because sessionStorage is unique to
+  // each tab.
+  let tabId = z.string().safeParse(sessionStorage.getItem("tabId")).data
+  if (!tabId) {
+    tabId = Math.random().toString(36)
+    sessionStorage.setItem("tabId", tabId)
+  }
+
+  return { tabId }
 }

@@ -1,3 +1,4 @@
+import { tabIdSchema } from "library/server/utilities/tabId"
 import { z } from "zod"
 
 export const testDirectoryFile = z.enum([
@@ -53,9 +54,9 @@ export type StartNeovimArguments = z.infer<typeof startNeovimArguments>
 export type StartNeovimServerArguments = z.infer<
   typeof startNeovimServerArguments
 >
-
 export const startNeovimServerArguments = z.intersection(
   z.object({
+    tabId: tabIdSchema,
     terminalDimensions: z
       .object({
         cols: z.number(),

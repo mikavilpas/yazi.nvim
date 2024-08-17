@@ -19,7 +19,7 @@ export abstract class DisposableSingleApplication<T>
   abstract startNextAndKillCurrent(startArgs: unknown): Promise<T>
 
   public async killCurrent(): Promise<void> {
-    return this.application?.killAndWait()
+    await this.application?.killAndWait()
   }
 
   public async write(input: string): Promise<void> {

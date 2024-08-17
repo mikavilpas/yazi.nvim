@@ -1,5 +1,5 @@
+import EventEmitter from "events"
 import { existsSync } from "fs"
-import { eventEmitter } from "library/server"
 import { DisposableSingleApplication } from "library/server/utilities/DisposableSingleApplication"
 import { TerminalApplication } from "library/server/utilities/TerminalApplication"
 import path from "path"
@@ -8,11 +8,6 @@ import type {
   StartNeovimServerArguments,
   TestDirectory,
 } from "./environment/testEnvironmentTypes"
-
-export type StdinMessage = "stdin"
-export type StdoutMessage = "stdout"
-export type StartNeovimMessage = "startNeovim"
-export type MouseEventMessage = "mouseEvent"
 
 /*
 
@@ -51,10 +46,24 @@ Options:
 
 See ":help startup-options" for all options.
 
+$ nvim --version
+NVIM v0.11.0-dev-608+g9d74dc3ac
+Build type: Release
+LuaJIT 2.1.1720049189
+Run "nvim -V1 -v" for more info
+
 */
+
+export type StdoutMessage = "stdout"
 
 export class NeovimApplication extends DisposableSingleApplication<TestDirectory> {
   private testDirectory: NeovimTestDirectory | undefined
+  public readonly events: EventEmitter
+
+  public constructor() {
+    super()
+    this.events = new EventEmitter()
+  }
 
   public async startNextAndKillCurrent(
     startArgs: StartNeovimServerArguments,
@@ -100,6 +109,7 @@ export class NeovimApplication extends DisposableSingleApplication<TestDirectory
         neovimArguments.push(filePath)
       }
     }
+    const stdout = this.events
 
     this.application = TerminalApplication.start({
       command: "nvim",
@@ -110,7 +120,7 @@ export class NeovimApplication extends DisposableSingleApplication<TestDirectory
       dimensions: startArgs.terminalDimensions,
 
       onStdoutOrStderr(data: string) {
-        eventEmitter.emit("stdout" satisfies StdoutMessage, data)
+        stdout.emit("stdout" satisfies StdoutMessage, data)
       },
     })
 

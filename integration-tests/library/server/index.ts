@@ -1,15 +1,14 @@
 import type { AnyRouter } from "@trpc/server"
 import { applyWSSHandler } from "@trpc/server/adapters/ws"
 import "core-js/proposals/async-explicit-resource-management"
-import EventEmitter, { once } from "events"
+import { once } from "events"
 import { WebSocketServer } from "ws"
-import { createContext, trpc } from "./connection/trpc"
-
-export const eventEmitter = new EventEmitter()
+import { createContext } from "./connection/trpc"
 
 export class TestServer {
   public constructor(private readonly port: number) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
   public async startAndRun<TRouter extends AnyRouter>(
     appRouter: TRouter,
   ): Promise<void> {
@@ -51,5 +50,3 @@ export class TestServer {
     })
   }
 }
-
-export { trpc as defaultTrpc }
