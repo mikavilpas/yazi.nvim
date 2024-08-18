@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.0...v6.0.1) (2024-08-18)
+
+
+### Bug Fixes
+
+* starting telescope or grug-far when hovering a directory ([#388](https://github.com/mikavilpas/yazi.nvim/issues/388)) ([d6da015](https://github.com/mikavilpas/yazi.nvim/commit/d6da015cd2a6aee19ed798495318e227d8a720c0))
+
 ## [6.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v5.7.1...v6.0.0) (2024-08-17)
 
 
