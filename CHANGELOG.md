@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.1...v6.0.2) (2024-08-18)
+
+
+### Bug Fixes
+
+* showing error message when background color is not found ([#393](https://github.com/mikavilpas/yazi.nvim/issues/393)) ([b2c0bf3](https://github.com/mikavilpas/yazi.nvim/commit/b2c0bf3144290bb35240aac8ffa1350dda827b9b))
+
 ## [6.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.0...v6.0.1) (2024-08-18)
 
 
