@@ -46,7 +46,7 @@ describe("dir_of helper function", function()
       vim.fn.mkdir(dir)
       local d = utils.dir_of(dir)
 
-      assert.is_equal(dir, d.filename)
+      assert.is_equal(base_dir, d.filename)
     end)
   end)
 end)

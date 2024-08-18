@@ -116,14 +116,13 @@ end
 function M.dir_of(file_path)
   ---@type Path
   local path = plenary_path:new(file_path)
-  if path:is_dir() then
-    return path
-  else
-    local parent = path:parent()
-    assert(type(parent) == "table", "parent must be a table")
+  local parent = path:parent()
 
-    return parent
-  end
+  -- for some reason, plenary is documented as returning table|unknown[]. we
+  -- want the table version only
+  assert(type(parent) == "table", "parent must be a table")
+
+  return parent
 end
 
 -- Returns parsed events from the yazi events file

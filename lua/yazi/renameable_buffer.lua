@@ -61,15 +61,8 @@ function RenameableBuffer:is_sibling_of_hovered(other)
   other = remove_trailing_slash(other)
   local utils = require("yazi.utils")
 
-  ---@type Path
-  local other_path = plenary_path:new(other)
-
   local my_dir = utils.dir_of(self.path.filename)
   local other_dir = utils.dir_of(other)
-
-  if other_path:is_dir() then
-    return my_dir.filename == other_dir:parent().filename
-  end
 
   return my_dir.filename == other_dir.filename
 end

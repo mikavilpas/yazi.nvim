@@ -21,7 +21,7 @@ describe("keybinding_helpers", function()
 
       keybinding_helpers.grep_in_directory(config, "/tmp")
 
-      assert.stub(s).was_called_with("/tmp")
+      assert.stub(s).was_called_with("/")
     end)
 
     it("should not crash if the integration is disabled", function()
@@ -74,22 +74,29 @@ describe("keybinding_helpers", function()
       end
     )
 
-    it("when a directory is passed, should replace in the directory", function()
-      local config = config_module.default()
+    it(
+      "when a directory is passed, should replace in the directory the directory is in",
+      function()
+        -- when hovering a directory and starting the replace operation, it
+        -- should not replace in the directory itself. Otherwise starting the
+        -- replace operation is too confusing
+        local config = config_module.default()
 
-      local stub_replace = stub(config.integrations, "replace_in_directory")
+        local stub_replace = stub(config.integrations, "replace_in_directory")
 
-      keybinding_helpers.replace_in_directory(config, "/tmp")
+        keybinding_helpers.replace_in_directory(config, "/tmp")
 
-      assert.stub(stub_replace).was_called_with(match.is_truthy())
-      assert.equals("/tmp", stub_replace.calls[1].vals[1].filename)
-    end)
+        assert.stub(stub_replace).was_called_with(match.is_truthy())
+        assert.equals("/", stub_replace.calls[1].vals[1].filename)
+      end
+    )
   end)
 
   describe("replace_in_selected_files", function()
-    it("should call `integrations.replace_in_selected_files`", function()
+    it("should call the integration if it's available", function()
       local config = config_module.default()
 
+      ---@type Path[]
       local results = {}
       config.integrations.replace_in_selected_files = function(paths)
         results = paths
@@ -101,15 +108,14 @@ describe("keybinding_helpers", function()
       )
 
       assert.equals(2, #results)
-      assert.are.same(
-        { "/tmp/file1", "/tmp/file2" },
-        vim
-          .iter(results)
-          :map(function(a)
-            return a.filename
-          end)
-          :totable()
-      )
+
+      local paths = vim
+        .iter(results)
+        :map(function(a)
+          return a.filename
+        end)
+        :totable()
+      assert.same({ "/tmp/file1", "/tmp/file2" }, paths)
     end)
   end)
 end)
