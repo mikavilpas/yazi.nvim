@@ -22,7 +22,7 @@ if not (vim.uv).fs_stat(lazypath) then
     "git",
     "clone",
     "--filter=blob:none",
-    "--branch=v11.12.0",
+    "--branch=v11.14.1",
     lazyrepo,
     lazypath,
   })
