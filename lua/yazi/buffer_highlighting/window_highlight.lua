@@ -62,10 +62,6 @@ function WindowHighlight:set_highlight(
     local color = create_hover_color_from_theme(lighten_or_darken)
     if color == nil then
       Log:debug("Could not find a background color, not highlighting")
-      vim.notify(
-        "Could not find a background color, not highlighting",
-        vim.log.levels.ERROR
-      )
 
       return
     end
