@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.2...v6.0.3) (2024-08-21)
+
+
+### Bug Fixes
+
+* not being able to delete a buffer when it is modified ([#399](https://github.com/mikavilpas/yazi.nvim/issues/399)) ([8b0ecd8](https://github.com/mikavilpas/yazi.nvim/commit/8b0ecd8a6e0abe1af6bddf368cf6e10196443b24))
+
 ## [6.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.1...v6.0.2) (2024-08-18)
 
 
