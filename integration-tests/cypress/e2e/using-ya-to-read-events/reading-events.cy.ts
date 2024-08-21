@@ -35,6 +35,9 @@ describe("reading events", () => {
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
+      // modify the buffer to make sure it works even if the buffer is modified
+      cy.typeIntoTerminal("ccchanged{esc}")
+
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
 
@@ -62,6 +65,9 @@ describe("reading events", () => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
+
+      // modify the buffer to make sure it works even if the buffer is modified
+      cy.typeIntoTerminal("ccchanged{esc}")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
