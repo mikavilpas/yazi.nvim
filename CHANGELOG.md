@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.4](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.3...v6.0.4) (2024-08-22)
+
+
+### Bug Fixes
+
+* closing split when opening directory ([#403](https://github.com/mikavilpas/yazi.nvim/issues/403)) ([80e8dc4](https://github.com/mikavilpas/yazi.nvim/commit/80e8dc45c050b85f1cf09be7a3377964615c0be3))
+
 ## [6.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.2...v6.0.3) (2024-08-21)
 
 
