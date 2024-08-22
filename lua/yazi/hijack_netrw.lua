@@ -14,27 +14,30 @@ function M.hijack_netrw(yazi_augroup)
       -- A buffer was opened for a directory.
       -- Remove the buffer as we want to show yazi instead
       local empty_buffer = vim.api.nvim_create_buf(true, false)
+      local next_buffer = vim.fn.bufnr("#") or empty_buffer
       Log:debug(
         string.format(
-          "Removing buffer %s for directory %s and replacing it with empty buffer %s",
+          "Removing buffer %s for directory %s and replacing it with the next buffer %s",
           dir_bufnr,
           file,
-          empty_buffer
+          next_buffer
         )
       )
-      pcall(function()
-        vim.api.nvim_win_set_buf(winid, empty_buffer)
-        Log:debug(
-          string.format("Set buffer %s for window %s", empty_buffer, winid)
-        )
-      end)
       vim.schedule(function()
         Log:debug(
           string.format("Deleting buffer %s for directory %s", dir_bufnr, file)
         )
 
+        pcall(function()
+          vim.api.nvim_win_set_buf(winid, next_buffer)
+          Log:debug(
+            string.format("Set buffer %s for window %s", next_buffer, winid)
+          )
+        end)
         vim.api.nvim_buf_delete(bufnr, { force = true })
-        vim.api.nvim_buf_delete(empty_buffer, { force = true })
+        if next_buffer ~= empty_buffer then
+          vim.api.nvim_buf_delete(empty_buffer, { force = true })
+        end
         Log:debug(
           string.format("Deleted buffer %s for directory %s", bufnr, file)
         )
