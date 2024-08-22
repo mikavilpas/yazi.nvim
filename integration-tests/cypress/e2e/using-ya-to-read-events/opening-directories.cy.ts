@@ -18,6 +18,9 @@ describe("opening directories", () => {
     cy.visit("http://localhost:5173")
     cy.startNeovim({
       startupScriptModifications: ["add_command_to_count_open_buffers.lua"],
+      filename: {
+        openInVerticalSplits: ["initial-file.txt", "file.txt"],
+      },
     }).then((dir) => {
       cy.contains(dir.contents["initial-file.txt"].name)
 
@@ -29,11 +32,10 @@ describe("opening directories", () => {
       cy.contains(dir.contents["test-setup.lua"].name)
 
       cy.typeIntoTerminal("q")
-
       cy.contains("-- TERMINAL --").should("not.exist")
 
       cy.typeIntoTerminal(":CountBuffers{enter}")
-      cy.contains("Number of open buffers: 1")
+      cy.contains("Number of open buffers: 2")
     })
   })
 
