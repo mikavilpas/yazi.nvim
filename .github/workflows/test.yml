@@ -53,7 +53,7 @@ jobs:
           luarocks_version: "3.11.1"
 
       - name: Cypress run
-        uses: cypress-io/github-action@v6.7.2
+        uses: cypress-io/github-action@v6.7.3
         with:
           command: npm run cy:run
 
