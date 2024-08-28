@@ -129,7 +129,7 @@ describe("opening files", () => {
 
         // yazi should now have opened an embedded Neovim. The file name should say
         // "bulk" somewhere to indicate this
-        cy.contains(new RegExp("yazi/bulk-\\d+"))
+        cy.contains(new RegExp("yazi-\\d+/bulk-\\d+"))
 
         // edit the name of the first file
         cy.typeIntoTerminal("xxx")
@@ -140,6 +140,7 @@ describe("opening files", () => {
 
         // answer yes
         cy.typeIntoTerminal("y{enter}")
+        cy.contains("fig-modifications")
       })
     })
 
@@ -154,7 +155,7 @@ describe("opening files", () => {
 
         // yazi should now have opened an embedded Neovim. The file name should say
         // "bulk" somewhere to indicate this
-        cy.contains(new RegExp("yazi/bulk-\\d+"))
+        cy.contains(new RegExp("yazi-\\d+/bulk-\\d+"))
 
         // edit the name of the file
         cy.typeIntoTerminal("cc")

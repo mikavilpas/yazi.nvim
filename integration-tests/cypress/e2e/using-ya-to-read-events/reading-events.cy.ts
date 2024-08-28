@@ -43,8 +43,8 @@ describe("reading events", () => {
 
       // start file deletion
       cy.typeIntoTerminal("d")
-      cy.contains("Move 1 selected file to trash?")
-      cy.typeIntoTerminal("y{enter}")
+      cy.contains("Trash 1 selected file?")
+      cy.typeIntoTerminal("y")
 
       cy.get("Move 1 selected file to trash").should("not.exist")
 
@@ -74,8 +74,8 @@ describe("reading events", () => {
 
       // start file deletion
       cy.typeIntoTerminal("D")
-      cy.contains("Delete 1 selected file permanently?")
-      cy.typeIntoTerminal("y{enter}")
+      cy.contains("Permanently delete 1 selected file?")
+      cy.typeIntoTerminal("y")
 
       cy.get("Delete 1 selected file permanently").should("not.exist")
 
