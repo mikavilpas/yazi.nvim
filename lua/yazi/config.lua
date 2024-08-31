@@ -1,25 +1,56 @@
 ---@module "plenary.path"
 
+local openers = require("yazi.openers")
+
 local M = {}
 
 function M.default()
-  local openers = require("yazi.openers")
-
-  local relpath = nil
-  if vim.uv.os_uname().sysname == "Darwin" then
-    relpath = "grealpath"
-  else
-    relpath = "realpath"
-  end
-
   ---@type YaziConfig
   return {
-    log_level = vim.log.levels.OFF,
+    -- Below is the default configuration. It is optional to set these values.
+    -- You can customize the configuration for each yazi call by passing it to
+    -- yazi() explicitly
+
+    -- enable this if you want to open yazi instead of netrw.
+    -- Note that if you enable this, you need to call yazi.setup() to
+    -- initialize the plugin. lazy.nvim does this for you in certain cases.
+    --
+    -- If you are also using neotree, you may prefer not to bring it up when
+    -- opening a directory:
+    -- {
+    --   "nvim-neo-tree/neo-tree.nvim",
+    --   opts = {
+    --     filesystem = {
+    --       hijack_netrw_behavior = "disabled",
+    --     },
+    --   },
+    -- }
     open_for_directories = false,
+
+    -- the log level to use. Off by default, but can be used to diagnose
+    -- issues. You can find the location of the log file by running
+    -- `:checkhealth yazi` in Neovim. Also check out the "reproducing issues"
+    -- section below
+    log_level = vim.log.levels.OFF,
+
+    -- open visible splits as yazi tabs for easy navigation. Requires a yazi
+    -- version more recent than 2024-08-11
+    -- https://github.com/mikavilpas/yazi.nvim/pull/359
     open_multiple_tabs = false,
     enable_mouse_support = false,
+
+    -- what Neovim should do a when a file was opened (selected) in yazi.
+    -- Defaults to simply opening the file.
     open_file_function = openers.open_file,
+
+    -- some yazi.nvim commands copy text to the clipboard. This is the register
+    -- yazi.nvim should use for copying. Defaults to "*", the system clipboard
     clipboard_register = "*",
+
+    -- customize the keymaps that are active when yazi is open and focused. The
+    -- defaults are listed below. Also:
+    -- - use e.g. `open_file_in_tab = false` to disable a keymap
+    -- - you can customize only some of the keymaps if you want
     keymaps = {
       show_help = "<f1>",
       open_file_in_vertical_split = "<c-v>",
@@ -31,19 +62,41 @@ function M.default()
       copy_relative_path_to_selected_files = "<c-y>",
       send_to_quickfix_list = "<c-q>",
     },
+
+    -- completely override the keymappings for yazi. This function will be
+    -- called in the context of the yazi terminal buffer.
     set_keymappings_function = nil,
+
+    -- run your own custom code when yazi.nvim does some actions. See types.lua
+    -- for the exact signatures of these functions.
     hooks = {
-      yazi_opened = function() end,
+      -- if you want to execute a custom action when yazi has been opened,
+      -- you can define it here.
+      yazi_opened = function()
+        -- you can optionally modify the config for this specific yazi
+        -- invocation if you want to customize the behaviour
+      end,
+
+      -- when yazi was successfully closed
       yazi_closed_successfully = function() end,
+
+      -- when yazi opened multiple files. The default is to send them to the
+      -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = openers.open_multiple_files,
     },
+
+    -- highlight buffers in the same directory as the hovered buffer
     highlight_hovered_buffers_in_same_directory = true,
     highlight_groups = {
+      -- See https://github.com/mikavilpas/yazi.nvim/pull/180
       hovered_buffer = nil,
+      -- See https://github.com/mikavilpas/yazi.nvim/pull/351
       hovered_buffer_in_same_directory = nil,
     },
     integrations = {
+      --- What should be done when the user wants to grep in a directory
       grep_in_directory = function(directory)
+        -- the default implementation uses telescope if available, otherwise nothing
         require("telescope.builtin").live_grep({
           search = "",
           prompt_title = "Grep in " .. directory,
@@ -88,11 +141,20 @@ function M.default()
           },
         })
       end,
-      resolve_relative_path_application = relpath,
+      resolve_relative_path_application = vim.uv.os_uname().sysname == "Darwin"
+          and "grealpath"
+        or "realpath",
     },
 
+    -- the floating window scaling factor. 1 means 100%, 0.9 means 90%, etc.
     floating_window_scaling_factor = 0.9,
+
+    -- the transparency of the yazi floating window (0-100). See :h winblend
     yazi_floating_window_winblend = 0,
+
+    -- the type of border to use for the floating window. Can be many values,
+    -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
+    -- more information, see :h nvim_open_win
     yazi_floating_window_border = "rounded",
   }
 end
