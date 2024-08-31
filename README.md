@@ -151,7 +151,7 @@ end)
 
 You can optionally configure yazi.nvim by setting any of the options below.
 
-https://github.com/mikavilpas/yazi.nvim/blob/main/lua/yazi/config.lua
+https://github.com/mikavilpas/yazi.nvim/blob/main/lua/yazi/config.lua#L1-999
 
 ## ⌨️ Keybindings
 
