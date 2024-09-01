@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.5](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.4...v6.0.5) (2024-09-01)
+
+
+### Bug Fixes
+
+* opening directories in splits and tabs opening empty buffers ([#421](https://github.com/mikavilpas/yazi.nvim/issues/421)) ([88cb633](https://github.com/mikavilpas/yazi.nvim/commit/88cb633d31b17c8f2fffbe47796f1bc13c489ac0))
+
 ## [6.0.4](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.3...v6.0.4) (2024-08-22)
 
 
