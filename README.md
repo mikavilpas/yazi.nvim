@@ -206,9 +206,13 @@ You can optionally configure yazi.nvim by setting any of the options below.
     open_file_function = function(chosen_file, config, state) end,
 
     -- customize the keymaps that are active when yazi is open and focused. The
-    -- defaults are listed below. Also:
+    -- defaults are listed below. Note that the keymaps simply hijack input and
+    -- they are never sent to yazi, so only try to map keys that are never
+    -- needed by yazi.
+    --
+    -- Also:
     -- - use e.g. `open_file_in_tab = false` to disable a keymap
-    -- - you can customize only some of the keymaps if you want
+    -- - you can customize only some of the keymaps (not all of them)
     keymaps = {
       show_help = '<f1>',
       open_file_in_vertical_split = '<c-v>',
