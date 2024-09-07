@@ -51,7 +51,6 @@ describe("opening a file", function()
     vim.api.nvim_command("edit " .. vim.fn.fnameescape("/abc/test file-$1.txt"))
     plugin.yazi({
       chosen_file_path = "/tmp/yazi_filechosen",
-      events_file_path = "/tmp/yazi.nvim.events.txt",
     })
 
     assert_opened_yazi_with_files({ "/abc/test file-$1.txt" })
@@ -64,7 +63,6 @@ describe("opening a file", function()
 
     plugin.yazi({
       chosen_file_path = "/tmp/yazi_filechosen",
-      events_file_path = "/tmp/yazi.nvim.events.txt",
     })
 
     assert_opened_yazi_with_files({ "/tmp/" })
