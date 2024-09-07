@@ -69,7 +69,7 @@ function M.default()
         -- `prefills.flags` get passed to ripgrep as is
         -- https://github.com/MagicDuck/grug-far.nvim/issues/146
         local filter = directory:make_relative(vim.uv.cwd())
-        require("grug-far").grug_far({
+        require("grug-far").open({
           prefills = {
             paths = filter:gsub(" ", "\\ "),
           },
@@ -82,7 +82,7 @@ function M.default()
           files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
         end
 
-        require("grug-far").grug_far({
+        require("grug-far").open({
           prefills = {
             paths = table.concat(files, " "),
           },

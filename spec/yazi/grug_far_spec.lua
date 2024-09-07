@@ -6,7 +6,7 @@ local config = require("yazi.config")
 local plenary_path = require("plenary.path")
 
 describe("the grug-far integration (search and replace)", function()
-  local mock_grug_far = { grug_far = function() end }
+  local mock_grug_far = { open = function() end }
 
   before_each(function()
     mock.revert(mock_grug_far)
@@ -18,7 +18,7 @@ describe("the grug-far integration (search and replace)", function()
 
     config.default().integrations.replace_in_directory(tmp_path)
 
-    assert.spy(mock_grug_far.grug_far).was_called_with({
+    assert.spy(mock_grug_far.open).was_called_with({
       prefills = {
         paths = "/tmp/folder\\ with\\ spaces",
       },
