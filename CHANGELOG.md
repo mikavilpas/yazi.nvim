@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.6](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.5...v6.0.6) (2024-09-07)
+
+
+### Bug Fixes
+
+* `nvim .` sent extra `i` key to yazi ([8253e11](https://github.com/mikavilpas/yazi.nvim/commit/8253e11e23b94c15f7c55d1c040f8847a86ecaeb))
+
 ## [6.0.5](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.4...v6.0.5) (2024-09-01)
 
 
