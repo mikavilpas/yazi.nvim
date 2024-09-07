@@ -42,7 +42,6 @@ function M.yazi(config, input_path)
   local prev_buf = vim.api.nvim_get_current_buf()
 
   config.chosen_file_path = config.chosen_file_path or vim.fn.tempname()
-  config.events_file_path = config.events_file_path or vim.fn.tempname()
 
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
