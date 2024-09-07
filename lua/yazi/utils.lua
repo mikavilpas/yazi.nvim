@@ -254,17 +254,6 @@ function M.parse_events(events_file_lines)
   return events
 end
 
----@param path string
-function M.read_events_file(path)
-  local success, events_file_lines = pcall(vim.fn.readfile, path)
-  os.remove(path)
-  if not success then
-    return {}
-  end
-
-  return M.safe_parse_events(events_file_lines)
-end
-
 ---@param event_lines string[]
 function M.safe_parse_events(event_lines)
   local success, events = pcall(M.parse_events, event_lines)
