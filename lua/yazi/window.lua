@@ -141,6 +141,9 @@ function YaziFloatingWindow:open_and_display()
   return self
 end
 
+--- Compatibility with tmux and neovim mouse support
+--- https://github.com/mikavilpas/yazi.nvim/issues/176
+--- https://github.com/mikavilpas/yazi.nvim/issues/49
 ---@param yazi_buffer integer
 function YaziFloatingWindow:add_hacky_mouse_support(yazi_buffer)
   -- Disable nvim mouse support so that yazi can handle mouse events instead
