@@ -66,6 +66,11 @@ function M.hijack_netrw(yazi_augroup)
     pattern = "*",
     ---@param ev yazi.AutoCmdEvent
     callback = function(ev)
+      if vim.g.SessionLoad == 1 then
+        -- Fix https://github.com/mikavilpas/yazi.nvim/issues/440
+        -- See `:h SessionLoad-variable`
+        return
+      end
       open_yazi_in_directory(ev.file, ev.buf)
     end,
     group = yazi_augroup,
