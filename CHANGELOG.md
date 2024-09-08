@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.7](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.6...v6.0.7) (2024-09-08)
+
+
+### Bug Fixes
+
+* opening a LazyVim session with folke/persistence.nvim starting yazi ([#442](https://github.com/mikavilpas/yazi.nvim/issues/442)) ([b8f4cc7](https://github.com/mikavilpas/yazi.nvim/commit/b8f4cc7fe365a4c16826efd5e07a9ca13fc6c11e))
+
 ## [6.0.6](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.5...v6.0.6) (2024-09-07)
 
 
