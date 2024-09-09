@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@umbrelladocs/linkspector": "0.3.13",
-    "markdownlint-cli2": "0.13.0",
+    "markdownlint-cli2": "0.14.0",
     "prettier": "3.3.3",
     "prettier-plugin-packagejson": "2.5.2"
   }
