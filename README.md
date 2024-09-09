@@ -279,6 +279,14 @@ You can optionally configure yazi.nvim by setting any of the options below.
 }
 ```
 
+> [!TIP]
+>
+> If you are adding custom bindings for special use cases, you can use the lua
+> api. It allows customizing the configuration on a per call basis. For example,
+> you can open yazi with a different configuration by calling
+> `require('yazi').yazi({open_for_directories = true})` to override some of your
+> default settings for this specific call.
+
 ## ⌨️ Keybindings
 
 These are the default keybindings that are available when yazi is open:
