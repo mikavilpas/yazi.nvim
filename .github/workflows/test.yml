@@ -47,7 +47,7 @@ jobs:
           tag: v0.3.3
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@v1.0.1
+        uses: nvim-neorocks/nvim-busted-action@v1.1.0
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
