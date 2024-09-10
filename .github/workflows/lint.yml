@@ -12,10 +12,12 @@ jobs:
         with:
           # Github secret token
           token: ${{ secrets.GITHUB_TOKEN }}
-          # selene arguments
-          args: --display-style=quiet .
+          # selene arguments, should be the same as in ../../Makefile
+          args:
+            --display-style=quiet ./lua/ ./spec/
+            ./integration-tests/test-environment/config-modifications
           # selene version
-          version: 0.12.1
+          version: 0.26.1
 
   markdownlint:
     name: markdownlint
