@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.7...v6.1.0) (2024-09-11)
+
+
+### Features
+
+* allow cycle_open_buffers (`tab`) to work for a single file ([#451](https://github.com/mikavilpas/yazi.nvim/issues/451)) ([2d80e92](https://github.com/mikavilpas/yazi.nvim/commit/2d80e926e352841c411ef5c72eafd64d4c0b4763))
+
 ## [6.0.7](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.6...v6.0.7) (2024-09-08)
 
 
