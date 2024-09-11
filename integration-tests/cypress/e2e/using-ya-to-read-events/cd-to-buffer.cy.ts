@@ -115,4 +115,24 @@ describe("'cd' to another buffer's directory", () => {
       isHoveredInNeovim(view.rightFile.text)
     })
   })
+
+  it("can tab to the directory of just a single buffer", () => {
+    cy.startNeovim({
+      filename: "file.txt",
+    }).then((dir) => {
+      cy.contains("Hello")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("initial-file.txt")
+
+      cy.typeIntoTerminal(`/routes{enter}`, { delay: 1 })
+      cy.contains("posts.$postId")
+
+      // enter the directory and make sure its contents are shown
+      cy.typeIntoTerminal("l")
+      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+
+      cy.typeIntoTerminal("{control+i}")
+    })
+  })
 })

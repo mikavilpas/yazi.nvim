@@ -60,6 +60,7 @@ export default defineConfig({
         },
       })
     },
+    experimentalRunAllSpecs: true,
     retries: {
       runMode: 2,
       openMode: 0,
