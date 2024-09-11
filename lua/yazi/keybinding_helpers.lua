@@ -98,10 +98,10 @@ function YaziOpenerActions.cycle_open_buffers(context)
           ~= current_cycle_position.filename
       end)
 
-      if not next_buffer then
+      if not next_buffer and #visible_buffers <= 1 then
         Log:debug(
           string.format(
-            'Could not find next buffer for path: "%s", probably only one is open.',
+            'Could not find next buffer for path: "%s".',
             context.input_path
           )
         )
