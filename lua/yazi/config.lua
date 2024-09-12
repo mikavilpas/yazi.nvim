@@ -231,7 +231,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         "version *" .. require("yazi").version .. "*",
       })
 
-      vim.api.nvim_set_option_value("filetype", "help", { buf = help_buffer })
+      vim.api.nvim_set_option_value("syntax", "help", { buf = help_buffer })
+      vim.api.nvim_set_option_value("concealcursor", "nc", { win = win })
+      vim.api.nvim_set_option_value("conceallevel", 2, { win = win })
       vim.api.nvim_set_option_value("modifiable", false, { buf = help_buffer })
 
       local function close_help()
