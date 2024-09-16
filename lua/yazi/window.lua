@@ -58,8 +58,20 @@ local function get_window_dimensions(config)
     return value > 1 and math.min(value, max) or math.floor(max * value)
   end
 
-  local height = size(vim.o.lines, config.floating_window_scaling_factor)
-  local width = size(vim.o.columns, config.floating_window_scaling_factor)
+  local height
+  local width
+
+  if type(config.floating_window_scaling_factor) == "number" then
+    height = size(vim.o.lines, config.floating_window_scaling_factor)
+    width = size(vim.o.columns, config.floating_window_scaling_factor)
+  else
+    assert(
+      type(config.floating_window_scaling_factor) == "table",
+      "floating_window_scaling_factor must be a number or a table"
+    )
+    height = size(vim.o.lines, config.floating_window_scaling_factor.height)
+    width = size(vim.o.columns, config.floating_window_scaling_factor.width)
+  end
 
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
