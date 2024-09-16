@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.1.0...v6.2.0) (2024-09-16)
+
+
+### Features
+
+* allow scaling the floating window width and height separately ([56912be](https://github.com/mikavilpas/yazi.nvim/commit/56912beffcdd6950e39f6e8782ffdf15fbc13d15))
+
 ## [6.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.0.7...v6.1.0) (2024-09-11)
 
 
