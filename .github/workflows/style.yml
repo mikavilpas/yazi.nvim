@@ -10,7 +10,7 @@ jobs:
     name: prettier
     steps:
       - uses: actions/checkout@v4.1.7
-      - uses: actions/setup-node@v4.0.3
+      - uses: actions/setup-node@v4.0.4
         with:
           node-version-file: .nvmrc
       - run: npm ci
