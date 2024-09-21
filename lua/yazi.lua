@@ -95,19 +95,20 @@ function M.yazi(config, input_path)
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
+  ---@type YaziActiveContext
+  local context = {
+    api = yazi_process.api,
+    input_path = path,
+    ya_process = yazi_process.ya_process,
+  }
+
   local yazi_buffer = win.content_buffer
   if config.set_keymappings_function ~= nil then
-    config.set_keymappings_function(yazi_buffer, config, {
-      api = yazi_process.api,
-      input_path = path,
-    })
+    config.set_keymappings_function(yazi_buffer, config, context)
   end
 
   if config.keymaps ~= false then
-    require("yazi.config").set_keymappings(yazi_buffer, config, {
-      api = yazi_process.api,
-      input_path = path,
-    })
+    require("yazi.config").set_keymappings(yazi_buffer, config, context)
   end
 
   win.on_resized = function(event)

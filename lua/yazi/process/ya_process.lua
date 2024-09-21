@@ -9,6 +9,7 @@ local YaziSessionHighlighter =
 ---@field public events YaziEvent[] "The events that have been received from yazi"
 ---@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
 ---@field public hovered_url? string "The path that is currently hovered over in this yazi."
+---@field public cwd? string "The path that the yazi process is currently in."
 ---@field private config YaziConfig
 ---@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
@@ -137,29 +138,7 @@ function YaProcess:start()
       local parsed = utils.safe_parse_events(data)
       -- Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
 
-      for _, event in ipairs(parsed) do
-        if event.type == "hover" then
-          ---@cast event YaziHoverEvent
-          if event.yazi_id == self.yazi_id then
-            Log:debug(
-              string.format("Changing the last hovered_url to %s", event.url)
-            )
-            self.hovered_url = event.url
-          end
-          vim.schedule(function()
-            self.highlighter:highlight_buffers_when_hovered(
-              event.url,
-              self.config
-            )
-
-            local event_handling =
-              require("yazi.event_handling.nvim_event_handling")
-            event_handling.emit("YaziDDSHover", event)
-          end)
-        else
-          self.events[#self.events + 1] = event
-        end
-      end
+      YaProcess:process_events(parsed)
     end,
 
     ---@param obj vim.SystemCompleted
@@ -169,6 +148,33 @@ function YaProcess:start()
   })
 
   return self
+end
+
+---@param events YaziEvent[]
+function YaProcess:process_events(events)
+  for _, event in ipairs(events) do
+    if event.type == "hover" then
+      ---@cast event YaziHoverEvent
+      if event.yazi_id == self.yazi_id then
+        Log:debug(
+          string.format("Changing the last hovered_url to %s", event.url)
+        )
+        self.hovered_url = event.url
+      end
+      vim.schedule(function()
+        self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
+
+        local event_handling =
+          require("yazi.event_handling.nvim_event_handling")
+        event_handling.emit("YaziDDSHover", event)
+      end)
+    elseif event.type == "cd" then
+      ---@cast event YaziChangeDirectoryEvent
+      self.cwd = event.url
+    else
+      self.events[#self.events + 1] = event
+    end
+  end
 end
 
 return YaProcess

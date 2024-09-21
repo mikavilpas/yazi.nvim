@@ -1,4 +1,4 @@
----@class YaziProcessApi # Provides yazi.nvim -> yazi process interactions
+---@class YaziProcessApi # Provides yazi.nvim -> yazi process interactions. This allows yazi.nvim to tell yazi what to do.
 ---@field private config YaziConfig
 ---@field private yazi_id string
 local YaziProcessApi = {}

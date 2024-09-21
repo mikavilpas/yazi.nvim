@@ -37,6 +37,7 @@
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi
+---@field ya_process YaProcess the ya process that is currently running, listening for events from yazi
 ---@field input_path Path the path that is first selected by yazi when it's opened
 ---@field cycled_file? RenameableBuffer the last file that was cycled to with e.g. the <tab> key
 
