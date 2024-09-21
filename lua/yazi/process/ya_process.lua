@@ -138,7 +138,7 @@ function YaProcess:start()
       local parsed = utils.safe_parse_events(data)
       -- Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
 
-      YaProcess:process_events(parsed)
+      self:process_events(parsed)
     end,
 
     ---@param obj vim.SystemCompleted
