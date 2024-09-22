@@ -10,11 +10,13 @@ jobs:
     name: prettier
     steps:
       - uses: actions/checkout@v4.1.7
+      - uses: pnpm/action-setup@v4.0.0
       - uses: actions/setup-node@v4.0.4
         with:
           node-version-file: .nvmrc
-      - run: npm ci
-      - run: npm run prettier
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm prettier
 
   stylua:
     name: stylua

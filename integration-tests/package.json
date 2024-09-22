@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "cy:open": "cypress open --e2e",
-    "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
-    "dev": "concurrently --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'npm run dev:client' 'npm run dev:server' 'npm run cy:open'",
+    "cy:run:ci": "concurrently --success command-cypress --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'pnpm dev:client' 'pnpm dev:server' 'wait-on --timeout 60000 http://127.0.0.1:5173 && npx cypress run'",
+    "dev": "concurrently --kill-others --names 'client,server,cypress' --prefix-colors 'blue,green,yellow' 'pnpm dev:client' 'pnpm dev:server' 'pnpm cy:open'",
     "dev:client": "vite",
     "dev:server": "nodemon --watch server --ext '*' --exec 'npx tsx ./server/server.ts'",
     "eslint": "eslint --max-warnings=0 .",
