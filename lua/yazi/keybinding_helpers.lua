@@ -212,4 +212,13 @@ function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
   end
 end
 
+---@param context YaziActiveContext
+function YaziOpenerActions.change_working_directory(context)
+  local last_directory = context.ya_process.cwd
+  if last_directory then
+    vim.notify('cwd changed to "' .. last_directory .. '"')
+    vim.cmd({ cmd = "cd", args = { last_directory } })
+  end
+end
+
 return YaziOpenerActions

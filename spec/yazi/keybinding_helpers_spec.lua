@@ -5,6 +5,20 @@ local match = require("luassert.match")
 local stub = require("luassert.stub")
 
 describe("keybinding_helpers", function()
+  local vim_cmd_stub
+  local vim_notify_stub
+  local snapshot
+
+  before_each(function()
+    snapshot = assert:snapshot()
+    vim_notify_stub = stub(vim, "notify")
+    vim_cmd_stub = stub(vim, "cmd")
+  end)
+
+  after_each(function()
+    snapshot:revert()
+  end)
+
   describe("grep_in_directory", function()
     it("should grep in the parent directory for a file", function()
       local config = config_module.default()
@@ -116,6 +130,42 @@ describe("keybinding_helpers", function()
         end)
         :totable()
       assert.same({ "/tmp/file1", "/tmp/file2" }, paths)
+    end)
+  end)
+
+  describe("change_working_directory", function()
+    it(
+      "should change the working directory when the cwd is available from ya",
+      function()
+        -- When yazi changes a directory, knowledge of that cwd becomes
+        -- available to the plugin. This information is used to update the cwd
+        -- in neovim
+
+        ---@diagnostic disable-next-line: missing-fields
+        keybinding_helpers.change_working_directory({
+          ---@diagnostic disable-next-line: missing-fields
+          ya_process = { cwd = "/tmp" },
+        })
+
+        assert
+          .stub(vim_cmd_stub)
+          .was_called_with({ cmd = "cd", args = { "/tmp" } })
+
+        assert.stub(vim_notify_stub).was_called_with('cwd changed to "/tmp"')
+      end
+    )
+
+    it("should not crash when the cwd is not available", function()
+      ---@diagnostic disable-next-line: missing-fields
+      keybinding_helpers.change_working_directory({
+        ---@diagnostic disable-next-line: missing-fields
+        ya_process = {
+          cwd = nil,
+        },
+      })
+
+      assert.stub(vim_cmd_stub).was_not_called()
+      assert.stub(vim_notify_stub).was_not_called()
     end)
   end)
 end)

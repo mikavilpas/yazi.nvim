@@ -223,6 +223,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
       cycle_open_buffers = '<tab>',
       copy_relative_path_to_selected_files = '<c-y>',
       send_to_quickfix_list = '<c-q>',
+      change_working_directory = "<c-\\>",
     },
 
     -- completely override the keymappings for yazi. This function will be

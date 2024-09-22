@@ -30,6 +30,7 @@ function M.default()
       cycle_open_buffers = "<tab>",
       copy_relative_path_to_selected_files = "<c-y>",
       send_to_quickfix_list = "<c-q>",
+      change_working_directory = "<c-\\>",
     },
     set_keymappings_function = nil,
     hooks = {
@@ -179,6 +180,12 @@ function M.set_keymappings(yazi_buffer, config, context)
     end, { buffer = yazi_buffer })
   end
 
+  if config.keymaps.change_working_directory ~= false then
+    vim.keymap.set({ "t" }, config.keymaps.change_working_directory, function()
+      keybinding_helpers.change_working_directory(context)
+    end, { buffer = yazi_buffer })
+  end
+
   if config.keymaps.show_help ~= false then
     vim.keymap.set({ "t" }, config.keymaps.show_help, function()
       local w = vim.api.nvim_win_get_width(0)
@@ -191,7 +198,7 @@ function M.set_keymappings(yazi_buffer, config, context)
         bufpos = { 5, 30 },
         noautocmd = true,
         width = math.min(46, math.floor(w * 0.5)),
-        height = math.min(13, math.floor(h * 0.5)),
+        height = math.min(14, math.floor(h * 0.5)),
         border = config.yazi_floating_window_border,
       })
 
@@ -226,6 +233,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         ""
           .. show(config.keymaps.copy_relative_path_to_selected_files)
           .. " - copy relative path to selected file(s)",
+        ""
+          .. show(config.keymaps.change_working_directory)
+          .. " - change cwd to current directory",
         "" .. show(config.keymaps.show_help) .. " - show this help",
         "",
         "version *" .. require("yazi").version .. "*",
