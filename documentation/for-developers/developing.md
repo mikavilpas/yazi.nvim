@@ -111,25 +111,25 @@ The tests are written in TypeScript using the [Cypress](https://www.cypress.io/)
 browser testing framework.
 
 Optional, but recommended: install
-[Node Version Manager](https://github.com/nvm-sh/nvm) to install the correct
+[Fast Node Manager](https://github.com/Schniz/fnm) to install the correct
 version of node.
 
 Run the following commands in the root of the project:
 
 ```sh
 # activate the correct version of node
-nvm use
-# or nvm install <version> if you don't have the correct version installed
+fnm use
+# or fnm install <version> if you don't have the correct version installed
 
 # install the dependencies
-npm run install:all
+pnpm install # or `pnpm i`
 ```
 
 Next, start the integration test environment inside the
 [integration-tests](../../integration-tests/) directory:
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
 ## Managing your development code

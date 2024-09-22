@@ -2,3 +2,4 @@ lazy-lock.json
 CHANGELOG.md
 release-please-config.json
 .release-please-manifest.json
+pnpm-lock.yaml

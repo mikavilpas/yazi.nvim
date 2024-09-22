@@ -52,10 +52,24 @@ jobs:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v6.7.6
+      - uses: pnpm/action-setup@v4.0.0
+      - uses: actions/setup-node@v4.0.4
         with:
-          command: npm run cy:run
+          node-version-file: .nvmrc
+          cache: "pnpm"
+      - run: pnpm install
+
+      - name: Install dependencies
+        uses: cypress-io/github-action@v6
+        with:
+          runTests: false
+          # https://github.com/cypress-io/github-action/blob/bff0ae58f02476fbc4b13229bcaac2767f645b3e/README.md#pnpm-workspaces
+
+      - name: Cypress test
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          command: pnpm cy:run
 
       - uses: actions/upload-artifact@v4.4.0
         # add the line below to store screenshots only on failures

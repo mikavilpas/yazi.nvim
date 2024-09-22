@@ -6,14 +6,9 @@
   "keywords": [],
   "license": "ISC",
   "author": "",
-  "workspaces": [
-    "integration-tests"
-  ],
   "scripts": {
-    "clean-install:all": "npm clean-install --workspaces --include-workspace-root",
-    "cy:run": "npm run cy:run:ci --workspace integration-tests",
-    "dev": "npm run dev --workspace integration-tests",
-    "install:all": "npm install --workspaces --include-workspace-root",
+    "cy:run": "pnpm --filter ./integration-tests/ cy:run:ci",
+    "dev": "pnpm --filter ./integration-tests/ dev",
     "markdownlint": "markdownlint-cli2 README.md",
     "prettier": "prettier --check ."
   },
@@ -22,5 +17,6 @@
     "markdownlint-cli2": "0.14.0",
     "prettier": "3.3.3",
     "prettier-plugin-packagejson": "2.5.2"
-  }
+  },
+  "packageManager": "pnpm@9.11.0+sha256.1c0e33f70e5df9eede84a357bdfa0b1f9dba6e58194628d48a1055756f553754"
 }
