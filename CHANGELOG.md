@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.2.0...v6.3.0) (2024-09-22)
+
+
+### Features
+
+* add keymap for changing cwd to current directory ([#474](https://github.com/mikavilpas/yazi.nvim/issues/474)) ([d63165d](https://github.com/mikavilpas/yazi.nvim/commit/d63165d5e122f27f985591bd4803c0222383f770))
+* expose the current working directory to keybindings ([#471](https://github.com/mikavilpas/yazi.nvim/issues/471)) ([445f487](https://github.com/mikavilpas/yazi.nvim/commit/445f4877d8b80f9d24ea1f9b890c878211878d63))
+
 ## [6.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.1.0...v6.2.0) (2024-09-16)
 
 
