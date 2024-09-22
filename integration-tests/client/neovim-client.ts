@@ -1,70 +1,56 @@
-import { createTRPCClient, createWSClient, wsLink } from "@trpc/client"
-import type {
-  StartNeovimArguments,
-  TestDirectory,
-} from "server/neovim/environment/testEnvironmentTypes.ts"
-import type { AppRouter } from "server/server.ts"
-import { getTabId, startTerminal } from "../library/client/websocket-client.ts"
-import "./__global.ts"
-import "./style.css"
+import { NeovimClient } from "@tui-sandbox/library/src/client/websocket-client"
+import { z } from "zod"
+import {
+  MyTestDirectoryContentsSchema,
+  testDirectoryFiles,
+} from "../MyTestDirectory"
+import type { NeovimContext } from "./__global"
 
 const app = document.querySelector<HTMLElement>("#app")
 if (!app) {
   throw new Error("No app element found")
 }
 
-const wsClient = createWSClient({ url: `ws://localhost:3000`, WebSocket })
-const trpc = createTRPCClient<AppRouter>({
-  links: [wsLink({ client: wsClient })],
+const client = new NeovimClient(app)
+
+/** The arguments given from the tests to send to the server. This one contains
+ * the test environment's files in a type safe manner, whereas the server only
+ * requires strings. */
+export const myStartNeovimArguments = z.object({
+  filename: z
+    .union([
+      testDirectoryFiles,
+      z.object({
+        openInVerticalSplits: z.array(testDirectoryFiles),
+      }),
+    ])
+    .optional(),
+  startupScriptModifications: z
+    .array(
+      z.enum(
+        MyTestDirectoryContentsSchema.shape[
+          "config-modifications"
+        ].shape.contents.keyof().options,
+      ),
+    )
+    .optional(),
 })
+export type MyStartNeovimServerArguments = z.infer<
+  typeof myStartNeovimArguments
+>
 
-const tabId = getTabId()
+/** Entrypoint for the test runner (cypress) */
+window.startNeovim = async function (
+  startArgs?: MyStartNeovimServerArguments,
+): Promise<NeovimContext> {
+  const neovim = await client.startNeovim({
+    filename: startArgs?.filename ?? "initial-file.txt",
+    startupScriptModifications: startArgs?.startupScriptModifications,
+  })
 
-const terminal = startTerminal(app, {
-  onMouseEvent(data: string) {
-    void trpc.neovim.sendStdin
-      .mutate({ tabId, data })
-      .catch((error: unknown) => {
-        console.error(`Error sending mouse event`, error)
-      })
-  },
-  onKeyPress(event) {
-    void trpc.neovim.sendStdin.mutate({ tabId, data: event.key })
-  },
-})
-
-const ready = new Promise<void>((resolve) => {
-  console.log("Subscribing to Neovim stdout")
-  trpc.neovim.onStdout.subscribe(
-    { client: tabId },
-    {
-      onStarted(_) {
-        resolve()
-      },
-      onData(data: string) {
-        terminal.write(data)
-      },
-      onError(err: unknown) {
-        console.error(`Error from Neovim`, err)
-      },
-    },
-  )
-})
-
-{
-  /** Entrypoint for the test runner (cypress) */
-  window.startNeovim = async function (
-    startArgs?: StartNeovimArguments,
-  ): Promise<TestDirectory> {
-    await ready
-    const terminalDimensions = { cols: terminal.cols, rows: terminal.rows }
-    const neovim = await trpc.neovim.start.mutate({
-      tabId,
-      filename: startArgs?.filename ?? "initial-file.txt",
-      startupScriptModifications: startArgs?.startupScriptModifications,
-      terminalDimensions,
-    })
-
-    return neovim.dir
+  return {
+    contents: MyTestDirectoryContentsSchema.parse(neovim.contents),
+    files: testDirectoryFiles.enum,
+    testDirectory: neovim,
   }
 }

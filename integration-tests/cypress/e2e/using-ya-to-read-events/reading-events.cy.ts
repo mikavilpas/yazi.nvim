@@ -112,14 +112,14 @@ describe("'rename' events", () => {
       cy.get("Rename").should("not.exist")
 
       // yazi should be showing the new file name
-      const file = dir.contents["initial-file.txt"]
-      cy.contains(`${file.stem}2${file.extension}`)
+      const newFileName = `initial-file2.txt`
+      cy.contains(newFileName)
 
       // close yazi
       cy.typeIntoTerminal("q")
 
       // the buffer name should now be updated
-      cy.contains(`${file.stem}2${file.extension}`)
+      cy.contains(newFileName)
     })
   })
 
@@ -140,26 +140,25 @@ describe("'rename' events", () => {
       cy.get("Rename").should("not.exist")
 
       // yazi should be showing the new file name
-      const file = dir.contents["initial-file.txt"]
-      cy.contains(`${file.stem}2${file.extension}`)
+      const newFileName = "initial-file2.txt"
+      cy.contains(newFileName)
 
       // close yazi
       cy.typeIntoTerminal("q")
 
-      const newName = `${file.stem}2${file.extension}`
       // the buffer name should now be updated
-      cy.contains(newName)
+      cy.contains(newFileName)
 
       // rename a second time, returning to the original name
       cy.typeIntoTerminal("{upArrow}")
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("{backspace}")
-      cy.contains(`${file.stem}${file.extension}`)
+      cy.contains(newFileName)
       cy.typeIntoTerminal("{enter}")
 
       cy.typeIntoTerminal("q")
-      cy.contains(newName).should("not.exist")
+      cy.contains(newFileName).should("not.exist")
     })
   })
 })

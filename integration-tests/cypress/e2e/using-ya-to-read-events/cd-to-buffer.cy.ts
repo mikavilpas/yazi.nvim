@@ -130,7 +130,10 @@ describe("'cd' to another buffer's directory", () => {
 
       // enter the directory and make sure its contents are shown
       cy.typeIntoTerminal("l")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
 
       cy.typeIntoTerminal("{control+i}")
     })
