@@ -1,4 +1,3 @@
-import type { IntegrationTestFile } from "server/neovim/environment/testEnvironmentTypes"
 import {
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
@@ -188,14 +187,17 @@ describe("opening files", () => {
       cy.contains("routes")
       cy.typeIntoTerminal("/routes{enter}")
       cy.typeIntoTerminal("{rightArrow}")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      ) // file in the directory
 
       // enter routes/posts.$postId/
       cy.typeIntoTerminal("{rightArrow}")
 
       // select route.tsx
       cy.typeIntoTerminal(
-        `/${dir.contents["routes/posts.$postId/route.tsx"].name}{enter}`,
+        `/${dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name}{enter}`,
       )
 
       // open the file
@@ -203,7 +205,9 @@ describe("opening files", () => {
 
       // close yazi just to be sure the file preview is not found instead
       cy.get(
-        dir.contents["routes/posts.$postId/adjacent-file.txt"].name,
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "adjacent-file.txt"
+        ].name,
       ).should("not.exist")
 
       // the file contents should now be visible
@@ -225,10 +229,17 @@ describe("opening files", () => {
       cy.typeIntoTerminal("/routes{enter}")
       cy.contains("posts.$postId")
       cy.typeIntoTerminal("{rightArrow}")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      ) // file in the directory
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal(
-        `/${dir.contents["routes/posts.$postId/adjacent-file.txt"].name}{enter}`,
+        `/${
+          dir.contents.routes.contents["posts.$postId"].contents[
+            "adjacent-file.txt"
+          ].name
+        }{enter}`,
       )
 
       // the file contents should now be visible
@@ -237,9 +248,10 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{control+y}")
 
       // yazi should now be closed
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name).should(
-        "not.exist",
-      )
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      ).should("not.exist")
 
       // the relative path should now be in the clipboard. Let's paste it to
       // the file to verify this.
@@ -247,9 +259,7 @@ describe("opening files", () => {
       cy.typeIntoTerminal("o{enter}{esc}")
       cy.typeIntoTerminal(':normal ""p{enter}')
 
-      cy.contains(
-        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
-      )
+      cy.contains("routes/posts.$postId/adjacent-file.txt")
     })
   })
 
@@ -267,16 +277,20 @@ describe("opening files", () => {
       cy.typeIntoTerminal("/routes{enter}")
       cy.contains("posts.$postId")
       cy.typeIntoTerminal("{rightArrow}")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name) // file in the directory
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      ) // file in the directory
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal("{control+a}")
 
       cy.typeIntoTerminal("{control+y}")
 
       // yazi should now be closed
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name).should(
-        "not.exist",
-      )
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      ).should("not.exist")
 
       // the relative path should now be in the clipboard. Let's paste it to
       // the file to verify this.
@@ -285,15 +299,9 @@ describe("opening files", () => {
       cy.typeIntoTerminal(':normal ""p{enter}')
 
       // all selected files should now be visible
-      cy.contains(
-        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
-      )
-      cy.contains(
-        "routes/posts.$postId/route.tsx" satisfies IntegrationTestFile,
-      )
-      cy.contains(
-        "routes/posts.$postId/adjacent-file.txt" satisfies IntegrationTestFile,
-      )
+      cy.contains("routes/posts.$postId/adjacent-file.txt")
+      cy.contains("routes/posts.$postId/route.tsx")
+      cy.contains("routes/posts.$postId/adjacent-file.txt")
     })
   })
 
@@ -302,7 +310,7 @@ describe("opening files", () => {
       cy.contains("this is the first file")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["dir with spaces/file2.txt"].name)
+      cy.contains(dir.contents["dir with spaces"].contents["file2.txt"].name)
 
       // select all files and open them
       cy.typeIntoTerminal("{control+a}")
@@ -311,8 +319,8 @@ describe("opening files", () => {
       cy.typeIntoTerminal(":buffers{enter}")
 
       // all files should now be visible
-      cy.contains("dir with spaces/file1.txt" satisfies IntegrationTestFile)
-      cy.contains("dir with spaces/file2.txt" satisfies IntegrationTestFile)
+      cy.contains("dir with spaces/file1.txt")
+      cy.contains("dir with spaces/file2.txt")
     })
   })
 
@@ -348,9 +356,13 @@ describe("opening files", () => {
       // next, move to the third tab (3). This tab should be in a different
       // directory, so other adjacent files should be visible than before
       cy.typeIntoTerminal("3")
-      cy.contains(dir.contents["dir with spaces/file1.txt"].name)
-      isFileSelectedInYazi(dir.contents["dir with spaces/file1.txt"].name)
-      isFileNotSelectedInYazi(dir.contents["dir with spaces/file2.txt"].name)
+      cy.contains(dir.contents["dir with spaces"].contents["file1.txt"].name)
+      isFileSelectedInYazi(
+        dir.contents["dir with spaces"].contents["file1.txt"].name,
+      )
+      isFileNotSelectedInYazi(
+        dir.contents["dir with spaces"].contents["file2.txt"].name,
+      )
     })
   })
 })

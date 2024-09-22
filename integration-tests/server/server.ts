@@ -1,17 +1,20 @@
-import { TestServer } from "library/server"
-import { trpc } from "library/server/connection/trpc"
-import { neovimRouter } from "./neovim/neovimRouter"
+import { startTestServer } from "@tui-sandbox/library/src/server/server"
+import type { TestServerConfig } from "@tui-sandbox/library/src/server/updateTestdirectorySchemaFile"
+import { updateTestdirectorySchemaFile } from "@tui-sandbox/library/src/server/updateTestdirectorySchemaFile"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-/** Stack for managing resources that need to be disposed of when the server
- * shuts down */
-await using autocleanup = new AsyncDisposableStack()
-autocleanup.defer(() => {
-  console.log("Closing any open test applications")
-})
-export { autocleanup }
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const appRouter = trpc.router({ neovim: neovimRouter })
-export type AppRouter = typeof appRouter
+const config: TestServerConfig = {
+  testEnvironmentPath: path.join(__dirname, "..", "test-environment/"),
+  outputFilePath: path.join(__dirname, "..", "MyTestDirectory.ts"),
+}
 
-export const testServer = new TestServer(3000)
-await testServer.startAndRun(appRouter)
+console.log(
+  `Starting test server with config ${JSON.stringify(config, null, 2)}`,
+)
+
+await updateTestdirectorySchemaFile(config)
+await startTestServer(config)

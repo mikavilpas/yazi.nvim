@@ -1,5 +1,4 @@
 import path from "path"
-import type { IntegrationTestFile } from "server/neovim/environment/testEnvironmentTypes"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
@@ -15,7 +14,9 @@ describe("grug-far integration (search and replace)", () => {
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents["routes/posts.$postId/should-be-excluded-file.txt"].name,
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "should-be-excluded-file.txt"
+        ].name,
       )
       // close yazi and start grug-far.nvim
       cy.typeIntoTerminal("{control+g}")
@@ -23,7 +24,10 @@ describe("grug-far integration (search and replace)", () => {
 
       // the directory we were in should be prefilled in grug-far.nvim's view
       cy.contains("testdirs")
-      const p = path.join(dir.rootPathRelativeToTestEnvironmentDir, "routes")
+      const p = path.join(
+        dir.testDirectory.testEnvironmentPathRelative,
+        "routes",
+      )
       cy.contains(p)
 
       // by default, the focus is on the search field in normal mode. Type
@@ -42,7 +46,10 @@ describe("grug-far integration (search and replace)", () => {
     }).then((dir) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left
@@ -58,15 +65,14 @@ describe("grug-far integration (search and replace)", () => {
 
       // the selected files should be visible in the view, used as the files to
       // whitelist into the search and replace operation
-      type File = IntegrationTestFile
-      cy.contains("routes/posts.$postId/adjacent-file.txt" satisfies File)
-      cy.contains("routes/posts.$postId/route.tsx" satisfies File)
+      cy.contains("routes/posts.$postId/adjacent-file.txt")
+      cy.contains("routes/posts.$postId/route.tsx")
 
       // the files in the same directory that were not selected should not be
       // visible in the view
-      cy.contains(
-        "routes/posts.$postId/should-be-excluded-file.txt" satisfies File,
-      ).should("not.exist")
+      cy.contains("routes/posts.$postId/should-be-excluded-file.txt").should(
+        "not.exist",
+      )
     })
   })
 })
@@ -82,7 +88,10 @@ describe("telescope integration (search)", () => {
     }).then((dir) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["routes/posts.$postId/route.tsx"].name)
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left

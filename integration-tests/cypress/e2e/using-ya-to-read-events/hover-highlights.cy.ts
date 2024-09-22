@@ -104,7 +104,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       const testFile = dir.contents["test-setup.lua"].name
       // open an adjacent file and wait for it to be displayed
       cy.typeIntoTerminal(
-        `:vsplit ${dir.rootPathAbsolute}/${testFile}{enter}`,
+        `:vsplit ${dir.testDirectory.testEnvironmentPathRelative}/${testFile}{enter}`,
         {
           delay: 1,
         },
