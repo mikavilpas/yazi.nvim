@@ -213,6 +213,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- Also:
     -- - use e.g. `open_file_in_tab = false` to disable a keymap
     -- - you can customize only some of the keymaps (not all of them)
+    -- - you can opt out of all keymaps by setting `keymaps = false`
     keymaps = {
       show_help = '<f1>',
       open_file_in_vertical_split = '<c-v>',
