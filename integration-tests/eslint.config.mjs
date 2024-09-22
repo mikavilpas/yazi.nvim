@@ -19,6 +19,7 @@ export default [
       "**/cypress.config.ts",
       "**/test-environment/",
       "eslint.config.mjs",
+      "dist/",
     ],
   },
   ...compat.extends(
