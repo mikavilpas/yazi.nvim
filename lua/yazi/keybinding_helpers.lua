@@ -214,8 +214,10 @@ end
 
 ---@param context YaziActiveContext
 function YaziOpenerActions.change_working_directory(context)
+  local path = context.input_path
   local last_directory = context.ya_process.cwd
-  if last_directory then
+    or (path and path:parent().filename)
+  if last_directory and last_directory ~= vim.fn.getcwd() then
     vim.notify('cwd changed to "' .. last_directory .. '"')
     vim.cmd({ cmd = "cd", args = { last_directory } })
   end
