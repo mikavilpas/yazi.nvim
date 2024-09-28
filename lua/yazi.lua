@@ -37,7 +37,9 @@ local function on_exit(job_id, code, event)
 	vim.cmd("silent! :checktime")
 
 	if vim.api.nvim_win_is_valid(prev_win) then
-		vim.api.nvim_win_close(win, true)
+		if vim.api.nvim_win_is_valid(win) then
+			vim.api.nvim_win_close(win, true)
+		end
 		vim.api.nvim_set_current_win(prev_win)
 		if code == 0 and file_exists(output_path) == true then
 			local chosen_file = vim.fn.readfile(output_path)[1]
