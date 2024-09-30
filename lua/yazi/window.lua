@@ -39,7 +39,9 @@ function YaziFloatingWindow:close()
   end
 
   if vim.api.nvim_win_is_valid(self.win) then
-    vim.api.nvim_win_close(self.win, true)
+    if vim.api.nvim_win_is_valid(self.win) then
+        vim.api.nvim_win_close(self.win, true)
+    end
     Log:debug(
       string.format(
         "YaziFloatingWindow closing (content_buffer: %s, win: %s)",
