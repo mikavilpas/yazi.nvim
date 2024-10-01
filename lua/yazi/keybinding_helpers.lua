@@ -220,7 +220,11 @@ function YaziOpenerActions.change_working_directory(context)
       context.input_path,
       "No input_path found. Expected yazi to be started with an input_path"
     )
-    last_directory = context.input_path.filename
+    if context.input_path:is_file() then
+      last_directory = context.input_path:parent().filename
+    else
+      last_directory = context.input_path.filename
+    end
   end
 
   if last_directory ~= vim.fn.getcwd() then
