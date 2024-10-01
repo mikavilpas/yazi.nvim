@@ -168,8 +168,10 @@ describe("keybinding_helpers", function()
         },
       })
 
-      assert.stub(vim_cmd_stub).was_called_with({ cmd = "cd", args = { "/" } })
-      assert.stub(vim_notify_stub).was_called_with('cwd changed to "/"')
+      assert
+        .stub(vim_cmd_stub)
+        .was_called_with({ cmd = "cd", args = { "/tmp" } })
+      assert.stub(vim_notify_stub).was_called_with('cwd changed to "/tmp"')
     end)
 
     it(
