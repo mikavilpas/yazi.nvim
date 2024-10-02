@@ -1,4 +1,4 @@
-import { NeovimClient } from "@tui-sandbox/library/src/client/websocket-client"
+import { NeovimClient } from "@tui-sandbox/library/src/client"
 import { z } from "zod"
 import {
   MyTestDirectoryContentsSchema,
