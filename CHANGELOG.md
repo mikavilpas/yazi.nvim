@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.3.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.3.0...v6.3.1) (2024-10-02)
+
+
+### Bug Fixes
+
+* use input dir if needed when changing cwd ([#487](https://github.com/mikavilpas/yazi.nvim/issues/487)) ([33857bf](https://github.com/mikavilpas/yazi.nvim/commit/33857bf7a32bdfff1a5236b80905e4c4f5ba4bd7))
+
 ## [6.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.2.0...v6.3.0) (2024-09-22)
 
 
