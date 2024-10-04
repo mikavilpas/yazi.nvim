@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.3.1...v6.4.0) (2024-10-04)
+
+
+### Features
+
+* emit YaziRenamedOrMoved event when files are renamed or moved ([#495](https://github.com/mikavilpas/yazi.nvim/issues/495)) ([c4befd1](https://github.com/mikavilpas/yazi.nvim/commit/c4befd124f81741de987633e2ea08df0f996031f))
+
 ## [6.3.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.3.0...v6.3.1) (2024-10-02)
 
 
