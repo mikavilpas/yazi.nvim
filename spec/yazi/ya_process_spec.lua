@@ -1,5 +1,6 @@
 local assert = require("luassert")
 local ya_process = require("yazi.process.ya_process")
+local spy = require("luassert.spy")
 
 describe("the get_yazi_command() function", function()
   it("specifies opening multiple tabs when enabled in the config", function()
@@ -112,5 +113,134 @@ describe("process_events()", function()
 
       assert.are.same("/tmp/directory", ya.cwd)
     end)
+  end)
+
+  describe("YaziRenamedOrMoved events", function()
+    before_each(function()
+      -- delete the autocmd to prevent it from being called multiple times
+      vim.api.nvim_command("silent! autocmd! YaziRenamedOrMoved")
+    end)
+
+    it(
+      "gets published when YaziRenameEvent events are received from yazi",
+      function()
+        local config = require("yazi.config").default()
+        local ya = ya_process.new(config, "yazi_id_123")
+
+        ---@type YaziRenameEvent[]
+        local events = {
+          {
+            type = "rename",
+            timestamp = "2021-09-01T12:00:00Z",
+            id = "rename_123",
+            data = {
+              from = "/tmp/old_path",
+              to = "/tmp/new_path",
+            },
+          },
+        }
+
+        local event_callback = spy.new()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "YaziRenamedOrMoved",
+          callback = function(...)
+            event_callback(...)
+          end,
+        })
+
+        ya:process_events(events)
+
+        assert.spy(event_callback).was_called()
+        assert.same(#event_callback.calls, 1)
+
+        local event = event_callback.calls[1].vals[1]
+        assert.same({
+          changes = {
+            ["/tmp/old_path"] = "/tmp/new_path",
+          },
+        }, event.data)
+      end
+    )
+
+    it(
+      "gets published when YaziMoveEvent events are received from yazi",
+      function()
+        local config = require("yazi.config").default()
+        local ya = ya_process.new(config, "yazi_id_123")
+
+        ---@type YaziMoveEvent[]
+        local events = {
+          {
+            type = "move",
+            timestamp = "2021-09-01T12:00:00Z",
+            id = "rename_123",
+            data = {
+              from = "/tmp/old_path",
+              to = "/tmp/new_path",
+            },
+          },
+        }
+
+        local event_callback = spy.new()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "YaziRenamedOrMoved",
+          callback = function(...)
+            event_callback(...)
+          end,
+        })
+
+        ya:process_events(events)
+
+        assert.spy(event_callback).was_called()
+        assert.same(#event_callback.calls, 1)
+
+        local event = event_callback.calls[1].vals[1]
+        assert.same({
+          changes = {
+            ["/tmp/old_path"] = "/tmp/new_path",
+          },
+        }, event.data)
+      end
+    )
+
+    it(
+      "gets published when YaziBulkEvent events are received from yazi",
+      function()
+        local config = require("yazi.config").default()
+        local ya = ya_process.new(config, "yazi_id_123")
+
+        ---@type YaziBulkEvent[]
+        local events = {
+          {
+            type = "bulk",
+            changes = {
+              ["/tmp/old_path1"] = "/tmp/new_path1",
+              ["/tmp/old_path2"] = "/tmp/new_path2",
+            },
+          },
+        }
+
+        local event_callback = spy.new()
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "YaziRenamedOrMoved",
+          callback = function(...)
+            event_callback(...)
+          end,
+        })
+
+        ya:process_events(events)
+
+        assert.spy(event_callback).was_called()
+        assert.same(#event_callback.calls, 1)
+
+        local event = event_callback.calls[1].vals[1]
+        assert.same({
+          changes = {
+            ["/tmp/old_path1"] = "/tmp/new_path1",
+            ["/tmp/old_path2"] = "/tmp/new_path2",
+          },
+        }, event.data)
+      end
+    )
   end)
 end)
