@@ -169,10 +169,23 @@ function YaProcess:process_events(events)
         event_handling.emit("YaziDDSHover", event)
       end)
     elseif event.type == "cd" then
-      ---@cast event YaziChangeDirectoryEvent
+      ---@cast event YaziHoverEvent
       self.cwd = event.url
     else
       self.events[#self.events + 1] = event
+
+      if
+        event.type == "rename"
+        or event.type == "move"
+        or event.type == "bulk"
+      then
+        local event_handling =
+          require("yazi.event_handling.nvim_event_handling")
+
+        pcall(function()
+          event_handling.emit_renamed_or_moved_event(event)
+        end)
+      end
     end
   end
 end
