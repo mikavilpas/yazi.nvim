@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.4.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.4.0...v6.4.1) (2024-10-05)
+
+
+### Bug Fixes
+
+* YaziRenamedOrMoved events could not be published in practice ([#499](https://github.com/mikavilpas/yazi.nvim/issues/499)) ([e379516](https://github.com/mikavilpas/yazi.nvim/commit/e37951699881885f1cfee5f3d794ad10da0a95dd))
+
 ## [6.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.3.1...v6.4.0) (2024-10-04)
 
 
