@@ -161,4 +161,37 @@ describe("'rename' events", () => {
       cy.contains(newFileName).should("not.exist")
     })
   })
+
+  it("can publish YaziRenamedOrMoved events when a file is renamed", () => {
+    cy.startNeovim({
+      startupScriptModifications: ["notify_rename_events.lua"],
+    }).then((dir) => {
+      // the default file should already be open
+      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+
+      // start file renaming
+      cy.typeIntoTerminal("r")
+      cy.contains("Rename:")
+      cy.typeIntoTerminal("2{enter}")
+
+      cy.get("Rename").should("not.exist")
+
+      // yazi should be showing the new file name
+      const newFileName = `initial-file2.txt`
+      cy.contains(newFileName)
+
+      // close yazi
+      cy.typeIntoTerminal("q")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      cy.typeIntoTerminal(":mes{enter}")
+      cy.contains("Just received a YaziRenamedOrMoved event!")
+    })
+  })
 })

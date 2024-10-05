@@ -30,6 +30,8 @@ end
 ---@param event_name YaziNeovimEvent
 ---@param event_data table<string, unknown>
 function M.emit(event_name, event_data)
+  local Log = require("yazi.log")
+  Log:debug(vim.inspect({ "emitting", event_name, event_data }))
   vim.api.nvim_exec_autocmds("User", {
     pattern = event_name,
     data = event_data,
