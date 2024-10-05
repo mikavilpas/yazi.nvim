@@ -2,6 +2,8 @@ local assert = require("luassert")
 local ya_process = require("yazi.process.ya_process")
 local spy = require("luassert.spy")
 
+require("plenary.async").tests.add_to_env()
+
 describe("the get_yazi_command() function", function()
   it("specifies opening multiple tabs when enabled in the config", function()
     local config = require("yazi.config").default()
@@ -149,6 +151,9 @@ describe("process_events()", function()
         })
 
         ya:process_events(events)
+        vim.wait(2000, function()
+          return #event_callback.calls > 0
+        end)
 
         assert.spy(event_callback).was_called()
         assert.same(#event_callback.calls, 1)
@@ -190,6 +195,9 @@ describe("process_events()", function()
         })
 
         ya:process_events(events)
+        vim.wait(2000, function()
+          return #event_callback.calls > 0
+        end)
 
         assert.spy(event_callback).was_called()
         assert.same(#event_callback.calls, 1)
@@ -229,6 +237,9 @@ describe("process_events()", function()
         })
 
         ya:process_events(events)
+        vim.wait(2000, function()
+          return #event_callback.calls > 0
+        end)
 
         assert.spy(event_callback).was_called()
         assert.same(#event_callback.calls, 1)
