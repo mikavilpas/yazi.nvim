@@ -179,11 +179,19 @@ function YaProcess:process_events(events)
         or event.type == "move"
         or event.type == "bulk"
       then
-        local event_handling =
-          require("yazi.event_handling.nvim_event_handling")
-
-        pcall(function()
-          event_handling.emit_renamed_or_moved_event(event)
+        vim.schedule(function()
+          local event_handling =
+            require("yazi.event_handling.nvim_event_handling")
+          local success, result = pcall(function()
+            event_handling.emit_renamed_or_moved_event(event)
+          end)
+          if not success then
+            Log:debug(vim.inspect({
+              "Failed to emit YaziRenamedOrMoved event",
+              event,
+              result,
+            }))
+          end
         end)
       end
     end

@@ -69,6 +69,12 @@ export const MyTestDirectorySchema = z.object({
           extension: z.literal("lua"),
           stem: z.literal("notify_hover_events."),
         }),
+        "notify_rename_events.lua": z.object({
+          name: z.literal("notify_rename_events.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("notify_rename_events."),
+        }),
         "report_loaded_yazi_modules.lua": z.object({
           name: z.literal("report_loaded_yazi_modules.lua"),
           type: z.literal("file"),
@@ -192,6 +198,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/modify_yazi_config_and_open_multiple_files.lua",
   "config-modifications/modify_yazi_config_and_set_help_key.lua",
   "config-modifications/notify_hover_events.lua",
+  "config-modifications/notify_rename_events.lua",
   "config-modifications/report_loaded_yazi_modules.lua",
   "config-modifications/use_light_neovim_colorscheme.lua",
   "config-modifications",
