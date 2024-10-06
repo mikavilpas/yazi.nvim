@@ -101,11 +101,12 @@ for some ideas.
 
 ![integration tests](https://github.com/mikavilpas/yazi.nvim/assets/300791/817ccb3f-725b-4830-b5e0-d99a9b87ad26)
 
-This project includes a custom setup for running integration tests. The setup
-shows Neovim running in a web based terminal and allows simulating pressing keys
-and checking that the correct output is shown. Because the real applications are
-being run in a real environment, almost all features that Neovim and yazi
-support can be tested.
+This project uses
+[mikavilpas/tui-sandbox](https://github.com/mikavilpas/tui-sandbox) for running
+integration tests. The setup shows Neovim running in a web based terminal and
+allows simulating pressing keys and checking that the correct output is shown.
+Because the real applications are being run in a real environment, almost all
+features that Neovim and yazi support can be tested.
 
 The tests are written in TypeScript using the [Cypress](https://www.cypress.io/)
 browser testing framework.
