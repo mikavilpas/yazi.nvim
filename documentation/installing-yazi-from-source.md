@@ -37,10 +37,10 @@ to the project.
    # in the yazi repository:
 
    # Install `yazi`, the main application
-   cargo install --path yazi-fm
+   cargo install --path yazi-fm --locked
 
    # Install `ya`, the command line interface that's internally used by yazi.nvim
-   cargo install --path yazi-cli
+   cargo install --path yazi-cli --locked
    ```
 
 4. In case there are any issues, you can try these steps:
