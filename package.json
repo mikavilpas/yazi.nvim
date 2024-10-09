@@ -18,5 +18,5 @@
     "prettier": "3.3.3",
     "prettier-plugin-packagejson": "2.5.2"
   },
-  "packageManager": "pnpm@9.11.0+sha256.1c0e33f70e5df9eede84a357bdfa0b1f9dba6e58194628d48a1055756f553754"
+  "packageManager": "pnpm@9.12.1+sha256.91452fdfa46234ae447d46d5c4fc4e7e0a7058f90495c4b6f77f8beebbb154e3"
 }
