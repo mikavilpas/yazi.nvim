@@ -1,25 +1,32 @@
 local assert = require("luassert")
 local mock = require("luassert.mock")
 
-local api_mock = mock(require("yazi.vimfn"))
-
 local plugin = require("yazi")
 
-describe(
-  "when the user has not set open_for_directories and uses the defaults",
-  function()
-    after_each(function()
-      mock.clear(api_mock)
-    end)
+describe("open_for_directories", function()
+  local hijack_netrw = mock(require("yazi.hijack_netrw"), true)
+  before_each(function()
+    mock.clear(hijack_netrw)
+  end)
 
-    it("does not show yazi when a directory is opened", function()
-      ---@diagnostic disable-next-line: missing-fields
-      plugin.setup()
+  it("sets up hijack_netrw when `open_for_directories` has been set", function()
+    plugin.setup({ open_for_directories = true })
+
+    -- instead of netrw opening, yazi should open
+    vim.api.nvim_command("edit /")
+
+    assert.spy(hijack_netrw.hijack_netrw).was_called(1)
+  end)
+
+  it(
+    "does not set up hijack_netrw when `open_for_directories` is falsy",
+    function()
+      plugin.setup({ open_for_directories = false })
 
       -- instead of netrw opening, yazi should open
       vim.api.nvim_command("edit /")
 
-      assert.stub(api_mock.termopen).was_not_called()
-    end)
-  end
-)
+      assert.spy(hijack_netrw.hijack_netrw).was_not_called()
+    end
+  )
+end)
