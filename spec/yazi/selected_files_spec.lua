@@ -1,12 +1,10 @@
 local assert = require("luassert")
 local utils = require("yazi.utils")
+local reset = require("spec.yazi.helpers.reset")
 
 describe("choosing the correct files when starting yazi", function()
   before_each(function()
-    -- clear all buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
+    reset.clear_all_buffers()
   end)
 
   describe(" selected_file_path", function()

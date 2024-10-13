@@ -1,17 +1,11 @@
 local utils = require("yazi.utils")
 local assert = require("luassert")
+local reset = require("spec.yazi.helpers.reset")
 
 describe("YaziVisibleBuffer", function()
   before_each(function()
-    -- clear all buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
-
-    -- close all windows
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      pcall(vim.api.nvim_win_close, win, true)
-    end
+    reset.clear_all_buffers()
+    reset.close_all_windows()
   end)
 
   it("is found for a visible buffer editing a file", function()
