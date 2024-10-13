@@ -71,7 +71,7 @@ jobs:
           install: false
           command: pnpm cy:run
 
-      - uses: actions/upload-artifact@v4.4.0
+      - uses: actions/upload-artifact@v4.4.3
         # add the line below to store screenshots only on failures
         # if: failure()
         if: failure()
