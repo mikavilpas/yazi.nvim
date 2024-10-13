@@ -1,9 +1,8 @@
+local reset = require("spec.yazi.helpers.reset")
+
 describe("the default configuration", function()
   before_each(function()
-    -- clear all buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
+    reset.clear_all_buffers()
   end)
 
   local plenary_path = require("plenary.path")

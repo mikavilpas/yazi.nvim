@@ -1,13 +1,11 @@
 local assert = require("luassert")
 local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local utils = require("yazi.utils")
+local reset = require("spec.yazi.helpers.reset")
 
 describe("get_buffers_that_need_renaming_after_yazi_exited", function()
   before_each(function()
-    -- clear all buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
+    reset.clear_all_buffers()
   end)
 
   it("can detect renames to files whose names match exactly", function()
@@ -77,10 +75,7 @@ end)
 
 describe("process_events_emitted_from_yazi", function()
   before_each(function()
-    -- clear all buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
+    reset.clear_all_buffers()
   end)
 
   it("closes a buffer that was renamed to another open buffer", function()
