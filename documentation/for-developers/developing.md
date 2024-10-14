@@ -12,29 +12,28 @@
 - install [nlua](https://github.com/mfussenegger/nlua), the neovim lua
   interpreter, which is used to run the tests.
 
-- install [GNU Make](https://www.gnu.org/software/make/), which is used to run
-  the development commands that are defined in the Makefile.
+- install [just](https://github.com/casey/just), which is used to run the
+  development commands that are defined in the justfile.
 
 Next, install all the dependencies with the following command:
 
 ```sh
-make
+just
 ```
 
 When successful, the output will greet you with a message similar to the
 following:
 
 ```text
-Welcome to yazi.nvim development! 🚀
-Next, run one of these commands to get started:
-  make test
-    Run all tests
-  make test-focus
-    Run only the tests marked with #focus in the test name
-  make lint
-    Check the code for lint errors
-  make format
-    Reformat all code
+Available recipes:
+    build      # Build the project
+    check      # Check the code for errors (lint + test + format)
+    default
+    format     # Reformat all code
+    help
+    lint       # Check the code for lint errors
+    test       # Run all tests
+    test-focus # Run only the tests marked with #focus somewhere in the test name
 ```
 
 ## Neovim development tools
@@ -79,18 +78,18 @@ This project has two types of tests
 
 ```sh
 # run all tests
-make test
+just test
 # NOTE: if you get an error about "busted.runner" not being found, you may need
 # to run the following command:
 eval $(luarocks path --no-bin --lua-version 5.1)
 
 # run only the tests marked with #focus in their name
-make test-focus
+just test-focus
 ```
 
 Recommended: use a file watcher to run tests automatically when files change. I
 like [watchexec 🦀](https://github.com/watchexec/watchexec), and I run it with
-`watchexec make test`
+`watchexec just test`
 
 Optionally, you can install test integration plugins for Neovim to start the
 tests from within Neovim. See the "Tools" section of

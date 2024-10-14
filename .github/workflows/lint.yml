@@ -12,7 +12,7 @@ jobs:
         with:
           # Github secret token
           token: ${{ secrets.GITHUB_TOKEN }}
-          # selene arguments, should be the same as in ../../Makefile
+          # selene arguments, should be the same as in ../../justfile
           args:
             --display-style=quiet ./lua/ ./spec/
             ./integration-tests/test-environment/config-modifications
@@ -24,3 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: DavidAnson/markdownlint-cli2-action@v17.0.0
+
+  just:
+    name: just
+    runs-on: ubuntu-latest
+    steps:
+      - uses: extractions/setup-just@v1
+        # https://github.com/casey/just
+        # use the latest version, probably doesn't matter much
+
+      - name: Run just format check
+        run: just --fmt --check
