@@ -25,18 +25,15 @@ When successful, the output will greet you with a message similar to the
 following:
 
 ```text
-Welcome to yazi.nvim development! 🚀
-Next, run one of these commands to get started:
-  just check
-    Check the code for errors (lint + test + format)
-  just test
-    Run all tests
-  just test-focus
-    Run only the tests marked with #focus in the test name
-  just lint
-    Check the code for lint errors
-  just format
-    Reformat all code
+Available recipes:
+    build      # Build the project
+    check      # Check the code for errors (lint + test + format)
+    default
+    format     # Reformat all code
+    help
+    lint       # Check the code for lint errors
+    test       # Run all tests
+    test-focus # Run only the tests marked with #focus somewhere in the test name
 ```
 
 ## Neovim development tools
