@@ -1,6 +1,6 @@
 name: Linting
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   selene:
@@ -29,7 +29,8 @@ jobs:
     name: just
     runs-on: ubuntu-latest
     steps:
-      - uses: extractions/setup-just@v1
+      - uses: actions/checkout@v4.2.1
+      - uses: extractions/setup-just@v2
         # https://github.com/casey/just
         # use the latest version, probably doesn't matter much
 

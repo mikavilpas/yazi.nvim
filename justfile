@@ -11,7 +11,7 @@ COLOR_WHITE := '\033[1;37m'
 default: help
 
 @help:
-  just --list
+    just --list
 
 # Build the project
 @build:
