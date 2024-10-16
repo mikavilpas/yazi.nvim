@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.2.1
-      - uses: extractions/setup-just@v1
+      - uses: extractions/setup-just@v2
         # https://github.com/casey/just
         # use the latest version, probably doesn't matter much
 
