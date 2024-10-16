@@ -73,6 +73,7 @@ function M.yazi(config, input_path)
         yazi_event_handling.process_events_emitted_from_yazi(events)
 
       local last_directory = event_info.last_directory
+
       if last_directory == nil then
         if path:is_file() then
           last_directory = path:parent()
@@ -80,8 +81,9 @@ function M.yazi(config, input_path)
           last_directory = path
         end
       end
+
       utils.on_yazi_exited(prev_win, prev_buf, win, config, selected_files, {
-        last_directory = event_info.last_directory or path:parent(),
+        last_directory = last_directory,
       })
 
       if hovered_url then

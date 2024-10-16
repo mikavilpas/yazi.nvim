@@ -4,6 +4,7 @@ local assert = require("luassert")
 local mock = require("luassert.mock")
 local match = require("luassert.match")
 local spy = require("luassert.spy")
+local test_files = require("spec.yazi.helpers.test_files")
 package.loaded["yazi.process.yazi_process"] =
   require("spec.yazi.helpers.fake_yazi_process")
 local fake_yazi_process = require("spec.yazi.helpers.fake_yazi_process")
@@ -68,38 +69,97 @@ describe("opening a file", function()
     assert_opened_yazi_with_files({ "/tmp/" })
   end)
 
-  it(
-    "calls the yazi_closed_successfully hook when a file is selected in yazi's chooser",
-    function()
-      local target_file = "/abc/test-file-potato.txt"
+  describe("when a file is selected in yazi's chooser", function()
+    it(
+      "calls the yazi_closed_successfully hook with the target_file and last_directory",
+      function()
+        fake_yazi_process.setup_created_instances_to_instantly_exit({
+          selected_files = {
+            -- in this test, the cd event defines the last_directory so this is ignored
+          },
+          ---@type YaziChangeDirectoryEvent[]
+          events = {
+            {
+              type = "cd",
+              timestamp = "123",
+              id = "123",
+              url = "/abc",
+            },
+          },
+        })
 
-      fake_yazi_process.setup_created_instances_to_instantly_exit({
-        selected_files = { target_file },
-      })
+        ---@param state YaziClosedState
+        ---@diagnostic disable-next-line: unused-local
+        local spy_hook = spy.new(function(chosen_file, _config, state)
+          assert.equals(nil, chosen_file)
+          assert.equals("/abc", state.last_directory.filename)
+        end)
 
-      ---@param state YaziClosedState
-      ---@diagnostic disable-next-line: unused-local
-      local spy_hook = spy.new(function(chosen_file, _config, state)
-        assert.equals(target_file, chosen_file)
-        assert.equals("/abc", state.last_directory.filename)
-      end)
+        plugin.yazi({
+          chosen_file_path = "/tmp/yazi_filechosen",
+          ---@diagnostic disable-next-line: missing-fields
+          hooks = {
+            ---@diagnostic disable-next-line: assign-type-mismatch
+            yazi_closed_successfully = spy_hook,
+          },
+        })
 
-      vim.api.nvim_command("edit /abc/test-file.txt")
+        assert
+          .spy(spy_hook)
+          .was_called_with(nil, match.is_table(), match.is_table())
+      end
+    )
 
-      plugin.yazi({
-        chosen_file_path = "/tmp/yazi_filechosen",
-        ---@diagnostic disable-next-line: missing-fields
-        hooks = {
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          yazi_closed_successfully = spy_hook,
-        },
-      })
+    it(
+      "uses the parent directory of the input_path as the last_directory when no events are emitted",
+      function()
+        local plenary_path = require("plenary.path")
+        -- it can happen that we don't know what the last_directory was when
+        -- yazi has exited. This currently happens when `ya` is started too
+        -- late - yazi has already reported its `cd` event before `ya` starts
+        -- due to https://github.com/sxyazi/yazi/issues/1314
+        --
+        -- we work around this by using the parent directory of the input_path
+        -- since it's a good guess
+        local target_file =
+          "/tmp/test-file-potato-ea7142f8-ac6d-4037-882c-7dbc4f7b6c65.txt"
+        test_files.create_test_file(target_file)
 
-      assert
-        .spy(spy_hook)
-        .was_called_with(target_file, match.is_table(), match.is_table())
-    end
-  )
+        fake_yazi_process.setup_created_instances_to_instantly_exit({
+          selected_files = { target_file },
+          events = {
+            -- no events are emitted from yazi
+          },
+        })
+
+        local spy_yazi_closed_successfully = spy.new(
+          ---@param state YaziClosedState
+          ---@diagnostic disable-next-line: unused-local
+          function(chosen_file, _config, state)
+            assert.equals(target_file, chosen_file)
+            assert.equals("/tmp", state.last_directory.filename)
+            assert.equals(
+              "/tmp",
+              plenary_path:new(target_file):parent().filename
+            )
+          end
+        )
+
+        plugin.yazi({
+          chosen_file_path = "/tmp/yazi_filechosen",
+          ---@diagnostic disable-next-line: missing-fields
+          hooks = {
+            ---@diagnostic disable-next-line: assign-type-mismatch
+            yazi_closed_successfully = spy_yazi_closed_successfully,
+          },
+        }, target_file)
+
+        assert
+          .spy(spy_yazi_closed_successfully)
+          .was_called_with(target_file, match.is_table(), match.is_table())
+      end
+    )
+  end)
 
   it("calls the yazi_opened hook when yazi is opened", function()
     local spy_yazi_opened_hook = spy.new()
