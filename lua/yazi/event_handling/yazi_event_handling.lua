@@ -2,7 +2,6 @@
 
 local utils = require("yazi.utils")
 local plenaryIterators = require("plenary.iterators")
-local plenary_path = require("plenary.path")
 local lsp_delete = require("yazi.lsp.delete")
 local lsp_rename = require("yazi.lsp.rename")
 
@@ -70,11 +69,7 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(
 end
 
 ---@param events YaziEvent[]
----@return {last_directory?: Path}
 function M.process_events_emitted_from_yazi(events)
-  ---@type Path | nil
-  local last_directory = nil
-
   for i, event in ipairs(events) do
     if event.type == "rename" then
       ---@cast event YaziRenameEvent
@@ -119,15 +114,8 @@ function M.process_events_emitted_from_yazi(events)
       local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziTrashEvent
       M.process_delete_event(event, remaining_events)
-    elseif event.type == "cd" then
-      ---@cast event YaziChangeDirectoryEvent
-      if event.url ~= nil and event.url ~= "" then
-        last_directory = plenary_path:new(event.url)
-      end
     end
   end
-
-  return { last_directory = last_directory }
 end
 
 return M

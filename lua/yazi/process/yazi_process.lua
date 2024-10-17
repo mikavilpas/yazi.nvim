@@ -4,6 +4,7 @@ local YaProcess = require("yazi.process.ya_process")
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
 local YaziProcessApi = require("yazi.process.yazi_process_api")
+local plenary_path = require("plenary.path")
 
 ---@class YaziProcess
 ---@field public api YaziProcessApi
@@ -16,7 +17,7 @@ YaziProcess.__index = YaziProcess
 
 ---@param config YaziConfig
 ---@param paths Path[]
----@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil)
+---@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil)
 function YaziProcess:start(config, paths, on_exit)
   os.remove(config.chosen_file_path)
 
@@ -40,7 +41,19 @@ function YaziProcess:start(config, paths, on_exit)
       if utils.file_exists(config.chosen_file_path) == true then
         chosen_files = vim.fn.readfile(config.chosen_file_path)
       end
-      on_exit(code, chosen_files, events, self.ya_process.hovered_url)
+
+      local last_directory = nil
+      if self.ya_process.cwd ~= nil then
+        last_directory = plenary_path:new(self.ya_process.cwd) --[[@as Path]]
+      end
+
+      on_exit(
+        code,
+        chosen_files,
+        events,
+        self.ya_process.hovered_url,
+        last_directory
+      )
     end,
   })
 

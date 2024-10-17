@@ -49,7 +49,7 @@ function M.yazi(config, input_path)
   local yazi_process = YaziProcess:start(
     config,
     paths,
-    function(exit_code, selected_files, events, hovered_url)
+    function(exit_code, selected_files, events, hovered_url, last_directory)
       if exit_code ~= 0 then
         print(
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
@@ -69,10 +69,7 @@ function M.yazi(config, input_path)
         )
       )
 
-      local event_info =
-        yazi_event_handling.process_events_emitted_from_yazi(events)
-
-      local last_directory = event_info.last_directory
+      yazi_event_handling.process_events_emitted_from_yazi(events)
 
       if last_directory == nil then
         if path:is_file() then
@@ -81,6 +78,10 @@ function M.yazi(config, input_path)
           last_directory = path
         end
       end
+
+      Log:debug(
+        string.format("Resolved the last_directory to %s", last_directory)
+      )
 
       utils.on_yazi_exited(prev_win, prev_buf, win, config, selected_files, {
         last_directory = last_directory,

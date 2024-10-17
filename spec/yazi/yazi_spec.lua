@@ -74,18 +74,7 @@ describe("opening a file", function()
       "calls the yazi_closed_successfully hook with the target_file and last_directory",
       function()
         fake_yazi_process.setup_created_instances_to_instantly_exit({
-          selected_files = {
-            -- in this test, the cd event defines the last_directory so this is ignored
-          },
-          ---@type YaziChangeDirectoryEvent[]
-          events = {
-            {
-              type = "cd",
-              timestamp = "123",
-              id = "123",
-              url = "/abc",
-            },
-          },
+          last_cwd = { filename = "/abc" } --[[@as Path]],
         })
 
         ---@param state YaziClosedState
@@ -111,7 +100,7 @@ describe("opening a file", function()
     )
 
     it(
-      "uses the parent directory of the input_path as the last_directory when no events are emitted",
+      "uses the parent directory of the input_path as the last_directory when no last_directory is available",
       function()
         local plenary_path = require("plenary.path")
         -- it can happen that we don't know what the last_directory was when

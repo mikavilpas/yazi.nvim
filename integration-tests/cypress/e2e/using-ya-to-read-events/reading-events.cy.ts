@@ -194,4 +194,34 @@ describe("'rename' events", () => {
       cy.contains("Just received a YaziRenamedOrMoved event!")
     })
   })
+
+  it("reports the correct last_directory when yazi is closed", () => {
+    cy.startNeovim({
+      startupScriptModifications: [
+        "modify_yazi_config_log_yazi_closed_successfully.lua",
+      ],
+    }).then((dir) => {
+      // the default file should already be open
+      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+
+      // move to another directory
+      cy.typeIntoTerminal(`/${dir.contents["dir with spaces"].name}{enter}`)
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.contains("this is the first file")
+
+      // close yazi
+      cy.typeIntoTerminal("q")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      cy.contains("yazi_closed_successfully hook")
+      cy.contains("last_directory = ")
+      cy.contains("dir with spaces")
+    })
+  })
 })
