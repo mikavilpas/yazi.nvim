@@ -130,6 +130,7 @@ function YaProcess:start()
         Log:debug(string.format("ya stdout error: '%s'", data))
       end
       data = data or ""
+      data = data:gsub("\n+", "\n")
 
       Log:debug(string.format("ya stdout: '%s'", data))
 
