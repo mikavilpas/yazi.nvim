@@ -55,6 +55,7 @@ local plugins = {
     ---@type YaziConfig
     opts = {
       open_for_directories = false,
+      log_level = vim.log.levels.DEBUG,
     },
   },
 }
