@@ -120,7 +120,7 @@ M.setup = function(opts)
         id = id,
         event = event,
         handler = function(args)
-          -- translate neo-tree arguemnts to the same format as nvim-tree
+          -- translate neo-tree arguments to the same format as nvim-tree
           if type(args) == "table" then
             args = { old_name = args.source, new_name = args.destination }
           else
