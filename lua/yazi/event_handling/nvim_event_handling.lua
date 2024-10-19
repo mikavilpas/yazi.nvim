@@ -9,7 +9,7 @@ local M = {}
 
 ---@alias YaziNeovimEvent.YaziRenamedOrMovedData {changes: table<string, string>} # a table of old paths to new paths
 
----Emit and event when files are renamed or moved.
+---Emit an event when files are renamed or moved.
 ---@param event YaziRenameEvent | YaziMoveEvent | YaziBulkEvent
 ---@see YaziNeovimEvent.YaziRenamedOrMovedData
 function M.emit_renamed_or_moved_event(event)
