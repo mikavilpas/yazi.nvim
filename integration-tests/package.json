@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@catppuccin/palette": "1.4.0",
-    "cypress": "13.15.0",
+    "cypress": "13.15.1",
     "tsx": "4.19.1",
     "wait-on": "8.0.1",
     "zod": "3.23.8"
