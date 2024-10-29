@@ -14,17 +14,17 @@
     "eslint": "eslint --max-warnings=0 ."
   },
   "dependencies": {
-    "@catppuccin/palette": "1.4.0",
-    "cypress": "13.15.0",
-    "tsx": "4.19.1",
+    "@catppuccin/palette": "1.5.0",
+    "cypress": "13.15.1",
+    "tsx": "4.19.2",
     "wait-on": "8.0.1",
     "zod": "3.23.8"
   },
   "devDependencies": {
     "@tui-sandbox/library": "2.0.2",
     "@types/tinycolor2": "1.4.6",
-    "@typescript-eslint/eslint-plugin": "8.11.0",
-    "@typescript-eslint/parser": "8.11.0",
+    "@typescript-eslint/eslint-plugin": "8.12.2",
+    "@typescript-eslint/parser": "8.12.2",
     "concurrently": "9.0.1",
     "eslint": "9.13.0",
     "eslint-config-prettier": "9.1.0",
