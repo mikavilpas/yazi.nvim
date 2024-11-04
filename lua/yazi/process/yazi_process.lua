@@ -33,6 +33,11 @@ function YaziProcess:start(config, paths, on_exit)
   Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
 
   self.yazi_job_id = vim.fn.termopen(yazi_cmd, {
+    env = {
+      -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
+      -- neovim specific functionality
+      NVIM_CWD = vim.uv.cwd(),
+    },
     on_exit = function(_, code)
       self.ya_process:kill()
       local events = self.ya_process:wait(1000)

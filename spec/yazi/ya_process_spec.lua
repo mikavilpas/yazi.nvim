@@ -255,3 +255,44 @@ describe("process_events()", function()
     )
   end)
 end)
+
+describe("opening the yazi in a terminal", function()
+  local config = require("yazi.config").default()
+  local path = require("plenary.path"):new()
+
+  local snapshot
+
+  before_each(function()
+    snapshot = assert.snapshot()
+  end)
+
+  after_each(function()
+    snapshot:revert()
+  end)
+
+  it(
+    "sets the NVIM_CWD environment variable to the current working directory",
+    function()
+      -- selene: allow(incorrect_standard_library_use)
+      os.remove = spy.new()
+      vim.uv.cwd = spy.new(function()
+        return "/tmp/fakedir"
+      end)
+      local termopen_spy = spy.new()
+      vim.fn.termopen = termopen_spy
+
+      require("yazi.process.yazi_process"):start(
+        config,
+        { path },
+        function() end
+      )
+
+      assert(termopen_spy.calls[1])
+      assert(termopen_spy.calls[1].vals[2])
+      assert(termopen_spy.calls[1].vals[2].env)
+      local env = termopen_spy.calls[1].vals[2].env
+
+      assert.equals(env.NVIM_CWD, "/tmp/fakedir")
+    end
+  )
+end)
