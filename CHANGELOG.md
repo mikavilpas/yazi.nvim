@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.4.3...v6.5.0) (2024-11-04)
+
+
+### Features
+
+* allow using nvim's cwd in yazi keybindings ([#548](https://github.com/mikavilpas/yazi.nvim/issues/548)) ([f7ae54b](https://github.com/mikavilpas/yazi.nvim/commit/f7ae54bbe2346b28d0889140440272668708f33e))
+
 ## [6.4.3](https://github.com/mikavilpas/yazi.nvim/compare/v6.4.2...v6.4.3) (2024-10-17)
 
 
