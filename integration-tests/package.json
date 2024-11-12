@@ -15,16 +15,16 @@
   },
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
-    "cypress": "13.15.1",
+    "cypress": "13.15.2",
     "tsx": "4.19.2",
     "wait-on": "8.0.1",
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@tui-sandbox/library": "2.3.0",
+    "@tui-sandbox/library": "4.1.0",
     "@types/tinycolor2": "1.4.6",
-    "@typescript-eslint/eslint-plugin": "8.13.0",
-    "@typescript-eslint/parser": "8.13.0",
+    "@typescript-eslint/eslint-plugin": "8.14.0",
+    "@typescript-eslint/parser": "8.14.0",
     "concurrently": "9.1.0",
     "eslint": "9.14.0",
     "eslint-config-prettier": "9.1.0",
@@ -33,6 +33,6 @@
     "prettier-plugin-organize-imports": "4.1.0",
     "tinycolor2": "1.6.0",
     "typescript": "5.6.3",
-    "vite": "5.4.10"
+    "vite": "5.4.11"
   }
 }
