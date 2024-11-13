@@ -2,7 +2,7 @@ import path from "path"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can use grug-far.nvim to search and replace in the directory of the hovered file", () => {
@@ -24,10 +24,7 @@ describe("grug-far integration (search and replace)", () => {
 
       // the directory we were in should be prefilled in grug-far.nvim's view
       cy.contains("testdirs")
-      const p = path.join(
-        dir.testDirectory.testEnvironmentPathRelative,
-        "routes",
-      )
+      const p = path.join(dir.testEnvironmentPathRelative, "routes")
       cy.contains(p)
 
       // by default, the focus is on the search field in normal mode. Type
@@ -79,7 +76,7 @@ describe("grug-far integration (search and replace)", () => {
 
 describe("telescope integration (search)", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can use telescope.nvim to search, limited to the selected files only", () => {

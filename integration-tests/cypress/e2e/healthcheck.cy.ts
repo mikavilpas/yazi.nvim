@@ -2,7 +2,7 @@ import * as assert from "assert"
 
 describe("the healthcheck", () => {
   it("can run the :healthcheck for yazi.nvim", () => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
     cy.startNeovim()
 
     // wait until text on the start screen is visible

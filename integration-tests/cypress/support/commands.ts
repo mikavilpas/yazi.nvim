@@ -1,16 +1,41 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
-import "../../client/__global.ts"
-import type { NeovimContext } from "../../client/__global.ts"
-import type { MyStartNeovimServerArguments } from "../../client/neovim-client.ts"
+import type { TestDirectory } from "@tui-sandbox/library/dist/src/server/types.ts"
+import type { OverrideProperties } from "type-fest"
+import type {
+  MyTestDirectory,
+  MyTestDirectoryFile,
+} from "../../MyTestDirectory"
+
+type MyStartNeovimServerArguments = {
+  filename?:
+    | MyTestDirectoryFile
+    | { openInVerticalSplits: MyTestDirectoryFile[] }
+  startupScriptModifications?: Array<
+    keyof MyTestDirectory["config-modifications"]["contents"]
+  >
+}
+
+export type NeovimContext = OverrideProperties<
+  TestDirectory,
+  {
+    contents: MyTestDirectory
+  }
+>
+
+declare global {
+  interface Window {
+    startNeovim(
+      startArguments?: MyStartNeovimServerArguments,
+    ): Promise<NeovimContext>
+  }
+}
 
 Cypress.Commands.add(
   "startNeovim",
   (startArguments?: MyStartNeovimServerArguments) => {
-    cy.window().then((win) => {
-      return win.startNeovim(startArguments)
-    })
+    return cy.window().then((win) => win.startNeovim(startArguments))
   },
 )
 

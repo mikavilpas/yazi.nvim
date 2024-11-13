@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "noEmit": true,
+    "types": ["node"],
     "allowImportingTsExtensions": true,
     "outDir": "dist",
     "lib": ["ES2023", "ESNext.Disposable"],

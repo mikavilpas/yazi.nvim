@@ -8,7 +8,7 @@ import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
 
 describe("'cd' to another buffer's directory", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can highlight the buffer when hovered", () => {

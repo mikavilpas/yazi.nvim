@@ -1,6 +1,6 @@
 describe("opening directories", () => {
   it("can open a directory when starting with `neovim .`", () => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
     cy.startNeovim({
       // `neovim .` specifies to open the current directory when neovim is
       // starting
@@ -15,7 +15,7 @@ describe("opening directories", () => {
   })
 
   it("can open a directory with `:edit .`", () => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
     cy.startNeovim({
       startupScriptModifications: ["add_command_to_count_open_buffers.lua"],
       filename: {
@@ -40,7 +40,7 @@ describe("opening directories", () => {
   })
 
   it("can open a directory when pressing enter on a directory in yazi", () => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
     cy.startNeovim().then((dir) => {
       cy.contains(dir.contents["initial-file.txt"].name)
 

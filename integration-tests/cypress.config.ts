@@ -19,6 +19,7 @@ console.log(`yaziLogFile: ${yaziLogFile}`)
 
 export default defineConfig({
   e2e: {
+    baseUrl: "http://localhost:3000",
     setupNodeEvents(on, _config) {
       on("task", {
         async removeYaziLog(): Promise<null> {
