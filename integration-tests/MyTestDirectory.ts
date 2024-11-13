@@ -11,11 +11,11 @@
 import { z } from "zod"
 
 export const MyTestDirectorySchema = z.object({
-  name: z.literal("test-environment"),
+  name: z.literal("test-environment/"),
   type: z.literal("directory"),
   contents: z.object({
     "config-modifications": z.object({
-      name: z.literal("config-modifications"),
+      name: z.literal("config-modifications/"),
       type: z.literal("directory"),
       contents: z.object({
         "add_command_to_count_open_buffers.lua": z.object({
@@ -98,7 +98,7 @@ export const MyTestDirectorySchema = z.object({
       }),
     }),
     "dir with spaces": z.object({
-      name: z.literal("dir with spaces"),
+      name: z.literal("dir with spaces/"),
       type: z.literal("directory"),
       contents: z.object({
         "file1.txt": z.object({
@@ -128,7 +128,7 @@ export const MyTestDirectorySchema = z.object({
       stem: z.literal("initial-file."),
     }),
     "other-subdirectory": z.object({
-      name: z.literal("other-subdirectory"),
+      name: z.literal("other-subdirectory/"),
       type: z.literal("directory"),
       contents: z.object({
         "other-sub-file.txt": z.object({
@@ -140,11 +140,11 @@ export const MyTestDirectorySchema = z.object({
       }),
     }),
     routes: z.object({
-      name: z.literal("routes"),
+      name: z.literal("routes/"),
       type: z.literal("directory"),
       contents: z.object({
         "posts.$postId": z.object({
-          name: z.literal("posts.$postId"),
+          name: z.literal("posts.$postId/"),
           type: z.literal("directory"),
           contents: z.object({
             "adjacent-file.txt": z.object({
@@ -170,7 +170,7 @@ export const MyTestDirectorySchema = z.object({
       }),
     }),
     subdirectory: z.object({
-      name: z.literal("subdirectory"),
+      name: z.literal("subdirectory/"),
       type: z.literal("directory"),
       contents: z.object({
         "subdirectory-file.txt": z.object({

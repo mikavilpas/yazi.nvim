@@ -1,6 +1,8 @@
+import type { MyTestDirectoryFile } from "MyTestDirectory"
+
 describe("reading events", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can read 'cd' events and use telescope in the latest directory", () => {
@@ -92,7 +94,7 @@ describe("reading events", () => {
 
 describe("'rename' events", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can read 'rename' events and update the buffer name when the file was renamed", () => {
@@ -209,7 +211,9 @@ describe("'rename' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // move to another directory
-      cy.typeIntoTerminal(`/${dir.contents["dir with spaces"].name}{enter}`)
+      cy.typeIntoTerminal(
+        `/${"dir with spaces" satisfies MyTestDirectoryFile}{enter}`,
+      )
       cy.typeIntoTerminal("{rightArrow}")
       cy.contains("this is the first file")
 

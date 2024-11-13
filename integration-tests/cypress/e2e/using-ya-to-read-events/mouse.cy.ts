@@ -1,6 +1,6 @@
 describe("mouse support", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can close the YaziFloatingWindow when clicked outside of it", () => {

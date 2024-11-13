@@ -8,7 +8,7 @@ import {
 
 describe("highlighting the buffer with 'hover' events", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   // NOTE: when opening the file, the cursor is placed at the beginning of
@@ -104,7 +104,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       const testFile = dir.contents["test-setup.lua"].name
       // open an adjacent file and wait for it to be displayed
       cy.typeIntoTerminal(
-        `:vsplit ${dir.testDirectory.testEnvironmentPathRelative}/${testFile}{enter}`,
+        `:vsplit ${dir.testEnvironmentPathRelative}/${testFile}{enter}`,
         {
           delay: 1,
         },

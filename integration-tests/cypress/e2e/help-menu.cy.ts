@@ -2,7 +2,7 @@ import * as assert from "assert"
 
 describe("the help menu", () => {
   it("can show help with a keymap", () => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
     cy.startNeovim({
       startupScriptModifications: [
         "modify_yazi_config_and_set_help_key.lua",

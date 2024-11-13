@@ -1,6 +1,6 @@
 describe("toggling yazi to pseudo-continue the previous session", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   function hoverAnotherFileToEnsureHoverEventIsReceivedInCI(file: string) {

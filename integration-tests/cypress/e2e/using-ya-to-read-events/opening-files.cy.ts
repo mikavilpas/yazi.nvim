@@ -5,7 +5,7 @@ import {
 
 describe("opening files", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173")
+    cy.visit("/")
   })
 
   it("can display yazi in a floating terminal", () => {
