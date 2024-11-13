@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.5.0...v6.5.1) (2024-11-13)
+
+
+### Bug Fixes
+
+* avoid "E13: File exists" error after renaming a file ([#560](https://github.com/mikavilpas/yazi.nvim/issues/560)) ([58f1227](https://github.com/mikavilpas/yazi.nvim/commit/58f1227a82a656510e99202822ba8c67e2119e6e))
+
 ## [6.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.4.3...v6.5.0) (2024-11-04)
 
 
