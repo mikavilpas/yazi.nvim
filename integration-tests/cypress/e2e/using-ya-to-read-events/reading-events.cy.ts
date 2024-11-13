@@ -1,6 +1,6 @@
 import { flavors } from "@catppuccin/palette"
+import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
-import { rgbify } from "./utils/hover-utils"
 
 describe("reading events", () => {
   beforeEach(() => {
