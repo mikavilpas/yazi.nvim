@@ -1,4 +1,6 @@
+import { flavors } from "@catppuccin/palette"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import { rgbify } from "./utils/hover-utils"
 
 describe("reading events", () => {
   beforeEach(() => {
@@ -103,8 +105,13 @@ describe("'rename' events", () => {
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
-      // start yazi
+      // start yazi and wait for the current file to be highlighted
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(dir.contents["initial-file.txt"].name).should(
+        "have.css",
+        "background-color",
+        rgbify(flavors.macchiato.colors.text.rgb),
+      )
 
       // start file renaming
       cy.typeIntoTerminal("r")
@@ -122,6 +129,10 @@ describe("'rename' events", () => {
 
       // the buffer name should now be updated
       cy.contains(newFileName)
+
+      // the file should be saveable
+      cy.typeIntoTerminal(":w{enter}")
+      cy.contains("E13").should("not.exist")
     })
   })
 
