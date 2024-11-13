@@ -43,6 +43,7 @@ function RenameableBuffer:matches_exactly(path)
 end
 
 ---@param path string
+---@return boolean
 function RenameableBuffer:matches_parent(path)
   path = remove_trailing_slash(path)
   local found = plenary_iterators
@@ -57,6 +58,7 @@ end
 --- When hovering over a file or a directory `other`, return true if this
 --- buffer is in the same directory as `other`.
 ---@param other string
+---@return boolean
 function RenameableBuffer:is_sibling_of_hovered(other)
   other = remove_trailing_slash(other)
   local utils = require("yazi.utils")

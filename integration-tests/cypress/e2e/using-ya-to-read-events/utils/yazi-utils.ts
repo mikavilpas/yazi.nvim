@@ -1,5 +1,5 @@
 import { flavors } from "@catppuccin/palette"
-import { rgbify } from "./hover-utils"
+import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 
 const darkTheme = flavors.macchiato.colors
 

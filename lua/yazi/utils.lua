@@ -333,6 +333,11 @@ function M.rename_or_close_buffer(instruction)
   pcall(function()
     vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
   end)
+  vim.schedule(function()
+    vim.api.nvim_buf_call(instruction.bufnr, function()
+      vim.cmd("edit!")
+    end)
+  end)
 end
 
 ---@param prev_win integer
