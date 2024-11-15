@@ -6,6 +6,8 @@ import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
 // TODO make this more robust once we can jump to a file, not just a
 // directory - could test with directories that have multiple files
 
+const yaziText = "NOR"
+
 describe("'cd' to another buffer's directory", () => {
   beforeEach(() => {
     cy.visit("/")
@@ -41,8 +43,9 @@ describe("'cd' to another buffer's directory", () => {
       isNotHoveredInNeovim(view.centerFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
 
-      // start yazi
+      // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(yaziText)
 
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.
@@ -95,6 +98,7 @@ describe("'cd' to another buffer's directory", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(yaziText)
 
       cy.typeIntoTerminal("{control+i}")
 
@@ -118,11 +122,12 @@ describe("'cd' to another buffer's directory", () => {
 
   it("can tab to the directory of just a single buffer", () => {
     cy.startNeovim({
-      filename: "file.txt",
+      filename: "file2.txt",
     }).then((dir) => {
       cy.contains("Hello")
 
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains(yaziText)
       cy.contains("initial-file.txt")
 
       cy.typeIntoTerminal(`/routes{enter}`, { delay: 1 })

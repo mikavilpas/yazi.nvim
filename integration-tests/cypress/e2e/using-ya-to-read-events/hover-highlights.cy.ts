@@ -1,3 +1,4 @@
+import type { MyTestDirectoryFile } from "MyTestDirectory"
 import tinycolor2 from "tinycolor2"
 import {
   darkBackgroundColors,
@@ -42,7 +43,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should be visible now
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
         dir.contents["initial-file.txt"].name,
       )
@@ -74,7 +75,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi is shown and adjacent files should be visible now
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
         dir.contents["initial-file.txt"].name,
@@ -86,7 +87,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       isHoveredInNeovim("If you see this text, Neovim is ready!")
 
       // hover another file - the highlight should be removed
-      cy.typeIntoTerminal(`/^${dir.contents["test-setup.lua"].name}{enter}`)
+      cy.typeIntoTerminal(`/^${dir.contents["file2.txt"].name}{enter}`)
 
       isNotHoveredInNeovim("If you see this text, Neovim is ready!")
     })
@@ -101,29 +102,32 @@ describe("highlighting the buffer with 'hover' events", () => {
       // wait until text on the start screen is visible
       isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
-      const testFile = dir.contents["test-setup.lua"].name
+      const testFile = dir.contents["file2.txt"].name
       // open an adjacent file and wait for it to be displayed
       cy.typeIntoTerminal(
         `:vsplit ${dir.testEnvironmentPathRelative}/${testFile}{enter}`,
         {
-          delay: 1,
+          delay: 0,
         },
       )
-      cy.contains("how to initialize the test environment")
+
+      const file2Text = "Hello"
+      cy.contains(file2Text)
 
       // start yazi - the initial file should be highlighted
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains("-- TERMINAL --")
 
       // yazi should be visible now
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(testFile)
-      isHoveredInNeovim("how to initialize the test environment")
+      isHoveredInNeovim(file2Text)
 
       // select the other file - the highlight should move to it
       cy.typeIntoTerminal(`/^${dir.contents["initial-file.txt"].name}{enter}`, {
         delay: 1,
       })
-      isNotHoveredInNeovim("how to initialize the test environment")
+      isNotHoveredInNeovim(file2Text)
       isHoveredInNeovim("If you see this text, Neovim is ready!")
     })
   })
@@ -142,9 +146,9 @@ describe("highlighting the buffer with 'hover' events", () => {
         cy.typeIntoTerminal("{upArrow}")
 
         // yazi should be visible now
-        cy.contains(dir.contents["test-setup.lua"].name)
+        cy.contains(dir.contents["file2.txt"].name)
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-          dir.contents["test-setup.lua"].name,
+          dir.contents["file2.txt"].name,
         )
 
         // yazi is shown and adjacent files should be visible now
@@ -164,7 +168,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       })
     })
 
-    it("for a light colorscheme", () => {
+    it("for a light colorscheme, hovers appear darker", () => {
       cy.startNeovim({
         startupScriptModifications: ["use_light_neovim_colorscheme.lua"],
       }).then((dir) => {
@@ -177,9 +181,9 @@ describe("highlighting the buffer with 'hover' events", () => {
         cy.typeIntoTerminal("{upArrow}")
 
         // yazi should be visible now
-        cy.contains(dir.contents["test-setup.lua"].name)
+        cy.contains(dir.contents["file2.txt"].name)
         hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-          dir.contents["test-setup.lua"].name,
+          dir.contents["file2.txt"].name,
         )
 
         // yazi is shown and adjacent files should be visible now
@@ -211,9 +215,9 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should be visible now
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-        dir.contents["test-setup.lua"].name,
+        dir.contents["file2.txt"].name,
       )
 
       cy.typeIntoTerminal("q")
@@ -238,9 +242,9 @@ describe("highlighting the buffer with 'hover' events", () => {
         "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
       ],
       filename: {
-        openInVerticalSplits: ["initial-file.txt", "file.txt"],
+        openInVerticalSplits: ["initial-file.txt", "file2.txt"],
       },
-    }).then((dir) => {
+    }).then(() => {
       // wait until text on the start screen is visible
       isNotHoveredInNeovim("f you see this text, Neovim is ready!")
       isNotHoveredInNeovim("Hello")
@@ -249,9 +253,9 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should be visible now
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-        dir.contents["test-setup.lua"].name,
+        "subdirectory" satisfies MyTestDirectoryFile,
       )
 
       isHoveredInNeovim(

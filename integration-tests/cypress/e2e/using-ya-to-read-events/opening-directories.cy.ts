@@ -8,7 +8,7 @@ describe("opening directories", () => {
     }).then((dir) => {
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       cy.typeIntoTerminal("{downArrow}")
     })
@@ -19,7 +19,7 @@ describe("opening directories", () => {
     cy.startNeovim({
       startupScriptModifications: ["add_command_to_count_open_buffers.lua"],
       filename: {
-        openInVerticalSplits: ["initial-file.txt", "file.txt"],
+        openInVerticalSplits: ["initial-file.txt", "file2.txt"],
       },
     }).then((dir) => {
       cy.contains(dir.contents["initial-file.txt"].name)
@@ -29,7 +29,7 @@ describe("opening directories", () => {
 
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
@@ -46,7 +46,7 @@ describe("opening directories", () => {
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // select a directory
       cy.typeIntoTerminal("/routes{enter}")

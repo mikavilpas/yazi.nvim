@@ -15,3 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands.ts"
+
+before(function () {
+  // disable Cypress's default behavior of logging all XMLHttpRequests and
+  // fetches to the Command Log
+  // https://gist.github.com/simenbrekken/3d2248f9e50c1143bf9dbe02e67f5399?permalink_comment_id=4615046#gistcomment-4615046
+  cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
+})

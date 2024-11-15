@@ -16,7 +16,7 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should now be visible, showing the names of adjacent files
-      cy.contains(dir.contents["test-setup.lua"].name) // an adjacent file
+      cy.contains(dir.contents["file2.txt"].name) // an adjacent file
     })
   })
 
@@ -24,10 +24,10 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["file.txt"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // search for the file in yazi. This focuses the file in yazi
-      cy.typeIntoTerminal("gg/file.txt{enter}")
+      cy.typeIntoTerminal(`gg/${dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{enter}")
 
       // the file content should now be visible
@@ -39,15 +39,15 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
-      cy.typeIntoTerminal("/test-setup.lua{enter}")
+      cy.contains(dir.contents["file2.txt"].name)
+      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{control+v}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // the file path must be visible at the bottom
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       cy.contains(dir.contents["initial-file.txt"].name)
     })
   })
@@ -56,15 +56,15 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
-      cy.typeIntoTerminal("/test-setup.lua{enter}")
+      cy.contains(dir.contents["file2.txt"].name)
+      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{control+x}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // the file path must be visible at the bottom
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       cy.contains(dir.contents["initial-file.txt"].name)
     })
   })
@@ -73,19 +73,22 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
-      cy.typeIntoTerminal("/test-setup.lua{enter}")
+      cy.contains(dir.contents["file2.txt"].name)
+      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{control+t}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.contains("defines how to")
+      cy.contains(
+        // match some text from inside the file
+        "Hello",
+      )
       cy.typeIntoTerminal(":tabnext{enter}")
 
       cy.contains("If you see this text, Neovim is ready!")
 
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       cy.contains(dir.contents["initial-file.txt"].name)
     })
   })
@@ -96,7 +99,7 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // select the initial file, the cursor moves one line down to the next file
       cy.typeIntoTerminal(" ")
@@ -123,7 +126,7 @@ describe("opening files", () => {
         //   file.
         // - Finally, yazi should rename the files to match the new names.
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(dir.contents["test-setup.lua"].name)
+        cy.contains(dir.contents["file2.txt"].name)
         cy.typeIntoTerminal("{control+a}r")
 
         // yazi should now have opened an embedded Neovim. The file name should say
@@ -147,7 +150,7 @@ describe("opening files", () => {
       cy.startNeovim().then((dir) => {
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(dir.contents["test-setup.lua"].name)
+        cy.contains(dir.contents["file2.txt"].name)
         // select only the current file to make the test easier
         cy.typeIntoTerminal("v")
         cy.typeIntoTerminal("r") // start renaming
@@ -223,7 +226,7 @@ describe("opening files", () => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // enter another directory and select a file
       cy.typeIntoTerminal("/routes{enter}")
@@ -271,7 +274,7 @@ describe("opening files", () => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // enter another directory and select a file
       cy.typeIntoTerminal("/routes{enter}")
@@ -328,8 +331,8 @@ describe("opening files", () => {
     cy.startNeovim({
       filename: {
         openInVerticalSplits: [
-          "file.txt",
-          "test-setup.lua",
+          "initial-file.txt",
+          "file2.txt",
           "dir with spaces/file1.txt",
         ],
       },
@@ -345,13 +348,13 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // this is the first yazi tab (1)
-      isFileSelectedInYazi(dir.contents["file.txt"].name)
-      isFileNotSelectedInYazi(dir.contents["test-setup.lua"].name)
+      isFileSelectedInYazi(dir.contents["initial-file.txt"].name)
+      isFileNotSelectedInYazi(dir.contents["file2.txt"].name)
 
       // next, move to the second tab (2)
       cy.typeIntoTerminal("2")
-      isFileSelectedInYazi(dir.contents["test-setup.lua"].name)
-      isFileNotSelectedInYazi(dir.contents["file.txt"].name)
+      isFileSelectedInYazi(dir.contents["file2.txt"].name)
+      isFileNotSelectedInYazi(dir.contents["initial-file.txt"].name)
 
       // next, move to the third tab (3). This tab should be in a different
       // directory, so other adjacent files should be visible than before

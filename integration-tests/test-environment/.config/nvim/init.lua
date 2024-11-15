@@ -1,24 +1,8 @@
--- This files defines how to initialize the test environment for the
--- integration tests. It should be executed before running the tests.
-
----@module "lazy"
----@module "yazi"
----@module "catppuccin"
-
--- DO NOT change the paths and don't remove the colorscheme
-local root = vim.fn.fnamemodify("./.repro", ":p")
-vim.env.LAZY_STDPATH = ".repro"
-
--- set stdpaths to use .repro
-for _, name in ipairs({ "config", "data", "state", "cache" }) do
-  vim.env[("XDG_%s_HOME"):format(name:upper())] = root .. "/" .. name
-end
-
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv).fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  vim.fn.system({
+  local out = vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
@@ -26,10 +10,17 @@ if not (vim.uv).fs_stat(lazypath) then
     lazyrepo,
     lazypath,
   })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 vim.opt.rtp:prepend(lazypath)
-
-vim.opt.rtp:prepend("../../")
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
@@ -38,13 +29,22 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.o.swapfile = false
 
+local thisfile = vim.fn.expand("<sfile>")
+local repo_root = vim.fn.fnamemodify(thisfile, ":h:h:h:h:h:h:h")
+
+-- for CI, use a single log file location and put it in a known location. This
+-- way it's easy to display the log file contents after each test using
+-- showYaziLog() and removeYaziLog().
+vim.env.YAZI_NVIM_LOG_PATH =
+  vim.fn.fnamemodify(vim.uv.os_environ().HOME .. "/../../.repro/yazi.log", ":p")
+
 -- install the following plugins
 ---@type LazySpec
 local plugins = {
   {
     "mikavilpas/yazi.nvim",
     -- for tests, always use the code from this repository
-    dir = "../..",
+    dir = repo_root,
     event = "VeryLazy",
     keys = {
       { "<up>", "<cmd>Yazi<cr>" },

@@ -21,6 +21,9 @@ Log.level = log_levels.OFF
 
 ---@return string
 function Log:get_logfile_path()
+  if vim.uv.os_environ().YAZI_NVIM_LOG_PATH then
+    return vim.uv.os_environ().YAZI_NVIM_LOG_PATH
+  end
   local ok, stdpath = pcall(vim.fn.stdpath, "log")
   if not ok then
     stdpath = vim.fn.stdpath("cache")
