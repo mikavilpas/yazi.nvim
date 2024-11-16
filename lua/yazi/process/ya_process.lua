@@ -85,7 +85,30 @@ function YaProcess:wait(timeout)
 end
 
 function YaProcess:start()
-  local ya_command = { "ya", "sub", "rename,delete,trash,move,cd,hover,bulk" }
+  local event_kinds = {
+    "rename",
+    "delete",
+    "trash",
+    "move",
+    "cd",
+    "hover",
+    "bulk",
+  }
+
+  ---@type table<string,boolean>
+  local interesting_events = {}
+  if self.config.forwarded_dds_events ~= nil then
+    for _, event_kind in ipairs(self.config.forwarded_dds_events) do
+      event_kinds[#event_kinds + 1] = event_kind
+      interesting_events[event_kind] = true
+    end
+  end
+
+  local ya_command = {
+    "ya",
+    "sub",
+    table.concat(event_kinds, ","),
+  }
   Log:debug(
     string.format(
       "Opening ya with the command: (%s), attempt %s",
@@ -137,9 +160,9 @@ function YaProcess:start()
       data = vim.split(data, "\n", { plain = true, trimempty = true })
 
       local parsed = utils.safe_parse_events(data)
-      -- Log:debug(string.format('Parsed events: %s', vim.inspect(parsed)))
+      Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
 
-      self:process_events(parsed)
+      self:process_events(parsed, interesting_events)
     end,
 
     ---@param obj vim.SystemCompleted
@@ -152,7 +175,8 @@ function YaProcess:start()
 end
 
 ---@param events YaziEvent[]
-function YaProcess:process_events(events)
+---@param forwarded_event_kinds table<string,boolean>
+function YaProcess:process_events(events, forwarded_event_kinds)
   for _, event in ipairs(events) do
     if event.type == "hover" then
       ---@cast event YaziHoverEvent
@@ -197,6 +221,16 @@ function YaProcess:process_events(events)
             }))
           end
         end)
+      elseif forwarded_event_kinds[event.type] ~= nil then
+        vim.schedule(function()
+          local event_handling =
+            require("yazi.event_handling.nvim_event_handling")
+          event_handling.emit("YaziDDSCustom", event)
+        end)
+      else
+        Log:debug(
+          string.format("Ignoring unknown event: %s", vim.inspect(event))
+        )
       end
     end
   end

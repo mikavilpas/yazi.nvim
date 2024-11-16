@@ -30,6 +30,18 @@ export const MyTestDirectorySchema = z.object({
             }),
           }),
         }),
+        yazi: z.object({
+          name: z.literal("yazi/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "keymap.toml": z.object({
+              name: z.literal("keymap.toml"),
+              type: z.literal("file"),
+              extension: z.literal("toml"),
+              stem: z.literal("keymap."),
+            }),
+          }),
+        }),
       }),
     }),
     "config-modifications": z.object({
@@ -88,6 +100,12 @@ export const MyTestDirectorySchema = z.object({
           type: z.literal("file"),
           extension: z.literal("lua"),
           stem: z.literal("modify_yazi_config_log_yazi_closed_successfully."),
+        }),
+        "notify_custom_events.lua": z.object({
+          name: z.literal("notify_custom_events.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("notify_custom_events."),
         }),
         "notify_hover_events.lua": z.object({
           name: z.literal("notify_hover_events.lua"),
@@ -213,6 +231,8 @@ export type MyTestDirectory = MyTestDirectoryContentsSchemaType["contents"]
 export const testDirectoryFiles = z.enum([
   ".config/nvim/init.lua",
   ".config/nvim",
+  ".config/yazi/keymap.toml",
+  ".config/yazi",
   ".config",
   "config-modifications/add_command_to_count_open_buffers.lua",
   "config-modifications/disable_a_keybinding.lua",
@@ -221,6 +241,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/modify_yazi_config_and_open_multiple_files.lua",
   "config-modifications/modify_yazi_config_and_set_help_key.lua",
   "config-modifications/modify_yazi_config_log_yazi_closed_successfully.lua",
+  "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",
   "config-modifications/notify_rename_events.lua",
   "config-modifications/report_loaded_yazi_modules.lua",

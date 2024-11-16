@@ -239,4 +239,37 @@ describe("'rename' events", () => {
       cy.contains("dir with spaces")
     })
   })
+
+  describe("custom YaziDDSCustom events", () => {
+    it("emits events the user has subscribed to", () => {
+      cy.startNeovim({
+        startupScriptModifications: ["notify_custom_events.lua"],
+      }).then((dir) => {
+        // The user can set a config option to specify custom yazi dds events that
+        // they want to subscribe to. These are emitted as YaziDDSCustom events.
+        cy.contains("If you see this text, Neovim is ready!")
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains(dir.contents["file2.txt"].name)
+
+        // publish the custom MyMessageNoData event that we subscribed to in
+        // notify_custom_events.lua
+        cy.typeIntoTerminal("{control+p}")
+
+        // also publish MyMessageWithData that contains json data
+        cy.typeIntoTerminal("{control+h}")
+
+        cy.typeIntoTerminal("q")
+        cy.contains(dir.contents["file2.txt"].name).should("not.exist")
+        cy.typeIntoTerminal(":messages{enter}", { delay: 0 })
+
+        // should see a message for the event kind MyMessageNoData that has no data
+        // this checks that events without data are supported
+        cy.contains("Just received a YaziDDSCustom event 'MyMessageNoData'!")
+
+        // should see the data for MyMessageWithData
+        cy.contains("Just received a YaziDDSCustom event 'MyMessageWithData'!")
+        cy.contains("somedata")
+      })
+    })
+  })
 })
