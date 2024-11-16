@@ -5,13 +5,10 @@ import { fileURLToPath } from "url"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
-// const file = "./test-environment/.repro/state/nvim/yazi.log"
 const yaziLogFile = path.join(
   __dirname,
   "test-environment",
   ".repro",
-  "state",
-  "nvim",
   "yazi.log",
 )
 

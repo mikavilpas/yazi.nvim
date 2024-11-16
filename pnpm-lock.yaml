@@ -37,8 +37,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@tui-sandbox/library':
-        specifier: 4.1.0
-        version: 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.1.2
+        version: 5.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/node':
         specifier: 22.9.0
         version: 22.9.0
@@ -70,8 +70,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 4.26.1
-        version: 4.26.1
+        specifier: 4.27.0
+        version: 4.27.0
       typescript:
         specifier: 5.6.3
         version: 5.6.3
@@ -541,16 +541,16 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.630':
-    resolution: {integrity: sha512-kHs2pa6oGiHRgF+hzLerGP4Vqm16t9KUrjunijIXPVco6oiYQ6IYy2vWOEgZk21/KjrwxBIv3Q7bqAZCQ7T3PA==}
+  '@trpc/client@11.0.0-rc.633':
+    resolution: {integrity: sha512-fha4Mix/birOFNMIutHXAhkJuZ8Zob0PGZ5s0NVyt4VbIGIpuvx2DYjFQG9lmyt+LEGZklsi1G0QfY+7rNaSmg==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.630+73639524c
+      '@trpc/server': 11.0.0-rc.633+55512768a
 
-  '@trpc/server@11.0.0-rc.630':
-    resolution: {integrity: sha512-4zmlqbLscjJNIsj8VuY38vdaDFxukdmqOOO4y3CoXQBNSLLtcpeecoRUHISpEcImtfvqEAW+gikxAxpoicUNkQ==}
+  '@trpc/server@11.0.0-rc.633':
+    resolution: {integrity: sha512-R26i5aP7/DvgIp3YbU+0u0nbggqItMLYvPmVBOyTP8rD5+wrifZ9ZKp8p+KMzhQEGeBv5mJ48TjJ2URcKwxg6g==}
 
-  '@tui-sandbox/library@4.1.0':
-    resolution: {integrity: sha512-iCxsuNVO4GsOqaRLN9uSq6DGiPYt0gTnuh/lV7f4iyiEIxk3nlde148+/TaRUk3XDmuJ64NphORDfL/o4cXGhw==}
+  '@tui-sandbox/library@5.1.2':
+    resolution: {integrity: sha512-qx9+BnpVHjV1Op9zb0xKpc7pDiTk5viaT5F1LrYrHmv8L29Y9lZ4yzu67xkye4IOpAiOG0j/SuT99GJv4oslPw==}
     hasBin: true
 
   '@types/aws-lambda@8.10.145':
@@ -2648,6 +2648,10 @@ packages:
     resolution: {integrity: sha512-yOGpmOAL7CkKe/91I5O3gPICmJNLJ1G4zFYVAsRHg7M64biSnPtRj0WNQt++bRkjYOqjWXrhnUw1utzmVErAdg==}
     engines: {node: '>=16'}
 
+  type-fest@4.27.0:
+    resolution: {integrity: sha512-3IMSWgP7C5KSQqmo1wjhKrwsvXAtF33jO3QY+Uy++ia7hqvgSK6iXbbg5PbDBc1P2ZbNEDgejOrN4YooXvhwCw==}
+    engines: {node: '>=16'}
+
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
@@ -3184,11 +3188,11 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.630(@trpc/server@11.0.0-rc.630(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@trpc/client@11.0.0-rc.633(@trpc/server@11.0.0-rc.633(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      '@trpc/server': 11.0.0-rc.630(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@trpc/server': 11.0.0-rc.633(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
-  '@trpc/server@11.0.0-rc.630(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@trpc/server@11.0.0-rc.633(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     optionalDependencies:
       '@types/aws-lambda': 8.10.145
       express: 4.21.1
@@ -3208,11 +3212,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@tui-sandbox/library@4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tui-sandbox/library@5.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@catppuccin/palette': 1.7.1
-      '@trpc/client': 11.0.0-rc.630(@trpc/server@11.0.0-rc.630(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@trpc/server': 11.0.0-rc.630(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@trpc/client': 11.0.0-rc.633(@trpc/server@11.0.0-rc.633(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+      '@trpc/server': 11.0.0-rc.633(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@xterm/addon-attach': 0.11.0(@xterm/xterm@5.5.0)
       '@xterm/addon-fit': 0.10.0(@xterm/xterm@5.5.0)
       '@xterm/xterm': 5.5.0
@@ -5724,6 +5728,8 @@ snapshots:
   type-fest@0.21.3: {}
 
   type-fest@4.26.1: {}
+
+  type-fest@4.27.0: {}
 
   type-is@1.6.18:
     dependencies:

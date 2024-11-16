@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /// <reference types="cypress" />
 
-import type { TestDirectory } from "@tui-sandbox/library/dist/src/server/types.ts"
+import type {
+  StartNeovimGenericArguments,
+  TestDirectory,
+} from "@tui-sandbox/library/dist/src/server/types.ts"
 import type { OverrideProperties } from "type-fest"
 import type {
   MyTestDirectory,
   MyTestDirectoryFile,
 } from "../../MyTestDirectory"
 
-type MyStartNeovimServerArguments = {
-  filename?:
-    | MyTestDirectoryFile
-    | { openInVerticalSplits: MyTestDirectoryFile[] }
-  startupScriptModifications?: Array<
-    keyof MyTestDirectory["config-modifications"]["contents"]
-  >
-}
+type MyStartNeovimServerArguments = OverrideProperties<
+  StartNeovimGenericArguments,
+  {
+    filename?:
+      | MyTestDirectoryFile
+      | { openInVerticalSplits: MyTestDirectoryFile[] }
+    startupScriptModifications?: Array<
+      keyof MyTestDirectory["config-modifications"]["contents"]
+    >
+  }
+>
 
 export type NeovimContext = OverrideProperties<
   TestDirectory,

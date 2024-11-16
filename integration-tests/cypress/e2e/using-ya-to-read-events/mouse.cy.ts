@@ -12,7 +12,7 @@ describe("mouse support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should be showing adjacent files
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       // click outside of the yazi floating window. This should close it
       // because it's designed to close when it loses focus
@@ -20,7 +20,7 @@ describe("mouse support", () => {
 
       // clicking outside of the yazi window should close it, after which
       // Neovim should not be showing adjacent files
-      cy.contains(dir.contents["test-setup.lua"].name).should("not.exist")
+      cy.contains(dir.contents["file2.txt"].name).should("not.exist")
     })
   })
 })

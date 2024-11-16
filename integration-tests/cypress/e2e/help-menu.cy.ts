@@ -14,7 +14,7 @@ describe("the help menu", () => {
 
       // open yazi and wait for it to load
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
 
       cy.typeIntoTerminal("{del}")
       cy.contains("yazi.nvim help")
@@ -51,9 +51,9 @@ describe("the help menu", () => {
 
       // it should now be possible to close yazi, since it's in insert mode
       // and ready to accept commands
-      cy.contains(dir.contents["test-setup.lua"].name)
+      cy.contains(dir.contents["file2.txt"].name)
       cy.typeIntoTerminal("q")
-      cy.contains(dir.contents["test-setup.lua"].name).should("not.exist")
+      cy.contains(dir.contents["file2.txt"].name).should("not.exist")
     })
   })
 })
