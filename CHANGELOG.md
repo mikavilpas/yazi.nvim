@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.5.1...v6.6.0) (2024-11-16)
+
+
+### Features
+
+* support reacting to custom yazi DDS events ([882c200](https://github.com/mikavilpas/yazi.nvim/commit/882c200d3abc0f4c950d149e014096efe59c46ae))
+
 ## [6.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.5.0...v6.5.1) (2024-11-13)
 
 
