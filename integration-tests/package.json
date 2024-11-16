@@ -21,7 +21,7 @@
     "@typescript-eslint/eslint-plugin": "8.14.0",
     "@typescript-eslint/parser": "8.14.0",
     "concurrently": "9.1.0",
-    "eslint": "9.14.0",
+    "eslint": "9.15.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-no-only-tests": "3.3.0",
     "prettier-plugin-organize-imports": "4.1.0",
