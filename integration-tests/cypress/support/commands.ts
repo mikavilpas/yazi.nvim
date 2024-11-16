@@ -68,8 +68,5 @@ declare global {
 
 afterEach(() => {
   cy.task("showYaziLog")
-})
-
-beforeEach(() => {
   cy.task("removeYaziLog")
 })
