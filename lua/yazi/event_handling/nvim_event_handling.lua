@@ -6,6 +6,7 @@ local M = {}
 ---@alias YaziNeovimEvent
 ---| "'YaziDDSHover'" A file was hovered over in yazi
 ---| "'YaziRenamedOrMoved'" Files were renamed or moved
+---| "'YaziDDSCustom'" A custom event was received from yazi. The event was specifically subscribed to with the `forwarded_dds_events` yazi.nvim config option.
 
 ---@alias YaziNeovimEvent.YaziRenamedOrMovedData {changes: table<string, string>} # a table of old paths to new paths
 

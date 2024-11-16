@@ -248,6 +248,21 @@ function M.parse_events(events_file_lines)
         url = url or "",
       }
       table.insert(events, event)
+    else
+      require("yazi.log"):debug(string.format("Unknown event type: %s", type))
+      -- Custom user event.
+      -- It could look like this (with optional data at the end)
+      -- MyMessageNoData,0,1731774290298033,
+      local data_string = table.concat(parts, ",", 4, #parts)
+      local yazi_id = parts[3]
+
+      ---@type YaziCustomDDSEvent
+      local event = {
+        yazi_id = yazi_id,
+        type = type,
+        raw_data = data_string,
+      }
+      table.insert(events, event)
     end
   end
 

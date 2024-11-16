@@ -21,6 +21,7 @@
 ---@field public log_level? yazi.LogLevel
 ---@field public clipboard_register? string the register to use for copying. Defaults to "*", the system clipboard
 ---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"
+---@field public forwarded_dds_events? string[] "Yazi events to listen to. These are published as neovim autocmds so that the user can set up custom handlers for themselves. Defaults to `nil`."
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
@@ -58,7 +59,7 @@
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi
 ---@field public hovered_buffer_in_same_directory? vim.api.keyset.highlight # the color of a buffer that is in the same directory as the hovered buffer
 
----@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent | YaziCustomDDSEvent
 
 ---@class (exact) YaziPreviousState # describes the previous state of yazi when it was closed; the last known state
 ---@field public last_hovered? string
@@ -108,6 +109,11 @@
 ---@class (exact) YaziBulkEvent "Like `rename` and `move` but for bulk renaming"
 ---@field public type "bulk"
 ---@field public changes table<string, string> # a table of old paths to new paths
+
+---@class (exact) YaziCustomDDSEvent "A custom event that is emitted by yazi. It could be coming from yazi itself, or a yazi plugin that uses custom events."
+---@field public yazi_id string
+---@field public type string
+---@field public raw_data string # the data included in the event as a string. Might be the empty string in case no data is included.
 
 ---@class (exact) yazi.AutoCmdEvent # the nvim_create_autocmd() event object copied from the nvim help docs
 ---@field public id number
