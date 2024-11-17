@@ -1,10 +1,22 @@
 local assert = require("luassert")
 local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local reset = require("spec.yazi.helpers.reset")
+local stub = require("luassert.stub")
 
 describe("process_trash_event", function()
+  local snapshot
+
   before_each(function()
     reset.clear_all_buffers()
+    snapshot = assert:snapshot()
+
+    -- silence the following warning
+    -- "Error executing vim.schedule lua callback: ./lua/yazi/utils.lua:352: Invalid buffer id: 32"
+    stub(vim.api, "nvim_buf_call")
+  end)
+
+  after_each(function()
+    snapshot:revert()
   end)
 
   it("deletes a buffer that matches the trash event exactly", function()
