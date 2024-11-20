@@ -18,8 +18,8 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       prettier-plugin-packagejson:
-        specifier: 2.5.3
-        version: 2.5.3(prettier@3.3.3)
+        specifier: 2.5.5
+        version: 2.5.5(prettier@3.3.3)
 
   integration-tests:
     dependencies:
@@ -37,8 +37,8 @@ importers:
         version: 3.23.8
     devDependencies:
       '@tui-sandbox/library':
-        specifier: 6.1.0
-        version: 6.1.0(cypress@13.16.0)(prettier@3.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.27.0)(typescript@5.6.3)
+        specifier: 7.0.1
+        version: 7.0.1(cypress@13.16.0)(prettier@3.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.27.0)(typescript@5.6.3)
       '@types/node':
         specifier: 22.9.1
         version: 22.9.1
@@ -549,8 +549,8 @@ packages:
   '@trpc/server@11.0.0-rc.638':
     resolution: {integrity: sha512-ho3sRx66UuncKTtuy7UKbYP8IB4qaPj2gmdDIIdQOftta1oYzEsQuYiBozQAIAmX9TbV5FaqAdBUl2alFBSbdg==}
 
-  '@tui-sandbox/library@6.1.0':
-    resolution: {integrity: sha512-MeB1OXJ2owQVFuH+Kx0tFiq1ZI6kj/4inRgfMM0SPZmwTgDyQe2S5C/5eIFYdG45h0KA8noDYLcL5X1UsUp4BQ==}
+  '@tui-sandbox/library@7.0.1':
+    resolution: {integrity: sha512-7Al+9PBegUCR6ZGo+09HVoBMyz8WUdt5u7bT6IhBUy17jIPmNh1kg1rxwBm2ME0kMkZAyo6e+bJM4KN7i2RNtA==}
     hasBin: true
     peerDependencies:
       cypress: ^13
@@ -1128,10 +1128,6 @@ packages:
   devtools-protocol@0.0.1330662:
     resolution: {integrity: sha512-pzh6YQ8zZfz3iKlCvgzVCu22NdpZ8hNmwU6WnQjNVquh0A9iVosPtNLWDwaWVGyrntQlltPFztTMK5Cg6lfCuw==}
 
-  dir-glob@3.0.1:
-    resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
-    engines: {node: '>=8'}
-
   dree@5.1.5:
     resolution: {integrity: sha512-4VZ5m1EgV+467S2LdTUxCE1L98ikzGFW7PTE8FlPSk7jvkbqeKQN1vCfwQ6w1vYVgAZMSooyvoae5F/LQWozhw==}
     hasBin: true
@@ -1352,6 +1348,14 @@ packages:
   fd-slicer@1.1.0:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
 
+  fdir@6.4.2:
+    resolution: {integrity: sha512-KnhMXsKSPZlAhp7+IjUkRZKPb4fUyccpDrdFXbi4QL1qkmFh9kVY09Yox+n4MaOb3lHZ1Tv829C3oaaXoMYPDQ==}
+    peerDependencies:
+      picomatch: ^3 || ^4
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
   fecha@4.2.3:
     resolution: {integrity: sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==}
 
@@ -1492,10 +1496,6 @@ packages:
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
-
-  globby@13.2.2:
-    resolution: {integrity: sha512-Y1zNGV+pzQdh7H39l9zgB4PJqjRNqydvdYCDG4HFXM4XuvSaQQlEc91IU1yALL8gUTDomgBAfz3XJdmUS+oo0w==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   globby@14.0.2:
     resolution: {integrity: sha512-s3Fq41ZVh7vbbe2PN3nrW7yC7U7MFVc5c98/iTl9c2GawNMKx/J648KQRW6WKkuU8GIbbh2IXfIRQjOZnXcTnw==}
@@ -2149,10 +2149,6 @@ packages:
   path-to-regexp@0.1.10:
     resolution: {integrity: sha512-7lf7qcQidTku0Gu3YDPc8DJ1q7OOucfa/BSsIwjuh56VU7katFvuM8hULfkwB3Fns/rsVF7PwPKVw1sl5KQS9w==}
 
-  path-type@4.0.0:
-    resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
-    engines: {node: '>=8'}
-
   path-type@5.0.0:
     resolution: {integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==}
     engines: {node: '>=12'}
@@ -2169,6 +2165,10 @@ packages:
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  picomatch@4.0.2:
+    resolution: {integrity: sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==}
+    engines: {node: '>=12'}
 
   pify@2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
@@ -2202,8 +2202,8 @@ packages:
       vue-tsc:
         optional: true
 
-  prettier-plugin-packagejson@2.5.3:
-    resolution: {integrity: sha512-ATMEEXr+ywls1kgrZEWl4SBPEm0uDdyDAjyNzUC0/Z8WZTD3RqbJcQDR+Dau+wYkW9KHK6zqQIsFyfn+9aduWg==}
+  prettier-plugin-packagejson@2.5.5:
+    resolution: {integrity: sha512-SvzImCwDluH29OgD37wDv96milAHhIQuYS+WN3iwQzonR8lqv0su7IdQYfLc3So+0MtuPSCEQF6tZYubTnf7xg==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
@@ -2425,10 +2425,6 @@ packages:
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
 
-  slash@4.0.0:
-    resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
-    engines: {node: '>=12'}
-
   slash@5.1.0:
     resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
     engines: {node: '>=14.16'}
@@ -2459,8 +2455,8 @@ packages:
   sort-object-keys@1.1.3:
     resolution: {integrity: sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==}
 
-  sort-package-json@2.10.1:
-    resolution: {integrity: sha512-d76wfhgUuGypKqY72Unm5LFnMpACbdxXsLPcL27pOsSrmVqH3PztFp1uq+Z22suk15h7vXmTesuh2aEjdCqb5w==}
+  sort-package-json@2.11.0:
+    resolution: {integrity: sha512-pBs3n/wcsbnMSiO5EYV4AVnZVtyQslfZ/0v6VbrRRVApqyNf0Uqo4MOXJsBmIplGY1hYZ4bq5qjO9xTgY+K8xw==}
     hasBin: true
 
   source-map-js@1.2.1:
@@ -2585,6 +2581,10 @@ packages:
   tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
 
+  tinyglobby@0.2.10:
+    resolution: {integrity: sha512-Zc+8eJlFMvgatPZTl6A9L/yht8QqdmUNtURHaKZLmKBE12hNPSrqNkUp2cs3M/UKmNVVAMFQYSjYIVHDjW5zew==}
+    engines: {node: '>=12.0.0'}
+
   tldts-core@6.1.61:
     resolution: {integrity: sha512-In7VffkDWUPgwa+c9picLUxvb0RltVwTkSgMNFgvlGSWveCzGBemBqTsgJCL4EDFWZ6WH0fKTsot6yNhzy3ZzQ==}
 
@@ -2631,6 +2631,9 @@ packages:
 
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
+
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   tsx@4.19.2:
     resolution: {integrity: sha512-pOUl6Vo2LUq/bSa8S5q7b91cgNSjctn9ugq/+Mvow99qW6x/UZYwzxy/3NmqoT66eHYfCVvFvACC58UBPFf28g==}
@@ -2875,7 +2878,7 @@ snapshots:
 
   '@emnapi/runtime@1.3.1':
     dependencies:
-      tslib: 2.7.0
+      tslib: 2.8.1
     optional: true
 
   '@esbuild/aix-ppc64@0.23.1':
@@ -3186,7 +3189,7 @@ snapshots:
 
   '@swc/helpers@0.5.13':
     dependencies:
-      tslib: 2.7.0
+      tslib: 2.8.1
     optional: true
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
@@ -3215,7 +3218,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@tui-sandbox/library@6.1.0(cypress@13.16.0)(prettier@3.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.27.0)(typescript@5.6.3)':
+  '@tui-sandbox/library@7.0.1(cypress@13.16.0)(prettier@3.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.27.0)(typescript@5.6.3)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -3478,7 +3481,7 @@ snapshots:
 
   ast-types@0.13.4:
     dependencies:
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   astral-regex@2.0.0: {}
 
@@ -3877,10 +3880,6 @@ snapshots:
 
   devtools-protocol@0.0.1330662: {}
 
-  dir-glob@3.0.1:
-    dependencies:
-      path-type: 4.0.0
-
   dree@5.1.5:
     dependencies:
       minimatch: 10.0.1
@@ -4190,6 +4189,10 @@ snapshots:
     dependencies:
       pend: 1.2.0
 
+  fdir@6.4.2(picomatch@4.0.2):
+    optionalDependencies:
+      picomatch: 4.0.2
+
   fecha@4.2.3: {}
 
   figures@3.2.0:
@@ -4339,14 +4342,6 @@ snapshots:
       ini: 2.0.0
 
   globals@14.0.0: {}
-
-  globby@13.2.2:
-    dependencies:
-      dir-glob: 3.0.1
-      fast-glob: 3.3.2
-      ignore: 5.3.2
-      merge2: 1.4.1
-      slash: 4.0.0
 
   globby@14.0.2:
     dependencies:
@@ -5157,8 +5152,6 @@ snapshots:
 
   path-to-regexp@0.1.10: {}
 
-  path-type@4.0.0: {}
-
   path-type@5.0.0: {}
 
   pend@1.2.0: {}
@@ -5168,6 +5161,8 @@ snapshots:
   picocolors@1.1.0: {}
 
   picomatch@2.3.1: {}
+
+  picomatch@4.0.2: {}
 
   pify@2.3.0: {}
 
@@ -5208,9 +5203,9 @@ snapshots:
       prettier: 3.3.3
       typescript: 5.6.3
 
-  prettier-plugin-packagejson@2.5.3(prettier@3.3.3):
+  prettier-plugin-packagejson@2.5.5(prettier@3.3.3):
     dependencies:
-      sort-package-json: 2.10.1
+      sort-package-json: 2.11.0
       synckit: 0.9.2
     optionalDependencies:
       prettier: 3.3.3
@@ -5501,8 +5496,6 @@ snapshots:
     dependencies:
       is-arrayish: 0.3.2
 
-  slash@4.0.0: {}
-
   slash@5.1.0: {}
 
   slice-ansi@3.0.0:
@@ -5539,16 +5532,16 @@ snapshots:
 
   sort-object-keys@1.1.3: {}
 
-  sort-package-json@2.10.1:
+  sort-package-json@2.11.0:
     dependencies:
       detect-indent: 7.0.1
       detect-newline: 4.0.1
       get-stdin: 9.0.0
       git-hooks-list: 3.1.0
-      globby: 13.2.2
       is-plain-obj: 4.1.0
       semver: 7.6.3
       sort-object-keys: 1.1.3
+      tinyglobby: 0.2.10
 
   source-map-js@1.2.1:
     optional: true
@@ -5645,7 +5638,7 @@ snapshots:
   synckit@0.9.2:
     dependencies:
       '@pkgr/core': 0.1.1
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   tar-fs@3.0.6:
     dependencies:
@@ -5677,6 +5670,11 @@ snapshots:
   through@2.3.8: {}
 
   tinycolor2@1.6.0: {}
+
+  tinyglobby@0.2.10:
+    dependencies:
+      fdir: 6.4.2(picomatch@4.0.2)
+      picomatch: 4.0.2
 
   tldts-core@6.1.61: {}
 
@@ -5710,6 +5708,8 @@ snapshots:
       typescript: 5.6.3
 
   tslib@2.7.0: {}
+
+  tslib@2.8.1: {}
 
   tsx@4.19.2:
     dependencies:
