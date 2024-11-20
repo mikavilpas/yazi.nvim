@@ -1,4 +1,4 @@
-import path from "path"
+import type { MyTestDirectoryFile } from "MyTestDirectory"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
@@ -24,8 +24,7 @@ describe("grug-far integration (search and replace)", () => {
 
       // the directory we were in should be prefilled in grug-far.nvim's view
       cy.contains("testdirs")
-      const p = path.join(dir.testEnvironmentPathRelative, "routes")
-      cy.contains(p)
+      cy.contains("routes/posts.$postId" satisfies MyTestDirectoryFile)
 
       // by default, the focus is on the search field in normal mode. Type
       // something in the search field so we can see if results can be found
