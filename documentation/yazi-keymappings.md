@@ -66,7 +66,7 @@ vim.api.nvim_create_autocmd("User", {
 })
 ```
 
-## Resources
+### Resources
 
 - Originally discussed in
   [#547](https://github.com/mikavilpas/yazi.nvim/issues/547)
@@ -79,3 +79,27 @@ vim.api.nvim_create_autocmd("User", {
   <https://yazi-rs.github.io/docs/configuration/keymap>
 - the key names that yazi supports in mappings are available in the source code
   <https://github.com/sxyazi/yazi/blob/1f32601dc4163b419257b74777271c283a32dca6/yazi-config/src/keymap/key.rs>
+
+## Define different behavior when yazi is running outside of neovim
+
+**Problem:** As a yazi.nvim user, I sometimes use yazi outside of Neovim and
+yazi.nvim. When yazi.nvim is open, I want to do something different than when it
+is not open.
+
+**Solution:** We will define a keymap that checks if nvim is open.
+
+When yazi.nvim starts yazi, it sets a special environment variable `NVIM_CWD` to
+the current working directory of Neovim. We can use this to check if Neovim is
+running.
+
+### Define a keymap in yazi's config
+
+```toml
+# Augment https://yazi-rs.github.io/docs/tips/#cd-to-git-root - go to the nvim
+# cwd when neovim is open, and to the git root when it is not
+[[manager.prepend_keymap]]
+on = ["g", "r"]
+run = '''
+	shell 'ya pub dds-cd --str "${NVIM_CWD:-$(git rev-parse --show-toplevel 2>/dev/null)}"' --confirm
+'''
+```
