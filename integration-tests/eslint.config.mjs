@@ -20,6 +20,7 @@ export default [
       "**/test-environment/",
       "eslint.config.mjs",
       "dist/",
+      "cypress/support/tui-sandbox.ts",
     ],
   },
   ...compat.extends(
