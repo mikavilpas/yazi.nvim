@@ -221,18 +221,18 @@ describe("highlighting the buffer with 'hover' events", () => {
       )
 
       cy.typeIntoTerminal("q")
-      cy.typeIntoTerminal(":messages{enter}")
+      cy.runExCommand({ command: "messages" }).then((result) => {
+        // Hovering a new file should have triggered the integration
+        //
+        // the main message from the integration in the
+        // startupScriptModifications script should be visible. Check the file
+        // to see the full integration.
+        expect(result.value).to.contain("Just received a YaziDDSHover event!")
 
-      // Hovering a new file should have triggered the integration
-      //
-      // the main message from the integration in the
-      // startupScriptModifications script should be visible. Check the file
-      // to see the full integration.
-      cy.contains("Just received a YaziDDSHover event!")
-
-      // some event data should be visible. See the lua type YaziHoverEvent for
-      // the structure
-      cy.contains(`type = "hover"`)
+        // some event data should be visible. See the lua type YaziHoverEvent for
+        // the structure
+        expect(result.value).to.contain(`type = "hover"`)
+      })
     })
   })
 

@@ -1,3 +1,4 @@
+import type { MyTestDirectoryFile } from "MyTestDirectory"
 import {
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
@@ -84,7 +85,7 @@ describe("opening files", () => {
         // match some text from inside the file
         "Hello",
       )
-      cy.typeIntoTerminal(":tabnext{enter}")
+      cy.runExCommand({ command: "tabnext" })
 
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -174,9 +175,9 @@ describe("opening files", () => {
         cy.typeIntoTerminal("q")
 
         // the file should now be renamed - ask neovim to confirm this
-        cy.typeIntoTerminal(":buffers{enter}")
-
-        cy.contains("renamed-file.txt")
+        cy.runExCommand({ command: "buffers" }).then((result) => {
+          expect(result.value).to.contain("renamed-file.txt")
+        })
       })
     })
   })
@@ -260,9 +261,11 @@ describe("opening files", () => {
       // the file to verify this.
       // NOTE: the test-setup configures the `"` register to be the clipboard
       cy.typeIntoTerminal("o{enter}{esc}")
-      cy.typeIntoTerminal(':normal ""p{enter}')
-
-      cy.contains("routes/posts.$postId/adjacent-file.txt")
+      cy.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then((result) => {
+        expect(result.value).to.contain(
+          "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
+        )
+      })
     })
   })
 
@@ -299,12 +302,17 @@ describe("opening files", () => {
       // the file to verify this.
       // NOTE: the test-setup configures the `"` register to be the clipboard
       cy.typeIntoTerminal("o{enter}{esc}")
-      cy.typeIntoTerminal(':normal ""p{enter}')
-
-      // all selected files should now be visible
-      cy.contains("routes/posts.$postId/adjacent-file.txt")
-      cy.contains("routes/posts.$postId/route.tsx")
-      cy.contains("routes/posts.$postId/adjacent-file.txt")
+      cy.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then((result) => {
+        expect(result.value).to.eql(
+          (
+            [
+              "routes/posts.$postId/adjacent-file.txt",
+              "routes/posts.$postId/route.tsx",
+              "routes/posts.$postId/should-be-excluded-file.txt",
+            ] satisfies MyTestDirectoryFile[]
+          ).join("\n"),
+        )
+      })
     })
   })
 
@@ -319,11 +327,14 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{control+a}")
       cy.typeIntoTerminal("{enter}")
 
-      cy.typeIntoTerminal(":buffers{enter}")
-
-      // all files should now be visible
-      cy.contains("dir with spaces/file1.txt")
-      cy.contains("dir with spaces/file2.txt")
+      cy.runExCommand({ command: "buffers" }).then((result) => {
+        expect(result.value).to.match(
+          new RegExp("dir with spaces/file1.txt" satisfies MyTestDirectoryFile),
+        )
+        expect(result.value).to.match(
+          new RegExp("dir with spaces/file2.txt" satisfies MyTestDirectoryFile),
+        )
+      })
     })
   })
 

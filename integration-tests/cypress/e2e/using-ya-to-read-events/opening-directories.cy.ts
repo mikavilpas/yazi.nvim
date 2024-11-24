@@ -34,8 +34,9 @@ describe("opening directories", () => {
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.typeIntoTerminal(":CountBuffers{enter}")
-      cy.contains("Number of open buffers: 2")
+      cy.runExCommand({ command: "CountBuffers" }).then((result) => {
+        expect(result.value).to.equal("Number of open buffers: 2")
+      })
     })
   })
 
