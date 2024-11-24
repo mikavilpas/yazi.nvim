@@ -57,7 +57,7 @@ describe("grug-far integration (search and replace)", () => {
       cy.typeIntoTerminal("{esc}")
 
       // close the split on the right so we can get some more space
-      cy.typeIntoTerminal(":only{enter}")
+      cy.runExCommand({ command: "only" })
 
       // the selected files should be visible in the view, used as the files to
       // whitelist into the search and replace operation

@@ -8,7 +8,7 @@ describe("the healthcheck", () => {
     // wait until text on the start screen is visible
     cy.contains("If you see this text, Neovim is ready!")
 
-    cy.typeIntoTerminal(":checkhealth yazi{enter}")
+    cy.runExCommand({ command: "checkhealth yazi" })
 
     // the version of yazi.nvim itself should be shown
     cy.readFile("../.release-please-manifest.json").then(
