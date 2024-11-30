@@ -69,6 +69,10 @@ jobs:
           runTests: false
           # https://github.com/cypress-io/github-action/blob/bff0ae58f02476fbc4b13229bcaac2767f645b3e/README.md#pnpm-workspaces
 
+      - name: Preinstall neovim plugins
+        run: pnpm tui neovim exec "Lazy! sync"
+        working-directory: integration-tests
+
       - name: Cypress test
         uses: cypress-io/github-action@v6
         with:
