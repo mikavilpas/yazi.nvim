@@ -15,7 +15,7 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@tui-sandbox/library": "7.2.1",
+    "@tui-sandbox/library": "7.3.0",
     "@types/node": "22.10.1",
     "@types/tinycolor2": "1.4.6",
     "@typescript-eslint/eslint-plugin": "8.16.0",
