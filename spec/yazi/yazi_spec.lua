@@ -32,7 +32,7 @@ describe("opening a file", function()
 
     ---@type Path[]
     local actual_files = call.vals[3]
-    assert.is_equal(type(actual_files), "table")
+    assert.equal(type(actual_files), "table")
 
     local file_names = vim.tbl_map(function(file)
       return file.filename
@@ -80,8 +80,8 @@ describe("opening a file", function()
         ---@param state YaziClosedState
         ---@diagnostic disable-next-line: unused-local
         local spy_hook = spy.new(function(chosen_file, _config, state)
-          assert.equals(nil, chosen_file)
-          assert.equals("/abc", state.last_directory.filename)
+          assert.equal(nil, chosen_file)
+          assert.equal("/abc", state.last_directory.filename)
         end)
 
         plugin.yazi({
@@ -95,7 +95,7 @@ describe("opening a file", function()
 
         assert
           .spy(spy_hook)
-          .was_called_with(nil, match.is_table(), match.is_table())
+          .called_with(nil, match.is_table(), match.is_table())
       end
     )
 
@@ -125,9 +125,9 @@ describe("opening a file", function()
           ---@param state YaziClosedState
           ---@diagnostic disable-next-line: unused-local
           function(chosen_file, _config, state)
-            assert.equals(target_file, chosen_file)
-            assert.equals("/tmp", state.last_directory.filename)
-            assert.equals(
+            assert.equal(target_file, chosen_file)
+            assert.equal("/tmp", state.last_directory.filename)
+            assert.equal(
               "/tmp",
               plenary_path:new(target_file):parent().filename
             )
@@ -145,13 +145,13 @@ describe("opening a file", function()
 
         assert
           .spy(spy_yazi_closed_successfully)
-          .was_called_with(target_file, match.is_table(), match.is_table())
+          .called_with(target_file, match.is_table(), match.is_table())
       end
     )
   end)
 
   it("calls the yazi_opened hook when yazi is opened", function()
-    local spy_yazi_opened_hook = spy.new()
+    local spy_yazi_opened_hook = spy.new(function() end)
 
     vim.api.nvim_command("edit /abc/yazi_opened_hook_file.txt")
 
@@ -165,7 +165,7 @@ describe("opening a file", function()
 
     assert
       .spy(spy_yazi_opened_hook)
-      .was_called_with("/abc/yazi_opened_hook_file.txt", match.is_number(), match.is_table())
+      .called_with("/abc/yazi_opened_hook_file.txt", match.is_number(), match.is_table())
   end)
 
   it("calls the open_file_function to open the selected file", function()
@@ -173,7 +173,7 @@ describe("opening a file", function()
     fake_yazi_process.setup_created_instances_to_instantly_exit({
       selected_files = { target_file },
     })
-    local spy_open_file_function = spy.new()
+    local spy_open_file_function = spy.new(function() end)
 
     vim.api.nvim_command("edit " .. target_file)
 
@@ -185,7 +185,7 @@ describe("opening a file", function()
 
     assert
       .spy(spy_open_file_function)
-      .was_called_with(target_file, match.is_table(), match.is_table())
+      .called_with(target_file, match.is_table(), match.is_table())
   end)
 end)
 
@@ -198,7 +198,7 @@ describe("opening multiple files", function()
       selected_files = { target_file_1, target_file_2 },
     })
 
-    local spy_open_multiple_files = spy.new()
+    local spy_open_multiple_files = spy.new(function() end)
     plugin.yazi({
       ---@diagnostic disable-next-line: missing-fields
       hooks = {
@@ -208,7 +208,7 @@ describe("opening multiple files", function()
       chosen_file_path = "/tmp/yazi_filechosen-123",
     })
 
-    assert.spy(spy_open_multiple_files).was_called_with({
+    assert.spy(spy_open_multiple_files).called_with({
       target_file_1,
       target_file_2,
     }, match.is_table(), match.is_table())

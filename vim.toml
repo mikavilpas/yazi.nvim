@@ -29,11 +29,11 @@ any = true
 [assert.has_error]
 any = true
 
-[[assert.equals.args]]
+[[assert.equal.args]]
 type = "any"
-[[assert.equals.args]]
+[[assert.equal.args]]
 type = "any"
-[[assert.equals.args]]
+[[assert.equal.args]]
 type = "any"
 required = false
 

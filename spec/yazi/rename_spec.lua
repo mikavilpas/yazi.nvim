@@ -24,10 +24,10 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
         rename_event
       )
 
-    assert.is_equal(vim.tbl_count(rename_instructions), 1)
+    assert.equal(vim.tbl_count(rename_instructions), 1)
 
     local result1 = rename_instructions[1]
-    assert.is_equal("/my-tmp/file2", result1.path.filename)
+    assert.equal("/my-tmp/file2", result1.path.filename)
     assert.is_number(result1.bufnr)
   end)
 
@@ -48,9 +48,9 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
           rename_event
         )
 
-      assert.is_equal(vim.tbl_count(rename_instructions), 1)
+      assert.equal(vim.tbl_count(rename_instructions), 1)
       local result = rename_instructions[1]
-      assert.is_equal("/my-tmp/dir2/file", result.path.filename)
+      assert.equal("/my-tmp/dir2/file", result.path.filename)
     end
   )
 
@@ -69,7 +69,7 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
         rename_event
       )
 
-    assert.is_equal(vim.tbl_count(rename_instructions), 0)
+    assert.equal(vim.tbl_count(rename_instructions), 0)
   end)
 end)
 

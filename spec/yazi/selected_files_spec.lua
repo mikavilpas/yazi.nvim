@@ -13,20 +13,20 @@ describe("choosing the correct files when starting yazi", function()
 
       local result = utils.selected_file_path("/my-tmp/file1")
 
-      assert.is_equal("/my-tmp/file1", result.filename)
+      assert.equal("/my-tmp/file1", result.filename)
     end)
 
     it("when no file is loaded, returns the current directory", function()
       local result = utils.selected_file_path()
 
-      assert.is_equal(result.filename, vim.fn.getcwd())
+      assert.equal(result.filename, vim.fn.getcwd())
     end)
   end)
 
   describe(" selected_files", function()
     it("when no file is loaded, returns the current directory", function()
       local result = utils.selected_file_paths()
-      assert.is_equal(result[1].filename, vim.fn.getcwd())
+      assert.equal(result[1].filename, vim.fn.getcwd())
     end)
 
     it("when given a file, returns that file", function()
@@ -34,8 +34,8 @@ describe("choosing the correct files when starting yazi", function()
 
       local result = utils.selected_file_paths("/my-tmp/file1")
 
-      assert.is_equal("/my-tmp/file1", result[1].filename)
-      assert.is_equal(1, #result)
+      assert.equal("/my-tmp/file1", result[1].filename)
+      assert.equal(1, #result)
     end)
 
     it(
@@ -46,10 +46,10 @@ describe("choosing the correct files when starting yazi", function()
 
         local result = utils.selected_file_paths("/my-tmp/file1")
 
-        assert.is_equal(#result, 2)
+        assert.equal(#result, 2)
 
-        assert.is_equal("/my-tmp/file1", result[1].filename)
-        assert.is_equal("/my-tmp/file2", result[2].filename)
+        assert.equal("/my-tmp/file1", result[1].filename)
+        assert.equal("/my-tmp/file2", result[2].filename)
       end
     )
   end)

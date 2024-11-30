@@ -91,7 +91,7 @@ describe("process_events()", function()
           id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
-      })
+      }, {})
 
       assert.are.same("/tmp", ya.cwd)
     end)
@@ -111,7 +111,7 @@ describe("process_events()", function()
           id = "cd_123",
           url = "/tmp/directory",
         } --[[@as YaziChangeDirectoryEvent]],
-      })
+      }, {})
 
       assert.are.same("/tmp/directory", ya.cwd)
     end)
@@ -142,7 +142,7 @@ describe("process_events()", function()
           },
         }
 
-        local event_callback = spy.new()
+        local event_callback = spy.new(function() end)
         vim.api.nvim_create_autocmd("User", {
           pattern = "YaziRenamedOrMoved",
           callback = function(...)
@@ -150,7 +150,7 @@ describe("process_events()", function()
           end,
         })
 
-        ya:process_events(events)
+        ya:process_events(events, {})
         vim.wait(2000, function()
           return #event_callback.calls > 0
         end)
@@ -186,7 +186,7 @@ describe("process_events()", function()
           },
         }
 
-        local event_callback = spy.new()
+        local event_callback = spy.new(function() end)
         vim.api.nvim_create_autocmd("User", {
           pattern = "YaziRenamedOrMoved",
           callback = function(...)
@@ -194,7 +194,7 @@ describe("process_events()", function()
           end,
         })
 
-        ya:process_events(events)
+        ya:process_events(events, {})
         vim.wait(2000, function()
           return #event_callback.calls > 0
         end)
@@ -228,7 +228,7 @@ describe("process_events()", function()
           },
         }
 
-        local event_callback = spy.new()
+        local event_callback = spy.new(function() end)
         vim.api.nvim_create_autocmd("User", {
           pattern = "YaziRenamedOrMoved",
           callback = function(...)
@@ -236,7 +236,7 @@ describe("process_events()", function()
           end,
         })
 
-        ya:process_events(events)
+        ya:process_events(events, {})
         vim.wait(2000, function()
           return #event_callback.calls > 0
         end)
@@ -263,7 +263,7 @@ describe("opening the yazi in a terminal", function()
   local snapshot
 
   before_each(function()
-    snapshot = assert.snapshot()
+    snapshot = assert:snapshot()
   end)
 
   after_each(function()
@@ -274,11 +274,11 @@ describe("opening the yazi in a terminal", function()
     "sets the NVIM_CWD environment variable to the current working directory",
     function()
       -- selene: allow(incorrect_standard_library_use)
-      os.remove = spy.new()
+      os.remove = spy.new(function() end)
       vim.uv.cwd = spy.new(function()
         return "/tmp/fakedir"
       end)
-      local termopen_spy = spy.new()
+      local termopen_spy = spy.new(function() end)
       vim.fn.termopen = termopen_spy
 
       require("yazi.process.yazi_process"):start(
@@ -292,7 +292,7 @@ describe("opening the yazi in a terminal", function()
       assert(termopen_spy.calls[1].vals[2].env)
       local env = termopen_spy.calls[1].vals[2].env
 
-      assert.equals(env.NVIM_CWD, "/tmp/fakedir")
+      assert.equal(env.NVIM_CWD, "/tmp/fakedir")
     end
   )
 end)
