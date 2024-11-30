@@ -37,8 +37,8 @@ jobs:
           crate: yazi-fm
           git: https://github.com/sxyazi/yazi
           commit:
-            # https://github.com/sxyazi/yazi/commit/c6687237e17673bfcd9a75f12730ea078faa0262
-            c6687237e17673bfcd9a75f12730ea078faa0262
+            # https://github.com/sxyazi/yazi/commit/d72f90356b98
+            d72f90356b98
 
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3.1.1
@@ -47,8 +47,8 @@ jobs:
           crate: yazi-cli
           git: https://github.com/sxyazi/yazi
           commit:
-            # https://github.com/sxyazi/yazi/commit/c6687237e17673bfcd9a75f12730ea078faa0262
-            c6687237e17673bfcd9a75f12730ea078faa0262
+            # https://github.com/sxyazi/yazi/commit/d72f90356b98
+            d72f90356b98
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1.1.0
