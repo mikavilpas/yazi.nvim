@@ -78,8 +78,8 @@ describe("installing a plugin", function()
         name = "test-plugin-2",
       }, { yazi_dir = yazi_dir })
 
-      assert.is_equal(result.error, "source directory does not exist")
-      assert.is_equal(result.from, plugin_dir)
+      assert.equal(result.error, "source directory does not exist")
+      assert.equal(result.from, plugin_dir)
     end)
 
     it("can install a plugin from a monorepo subdirectory", function()

@@ -29,7 +29,7 @@ describe("keybinding_helpers", function()
 
       keybinding_helpers.grep_in_directory(config, "/tmp/file")
 
-      assert.stub(s).was_called_with("/tmp")
+      assert.stub(s).called_with("/tmp")
     end)
 
     it("should grep in the directory when a directory is passed", function()
@@ -38,7 +38,7 @@ describe("keybinding_helpers", function()
 
       keybinding_helpers.grep_in_directory(config, "/tmp")
 
-      assert.stub(s).was_called_with("/")
+      assert.stub(s).called_with("/")
     end)
 
     it("should not crash if the integration is disabled", function()
@@ -63,7 +63,7 @@ describe("keybinding_helpers", function()
         { "/tmp/file1", "/tmp/file2" }
       )
 
-      assert.equals(2, #results)
+      assert.equal(2, #results)
       assert.are.same(
         { "/tmp/file1", "/tmp/file2" },
         vim
@@ -86,8 +86,8 @@ describe("keybinding_helpers", function()
 
         keybinding_helpers.replace_in_directory(config, "/tmp/file")
 
-        assert.stub(stub_replace).was_called_with(match.is_truthy())
-        assert.equals("/tmp", stub_replace.calls[1].vals[1].filename)
+        assert.stub(stub_replace).called_with(match.is_truthy())
+        assert.equal("/tmp", stub_replace.calls[1].vals[1].filename)
       end
     )
 
@@ -103,8 +103,8 @@ describe("keybinding_helpers", function()
 
         keybinding_helpers.replace_in_directory(config, "/tmp")
 
-        assert.stub(stub_replace).was_called_with(match.is_truthy())
-        assert.equals("/", stub_replace.calls[1].vals[1].filename)
+        assert.stub(stub_replace).called_with(match.is_truthy())
+        assert.equal("/", stub_replace.calls[1].vals[1].filename)
       end
     )
   end)
@@ -124,7 +124,7 @@ describe("keybinding_helpers", function()
         { "/tmp/file1", "/tmp/file2" }
       )
 
-      assert.equals(2, #results)
+      assert.equal(2, #results)
 
       local paths = vim
         .iter(results)
@@ -152,9 +152,9 @@ describe("keybinding_helpers", function()
 
         assert
           .stub(vim_cmd_stub)
-          .was_called_with({ cmd = "cd", args = { "/tmp" } })
+          .called_with({ cmd = "cd", args = { "/tmp" } })
 
-        assert.stub(vim_notify_stub).was_called_with('cwd changed to "/tmp"')
+        assert.stub(vim_notify_stub).called_with('cwd changed to "/tmp"')
       end
     )
 
@@ -170,8 +170,8 @@ describe("keybinding_helpers", function()
 
       assert
         .stub(vim_cmd_stub)
-        .was_called_with({ cmd = "cd", args = { "/tmp" } })
-      assert.stub(vim_notify_stub).was_called_with('cwd changed to "/tmp"')
+        .called_with({ cmd = "cd", args = { "/tmp" } })
+      assert.stub(vim_notify_stub).called_with('cwd changed to "/tmp"')
     end)
 
     it(
@@ -187,7 +187,7 @@ describe("keybinding_helpers", function()
           },
         })
 
-        assert.stub(vim_fn_stub).was_called_with()
+        assert.stub(vim_fn_stub).called_with()
         assert.stub(vim_cmd_stub).was_not_called()
         assert.stub(vim_notify_stub).was_not_called()
       end

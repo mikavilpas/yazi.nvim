@@ -20,9 +20,9 @@ describe("the default configuration", function()
 
     local buffers = vim.api.nvim_list_bufs()
 
-    assert.equals(2, #buffers)
-    assert.equals("/abc/test-file.txt", vim.api.nvim_buf_get_name(buffers[1]))
-    assert.equals("/abc/test-file2.txt", vim.api.nvim_buf_get_name(buffers[2]))
+    assert.equal(2, #buffers)
+    assert.equal("/abc/test-file.txt", vim.api.nvim_buf_get_name(buffers[1]))
+    assert.equal("/abc/test-file2.txt", vim.api.nvim_buf_get_name(buffers[2]))
   end)
 
   it("can display multiple files in the quickfix list", function()
@@ -41,8 +41,8 @@ describe("the default configuration", function()
 
     local quickfix_list = vim.fn.getqflist()
 
-    assert.equals(2, #quickfix_list)
-    assert.equals("/abc/test-$@file.txt", quickfix_list[1].text)
-    assert.equals("/abc/test-file2.txt", quickfix_list[2].text)
+    assert.equal(2, #quickfix_list)
+    assert.equal("/abc/test-$@file.txt", quickfix_list[1].text)
+    assert.equal("/abc/test-file2.txt", quickfix_list[2].text)
   end)
 end)

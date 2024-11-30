@@ -27,20 +27,20 @@ describe("the Yazi commands", function()
     commands.create_yazi_commands()
     vim.cmd(":Yazi")
 
-    assert.stub(yazi_stub).was_called_with()
+    assert.stub(yazi_stub).called_with()
   end)
 
   it("creates the `:Yazi cwd` command", function()
     commands.create_yazi_commands()
     vim.cmd(":Yazi cwd")
 
-    assert.stub(yazi_stub).was_called_with(nil, "/tmp")
+    assert.stub(yazi_stub).called_with(nil, "/tmp")
   end)
 
   it("creates the `:Yazi toggle` command", function()
     commands.create_yazi_commands()
     vim.cmd(":Yazi toggle")
 
-    assert.stub(yazi_toggle_stub).was_called_with()
+    assert.stub(yazi_toggle_stub).called_with()
   end)
 end)

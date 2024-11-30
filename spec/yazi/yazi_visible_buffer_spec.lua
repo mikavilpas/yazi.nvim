@@ -14,7 +14,7 @@ describe("YaziVisibleBuffer", function()
 
     local visible_open_buffers = utils.get_visible_open_buffers()
 
-    assert.equals(1, #visible_open_buffers)
+    assert.equal(1, #visible_open_buffers)
   end)
 
   it("is not found for a buffer that's not visible", function()
@@ -23,10 +23,10 @@ describe("YaziVisibleBuffer", function()
 
     local visible_open_buffers = utils.get_visible_open_buffers()
 
-    assert.equals(1, #visible_open_buffers)
+    assert.equal(1, #visible_open_buffers)
     local visible_open_buffer = visible_open_buffers[1]
 
-    assert.equals(
+    assert.equal(
       "file1",
       visible_open_buffer.renameable_buffer.path.filename:match("file1")
     )

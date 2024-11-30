@@ -18,7 +18,7 @@ describe("the grug-far integration (search and replace)", function()
 
     config.default().integrations.replace_in_directory(tmp_path)
 
-    assert.spy(mock_grug_far.open).was_called_with({
+    assert.spy(mock_grug_far.open).called_with({
       prefills = {
         paths = "/tmp/folder\\ with\\ spaces",
       },

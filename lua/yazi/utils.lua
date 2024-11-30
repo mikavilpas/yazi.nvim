@@ -9,6 +9,10 @@ local M = {}
 ---@return string
 function M.relative_path(config, current_file_dir, selected_file)
   local command = config.integrations.resolve_relative_path_application
+  assert(
+    command ~= nil,
+    "resolve_relative_path_application must be set. Please report this as a bug."
+  )
 
   if vim.fn.executable(command) == 0 then
     local msg = string.format(
