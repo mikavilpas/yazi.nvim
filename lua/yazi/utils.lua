@@ -353,9 +353,11 @@ function M.rename_or_close_buffer(instruction)
     vim.api.nvim_buf_set_name(instruction.bufnr, instruction.path.filename)
   end)
   vim.schedule(function()
-    vim.api.nvim_buf_call(instruction.bufnr, function()
-      vim.cmd("edit!")
-    end)
+    if vim.api.nvim_buf_is_valid(instruction.bufnr) then
+      vim.api.nvim_buf_call(instruction.bufnr, function()
+        vim.cmd("edit!")
+      end)
+    end
   end)
 end
 
