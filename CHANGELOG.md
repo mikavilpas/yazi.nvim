@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.6.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.6.0...v6.6.1) (2024-12-02)
+
+
+### Bug Fixes
+
+* "invalid buffer id x" error when renaming a buffer ([6884a0f](https://github.com/mikavilpas/yazi.nvim/commit/6884a0feedecc6e1e274860893a2827d88740c6a))
+
+
+### Performance Improvements
+
+* **tests:** use `cy.runExCommand` in all tests ([97093b1](https://github.com/mikavilpas/yazi.nvim/commit/97093b16f3c9d027706bb97c4b65117e78d846d9))
+
 ## [6.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.5.1...v6.6.0) (2024-11-16)
 
 
