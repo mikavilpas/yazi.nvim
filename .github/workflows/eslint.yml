@@ -9,7 +9,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: reviewdog/action-eslint@v1.32.0
+      - uses: reviewdog/action-eslint@v1.33.0
         with:
           workdir: integration-tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
