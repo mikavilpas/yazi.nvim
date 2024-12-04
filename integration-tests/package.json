@@ -10,23 +10,23 @@
   },
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
-    "cypress": "13.16.0",
+    "cypress": "13.16.1",
     "wait-on": "8.0.1",
     "zod": "3.23.8"
   },
   "devDependencies": {
-    "@tui-sandbox/library": "7.3.0",
+    "@tui-sandbox/library": "7.4.0",
     "@types/node": "22.10.1",
     "@types/tinycolor2": "1.4.6",
-    "@typescript-eslint/eslint-plugin": "8.16.0",
-    "@typescript-eslint/parser": "8.16.0",
+    "@typescript-eslint/eslint-plugin": "8.17.0",
+    "@typescript-eslint/parser": "8.17.0",
     "concurrently": "9.1.0",
     "eslint": "9.16.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-no-only-tests": "3.3.0",
     "prettier-plugin-organize-imports": "4.1.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "4.29.0",
+    "type-fest": "4.30.0",
     "typescript": "5.7.2"
   }
 }
