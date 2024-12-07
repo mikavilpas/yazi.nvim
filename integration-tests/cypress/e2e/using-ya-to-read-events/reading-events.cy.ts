@@ -34,16 +34,20 @@ describe("reading events", () => {
   it("can read 'trash' events and close an open buffer when its file was trashed", () => {
     // NOTE: trash means moving a file to the trash, not deleting it permanently
 
-    cy.startNeovim().then((dir) => {
+    cy.startNeovim({
+      filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
+    }).then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
+      cy.contains("Hello")
 
       // modify the buffer to make sure it works even if the buffer is modified
       cy.typeIntoTerminal("ccchanged{esc}")
 
-      // start yazi
+      // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
       cy.typeIntoTerminal("d")
@@ -59,22 +63,40 @@ describe("reading events", () => {
       // have closed the buffer
       cy.contains(dir.contents["initial-file.txt"].name).should("not.exist")
       cy.contains("If you see this text, Neovim is ready").should("not.exist")
+
+      // make sure two windows are open. The test environment uses snacks.nvim
+      // which should make sure the window layout is preserved when closing
+      // the deleted buffer. The default in neovim is to also close the
+      // window.
+      cy.runExCommand({ command: `echo winnr("$")` }).then((result) => {
+        expect(result.value).to.match(/2/)
+      })
     })
   })
 
   it("can read 'delete' events and close an open buffer when its file was deleted", () => {
     // NOTE: delete means permanently deleting a file (not moving it to the trash)
 
-    cy.startNeovim().then((dir) => {
+    cy.startNeovim({
+      filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
+    }).then((dir) => {
       // the default file should already be open
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
+      cy.contains("Hello")
+
+      // make sure If you see this text, Neovim is ready! is in the correct
+      // buffer so that we are editing the correct buffer in this test
+      cy.runExCommand({ command: "echo expand('%')" }).then((result) => {
+        expect(result.value).to.match(/initial-file.txt$/)
+      })
 
       // modify the buffer to make sure it works even if the buffer is modified
       cy.typeIntoTerminal("ccchanged{esc}")
 
-      // start yazi
+      // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
       cy.typeIntoTerminal("D")
@@ -90,6 +112,14 @@ describe("reading events", () => {
       // have closed the buffer
       cy.get(dir.contents["initial-file.txt"].name).should("not.exist")
       cy.contains("If you see this text, Neovim is ready").should("not.exist")
+
+      // make sure two windows are open. The test environment uses snacks.nvim
+      // which should make sure the window layout is preserved when closing
+      // the deleted buffer. The default in neovim is to also close the
+      // window.
+      cy.runExCommand({ command: `echo winnr("$")` }).then((result) => {
+        expect(result.value).to.match(/2/)
+      })
     })
   })
 })

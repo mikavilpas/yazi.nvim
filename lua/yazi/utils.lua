@@ -338,6 +338,17 @@ function M.is_buffer_open(path)
   return false
 end
 
+function M.bufdelete(bufnr)
+  local ok, bufdelete = pcall(function()
+    return require("snacks.bufdelete")
+  end)
+  if ok then
+    return bufdelete.delete({ buf = bufnr, force = true })
+  else
+    vim.api.nvim_buf_delete(bufnr, { force = true })
+  end
+end
+
 ---@param instruction RenameableBuffer
 ---@return nil
 function M.rename_or_close_buffer(instruction)

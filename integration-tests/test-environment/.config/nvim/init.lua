@@ -77,6 +77,7 @@ local plugins = {
   { "nvim-telescope/telescope.nvim", lazy = true },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
+  { "folke/snacks.nvim", opts = {} },
 }
 require("lazy").setup({ spec = plugins })
 
