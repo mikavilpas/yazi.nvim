@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.6.1...v6.7.0) (2024-12-07)
+
+
+### Features
+
+* using folke/snacks.nvim can preserve window layouts on deletes ([5c0f9b2](https://github.com/mikavilpas/yazi.nvim/commit/5c0f9b24ba0b87b8e2a79a685ac4a95577961fff))
+
 ## [6.6.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.6.0...v6.6.1) (2024-12-02)
 
 
