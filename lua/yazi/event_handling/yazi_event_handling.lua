@@ -33,7 +33,7 @@ function M.process_delete_event(event, remaining_events)
           deleted_buffers[#deleted_buffers + 1] = buffer
 
           vim.schedule(function()
-            vim.api.nvim_buf_delete(buffer.bufnr, { force = true })
+            utils.bufdelete(buffer.bufnr)
             lsp_delete.file_deleted(buffer.path.filename)
           end)
         end
