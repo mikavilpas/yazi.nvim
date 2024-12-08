@@ -150,9 +150,7 @@ describe("keybinding_helpers", function()
           ya_process = { cwd = "/tmp" },
         })
 
-        assert
-          .stub(vim_cmd_stub)
-          .called_with({ cmd = "cd", args = { "/tmp" } })
+        assert.stub(vim_cmd_stub).called_with({ cmd = "cd", args = { "/tmp" } })
 
         assert.stub(vim_notify_stub).called_with('cwd changed to "/tmp"')
       end
@@ -168,9 +166,7 @@ describe("keybinding_helpers", function()
         },
       })
 
-      assert
-        .stub(vim_cmd_stub)
-        .called_with({ cmd = "cd", args = { "/tmp" } })
+      assert.stub(vim_cmd_stub).called_with({ cmd = "cd", args = { "/tmp" } })
       assert.stub(vim_notify_stub).called_with('cwd changed to "/tmp"')
     end)
 
