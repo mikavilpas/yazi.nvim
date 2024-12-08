@@ -5,28 +5,29 @@ import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
 
 const yaziText = "NOR"
 
-describe("'cd' to another buffer's directory", () => {
+describe("revealing another open split (buffer) in yazi", () => {
   beforeEach(() => {
     cy.visit("/")
   })
 
   it("can highlight the buffer when hovered", () => {
     const view = {
-      leftFile: { text: "This is other-sub-file.txt" },
-      centerFile: { text: "this file is adjacent-file.txt" },
-      rightFile: { text: "ello from the subdirectory!" },
+      leftFile: { text: "ello from file_1.txt" },
+      centerFile: { text: "This is file_2.txt" },
+      rightFile: { text: "You are looking at file_3.txt" },
     } as const
 
     cy.startNeovim({
       filename: {
         openInVerticalSplits: [
-          "subdirectory/subdirectory-file.txt",
-          "routes/posts.$postId/adjacent-file.txt",
-          "other-subdirectory/other-sub-file.txt",
+          "highlights/file_1.txt",
+          "highlights/file_2.txt",
+          "highlights/file_3.txt",
         ],
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "modify_yazi_config_use_ya_emit.lua",
       ],
     }).then(() => {
       // sanity check to make sure the files are open
@@ -46,22 +47,20 @@ describe("'cd' to another buffer's directory", () => {
 
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.
-      //
-      // Since each directory only has one file, it should be highlighted :)
       cy.typeIntoTerminal("{control+i}")
       isNotHoveredInNeovim(view.leftFile.text)
       isHoveredInNeovim(view.centerFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
 
       cy.typeIntoTerminal("{control+i}")
+      isHoveredInNeovim(view.rightFile.text)
+      isNotHoveredInNeovim(view.centerFile.text)
+      isNotHoveredInNeovim(view.leftFile.text)
+
+      cy.typeIntoTerminal("{control+i}")
       isHoveredInNeovim(view.leftFile.text)
       isNotHoveredInNeovim(view.centerFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
-
-      cy.typeIntoTerminal("{control+i}")
-      isNotHoveredInNeovim(view.leftFile.text)
-      isNotHoveredInNeovim(view.centerFile.text)
-      isHoveredInNeovim(view.rightFile.text)
 
       // tab once more to make sure it wraps around
       cy.typeIntoTerminal("{control+i}")
@@ -88,6 +87,7 @@ describe("'cd' to another buffer's directory", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "modify_yazi_config_use_ya_emit.lua",
       ],
     }).then(() => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
@@ -114,30 +114,6 @@ describe("'cd' to another buffer's directory", () => {
       cy.typeIntoTerminal("{control+i}")
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
       isHoveredInNeovim(view.rightFile.text)
-    })
-  })
-
-  it("can tab to the directory of just a single buffer", () => {
-    cy.startNeovim({
-      filename: "file2.txt",
-    }).then((dir) => {
-      cy.contains("Hello")
-
-      cy.typeIntoTerminal("{upArrow}")
-      cy.contains(yaziText)
-      cy.contains("initial-file.txt")
-
-      cy.typeIntoTerminal(`/routes{enter}`, { delay: 1 })
-      cy.contains("posts.$postId")
-
-      // enter the directory and make sure its contents are shown
-      cy.typeIntoTerminal("l")
-      cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
-
-      cy.typeIntoTerminal("{control+i}")
     })
   })
 })

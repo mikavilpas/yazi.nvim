@@ -16,6 +16,7 @@ function M.default()
   return {
     log_level = vim.log.levels.OFF,
     open_for_directories = false,
+    future_features = {},
     open_multiple_tabs = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
@@ -151,7 +152,7 @@ function M.set_keymappings(yazi_buffer, config, context)
 
   if config.keymaps.cycle_open_buffers ~= false then
     vim.keymap.set({ "t" }, config.keymaps.cycle_open_buffers, function()
-      keybinding_helpers.cycle_open_buffers(context)
+      keybinding_helpers.cycle_open_buffers(config, context)
     end, { buffer = yazi_buffer })
   end
 
