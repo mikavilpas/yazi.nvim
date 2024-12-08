@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.7.0...v6.8.0) (2024-12-08)
+
+
+### Features
+
+* can use `ya emit` for more accurate &lt;tab&gt; to file (opt-in) ([#604](https://github.com/mikavilpas/yazi.nvim/issues/604)) ([b81e03c](https://github.com/mikavilpas/yazi.nvim/commit/b81e03c64bc1635acb15f536948b243ae975c960))
+
 ## [6.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.6.1...v6.7.0) (2024-12-07)
 
 
