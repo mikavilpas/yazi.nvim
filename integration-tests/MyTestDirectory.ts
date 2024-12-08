@@ -101,6 +101,12 @@ export const MyTestDirectorySchema = z.object({
           extension: z.literal("lua"),
           stem: z.literal("modify_yazi_config_log_yazi_closed_successfully."),
         }),
+        "modify_yazi_config_use_ya_emit.lua": z.object({
+          name: z.literal("modify_yazi_config_use_ya_emit.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("modify_yazi_config_use_ya_emit."),
+        }),
         "notify_custom_events.lua": z.object({
           name: z.literal("notify_custom_events.lua"),
           type: z.literal("file"),
@@ -156,6 +162,30 @@ export const MyTestDirectorySchema = z.object({
       type: z.literal("file"),
       extension: z.literal("txt"),
       stem: z.literal("file2."),
+    }),
+    highlights: z.object({
+      name: z.literal("highlights/"),
+      type: z.literal("directory"),
+      contents: z.object({
+        "file_1.txt": z.object({
+          name: z.literal("file_1.txt"),
+          type: z.literal("file"),
+          extension: z.literal("txt"),
+          stem: z.literal("file_1."),
+        }),
+        "file_2.txt": z.object({
+          name: z.literal("file_2.txt"),
+          type: z.literal("file"),
+          extension: z.literal("txt"),
+          stem: z.literal("file_2."),
+        }),
+        "file_3.txt": z.object({
+          name: z.literal("file_3.txt"),
+          type: z.literal("file"),
+          extension: z.literal("txt"),
+          stem: z.literal("file_3."),
+        }),
+      }),
     }),
     "initial-file.txt": z.object({
       name: z.literal("initial-file.txt"),
@@ -241,6 +271,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/modify_yazi_config_and_open_multiple_files.lua",
   "config-modifications/modify_yazi_config_and_set_help_key.lua",
   "config-modifications/modify_yazi_config_log_yazi_closed_successfully.lua",
+  "config-modifications/modify_yazi_config_use_ya_emit.lua",
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",
   "config-modifications/notify_rename_events.lua",
@@ -251,6 +282,10 @@ export const testDirectoryFiles = z.enum([
   "dir with spaces/file2.txt",
   "dir with spaces",
   "file2.txt",
+  "highlights/file_1.txt",
+  "highlights/file_2.txt",
+  "highlights/file_3.txt",
+  "highlights",
   "initial-file.txt",
   "other-subdirectory/other-sub-file.txt",
   "other-subdirectory",

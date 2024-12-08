@@ -22,6 +22,10 @@
 ---@field public clipboard_register? string the register to use for copying. Defaults to "*", the system clipboard
 ---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"
 ---@field public forwarded_dds_events? string[] "Yazi events to listen to. These are published as neovim autocmds so that the user can set up custom handlers for themselves. Defaults to `nil`."
+---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
+
+---@class(exact) yazi.OptInFeatures
+---@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. This requires https://github.com/sxyazi/yazi/pull/1979 (from 2024-12-01).
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 

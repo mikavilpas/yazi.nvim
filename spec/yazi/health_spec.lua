@@ -184,6 +184,41 @@ Options:
     )
   end)
 
+  describe("future_features", function()
+    it(
+      "warns when yazi is < 0.4.0 and `config.future_features.ya_emit_reveal` is enabled",
+      function()
+        yazi.setup({
+          future_features = {
+            ya_emit_reveal = true,
+          },
+        })
+
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_contains_text(
+          "You have enabled `future_features.ya_emit_reveal` in your config. This requires yazi.nvim version 0.4.0 or newer."
+        )
+      end
+    )
+
+    it(
+      "does not warn when yazi is >= 0.4.0 and `config.future_features.ya_emit_reveal` is enabled",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.4.0 (f5a7ace 2024-07-23)"
+        yazi.setup({
+          future_features = {
+            ya_emit_reveal = true,
+          },
+        })
+
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("future_features.ya_emit_reveal")
+      end
+    )
+  end)
+
   describe("the checks for resolve_relative_path_application", function()
     it(
       "warns when the keymap for this integration is set but the resolver is missing",

@@ -1,3 +1,5 @@
+---@module "plenary.path"
+
 ---@class YaziProcessApi # Provides yazi.nvim -> yazi process interactions. This allows yazi.nvim to tell yazi what to do.
 ---@field private config YaziConfig
 ---@field private yazi_id string
@@ -15,9 +17,17 @@ end
 
 ---@param path string
 function YaziProcessApi:cd(path)
-  assert(path, "path is required")
   vim.system(
     { "ya", "pub-to", self.yazi_id, "--str", path, "dds-cd" },
+    { timeout = 1000 }
+  )
+end
+
+---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.reveal
+---@param path string
+function YaziProcessApi:reveal(path)
+  vim.system(
+    { "ya", "emit-to", self.yazi_id, "reveal", "--str", path },
     { timeout = 1000 }
   )
 end
