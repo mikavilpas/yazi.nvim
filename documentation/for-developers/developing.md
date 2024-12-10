@@ -173,3 +173,5 @@ An example can be found
 More information about the setup:
 
 - <https://github.com/nvim-neorocks/nvim-best-practices/tree/main?tab=readme-ov-file#test_tube-testing>
+- an example of adding LuaCATS types
+  [with folke/lazydev.nvim](https://github.com/mikavilpas/dotfiles/blob/260876061e7309ae1f0833ac8a509d1a13b7bedf/.config/nvim/lua/plugins/luadev.lua?plain=1#L7)
