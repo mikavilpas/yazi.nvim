@@ -155,8 +155,7 @@ describe("process_events()", function()
           return #event_callback.calls > 0
         end)
 
-        assert.spy(event_callback).was_called()
-        assert.same(#event_callback.calls, 1)
+        assert.spy(event_callback).called(1)
 
         local event = event_callback.calls[1].vals[1]
         assert.same({
@@ -199,8 +198,7 @@ describe("process_events()", function()
           return #event_callback.calls > 0
         end)
 
-        assert.spy(event_callback).was_called()
-        assert.same(#event_callback.calls, 1)
+        assert.spy(event_callback).called(1)
 
         local event = event_callback.calls[1].vals[1]
         assert.same({
@@ -241,8 +239,7 @@ describe("process_events()", function()
           return #event_callback.calls > 0
         end)
 
-        assert.spy(event_callback).was_called()
-        assert.same(#event_callback.calls, 1)
+        assert.spy(event_callback).called(1)
 
         local event = event_callback.calls[1].vals[1]
         assert.same({

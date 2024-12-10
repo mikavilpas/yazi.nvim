@@ -184,8 +184,8 @@ describe("keybinding_helpers", function()
         })
 
         assert.stub(vim_fn_stub).called_with()
-        assert.stub(vim_cmd_stub).was_not_called()
-        assert.stub(vim_notify_stub).was_not_called()
+        assert.stub(vim_cmd_stub).called_at_most(0)
+        assert.stub(vim_notify_stub).called_at_most(0)
       end
     )
   end)

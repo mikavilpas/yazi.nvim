@@ -1,4 +1,5 @@
 local reset = require("spec.yazi.helpers.reset")
+local assert = require("luassert")
 
 describe("the default configuration", function()
   before_each(function()
@@ -6,7 +7,7 @@ describe("the default configuration", function()
   end)
 
   local plenary_path = require("plenary.path")
-  local test_file_path = plenary_path:new(vim.fn.getcwd(), "test-file.txt")
+  local last_directory = plenary_path:new(vim.fn.getcwd())
 
   it("opens multiple files in buffers by default", function()
     local config = require("yazi.config").default()
@@ -15,7 +16,7 @@ describe("the default configuration", function()
     config.hooks.yazi_opened_multiple_files(
       chosen_files,
       config,
-      test_file_path
+      { last_directory = last_directory }
     )
 
     local buffers = vim.api.nvim_list_bufs()
@@ -36,7 +37,7 @@ describe("the default configuration", function()
     config.hooks.yazi_opened_multiple_files(
       chosen_files,
       config,
-      test_file_path
+      { last_directory = last_directory }
     )
 
     local quickfix_list = vim.fn.getqflist()

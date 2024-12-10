@@ -25,7 +25,7 @@ describe("open_file_in_vertical_split", function()
     -- explorer, which is less useful than yazi
     openers.open_file_in_vertical_split(base_dir)
 
-    assert.stub(vim.cmd).was_not_called()
+    assert.stub(vim.cmd).called_at_most(0)
   end)
 end)
 
@@ -35,7 +35,7 @@ describe("open_file_in_horizontal_split", function()
     -- explorer, which is less useful than yazi
     openers.open_file_in_horizontal_split(base_dir)
 
-    assert.stub(vim.cmd).was_not_called()
+    assert.stub(vim.cmd).called_at_most(0)
   end)
 end)
 
@@ -45,6 +45,6 @@ describe("open_file_in_tab", function()
     -- explorer, which is less useful than yazi
     openers.open_file_in_tab(base_dir)
 
-    assert.stub(vim.cmd).was_not_called()
+    assert.stub(vim.cmd).called_at_most(0)
   end)
 end)

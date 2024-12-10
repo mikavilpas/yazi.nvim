@@ -97,7 +97,7 @@ describe("process_events_emitted_from_yazi", function()
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
-      assert.is_not_equal("/my-tmp/file1", buffer.path.filename)
+      assert.are_not_equal("/my-tmp/file1", buffer.path.filename)
     end
   end)
 
@@ -124,7 +124,7 @@ describe("process_events_emitted_from_yazi", function()
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
-      assert.is_not_equal("/my-tmp/file1", buffer.path.filename)
+      assert.are_not_equal("/my-tmp/file1", buffer.path.filename)
     end
   end)
 end)

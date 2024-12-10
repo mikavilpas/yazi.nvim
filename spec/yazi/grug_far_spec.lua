@@ -7,10 +7,15 @@ local plenary_path = require("plenary.path")
 
 describe("the grug-far integration (search and replace)", function()
   local mock_grug_far = { open = function() end }
+  local snapshot
 
   before_each(function()
-    mock.revert(mock_grug_far)
+    snapshot = assert:snapshot()
     package.loaded["grug-far"] = mock(mock_grug_far)
+  end)
+
+  after_each(function()
+    snapshot:revert()
   end)
 
   it("opens yazi with the current file selected", function()
