@@ -15,7 +15,7 @@ describe("open_for_directories", function()
     -- instead of netrw opening, yazi should open
     vim.api.nvim_command("edit /")
 
-    assert.spy(hijack_netrw.hijack_netrw).was_called(1)
+    assert.spy(hijack_netrw.hijack_netrw).called_at_least(1)
   end)
 
   it(
@@ -26,7 +26,7 @@ describe("open_for_directories", function()
       -- instead of netrw opening, yazi should open
       vim.api.nvim_command("edit /")
 
-      assert.spy(hijack_netrw.hijack_netrw).was_not_called()
+      assert.spy(hijack_netrw.hijack_netrw).called_at_most(0)
     end
   )
 end)

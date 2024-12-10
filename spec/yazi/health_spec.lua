@@ -25,6 +25,7 @@ local function assert_buffer_does_not_contain_text(needle)
   )
 
   local found = string.find(text, needle, 1, true) ~= nil
+  ---@diagnostic disable-next-line: redundant-parameter
   assert.is_false(found, message)
 end
 
