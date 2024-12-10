@@ -36,7 +36,7 @@ jobs:
           # yazi-fm is the `yazi` executable
           crate: yazi-fm
           git: https://github.com/sxyazi/yazi
-          tag: v0.4.0
+          tag: v0.4.1
           # commit:
           #   # https://github.com/sxyazi/yazi/commit/d72f90356b98
           #   d72f90356b98
@@ -47,7 +47,7 @@ jobs:
           # yazi-cli is the `ya` command line interface
           crate: yazi-cli
           git: https://github.com/sxyazi/yazi
-          tag: v0.4.0
+          tag: v0.4.1
           # commit:
           #   # https://github.com/sxyazi/yazi/commit/d72f90356b98
           #   d72f90356b98
