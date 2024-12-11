@@ -12,11 +12,11 @@
     "@catppuccin/palette": "1.7.1",
     "cypress": "13.16.1",
     "wait-on": "8.0.1",
-    "zod": "3.24.0"
+    "zod": "3.24.1"
   },
   "devDependencies": {
     "@tui-sandbox/library": "7.4.0",
-    "@types/node": "22.10.1",
+    "@types/node": "22.10.2",
     "@types/tinycolor2": "1.4.6",
     "@typescript-eslint/eslint-plugin": "8.18.0",
     "@typescript-eslint/parser": "8.18.0",
