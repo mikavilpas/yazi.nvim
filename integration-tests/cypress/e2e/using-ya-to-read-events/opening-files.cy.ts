@@ -10,14 +10,14 @@ describe("opening files", () => {
   })
 
   it("can display yazi in a floating terminal", () => {
-    cy.startNeovim().then((dir) => {
+    cy.startNeovim().then(() => {
       cy.contains("If you see this text, Neovim is ready!")
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
       // yazi should now be visible, showing the names of adjacent files
-      cy.contains(dir.contents["file2.txt"].name) // an adjacent file
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
     })
   })
 
@@ -29,6 +29,8 @@ describe("opening files", () => {
 
       // search for the file in yazi. This focuses the file in yazi
       cy.typeIntoTerminal(`gg/${dir.contents["file2.txt"].name}{enter}`)
+      cy.typeIntoTerminal("{esc}") // hide the search highlight
+      isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("{enter}")
 
       // the file content should now be visible
@@ -40,8 +42,12 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal(
+        `/${"file2.txt" satisfies MyTestDirectoryFile}{enter}`,
+      )
+      cy.typeIntoTerminal("{esc}") // hide the search highlight
+      isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("{control+v}")
 
       // yazi should now be closed
@@ -59,6 +65,8 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(dir.contents["file2.txt"].name)
       cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+      cy.typeIntoTerminal("{esc}") // hide the search highlight
+      isFileSelectedInYazi(dir.contents["file2.txt"].name)
       cy.typeIntoTerminal("{control+x}")
 
       // yazi should now be closed
@@ -74,8 +82,11 @@ describe("opening files", () => {
     cy.startNeovim().then((dir) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
+      isFileNotSelectedInYazi(dir.contents["file2.txt"].name)
       cy.contains(dir.contents["file2.txt"].name)
       cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+      cy.typeIntoTerminal("{esc}") // hide the search highlight
+      isFileSelectedInYazi(dir.contents["file2.txt"].name)
       cy.typeIntoTerminal("{control+t}")
 
       // yazi should now be closed
@@ -95,30 +106,38 @@ describe("opening files", () => {
   })
 
   it("can send file names to the quickfix list", () => {
-    cy.startNeovim().then((dir) => {
-      cy.contains("If you see this text, Neovim is ready!")
+    cy.startNeovim({ filename: "file2.txt" }).then((dir) => {
+      cy.contains("Hello")
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open
       cy.contains(dir.contents["file2.txt"].name)
 
-      // select the initial file, the cursor moves one line down to the next file
+      // file2.txt should be selected
+      isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+
+      // select file2, the cursor moves one line down to the next file
       cy.typeIntoTerminal(" ")
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+
       // also select the next file because multiple files have to be selected
+      isFileSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal(" ")
+      isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("{control+q}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // items in the quickfix list should now be visible
-      cy.contains(`${dir.contents["initial-file.txt"].name}||`)
+      cy.contains(`${dir.contents["file2.txt"].name}||`)
+      cy.contains(`${dir.contents["file3.txt"].name}||`)
     })
   })
 
   describe("bulk renaming", () => {
     it("can bulk rename files", () => {
-      cy.startNeovim().then((dir) => {
+      cy.startNeovim().then(() => {
         cy.contains("If you see this text, Neovim is ready!")
         // in yazi, bulk renaming is done by
         // - selecting files and pressing "r".
@@ -127,7 +146,8 @@ describe("opening files", () => {
         //   file.
         // - Finally, yazi should rename the files to match the new names.
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(dir.contents["file2.txt"].name)
+
+        isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
         cy.typeIntoTerminal("{control+a}r")
 
         // yazi should now have opened an embedded Neovim. The file name should say
@@ -148,10 +168,10 @@ describe("opening files", () => {
     })
 
     it("can rename a buffer that's open in Neovim", () => {
-      cy.startNeovim().then((dir) => {
+      cy.startNeovim().then(() => {
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(dir.contents["file2.txt"].name)
+        isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
         // select only the current file to make the test easier
         cy.typeIntoTerminal("v")
         cy.typeIntoTerminal("r") // start renaming
@@ -227,7 +247,7 @@ describe("opening files", () => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["file2.txt"].name)
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
 
       // enter another directory and select a file
       cy.typeIntoTerminal("/routes{enter}")
@@ -243,7 +263,13 @@ describe("opening files", () => {
           dir.contents.routes.contents["posts.$postId"].contents[
             "adjacent-file.txt"
           ].name
-        }{enter}`,
+        }{enter}{esc}`,
+        // esc to hide the search highlight
+      )
+      isFileSelectedInYazi(
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "adjacent-file.txt"
+        ].name,
       )
 
       // the file contents should now be visible
