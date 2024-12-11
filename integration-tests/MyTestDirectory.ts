@@ -163,6 +163,12 @@ export const MyTestDirectorySchema = z.object({
       extension: z.literal("txt"),
       stem: z.literal("file2."),
     }),
+    "file3.txt": z.object({
+      name: z.literal("file3.txt"),
+      type: z.literal("file"),
+      extension: z.literal("txt"),
+      stem: z.literal("file3."),
+    }),
     highlights: z.object({
       name: z.literal("highlights/"),
       type: z.literal("directory"),
@@ -282,6 +288,7 @@ export const testDirectoryFiles = z.enum([
   "dir with spaces/file2.txt",
   "dir with spaces",
   "file2.txt",
+  "file3.txt",
   "highlights/file_1.txt",
   "highlights/file_2.txt",
   "highlights/file_3.txt",
