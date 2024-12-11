@@ -25,7 +25,8 @@
 ---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
 
 ---@class(exact) yazi.OptInFeatures
----@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. This requires https://github.com/sxyazi/yazi/pull/1979 (from 2024-12-01).
+---@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. Requires yazi 0.4.0 or later (from 2024-12-08).
+---@field ya_emit_open? boolean # Use `ya emit open` as a more robust implementation for opening files in yazi. This can prevent conflicts with custom keymappings for the enter key. Requires yazi 0.4.0 or later (from 2024-12-08).
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 

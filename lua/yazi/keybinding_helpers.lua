@@ -9,22 +9,28 @@ local utils = require("yazi.utils")
 local YaziOpenerActions = {}
 
 ---@param config YaziConfig
-function YaziOpenerActions.open_file_in_vertical_split(config)
+---@param api YaziProcessApi
+function YaziOpenerActions.open_file_in_vertical_split(config, api)
   YaziOpenerActions.select_current_file_and_close_yazi(config, {
+    api = api,
     on_file_opened = openers.open_file_in_vertical_split,
   })
 end
 
 ---@param config YaziConfig
-function YaziOpenerActions.open_file_in_horizontal_split(config)
+---@param api YaziProcessApi
+function YaziOpenerActions.open_file_in_horizontal_split(config, api)
   YaziOpenerActions.select_current_file_and_close_yazi(config, {
+    api = api,
     on_file_opened = openers.open_file_in_horizontal_split,
   })
 end
 
 ---@param config YaziConfig
-function YaziOpenerActions.open_file_in_tab(config)
+---@param api YaziProcessApi
+function YaziOpenerActions.open_file_in_tab(config, api)
   YaziOpenerActions.select_current_file_and_close_yazi(config, {
+    api = api,
     on_file_opened = openers.open_file_in_tab,
   })
 end
@@ -34,6 +40,7 @@ end
 --
 --
 ---@class (exact) YaziOpenerActionsCallbacks
+---@field api YaziProcessApi
 ---@field on_file_opened fun(chosen_file: string, config: YaziConfig, state: YaziClosedState):nil
 ---@field on_multiple_files_opened? fun(chosen_files: string[], config: YaziConfig, state: YaziClosedState):nil
 
@@ -54,11 +61,15 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
 
   config.hooks.yazi_opened_multiple_files = callbacks.on_multiple_files_opened
 
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes("<enter>", true, false, true),
-    "n",
-    true
-  )
+  if config.future_features.ya_emit_open then
+    callbacks.api:open()
+  else
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes("<enter>", true, false, true),
+      "n",
+      true
+    )
+  end
 end
 
 ---@param config YaziConfig

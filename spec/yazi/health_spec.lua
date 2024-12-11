@@ -218,6 +218,39 @@ Options:
         assert_buffer_does_not_contain_text("future_features.ya_emit_reveal")
       end
     )
+
+    it(
+      "warns when yazi is < 0.4.0 and `config.future_features.ya_emit_open` is enabled",
+      function()
+        yazi.setup({
+          future_features = {
+            ya_emit_open = true,
+          },
+        })
+
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_contains_text(
+          "You have enabled `future_features.ya_emit_open` in your config. This requires yazi.nvim version 0.4.0 or newer."
+        )
+      end
+    )
+
+    it(
+      "does not warn when yazi is >= 0.4.0 and `config.future_features.ya_emit_open` is enabled",
+      function()
+        mock_app_versions["yazi"] = "yazi 0.4.0 (f5a7ace 2024-07-23)"
+        yazi.setup({
+          future_features = {
+            ya_emit_open = true,
+          },
+        })
+
+        vim.cmd("checkhealth yazi")
+
+        assert_buffer_does_not_contain_text("future_features.ya_emit_open")
+      end
+    )
   end)
 
   describe("the checks for resolve_relative_path_application", function()

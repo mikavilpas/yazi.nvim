@@ -280,9 +280,13 @@ You can optionally configure yazi.nvim by setting any of the options below.
 
     future_features = {
       -- Whether to use `ya emit reveal` to reveal files in the file manager.
-      -- This requires yazi 0.4.0 but will likely be the default in the
-      -- future.
-      ya_emit_reveal = true,
+      -- Requires yazi 0.4.0 or later (from 2024-12-08).
+      ya_emit_reveal = false,
+
+      -- Use `ya emit open` as a more robust implementation for opening files
+      -- in yazi. This can prevent conflicts with custom keymappings for the enter
+      -- key. Requires yazi 0.4.0 or later (from 2024-12-08).
+      ya_emit_open = false,
     },
   },
 }
