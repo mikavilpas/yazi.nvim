@@ -114,7 +114,7 @@ function M.set_keymappings(yazi_buffer, config, context)
       { "t" },
       config.keymaps.open_file_in_vertical_split,
       function()
-        keybinding_helpers.open_file_in_vertical_split(config)
+        keybinding_helpers.open_file_in_vertical_split(config, context.api)
       end,
       { buffer = yazi_buffer }
     )
@@ -125,7 +125,7 @@ function M.set_keymappings(yazi_buffer, config, context)
       { "t" },
       config.keymaps.open_file_in_horizontal_split,
       function()
-        keybinding_helpers.open_file_in_horizontal_split(config)
+        keybinding_helpers.open_file_in_horizontal_split(config, context.api)
       end,
       { buffer = yazi_buffer }
     )
@@ -134,6 +134,7 @@ function M.set_keymappings(yazi_buffer, config, context)
   if config.keymaps.grep_in_directory ~= false then
     vim.keymap.set({ "t" }, config.keymaps.grep_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
+        api = context.api,
         on_file_opened = function(chosen_file, _, _)
           keybinding_helpers.grep_in_directory(config, chosen_file)
         end,
@@ -146,7 +147,7 @@ function M.set_keymappings(yazi_buffer, config, context)
 
   if config.keymaps.open_file_in_tab ~= false then
     vim.keymap.set({ "t" }, config.keymaps.open_file_in_tab, function()
-      keybinding_helpers.open_file_in_tab(config)
+      keybinding_helpers.open_file_in_tab(config, context.api)
     end, { buffer = yazi_buffer })
   end
 
@@ -159,6 +160,7 @@ function M.set_keymappings(yazi_buffer, config, context)
   if config.keymaps.replace_in_directory ~= false then
     vim.keymap.set({ "t" }, config.keymaps.replace_in_directory, function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
+        api = context.api,
         on_file_opened = function(chosen_file)
           keybinding_helpers.replace_in_directory(config, chosen_file)
         end,
@@ -173,6 +175,7 @@ function M.set_keymappings(yazi_buffer, config, context)
     vim.keymap.set({ "t" }, config.keymaps.send_to_quickfix_list, function()
       local openers = require("yazi.openers")
       keybinding_helpers.select_current_file_and_close_yazi(config, {
+        api = context.api,
         on_multiple_files_opened = openers.send_files_to_quickfix_list,
         on_file_opened = function(chosen_file)
           openers.send_files_to_quickfix_list({ chosen_file })
@@ -268,6 +271,7 @@ function M.set_keymappings(yazi_buffer, config, context)
       config.keymaps.copy_relative_path_to_selected_files,
       function()
         keybinding_helpers.select_current_file_and_close_yazi(config, {
+          api = context.api,
           on_file_opened = function(chosen_file)
             local relative_path = require("yazi.utils").relative_path(
               config,

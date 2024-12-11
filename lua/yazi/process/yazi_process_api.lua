@@ -23,6 +23,7 @@ function YaziProcessApi:cd(path)
   )
 end
 
+--- Tell yazi to focus (hover on) the given path.
 ---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.reveal
 ---@param path string
 function YaziProcessApi:reveal(path)
@@ -30,6 +31,12 @@ function YaziProcessApi:reveal(path)
     { "ya", "emit-to", self.yazi_id, "reveal", "--str", path },
     { timeout = 1000 }
   )
+end
+
+--- Tell yazi to open the currently selected file(s).
+---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.open
+function YaziProcessApi:open()
+  vim.system({ "ya", "emit-to", self.yazi_id, "open" }, { timeout = 1000 })
 end
 
 return YaziProcessApi

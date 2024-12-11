@@ -60,6 +60,9 @@ local plugins = {
       clipboard_register = '"',
       -- allows logging debug data, which can be shown in CI when cypress tests fail
       log_level = vim.log.levels.DEBUG,
+      future_features = {
+        ya_emit_open = true,
+      },
       integrations = {
         grep_in_directory = function(directory)
           require("telescope.builtin").live_grep({

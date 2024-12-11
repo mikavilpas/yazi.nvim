@@ -121,6 +121,14 @@ return {
       end
     end
 
+    if config.future_features and config.future_features.ya_emit_open then
+      if not checker.ge(yazi_semver, "0.4.0") then
+        vim.health.warn(
+          "You have enabled `future_features.ya_emit_open` in your config. This requires yazi.nvim version 0.4.0 or newer."
+        )
+      end
+    end
+
     vim.health.start("yazi.config")
     vim.health.info(table.concat({
       "hint: execute the following command to see your configuration: >",
