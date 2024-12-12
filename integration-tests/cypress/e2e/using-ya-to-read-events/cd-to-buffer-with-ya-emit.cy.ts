@@ -27,7 +27,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
-        "modify_yazi_config_use_ya_emit.lua",
+        "modify_yazi_config_use_ya_emit_reveal.lua",
       ],
     }).then(() => {
       // sanity check to make sure the files are open
@@ -87,7 +87,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
-        "modify_yazi_config_use_ya_emit.lua",
+        "modify_yazi_config_use_ya_emit_reveal.lua",
       ],
     }).then(() => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
