@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.8.0...v6.9.0) (2024-12-12)
+
+
+### Features
+
+* prevent conflicts with custom yazi config for `&lt;enter&gt;` (opt-in) ([e64d309](https://github.com/mikavilpas/yazi.nvim/commit/e64d3093895c68ec6f62b8a98c12d3f76d802e03))
+
 ## [6.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.7.0...v6.8.0) (2024-12-08)
 
 
