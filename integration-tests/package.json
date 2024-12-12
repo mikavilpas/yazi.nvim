@@ -26,7 +26,7 @@
     "eslint-plugin-no-only-tests": "3.3.0",
     "prettier-plugin-organize-imports": "4.1.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "4.30.0",
+    "type-fest": "4.30.1",
     "typescript": "5.7.2"
   }
 }

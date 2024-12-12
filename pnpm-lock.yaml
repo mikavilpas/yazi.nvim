@@ -38,7 +38,7 @@ importers:
     devDependencies:
       '@tui-sandbox/library':
         specifier: 7.4.0
-        version: 7.4.0(cypress@13.16.1)(prettier@3.4.2)(type-fest@4.30.0)(typescript@5.7.2)
+        version: 7.4.0(cypress@13.16.1)(prettier@3.4.2)(type-fest@4.30.1)(typescript@5.7.2)
       '@types/node':
         specifier: 22.10.2
         version: 22.10.2
@@ -70,8 +70,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 4.30.0
-        version: 4.30.0
+        specifier: 4.30.1
+        version: 4.30.1
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -2258,8 +2258,8 @@ packages:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
 
-  type-fest@4.30.0:
-    resolution: {integrity: sha512-G6zXWS1dLj6eagy6sVhOMQiLtJdxQBHIA9Z6HFUNLOlr6MFOgzV8wvmidtPONfPtEUv0uZsy77XJNzTAfwPDaA==}
+  type-fest@4.30.1:
+    resolution: {integrity: sha512-ojFL7eDMX2NF0xMbDwPZJ8sb7ckqtlAi1GsmgsFXvErT9kFTk1r0DuQKvrCh73M6D4nngeHJmvogF9OluXs7Hw==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -2675,7 +2675,7 @@ snapshots:
     dependencies:
       typescript: 5.7.2
 
-  '@tui-sandbox/library@7.4.0(cypress@13.16.1)(prettier@3.4.2)(type-fest@4.30.0)(typescript@5.7.2)':
+  '@tui-sandbox/library@7.4.0(cypress@13.16.1)(prettier@3.4.2)(type-fest@4.30.1)(typescript@5.7.2)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.0.0-rc.648(@trpc/server@11.0.0-rc.648(typescript@5.7.2))(typescript@5.7.2)
@@ -2693,7 +2693,7 @@ snapshots:
       node-pty: 1.0.0
       prettier: 3.4.2
       tsx: 4.19.2
-      type-fest: 4.30.0
+      type-fest: 4.30.1
       typescript: 5.7.2
       winston: 3.17.0
       zod: 3.23.8
@@ -4887,7 +4887,7 @@ snapshots:
 
   type-fest@0.21.3: {}
 
-  type-fest@4.30.0: {}
+  type-fest@4.30.1: {}
 
   type-is@1.6.18:
     dependencies:
