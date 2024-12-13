@@ -414,6 +414,17 @@ function M.on_yazi_exited(
   else
     config.hooks.yazi_closed_successfully(nil, config, state)
   end
+
+  if config.change_cwd_on_exit == "always" then
+    require("yazi.log"):debug(
+      string.format(
+        "changing cwd to last directory %s",
+        state.last_directory.filename
+      )
+    )
+
+    vim.fn.chdir(state.last_directory.filename)
+  end
 end
 
 return M

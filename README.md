@@ -177,6 +177,15 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- }
     open_for_directories = false,
 
+    -- Change neovim's current working directory (`:echo getcwd()`) to the
+    -- directory that was last opened when yazi is closed. This can be useful
+    -- if you want to use a workflow where you change the cwd a lot.
+    --
+    -- Possible values:
+    -- - nil or not specified - the default meaning "not in use"
+    -- - "always" - always change the cwd, regardless of whether files were opened or not
+    change_cwd_on_exit = nil,
+
     -- open visible splits as yazi tabs for easy navigation. Requires a yazi
     -- version more recent than 2024-08-11
     -- https://github.com/mikavilpas/yazi.nvim/pull/359

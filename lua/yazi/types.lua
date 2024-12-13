@@ -23,6 +23,7 @@
 ---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"
 ---@field public forwarded_dds_events? string[] "Yazi events to listen to. These are published as neovim autocmds so that the user can set up custom handlers for themselves. Defaults to `nil`."
 ---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
+---@field public change_cwd_on_exit? "always" # Change neovim's working directory to the directory that was last opened when yazi is closed. This can be useful if you want to use a workflow where you change the cwd a lot.
 
 ---@class(exact) yazi.OptInFeatures
 ---@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. Requires yazi 0.4.0 or later (from 2024-12-08).
