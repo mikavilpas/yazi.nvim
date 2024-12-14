@@ -45,26 +45,8 @@ function M.default()
       hovered_buffer_in_same_directory = nil,
     },
     integrations = {
-      grep_in_directory = function(directory)
-        require("telescope.builtin").live_grep({
-          search = "",
-          prompt_title = "Grep in " .. directory,
-          cwd = directory,
-        })
-      end,
-      grep_in_selected_files = function(selected_files)
-        ---@type string[]
-        local files = {}
-        for _, path in ipairs(selected_files) do
-          files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
-        end
-
-        require("telescope.builtin").live_grep({
-          search = "",
-          prompt_title = string.format("Grep in %d paths", #files),
-          search_dirs = files,
-        })
-      end,
+      grep_in_directory = "telescope",
+      grep_in_selected_files = "telescope",
       replace_in_directory = function(directory)
         -- limit the search to the given path
         --

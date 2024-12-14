@@ -74,8 +74,29 @@ describe("grug-far integration (search and replace)", () => {
 })
 
 describe("telescope integration (search)", () => {
+  // https://github.com/nvim-telescope/telescope.nvim
   beforeEach(() => {
     cy.visit("/")
+  })
+
+  it("can use telescope.nvim to search in the current directory", () => {
+    cy.startNeovim({
+      filename: "routes/posts.$postId/adjacent-file.txt",
+    }).then((dir) => {
+      cy.contains("this file is adjacent-file.txt")
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
+
+      cy.typeIntoTerminal("{control+s}")
+
+      cy.contains(new RegExp(`Grep in testdirs/.*?/routes/posts.\\$postId`))
+
+      // verify this manually for now as I'm a bit scared this will be too
+      // flaky
+    })
   })
 
   it("can use telescope.nvim to search, limited to the selected files only", () => {

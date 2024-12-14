@@ -163,9 +163,22 @@ end
 ---@return nil
 function YaziOpenerActions.grep_in_directory(config, chosen_file)
   if config.integrations.grep_in_directory == nil then
+    -- the user has opted out of this feature for some reason. Do nothing.
     return
   end
-  local last_directory = utils.dir_of(chosen_file).filename
+  local cwd = vim.uv.cwd()
+  local last_directory = utils.dir_of(chosen_file):make_relative(cwd)
+
+  if config.integrations.grep_in_directory == "telescope" then
+    require("telescope.builtin").live_grep({
+      search = "",
+      prompt_title = "Grep in " .. last_directory,
+      cwd = last_directory,
+    })
+    return
+  end
+
+  -- the user has a custom implementation. Call it.
   config.integrations.grep_in_directory(last_directory)
 end
 
@@ -173,6 +186,7 @@ end
 ---@param chosen_files string[]
 function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
   if config.integrations.grep_in_selected_files == nil then
+    -- the user has opted out of this feature for some reason. Do nothing.
     return
   end
 
@@ -182,6 +196,22 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
     table.insert(paths, plenary_path:new(path))
   end
 
+  if config.integrations.grep_in_selected_files == "telescope" then
+    ---@type string[]
+    local files = {}
+    for _, path in ipairs(paths) do
+      files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
+    end
+
+    require("telescope.builtin").live_grep({
+      search = "",
+      prompt_title = string.format("Grep in %d paths", #files),
+      search_dirs = files,
+    })
+    return
+  end
+
+  -- the user has a custom implementation. Call it.
   config.integrations.grep_in_selected_files(paths)
 end
 
