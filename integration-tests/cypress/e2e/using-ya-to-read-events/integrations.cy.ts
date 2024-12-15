@@ -129,3 +129,85 @@ describe("telescope integration (search)", () => {
     })
   })
 })
+
+describe("fzf-lua integration (grep)", () => {
+  beforeEach(() => {
+    cy.visit("/")
+  })
+
+  it("can use fzf-lua.nvim to search in the current directory", () => {
+    cy.startNeovim({
+      filename: "routes/posts.$postId/adjacent-file.txt",
+      startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
+    }).then((dir) => {
+      cy.contains("this file is adjacent-file.txt")
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
+
+      cy.typeIntoTerminal("{control+s}")
+
+      // wait for fzf-lua to be visible
+      cy.contains("to Fuzzy Search")
+
+      cy.typeIntoTerminal("this")
+
+      // results should be visible
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "should-be-excluded-file.txt"
+        ].name,
+      )
+
+      // results from outside the directory should not be visible. This
+      // verifies the search is limited to the current directory
+      cy.contains(dir.contents["initial-file.txt"].name).should("not.exist")
+    })
+  })
+
+  it("can use fzf-lua.nvim to search, limited to the selected files only", () => {
+    // https://github.com/ibhagwan/fzf-lua
+    cy.startNeovim({
+      filename: "routes/posts.$postId/route.tsx",
+      startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
+    }).then((dir) => {
+      // wait until the file contents are visible
+      cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
+
+      // select the current file and the file below. There are three files in
+      // this directory so two will be selected and one will be left
+      // unselected
+      cy.typeIntoTerminal("vk")
+      cy.typeIntoTerminal("{control+s}")
+
+      // telescope should be open now
+      cy.contains("to Fuzzy Search")
+
+      // search for some file content. This should match
+      // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
+      cy.typeIntoTerminal("this")
+
+      // some results should be visible
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "adjacent-file.txt"
+        ].name,
+      )
+      cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
+
+      cy.contains(
+        dir.contents.routes.contents["posts.$postId"].contents[
+          "should-be-excluded-file.txt"
+        ].name,
+      ).should("not.exist")
+    })
+  })
+})

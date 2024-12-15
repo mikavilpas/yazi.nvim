@@ -18,12 +18,22 @@ jobs:
       - uses: actions/checkout@v4.2.2
       - name: Set up dependencies
         run: |
-          # ripgrep is a telescope dependency
-          which rg || {
-            sudo apt-get install ripgrep
-          }
+          # ripgrep is a dependency of telescope and fzf-lua
+          sudo apt-get install ripgrep
+          rg --version
 
-          # realpath is used to resolve relative paths
+          # fd is a dependency of telescope and fzf-lua
+          # https://github.com/sharkdp/fd?tab=readme-ov-file#on-ubuntu
+          # make sure it's available as `fd` - there seems to be some conflict in Ubuntu
+          sudo apt-get install fd-find
+          sudo ln -s $(which fdfind) /usr/local/bin/fd
+          fd --version
+
+          # install fzf
+          sudo apt install fzf
+          fzf --version
+
+          # realpath is used to resolve relative paths in yazi.nvim
           which realpath || {
             # just fail with an error message if realpath is not found
             echo "realpath is not installed, but it should be part of GNU coreutils and included in Ubuntu"

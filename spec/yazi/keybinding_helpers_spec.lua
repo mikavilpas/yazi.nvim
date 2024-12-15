@@ -4,6 +4,7 @@ local keybinding_helpers = require("yazi.keybinding_helpers")
 local match = require("luassert.match")
 local plenary_path = require("plenary.path")
 local stub = require("luassert.stub")
+local spy = require("luassert.spy")
 
 describe("keybinding_helpers", function()
   local vim_cmd_stub
@@ -25,7 +26,9 @@ describe("keybinding_helpers", function()
   describe("grep_in_directory", function()
     it("should grep in the parent directory for a file", function()
       local config = config_module.default()
-      local s = stub(config.integrations, "grep_in_directory")
+      local s = spy.new(function() end)
+      ---@diagnostic disable-next-line: assign-type-mismatch
+      config.integrations.grep_in_directory = s
 
       keybinding_helpers.grep_in_directory(config, "/tmp/file")
 
@@ -34,7 +37,9 @@ describe("keybinding_helpers", function()
 
     it("should grep in the directory when a directory is passed", function()
       local config = config_module.default()
-      local s = stub(config.integrations, "grep_in_directory")
+      local s = spy.new(function() end)
+      ---@diagnostic disable-next-line: assign-type-mismatch
+      config.integrations.grep_in_directory = s
 
       keybinding_helpers.grep_in_directory(config, "/tmp")
 

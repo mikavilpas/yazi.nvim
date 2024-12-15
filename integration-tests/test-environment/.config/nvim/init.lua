@@ -79,6 +79,7 @@ local plugins = {
       },
     },
   },
+  { "ibhagwan/fzf-lua" },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
   { "folke/snacks.nvim", opts = {} },
