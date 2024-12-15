@@ -107,6 +107,12 @@ export const MyTestDirectorySchema = z.object({
           extension: z.literal("lua"),
           stem: z.literal("modify_yazi_config_log_yazi_closed_successfully."),
         }),
+        "modify_yazi_config_use_fzf_lua.lua": z.object({
+          name: z.literal("modify_yazi_config_use_fzf_lua.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("modify_yazi_config_use_fzf_lua."),
+        }),
         "modify_yazi_config_use_ya_emit_reveal.lua": z.object({
           name: z.literal("modify_yazi_config_use_ya_emit_reveal.lua"),
           type: z.literal("file"),
@@ -284,6 +290,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/modify_yazi_config_and_set_help_key.lua",
   "config-modifications/modify_yazi_config_do_not_use_ya_emit_open.lua",
   "config-modifications/modify_yazi_config_log_yazi_closed_successfully.lua",
+  "config-modifications/modify_yazi_config_use_fzf_lua.lua",
   "config-modifications/modify_yazi_config_use_ya_emit_reveal.lua",
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",

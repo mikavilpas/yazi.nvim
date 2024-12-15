@@ -175,11 +175,14 @@ function YaziOpenerActions.grep_in_directory(config, chosen_file)
       prompt_title = "Grep in " .. last_directory,
       cwd = last_directory,
     })
-    return
+  elseif config.integrations.grep_in_directory == "fzf-lua" then
+    require("fzf-lua").live_grep({
+      search_paths = { last_directory },
+    })
+  else
+    -- the user has a custom implementation. Call it.
+    config.integrations.grep_in_directory(last_directory)
   end
-
-  -- the user has a custom implementation. Call it.
-  config.integrations.grep_in_directory(last_directory)
 end
 
 ---@param config YaziConfig
@@ -196,23 +199,24 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
     table.insert(paths, plenary_path:new(path))
   end
 
-  if config.integrations.grep_in_selected_files == "telescope" then
-    ---@type string[]
-    local files = {}
-    for _, path in ipairs(paths) do
-      files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
-    end
+  ---@type string[]
+  local files = {}
+  for _, path in ipairs(paths) do
+    files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
+  end
 
+  if config.integrations.grep_in_selected_files == "telescope" then
     require("telescope.builtin").live_grep({
       search = "",
       prompt_title = string.format("Grep in %d paths", #files),
       search_dirs = files,
     })
-    return
+  elseif config.integrations.grep_in_selected_files == "fzf-lua" then
+    require("fzf-lua").live_grep({ search_paths = files })
+  else
+    -- the user has a custom implementation. Call it.
+    config.integrations.grep_in_selected_files(paths)
   end
-
-  -- the user has a custom implementation. Call it.
-  config.integrations.grep_in_selected_files(paths)
 end
 
 ---@param config YaziConfig
