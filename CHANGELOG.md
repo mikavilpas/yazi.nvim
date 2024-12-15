@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.10.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.9.0...v6.10.0) (2024-12-15)
+
+
+### Features
+
+* add fzf-lua integration for grepping in files and dirs ([56b80f3](https://github.com/mikavilpas/yazi.nvim/commit/56b80f3e7cf6f4559fa2898cb33844eb10f0d97d))
+
 ## [6.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.8.0...v6.9.0) (2024-12-12)
 
 
