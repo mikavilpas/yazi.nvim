@@ -30,12 +30,12 @@ Define the key you want to use in yazi's keymap.toml config:
 # send an event with no data
 [[manager.prepend_keymap]]
 on = "<C-p>"
-run = """shell 'ya pub-to 0 MyMessageNoData' --confirm"""
+run = """shell 'ya pub-to 0 MyMessageNoData'"""
 
 # send an event that also has json data
 [[manager.prepend_keymap]]
 on = "<C-h>"
-run = """shell "ya pub-to 0 MyMessageWithData --json '{\\"somedata\\": 123}'" --confirm"""
+run = """shell "ya pub-to 0 MyMessageWithData --json '{\\"somedata\\": 123}'""""
 ```
 
 ### Define a handler in yazi.nvim
@@ -100,6 +100,6 @@ running.
 [[manager.prepend_keymap]]
 on = ["g", "r"]
 run = '''
-	shell 'ya pub dds-cd --str "${NVIM_CWD:-$(git rev-parse --show-toplevel 2>/dev/null)}"' --confirm
+  shell 'ya pub dds-cd --str "${NVIM_CWD:-$(git rev-parse --show-toplevel 2>/dev/null)}"'
 '''
 ```
