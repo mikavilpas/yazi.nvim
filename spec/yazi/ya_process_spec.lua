@@ -275,8 +275,8 @@ describe("opening the yazi in a terminal", function()
       vim.uv.cwd = spy.new(function()
         return "/tmp/fakedir"
       end)
-      local termopen_spy = spy.new(function() end)
-      vim.fn.termopen = termopen_spy
+      local jobstart_spy = spy.new(function() end)
+      vim.fn.jobstart = jobstart_spy
 
       require("yazi.process.yazi_process"):start(
         config,
@@ -284,11 +284,11 @@ describe("opening the yazi in a terminal", function()
         function() end
       )
 
-      assert(termopen_spy.calls[1])
-      assert(termopen_spy.calls[1].vals[2])
-      assert(termopen_spy.calls[1].vals[2].env)
-      local env = termopen_spy.calls[1].vals[2].env
+      assert(jobstart_spy.calls[1])
+      assert(jobstart_spy.calls[1].vals[2])
 
+      local env = jobstart_spy.calls[1].vals[2].env
+      assert(env)
       assert.equal(env.NVIM_CWD, "/tmp/fakedir")
     end
   )
