@@ -233,10 +233,10 @@ function YaziOpenerActions.replace_in_directory(config, chosen_file)
 
   if not success then
     local detail = vim.inspect({
-      message = "yazi.nvim: error replacing with grug-far.nvim.",
+      message = "error replacing with grug-far.nvim.",
       error = result_or_error,
     })
-    vim.notify(detail, vim.log.levels.WARN)
+    vim.notify(detail, vim.log.levels.WARN, { title = "yazi.nvim" })
     Log:debug(vim.inspect({ message = detail, error = result_or_error }))
   end
 end
@@ -260,10 +260,10 @@ function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
 
   if not success then
     local detail = vim.inspect({
-      message = "yazi.nvim: error replacing with grug-far.nvim.",
+      message = "error replacing with grug-far.nvim.",
       error = result_or_error,
     })
-    vim.notify(detail, vim.log.levels.WARN)
+    vim.notify(detail, vim.log.levels.WARN, { title = "yazi.nvim" })
     Log:debug(vim.inspect({ message = detail, error = result_or_error }))
   end
 end
