@@ -45,9 +45,8 @@ function Log:write_message(level, message)
     file = logfile
 
     if not file then
-      local err_msg =
-        string.format('yazi.nvim: Failed to open log file at "%s"', err)
-      vim.notify(err_msg, vim.log.levels.ERROR)
+      local err_msg = string.format('Failed to open log file at "%s"', err)
+      vim.notify(err_msg, vim.log.levels.ERROR, { title = "yazi.nvim" })
     end
   end
 
