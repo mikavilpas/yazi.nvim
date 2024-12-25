@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     "git",
     "clone",
     "--filter=blob:none",
-    "--branch=v11.14.1",
+    "--branch=v11.16.0",
     lazyrepo,
     lazypath,
   })
