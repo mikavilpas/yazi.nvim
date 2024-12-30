@@ -23,7 +23,7 @@ jobs:
     name: markdownlint
     runs-on: ubuntu-latest
     steps:
-      - uses: DavidAnson/markdownlint-cli2-action@v18.0.0
+      - uses: DavidAnson/markdownlint-cli2-action@v19.0.0
 
   just:
     name: just
