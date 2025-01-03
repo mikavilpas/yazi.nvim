@@ -213,8 +213,9 @@ describe("'rename' events", () => {
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
-      // start yazi
+      // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // start file renaming
       cy.typeIntoTerminal("r")
@@ -233,8 +234,12 @@ describe("'rename' events", () => {
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.typeIntoTerminal(":mes{enter}")
-      cy.contains("Just received a YaziRenamedOrMoved event!")
+      cy.runLuaCode({ luaCode: `return _G.yazi_test_events` }).should(
+        (result) => {
+          const events = result.value as unknown[]
+          expect(events).to.have.length(1)
+        },
+      )
     })
   })
 
@@ -248,8 +253,9 @@ describe("'rename' events", () => {
       cy.contains(dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
-      // start yazi
+      // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
+      cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // move to another directory
       cy.typeIntoTerminal(
@@ -264,9 +270,17 @@ describe("'rename' events", () => {
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.contains("yazi_closed_successfully hook")
-      cy.contains("last_directory = ")
-      cy.contains("dir with spaces")
+      cy.runLuaCode({
+        luaCode: `return _G.yazi_closed_successfully_hook_test_results`,
+      }).should((result) => {
+        debugger
+        assert(result.value)
+        assert(typeof result.value === "object")
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+        const data = result.value as any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        expect(data["last_directory"]).to.match(/dir with spaces$/)
+      })
     })
   })
 
@@ -290,15 +304,15 @@ describe("'rename' events", () => {
 
         cy.typeIntoTerminal("q")
         cy.contains(dir.contents["file2.txt"].name).should("not.exist")
-        cy.typeIntoTerminal(":messages{enter}", { delay: 0 })
-
-        // should see a message for the event kind MyMessageNoData that has no data
-        // this checks that events without data are supported
-        cy.contains("Just received a YaziDDSCustom event 'MyMessageNoData'!")
-
-        // should see the data for MyMessageWithData
-        cy.contains("Just received a YaziDDSCustom event 'MyMessageWithData'!")
-        cy.contains("somedata")
+        cy.runExCommand({ command: "messages" }).should((result) => {
+          expect(result.value).to.match(
+            /Just received a YaziDDSCustom event 'MyMessageNoData'!/,
+          )
+          expect(result.value).to.match(
+            /Just received a YaziDDSCustom event 'MyMessageWithData'!/,
+          )
+          expect(result.value).to.match(/somedata/)
+        })
       })
     })
   })
