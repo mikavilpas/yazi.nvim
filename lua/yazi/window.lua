@@ -31,13 +31,6 @@ end
 function YaziFloatingWindow:close()
   pcall(self.cleanup)
 
-  if
-    vim.api.nvim_buf_is_valid(self.content_buffer)
-    and vim.api.nvim_buf_is_loaded(self.content_buffer)
-  then
-    vim.api.nvim_buf_delete(self.content_buffer, { force = true })
-  end
-
   if vim.api.nvim_win_is_valid(self.win) then
     vim.api.nvim_win_close(self.win, true)
     Log:debug(
@@ -48,6 +41,15 @@ function YaziFloatingWindow:close()
       )
     )
   end
+
+  vim.schedule(function()
+    if
+      vim.api.nvim_buf_is_valid(self.content_buffer)
+      and vim.api.nvim_buf_is_loaded(self.content_buffer)
+    then
+      vim.api.nvim_buf_delete(self.content_buffer, { force = true })
+    end
+  end)
 end
 
 ---@param config YaziConfig

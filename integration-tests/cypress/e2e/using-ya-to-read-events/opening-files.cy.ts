@@ -78,30 +78,62 @@ describe("opening files", () => {
     })
   })
 
-  it("can open a file in a new tab", () => {
-    cy.startNeovim().then((dir) => {
-      cy.contains("If you see this text, Neovim is ready!")
-      cy.typeIntoTerminal("{upArrow}")
-      isFileNotSelectedInYazi(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
-      cy.typeIntoTerminal("{esc}") // hide the search highlight
-      isFileSelectedInYazi(dir.contents["file2.txt"].name)
-      cy.typeIntoTerminal("{control+t}")
+  describe("opening files in new tabs", () => {
+    it("can open a file in a new tab", () => {
+      cy.startNeovim().then((dir) => {
+        cy.contains("If you see this text, Neovim is ready!")
+        cy.typeIntoTerminal("{upArrow}")
+        isFileNotSelectedInYazi(dir.contents["file2.txt"].name)
+        cy.contains(dir.contents["file2.txt"].name)
+        cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+        cy.typeIntoTerminal("{esc}") // hide the search highlight
+        isFileSelectedInYazi(dir.contents["file2.txt"].name)
+        cy.typeIntoTerminal("{control+t}")
 
-      // yazi should now be closed
-      cy.contains("-- TERMINAL --").should("not.exist")
+        // yazi should now be closed
+        cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.contains(
-        // match some text from inside the file
-        "Hello",
-      )
-      cy.runExCommand({ command: "tabnext" })
+        cy.contains(
+          // match some text from inside the file
+          "Hello",
+        )
+        cy.runExCommand({ command: "tabnext" })
 
-      cy.contains("If you see this text, Neovim is ready!")
+        cy.contains("If you see this text, Neovim is ready!")
 
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["initial-file.txt"].name)
+        cy.contains(dir.contents["file2.txt"].name)
+        cy.contains(dir.contents["initial-file.txt"].name)
+      })
+    })
+
+    it("preserves line numbers for new tabs", () => {
+      // a regression reported in
+      // https://github.com/mikavilpas/yazi.nvim/issues/649
+      cy.visit("/")
+      cy.startNeovim({}).then(() => {
+        cy.runExCommand({ command: "set number" })
+        cy.runLuaCode({
+          luaCode: `assert(vim.o.number == true, "line numbers are not set")`,
+        })
+
+        // wait until text on the start screen is visible
+        cy.contains("If you see this text, Neovim is ready!")
+
+        // open and close yazi without doing anything. This used to remove line
+        // numbering in the new tab, when a previous buffer was switched to
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains("config-modifications" satisfies MyTestDirectoryFile)
+        cy.typeIntoTerminal("q")
+        cy.contains("config-modifications").should("not.exist")
+
+        cy.runExCommand({ command: "tabedit %:p:h/file2.txt" })
+        cy.runExCommand({ command: "buffer 1" })
+
+        cy.contains("If you see this text, Neovim is ready!")
+        cy.runLuaCode({
+          luaCode: `assert(vim.o.number == true, "line numbers are not set")`,
+        })
+      })
     })
   })
 
