@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.11.1](https://github.com/mikavilpas/yazi.nvim/compare/v6.11.0...v6.11.1) (2025-01-06)
+
+
+### Bug Fixes
+
+* preserve line numbers when switching buffers in a new tab ([#653](https://github.com/mikavilpas/yazi.nvim/issues/653)) ([b023f1d](https://github.com/mikavilpas/yazi.nvim/commit/b023f1dfcb09e1319b5869452f17f5cc2fb3809f))
+
 ## [6.11.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.10.0...v6.11.0) (2024-12-22)
 
 
