@@ -388,31 +388,35 @@ function M.on_yazi_exited(
 )
   vim.cmd("silent! :checktime")
 
-  -- open the file that was chosen
-  if not vim.api.nvim_win_is_valid(prev_win) then
+  window:close()
+
+  do
+    -- sanity check: make sure the previous window and buffer are still valid
+    if not vim.api.nvim_win_is_valid(prev_win) then
+      return
+    end
+
+    if vim.api.nvim_buf_is_valid(prev_buf) then
+      vim.api.nvim_set_current_buf(prev_buf)
+    end
+  end
+
+  vim.api.nvim_set_current_win(prev_win)
+  if #selected_files <= 0 then
+    config.hooks.yazi_closed_successfully(nil, config, state)
     return
   end
 
-  if vim.api.nvim_buf_is_valid(prev_buf) then
-    vim.api.nvim_set_current_buf(prev_buf)
+  if #selected_files > 1 then
+    config.hooks.yazi_opened_multiple_files(selected_files, config, state)
+    return
   end
 
-  window:close()
-
-  vim.api.nvim_set_current_win(prev_win)
-  -- if M.file_exists(config.chosen_file_path) == true then
-  if #selected_files > 0 then
-    if #selected_files > 1 then
-      config.hooks.yazi_opened_multiple_files(selected_files, config, state)
-    else
-      local chosen_file = selected_files[1]
-      config.hooks.yazi_closed_successfully(chosen_file, config, state)
-      if chosen_file then
-        config.open_file_function(chosen_file, config, state)
-      end
-    end
-  else
-    config.hooks.yazi_closed_successfully(nil, config, state)
+  assert(#selected_files == 1)
+  local chosen_file = selected_files[1]
+  config.hooks.yazi_closed_successfully(chosen_file, config, state)
+  if chosen_file then
+    config.open_file_function(chosen_file, config, state)
   end
 end
 
