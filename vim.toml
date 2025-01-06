@@ -20,6 +20,9 @@ type = "function"
 [[after_each.args]]
 type = "function"
 
+[assert]
+any = true
+
 [assert.is_not]
 any = true
 
