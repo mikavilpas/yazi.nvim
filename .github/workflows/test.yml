@@ -41,7 +41,7 @@ jobs:
           }
 
       - name: Compile and install `yazi-fm` from source
-        uses: baptiste0928/cargo-install@v3.2.0
+        uses: baptiste0928/cargo-install@v3.3.0
         with:
           # yazi-fm is the `yazi` executable
           crate: yazi-fm
@@ -52,7 +52,7 @@ jobs:
           #   d72f90356b98
 
       - name: Compile and install yazi from source
-        uses: baptiste0928/cargo-install@v3.2.0
+        uses: baptiste0928/cargo-install@v3.3.0
         with:
           # yazi-cli is the `ya` command line interface
           crate: yazi-cli
