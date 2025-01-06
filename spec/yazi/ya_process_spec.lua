@@ -270,13 +270,17 @@ describe("opening the yazi in a terminal", function()
   it(
     "sets the NVIM_CWD environment variable to the current working directory",
     function()
+      if vim.fn.has("nvim-0.11") == 0 then
+        return
+      end
+
       -- selene: allow(incorrect_standard_library_use)
       os.remove = spy.new(function() end)
       vim.uv.cwd = spy.new(function()
         return "/tmp/fakedir"
       end)
-      local termopen_spy = spy.new(function() end)
-      vim.fn.termopen = termopen_spy
+      local jobstart_spy = spy.new(function() end)
+      vim.fn.jobstart = jobstart_spy
 
       require("yazi.process.yazi_process"):start(
         config,
@@ -284,10 +288,10 @@ describe("opening the yazi in a terminal", function()
         function() end
       )
 
-      assert(termopen_spy.calls[1])
-      assert(termopen_spy.calls[1].vals[2])
-      assert(termopen_spy.calls[1].vals[2].env)
-      local env = termopen_spy.calls[1].vals[2].env
+      assert(jobstart_spy.calls[1])
+      assert(jobstart_spy.calls[1].vals[2])
+      assert(jobstart_spy.calls[1].vals[2].env)
+      local env = jobstart_spy.calls[1].vals[2].env
 
       assert.equal(env.NVIM_CWD, "/tmp/fakedir")
     end
