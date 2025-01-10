@@ -74,6 +74,7 @@ describe("opening a file", function()
       "calls the yazi_closed_successfully hook with the target_file and last_directory",
       function()
         fake_yazi_process.setup_created_instances_to_instantly_exit({
+          ---@diagnostic disable-next-line: missing-fields
           last_cwd = { filename = "/abc" } --[[@as Path]],
         })
 
