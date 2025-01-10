@@ -11,7 +11,7 @@
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
     "cypress": "13.17.0",
-    "wait-on": "8.0.1",
+    "wait-on": "8.0.2",
     "zod": "3.24.1"
   },
   "devDependencies": {
