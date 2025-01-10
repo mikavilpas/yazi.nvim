@@ -27,8 +27,10 @@ describe("'cd' to another buffer's directory", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "modify_yazi_config_don't_use_ya_emit_reveal.lua",
       ],
     }).then(() => {
+      assertDoesNotUseEmitReveal()
       // sanity check to make sure the files are open
       cy.contains(view.leftFile.text)
       cy.contains(view.centerFile.text)
@@ -88,8 +90,10 @@ describe("'cd' to another buffer's directory", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "modify_yazi_config_don't_use_ya_emit_reveal.lua",
       ],
     }).then(() => {
+      assertDoesNotUseEmitReveal()
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
 
@@ -120,7 +124,11 @@ describe("'cd' to another buffer's directory", () => {
   it("can tab to the directory of just a single buffer", () => {
     cy.startNeovim({
       filename: "file2.txt",
+      startupScriptModifications: [
+        "modify_yazi_config_don't_use_ya_emit_reveal.lua",
+      ],
     }).then((dir) => {
+      assertDoesNotUseEmitReveal()
       cy.contains("Hello")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -141,3 +149,9 @@ describe("'cd' to another buffer's directory", () => {
     })
   })
 })
+
+function assertDoesNotUseEmitReveal() {
+  cy.runLuaCode({
+    luaCode: `assert(require("yazi").config.future_features.ya_emit_reveal == false)`,
+  })
+}

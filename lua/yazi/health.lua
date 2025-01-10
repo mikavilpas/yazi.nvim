@@ -35,7 +35,7 @@ return {
     end
 
     local checker = require("vim.version")
-    if not checker.ge(yazi_semver, "0.3.0") then
+    if not checker.ge(yazi_semver, "0.4.0") then
       return vim.health.warn(
         "your yazi version is too old, please upgrade to the newest version of yazi"
       )
@@ -70,7 +70,7 @@ return {
         )
       )
     else
-      if not checker.ge(ya_semver, "0.3.0") then
+      if not checker.ge(ya_semver, "0.4.0") then
         vim.health.warn(
           "The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version."
         )

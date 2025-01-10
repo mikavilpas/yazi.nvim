@@ -41,7 +41,7 @@ describe("the healthcheck", function()
   before_each(function()
     snapshot = assert:snapshot()
     mock_app_versions = {
-      ["yazi"] = "Yazi 0.3.0 (4112bf4 2024-08-15)",
+      ["yazi"] = "Yazi 0.4.0 (4112bf4 2024-08-15)",
       ["yazi --help"] = [[Usage: yazi [OPTIONS] [ENTRY]
 
 Arguments:
@@ -58,7 +58,7 @@ Options:
   -V, --version                        Print version
   -h, --help                           Print help
       ]],
-      ["ya"] = "Ya 0.3.0 (4112bf4 2024-08-15)",
+      ["ya"] = "Ya 0.4.0 (4112bf4 2024-08-15)",
       ["nvim-0.10.0"] = true,
     }
 
@@ -94,8 +94,8 @@ Options:
   it("reports everything is ok", function()
     vim.cmd("checkhealth yazi")
 
-    assert_buffer_contains_text("Found `yazi` version `Yazi 0.3.0")
-    assert_buffer_contains_text("Found `ya` version `Ya 0.3.0")
+    assert_buffer_contains_text("Found `yazi` version `Yazi 0.4.0")
+    assert_buffer_contains_text("Found `ya` version `Ya 0.4.0")
     assert_buffer_contains_text("OK yazi")
   end)
 
@@ -151,8 +151,9 @@ Options:
   end)
 
   it("warns when the yazi version and yazi version are not the same", function()
-    mock_app_versions["yazi"] = "yazi 0.3.5 (f5a7ace 2024-07-23)"
-    mock_app_versions["ya"] = "Ya 0.3.4 (f5a7ace 2024-06-23)"
+    -- intentionally use versions that are way too large to not hit other checks
+    mock_app_versions["yazi"] = "yazi 1.3.5 (f5a7ace 2024-07-23)"
+    mock_app_versions["ya"] = "Ya 1.3.4 (f5a7ace 2024-06-23)"
 
     vim.cmd("checkhealth yazi")
 
@@ -181,74 +182,6 @@ Options:
         vim.cmd("checkhealth yazi")
 
         assert_buffer_does_not_contain_text("open_for_directories")
-      end
-    )
-  end)
-
-  describe("future_features", function()
-    it(
-      "warns when yazi is < 0.4.0 and `config.future_features.ya_emit_reveal` is enabled",
-      function()
-        yazi.setup({
-          future_features = {
-            ya_emit_reveal = true,
-          },
-        })
-
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_contains_text(
-          "You have enabled `future_features.ya_emit_reveal` in your config. This requires yazi.nvim version 0.4.0 or newer."
-        )
-      end
-    )
-
-    it(
-      "does not warn when yazi is >= 0.4.0 and `config.future_features.ya_emit_reveal` is enabled",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.4.0 (f5a7ace 2024-07-23)"
-        yazi.setup({
-          future_features = {
-            ya_emit_reveal = true,
-          },
-        })
-
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("future_features.ya_emit_reveal")
-      end
-    )
-
-    it(
-      "warns when yazi is < 0.4.0 and `config.future_features.ya_emit_open` is enabled",
-      function()
-        yazi.setup({
-          future_features = {
-            ya_emit_open = true,
-          },
-        })
-
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_contains_text(
-          "You have enabled `future_features.ya_emit_open` in your config. This requires yazi.nvim version 0.4.0 or newer."
-        )
-      end
-    )
-
-    it(
-      "does not warn when yazi is >= 0.4.0 and `config.future_features.ya_emit_open` is enabled",
-      function()
-        mock_app_versions["yazi"] = "yazi 0.4.0 (f5a7ace 2024-07-23)"
-        yazi.setup({
-          future_features = {
-            ya_emit_open = true,
-          },
-        })
-
-        vim.cmd("checkhealth yazi")
-
-        assert_buffer_does_not_contain_text("future_features.ya_emit_open")
       end
     )
   end)

@@ -4,7 +4,7 @@ require("yazi").setup(
   ---@type YaziConfig
   {
     future_features = {
-      ya_emit_reveal = true,
+      ya_emit_reveal = false,
     },
   }
 )
