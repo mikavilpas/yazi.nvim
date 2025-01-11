@@ -1,0 +1,6 @@
+{
+  "runtime": {
+    "version": "LuaJIT",
+    "pathStrict": true
+  }
+}
