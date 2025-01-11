@@ -28,6 +28,12 @@ export const MyTestDirectorySchema = z.object({
               extension: z.literal("lua"),
               stem: z.literal("init."),
             }),
+            "prepare.lua": z.object({
+              name: z.literal("prepare.lua"),
+              type: z.literal("file"),
+              extension: z.literal("lua"),
+              stem: z.literal("prepare."),
+            }),
           }),
         }),
         yazi: z.object({
@@ -278,6 +284,7 @@ export type MyTestDirectory = MyTestDirectoryContentsSchemaType["contents"]
 
 export const testDirectoryFiles = z.enum([
   ".config/nvim/init.lua",
+  ".config/nvim/prepare.lua",
   ".config/nvim",
   ".config/yazi/keymap.toml",
   ".config/yazi",
