@@ -37,8 +37,8 @@ importers:
         version: 3.24.1
     devDependencies:
       '@tui-sandbox/library':
-        specifier: 7.5.6
-        version: 7.5.6(cypress@13.17.0)(prettier@3.4.2)(type-fest@4.32.0)(typescript@5.7.3)
+        specifier: 7.6.0
+        version: 7.6.0(cypress@13.17.0)(prettier@3.4.2)(type-fest@4.32.0)(typescript@5.7.3)
       '@types/node':
         specifier: 22.10.5
         version: 22.10.5
@@ -364,19 +364,19 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.682':
-    resolution: {integrity: sha512-zfM6t4tkbQPm/FHK85jcJjJle7FJTj9U8t/ieDzIe3X6DNo66sg6KqQpjkeTJcaj5u2hga1lmv3rc4uob/7D0g==}
+  '@trpc/client@11.0.0-rc.695':
+    resolution: {integrity: sha512-PDLTGY4FYU0aJAHHJYGdmn6ePlkZcqX6FjyZodmpSlYrIZG8r21J6X4+nebFnsIUetxktmcmlJziUoEFYVH56g==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.682+8650a22e8
+      '@trpc/server': 11.0.0-rc.695+01bdfa997
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.0.0-rc.682':
-    resolution: {integrity: sha512-y8FhLW/UJ8SOyHByvSQW7WvCnbvYioOYhviWD+sRvqkB9f0O8/sEBPJt1mBadWaO/0tygOghkeNC9o1wAsJ8cg==}
+  '@trpc/server@11.0.0-rc.695':
+    resolution: {integrity: sha512-r8e7shX/uoGWSDTRYoy6LmbgXYIlaWK6BDi9PyOCkoh67+ZNOVFSmb3c4XAwyhp3l2QhtjiCQXGxDPFetzP0mA==}
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@7.5.6':
-    resolution: {integrity: sha512-lcqCKbFpdwkHkidUbIst+4KUPCRbxYjreZQ6VqCm6JBQO9+V1ERfoA0wjbfeUOoBwKcWpcbsRVTh8Y1m+7lZ2w==}
+  '@tui-sandbox/library@7.6.0':
+    resolution: {integrity: sha512-EvysxG0ea1s14XodXkeWnURymp7Wjp5mTHr3pqAGQoyIBxEQUOxkAcp5cQI5kXiZzCPOCY8OUsyNBSCxH2Cs3g==}
     hasBin: true
     peerDependencies:
       cypress: ^13
@@ -801,8 +801,8 @@ packages:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
     engines: {node: '>= 0.6'}
 
-  core-js@3.39.0:
-    resolution: {integrity: sha512-raM0ew0/jJUqkJ0E6e8UDtl+y/7ktFivgWvqw8dNSQeNWoSDLvQ1H/RN3aPXB9tBd4/FhyR4RDPGhsNIMsAn7g==}
+  core-js@3.40.0:
+    resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
 
   core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -2724,25 +2724,25 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.682(@trpc/server@11.0.0-rc.682(typescript@5.7.3))(typescript@5.7.3)':
+  '@trpc/client@11.0.0-rc.695(@trpc/server@11.0.0-rc.695(typescript@5.7.3))(typescript@5.7.3)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.682(typescript@5.7.3)
+      '@trpc/server': 11.0.0-rc.695(typescript@5.7.3)
       typescript: 5.7.3
 
-  '@trpc/server@11.0.0-rc.682(typescript@5.7.3)':
+  '@trpc/server@11.0.0-rc.695(typescript@5.7.3)':
     dependencies:
       typescript: 5.7.3
 
-  '@tui-sandbox/library@7.5.6(cypress@13.17.0)(prettier@3.4.2)(type-fest@4.32.0)(typescript@5.7.3)':
+  '@tui-sandbox/library@7.6.0(cypress@13.17.0)(prettier@3.4.2)(type-fest@4.32.0)(typescript@5.7.3)':
     dependencies:
       '@catppuccin/palette': 1.7.1
-      '@trpc/client': 11.0.0-rc.682(@trpc/server@11.0.0-rc.682(typescript@5.7.3))(typescript@5.7.3)
-      '@trpc/server': 11.0.0-rc.682(typescript@5.7.3)
+      '@trpc/client': 11.0.0-rc.695(@trpc/server@11.0.0-rc.695(typescript@5.7.3))(typescript@5.7.3)
+      '@trpc/server': 11.0.0-rc.695(typescript@5.7.3)
       '@xterm/addon-attach': 0.11.0(@xterm/xterm@5.5.0)
       '@xterm/addon-fit': 0.10.0(@xterm/xterm@5.5.0)
       '@xterm/xterm': 5.5.0
       command-exists: 1.2.9
-      core-js: 3.39.0
+      core-js: 3.40.0
       cors: 2.8.5
       cypress: 13.17.0
       dree: 5.1.5
@@ -3209,7 +3209,7 @@ snapshots:
 
   cookie@0.7.1: {}
 
-  core-js@3.39.0: {}
+  core-js@3.40.0: {}
 
   core-util-is@1.0.2: {}
 
