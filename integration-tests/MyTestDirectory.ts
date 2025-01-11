@@ -217,6 +217,30 @@ export const MyTestDirectorySchema = z.object({
       extension: z.literal("txt"),
       stem: z.literal("initial-file."),
     }),
+    "lua-project": z.object({
+      name: z.literal("lua-project/"),
+      type: z.literal("directory"),
+      contents: z.object({
+        ".luarc.json": z.object({
+          name: z.literal(".luarc.json"),
+          type: z.literal("file"),
+          extension: z.literal("json"),
+          stem: z.literal(".luarc."),
+        }),
+        "config.lua": z.object({
+          name: z.literal("config.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("config."),
+        }),
+        "init.lua": z.object({
+          name: z.literal("init.lua"),
+          type: z.literal("file"),
+          extension: z.literal("lua"),
+          stem: z.literal("init."),
+        }),
+      }),
+    }),
     "other-subdirectory": z.object({
       name: z.literal("other-subdirectory/"),
       type: z.literal("directory"),
@@ -315,6 +339,10 @@ export const testDirectoryFiles = z.enum([
   "highlights/file_3.txt",
   "highlights",
   "initial-file.txt",
+  "lua-project/.luarc.json",
+  "lua-project/config.lua",
+  "lua-project/init.lua",
+  "lua-project",
   "other-subdirectory/other-sub-file.txt",
   "other-subdirectory",
   "routes/posts.$postId/adjacent-file.txt",
