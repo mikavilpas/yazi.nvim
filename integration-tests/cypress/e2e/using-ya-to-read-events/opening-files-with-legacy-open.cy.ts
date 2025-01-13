@@ -22,7 +22,7 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
@@ -37,8 +37,8 @@ describe("opening files with yazi < 0.4.0", () => {
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // the file path must be visible at the bottom
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
     })
   })
 
@@ -47,21 +47,21 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.typeIntoTerminal(`/${nvim.dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{esc}") // hide the search highlight
-      isFileSelectedInYazi(dir.contents["file2.txt"].name)
+      isFileSelectedInYazi(nvim.dir.contents["file2.txt"].name)
       cy.typeIntoTerminal("{control+x}")
 
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // the file path must be visible at the bottom
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
     })
   })
 
@@ -70,14 +70,14 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
-      isFileNotSelectedInYazi(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.typeIntoTerminal(`/${dir.contents["file2.txt"].name}{enter}`)
+      isFileNotSelectedInYazi(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.typeIntoTerminal(`/${nvim.dir.contents["file2.txt"].name}{enter}`)
       cy.typeIntoTerminal("{esc}") // hide the search highlight
-      isFileSelectedInYazi(dir.contents["file2.txt"].name)
+      isFileSelectedInYazi(nvim.dir.contents["file2.txt"].name)
       cy.typeIntoTerminal("{control+t}")
 
       // yazi should now be closed
@@ -87,12 +87,12 @@ describe("opening files with yazi < 0.4.0", () => {
         // match some text from inside the file
         "Hello",
       )
-      cy.runExCommand({ command: "tabnext" })
+      nvim.runExCommand({ command: "tabnext" })
 
       cy.contains("If you see this text, Neovim is ready!")
 
-      cy.contains(dir.contents["file2.txt"].name)
-      cy.contains(dir.contents["initial-file.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
     })
   })
 
@@ -102,12 +102,12 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("Hello")
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open
-      cy.contains(dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
 
       // file2.txt should be selected
       isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
@@ -126,8 +126,8 @@ describe("opening files with yazi < 0.4.0", () => {
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // items in the quickfix list should now be visible
-      cy.contains(`${dir.contents["file2.txt"].name}||`)
-      cy.contains(`${dir.contents["file3.txt"].name}||`)
+      cy.contains(`${nvim.dir.contents["file2.txt"].name}||`)
+      cy.contains(`${nvim.dir.contents["file3.txt"].name}||`)
     })
   })
 
@@ -139,7 +139,7 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -150,20 +150,20 @@ describe("opening files with yazi < 0.4.0", () => {
       cy.contains("posts.$postId")
       cy.typeIntoTerminal("{rightArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       ) // file in the directory
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal(
         `/${
-          dir.contents.routes.contents["posts.$postId"].contents[
+          nvim.dir.contents.routes.contents["posts.$postId"].contents[
             "adjacent-file.txt"
           ].name
         }{enter}{esc}`,
         // esc to hide the search highlight
       )
       isFileSelectedInYazi(
-        dir.contents.routes.contents["posts.$postId"].contents[
+        nvim.dir.contents.routes.contents["posts.$postId"].contents[
           "adjacent-file.txt"
         ].name,
       )
@@ -175,7 +175,7 @@ describe("opening files with yazi < 0.4.0", () => {
 
       // yazi should now be closed
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       ).should("not.exist")
 
@@ -183,11 +183,13 @@ describe("opening files with yazi < 0.4.0", () => {
       // the file to verify this.
       // NOTE: the test-setup configures the `"` register to be the clipboard
       cy.typeIntoTerminal("o{enter}{esc}")
-      cy.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then((result) => {
-        expect(result.value).to.contain(
-          "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
-        )
-      })
+      nvim
+        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+        .then((result) => {
+          expect(result.value).to.contain(
+            "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
+          )
+        })
     })
   })
 
@@ -199,18 +201,18 @@ describe("opening files with yazi < 0.4.0", () => {
       startupScriptModifications: [
         "modify_yazi_config_do_not_use_ya_emit_open.lua",
       ],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
 
       // enter another directory and select a file
       cy.typeIntoTerminal("/routes{enter}")
       cy.contains("posts.$postId")
       cy.typeIntoTerminal("{rightArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       ) // file in the directory
       cy.typeIntoTerminal("{rightArrow}")
@@ -220,7 +222,7 @@ describe("opening files with yazi < 0.4.0", () => {
 
       // yazi should now be closed
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       ).should("not.exist")
 
@@ -228,17 +230,19 @@ describe("opening files with yazi < 0.4.0", () => {
       // the file to verify this.
       // NOTE: the test-setup configures the `"` register to be the clipboard
       cy.typeIntoTerminal("o{enter}{esc}")
-      cy.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then((result) => {
-        expect(result.value).to.eql(
-          (
-            [
-              "routes/posts.$postId/adjacent-file.txt",
-              "routes/posts.$postId/route.tsx",
-              "routes/posts.$postId/should-be-excluded-file.txt",
-            ] satisfies MyTestDirectoryFile[]
-          ).join("\n"),
-        )
-      })
+      nvim
+        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+        .then((result) => {
+          expect(result.value).to.eql(
+            (
+              [
+                "routes/posts.$postId/adjacent-file.txt",
+                "routes/posts.$postId/route.tsx",
+                "routes/posts.$postId/should-be-excluded-file.txt",
+              ] satisfies MyTestDirectoryFile[]
+            ).join("\n"),
+          )
+        })
     })
   })
 })

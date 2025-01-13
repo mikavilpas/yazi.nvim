@@ -8,13 +8,13 @@ describe("grug-far integration (search and replace)", () => {
   it("can use grug-far.nvim to search and replace in the directory of the hovered file", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
-    }).then((dir) => {
+    }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains("this file is adjacent-file.txt")
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents[
+        nvim.dir.contents.routes.contents["posts.$postId"].contents[
           "should-be-excluded-file.txt"
         ].name,
       )
@@ -39,11 +39,11 @@ describe("grug-far integration (search and replace)", () => {
   it("can search and replace, limited to selected files only", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -57,7 +57,7 @@ describe("grug-far integration (search and replace)", () => {
       cy.typeIntoTerminal("{esc}")
 
       // close the split on the right so we can get some more space
-      cy.runExCommand({ command: "only" })
+      nvim.runExCommand({ command: "only" })
 
       // the selected files should be visible in the view, used as the files to
       // whitelist into the search and replace operation
@@ -82,11 +82,11 @@ describe("telescope integration (search)", () => {
   it("can use telescope.nvim to search in the current directory", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -102,11 +102,11 @@ describe("telescope integration (search)", () => {
   it("can use telescope.nvim to search, limited to the selected files only", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -139,11 +139,11 @@ describe("fzf-lua integration (grep)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
-    }).then((dir) => {
+    }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -156,14 +156,16 @@ describe("fzf-lua integration (grep)", () => {
 
       // results should be visible
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents[
+        nvim.dir.contents.routes.contents["posts.$postId"].contents[
           "should-be-excluded-file.txt"
         ].name,
       )
 
       // results from outside the directory should not be visible. This
       // verifies the search is limited to the current directory
-      cy.contains(dir.contents["initial-file.txt"].name).should("not.exist")
+      cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
+        "not.exist",
+      )
     })
   })
 
@@ -172,13 +174,13 @@ describe("fzf-lua integration (grep)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
       startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
-    }).then((dir) => {
+    }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -197,14 +199,14 @@ describe("fzf-lua integration (grep)", () => {
 
       // some results should be visible
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents[
+        nvim.dir.contents.routes.contents["posts.$postId"].contents[
           "adjacent-file.txt"
         ].name,
       )
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents[
+        nvim.dir.contents.routes.contents["posts.$postId"].contents[
           "should-be-excluded-file.txt"
         ].name,
       ).should("not.exist")
