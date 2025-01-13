@@ -5,10 +5,10 @@ describe("opening directories", () => {
       // `neovim .` specifies to open the current directory when neovim is
       // starting
       filename: ".",
-    }).then((dir) => {
+    }).then((nvim) => {
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
 
       cy.typeIntoTerminal("{downArrow}")
     })
@@ -21,20 +21,20 @@ describe("opening directories", () => {
       filename: {
         openInVerticalSplits: ["initial-file.txt", "file2.txt"],
       },
-    }).then((dir) => {
-      cy.contains(dir.contents["initial-file.txt"].name)
+    }).then((nvim) => {
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
 
       // open the current directory using a command
       cy.typeIntoTerminal(":edit .{enter}")
 
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
 
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      cy.runExCommand({ command: "CountBuffers" }).then((result) => {
+      nvim.runExCommand({ command: "CountBuffers" }).then((result) => {
         expect(result.value).to.equal("Number of open buffers: 2")
       })
     })
@@ -42,12 +42,12 @@ describe("opening directories", () => {
 
   it("can open a directory when pressing enter on a directory in yazi", () => {
     cy.visit("/")
-    cy.startNeovim().then((dir) => {
-      cy.contains(dir.contents["initial-file.txt"].name)
+    cy.startNeovim().then((nvim) => {
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains("-- TERMINAL --")
-      cy.contains(dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
 
       // select a directory
       cy.typeIntoTerminal("/routes{enter}")
@@ -60,7 +60,7 @@ describe("opening directories", () => {
       // yazi should now be visible in the new directory
       cy.contains("-- TERMINAL --")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       )
 
@@ -69,7 +69,7 @@ describe("opening directories", () => {
 
       cy.contains("-- TERMINAL --").should("not.exist")
       cy.contains(
-        dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
       ).should("not.exist")
     })

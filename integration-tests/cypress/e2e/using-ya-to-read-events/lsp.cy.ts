@@ -6,7 +6,7 @@ describe("rename events with LSP support", () => {
     // can use the LSP server to rename the file and all its references in the
     // project.
     cy.visit("/")
-    cy.startNeovim({ filename: "lua-project/config.lua" }).then(() => {
+    cy.startNeovim({ filename: "lua-project/config.lua" }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
@@ -37,7 +37,7 @@ describe("rename events with LSP support", () => {
       cy.contains("Do you want to modify the require path?").should("not.exist")
 
       // go back to the init.lua file and verify the require path was updated
-      cy.runExCommand({ command: `edit %:h/init.lua` })
+      nvim.runExCommand({ command: `edit %:h/init.lua` })
       cy.contains(`local config = require("config2")`)
     })
   })
