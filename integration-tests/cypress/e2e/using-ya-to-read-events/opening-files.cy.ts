@@ -1,4 +1,6 @@
+import { flavors } from "@catppuccin/palette"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import { rgbify } from "./utils/hover-utils"
 import {
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
@@ -35,6 +37,43 @@ describe("opening files", () => {
 
       // the file content should now be visible
       cy.contains("Hello 👋")
+    })
+  })
+
+  it("can open a file that was selected in yazi", () => {
+    cy.startNeovim().then((_nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // add text that contains a filename in the middle to test that limiting
+      // the recognition of the filename works
+      //
+      // use a complicated filename to test that the filename is recognized
+      // even in these cases
+      cy.typeIntoTerminal("ccletsgo./dir with spaces/file2.txt__moretext{esc}")
+
+      // select the file name
+      cy.typeIntoTerminal(`_f.vt_`)
+      cy.typeIntoTerminal(`{upArrow}`)
+
+      // wait until yazi is showing the file contents (so we know it has
+      // started up)
+      cy.contains("this is the second file")
+
+      cy.get("span")
+        .filter(
+          (_, el) =>
+            el.textContent?.includes(
+              "file2.txt" satisfies MyTestDirectoryFile,
+            ) ?? false,
+        )
+        .then((elements) => {
+          const matchingElements = elements.map((_, el) => {
+            return window.getComputedStyle(el).backgroundColor
+          })
+
+          return matchingElements.toArray()
+        })
+        .should("contain", rgbify(flavors.macchiato.colors.text.rgb))
     })
   })
 

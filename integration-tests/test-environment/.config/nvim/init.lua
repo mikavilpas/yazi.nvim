@@ -48,7 +48,7 @@ local plugins = {
     dir = repo_root,
     event = "VeryLazy",
     keys = {
-      { "<up>", "<cmd>Yazi<cr>" },
+      { "<up>", mode = { "n", "v" }, "<cmd>Yazi<cr>" },
       { "<c-up>", "<cmd>Yazi toggle<cr>" },
     },
     ---@type YaziConfig
