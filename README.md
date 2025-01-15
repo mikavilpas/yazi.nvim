@@ -21,6 +21,8 @@ open yazi in a floating window in Neovim.
   splits that you have open.
 - Files selected in yazi can be opened in various ways: as the current buffer, a
   vertical split, a horizontal split, a new tab, as quickfix items...
+  - if you have selected a file path in visual mode, yazi will open that file
+    instead of current file
 - Integrations to other plugins and tools, if they are installed:
 
   - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) and
@@ -76,6 +78,7 @@ This is the preferred installation method.
     -- 👇 in this section, choose your own keymappings!
     {
       "<leader>-",
+      mode = { "n", "v" },
       "<cmd>Yazi<cr>",
       desc = "Open yazi at the current file",
     },

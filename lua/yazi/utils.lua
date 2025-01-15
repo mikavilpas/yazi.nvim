@@ -71,8 +71,45 @@ function M.file_exists(name)
   end
 end
 
+--- get text lines in visual selection
+---@return string[]
+function M.get_visual_selection_lines()
+  local start_row, start_col = unpack(vim.api.nvim_buf_get_mark(0, "<"))
+  local end_row, end_col = unpack(vim.api.nvim_buf_get_mark(0, ">"))
+  local lines = vim.fn.getline(start_row, end_row) --[[ @as string[] ]]
+  if
+    #lines > 0
+    and start_col
+    and end_col
+    and end_col < string.len(lines[#lines])
+  then
+    if start_row == end_row then
+      lines[1] = lines[1]:sub(start_col + 1, end_col + 1)
+    else
+      lines[1] = lines[1]:sub(start_col + 1, -1)
+      lines[#lines] = lines[#lines]:sub(1, end_col + 1)
+    end
+  end
+  return lines
+end
+
 ---@param path string?
 function M.selected_file_path(path)
+  -- if a file is currently selected in visual mode, use that as the path
+  local mode = vim.api.nvim_get_mode().mode
+  if mode == "V" or mode == "v" then
+    -- needed to make visual selection work
+    vim.fn.feedkeys(":", "nx")
+    local lines = M.get_visual_selection_lines()
+    local line = lines[1]
+    -- trim whitespace at the beginning and end of the line
+    line = line:gsub("^%s*(.-)%s*$", "%1")
+
+    if vim.fn.filereadable(line) == 1 then
+      path = line
+    end
+  end
+
   -- make sure the path is a full path
   if path == "" or path == nil then
     path = vim.fn.expand("%:p")
