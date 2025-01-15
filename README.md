@@ -351,3 +351,6 @@ Please see [COMMUNITY.md](./COMMUNITY.md) for more information on the project!
 ## In case there are issues
 
 See [reproducing-issues.md](./documentation/reproducing-issues.md).
+
+Powershell users: see [here](https://github.com/mikavilpas/yazi.nvim/issues/675)
+for Powershell specific configuration.
