@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.0.0...v7.1.0) (2025-01-16)
+
+
+### Features
+
+* open yazi, hovering the visual selection file path ([15f21e1](https://github.com/mikavilpas/yazi.nvim/commit/15f21e19cda6094fd9df352aadf2dcee75c8ffa1))
+
 ## [7.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v6.11.1...v7.0.0) (2025-01-10)
 
 
