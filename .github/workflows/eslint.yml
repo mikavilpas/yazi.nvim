@@ -1,4 +1,4 @@
-name: reviewdog eslint
+name: eslint
 on: [pull_request]
 jobs:
   eslint:
@@ -9,8 +9,14 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: reviewdog/action-eslint@v1.33.0
+      - uses: pnpm/action-setup@v4.0.0
         with:
-          workdir: integration-tests
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review # Change reporter.
+          # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
+          run_install: false
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm run eslint
+        working-directory: integration-tests
