@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.1.0...v7.1.1) (2025-01-18)
+
+
+### Bug Fixes
+
+* **health:** verify resolver is set ([#683](https://github.com/mikavilpas/yazi.nvim/issues/683)) ([1674c9d](https://github.com/mikavilpas/yazi.nvim/commit/1674c9dcfd4eca1e02a2384ccb657eceef203c44))
+
 ## [7.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.0.0...v7.1.0) (2025-01-16)
 
 
