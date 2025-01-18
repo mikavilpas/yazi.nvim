@@ -99,7 +99,8 @@ return {
 
     local resolver = config.integrations.resolve_relative_path_application
     if
-      config.keymaps.copy_relative_path_to_selected_files ~= false
+      resolver
+      and config.keymaps.copy_relative_path_to_selected_files ~= false
       and vim.fn.executable(resolver) ~= 1
     then
       vim.health.warn(
