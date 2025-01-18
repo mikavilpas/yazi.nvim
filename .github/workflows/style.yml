@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: pnpm/action-setup@v4.0.0
+        with:
+          # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
+          run_install: false
       - uses: actions/setup-node@v4.1.0
         with:
           node-version-file: .nvmrc
