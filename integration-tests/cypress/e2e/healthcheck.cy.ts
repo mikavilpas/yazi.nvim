@@ -24,6 +24,7 @@ describe("the healthcheck", () => {
       cy.contains(new RegExp("Found yazi version Yazi \\d+?.\\d+?.\\d+?"))
       cy.contains(new RegExp("Found ya version Ya \\d+?.\\d+?.\\d+?"))
       cy.contains("OK yazi")
+      cy.contains("Neovim version:")
     })
   })
 })
