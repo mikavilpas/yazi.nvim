@@ -4,6 +4,21 @@ return {
   check = function()
     vim.health.start("yazi")
 
+    do
+      -- display the current neovim version to help with debugging issues
+      local v = vim.version()
+      local version = (
+        string.format(
+          "Neovim version: %d.%d.%d, build %s",
+          v.major,
+          v.minor,
+          v.patch,
+          v.build or "nil"
+        )
+      )
+      vim.health.info("Neovim version: " .. version)
+    end
+
     local yazi = require("yazi")
 
     local msg = string.format("Running yazi.nvim version %s", yazi.version)
