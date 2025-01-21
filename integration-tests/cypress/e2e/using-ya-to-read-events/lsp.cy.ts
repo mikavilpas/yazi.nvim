@@ -1,3 +1,5 @@
+import { flavors } from "@catppuccin/palette"
+import { rgbify } from "./utils/hover-utils"
 import { isFileSelectedInYazi } from "./utils/yazi-utils"
 
 describe("rename events with LSP support", () => {
@@ -14,9 +16,13 @@ describe("rename events with LSP support", () => {
       // shows an "unused" warning when it has started :)
       //
       // It takes a bit of time for the LSP server to start
-      cy.contains("Unused local `ready`.", { timeout: 15_000 })
-      // cy.typeIntoTerminal(":LspInfo{enter}")
-      // cy.pause()
+      cy.contains("ready", { timeout: 15_000 }).should(
+        "have.css",
+        "color",
+        // the color of the unused variable, effectively waiting for the LSP
+        // to report this after having started
+        rgbify(flavors.macchiato.colors.overlay2.rgb),
+      )
 
       cy.typeIntoTerminal("{upArrow}")
 
