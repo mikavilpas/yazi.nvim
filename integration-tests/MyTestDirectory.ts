@@ -25,14 +25,10 @@ export const MyTestDirectorySchema = z.object({
             "init.lua": z.object({
               name: z.literal("init.lua"),
               type: z.literal("file"),
-              extension: z.literal("lua"),
-              stem: z.literal("init."),
             }),
             "prepare.lua": z.object({
               name: z.literal("prepare.lua"),
               type: z.literal("file"),
-              extension: z.literal("lua"),
-              stem: z.literal("prepare."),
             }),
           }),
         }),
@@ -43,8 +39,6 @@ export const MyTestDirectorySchema = z.object({
             "keymap.toml": z.object({
               name: z.literal("keymap.toml"),
               type: z.literal("file"),
-              extension: z.literal("toml"),
-              stem: z.literal("keymap."),
             }),
           }),
         }),
@@ -57,24 +51,16 @@ export const MyTestDirectorySchema = z.object({
         "add_command_to_count_open_buffers.lua": z.object({
           name: z.literal("add_command_to_count_open_buffers.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("add_command_to_count_open_buffers."),
         }),
         "disable_a_keybinding.lua": z.object({
           name: z.literal("disable_a_keybinding.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("disable_a_keybinding."),
         }),
         "modify_yazi_config_and_add_hovered_buffer_background.lua": z.object({
           name: z.literal(
             "modify_yazi_config_and_add_hovered_buffer_background.lua",
           ),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal(
-            "modify_yazi_config_and_add_hovered_buffer_background.",
-          ),
         }),
         "modify_yazi_config_and_highlight_buffers_in_same_directory.lua":
           z.object({
@@ -82,78 +68,52 @@ export const MyTestDirectorySchema = z.object({
               "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
             ),
             type: z.literal("file"),
-            extension: z.literal("lua"),
-            stem: z.literal(
-              "modify_yazi_config_and_highlight_buffers_in_same_directory.",
-            ),
           }),
         "modify_yazi_config_and_open_multiple_files.lua": z.object({
           name: z.literal("modify_yazi_config_and_open_multiple_files.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_and_open_multiple_files."),
         }),
         "modify_yazi_config_and_set_help_key.lua": z.object({
           name: z.literal("modify_yazi_config_and_set_help_key.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_and_set_help_key."),
         }),
         "modify_yazi_config_do_not_use_ya_emit_open.lua": z.object({
           name: z.literal("modify_yazi_config_do_not_use_ya_emit_open.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_do_not_use_ya_emit_open."),
         }),
         "modify_yazi_config_don't_use_ya_emit_reveal.lua": z.object({
           name: z.literal("modify_yazi_config_don't_use_ya_emit_reveal.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_don't_use_ya_emit_reveal."),
         }),
         "modify_yazi_config_log_yazi_closed_successfully.lua": z.object({
           name: z.literal(
             "modify_yazi_config_log_yazi_closed_successfully.lua",
           ),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_log_yazi_closed_successfully."),
         }),
         "modify_yazi_config_use_fzf_lua.lua": z.object({
           name: z.literal("modify_yazi_config_use_fzf_lua.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("modify_yazi_config_use_fzf_lua."),
         }),
         "notify_custom_events.lua": z.object({
           name: z.literal("notify_custom_events.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("notify_custom_events."),
         }),
         "notify_hover_events.lua": z.object({
           name: z.literal("notify_hover_events.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("notify_hover_events."),
         }),
         "notify_rename_events.lua": z.object({
           name: z.literal("notify_rename_events.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("notify_rename_events."),
         }),
         "report_loaded_yazi_modules.lua": z.object({
           name: z.literal("report_loaded_yazi_modules.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("report_loaded_yazi_modules."),
         }),
         "use_light_neovim_colorscheme.lua": z.object({
           name: z.literal("use_light_neovim_colorscheme.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("use_light_neovim_colorscheme."),
         }),
       }),
     }),
@@ -164,28 +124,20 @@ export const MyTestDirectorySchema = z.object({
         "file1.txt": z.object({
           name: z.literal("file1.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("file1."),
         }),
         "file2.txt": z.object({
           name: z.literal("file2.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("file2."),
         }),
       }),
     }),
     "file2.txt": z.object({
       name: z.literal("file2.txt"),
       type: z.literal("file"),
-      extension: z.literal("txt"),
-      stem: z.literal("file2."),
     }),
     "file3.txt": z.object({
       name: z.literal("file3.txt"),
       type: z.literal("file"),
-      extension: z.literal("txt"),
-      stem: z.literal("file3."),
     }),
     highlights: z.object({
       name: z.literal("highlights/"),
@@ -194,28 +146,20 @@ export const MyTestDirectorySchema = z.object({
         "file_1.txt": z.object({
           name: z.literal("file_1.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("file_1."),
         }),
         "file_2.txt": z.object({
           name: z.literal("file_2.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("file_2."),
         }),
         "file_3.txt": z.object({
           name: z.literal("file_3.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("file_3."),
         }),
       }),
     }),
     "initial-file.txt": z.object({
       name: z.literal("initial-file.txt"),
       type: z.literal("file"),
-      extension: z.literal("txt"),
-      stem: z.literal("initial-file."),
     }),
     "lua-project": z.object({
       name: z.literal("lua-project/"),
@@ -224,20 +168,14 @@ export const MyTestDirectorySchema = z.object({
         ".luarc.json": z.object({
           name: z.literal(".luarc.json"),
           type: z.literal("file"),
-          extension: z.literal("json"),
-          stem: z.literal(".luarc."),
         }),
         "config.lua": z.object({
           name: z.literal("config.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("config."),
         }),
         "init.lua": z.object({
           name: z.literal("init.lua"),
           type: z.literal("file"),
-          extension: z.literal("lua"),
-          stem: z.literal("init."),
         }),
       }),
     }),
@@ -248,8 +186,6 @@ export const MyTestDirectorySchema = z.object({
         "other-sub-file.txt": z.object({
           name: z.literal("other-sub-file.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("other-sub-file."),
         }),
       }),
     }),
@@ -264,20 +200,14 @@ export const MyTestDirectorySchema = z.object({
             "adjacent-file.txt": z.object({
               name: z.literal("adjacent-file.txt"),
               type: z.literal("file"),
-              extension: z.literal("txt"),
-              stem: z.literal("adjacent-file."),
             }),
             "route.tsx": z.object({
               name: z.literal("route.tsx"),
               type: z.literal("file"),
-              extension: z.literal("tsx"),
-              stem: z.literal("route."),
             }),
             "should-be-excluded-file.txt": z.object({
               name: z.literal("should-be-excluded-file.txt"),
               type: z.literal("file"),
-              extension: z.literal("txt"),
-              stem: z.literal("should-be-excluded-file."),
             }),
           }),
         }),
@@ -290,8 +220,6 @@ export const MyTestDirectorySchema = z.object({
         "subdirectory-file.txt": z.object({
           name: z.literal("subdirectory-file.txt"),
           type: z.literal("file"),
-          extension: z.literal("txt"),
-          stem: z.literal("subdirectory-file."),
         }),
       }),
     }),
