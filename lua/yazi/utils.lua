@@ -104,8 +104,9 @@ function M.selected_file_path(path)
     local line = lines[1]
     -- trim whitespace at the beginning and end of the line
     line = line:gsub("^%s*(.-)%s*$", "%1")
+    line = vim.fn.expand(line) or line
 
-    if vim.fn.filereadable(line) == 1 then
+    if vim.fn.filereadable(line) == 1 or vim.fn.isdirectory(line) == 1 then
       path = line
     end
   end
