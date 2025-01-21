@@ -23,11 +23,24 @@ describe("highlighting the buffer with 'hover' events", () => {
    * hovering the desired file.
    */
   function hoverAnotherFileToEnsureHoverEventIsReceivedInCI(file: string) {
-    // select another file (hacky)
-    cy.typeIntoTerminal("gg")
+    cy.typeIntoTerminal("f")
+    cy.contains("Filter:")
+    cy.typeIntoTerminal("txt{enter}")
+
+    // select another file (hacky) by going to the parent directory and then
+    // back
+    cy.typeIntoTerminal("hl")
 
     // select the desired file so that a new hover event is sent
-    cy.typeIntoTerminal(`/${file}{enter}`)
+    cy.typeIntoTerminal(`/${file}{enter}`, { delay: 10 })
+
+    // yazi should display a notification/status message about the filter and
+    // search being active
+    cy.contains("filter: txt, find: ")
+
+    // exit filter mode
+    cy.typeIntoTerminal("{esc}")
+    cy.contains("filter: txt")
   }
 
   it("can highlight the buffer when hovered", () => {
@@ -87,7 +100,12 @@ describe("highlighting the buffer with 'hover' events", () => {
       isHoveredInNeovim("If you see this text, Neovim is ready!")
 
       // hover another file - the highlight should be removed
-      cy.typeIntoTerminal(`/^${nvim.dir.contents["file2.txt"].name}{enter}`)
+      cy.typeIntoTerminal(`/^${nvim.dir.contents["file2.txt"].name}{enter}`, {
+        delay: 10,
+      })
+      // make sure yazi is focused on the correct file. Sometimes if the keys
+      // are sent too quickly, they are included in an incorrect order.
+      cy.contains("find: ^file2.txt)")
 
       isNotHoveredInNeovim("If you see this text, Neovim is ready!")
     })
@@ -127,9 +145,14 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal(
         `/^${nvim.dir.contents["initial-file.txt"].name}{enter}`,
         {
-          delay: 1,
+          delay: 10,
         },
       )
+      // make sure yazi is focused on the correct file. Sometimes if the keys
+      // are sent too quickly, they are included in an incorrect order, such
+      // as "initila-file"
+      cy.contains("find: ^initial-file.txt)")
+
       isNotHoveredInNeovim(file2Text)
       isHoveredInNeovim("If you see this text, Neovim is ready!")
     })
@@ -228,18 +251,16 @@ describe("highlighting the buffer with 'hover' events", () => {
       )
 
       cy.typeIntoTerminal("q")
-      nvim.runExCommand({ command: "messages" }).then((result) => {
-        // Hovering a new file should have triggered the integration
-        //
-        // the main message from the integration in the
-        // startupScriptModifications script should be visible. Check the file
-        // to see the full integration.
-        expect(result.value).to.contain("Just received a YaziDDSHover event!")
+      nvim
+        .runLuaCode({ luaCode: `return _G.yazi_test_events` })
+        .should((result) => {
+          const events = result.value as unknown[]
+          expect(events.length).to.be.greaterThan(1)
 
-        // some event data should be visible. See the lua type YaziHoverEvent for
-        // the structure
-        expect(result.value).to.contain(`type = "hover"`)
-      })
+          const firstEvent = JSON.stringify(events[0])
+          expect(firstEvent).to.contain("Just received a YaziDDSHover event!")
+          expect(firstEvent).to.contain(`"type":"hover"`)
+        })
     })
   })
 
@@ -262,7 +283,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       // yazi should be visible now
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
       hoverAnotherFileToEnsureHoverEventIsReceivedInCI(
-        "subdirectory" satisfies MyTestDirectoryFile,
+        "file3.txt" satisfies MyTestDirectoryFile,
       )
 
       isHoveredInNeovim(
