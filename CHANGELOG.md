@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.1.1...v7.2.0) (2025-01-21)
+
+
+### Features
+
+* **health:** display the current neovim version in the healthcheck ([e188eaa](https://github.com/mikavilpas/yazi.nvim/commit/e188eaafa095509592124baeedbf8ade2c44495a))
+
+
+### Bug Fixes
+
+* `:Yazi` visual selection not recognizing directories, only files ([#693](https://github.com/mikavilpas/yazi.nvim/issues/693)) ([584cdda](https://github.com/mikavilpas/yazi.nvim/commit/584cdda3ce14b9c6c1cf8ba4fede03e8058886ab))
+
 ## [7.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.1.0...v7.1.1) (2025-01-18)
 
 
