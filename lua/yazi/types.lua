@@ -27,6 +27,7 @@
 ---@class(exact) yazi.OptInFeatures
 ---@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. Requires yazi 0.4.0 or later (from 2024-12-08).
 ---@field ya_emit_open? boolean # Use `ya emit open` as a more robust implementation for opening files in yazi. This can prevent conflicts with custom keymappings for the enter key. Requires yazi 0.4.0 or later (from 2024-12-08).
+---@field nvim_0_10_termopen_fallback? boolean # Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart` (https://github.com/neovim/neovim/pull/31343). By default on nightly, this option is `false` and `jobstart` is used. Some users have reported issues with this, and can set this to `true` to keep using the old `termopen` for the time being.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 

@@ -2,6 +2,17 @@
 
 local M = {}
 
+-- https://github.com/ibhagwan/fzf-lua/issues/1732#issuecomment-2601200097
+---@return boolean
+function M.JOBSTART_HAS_TERM()
+  local ok, msg = pcall(function()
+    return vim.fn.jobstart("", { term = 1 })
+  end)
+  return not ok
+    and msg:match([[Vim:E475: Invalid argument: 'term' must be Boolean]])
+      ~= nil
+end
+
 function M.default()
   local openers = require("yazi.openers")
 
@@ -12,11 +23,15 @@ function M.default()
     relpath = "realpath"
   end
 
+  local jobstart_has_term = M.JOBSTART_HAS_TERM()
+
   ---@type YaziConfig
   return {
     log_level = vim.log.levels.OFF,
     open_for_directories = false,
-    future_features = {},
+    future_features = {
+      nvim_0_10_termopen_fallback = jobstart_has_term,
+    },
     open_multiple_tabs = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
