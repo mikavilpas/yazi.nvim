@@ -1,5 +1,174 @@
 # Changelog
 
+## [7.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.2.0...v7.2.1) (2025-01-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* require yazi 0.4.0 or later from 2024-12-08
+* yazi 0.3 is now required. Currently the version of yazi is 0.3.1 https://yazi-rs.github.io/docs/installation/
+* **openers:** when multiple files were selected in yazi, the previous behaviour was to open them as items in the quickfix list. This has been changed to open them as buffers instead. The previous behaviour can be restored by setting `config.hooks.yazi_opened_multiple_files` to `openers.send_files_to_quickfix_list`.
+* If you use `use_ya_for_events_reading = true` in your yazi.nvim config, you need to upgrade your yazi version to the currently latest version:
+* If you, for some reason, relied on the fact that `set_keymappings_function` removed all the built-in keymappings, you will need to change your configuration. You can get the same behaviour by setting `keymaps = false`. But realistically I think almost nobody has done this, so it should be fine.
+* The optional `hovered_buffer_background` key in the `YaziConfigHighlightGroups` has been renamed to `hovered_buffer`. This change was made to better reflect the purpose of the key.
+* This commit removes the `lsp_util` module, which was used to provide compatibility with Neovim 0.9.0. We now only support nvim 0.10.0 and later.
+* require yazi version 0.2.5 (previously required 0.2.4)
+
+### version
+
+* 1.3.0 ([bd19300](https://github.com/mikavilpas/yazi.nvim/commit/bd193005f818473dd924d35448b8af7eb398cf9a))
+* 7.2.1 ([4f67b94](https://github.com/mikavilpas/yazi.nvim/commit/4f67b94f1c99eed31c382c6e8a1f8474323086bf))
+
+
+### Features
+
+* &lt;c-s&gt; closes yazi and starts telescope.nvim's live_grep ([33657fc](https://github.com/mikavilpas/yazi.nvim/commit/33657fcda1a23f920208caa34bb3f0ef7d8d4913))
+* `&lt;c-y&gt;` to copy relative path to selected file(s) ([#287](https://github.com/mikavilpas/yazi.nvim/issues/287)) ([dd8995e](https://github.com/mikavilpas/yazi.nvim/commit/dd8995e9783c7a424cdbb37fab4c072177355bcc))
+* add `yazi.toggle()` to continue from the last hovered file ([#230](https://github.com/mikavilpas/yazi.nvim/issues/230)) ([dbddef0](https://github.com/mikavilpas/yazi.nvim/commit/dbddef0e047f95d15f6e1fa93cbb7be730200092))
+* add default colors for hover highlighting ([#194](https://github.com/mikavilpas/yazi.nvim/issues/194)) ([1deeba2](https://github.com/mikavilpas/yazi.nvim/commit/1deeba2fb2ab6a741d1df66a80b08112bae59327))
+* add fzf-lua integration for grepping in files and dirs ([56b80f3](https://github.com/mikavilpas/yazi.nvim/commit/56b80f3e7cf6f4559fa2898cb33844eb10f0d97d))
+* add keymap for changing cwd to current directory ([#474](https://github.com/mikavilpas/yazi.nvim/issues/474)) ([d63165d](https://github.com/mikavilpas/yazi.nvim/commit/d63165d5e122f27f985591bd4803c0222383f770))
+* add optional search and replace integration (grug-far.nvim) ([#250](https://github.com/mikavilpas/yazi.nvim/issues/250)) ([b512d38](https://github.com/mikavilpas/yazi.nvim/commit/b512d3898d7d37273fdad43e6ad697cf29839a28))
+* add targeted communication with the yazi instance (opt-in) ([#225](https://github.com/mikavilpas/yazi.nvim/issues/225)) ([8114817](https://github.com/mikavilpas/yazi.nvim/commit/81148178ccdfacd68f302b5c54dec649eb0a1ae3))
+* add title to notify messages ([51c0d14](https://github.com/mikavilpas/yazi.nvim/commit/51c0d1453b8991f96caa5714b13db8f6a8651dba))
+* allow customizing keymaps more clearly ([#244](https://github.com/mikavilpas/yazi.nvim/issues/244)) ([f511e64](https://github.com/mikavilpas/yazi.nvim/commit/f511e64197bf29b5e1eda792791f0541fadc1c32))
+* allow cycle_open_buffers (`tab`) to work for a single file ([#451](https://github.com/mikavilpas/yazi.nvim/issues/451)) ([2d80e92](https://github.com/mikavilpas/yazi.nvim/commit/2d80e926e352841c411ef5c72eafd64d4c0b4763))
+* allow scaling the floating window width and height separately ([56912be](https://github.com/mikavilpas/yazi.nvim/commit/56912beffcdd6950e39f6e8782ffdf15fbc13d15))
+* allow searching in selected files with telescope ([#279](https://github.com/mikavilpas/yazi.nvim/issues/279)) ([55e98d8](https://github.com/mikavilpas/yazi.nvim/commit/55e98d867104490ab7a139f55578d0300d4c8f1d))
+* allow using :Yazi commands automatically by default ([#377](https://github.com/mikavilpas/yazi.nvim/issues/377)) ([9a07ed5](https://github.com/mikavilpas/yazi.nvim/commit/9a07ed5dedabfe6f93f25eadb3d05cf1d5ca41ea))
+* allow using nvim's cwd in yazi keybindings ([#548](https://github.com/mikavilpas/yazi.nvim/issues/548)) ([f7ae54b](https://github.com/mikavilpas/yazi.nvim/commit/f7ae54bbe2346b28d0889140440272668708f33e))
+* allow yazi_closed_successfully hook to know the last yazi dir ([4541e44](https://github.com/mikavilpas/yazi.nvim/commit/4541e44f3a48cc7a5da5a06c033e1b1bfc36db46))
+* basic support for resizing the yazi window ([01e4685](https://github.com/mikavilpas/yazi.nvim/commit/01e4685b197bf09b7b41c9ab4b170f50692d0394))
+* can limit search and replace to selected files only ([#277](https://github.com/mikavilpas/yazi.nvim/issues/277)) ([5a12444](https://github.com/mikavilpas/yazi.nvim/commit/5a12444e811925f8454483061a8313211a6d618c))
+* can open a directory from the command line ([c32b990](https://github.com/mikavilpas/yazi.nvim/commit/c32b990c84b0e5b55a8f8cbe53f2e5ee6ecd37ef))
+* can toggle help menu with `&lt;f1&gt;` key in the yazi window ([#275](https://github.com/mikavilpas/yazi.nvim/issues/275)) ([cc65bb5](https://github.com/mikavilpas/yazi.nvim/commit/cc65bb57abb970b7f5c1ce8db498f9712c3462cf))
+* can use `ya emit` for more accurate &lt;tab&gt; to file (opt-in) ([#604](https://github.com/mikavilpas/yazi.nvim/issues/604)) ([b81e03c](https://github.com/mikavilpas/yazi.nvim/commit/b81e03c64bc1635acb15f536948b243ae975c960))
+* directories sent to the qf list end in '/' ([85dafe2](https://github.com/mikavilpas/yazi.nvim/commit/85dafe2167b2542caf380f889629d94636ca9ba2))
+* emit YaziRenamedOrMoved event when files are renamed or moved ([#495](https://github.com/mikavilpas/yazi.nvim/issues/495)) ([c4befd1](https://github.com/mikavilpas/yazi.nvim/commit/c4befd124f81741de987633e2ea08df0f996031f))
+* enable yazi 0.3 features by default ([#386](https://github.com/mikavilpas/yazi.nvim/issues/386)) ([7ecfdd7](https://github.com/mikavilpas/yazi.nvim/commit/7ecfdd76a4016a0ccf7f9d1987b5c30661829519))
+* expose the current working directory to keybindings ([#471](https://github.com/mikavilpas/yazi.nvim/issues/471)) ([445f487](https://github.com/mikavilpas/yazi.nvim/commit/445f4877d8b80f9d24ea1f9b890c878211878d63))
+* file opener hooks get access to the last dir visited ([0abd8e9](https://github.com/mikavilpas/yazi.nvim/commit/0abd8e91d191f72983d6241035f26a3bb4a22f0f))
+* **health:** add instructions for `open_for_directories` ([#281](https://github.com/mikavilpas/yazi.nvim/issues/281)) ([0df9393](https://github.com/mikavilpas/yazi.nvim/commit/0df939302b632368317f3d074590b72795c63334))
+* healthcheck reports yazi nvim version ([#208](https://github.com/mikavilpas/yazi.nvim/issues/208)) ([08ffd84](https://github.com/mikavilpas/yazi.nvim/commit/08ffd84e613d9dbc843188d4a2e3b2f04cd9bc6a))
+* **health:** display the current neovim version in the healthcheck ([e188eaa](https://github.com/mikavilpas/yazi.nvim/commit/e188eaafa095509592124baeedbf8ade2c44495a))
+* **health:** show a command for double checking the configuration ([#374](https://github.com/mikavilpas/yazi.nvim/issues/374)) ([d66dbef](https://github.com/mikavilpas/yazi.nvim/commit/d66dbef2303e75ead47384171a51af5726b8947c))
+* **health:** show exact version of yazi and ya in health check ([#238](https://github.com/mikavilpas/yazi.nvim/issues/238)) ([a2f6e2b](https://github.com/mikavilpas/yazi.nvim/commit/a2f6e2b6a96e3b3fd53c15629cb95b0347b1324a))
+* **health:** suggest enabling new features for yazi &gt;= 0.3.0 ([#362](https://github.com/mikavilpas/yazi.nvim/issues/362)) ([8cd2f71](https://github.com/mikavilpas/yazi.nvim/commit/8cd2f712461ae69e25e2ef99b9ced5edb0cefc26))
+* **health:** warn when using nvim &lt; 0.10.0 ([9b4130b](https://github.com/mikavilpas/yazi.nvim/commit/9b4130ba1b19672633a768c0cef97b118d7c5936))
+* **help:** allow closing help menu with the help key ([#314](https://github.com/mikavilpas/yazi.nvim/issues/314)) ([7dbda3c](https://github.com/mikavilpas/yazi.nvim/commit/7dbda3cb8b25183454404f2ee719305179e19088))
+* highlight buffers in the same directory (opt-out) ([#351](https://github.com/mikavilpas/yazi.nvim/issues/351)) ([879984b](https://github.com/mikavilpas/yazi.nvim/commit/879984b9181cb2489699edeac78ee2203f502c9e))
+* highlight the currently hovered file in yazi (opt-in) ([#180](https://github.com/mikavilpas/yazi.nvim/issues/180)) ([78cb7d2](https://github.com/mikavilpas/yazi.nvim/commit/78cb7d2eb67cefaeed60dd8d1649ccb443dbf154))
+* items sent to the quickfix list don't specify renundant lnum 1 ([a9d76ab](https://github.com/mikavilpas/yazi.nvim/commit/a9d76ab5c69f1182fc5452619cbf6f91ae9d9555))
+* keymaps can now be done with "&lt;cmd&gt;Yazi<cr>" etc. ([b038b35](https://github.com/mikavilpas/yazi.nvim/commit/b038b35f13caa468fd7df37ff5b65c293e251323))
+* lazy.nvim users no longer need to specify dependencies ([#144](https://github.com/mikavilpas/yazi.nvim/issues/144)) ([e6fe720](https://github.com/mikavilpas/yazi.nvim/commit/e6fe720ca30459f67a798e31e6d84fdce76f2b89))
+* **log:** add possibility for debug logging to diagnose issues ([db4ca7b](https://github.com/mikavilpas/yazi.nvim/commit/db4ca7bc1090ba6f4962e23db776e73df9b87848))
+* **lsp:** apply changes to related files when a file is deleted ([e824eb2](https://github.com/mikavilpas/yazi.nvim/commit/e824eb2dbb2c195cbbd5f3e628297f741258d041))
+* **lsp:** apply changes to related files when a file is renamed ([43ed7dc](https://github.com/mikavilpas/yazi.nvim/commit/43ed7dcd24fc6e9ecbc8b74bc934d5619fce0c12))
+* make it easier to completely override the default keymappings ([96ff34a](https://github.com/mikavilpas/yazi.nvim/commit/96ff34ab383ae93609112e4e84b7dacd20114614))
+* make it easier to create custom keymappings in the user config ([a6df4d7](https://github.com/mikavilpas/yazi.nvim/commit/a6df4d7e28b824fb3ce1e7cd1fcce3231a5afbc9))
+* **mouse:** add hacky support for scrolling inside tmux ([26eb08f](https://github.com/mikavilpas/yazi.nvim/commit/26eb08f1c50c74a49581bf3f6bbc456c7cf36290))
+* **mouse:** add hacky support for scrolling yazi (opt-in) ([83619ea](https://github.com/mikavilpas/yazi.nvim/commit/83619eae7f94b881ef9367d7f601271ee0a59633))
+* open currently visible splits as yazi tabs (opt-in) ([#359](https://github.com/mikavilpas/yazi.nvim/issues/359)) ([c57a4ea](https://github.com/mikavilpas/yazi.nvim/commit/c57a4ea81d2a08a615e27c77fc03bd941ad2b8e1))
+* open yazi, hovering the visual selection file path ([15f21e1](https://github.com/mikavilpas/yazi.nvim/commit/15f21e19cda6094fd9df352aadf2dcee75c8ffa1))
+* **openers:** multiple files are opened as buffers by default ([5cd3ad7](https://github.com/mikavilpas/yazi.nvim/commit/5cd3ad7ef02053d1360b9521d473f8f5a7ac7c3f))
+* plugin manager for installing and updating yazi plugins ([fd727d8](https://github.com/mikavilpas/yazi.nvim/commit/fd727d8f7c6eaef14ce7a784b406cb2b7f089164))
+* **plugin:** allow specifying a subdirectory for plugins ([0e79514](https://github.com/mikavilpas/yazi.nvim/commit/0e795143ac53d8805e9b08cf2454c55cb3a6a83a))
+* **plugin:** overwrite existing symlinks when installing plugins ([#199](https://github.com/mikavilpas/yazi.nvim/issues/199)) ([d09818e](https://github.com/mikavilpas/yazi.nvim/commit/d09818e19d4b43d64a1ca2872d940924ca7b2819))
+* **plugins:** add some sanity checking and error reporting ([169ac39](https://github.com/mikavilpas/yazi.nvim/commit/169ac399d4efab8dd7f6fbd94c8b8b48568a1f82))
+* **plugins:** support including yazi flavors with `.build_flavor` ([efc0ef1](https://github.com/mikavilpas/yazi.nvim/commit/efc0ef111835534455a93a05432aff13ea05bde2))
+* pressing `tab` in yazi jumps to dir of next open split ([#232](https://github.com/mikavilpas/yazi.nvim/issues/232)) ([3cbc40c](https://github.com/mikavilpas/yazi.nvim/commit/3cbc40c01ef96c0d1d56b6caa33bb951b7212c0e))
+* prevent conflicts with custom yazi config for `&lt;enter&gt;` (opt-in) ([e64d309](https://github.com/mikavilpas/yazi.nvim/commit/e64d3093895c68ec6f62b8a98c12d3f76d802e03))
+* require yazi 0.4.0 or later from 2024-12-08 ([5a78d8b](https://github.com/mikavilpas/yazi.nvim/commit/5a78d8b6208691e9b8651c3f441027c7783be20a))
+* require yazi version 0.2.5 (previously required 0.2.4) ([ad4f8a2](https://github.com/mikavilpas/yazi.nvim/commit/ad4f8a2543ac959532d304baf43ac3b0a1a88d48))
+* support bulk renaming files in nightly yazi (opt-in) ([#152](https://github.com/mikavilpas/yazi.nvim/issues/152)) ([8bd164d](https://github.com/mikavilpas/yazi.nvim/commit/8bd164dc0631e6bb394ba6f680e85c1adefd74be))
+* support reacting to custom yazi DDS events ([882c200](https://github.com/mikavilpas/yazi.nvim/commit/882c200d3abc0f4c950d149e014096efe59c46ae))
+* using folke/snacks.nvim can preserve window layouts on deletes ([5c0f9b2](https://github.com/mikavilpas/yazi.nvim/commit/5c0f9b24ba0b87b8e2a79a685ac4a95577961fff))
+* warn when the yazi version is too old ([3c36057](https://github.com/mikavilpas/yazi.nvim/commit/3c36057a3a1ae70fe5e0ff426d6b5d25b25fb492))
+* **window:** allow customizing the border ([410c9ed](https://github.com/mikavilpas/yazi.nvim/commit/410c9ed1570ba8f4755b8741ea1702284c95721c))
+
+
+### Bug Fixes
+
+* "invalid buffer id x" error when renaming a buffer ([6884a0f](https://github.com/mikavilpas/yazi.nvim/commit/6884a0feedecc6e1e274860893a2827d88740c6a))
+* `:Yazi` visual selection not recognizing directories, only files ([#693](https://github.com/mikavilpas/yazi.nvim/issues/693)) ([584cdda](https://github.com/mikavilpas/yazi.nvim/commit/584cdda3ce14b9c6c1cf8ba4fede03e8058886ab))
+* `nvim .` sent extra `i` key to yazi ([8253e11](https://github.com/mikavilpas/yazi.nvim/commit/8253e11e23b94c15f7c55d1c040f8847a86ecaeb))
+* `open_yazi_in_directory` error in nvim 0.10.1 & nightly ([#309](https://github.com/mikavilpas/yazi.nvim/issues/309)) ([7eb5f93](https://github.com/mikavilpas/yazi.nvim/commit/7eb5f933c863591411013a7944b0f02e80edeefc))
+* add quotes back for windows systems ([1dd8403](https://github.com/mikavilpas/yazi.nvim/commit/1dd84034e6a881d59dbd8931e4dffc52cd0a57c8))
+* avoid "E13: File exists" error after renaming a file ([#560](https://github.com/mikavilpas/yazi.nvim/issues/560)) ([58f1227](https://github.com/mikavilpas/yazi.nvim/commit/58f1227a82a656510e99202822ba8c67e2119e6e))
+* avoid issues with events_file_path having spaces ([a6d918f](https://github.com/mikavilpas/yazi.nvim/commit/a6d918f9a742cb7f8de804f2118b4deb3f59dc8b))
+* buffer cycling small errors ([#234](https://github.com/mikavilpas/yazi.nvim/issues/234)) ([a43465e](https://github.com/mikavilpas/yazi.nvim/commit/a43465efef62b897474808e680fd9248c4ce6c71))
+* close the floating terminal if it loses focus ([#269](https://github.com/mikavilpas/yazi.nvim/issues/269)) ([c9ebbf6](https://github.com/mikavilpas/yazi.nvim/commit/c9ebbf6749980680a533125ac08a0d57257c04a9))
+* closing split when opening directory ([#403](https://github.com/mikavilpas/yazi.nvim/issues/403)) ([80e8dc4](https://github.com/mikavilpas/yazi.nvim/commit/80e8dc45c050b85f1cf09be7a3377964615c0be3))
+* complex character file name resolution for multiple files ([051bfce](https://github.com/mikavilpas/yazi.nvim/commit/051bfcef27f68aa22d14fc11342d3473bae1cb78))
+* crash when current file contains "()" characters in its path/name ([ca914e0](https://github.com/mikavilpas/yazi.nvim/commit/ca914e0539e123143d12a03a8e3d37d0b722057f))
+* crash without newest yazi ([#227](https://github.com/mikavilpas/yazi.nvim/issues/227)) ([de4e79e](https://github.com/mikavilpas/yazi.nvim/commit/de4e79e07867c29c871a91d464c421ca1f26ba33))
+* don't open duplicate tabs when opening files ([#367](https://github.com/mikavilpas/yazi.nvim/issues/367)) ([1c1ac86](https://github.com/mikavilpas/yazi.nvim/commit/1c1ac86293bb2429b0f69280abfcba165847bbbc))
+* escape spaces in paths for grug-far integration ([#267](https://github.com/mikavilpas/yazi.nvim/issues/267)) ([f265e95](https://github.com/mikavilpas/yazi.nvim/commit/f265e957399ae80ffbbd63d75cef35c9f6b574ab))
+* exiting insert mode with "&lt;esc&gt;<esc>" ([bc2aabb](https://github.com/mikavilpas/yazi.nvim/commit/bc2aabbc23aa194b7a3e7aed5a0d466d0a7565f9))
+* grepping or replacing in cwd instead of the directory of the file ([#293](https://github.com/mikavilpas/yazi.nvim/issues/293)) ([aee19fb](https://github.com/mikavilpas/yazi.nvim/commit/aee19fb1b6ef17d961237a0682358d5ec02fe50f))
+* grug-far appending extra text at the end of replaced files ([#263](https://github.com/mikavilpas/yazi.nvim/issues/263)) ([be2ac43](https://github.com/mikavilpas/yazi.nvim/commit/be2ac43a530b9b8c8b1a6185f07fac13f128f046))
+* grug-far integration not being able to search outside of the cwd ([#256](https://github.com/mikavilpas/yazi.nvim/issues/256)) ([f446cb8](https://github.com/mikavilpas/yazi.nvim/commit/f446cb8734b839ee3bd971dd44abdf5dcd4ce0db))
+* **health:** verify resolver is set ([#683](https://github.com/mikavilpas/yazi.nvim/issues/683)) ([1674c9d](https://github.com/mikavilpas/yazi.nvim/commit/1674c9dcfd4eca1e02a2384ccb657eceef203c44))
+* **health:** warn when yazi and ya versions do not match ([#221](https://github.com/mikavilpas/yazi.nvim/issues/221)) ([e694c26](https://github.com/mikavilpas/yazi.nvim/commit/e694c2661af2c2443f8636247a1def9a9b398276))
+* help menu crashing when a keybinding is disabled ([#285](https://github.com/mikavilpas/yazi.nvim/issues/285)) ([dca52dd](https://github.com/mikavilpas/yazi.nvim/commit/dca52dd35ab76b6b6a994c1e7f2dc908cf15957d))
+* highlighting siblings of hovered directories ([#357](https://github.com/mikavilpas/yazi.nvim/issues/357)) ([ed31153](https://github.com/mikavilpas/yazi.nvim/commit/ed31153bb80205e556fb40cc9284dd00d5e32b72))
+* leaving an empty buffer when opening a directory with `:edit .` ([#379](https://github.com/mikavilpas/yazi.nvim/issues/379)) ([ebe93e5](https://github.com/mikavilpas/yazi.nvim/commit/ebe93e5136091d7de001432089a3c8d9a6c52548))
+* LSP renaming did not work in some cases ([#260](https://github.com/mikavilpas/yazi.nvim/issues/260)) ([6afe997](https://github.com/mikavilpas/yazi.nvim/commit/6afe997df07ba668fb443bc6e20b3c024078d8cb))
+* **lsp:** only notifying lsp of renames for open buffers ([85bac6b](https://github.com/mikavilpas/yazi.nvim/commit/85bac6b14f79b270274bca115645014770373fa1))
+* **lsp:** renaming only notified the lsp for the current file ([f3ccc14](https://github.com/mikavilpas/yazi.nvim/commit/f3ccc14fd1c685dc16ad6db77154dc5a804093ec))
+* not being able to delete a buffer when it is modified ([#399](https://github.com/mikavilpas/yazi.nvim/issues/399)) ([8b0ecd8](https://github.com/mikavilpas/yazi.nvim/commit/8b0ecd8a6e0abe1af6bddf368cf6e10196443b24))
+* not being able to disable writing DEBUG logs ([#150](https://github.com/mikavilpas/yazi.nvim/issues/150)) ([8f251de](https://github.com/mikavilpas/yazi.nvim/commit/8f251defe31ce7b3e623b499e08a7c558d79bfdb))
+* not being able to open directories with enter ([#272](https://github.com/mikavilpas/yazi.nvim/issues/272)) ([d70bb91](https://github.com/mikavilpas/yazi.nvim/commit/d70bb91569a472e5d9876bf445b161e7be087831))
+* not being able to open file names with complex characters ([bdec3b6](https://github.com/mikavilpas/yazi.nvim/commit/bdec3b6211b665ca1233d117efbf4025a350a31a))
+* not being able to open files with special chars on osx ([8c5ef23](https://github.com/mikavilpas/yazi.nvim/commit/8c5ef239f73c07e80e51cdacf55b609a4ef012ae))
+* not being able to open yazi for directories ([9b80f3e](https://github.com/mikavilpas/yazi.nvim/commit/9b80f3ee0d7665bffc0462994b5693a0c8d80b5f))
+* not being able to override the log level per invocation ([f5c7b73](https://github.com/mikavilpas/yazi.nvim/commit/f5c7b73f30cf0ca19935dd7c92999e1e3549a128))
+* not being able to resolve the last_directory ([#523](https://github.com/mikavilpas/yazi.nvim/issues/523)) ([6c24b52](https://github.com/mikavilpas/yazi.nvim/commit/6c24b52074db2c7db55a92ff5ce845924b4d0a50))
+* not being in insert mode when opening a dir from the command line ([#321](https://github.com/mikavilpas/yazi.nvim/issues/321)) ([c44ad14](https://github.com/mikavilpas/yazi.nvim/commit/c44ad14b71b30fa19ede4795158b010eb40a407a))
+* not handling bulk renaming events correctly ([607db68](https://github.com/mikavilpas/yazi.nvim/commit/607db68b14b72dc38d235b6ebdb9a6361ba84691))
+* open buffers deleted in yazi were not closed ([6dc4a48](https://github.com/mikavilpas/yazi.nvim/commit/6dc4a48c586201f545a9bac6c1e69474d3059c93))
+* open file results in one empty buffer ([#138](https://github.com/mikavilpas/yazi.nvim/issues/138)) ([73a5f8f](https://github.com/mikavilpas/yazi.nvim/commit/73a5f8f37971cc133bbab978eac825968e90bb9c))
+* opening "nvim dir/" may focus wrong window ([93de590](https://github.com/mikavilpas/yazi.nvim/commit/93de590cf13e430ed7077e8abc65b2213878706a))
+* opening a LazyVim session with folke/persistence.nvim starting yazi ([#442](https://github.com/mikavilpas/yazi.nvim/issues/442)) ([b8f4cc7](https://github.com/mikavilpas/yazi.nvim/commit/b8f4cc7fe365a4c16826efd5e07a9ca13fc6c11e))
+* opening directories in splits and tabs opening empty buffers ([#421](https://github.com/mikavilpas/yazi.nvim/issues/421)) ([88cb633](https://github.com/mikavilpas/yazi.nvim/commit/88cb633d31b17c8f2fffbe47796f1bc13c489ac0))
+* opening multiple files in a directory with spaces ([#347](https://github.com/mikavilpas/yazi.nvim/issues/347)) ([f7be6c1](https://github.com/mikavilpas/yazi.nvim/commit/f7be6c1f7b5cec69baf8f5d610f9d2a2a0ff5d20))
+* pick correct jobstart method by default ([1ca7aed](https://github.com/mikavilpas/yazi.nvim/commit/1ca7aedc26547f2adfe49177263d48891b1635f7))
+* **plugins:** fix failure on repeated installation ([3df04c4](https://github.com/mikavilpas/yazi.nvim/commit/3df04c467e11b448083a0987688ba4d4782e73ec))
+* preserve line numbers when switching buffers in a new tab ([#653](https://github.com/mikavilpas/yazi.nvim/issues/653)) ([b023f1d](https://github.com/mikavilpas/yazi.nvim/commit/b023f1dfcb09e1319b5869452f17f5cc2fb3809f))
+* pressing &lt;esc&gt; has a 1 second delay ([#311](https://github.com/mikavilpas/yazi.nvim/issues/311)) ([c38ca8f](https://github.com/mikavilpas/yazi.nvim/commit/c38ca8f1af71e87ac79abedb3bacee482200a3d8))
+* remove extra debug logging ([#153](https://github.com/mikavilpas/yazi.nvim/issues/153)) ([2fc4679](https://github.com/mikavilpas/yazi.nvim/commit/2fc46796d35a89958aca8666ddbeda81b81a3d0a))
+* renaming a file twice not updating the buffer name ([#259](https://github.com/mikavilpas/yazi.nvim/issues/259)) ([98caf39](https://github.com/mikavilpas/yazi.nvim/commit/98caf394dc998793dbb4987cbfefa5182ac4a65a))
+* report parent directory of input_path as last_directory ([#519](https://github.com/mikavilpas/yazi.nvim/issues/519)) ([9ff955a](https://github.com/mikavilpas/yazi.nvim/commit/9ff955af4bd0a92b9c5dc76d24e7d24ec0d1748f))
+* **repro:** update the repro instructions to update the dependencies ([#146](https://github.com/mikavilpas/yazi.nvim/issues/146)) ([b90d4fe](https://github.com/mikavilpas/yazi.nvim/commit/b90d4fe28ea8338174daf8922f49718c82d66161))
+* showing error message when background color is not found ([#393](https://github.com/mikavilpas/yazi.nvim/issues/393)) ([b2c0bf3](https://github.com/mikavilpas/yazi.nvim/commit/b2c0bf3144290bb35240aac8ffa1350dda827b9b))
+* starting telescope or grug-far when hovering a directory ([#388](https://github.com/mikavilpas/yazi.nvim/issues/388)) ([d6da015](https://github.com/mikavilpas/yazi.nvim/commit/d6da015cd2a6aee19ed798495318e227d8a720c0))
+* symlinked files cannot be highlighted when hovered ([#212](https://github.com/mikavilpas/yazi.nvim/issues/212)) ([85e8d1d](https://github.com/mikavilpas/yazi.nvim/commit/85e8d1d050f5e73bf5f5f3275109a676257f53ae))
+* **tests:** changing the tests had delay in restarting the test ([#355](https://github.com/mikavilpas/yazi.nvim/issues/355)) ([d5f170d](https://github.com/mikavilpas/yazi.nvim/commit/d5f170d4a75a8007c657ecb55c8c2adadbdb6074))
+* try to fix opening paths with spaces on windows ([e375060](https://github.com/mikavilpas/yazi.nvim/commit/e375060189714aa8462018c3c59c8096102ce974))
+* use input dir if needed when changing cwd ([#487](https://github.com/mikavilpas/yazi.nvim/issues/487)) ([33857bf](https://github.com/mikavilpas/yazi.nvim/commit/33857bf7a32bdfff1a5236b80905e4c4f5ba4bd7))
+* when opening a directory, insert mode is not activated ([2cf6057](https://github.com/mikavilpas/yazi.nvim/commit/2cf605783e66523d1ac83cc65b2196193d81adcd))
+* YaziRenamedOrMoved events could not be published in practice ([#499](https://github.com/mikavilpas/yazi.nvim/issues/499)) ([e379516](https://github.com/mikavilpas/yazi.nvim/commit/e37951699881885f1cfee5f3d794ad10da0a95dd))
+
+
+### Performance Improvements
+
+* don't set up nvim-tree and neo-tree in lsp-file-operations ([#332](https://github.com/mikavilpas/yazi.nvim/issues/332)) ([604f3d1](https://github.com/mikavilpas/yazi.nvim/commit/604f3d1035b5d186befb6f159cf9d59007aac61e))
+* improve lazy loading to 7 -&gt; 4 modules ([#255](https://github.com/mikavilpas/yazi.nvim/issues/255)) ([e29f633](https://github.com/mikavilpas/yazi.nvim/commit/e29f633e2d74e0e54f6580b5b4cf03a5f249fa85))
+* lazy load yazi.nvim modules by default ([#253](https://github.com/mikavilpas/yazi.nvim/issues/253)) ([f832c3c](https://github.com/mikavilpas/yazi.nvim/commit/f832c3cc50aab5bb3aad1a14b03850295628bc6d))
+* processing open buffers only processes normal buffers ([5acce15](https://github.com/mikavilpas/yazi.nvim/commit/5acce153d31c821dcc3535f1cd2da2ddbd4200f7))
+* **tests:** use `cy.runExCommand` in all tests ([97093b1](https://github.com/mikavilpas/yazi.nvim/commit/97093b16f3c9d027706bb97c4b65117e78d846d9))
+
+
+### Miscellaneous Chores
+
+* release 5.2.0 ([a801cb0](https://github.com/mikavilpas/yazi.nvim/commit/a801cb09854cd94a7ba2cc97f759cc42972c1325))
+* update to the latest commit of yazi ([#283](https://github.com/mikavilpas/yazi.nvim/issues/283)) ([c1b4e9a](https://github.com/mikavilpas/yazi.nvim/commit/c1b4e9a3136092db473708d807db5a495d38d7ce))
+
+
+### Code Refactoring
+
+* remove lsp_util (nvim 0.9.0 compatibility) ([6f27462](https://github.com/mikavilpas/yazi.nvim/commit/6f27462fc5022c5d64e3ff21ed9aff5b7b653d97))
+
 ## [7.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.1.1...v7.2.0) (2025-01-21)
 
 
