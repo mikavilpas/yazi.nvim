@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.2.0...v7.2.1) (2025-01-23)
+
+
+### version
+
+* 7.2.1 ([4f67b94](https://github.com/mikavilpas/yazi.nvim/commit/4f67b94f1c99eed31c382c6e8a1f8474323086bf))
+
+
+### Bug Fixes
+
+* pick correct jobstart method by default ([1ca7aed](https://github.com/mikavilpas/yazi.nvim/commit/1ca7aedc26547f2adfe49177263d48891b1635f7))
+
 ## [7.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.1.1...v7.2.0) (2025-01-21)
 
 
