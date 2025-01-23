@@ -179,6 +179,10 @@ function YaziOpenerActions.grep_in_directory(config, chosen_file)
     require("fzf-lua").live_grep({
       search_paths = { last_directory },
     })
+  elseif config.integrations.grep_in_directory == "snacks.picker" then
+    require("snacks.picker").grep({
+      dirs = { last_directory },
+    })
   else
     -- the user has a custom implementation. Call it.
     config.integrations.grep_in_directory(last_directory)
@@ -217,6 +221,10 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
     })
   elseif config.integrations.grep_in_selected_files == "fzf-lua" then
     require("fzf-lua").live_grep({ search_paths = files_relative })
+  elseif config.integrations.grep_in_selected_files == "snacks.picker" then
+    require("snacks.picker").grep({
+      dirs = files_relative,
+    })
   else
     -- the user has a custom implementation. Call it.
     config.integrations.grep_in_selected_files(paths, files_relative)
