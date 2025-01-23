@@ -253,7 +253,7 @@ describe("process_events()", function()
   end)
 end)
 
-describe("opening the yazi in a terminal", function()
+describe("opening yazi in a terminal", function()
   local config = require("yazi.config").default()
   local path = require("plenary.path"):new()
 
@@ -288,10 +288,11 @@ describe("opening the yazi in a terminal", function()
         function() end
       )
 
-      assert(jobstart_spy.calls[1])
-      assert(jobstart_spy.calls[1].vals[2])
-      assert(jobstart_spy.calls[1].vals[2].env)
-      local env = jobstart_spy.calls[1].vals[2].env
+      local call = jobstart_spy.calls[#jobstart_spy.calls]
+      assert(call)
+      assert(call.vals[2])
+      assert(call.vals[2].env)
+      local env = call.vals[2].env
 
       assert.equal(env.NVIM_CWD, "/tmp/fakedir")
     end
