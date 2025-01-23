@@ -194,28 +194,32 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
   end
 
   local plenary_path = require("plenary.path")
+
+  ---@type Path[]
   local paths = {}
   for _, path in ipairs(chosen_files) do
     table.insert(paths, plenary_path:new(path))
   end
 
+  -- pickers typically work with file paths relative to the cwd
   ---@type string[]
-  local files = {}
+  local files_relative = {}
   for _, path in ipairs(paths) do
-    files[#files + 1] = path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
+    files_relative[#files_relative + 1] =
+      path:make_relative(vim.uv.cwd()):gsub(" ", "\\ ")
   end
 
   if config.integrations.grep_in_selected_files == "telescope" then
     require("telescope.builtin").live_grep({
       search = "",
-      prompt_title = string.format("Grep in %d paths", #files),
-      search_dirs = files,
+      prompt_title = string.format("Grep in %d paths", #files_relative),
+      search_dirs = files_relative,
     })
   elseif config.integrations.grep_in_selected_files == "fzf-lua" then
-    require("fzf-lua").live_grep({ search_paths = files })
+    require("fzf-lua").live_grep({ search_paths = files_relative })
   else
     -- the user has a custom implementation. Call it.
-    config.integrations.grep_in_selected_files(paths)
+    config.integrations.grep_in_selected_files(paths, files_relative)
   end
 end
 

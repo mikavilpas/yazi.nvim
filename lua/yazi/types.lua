@@ -56,7 +56,7 @@
 
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? "telescope" | "fzf-lua" | fun(directory: string): nil "implementation to be called when the user wants to grep in a directory. Defaults to `"telescope"`"
----@field public grep_in_selected_files? "telescope" | "fzf-lua" | fun(selected_files: Path[]): nil "called to grep on files that were selected in yazi. Defaults to `"telescope"`"
+---@field public grep_in_selected_files? "telescope" | "fzf-lua" | fun(selected_files: Path[], relative_paths: string[]): nil "called to grep on files that were selected in yazi. Defaults to `"telescope"`"
 ---@field public replace_in_directory? fun(directory: Path, selected_files?: Path[]): nil "called to start a replacement operation on some directory; by default uses grug-far.nvim"
 ---@field public replace_in_selected_files? fun(selected_files?: Path[]): nil "called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim"
 ---@field public resolve_relative_path_application? string "the application that will be used to resolve relative paths. By default, this is GNU `realpath` on Linux and `grealpath` on macOS"
