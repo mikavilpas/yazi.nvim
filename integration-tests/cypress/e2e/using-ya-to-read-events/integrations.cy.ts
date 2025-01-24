@@ -190,7 +190,7 @@ describe("fzf-lua integration (grep)", () => {
       cy.typeIntoTerminal("vk")
       cy.typeIntoTerminal("{control+s}")
 
-      // telescope should be open now
+      // fzf-lua should be open now
       cy.contains("to Fuzzy Search")
 
       // search for some file content. This should match
