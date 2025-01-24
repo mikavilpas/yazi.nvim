@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.2.1...v7.3.0) (2025-01-24)
+
+
+### Features
+
+* add integration with snacks picker ([#704](https://github.com/mikavilpas/yazi.nvim/issues/704)) ([dfeba28](https://github.com/mikavilpas/yazi.nvim/commit/dfeba2890942004ba875123366c248bdbafbf1a3))
+
 ## [7.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.2.0...v7.2.1) (2025-01-23)
 
 
