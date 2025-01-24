@@ -118,7 +118,12 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd("setlocal bufhidden=hide")
   vim.cmd("setlocal nocursorcolumn")
   vim.api.nvim_set_hl(0, "YaziFloat", { link = "Normal", default = true })
-  vim.cmd("setlocal winhl=NormalFloat:YaziFloat")
+  vim.api.nvim_set_hl(
+    0,
+    "YaziFloatBorder",
+    { link = "FloatBorder", default = true }
+  )
+  vim.cmd("setlocal winhl=NormalFloat:YaziFloat,FloatBorder:YaziFloatBorder")
   vim.cmd("set winblend=" .. self.config.yazi_floating_window_winblend)
 
   vim.api.nvim_create_autocmd({ "WinLeave" }, {
