@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.3.0...v7.4.0) (2025-01-24)
+
+
+### Features
+
+* Add hl YaziFloatBorder to customize border highlight ([#709](https://github.com/mikavilpas/yazi.nvim/issues/709)) ([27d6250](https://github.com/mikavilpas/yazi.nvim/commit/27d62509a98d8a0d7fb9b5a33d483d7d08f0d3ee))
+
 ## [7.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.2.1...v7.3.0) (2025-01-24)
 
 
