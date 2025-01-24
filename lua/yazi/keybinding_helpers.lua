@@ -72,9 +72,10 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
   end
 end
 
----@param config YaziConfig
+---@param _config YaziConfig
 ---@param context YaziActiveContext
-function YaziOpenerActions.cycle_open_buffers(config, context)
+---@diagnostic disable-next-line: unused-local
+function YaziOpenerActions.cycle_open_buffers(_config, context)
   assert(context.input_path, "No input path found")
   assert(context.input_path.filename, "No input path filename found")
 
@@ -124,29 +125,13 @@ function YaziOpenerActions.cycle_open_buffers(config, context)
         return
       end
 
-      if config.future_features.ya_emit_reveal then
-        local nextfile = next_buffer.renameable_buffer.path.filename
+      local nextfile = next_buffer.renameable_buffer.path.filename
 
-        -- make sure the type is a string, because plenary thinks it is `string|unknown`
-        assert(type(nextfile) == "string", "Expected filename to be a string")
-        context.api:reveal(nextfile)
-        context.cycled_file = next_buffer.renameable_buffer
-        return
-      else
-        local directory =
-          vim.fn.fnamemodify(next_buffer.renameable_buffer.path.filename, ":h")
-        assert(
-          directory,
-          string.format(
-            'Found the next buffer, but could not find its base directory. The buffer: "%s", aborting.',
-            next_buffer.renameable_buffer.path.filename
-          )
-        )
-
-        context.api:cd(directory)
-        context.cycled_file = next_buffer.renameable_buffer
-        return
-      end
+      -- make sure the type is a string, because plenary thinks it is `string|unknown`
+      assert(type(nextfile) == "string", "Expected filename to be a string")
+      context.api:reveal(nextfile)
+      context.cycled_file = next_buffer.renameable_buffer
+      return
     end
   end
 

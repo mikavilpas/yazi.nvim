@@ -25,7 +25,6 @@
 ---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
 
 ---@class(exact) yazi.OptInFeatures
----@field ya_emit_reveal? boolean # Whether to use `ya emit reveal` to reveal files in the file manager. Requires yazi 0.4.0 or later (from 2024-12-08).
 ---@field ya_emit_open? boolean # Use `ya emit open` as a more robust implementation for opening files in yazi. This can prevent conflicts with custom keymappings for the enter key. Requires yazi 0.4.0 or later (from 2024-12-08).
 ---@field nvim_0_10_termopen_fallback? boolean # Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart` (https://github.com/neovim/neovim/pull/31343). By default on nightly, this option is `false` and `jobstart` is used. Some users have reported issues with this, and can set this to `true` to keep using the old `termopen` for the time being.
 

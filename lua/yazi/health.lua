@@ -129,14 +129,6 @@ return {
       )
     end
 
-    if config.future_features and config.future_features.ya_emit_reveal then
-      if not checker.ge(yazi_semver, "0.4.0") then
-        vim.health.warn(
-          "You have enabled `future_features.ya_emit_reveal` in your config. This requires yazi.nvim version 0.4.0 or newer."
-        )
-      end
-    end
-
     if config.future_features and config.future_features.ya_emit_open then
       if not checker.ge(yazi_semver, "0.4.0") then
         vim.health.warn(

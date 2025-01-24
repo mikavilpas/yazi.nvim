@@ -62,7 +62,6 @@ local plugins = {
       log_level = vim.log.levels.DEBUG,
       future_features = {
         ya_emit_open = true,
-        ya_emit_reveal = true,
       },
       integrations = {
         grep_in_directory = "telescope",
