@@ -308,13 +308,6 @@ You can optionally configure yazi.nvim by setting any of the options below.
     },
 
     future_features = {
-      -- Use `ya emit open` as a more robust implementation for opening files
-      -- in yazi. This can prevent conflicts with custom keymappings for the enter
-      -- key. Requires yazi 0.4.0 or later (from 2024-12-08).
-      -- 2025-01-10: became on by default, not configurable in the future
-      -- https://github.com/sxyazi/yazi/pull/1979
-      ya_emit_open = true,
-
       -- Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart`
       -- (https://github.com/neovim/neovim/pull/31343). By default on nightly,
       -- this option is `false` and `jobstart` is used. Some users have
