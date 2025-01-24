@@ -95,6 +95,10 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("modify_yazi_config_use_fzf_lua.lua"),
           type: z.literal("file"),
         }),
+        "modify_yazi_config_use_snacks_picker.lua": z.object({
+          name: z.literal("modify_yazi_config_use_snacks_picker.lua"),
+          type: z.literal("file"),
+        }),
         "notify_custom_events.lua": z.object({
           name: z.literal("notify_custom_events.lua"),
           type: z.literal("file"),
@@ -251,6 +255,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/modify_yazi_config_don't_use_ya_emit_reveal.lua",
   "config-modifications/modify_yazi_config_log_yazi_closed_successfully.lua",
   "config-modifications/modify_yazi_config_use_fzf_lua.lua",
+  "config-modifications/modify_yazi_config_use_snacks_picker.lua",
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",
   "config-modifications/notify_rename_events.lua",
