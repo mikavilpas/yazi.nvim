@@ -213,3 +213,34 @@ describe("fzf-lua integration (grep)", () => {
     })
   })
 })
+
+describe("snacks.picker integration (grep)", () => {
+  // https://github.com/folke/snacks.nvim
+
+  it("can use snacks.picker to search, limited to the selected files only", () => {
+    cy.visit("/")
+    cy.startNeovim({
+      filename: "routes/posts.$postId/route.tsx",
+      startupScriptModifications: ["modify_yazi_config_use_snacks_picker.lua"],
+    }).then((nvim) => {
+      // wait until the file contents are visible
+      cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
+          .name,
+      )
+
+      // select the current file and the file below. There are three files in
+      // this directory so two will be selected and one will be left
+      // unselected
+      cy.typeIntoTerminal("vk")
+      cy.typeIntoTerminal("{control+s}")
+
+      // snacks.picker should be open now. Don't test it for now because it
+      // might be unstable. If you want to try it manually, you can verify
+      // that it does not find the text in should-be-excluded-file
+    })
+  })
+})

@@ -25,10 +25,11 @@ open yazi in a floating window in Neovim.
     instead of current file
 - Integrations to other plugins and tools, if they are installed:
 
-  - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) and
-    [fzf-lua.nvim](https://github.com/ibhagwan/fzf-lua): you can grep/search in
-    the directory yazi is in. Select some files to limit the search to those
-    files only.
+  - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
+    [fzf-lua.nvim](https://github.com/ibhagwan/fzf-lua) and
+    [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md):
+    you can grep/search in the directory yazi is in. Select some files to limit
+    the search to those files only.
   - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can
     search and replace in the directory yazi is in
   - Copy the relative path from the start file to the currently hovered file.
@@ -148,9 +149,10 @@ These are the default keybindings that are available when yazi is open:
   - `<c-s>`: search in the current yazi directory using
     [telescope](https://github.com/nvim-telescope/telescope.nvim)'s `live_grep`,
     if available. Optionally you can use
-    [fzf-lua.nvim](https://github.com/ibhagwan/fzf-lua) or provide your own
-    implementation - see the instructions in the configuration section for more
-    info.
+    [fzf-lua.nvim](https://github.com/ibhagwan/fzf-lua),
+    [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md)
+    or provide your own implementation - see the instructions in the
+    configuration section for more info.
     - if multiple files/directories are selected in yazi, the search and replace
       will only be done in the selected files/directories
   - `<c-g>`: search and replace in the current yazi directory using
