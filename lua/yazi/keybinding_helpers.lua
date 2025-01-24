@@ -61,15 +61,7 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
 
   config.hooks.yazi_opened_multiple_files = callbacks.on_multiple_files_opened
 
-  if config.future_features.ya_emit_open then
-    callbacks.api:open()
-  else
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<enter>", true, false, true),
-      "n",
-      true
-    )
-  end
+  callbacks.api:open()
 end
 
 ---@param _config YaziConfig
