@@ -1,4 +1,5 @@
 import { flavors } from "@catppuccin/palette"
+import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
 import { rgbify } from "./utils/hover-utils"
 import {
@@ -482,6 +483,73 @@ describe("opening files", () => {
       isFileNotSelectedInYazi(
         nvim.dir.contents["dir with spaces"].contents["file2.txt"].name,
       )
+    })
+  })
+})
+
+describe("opening files from visual mode", () => {
+  beforeEach(() => {
+    cy.visit("/")
+  })
+
+  it("can open a relative file", () => {
+    cy.startNeovim({ filename: "dir with spaces/file1.txt" }).then((nvim) => {
+      cy.contains("this is the first file")
+
+      // enter a relative file path
+      cy.typeIntoTerminal("cc./file2.txt{esc}")
+      cy.typeIntoTerminal("V{upArrow}")
+
+      // wait for yazi to open. it should have the correct file selected, and
+      // the file's contents should be visible in the preview pane in yazi.
+      cy.contains("this is the second file")
+
+      // Open the file and verify that the correct file was opened.
+      cy.typeIntoTerminal("{enter}")
+
+      nvim.runLuaCode({ luaCode: `return vim.fn.bufname()` }).then((result) => {
+        // A regression might open the file from the test environment blueprint
+        // directory instead of from inside the unique test environment for this
+        // very test. Better to check that does not happen.
+        expect(result.value).to.contain(nvim.dir.testEnvironmentPathRelative)
+        expect(result.value).to.contain(
+          "dir with spaces/file2.txt" satisfies MyTestDirectoryFile,
+        )
+      })
+    })
+  })
+
+  it("can open an absolute file path", () => {
+    cy.startNeovim().then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // enter a relative file path
+      cy.typeIntoTerminal("dd")
+      const path = nvim.dir.rootPathAbsolute + "/dir with spaces/file2.txt"
+
+      // make sure the path points to the unique test environment for this test
+      assert(path.includes("testdirs/dir-"))
+      nvim.runLuaCode({
+        luaCode: `vim.api.nvim_command('normal! i${path}')`,
+      })
+      cy.typeIntoTerminal("V{upArrow}")
+
+      // wait for yazi to open. it should have the correct file selected, and
+      // the file's contents should be visible in the preview pane in yazi.
+      cy.contains("this is the second file")
+
+      // Open the file and verify that the correct file was opened.
+      cy.typeIntoTerminal("{enter}")
+
+      nvim.runLuaCode({ luaCode: `return vim.fn.bufname()` }).then((result) => {
+        // A regression might open the file from the test environment blueprint
+        // directory instead of from inside the unique test environment for this
+        // very test. Better to check that does not happen.
+        expect(result.value).to.contain(nvim.dir.testEnvironmentPathRelative)
+        expect(result.value).to.contain(
+          "dir with spaces/file2.txt" satisfies MyTestDirectoryFile,
+        )
+      })
     })
   })
 })
