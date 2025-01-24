@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@tui-sandbox/library": "9.0.0",
-    "@types/node": "22.10.7",
+    "@types/node": "22.10.10",
     "@types/tinycolor2": "1.4.6",
     "@typescript-eslint/eslint-plugin": "8.21.0",
     "@typescript-eslint/parser": "8.21.0",
