@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.4.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.4.0...v7.4.1) (2025-01-25)
+
+
+### Bug Fixes
+
+* opening files from visual mode did not work for relative paths ([#714](https://github.com/mikavilpas/yazi.nvim/issues/714)) ([14b5642](https://github.com/mikavilpas/yazi.nvim/commit/14b5642fe43a127878a2de343ca640989f1d7482))
+
 ## [7.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.3.0...v7.4.0) (2025-01-24)
 
 
