@@ -1,6 +1,7 @@
 local assert = require("luassert")
 local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local reset = require("spec.yazi.helpers.reset")
+local buffers = require("spec.yazi.helpers.buffers")
 
 describe("process_delete_event", function()
   before_each(function()
@@ -8,7 +9,7 @@ describe("process_delete_event", function()
   end)
 
   it("deletes a buffer that matches the delete event exactly", function()
-    local buffer = vim.fn.bufadd("/abc/def")
+    local buffer = buffers.add_listed_buffer("/abc/def")
 
     ---@type YaziDeleteEvent
     local event = {
@@ -27,7 +28,7 @@ describe("process_delete_event", function()
   end)
 
   it("deletes a buffer that matches the parent directory", function()
-    local buffer = vim.fn.bufadd("/abc/def")
+    local buffer = buffers.add_listed_buffer("/abc/def")
 
     ---@type YaziDeleteEvent
     local event = {
@@ -46,7 +47,7 @@ describe("process_delete_event", function()
   end)
 
   it("doesn't delete a buffer that doesn't match the delete event", function()
-    vim.fn.bufadd("/abc/def")
+    buffers.add_listed_buffer("/abc/def")
 
     ---@type YaziDeleteEvent
     local event = {
@@ -65,7 +66,7 @@ describe("process_delete_event", function()
   end)
 
   it("doesn't delete a buffer that was renamed to in a later event", function()
-    vim.fn.bufadd("/def/file")
+    buffers.add_listed_buffer("/def/file")
 
     ---@type YaziDeleteEvent
     local delete_event = {

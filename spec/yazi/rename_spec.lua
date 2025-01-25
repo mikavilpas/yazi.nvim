@@ -2,6 +2,7 @@ local assert = require("luassert")
 local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local utils = require("yazi.utils")
 local reset = require("spec.yazi.helpers.reset")
+local buffers = require("spec.yazi.helpers.buffers")
 
 describe("get_buffers_that_need_renaming_after_yazi_exited", function()
   before_each(function()
@@ -16,8 +17,8 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
     }
 
     -- simulate buffers being opened
-    vim.fn.bufadd("/my-tmp/file1")
-    vim.fn.bufadd("/my-tmp/file_A")
+    buffers.add_listed_buffer("/my-tmp/file1")
+    buffers.add_listed_buffer("/my-tmp/file_A")
 
     local rename_instructions =
       yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
@@ -41,7 +42,7 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
       }
 
       -- simulate the buffer being opened
-      vim.fn.bufadd("/my-tmp/dir1/file")
+      buffers.add_listed_buffer("/my-tmp/dir1/file")
 
       local rename_instructions =
         yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
@@ -62,7 +63,7 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
     }
 
     -- simulate the buffer being opened
-    vim.fn.bufadd("/my-tmp/dir1/file")
+    buffers.add_listed_buffer("/my-tmp/dir1/file")
 
     local rename_instructions =
       yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
@@ -79,8 +80,8 @@ describe("process_events_emitted_from_yazi", function()
   end)
 
   it("closes a buffer that was renamed to another open buffer", function()
-    vim.fn.bufadd("/my-tmp/file1")
-    vim.fn.bufadd("/my-tmp/file2")
+    buffers.add_listed_buffer("/my-tmp/file1")
+    buffers.add_listed_buffer("/my-tmp/file2")
 
     ---@type YaziRenameEvent
     local event = {
@@ -102,8 +103,8 @@ describe("process_events_emitted_from_yazi", function()
   end)
 
   it("closes a buffer that was moved to another open buffer", function()
-    vim.fn.bufadd("/my-tmp/file1")
-    vim.fn.bufadd("/my-tmp/file2")
+    buffers.add_listed_buffer("/my-tmp/file1")
+    buffers.add_listed_buffer("/my-tmp/file2")
 
     ---@type YaziMoveEvent
     local event = {
