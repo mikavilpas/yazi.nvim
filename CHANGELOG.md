@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.4.1...v7.5.0) (2025-01-25)
+
+
+### Features
+
+* allow processing all yazi events as soon as possible ([#718](https://github.com/mikavilpas/yazi.nvim/issues/718)) ([ac9fed8](https://github.com/mikavilpas/yazi.nvim/commit/ac9fed8c1666c99b2db5b3009e074375c0c52c44))
+
 ## [7.4.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.4.0...v7.4.1) (2025-01-25)
 
 
