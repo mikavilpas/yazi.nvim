@@ -14,7 +14,7 @@ return {
   -- Needed for file path resolution mainly
   --
   -- https://github.com/nvim-lua/plenary.nvim/
-  { 'nvim-lua/plenary.nvim', lazy = true },
+  { "nvim-lua/plenary.nvim", lazy = true },
 
   --
   -- TODO enable after https://github.com/nvim-neorocks/nvim-busted-action/issues/4 is resolved
@@ -27,13 +27,13 @@ return {
   -- },
 
   {
-    'mikavilpas/yazi.nvim',
+    "mikavilpas/yazi.nvim",
     ---@type YaziConfig
     opts = {},
     cmd = {
-      'Yazi',
-      'Yazi cwd',
-      'Yazi toggle',
+      "Yazi",
+      "Yazi cwd",
+      "Yazi toggle",
     },
   },
 }
