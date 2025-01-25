@@ -337,8 +337,12 @@ function M.get_open_buffers()
   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
     local path = vim.api.nvim_buf_get_name(bufnr)
     local type = vim.api.nvim_get_option_value("buftype", { buf = bufnr })
+    local is_listed = vim.api.nvim_buf_get_option(bufnr, "buflisted")
 
-    local is_ordinary_file = path ~= vim.NIL and path ~= "" and type == ""
+    local is_ordinary_file = path ~= vim.NIL
+      and path ~= ""
+      and type == ""
+      and is_listed
     if is_ordinary_file then
       local renameable_buffer = RenameableBuffer.new(bufnr, path)
       open_buffers[#open_buffers + 1] = renameable_buffer
@@ -403,7 +407,7 @@ function M.rename_or_close_buffer(instruction)
   -- It causes an error to try to rename to a buffer that's already open.
   if M.is_buffer_open(instruction.path.filename) then
     pcall(function()
-      vim.api.nvim_buf_delete(instruction.bufnr, { force = true })
+      M.bufdelete(instruction.bufnr)
     end)
   end
 

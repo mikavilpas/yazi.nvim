@@ -165,17 +165,83 @@ describe("'rename' events", () => {
       // the file should be saveable
       cy.typeIntoTerminal(":w{enter}")
       cy.contains("E13").should("not.exist")
+
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("dir with spaces" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal("r")
+      cy.contains("Rename:")
+      cy.typeIntoTerminal("{backspace}")
+      cy.contains("initial-file.txt" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal("{enter}")
+
+      cy.get("Rename").should("not.exist")
+
+      cy.typeIntoTerminal("q")
+      cy.contains("dir with spaces" satisfies MyTestDirectoryFile).should(
+        "not.exist",
+      )
+      nvim.runExCommand({ command: ":buffers" }).should((result) => {
+        expect(result.value).to.match(
+          new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
+        )
+      })
+
+      // the buffer name should still be visible
+      cy.contains("initial-file.txt" satisfies MyTestDirectoryFile)
+    })
+  })
+
+  it("can rename a file to the name of an already open file", () => {
+    cy.startNeovim({
+      filename: {
+        openInVerticalSplits: ["file2.txt", "file3.txt"],
+      },
+    }).then((nvim) => {
+      // wait for the files to be open
+      cy.contains("file2.txt" satisfies MyTestDirectoryFile)
+      cy.contains("file3.txt" satisfies MyTestDirectoryFile)
+
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
+
+      cy.typeIntoTerminal("r")
+      cy.contains("Rename:")
+
+      // the rename dialog covers the name of the file. we can use this to
+      // check that the correct new filename has been entered.
+      cy.contains("file3.txt" satisfies MyTestDirectoryFile).should("not.exist")
+      cy.typeIntoTerminal("{backspace}3")
+      cy.contains("file3.txt" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal("{enter}")
+      // a yazi dialog should pop up
+      cy.contains("Overwrite file?")
+      cy.typeIntoTerminal("y")
+      cy.contains("Rename").should("not.exist")
+      cy.typeIntoTerminal("q")
+
+      nvim.runExCommand({ command: ":buffers" }).should((result) => {
+        expect(result.value).to.not.match(
+          new RegExp("file2.txt" satisfies MyTestDirectoryFile),
+        )
+        expect(result.value).to.match(
+          new RegExp("file3.txt" satisfies MyTestDirectoryFile),
+        )
+      })
     })
   })
 
   it("can rename twice and keep track of the correct file name", () => {
-    cy.startNeovim().then((nvim) => {
+    cy.startNeovim({ filename: "initial-file.txt" }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+
+      // wait for yazi to start
+      cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
 
       // start file renaming
       cy.typeIntoTerminal("r")
@@ -188,14 +254,8 @@ describe("'rename' events", () => {
       const newFileName = "initial-file2.txt"
       cy.contains(newFileName)
 
-      // close yazi
-      cy.typeIntoTerminal("q")
-
-      // the buffer name should now be updated
-      cy.contains(newFileName)
-
       // rename a second time, returning to the original name
-      cy.typeIntoTerminal("{upArrow}")
+      // cy.typeIntoTerminal("{upArrow}")
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("{backspace}")
@@ -204,6 +264,12 @@ describe("'rename' events", () => {
 
       cy.typeIntoTerminal("q")
       cy.contains(newFileName).should("not.exist")
+
+      nvim.runExCommand({ command: ":buffers" }).should((result) => {
+        expect(result.value).to.match(
+          new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
+        )
+      })
     })
   })
 
