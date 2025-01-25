@@ -69,6 +69,12 @@ function M.yazi(config, input_path)
         )
       )
 
+      -- this is the legacy implementation used when
+      -- `future_features.process_events_live = false`. When that is used,
+      -- events should be processed in ya_process.lua and should not be
+      -- processed a second time here.
+      assert(#events == 0 or not config.future_features.process_events_live)
+
       yazi_event_handling.process_events_emitted_from_yazi(events)
 
       if last_directory == nil then

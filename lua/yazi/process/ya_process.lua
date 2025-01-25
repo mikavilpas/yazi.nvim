@@ -225,11 +225,9 @@ function YaProcess:process_events(events, forwarded_event_kinds)
           end
 
           if self.config.future_features.process_events_live == true then
-            vim.schedule(function()
-              require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
-                events
-              )
-            end)
+            require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
+              events
+            )
           end
         end)
       elseif forwarded_event_kinds[event.type] ~= nil then

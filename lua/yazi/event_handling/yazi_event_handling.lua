@@ -68,6 +68,15 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(
   return vim.tbl_values(renamed_buffers)
 end
 
+---@param event_data YaziEventDataRenameOrMove
+local function handle_rename_move_bulk_event(event_data)
+  local rename_instructions =
+    M.get_buffers_that_need_renaming_after_yazi_exited(event_data)
+  for _, instruction in ipairs(rename_instructions) do
+    utils.rename_or_close_buffer(instruction)
+  end
+end
+
 ---@param events YaziEvent[]
 function M.process_events_emitted_from_yazi(events)
   for i, event in ipairs(events) do
@@ -75,35 +84,20 @@ function M.process_events_emitted_from_yazi(events)
       ---@cast event YaziRenameEvent
       lsp_rename.file_renamed(event.data.from, event.data.to)
 
-      local rename_instructions =
-        M.get_buffers_that_need_renaming_after_yazi_exited(event.data)
-      for _, instruction in ipairs(rename_instructions) do
-        utils.rename_or_close_buffer(instruction)
-      end
+      handle_rename_move_bulk_event(event.data)
     elseif event.type == "move" then
       ---@cast event YaziMoveEvent
       for _, item in ipairs(event.data.items) do
         lsp_rename.file_renamed(item.from, item.to)
 
-        local rename_instructions =
-          M.get_buffers_that_need_renaming_after_yazi_exited(item)
-        for _, instruction in ipairs(rename_instructions) do
-          utils.rename_or_close_buffer(instruction)
-        end
+        handle_rename_move_bulk_event(item)
       end
     elseif event.type == "bulk" then
       ---@cast event YaziBulkEvent
       for from, to in pairs(event.changes) do
         lsp_rename.file_renamed(from, to)
 
-        local rename_instructions =
-          M.get_buffers_that_need_renaming_after_yazi_exited({
-            from = from,
-            to = to,
-          })
-        for _, instruction in ipairs(rename_instructions) do
-          utils.rename_or_close_buffer(instruction)
-        end
+        handle_rename_move_bulk_event({ from = from, to = to })
       end
     elseif event.type == "delete" then
       local remaining_events = vim.list_slice(events, i)
