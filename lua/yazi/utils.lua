@@ -390,7 +390,7 @@ function M.bufdelete(bufnr)
     return require("snacks.bufdelete")
   end)
   if ok then
-    return bufdelete.delete({ buf = bufnr, force = true })
+    return bufdelete.delete({ buf = bufnr, force = true, wipe = true })
   else
     vim.api.nvim_buf_delete(bufnr, { force = true })
   end

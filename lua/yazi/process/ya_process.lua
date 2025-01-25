@@ -200,7 +200,10 @@ function YaProcess:process_events(events, forwarded_event_kinds)
       )
       self.cwd = event.url
     else
-      self.events[#self.events + 1] = event
+      if self.config.future_features.process_events_live == nil then
+        -- these events will be processed when yazi exits
+        self.events[#self.events + 1] = event
+      end
 
       if
         event.type == "rename"
@@ -208,10 +211,10 @@ function YaProcess:process_events(events, forwarded_event_kinds)
         or event.type == "bulk"
       then
         vim.schedule(function()
-          local event_handling =
-            require("yazi.event_handling.nvim_event_handling")
           local success, result = pcall(function()
-            event_handling.emit_renamed_or_moved_event(event)
+            require("yazi.event_handling.nvim_event_handling").emit_renamed_or_moved_event(
+              event
+            )
           end)
           if not success then
             Log:debug(vim.inspect({
@@ -220,17 +223,34 @@ function YaProcess:process_events(events, forwarded_event_kinds)
               result,
             }))
           end
+
+          if self.config.future_features.process_events_live == true then
+            vim.schedule(function()
+              require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
+                events
+              )
+            end)
+          end
         end)
       elseif forwarded_event_kinds[event.type] ~= nil then
         vim.schedule(function()
-          local event_handling =
-            require("yazi.event_handling.nvim_event_handling")
-          event_handling.emit("YaziDDSCustom", event)
+          require("yazi.event_handling.nvim_event_handling").emit(
+            "YaziDDSCustom",
+            event
+          )
         end)
       else
-        Log:debug(
-          string.format("Ignoring unknown event: %s", vim.inspect(event))
-        )
+        if self.config.future_features.process_events_live == true then
+          vim.schedule(function()
+            require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
+              events
+            )
+          end)
+        else
+          Log:debug(
+            string.format("Ignoring unknown event: %s", vim.inspect(event))
+          )
+        end
       end
     end
   end

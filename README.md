@@ -314,6 +314,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
       -- reported issues with this, and can set this to `true` to keep using
       -- the old `termopen` for the time being.
       nvim_0_10_termopen_fallback = false,
+
+      -- By default, this is `false`, which means yazi.nvim processes events in
+      -- a batch when the user closes yazi. If this is `true`, events are
+      -- processed immediately.
+      process_events_live = false,
     },
   },
 }
