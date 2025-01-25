@@ -106,7 +106,16 @@ function M.selected_file_path(path)
     line = line:gsub("^%s*(.-)%s*$", "%1")
     line = vim.fn.expand(line) or line
 
-    if vim.fn.filereadable(line) == 1 or vim.fn.isdirectory(line) == 1 then
+    local current_file_dir = vim.fn.expand("%:p:h")
+    local absolute_path =
+      vim.fn.fnamemodify(current_file_dir .. "/" .. line, ":p")
+
+    if
+      vim.fn.filereadable(absolute_path) == 1
+      or vim.fn.isdirectory(absolute_path) == 1
+    then
+      path = absolute_path
+    elseif vim.fn.filereadable(line) == 1 or vim.fn.isdirectory(line) == 1 then
       path = line
     end
   end
