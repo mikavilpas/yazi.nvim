@@ -87,12 +87,12 @@ This is the preferred installation method.
       -- Open in the current working directory
       "<leader>cw",
       "<cmd>Yazi cwd<cr>",
-      desc = "Open the file manager in nvim's working directory" ,
+      desc = "Open the file manager in nvim's working directory",
     },
     {
       -- NOTE: this requires a version of yazi that includes
       -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
-      '<c-up>',
+      "<c-up>",
       "<cmd>Yazi toggle<cr>",
       desc = "Resume the last yazi session",
     },
@@ -102,7 +102,7 @@ This is the preferred installation method.
     -- if you want to open yazi instead of netrw, see below for more info
     open_for_directories = false,
     keymaps = {
-      show_help = '<f1>',
+      show_help = "<f1>",
     },
   },
 }
@@ -244,15 +244,15 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- - you can customize only some of the keymaps (not all of them)
     -- - you can opt out of all keymaps by setting `keymaps = false`
     keymaps = {
-      show_help = '<f1>',
-      open_file_in_vertical_split = '<c-v>',
-      open_file_in_horizontal_split = '<c-x>',
-      open_file_in_tab = '<c-t>',
-      grep_in_directory = '<c-s>',
-      replace_in_directory = '<c-g>',
-      cycle_open_buffers = '<tab>',
-      copy_relative_path_to_selected_files = '<c-y>',
-      send_to_quickfix_list = '<c-q>',
+      show_help = "<f1>",
+      open_file_in_vertical_split = "<c-v>",
+      open_file_in_horizontal_split = "<c-x>",
+      open_file_in_tab = "<c-t>",
+      grep_in_directory = "<c-s>",
+      replace_in_directory = "<c-g>",
+      cycle_open_buffers = "<tab>",
+      copy_relative_path_to_selected_files = "<c-y>",
+      send_to_quickfix_list = "<c-q>",
       change_working_directory = "<c-\\>",
     },
 
@@ -263,7 +263,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
     -- the type of border to use for the floating window. Can be many values,
     -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
     -- more information, see :h nvim_open_win
-    yazi_floating_window_border = 'rounded',
+    yazi_floating_window_border = "rounded",
 
     -- some yazi.nvim commands copy text to the clipboard. This is the register
     -- yazi.nvim should use for copying. Defaults to "*", the system clipboard
@@ -304,7 +304,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
         -- default: grug-far.nvim
       end,
       -- `grealpath` on OSX, (GNU) `realpath` otherwise
-      resolve_relative_path_application = ""
+      resolve_relative_path_application = "",
     },
 
     future_features = {
