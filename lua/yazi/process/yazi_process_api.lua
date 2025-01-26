@@ -15,14 +15,6 @@ function YaziProcessApi.new(config, yazi_id)
   return self
 end
 
----@param path string
-function YaziProcessApi:cd(path)
-  vim.system(
-    { "ya", "pub-to", self.yazi_id, "--str", path, "dds-cd" },
-    { timeout = 1000 }
-  )
-end
-
 --- Tell yazi to focus (hover on) the given path.
 ---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.reveal
 ---@param path string
