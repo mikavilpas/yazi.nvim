@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.0...v7.5.1) (2025-01-26)
+
+
+### Bug Fixes
+
+* renaming a file to its old name closed the buffer ([#722](https://github.com/mikavilpas/yazi.nvim/issues/722)) ([baeb1fa](https://github.com/mikavilpas/yazi.nvim/commit/baeb1faea912a8483a3876f8494ca8323ba23ddd))
+
 ## [7.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.4.1...v7.5.0) (2025-01-25)
 
 
