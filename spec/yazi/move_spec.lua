@@ -1,6 +1,7 @@
 local assert = require("luassert")
 local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local reset = require("spec.yazi.helpers.reset")
+local buffers = require("spec.yazi.helpers.buffers")
 
 describe("get_buffers_that_need_renaming_after_yazi_exited", function()
   before_each(function()
@@ -15,8 +16,8 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
     }
 
     -- simulate buffers being opened
-    vim.fn.bufadd("/my-tmp/file1")
-    vim.fn.bufadd("/my-tmp/file_A")
+    buffers.add_listed_buffer("/my-tmp/file1")
+    buffers.add_listed_buffer("/my-tmp/file_A")
 
     local instructions =
       yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
@@ -40,7 +41,7 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
       }
 
       -- simulate the buffer being opened
-      vim.fn.bufadd("/my-tmp/dir1/file")
+      buffers.add_listed_buffer("/my-tmp/dir1/file")
 
       local instructions =
         yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
@@ -61,7 +62,7 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
     }
 
     -- simulate the buffer being opened
-    vim.fn.bufadd("/my-tmp/dir1/file")
+    buffers.add_listed_buffer("/my-tmp/dir1/file")
 
     local instructions =
       yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
