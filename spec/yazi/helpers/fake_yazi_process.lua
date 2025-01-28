@@ -23,10 +23,10 @@ end
 
 -- Fake yazi process that instantly exits with the mocked data that was set up
 -- before.
----@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil)
+---@param callbacks yazi.Callbacks
 ---@diagnostic disable-next-line: unused-local
-function M:start(_, _, on_exit)
-  on_exit(
+function M:start(_, _, callbacks)
+  callbacks.on_exit(
     M.mocks.code,
     M.mocks.selected_files,
     M.mocks.events,
