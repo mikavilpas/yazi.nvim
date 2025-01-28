@@ -15,10 +15,14 @@ local YaziProcess = {}
 ---@diagnostic disable-next-line: inject-field
 YaziProcess.__index = YaziProcess
 
+---@class yazi.Callbacks
+---@field on_maybe_started fun(yazi_process: YaziProcess) # when yazi has been started. Note that it might not be ready and initialized yet. We don't have a way to detect this.
+---@field on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil)
+
 ---@param config YaziConfig
 ---@param paths Path[]
----@param on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil)
-function YaziProcess:start(config, paths, on_exit)
+---@param callbacks yazi.Callbacks
+function YaziProcess:start(config, paths, callbacks)
   os.remove(config.chosen_file_path)
 
   -- The YAZI_ID of the yazi process, used to uniquely identify this specific
@@ -58,7 +62,7 @@ function YaziProcess:start(config, paths, on_exit)
           last_directory = plenary_path:new(self.ya_process.cwd) --[[@as Path]]
         end
 
-        on_exit(
+        callbacks.on_exit(
           code,
           chosen_files,
           events,
@@ -69,10 +73,12 @@ function YaziProcess:start(config, paths, on_exit)
     })
   else
     Log:debug("Using nvim-0.10 termopen to start yazi.")
-    self.yazi_job_id = self:nvim_0_10_termopen(config, on_exit, yazi_cmd)
+    self.yazi_job_id =
+      self:nvim_0_10_termopen(config, callbacks.on_exit, yazi_cmd)
   end
 
   self.ya_process:start()
+  callbacks.on_maybe_started(self)
 
   return self
 end

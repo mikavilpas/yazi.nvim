@@ -18,8 +18,12 @@ end
 --- Tell yazi to focus (hover on) the given path.
 ---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.reveal
 ---@param path string
+---@return vim.SystemObj
 function YaziProcessApi:reveal(path)
-  vim.system(
+  require("yazi.log"):debug(
+    string.format("Using ya to reveal path: '%s'", path)
+  )
+  return vim.system(
     { "ya", "emit-to", self.yazi_id, "reveal", "--str", path },
     { timeout = 1000 }
   )

@@ -10,9 +10,12 @@ M.version = "7.5.1" -- x-release-please-version
 ---@type YaziPreviousState
 M.previous_state = {}
 
+---@alias yazi.Arguments {reveal_path: string}
+
 ---@param config? YaziConfig?
 ---@param input_path? string
-function M.yazi(config, input_path)
+---@param args? yazi.Arguments
+function M.yazi(config, input_path, args)
   local utils = require("yazi.utils")
   local YaziProcess = require("yazi.process.yazi_process")
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
@@ -46,10 +49,58 @@ function M.yazi(config, input_path)
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
 
-  local yazi_process = YaziProcess:start(
-    config,
-    paths,
-    function(exit_code, selected_files, events, hovered_url, last_directory)
+  local yazi_process = YaziProcess:start(config, paths, {
+    on_maybe_started = function(yazi)
+      if not (args and args.reveal_path) then
+        return
+      end
+
+      local retries_remaining = 5
+      local function try()
+        local success = pcall(function()
+          local result = yazi.api:reveal(args.reveal_path)
+          local completed = result:wait(500)
+          assert(completed.code == 0)
+          Log:debug(
+            string.format(
+              "Revealed path '%s' successfully after retries_remaining: %s",
+              args.reveal_path,
+              retries_remaining
+            )
+          )
+        end)
+        if not success then
+          retries_remaining = retries_remaining - 1
+          if retries_remaining == 0 then
+            Log:debug(
+              string.format(
+                "Failed to reveal path '%s' after 5 retries",
+                args.reveal_path
+              )
+            )
+            return
+          end
+
+          Log:debug(
+            string.format(
+              "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s",
+              args.reveal_path,
+              retries_remaining
+            )
+          )
+          vim.defer_fn(try, 50)
+        end
+      end
+
+      try()
+    end,
+    on_exit = function(
+      exit_code,
+      selected_files,
+      events,
+      hovered_url,
+      last_directory
+    )
       if exit_code ~= 0 then
         print(
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
@@ -99,8 +150,8 @@ function M.yazi(config, input_path)
         -- not corrupt the last working hovered state
         M.previous_state.last_hovered = hovered_url
       end
-    end
-  )
+    end,
+  })
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
@@ -147,7 +198,11 @@ function M.toggle(config)
       string.format("Opening yazi with previous file hovered: %s", path)
     )
   end
-  M.yazi(config, path)
+  if path then
+    M.yazi(config, path, { reveal_path = path })
+  else
+    M.yazi(config, path)
+  end
 end
 
 M.config = configModule.default()

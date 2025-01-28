@@ -285,7 +285,7 @@ describe("opening yazi in a terminal", function()
       require("yazi.process.yazi_process"):start(
         config,
         { path },
-        function() end
+        { on_exit = function() end, on_maybe_started = function() end }
       )
 
       local call = jobstart_spy.calls[#jobstart_spy.calls]
