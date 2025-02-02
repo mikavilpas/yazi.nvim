@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.2](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.1...v7.5.2) (2025-02-02)
+
+
+### Bug Fixes
+
+* `:Yazi toggle` not being able to hover a directory ([6fa08cf](https://github.com/mikavilpas/yazi.nvim/commit/6fa08cfc1037ae0529aac34261f3a4aba4bde7eb))
+
 ## [7.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.0...v7.5.1) (2025-01-26)
 
 
