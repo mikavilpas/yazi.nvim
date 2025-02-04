@@ -16,10 +16,10 @@
   },
   "devDependencies": {
     "@tui-sandbox/library": "9.0.1",
-    "@types/node": "22.13.0",
+    "@types/node": "22.13.1",
     "@types/tinycolor2": "1.4.6",
-    "@typescript-eslint/eslint-plugin": "8.22.0",
-    "@typescript-eslint/parser": "8.22.0",
+    "@typescript-eslint/eslint-plugin": "8.23.0",
+    "@typescript-eslint/parser": "8.23.0",
     "concurrently": "9.1.2",
     "eslint": "9.19.0",
     "eslint-config-prettier": "10.0.1",
