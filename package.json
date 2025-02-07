@@ -16,7 +16,17 @@
     "@umbrelladocs/linkspector": "0.3.13",
     "markdownlint-cli2": "0.17.2",
     "prettier": "3.4.2",
+    "prettier-plugin-organize-imports": "4.1.0",
     "prettier-plugin-packagejson": "2.5.8"
   },
-  "packageManager": "pnpm@9.15.4+sha256.9bee59c7313a216722c079c1e22160dea7f88df4e0c3450b1d7b01b882336c6a"
+  "packageManager": "pnpm@10.2.1+sha256.f988f0d93b87e1da2d8cdf6ac7f45a01c6f843ae3606b4ca0f2ffd713b85f975",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js",
+      "cypress",
+      "esbuild",
+      "node-pty",
+      "puppeteer"
+    ]
+  }
 }
