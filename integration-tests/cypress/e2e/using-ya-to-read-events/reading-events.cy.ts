@@ -343,7 +343,6 @@ describe("'rename' events", () => {
           luaCode: `return _G.yazi_closed_successfully_hook_test_results`,
         })
         .should((result) => {
-          debugger
           assert(result.value)
           assert(typeof result.value === "object")
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
