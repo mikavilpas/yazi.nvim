@@ -30,6 +30,10 @@ open yazi in a floating window in Neovim.
     [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md):
     you can grep/search in the directory yazi is in. Select some files to limit
     the search to those files only.
+  - Using
+    [snacks.bufdelete](https://github.com/folke/snacks.nvim/blob/main/docs/bufdelete.md)
+    to have yazi close buffers and preserve the window layout. This is
+    recommended!
   - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can
     search and replace in the directory yazi is in
   - Copy the relative path from the start file to the currently hovered file.
