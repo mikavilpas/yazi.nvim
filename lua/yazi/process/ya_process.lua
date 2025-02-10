@@ -200,7 +200,7 @@ function YaProcess:process_events(events, forwarded_event_kinds)
       )
       self.cwd = event.url
     else
-      if self.config.future_features.process_events_live == nil then
+      if not self.config.future_features.process_events_live then
         -- these events will be processed when yazi exits
         self.events[#self.events + 1] = event
       end
