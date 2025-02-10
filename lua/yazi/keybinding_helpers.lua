@@ -157,9 +157,16 @@ function YaziOpenerActions.grep_in_directory(config, chosen_file)
       search_paths = { last_directory },
     })
   elseif config.integrations.grep_in_directory == "snacks.picker" then
-    require("snacks.picker").grep({
-      dirs = { last_directory },
-    })
+    vim.defer_fn(function()
+      -- HACK something seems to exit insert mode when the picker is shown.
+      -- Wait a bit to hack around this.
+      require("snacks.picker").grep({
+        dirs = { last_directory },
+        on_show = function()
+          vim.cmd("startinsert")
+        end,
+      })
+    end, 50)
   else
     -- the user has a custom implementation. Call it.
     config.integrations.grep_in_directory(last_directory)
@@ -199,9 +206,13 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
   elseif config.integrations.grep_in_selected_files == "fzf-lua" then
     require("fzf-lua").live_grep({ search_paths = files_relative })
   elseif config.integrations.grep_in_selected_files == "snacks.picker" then
-    require("snacks.picker").grep({
-      dirs = files_relative,
-    })
+    vim.defer_fn(function()
+      -- HACK something seems to exit insert mode when the picker is shown.
+      -- Wait a bit to hack around this.
+      require("snacks.picker").grep({
+        dirs = files_relative,
+      })
+    end, 50)
   else
     -- the user has a custom implementation. Call it.
     config.integrations.grep_in_selected_files(paths, files_relative)
