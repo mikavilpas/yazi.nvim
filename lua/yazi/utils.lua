@@ -397,7 +397,9 @@ function M.bufdelete(bufnr)
   if ok then
     return bufdelete.delete({ buf = bufnr, force = true, wipe = true })
   else
-    vim.api.nvim_buf_delete(bufnr, { force = true })
+    vim.api.nvim_buf_call(bufnr, function()
+      vim.api.nvim_buf_delete(bufnr, { force = true })
+    end)
   end
 end
 
