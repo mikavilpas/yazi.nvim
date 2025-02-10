@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.3](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.2...v7.5.3) (2025-02-10)
+
+
+### Bug Fixes
+
+* snacks.picker not being in insert mode when opened ([#749](https://github.com/mikavilpas/yazi.nvim/issues/749)) ([d645982](https://github.com/mikavilpas/yazi.nvim/commit/d645982e6f254ed62ba816299a491813e386e48b))
+
 ## [7.5.2](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.1...v7.5.2) (2025-02-02)
 
 
