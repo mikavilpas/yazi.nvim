@@ -238,6 +238,15 @@ describe("snacks.picker integration (grep)", () => {
       cy.typeIntoTerminal("vk")
       cy.typeIntoTerminal("{control+s}")
 
+      // wait until the snacks.picker is visible
+      cy.contains("Grep")
+      cy.contains("0/0")
+
+      // snacks.picker should have started in insert mode
+      nvim.runLuaCode({ luaCode: `return vim.fn.mode()` }).should((result) => {
+        expect(result.value).to.equal("i")
+      })
+
       // snacks.picker should be open now. Don't test it for now because it
       // might be unstable. If you want to try it manually, you can verify
       // that it does not find the text in should-be-excluded-file
