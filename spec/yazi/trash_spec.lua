@@ -3,6 +3,7 @@ local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local reset = require("spec.yazi.helpers.reset")
 local stub = require("luassert.stub")
 local buffers = require("spec.yazi.helpers.buffers")
+local snacks_bufdelete = require("snacks.bufdelete")
 
 describe("process_trash_event", function()
   local snapshot
@@ -14,6 +15,19 @@ describe("process_trash_event", function()
     -- silence the following warning
     -- "Error executing vim.schedule lua callback: ./lua/yazi/utils.lua:352: Invalid buffer id: 32"
     stub(vim.api, "nvim_buf_call")
+
+    -- snacks.bufdelete is difficult to make work with these tests, so just
+    -- make it call the normal nvim_buf_delete instead
+    assert(type(snacks_bufdelete) == "table")
+    stub(
+      snacks_bufdelete,
+      "delete",
+      ---@param opts? number|snacks.bufdelete.Opts
+      function(opts)
+        assert(type(opts) == "table")
+        vim.api.nvim_buf_delete(opts.buf, { force = true })
+      end
+    )
   end)
 
   after_each(function()
