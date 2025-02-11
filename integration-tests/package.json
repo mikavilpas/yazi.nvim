@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
-    "cypress": "14.0.2",
+    "cypress": "14.0.3",
     "wait-on": "8.0.2",
     "zod": "3.24.1"
   },
@@ -20,7 +20,7 @@
     "@types/node": "22.13.1",
     "@types/tinycolor2": "1.4.6",
     "concurrently": "9.1.2",
-    "eslint": "9.20.0",
+    "eslint": "9.20.1",
     "eslint-config-prettier": "10.0.1",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
