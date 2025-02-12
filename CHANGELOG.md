@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.5.4](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.3...v7.5.4) (2025-02-12)
+
+
+### Bug Fixes
+
+* not being able live delete buffers without snacks.bufdelete ([3372a44](https://github.com/mikavilpas/yazi.nvim/commit/3372a447d89c934972681bf01c81f49f600bde9b))
+
 ## [7.5.3](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.2...v7.5.3) (2025-02-10)
 
 
