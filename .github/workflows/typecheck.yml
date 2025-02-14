@@ -13,11 +13,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.2.2
-      # TODO enable after https://github.com/stevearc/nvim-typecheck-action/pull/3
-      # - uses: stevearc/nvim-typecheck-action@v2
-      #   with:
-      #     path: lua
-      #     level: Information
-      #     libraries:
-      #       # space separated
-      #       https://github.com/nvim-lua/plenary.nvim
+      - uses: stevearc/nvim-typecheck-action@v2
+        with:
+          path: lua
+          level: Information
+          libraries:
+            # space separated
+            https://github.com/nvim-lua/plenary.nvim
+            https://github.com/folke/snacks.nvim
