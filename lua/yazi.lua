@@ -12,7 +12,7 @@ M.previous_state = {}
 
 ---@alias yazi.Arguments {reveal_path: string}
 
----@param config? YaziConfig?
+---@param config? YaziConfig | {}
 ---@param input_path? string
 ---@param args? yazi.Arguments
 function M.yazi(config, input_path, args)
@@ -186,7 +186,7 @@ end
 
 -- Open yazi, continuing from the previously hovered file. If no previous file
 -- was hovered, open yazi with the default path.
----@param config? YaziConfig?
+---@param config? YaziConfig | {}
 function M.toggle(config)
   local path = M.previous_state and M.previous_state.last_hovered or nil
 
@@ -207,7 +207,7 @@ end
 
 M.config = configModule.default()
 
----@param opts YaziConfig?
+---@param opts YaziConfig | {}
 function M.setup(opts)
   M.config =
     vim.tbl_deep_extend("force", configModule.default(), M.config, opts or {})

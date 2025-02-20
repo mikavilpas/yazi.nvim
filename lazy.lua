@@ -28,7 +28,7 @@ return {
 
   {
     "mikavilpas/yazi.nvim",
-    ---@type YaziConfig
+    ---@type YaziConfig | {}
     opts = {},
     cmd = {
       "Yazi",

@@ -99,7 +99,7 @@ This is the preferred installation method.
       desc = "Resume the last yazi session",
     },
   },
-  ---@type YaziConfig
+  ---@type YaziConfig | {}
   opts = {
     -- if you want to open yazi instead of netrw, see below for more info
     open_for_directories = false,
@@ -186,7 +186,7 @@ You can optionally configure yazi.nvim by setting any of the options below.
 {
   -- ... other lazy.nvim configuration from above
 
-  ---@type YaziConfig
+  ---@type YaziConfig | {}
   opts = {
     -- Below is the default configuration. It is optional to set these values.
     -- You can customize the configuration for each yazi call by passing it to
