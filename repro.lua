@@ -50,7 +50,7 @@ local plugins = {
         desc = "Resume the last yazi session",
       },
     },
-    ---@type YaziConfig
+    ---@type YaziConfig | {}
     opts = {
       open_for_directories = false,
       log_level = vim.log.levels.DEBUG,
