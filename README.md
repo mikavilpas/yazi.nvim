@@ -62,6 +62,7 @@ First, make sure you have the requirements:
 - yazi [0.4.0](https://github.com/sxyazi/yazi/releases/tag/v0.4.0) or later
 - New features might require a recent version of yazi (see
   [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md))
+- [snacks.nvim](https://github.com/folke/snacks.nvim)
 
 > [!TIP]
 >
