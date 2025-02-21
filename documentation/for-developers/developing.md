@@ -62,8 +62,10 @@ This project has two types of tests
    - can make assertions about lua level results
    - more difficult to test high level features such as actual integration with
      yazi
-2. integration tests. These are run with [cypress](https://www.cypress.io/), an
-   interactive JavaScript browser testing framework.
+2. integration tests. These are run with
+   [tui-sandbox](https://github.com/mikavilpas/tui-sandbox), an interactive
+   testing framework for terminal applications. It uses
+   [cypress](https://www.cypress.io/), which is
    - very visual
    - slower to run but still very nice
    - can make assertions about the actual UI and integration with yazi
