@@ -110,9 +110,10 @@ This is the preferred installation method.
 }
 ```
 
-Notice that yazi.nvim adds some minimal dependencies for you automatically when
-using a plugin manager like lazy.nvim. To see which dependencies are installed,
-see [lazy.lua](./lazy.lua). If you are not using lazy.nvim (or
+Notice that yazi.nvim adds and lazy loads some minimal dependencies for you
+automatically when using a plugin manager like lazy.nvim. To see which
+dependencies are installed, see [lazy.lua](./lazy.lua). If you are not using
+lazy.nvim (or
 [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim?tab=readme-ov-file)),
 you need to install the dependencies yourself. Also see the discussion in
 [issue 306](https://github.com/mikavilpas/yazi.nvim/issues/306) and examples of
@@ -183,7 +184,8 @@ These are the default keybindings that are available when yazi is open:
 You can optionally configure yazi.nvim by setting any of the options below.
 
 ```lua
-{
+
+return {
   -- ... other lazy.nvim configuration from above
 
   ---@type YaziConfig | {}
@@ -317,10 +319,11 @@ You can optionally configure yazi.nvim by setting any of the options below.
       -- the old `termopen` for the time being.
       nvim_0_10_termopen_fallback = false,
 
-      -- By default, this is `false`, which means yazi.nvim processes events in
-      -- a batch when the user closes yazi. If this is `true`, events are
+      -- By default, this is `true`, which means yazi.nvim processes events
+      -- before yazi has been closed. If this is `false`, events are processed
+      -- in a batch when the user closes yazi. If this is `true`, events are
       -- processed immediately.
-      process_events_live = false,
+      process_events_live = true,
     },
   },
 }
