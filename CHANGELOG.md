@@ -1,5 +1,16 @@
 # Changelog
 
+## [8.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.4...v8.0.0) (2025-02-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* This change now requires https://github.com/folke/snacks.nvim to be installed. Users of [lazy.nvim](https://lazy.folke.io/) and [rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim) should have this dependency automatically installed.
+
+### Features
+
+* process yazi events live by default (requires snacks.nvim) ([#769](https://github.com/mikavilpas/yazi.nvim/issues/769)) ([c59c654](https://github.com/mikavilpas/yazi.nvim/commit/c59c65404facd34614ca5cf6c8b380608a84ee23))
+
 ## [7.5.4](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.3...v7.5.4) (2025-02-12)
 
 
