@@ -1,5 +1,3 @@
-local plenary_path = require("plenary.path")
-
 ---@class (exact) yazi.Log
 ---@field level yazi.LogLevel
 ---@field path string
@@ -26,9 +24,11 @@ function Log:get_logfile_path()
   end
   local ok, stdpath = pcall(vim.fn.stdpath, "log")
   if not ok then
-    stdpath = vim.fn.stdpath("cache")
+    -- stdpath = vim.fn.stdpath("cache")
+    ok, stdpath = pcall(vim.fn.stdpath, "cache")
   end
-  return plenary_path:new(stdpath, "yazi.log"):absolute()
+  assert(type(stdpath) == "string", "Failed to get log path")
+  return vim.fs.joinpath(stdpath, "yazi.log")
 end
 
 Log.path = Log:get_logfile_path()
