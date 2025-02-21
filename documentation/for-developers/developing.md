@@ -42,9 +42,8 @@ Many of these are nicely available for [LazyVim](https://www.lazyvim.org/). Even
 if you don't use LazyVim, you can still refer to how they are set up if you're
 having trouble.
 
-- <https://github.com/folke/neoconf.nvim> which sets your lua LSP to use the
-  project settings
-- <https://github.com/folke/lazydev.nvim> which allows fast LSP startup
+- <https://github.com/folke/lazydev.nvim> good Lua LSP integration, providing
+  autocompletion, navigation, etc.
 - <https://github.com/folke/trouble.nvim> which shows errors and diagnostics
 - <https://github.com/stevearc/conform.nvim> which formats your code on save.
   Configure it to use stylua and prettier using the instructions in its README
