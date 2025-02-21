@@ -35,20 +35,26 @@ function M.relative_path(config, current_file_dir, selected_file)
     start_directory = start_path:parent()
   end
 
-  local stdout, exit_code, stderr = require("plenary.job")
-    :new({
-      command = command,
-      args = { "--relative-to", start_directory.filename, selected_file },
-    })
-    :sync()
+  local job = vim.system({
+    command,
+    "--relative-to",
+    start_directory.filename,
+    selected_file,
+  })
+  local result = job:wait(1000)
 
-  if exit_code ~= 0 or stdout == nil or stdout == "" then
-    vim.notify("error copying relative_path, exit code " .. exit_code)
-    error("error running command, exit code " .. exit_code)
-    print(vim.inspect(stderr))
+  if result.code ~= 0 or result.stdout == nil or result.stdout == "" then
+    vim.notify("error copying relative_path, exit code " .. result.code)
+    error("error running command, exit code " .. result.code)
+    print(vim.inspect(result.stderr))
   end
 
-  local path = stdout[1]
+  -- split
+  local lines = vim.split(result.stdout, "\n")
+
+  assert(lines, "error copying relative_path, no output")
+  assert(#lines >= 1, "error copying relative_path, no output")
+  local path = lines[1]
 
   return path
 end
