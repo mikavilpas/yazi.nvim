@@ -31,7 +31,7 @@ function M.default()
     open_for_directories = false,
     future_features = {
       nvim_0_10_termopen_fallback = jobstart_has_term,
-      process_events_live = false,
+      process_events_live = true,
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,

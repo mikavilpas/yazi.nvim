@@ -15,6 +15,7 @@ return {
   --
   -- https://github.com/nvim-lua/plenary.nvim/
   { "nvim-lua/plenary.nvim", lazy = true },
+  { "folke/snacks.nvim", lazy = true },
 
   --
   -- TODO enable after https://github.com/nvim-neorocks/nvim-busted-action/issues/4 is resolved
