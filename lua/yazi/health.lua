@@ -112,6 +112,17 @@ return {
       )
     end
 
+    if config.future_features.process_events_live then
+      local ok = pcall(function()
+        return require("snacks")
+      end)
+      if not ok then
+        vim.health.warn(
+          "The `snacks` library is not found. Please install it to enable the `process_events_live` feature."
+        )
+      end
+    end
+
     local resolver = config.integrations.resolve_relative_path_application
     if
       resolver
