@@ -1,5 +1,13 @@
 # Changelog
 
+## [8.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v8.0.0...v8.0.1) (2025-02-23)
+
+
+### Bug Fixes
+
+* **health:** add warning if snacks library is not found ([f5786b8](https://github.com/mikavilpas/yazi.nvim/commit/f5786b86990b9b3211998ba9add0663a0ebdda51))
+* prettier complains ([e12ddff](https://github.com/mikavilpas/yazi.nvim/commit/e12ddffab524f2fee9f0c93a7f1cff2818a77799))
+
 ## [8.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v7.5.4...v8.0.0) (2025-02-21)
 
 
