@@ -7,7 +7,6 @@ import type {
   GenericTerminalBrowserApi,
 } from "@tui-sandbox/library/dist/src/browser/neovim-client"
 import type {
-  BlockingCommandClientInput,
   ExCommandClientInput,
   LuaCodeClientInput,
 } from "@tui-sandbox/library/dist/src/server/server"
@@ -18,6 +17,7 @@ import type {
   StartNeovimGenericArguments,
   TestDirectory,
 } from "@tui-sandbox/library/dist/src/server/types"
+import type { BlockingCommandClientInput } from "@tui-sandbox/library/src/server/blockingCommandInputSchema"
 import type { StartTerminalGenericArguments } from "@tui-sandbox/library/src/server/terminal/TerminalTestApplication"
 import type { OverrideProperties } from "type-fest"
 import type {
@@ -33,7 +33,7 @@ export type TerminalTestApplicationContext = {
   /** Runs a shell command in a blocking manner, waiting for the command to
    * finish before returning. Requires the terminal to be running. */
   runBlockingShellCommand(
-    input: BlockingCommandClientInput,
+    input: MyBlockingCommandClientInput,
   ): Cypress.Chainable<BlockingShellCommandOutput>
 
   /** The test directory, providing type-safe access to its file and directory structure */
@@ -49,7 +49,7 @@ export type NeovimContext = {
   /** Runs a shell command in a blocking manner, waiting for the command to
    * finish before returning. Requires neovim to be running. */
   runBlockingShellCommand(
-    input: BlockingCommandClientInput,
+    input: MyBlockingCommandClientInput,
   ): Cypress.Chainable<BlockingShellCommandOutput>
 
   /** Runs a shell command in a blocking manner, waiting for the command to
@@ -162,6 +162,11 @@ before(function () {
   cy.intercept({ resourceType: /xhr|fetch/ }, { log: false })
 })
 
+export type MyBlockingCommandClientInput = OverrideProperties<
+  BlockingCommandClientInput,
+  { cwdRelative?: MyTestDirectoryFile | undefined }
+>
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -180,7 +185,7 @@ declare global {
       /** Runs a shell command in a blocking manner, waiting for the command to
        * finish before returning. Requires neovim to be running. */
       nvim_runBlockingShellCommand(
-        input: BlockingCommandClientInput,
+        input: MyBlockingCommandClientInput,
       ): Chainable<BlockingShellCommandOutput>
 
       nvim_runLuaCode(input: LuaCodeClientInput): Chainable<RunLuaCodeOutput>
@@ -193,7 +198,7 @@ declare global {
       ): Chainable<RunExCommandOutput>
 
       terminal_runBlockingShellCommand(
-        input: BlockingCommandClientInput,
+        input: MyBlockingCommandClientInput,
       ): Chainable<BlockingShellCommandOutput>
     }
   }
