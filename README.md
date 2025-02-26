@@ -348,7 +348,10 @@ I like.
 
 - <https://gitee.com/DreamMaoMao/easyjump.yazi.git> allows jumping to a line by
   typing a hint character, much like
-  [hop.nvim](https://github.com/smoka7/hop.nvim)
+  [hop.nvim](https://github.com/smoka7/hop.nvim). A GitHub mirror is available
+  [here](https://github.com/mikavilpas/easyjump.yazi) to work around
+  [this yazi issue](https://github.com/sxyazi/yazi/pull/1718) for the time
+  being.
 - <https://github.com/Rolv-Apneseth/starship.yazi> is a port of the
   [starship prompt](https://starship.rs) to yazi. It allows reusing the prompt
   you are using in your shell in yazi.
