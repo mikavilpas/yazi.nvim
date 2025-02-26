@@ -1,5 +1,16 @@
 # Changelog
 
+## [9.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v8.0.1...v9.0.0) (2025-02-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* to migrate, you may need to add snacks.nvim as a dependency manually if your neovim does not already have it from another source. You can copy it from the instructions in the readme file.
+
+### Code Refactoring
+
+* don't install snacks.nvim automatically ([58169cd](https://github.com/mikavilpas/yazi.nvim/commit/58169cdd36333de3c7ecb7aeac71e6339254b791))
+
 ## [8.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v8.0.0...v8.0.1) (2025-02-23)
 
 
