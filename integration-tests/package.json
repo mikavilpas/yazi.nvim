@@ -21,7 +21,7 @@
     "@types/tinycolor2": "1.4.6",
     "concurrently": "9.1.2",
     "eslint": "9.21.0",
-    "eslint-config-prettier": "10.0.1",
+    "eslint-config-prettier": "10.0.2",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
     "type-fest": "4.35.0",
