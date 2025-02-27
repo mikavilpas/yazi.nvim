@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.0...v9.0.1) (2025-02-27)
+
+
+### Bug Fixes
+
+* **health:** checkhealth fails if `config.keymaps = false` ([9909c81](https://github.com/mikavilpas/yazi.nvim/commit/9909c811c0502e50baf6faac8991495c139839eb))
+
 ## [9.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v8.0.1...v9.0.0) (2025-02-25)
 
 
