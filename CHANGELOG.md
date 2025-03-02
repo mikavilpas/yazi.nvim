@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.1...v9.0.2) (2025-03-02)
+
+
+### Bug Fixes
+
+* clarify error message when yazi or ya is not on PATH ([27e13aa](https://github.com/mikavilpas/yazi.nvim/commit/27e13aab5d1c3cb874112ff629f22db2a799e14e))
+
 ## [9.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.0...v9.0.1) (2025-02-27)
 
 
