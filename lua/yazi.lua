@@ -21,7 +21,9 @@ function M.yazi(config, input_path, args)
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   if utils.is_yazi_available() ~= true then
-    print("Please install yazi. Check the documentation for more information")
+    print(
+      "Please install yazi and make sure it is on your `vim.env.PATH`. Check the documentation for more information"
+    )
     return
   end
 
@@ -33,7 +35,7 @@ function M.yazi(config, input_path, args)
 
   if utils.is_ya_available() ~= true then
     print(
-      "Please install ya (the yazi command line utility). Check the documentation for more information"
+      "Please install ya (the yazi command line utility) and make sure it is on your `vim.env.PATH`. Check the documentation for more information"
     )
     return
   end
