@@ -24,7 +24,7 @@
     "eslint-config-prettier": "10.0.2",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "4.36.0",
+    "type-fest": "4.37.0",
     "typescript": "5.8.2",
     "typescript-eslint": "8.26.0"
   }
