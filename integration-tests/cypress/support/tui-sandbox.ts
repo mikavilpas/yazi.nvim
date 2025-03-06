@@ -9,6 +9,7 @@ import type {
 import type {
   ExCommandClientInput,
   LuaCodeClientInput,
+  PollLuaCodeClientInput,
 } from "@tui-sandbox/library/dist/src/server/server"
 import type {
   BlockingShellCommandOutput,
@@ -56,6 +57,18 @@ export type NeovimContext = {
    * finish before returning. Requires neovim to be running. */
   runLuaCode(input: LuaCodeClientInput): Cypress.Chainable<RunLuaCodeOutput>
 
+  /**
+   * Like runLuaCode, but waits until the given code (maybe using lua's return
+   * assert()) does not raise an error, and returns the first successful result.
+   *
+   * Useful for waiting until Neovim's internal state has changed in a way that
+   * means the test can continue executing. This can avoid timing issues that are
+   * otherwise hard to catch.
+   */
+  waitForLuaCode(
+    input: PollLuaCodeClientInput,
+  ): Cypress.Chainable<RunLuaCodeOutput>
+
   /** Run an ex command in neovim.
    * @example "echo expand('%:.')" current file, relative to the cwd
    */
@@ -95,6 +108,7 @@ Cypress.Commands.add(
         nvim_runBlockingShellCommand: underlyingNeovim.runBlockingShellCommand,
         nvim_runExCommand: underlyingNeovim.runExCommand,
         nvim_runLuaCode: underlyingNeovim.runLuaCode,
+        nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode,
       })
 
       const api: NeovimContext = {
@@ -106,6 +120,9 @@ Cypress.Commands.add(
         },
         runLuaCode(input) {
           return cy.nvim_runLuaCode(input)
+        },
+        waitForLuaCode(input) {
+          return cy.nvim_waitForLuaCode(input)
         },
         typeIntoTerminal(text, options) {
           cy.typeIntoTerminal(text, options)
@@ -189,6 +206,9 @@ declare global {
       ): Chainable<BlockingShellCommandOutput>
 
       nvim_runLuaCode(input: LuaCodeClientInput): Chainable<RunLuaCodeOutput>
+      nvim_waitForLuaCode(
+        input: PollLuaCodeClientInput,
+      ): Chainable<RunLuaCodeOutput>
 
       /** Run an ex command in neovim.
        * @example "echo expand('%:.')" current file, relative to the cwd
