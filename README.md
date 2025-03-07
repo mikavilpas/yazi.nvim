@@ -46,7 +46,9 @@ open yazi in a floating window in Neovim.
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open
   buffers in Neovim
-  - The files are also kept in sync with currently running LSP servers
+  - The files are also kept in sync with currently running LSP servers. A
+    technical explanation is available
+    [here](documentation/for-developers/lsp-renaming.md).
 - Customizable keybindings
 - 🆕 Plugin management for Yazi plugins and flavors
   ([documentation](./documentation/plugin-management.md))
