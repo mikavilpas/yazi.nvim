@@ -13,6 +13,12 @@ For example, if you have a file that's imported in many other files, you can
 rename the file and the LSP server will update all the references to the new
 file name.
 
+> [!NOTE]
+>
+> The LSP server must already be running for file renaming to work. For example,
+> when you open a file in neovim, an LSP server is typically automatically
+> started in the background.
+
 ## How does this plugin work with LSP file renaming?
 
 When files are renamed in yazi, this plugin will detect that via events that
