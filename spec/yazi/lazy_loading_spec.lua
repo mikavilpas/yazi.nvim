@@ -15,7 +15,7 @@ describe("lazy loading", function()
     -- `require("yazi")`. It should load as little code up front as possible,
     -- because some users don't use a package manager like lazy.nvim that
     -- supports lazy loading modules by default.
-    require("yazi").setup()
+    require("yazi").setup({})
 
     local yazi_modules = {}
     for k, _ in pairs(package.loaded) do
@@ -33,8 +33,6 @@ describe("lazy loading", function()
       "yazi",
       "yazi.config",
       "yazi.log",
-      "yazi.lsp.embedded-lsp-file-operations.lsp-file-operations",
-      "yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log",
       "yazi.openers",
     })
   end)
