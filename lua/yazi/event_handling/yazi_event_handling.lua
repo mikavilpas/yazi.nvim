@@ -72,6 +72,7 @@ end
 local function handle_rename_move_bulk_event(event_data)
   local rename_instructions =
     M.get_buffers_that_need_renaming_after_yazi_exited(event_data)
+
   for _, instruction in ipairs(rename_instructions) do
     utils.rename_or_close_buffer(instruction)
   end
@@ -86,8 +87,10 @@ function M.process_events_emitted_from_yazi(events)
 
       handle_rename_move_bulk_event(event.data)
     elseif event.type == "move" then
-      ---@cast event YaziMoveEvent
-      for _, item in ipairs(event.data.items) do
+      ---@type YaziMoveEvent
+      local move_event = event
+
+      for _, item in ipairs(move_event.data.items) do
         lsp_rename.file_renamed(item.from, item.to)
 
         handle_rename_move_bulk_event(item)
