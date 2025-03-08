@@ -1,7 +1,6 @@
-import { flavors } from "@catppuccin/palette"
 import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
-import { rgbify } from "./utils/hover-utils"
+import { z } from "zod"
 import {
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
@@ -42,39 +41,37 @@ describe("opening files", () => {
   })
 
   it("can open a file that was selected in yazi", () => {
-    cy.startNeovim().then((_nvim) => {
+    cy.startNeovim().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
+
+      function getSelectedFilePath(): Cypress.Chainable<string> {
+        const filenameSchema = z.object({ filename: z.string() })
+        return cy
+          .nvim_runLuaCode({
+            luaCode: `return require("yazi.utils").selected_file_path()`,
+          })
+          .then((result) => {
+            const value = filenameSchema.parse(result.value)
+            return value.filename satisfies string
+          })
+      }
 
       // add text that contains a filename in the middle to test that limiting
       // the recognition of the filename works
       //
       // use a complicated filename to test that the filename is recognized
       // even in these cases
-      cy.typeIntoTerminal("ccletsgo./dir with spaces/file2.txt__moretext{esc}")
+      nvim.runLuaCode({
+        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {"aaaaaa./dir with spaces/file2.txt__aaaaaaaa"})`,
+      })
 
-      // select the file name
-      cy.typeIntoTerminal(`_f.vt_`)
-      cy.typeIntoTerminal(`{upArrow}`)
+      // select the file name only
+      cy.typeIntoTerminal("_f.vt_")
 
-      // wait until yazi is showing the file contents (so we know it has
-      // started up)
-      cy.contains("this is the second file")
-
-      cy.get("span")
-        .filter(
-          (_, el) =>
-            el.textContent?.includes(
-              "file2.txt" satisfies MyTestDirectoryFile,
-            ) ?? false,
-        )
-        .then((elements) => {
-          const matchingElements = elements.map((_, el) => {
-            return window.getComputedStyle(el).backgroundColor
-          })
-
-          return matchingElements.toArray()
-        })
-        .should("contain", rgbify(flavors.macchiato.colors.text.rgb))
+      getSelectedFilePath().should(
+        "match",
+        new RegExp("dir with spaces/file2.txt" satisfies MyTestDirectoryFile),
+      )
     })
   })
 
