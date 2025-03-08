@@ -19,8 +19,16 @@ function M.emit_renamed_or_moved_event(event)
     changes = {},
   }
 
-  if event.type == "move" or event.type == "rename" then
-    event_data.changes[event.data.from] = event.data.to
+  if event.type == "move" then
+    ---@type YaziMoveEvent
+    local move_event = event
+    for _, item in ipairs(move_event.data.items) do
+      event_data.changes[item.from] = item.to
+    end
+  elseif event.type == "rename" then
+    ---@type YaziRenameEvent
+    local rename_event = event
+    event_data.changes[rename_event.data.from] = rename_event.data.to
   elseif event.type == "bulk" then
     event_data.changes = event.changes
   end
