@@ -179,8 +179,12 @@ describe("process_events()", function()
             timestamp = "2021-09-01T12:00:00Z",
             id = "rename_123",
             data = {
-              from = "/tmp/old_path",
-              to = "/tmp/new_path",
+              items = {
+                {
+                  from = "/tmp/old_path",
+                  to = "/tmp/new_path",
+                },
+              },
             },
           },
         }
@@ -194,6 +198,7 @@ describe("process_events()", function()
         })
 
         ya:process_events(events, {})
+
         vim.wait(2000, function()
           return #event_callback.calls > 0
         end)
