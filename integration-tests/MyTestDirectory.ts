@@ -173,6 +173,16 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("init.lua"),
           type: z.literal("file"),
         }),
+        utils: z.object({
+          name: z.literal("utils/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "utils.lua": z.object({
+              name: z.literal("utils.lua"),
+              type: z.literal("file"),
+            }),
+          }),
+        }),
       }),
     }),
     "other-subdirectory": z.object({
@@ -265,6 +275,8 @@ export const testDirectoryFiles = z.enum([
   "lua-project/.luarc.json",
   "lua-project/config.lua",
   "lua-project/init.lua",
+  "lua-project/utils/utils.lua",
+  "lua-project/utils",
   "lua-project",
   "other-subdirectory/other-sub-file.txt",
   "other-subdirectory",
