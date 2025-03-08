@@ -6,8 +6,9 @@
 [![LuaRocks](https://img.shields.io/luarocks/v/mikavilpas/yazi.nvim?logo=lua)](https://luarocks.org/modules/mikavilpas/yazi.nvim)
 [![Type checked codebase](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml/badge.svg)](https://github.com/mikavilpas/yazi.nvim/actions/workflows/typecheck.yml)
 
-Yazi is a blazing fast file manager for the terminal. This plugin allows you to
-open yazi in a floating window in Neovim.
+[Yazi](https://github.com/sxyazi/yazi.git) is a blazing fast file manager for
+the terminal. This plugin allows you to open yazi in a floating window in
+Neovim.
 
 <https://github.com/mikavilpas/yazi.nvim/assets/300791/c7ff98ee-54d6-4ad0-9318-903e4b674f84>
 
