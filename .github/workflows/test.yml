@@ -77,6 +77,8 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
+      - run: pnpm tui neovim prepare
+        working-directory: integration-tests
 
       # need to work around https://github.com/cypress-io/github-action/issues/1246
       - run: pnpm --filter integration-tests exec cypress install
