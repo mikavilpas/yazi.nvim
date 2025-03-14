@@ -149,9 +149,30 @@ end
 ---@param path string?
 function M.selected_file_paths(path)
   local selected_file_path = M.selected_file_path(path)
+
+  local is_quickfix_window_selected = vim.api.nvim_get_option_value(
+    "buftype",
+    { buf = 0 }
+  ) == "quickfix"
+  if is_quickfix_window_selected then
+    -- get the paths of the files in the quickfix window
+    local qflist = vim.fn.getqflist()
+
+    ---@type Path[]
+    local filenames = {}
+    for _, entry in ipairs(qflist) do
+      if entry.bufnr and entry.bufnr > 0 then
+        local filename = vim.api.nvim_buf_get_name(entry.bufnr)
+        local new_path = plenary_path:new(filename)
+        table.insert(filenames, new_path)
+      end
+    end
+
+    return filenames
+  end
+
   ---@type Path[]
   local paths = { selected_file_path }
-
   for _, buffer in ipairs(M.get_visible_open_buffers()) do
     -- NOTE: yazi can only display up to 9 paths, and it's an error to give any
     -- more

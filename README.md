@@ -222,8 +222,7 @@ return {
     -- }
     open_for_directories = false,
 
-    -- open visible splits as yazi tabs for easy navigation. Requires a yazi
-    -- version more recent than 2024-08-11
+    -- open visible splits and quickfix items as yazi tabs for easy navigation
     -- https://github.com/mikavilpas/yazi.nvim/pull/359
     open_multiple_tabs = false,
 
