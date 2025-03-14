@@ -1709,14 +1709,8 @@ packages:
   micromark-util-classify-character@2.0.1:
     resolution: {integrity: sha512-K0kHzM6afW/MbeWYWLjoHQv1sgg2Q9EccHEDzSkxiP/EaagNzCm7T/WMKZ3rjMbvIpvBiZgwR3dKMygtA4mG1Q==}
 
-  micromark-util-combine-extensions@2.0.0:
-    resolution: {integrity: sha512-vZZio48k7ON0fVS3CUgFatWHoKbbLTK/rT7pzpJ4Bjp5JjkZeasRfrS9wsBdDJK2cJLHMckXZdzPSSr1B8a4oQ==}
-
   micromark-util-combine-extensions@2.0.1:
     resolution: {integrity: sha512-OnAnH8Ujmy59JcyZw8JSbK9cGpdVY44NKgSM7E9Eh7DiLS2E9RNQf0dONaGDzEG9yjEl5hcqeIsj4hfRkLH/Bg==}
-
-  micromark-util-decode-numeric-character-reference@2.0.1:
-    resolution: {integrity: sha512-bmkNc7z8Wn6kgjZmVHOX3SowGmVdhYS7yBpMnuMnPzDq/6xwVA604DuOXMZTO1lvq01g+Adfa0pE2UKGlxL1XQ==}
 
   micromark-util-decode-numeric-character-reference@2.0.2:
     resolution: {integrity: sha512-ccUbYk6CwVdkmCQMyr64dXz42EfHGkPQlBj5p7YVGzq8I7CtjXZJrubAYezf7Rp+bjPseiROqe7G6foFd+lEuw==}
@@ -1730,9 +1724,6 @@ packages:
   micromark-util-html-tag-name@2.0.1:
     resolution: {integrity: sha512-2cNEiYDhCWKI+Gs9T0Tiysk136SnR13hhO8yW6BGNyhOC4qYFnwF1nKfD3HFAIXA5c45RrIG1ub11GiXeYd1xA==}
 
-  micromark-util-normalize-identifier@2.0.0:
-    resolution: {integrity: sha512-2xhYT0sfo85FMrUPtHcPo2rrp1lwbDEEzpx7jiH2xXJLqBuy4H0GgXk5ToU8IEwoROtXuL8ND0ttVa4rNqYK3w==}
-
   micromark-util-normalize-identifier@2.0.1:
     resolution: {integrity: sha512-sxPqmo70LyARJs0w2UclACPUUEqltCkJ6PhKdMIDuJ3gSf/Q+/GIe3WKl0Ijb/GyH9lOpUkRAO2wp0GVkLvS9Q==}
 
@@ -1745,14 +1736,8 @@ packages:
   micromark-util-subtokenize@2.0.3:
     resolution: {integrity: sha512-VXJJuNxYWSoYL6AJ6OQECCFGhIU2GGHMw8tahogePBrjkG8aCCas3ibkp7RnVOSTClg2is05/R7maAhF1XyQMg==}
 
-  micromark-util-symbol@2.0.0:
-    resolution: {integrity: sha512-8JZt9ElZ5kyTnO94muPxIGS8oyElRJaiJO8EzV6ZSyGQ1Is8xwl4Q45qU5UOg+bGH4AikWziz0iN4sFLWs8PGw==}
-
   micromark-util-symbol@2.0.1:
     resolution: {integrity: sha512-vs5t8Apaud9N28kgCrRUdEed4UJ+wWNvicHLPxCa9ENlYuAY31M0ETy5y1vA33YoNPDFTghEbnh6efaE8h4x0Q==}
-
-  micromark-util-types@2.0.0:
-    resolution: {integrity: sha512-oNh6S2WMHWRZrmutsRmDDfkzKtxF+bc2VxLC9dvtrDIRFln627VsFP6fLMgTryGDljgLPjkrzQSDcPrjPyDJ5w==}
 
   micromark-util-types@2.0.1:
     resolution: {integrity: sha512-534m2WhVTddrcKVepwmVEVnUAmtrx9bfIjNoQHRqfnvdaHQiFytEhJoTgpWJvDEXCO5gLTQh3wYC1PgOJA4NSQ==}
@@ -2092,9 +2077,6 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
-
-  rxjs@7.8.1:
-    resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
 
   rxjs@7.8.2:
     resolution: {integrity: sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==}
@@ -3252,7 +3234,7 @@ snapshots:
     dependencies:
       chalk: 4.1.2
       lodash: 4.17.21
-      rxjs: 7.8.1
+      rxjs: 7.8.2
       shell-quote: 1.8.1
       supports-color: 8.1.1
       tree-kill: 1.2.2
@@ -4154,11 +4136,11 @@ snapshots:
       devlop: 1.1.0
       mdast-util-to-string: 4.0.0
       micromark: 4.0.1
-      micromark-util-decode-numeric-character-reference: 2.0.1
+      micromark-util-decode-numeric-character-reference: 2.0.2
       micromark-util-decode-string: 2.0.0
-      micromark-util-normalize-identifier: 2.0.0
-      micromark-util-symbol: 2.0.0
-      micromark-util-types: 2.0.0
+      micromark-util-normalize-identifier: 2.0.1
+      micromark-util-symbol: 2.0.1
+      micromark-util-types: 2.0.1
       unist-util-stringify-position: 4.0.0
     transitivePeerDependencies:
       - supports-color
@@ -4336,7 +4318,7 @@ snapshots:
       micromark-extension-gfm-table: 2.1.0
       micromark-extension-gfm-tagfilter: 2.0.0
       micromark-extension-gfm-task-list-item: 2.0.1
-      micromark-util-combine-extensions: 2.0.0
+      micromark-util-combine-extensions: 2.0.1
       micromark-util-types: 2.0.1
 
   micromark-extension-math@3.1.0:
@@ -4396,19 +4378,10 @@ snapshots:
       micromark-util-symbol: 2.0.1
       micromark-util-types: 2.0.1
 
-  micromark-util-combine-extensions@2.0.0:
-    dependencies:
-      micromark-util-chunked: 2.0.1
-      micromark-util-types: 2.0.1
-
   micromark-util-combine-extensions@2.0.1:
     dependencies:
       micromark-util-chunked: 2.0.1
       micromark-util-types: 2.0.1
-
-  micromark-util-decode-numeric-character-reference@2.0.1:
-    dependencies:
-      micromark-util-symbol: 2.0.0
 
   micromark-util-decode-numeric-character-reference@2.0.2:
     dependencies:
@@ -4418,16 +4391,12 @@ snapshots:
     dependencies:
       decode-named-character-reference: 1.0.2
       micromark-util-character: 2.1.1
-      micromark-util-decode-numeric-character-reference: 2.0.1
-      micromark-util-symbol: 2.0.0
+      micromark-util-decode-numeric-character-reference: 2.0.2
+      micromark-util-symbol: 2.0.1
 
   micromark-util-encode@2.0.1: {}
 
   micromark-util-html-tag-name@2.0.1: {}
-
-  micromark-util-normalize-identifier@2.0.0:
-    dependencies:
-      micromark-util-symbol: 2.0.0
 
   micromark-util-normalize-identifier@2.0.1:
     dependencies:
@@ -4450,11 +4419,7 @@ snapshots:
       micromark-util-symbol: 2.0.1
       micromark-util-types: 2.0.1
 
-  micromark-util-symbol@2.0.0: {}
-
   micromark-util-symbol@2.0.1: {}
-
-  micromark-util-types@2.0.0: {}
 
   micromark-util-types@2.0.1: {}
 
@@ -4789,7 +4754,7 @@ snapshots:
     dependencies:
       '@types/mdast': 4.0.4
       mdast-util-from-markdown: 2.0.1
-      micromark-util-types: 2.0.0
+      micromark-util-types: 2.0.1
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
@@ -4827,10 +4792,6 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
-
-  rxjs@7.8.1:
-    dependencies:
-      tslib: 2.8.1
 
   rxjs@7.8.2:
     dependencies:
