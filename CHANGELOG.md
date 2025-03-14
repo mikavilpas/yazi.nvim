@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.2...v9.0.3) (2025-03-14)
+
+
+### Bug Fixes
+
+* publishing move events to other nvim plugins ([e3fab1d](https://github.com/mikavilpas/yazi.nvim/commit/e3fab1df699e093134fa2790eb8d8d366078223a))
+
 ## [9.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.1...v9.0.2) (2025-03-02)
 
 
