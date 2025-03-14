@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.3...v9.1.0) (2025-03-14)
+
+
+### Features
+
+* open yazi tabs for the files in the quickfix list ([9d3754b](https://github.com/mikavilpas/yazi.nvim/commit/9d3754b56f4812a677d7b45a6f74d8e700483ad9))
+
 ## [9.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.2...v9.0.3) (2025-03-14)
 
 
