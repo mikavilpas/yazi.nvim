@@ -218,6 +218,42 @@ describe("opening files", () => {
     })
   })
 
+  it("can open yazi with the files in the quickfix list", () => {
+    cy.startNeovim({
+      filename: "file2.txt",
+      startupScriptModifications: [
+        "modify_yazi_config_and_open_multiple_files.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("Hello")
+
+      // add some files to the quickfix list
+      nvim.runLuaCode({
+        luaCode: `vim.fn.setqflist({{filename = "file2.txt"}, {filename = "file3.txt"}})`,
+      })
+
+      // show the quickfix list
+      nvim.runLuaCode({ luaCode: `vim.api.nvim_command('copen')` })
+      cy.contains("file3.txt||")
+
+      // focus the quickfix list
+      nvim.runLuaCode({ luaCode: `vim.api.nvim_command('wincmd j')` })
+
+      // open yazi. It should open two tabs, one for each file in the quickfix
+      // list
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("NOR")
+
+      isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+      isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+
+      // switch to the next yazi tab. This should select the other file
+      cy.typeIntoTerminal("]")
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+      isFileSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+    })
+  })
+
   describe("bulk renaming", () => {
     it("can bulk rename files", () => {
       cy.startNeovim().then(() => {
