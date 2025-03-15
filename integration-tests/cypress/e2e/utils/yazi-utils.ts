@@ -11,6 +11,14 @@ export function isFileSelectedInYazi(text: string): void {
   )
 }
 
+export function isDirectorySelectedInYazi(text: string): void {
+  cy.contains(text).should(
+    "have.css",
+    "background-color",
+    rgbify(darkTheme.blue.rgb),
+  )
+}
+
 export function isFileNotSelectedInYazi(text: string): void {
   cy.contains(text).should(
     "have.css",
