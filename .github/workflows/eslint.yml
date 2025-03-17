@@ -13,7 +13,7 @@ jobs:
         with:
           # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
           run_install: false
-      - uses: actions/setup-node@v4.2.0
+      - uses: actions/setup-node@v4.3.0
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
