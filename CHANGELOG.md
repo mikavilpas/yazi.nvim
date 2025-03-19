@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.1.0...v9.2.0) (2025-03-19)
+
+
+### Features
+
+* support `winborder` setting on Neovim nightly (0.11+) ([ccf6d32](https://github.com/mikavilpas/yazi.nvim/commit/ccf6d3247392075e8d2617086d351db3fddc6f1b))
+
 ## [9.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.0.3...v9.1.0) (2025-03-14)
 
 
