@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Run linkspector
-        uses: umbrelladocs/action-linkspector@v1.3.1
+        uses: umbrelladocs/action-linkspector@v1.3.2
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
