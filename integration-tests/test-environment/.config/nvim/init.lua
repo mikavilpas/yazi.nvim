@@ -32,6 +32,8 @@ vim.o.swapfile = false
 local thisfile = vim.fn.expand("<sfile>")
 local repo_root = vim.fn.fnamemodify(thisfile, ":h:h:h:h:h:h:h")
 
+vim.lsp.set_log_level("debug")
+
 -- for CI, use a single log file location and put it in a known location. This
 -- way it's easy to display the log file contents after each test using
 -- showYaziLog() and removeYaziLog().
