@@ -44,3 +44,10 @@ neovim->>neovim: apply changes to related files
 neovim->>lsp: send 'renaming finished' notification (didRenameFiles)
 neovim->>neovim: user saves changes
 ```
+
+## Debugging for developers
+
+The e2e test environment should enable logging of all lsp requests and
+responses. Each test run has its own log file, and you can find it in a
+directory such as
+`integration-tests/test-environment/testdirs/dir-rNJosm/.local/state/nvim/lsp.log`
