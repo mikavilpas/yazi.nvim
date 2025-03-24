@@ -36,10 +36,7 @@ function YaziProcess:start(config, paths, callbacks)
   local yazi_cmd = self.ya_process:get_yazi_command(paths)
   Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
 
-  if
-    vim.fn.has("nvim-0.11") == 1
-    and config.future_features.nvim_0_10_termopen_fallback
-  then
+  if not config.future_features.use_nvim_0_10_termopen then
     Log:debug("Using nvim-0.11 jobstart to start yazi.")
     self.yazi_job_id = vim.fn.jobstart(yazi_cmd, {
       term = true,

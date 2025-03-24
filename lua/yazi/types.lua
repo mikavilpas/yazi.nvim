@@ -25,7 +25,7 @@
 ---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
 
 ---@class(exact) yazi.OptInFeatures
----@field nvim_0_10_termopen_fallback? boolean # Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart` (https://github.com/neovim/neovim/pull/31343). By default on nightly, this option is `false` and `jobstart` is used. Some users have reported issues with this, and can set this to `true` to keep using the old `termopen` for the time being.
+---@field use_nvim_0_10_termopen? boolean # Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart` (https://github.com/neovim/neovim/pull/31343). By default on nightly, this option is `false` and `jobstart` is used. Some users have reported issues with this, and can set this to `true` to keep using the old `termopen` for the time being.
 ---@field process_events_live? boolean # By default, this is `true`, which means yazi.nvim processes events before yazi has been closed. If this is `false`, events are processed in a batch when the user closes yazi. If this is `true`, events are processed immediately.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
