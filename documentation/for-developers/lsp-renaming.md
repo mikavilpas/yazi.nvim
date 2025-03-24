@@ -45,6 +45,11 @@ neovim->>lsp: send 'renaming finished' notification (didRenameFiles)
 neovim->>neovim: user saves changes
 ```
 
+LSP specification links for file renaming:
+
+- [workspace/willRenameFiles](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_willRenameFiles)
+- [workspace/didRenameFiles](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_didRenameFiles)
+
 ## Debugging for developers
 
 The e2e test environment should enable logging of all lsp requests and
