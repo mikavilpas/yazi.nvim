@@ -19,7 +19,7 @@ describe("relative_path", function()
   before_each(function()
     snapshot = assert:snapshot()
     -- use the defaults, which set realpath and grealpath depending on the OS
-    yazi.setup()
+    yazi.setup({})
 
     stub(vim.fn, "executable", function(command)
       if command == "realpath" or command == "grealpath" then
