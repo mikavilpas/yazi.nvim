@@ -1,5 +1,16 @@
 # Changelog
 
+## [10.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.2.1...v10.0.0) (2025-03-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* If you're using an old nightly Neovim version (older than 2 months) and cannot open yazi.nvim after this, you should update your nightly Neovim. If that is not possible, you can set `future_features.use_nvim_0_10_termopen=true` in your config to work around the issue. I will keep that around for a while, but eventually it might be removed.
+
+### Code Refactoring
+
+* remove 0.11 nightly termopen fallback logic ([1a15ad7](https://github.com/mikavilpas/yazi.nvim/commit/1a15ad738100e5e5c7b2b82ea9ee0a9c451388a9))
+
 ## [9.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v9.2.0...v9.2.1) (2025-03-24)
 
 
