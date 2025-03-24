@@ -1,5 +1,12 @@
 # Changelog
 
+## [9.2.1](https://github.com/mikavilpas/yazi.nvim/compare/v9.2.0...v9.2.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* don't restore the previous buffer when yazi is closed ([173d40f](https://github.com/mikavilpas/yazi.nvim/commit/173d40fa4161321bb82faef9d6945f90eb96db6f))
+
 ## [9.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.1.0...v9.2.0) (2025-03-19)
 
 
