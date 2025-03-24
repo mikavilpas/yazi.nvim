@@ -44,7 +44,6 @@ function M.yazi(config, input_path, args)
   local path = paths[1]
 
   local prev_win = vim.api.nvim_get_current_win()
-  local prev_buf = vim.api.nvim_get_current_buf()
 
   config.chosen_file_path = config.chosen_file_path or vim.fn.tempname()
 
@@ -142,7 +141,7 @@ function M.yazi(config, input_path, args)
         string.format("Resolved the last_directory to %s", last_directory)
       )
 
-      utils.on_yazi_exited(prev_win, prev_buf, win, config, selected_files, {
+      utils.on_yazi_exited(prev_win, win, config, selected_files, {
         last_directory = last_directory,
       })
 
