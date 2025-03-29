@@ -79,6 +79,15 @@ First, make sure you have the requirements:
 
 This is the preferred installation method.
 
+Notice that yazi.nvim adds and lazy loads some minimal dependencies for you
+automatically when using a plugin manager like lazy.nvim. To see which
+dependencies are installed, see [lazy.lua](./lazy.lua). If you are not using
+lazy.nvim (or
+[rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim?tab=readme-ov-file)),
+you need to install the dependencies yourself. Also see the discussion in
+[issue 306](https://github.com/mikavilpas/yazi.nvim/issues/306) and examples of
+[other Neovim plugins using this feature](https://github.com/search?q=path%3A%2F%5Elazy%5C.lua%24%2F&type=code).
+
 ```lua
 ---@type LazySpec
 {
@@ -121,15 +130,6 @@ This is the preferred installation method.
   end,
 }
 ```
-
-Notice that yazi.nvim adds and lazy loads some minimal dependencies for you
-automatically when using a plugin manager like lazy.nvim. To see which
-dependencies are installed, see [lazy.lua](./lazy.lua). If you are not using
-lazy.nvim (or
-[rocks.nvim](https://github.com/nvim-neorocks/rocks.nvim?tab=readme-ov-file)),
-you need to install the dependencies yourself. Also see the discussion in
-[issue 306](https://github.com/mikavilpas/yazi.nvim/issues/306) and examples of
-[other Neovim plugins using this feature](https://github.com/search?q=path%3A%2F%5Elazy%5C.lua%24%2F&type=code).
 
 ### Without a package manager
 
