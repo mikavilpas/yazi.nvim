@@ -46,9 +46,12 @@ function M.send_files_to_quickfix_list(chosen_files)
         path = file .. "/"
       end
 
+      ---@type vim.quickfix.entry
       return {
         filename = path,
         text = path,
+        col = 1,
+        lnum = 1,
       }
     end, chosen_files),
   })

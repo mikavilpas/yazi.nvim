@@ -213,8 +213,8 @@ describe("opening files", () => {
       cy.contains("-- TERMINAL --").should("not.exist")
 
       // items in the quickfix list should now be visible
-      cy.contains(`${nvim.dir.contents["file2.txt"].name}||`)
-      cy.contains(`${nvim.dir.contents["file3.txt"].name}||`)
+      cy.contains(`${nvim.dir.contents["file2.txt"].name}|1 col 1|`)
+      cy.contains(`${nvim.dir.contents["file3.txt"].name}|1 col 1|`)
     })
   })
 
