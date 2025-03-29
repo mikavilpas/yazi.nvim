@@ -81,6 +81,7 @@ function YaziProcess:start(config, paths, callbacks)
 end
 
 function YaziProcess:nvim_0_10_termopen(config, on_exit, yazi_cmd)
+  ---@diagnostic disable-next-line: deprecated
   return vim.fn.termopen(yazi_cmd, {
     env = {
       -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
