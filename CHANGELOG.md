@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.0...v10.0.1) (2025-03-29)
+
+
+### Bug Fixes
+
+* quickfix items not being processable with `:cfdo 1t1` ([#858](https://github.com/mikavilpas/yazi.nvim/issues/858)) ([b5596b9](https://github.com/mikavilpas/yazi.nvim/commit/b5596b981df9cdb219ece29eea60cd52f149c319))
+
 ## [10.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v9.2.1...v10.0.0) (2025-03-24)
 
 
