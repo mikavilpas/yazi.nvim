@@ -16,16 +16,16 @@
   },
   "devDependencies": {
     "@eslint/js": "9.23.0",
-    "@tui-sandbox/library": "10.0.0",
-    "@types/node": "22.13.13",
+    "@tui-sandbox/library": "10.1.0",
+    "@types/node": "22.13.17",
     "@types/tinycolor2": "1.4.6",
     "concurrently": "9.1.2",
     "eslint": "9.23.0",
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "4.38.0",
+    "type-fest": "4.39.0",
     "typescript": "5.8.2",
-    "typescript-eslint": "8.28.0"
+    "typescript-eslint": "8.29.0"
   }
 }
