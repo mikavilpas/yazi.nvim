@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: JohnnyMorganz/stylua-action@v4.0.0
+      - uses: JohnnyMorganz/stylua-action@v4.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v2.0.2
