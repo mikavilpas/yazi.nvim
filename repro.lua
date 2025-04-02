@@ -32,7 +32,15 @@ local plugins = {
   {
     "mikavilpas/yazi.nvim",
     event = "VeryLazy",
-    dependencies = { "folke/snacks.nvim", lazy = true },
+    dependencies = {
+      {
+        -- https://github.com/folke/snacks.nvim
+        "folke/snacks.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {},
+      },
+    },
     keys = {
       {
         "<leader>-",
