@@ -135,6 +135,12 @@ Cypress.Commands.add(
   },
 )
 
+Cypress.Commands.add("nvim_isRunning", () => {
+  return cy.window().then(async (_) => {
+    return !!testNeovim
+  })
+})
+
 Cypress.Commands.add(
   "startTerminalApplication",
   (args: StartTerminalGenericArguments) => {
@@ -216,6 +222,10 @@ declare global {
       nvim_runExCommand(
         input: ExCommandClientInput,
       ): Chainable<RunExCommandOutput>
+
+      /** Returns true if neovim is running. Useful to conditionally run
+       * afterEach actions based on whether it's running. */
+      nvim_isRunning(): Chainable<boolean>
 
       terminal_runBlockingShellCommand(
         input: MyBlockingCommandClientInput,
