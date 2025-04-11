@@ -162,6 +162,14 @@ function YaziFloatingWindow:open_and_display()
   -- the terminal window opens which-key and ignores the keypress.
   vim.keymap.set("t", "<esc>", "<esc>", { buffer = yazi_buffer })
 
+  -- HACK: for some reason, the cursor is not in insert mode when opening
+  -- yazi from the command line with `neovim .`, so just simulate
+  -- pressing "i" to enter insert mode :) It did nothing when when I
+  -- tried using vim.cmd('startinsert') or vim.cmd('normal! i')
+  if vim.fn.mode(true) == "t" then
+    vim.api.nvim_feedkeys("i", "n", false)
+  end
+
   return self
 end
 
