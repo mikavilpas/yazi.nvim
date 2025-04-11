@@ -47,14 +47,6 @@ function M.hijack_netrw(yazi_augroup)
 
       Log:debug(string.format("Opening yazi for directory %s", file))
       require("yazi").yazi(M.config, file)
-
-      -- HACK: for some reason, the cursor is not in insert mode when opening
-      -- yazi from the command line with `neovim .`, so just simulate
-      -- pressing "i" to enter insert mode :) It did nothing when when I
-      -- tried using vim.cmd('startinsert') or vim.cmd('normal! i')
-      if vim.fn.mode(true) == "t" then
-        vim.api.nvim_feedkeys("i", "n", false)
-      end
     end)
   end
 
