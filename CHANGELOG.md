@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.1...v10.0.2) (2025-04-12)
+
+
+### Bug Fixes
+
+* sending `i` on startup activating yazi actions ([c84f569](https://github.com/mikavilpas/yazi.nvim/commit/c84f569b38cae85018a41181e4a086c4a143d604))
+
 ## [10.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.0...v10.0.1) (2025-03-29)
 
 
