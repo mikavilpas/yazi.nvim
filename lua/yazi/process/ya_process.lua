@@ -177,6 +177,9 @@ end
 ---@param events YaziEvent[]
 ---@param forwarded_event_kinds table<string,boolean>
 function YaProcess:process_events(events, forwarded_event_kinds)
+  local nvim_event_handling = require("yazi.event_handling.nvim_event_handling")
+  local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
+
   for _, event in ipairs(events) do
     if event.type == "hover" then
       ---@cast event YaziHoverEvent
@@ -188,10 +191,7 @@ function YaProcess:process_events(events, forwarded_event_kinds)
       end
       vim.schedule(function()
         self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
-
-        local event_handling =
-          require("yazi.event_handling.nvim_event_handling")
-        event_handling.emit("YaziDDSHover", event)
+        nvim_event_handling.emit("YaziDDSHover", event)
       end)
     elseif event.type == "cd" then
       ---@cast event YaziHoverEvent
@@ -212,9 +212,7 @@ function YaProcess:process_events(events, forwarded_event_kinds)
       then
         vim.schedule(function()
           local success, result = pcall(function()
-            require("yazi.event_handling.nvim_event_handling").emit_renamed_or_moved_event(
-              event
-            )
+            nvim_event_handling.emit_renamed_or_moved_event(event)
           end)
           if not success then
             Log:debug(vim.inspect({
@@ -225,24 +223,17 @@ function YaProcess:process_events(events, forwarded_event_kinds)
           end
 
           if self.config.future_features.process_events_live == true then
-            require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
-              events
-            )
+            yazi_event_handling.process_events_emitted_from_yazi(events)
           end
         end)
       elseif forwarded_event_kinds[event.type] ~= nil then
         vim.schedule(function()
-          require("yazi.event_handling.nvim_event_handling").emit(
-            "YaziDDSCustom",
-            event
-          )
+          nvim_event_handling.emit("YaziDDSCustom", event)
         end)
       else
         if self.config.future_features.process_events_live == true then
           vim.schedule(function()
-            require("yazi.event_handling.yazi_event_handling").process_events_emitted_from_yazi(
-              events
-            )
+            yazi_event_handling.process_events_emitted_from_yazi(events)
           end)
         else
           Log:debug(
