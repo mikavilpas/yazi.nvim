@@ -203,13 +203,13 @@ function M.dir_of(file_path)
   return parent
 end
 
--- Returns parsed events from the yazi events file
----@param events_file_lines string[]
-function M.parse_events(events_file_lines)
+-- Returns parsed events from yazi
+---@param event_lines string[]
+function M.parse_events(event_lines)
   ---@type YaziEvent[]
   local events = {}
 
-  for _, line in ipairs(events_file_lines) do
+  for _, line in ipairs(event_lines) do
     local parts = vim.split(line, ",")
     local type = parts[1]
 
