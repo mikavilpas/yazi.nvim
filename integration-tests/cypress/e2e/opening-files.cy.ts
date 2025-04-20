@@ -314,7 +314,7 @@ describe("opening files", () => {
         cy.typeIntoTerminal("q")
 
         // the file should now be renamed - ask neovim to confirm this
-        nvim.runExCommand({ command: "buffers" }).then((result) => {
+        nvim.runExCommand({ command: "buffers" }).and((result) => {
           expect(result.value).to.contain("renamed-file.txt")
         })
       })

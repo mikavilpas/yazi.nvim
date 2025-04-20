@@ -10,6 +10,8 @@ M.version = "10.1.1" -- x-release-please-version
 ---@type YaziPreviousState
 M.previous_state = {}
 
+M.active_contexts = vim.ringbuf(2)
+
 ---@alias yazi.Arguments {reveal_path: string}
 
 ---@param config? YaziConfig | {}
@@ -158,6 +160,8 @@ function M.yazi(config, input_path, args)
       end
     end,
   })
+
+  M.active_contexts:push(yazi_context)
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
