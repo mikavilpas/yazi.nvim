@@ -84,7 +84,8 @@ function YaProcess:wait(timeout)
   return self.events
 end
 
-function YaProcess:start()
+---@param context YaziActiveContext
+function YaProcess:start(context)
   local event_kinds = {
     "rename",
     "delete",
@@ -140,7 +141,7 @@ function YaProcess:start()
           )
           self.retries = self.retries + 1
           vim.defer_fn(function()
-            self:start()
+            self:start(context)
           end, 50)
         else
           Log:debug("Failed to open ya after 5 retries")
@@ -162,7 +163,7 @@ function YaProcess:start()
       local parsed = utils.safe_parse_events(data)
       Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
 
-      self:process_events(parsed, interesting_events)
+      self:process_events(parsed, interesting_events, context)
     end,
 
     ---@param obj vim.SystemCompleted
@@ -176,7 +177,8 @@ end
 
 ---@param events YaziEvent[]
 ---@param forwarded_event_kinds table<string,boolean>
-function YaProcess:process_events(events, forwarded_event_kinds)
+---@param context YaziActiveContext
+function YaProcess:process_events(events, forwarded_event_kinds, context)
   local nvim_event_handling = require("yazi.event_handling.nvim_event_handling")
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
@@ -205,7 +207,16 @@ function YaProcess:process_events(events, forwarded_event_kinds)
         self.events[#self.events + 1] = event
       end
 
-      if
+      if event.type == "cycle-buffer" then
+        vim.schedule(function()
+          ---@cast event YaziNvimCycleBufferEvent
+          yazi_event_handling.process_events_emitted_from_yazi(
+            { event },
+            self.config,
+            context
+          )
+        end)
+      elseif
         event.type == "rename"
         or event.type == "move"
         or event.type == "bulk"
@@ -223,7 +234,11 @@ function YaProcess:process_events(events, forwarded_event_kinds)
           end
 
           if self.config.future_features.process_events_live == true then
-            yazi_event_handling.process_events_emitted_from_yazi(events)
+            yazi_event_handling.process_events_emitted_from_yazi(
+              events,
+              self.config,
+              context
+            )
           end
         end)
       elseif forwarded_event_kinds[event.type] ~= nil then
@@ -233,7 +248,11 @@ function YaProcess:process_events(events, forwarded_event_kinds)
       else
         if self.config.future_features.process_events_live == true then
           vim.schedule(function()
-            yazi_event_handling.process_events_emitted_from_yazi(events)
+            yazi_event_handling.process_events_emitted_from_yazi(
+              events,
+              self.config,
+              context
+            )
           end)
         else
           Log:debug(

@@ -79,7 +79,9 @@ local function handle_rename_move_bulk_event(event_data)
 end
 
 ---@param events YaziEvent[]
-function M.process_events_emitted_from_yazi(events)
+---@param config YaziConfig
+---@param context YaziActiveContext
+function M.process_events_emitted_from_yazi(events, config, context)
   for i, event in ipairs(events) do
     if event.type == "rename" then
       ---@cast event YaziRenameEvent
@@ -111,6 +113,9 @@ function M.process_events_emitted_from_yazi(events)
       local remaining_events = vim.list_slice(events, i)
       ---@cast event YaziTrashEvent
       M.process_delete_event(event, remaining_events)
+    elseif event.type == "cycle-buffer" then
+      ---@cast event YaziNvimCycleBufferEvent
+      require("yazi.keybinding_helpers").cycle_open_buffers(config, context)
     end
   end
 end

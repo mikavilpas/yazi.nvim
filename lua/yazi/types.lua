@@ -64,7 +64,7 @@
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi
 ---@field public hovered_buffer_in_same_directory? vim.api.keyset.highlight # the color of a buffer that is in the same directory as the hovered buffer
 
----@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent | YaziCustomDDSEvent
+---@alias YaziEvent YaziRenameEvent | YaziMoveEvent | YaziDeleteEvent | YaziTrashEvent | YaziChangeDirectoryEvent | YaziHoverEvent | YaziBulkEvent | YaziCustomDDSEvent | YaziNvimCycleBufferEvent
 
 ---@class (exact) YaziPreviousState # describes the previous state of yazi when it was closed; the last known state
 ---@field public last_hovered? string
@@ -114,6 +114,9 @@
 ---@class (exact) YaziBulkEvent "Like `rename` and `move` but for bulk renaming"
 ---@field public type "bulk"
 ---@field public changes table<string, string> # a table of old paths to new paths
+
+---@class (exact) YaziNvimCycleBufferEvent # yazi commands yazi.nvim to cycle to the next buffer
+---@field public type "cycle-buffer"
 
 ---@class (exact) YaziCustomDDSEvent "A custom event that is emitted by yazi. It could be coming from yazi itself, or a yazi plugin that uses custom events."
 ---@field public yazi_id string

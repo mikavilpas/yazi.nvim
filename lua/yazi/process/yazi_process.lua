@@ -17,7 +17,7 @@ YaziProcess.__index = YaziProcess
 
 ---@class yazi.Callbacks
 ---@field on_maybe_started fun(yazi_process: YaziProcess) # when yazi has been started. Note that it might not be ready and initialized yet. We don't have a way to detect this.
----@field on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil)
+---@field on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil, context: YaziActiveContext)
 
 ---@param config YaziConfig
 ---@param paths Path[]
@@ -36,6 +36,14 @@ function YaziProcess:start(config, paths, callbacks)
 
   local yazi_cmd = self.ya_process:get_yazi_command(paths)
   Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
+
+  ---@type YaziActiveContext
+  local context = {
+    api = self.api,
+    ya_process = self.ya_process,
+    yazi_job_id = self.yazi_job_id,
+    input_path = paths[1],
+  }
 
   if not config.future_features.use_nvim_0_10_termopen then
     Log:debug("Using nvim-0.11 jobstart to start yazi.")
@@ -65,7 +73,8 @@ function YaziProcess:start(config, paths, callbacks)
           chosen_files,
           events,
           self.ya_process.hovered_url,
-          last_directory
+          last_directory,
+          context
         )
       end,
     })
@@ -75,16 +84,9 @@ function YaziProcess:start(config, paths, callbacks)
       self:nvim_0_10_termopen(config, callbacks.on_exit, yazi_cmd)
   end
 
-  self.ya_process:start()
+  self.ya_process:start(context)
   callbacks.on_maybe_started(self)
 
-  ---@type YaziActiveContext
-  local context = {
-    api = self.api,
-    ya_process = self.ya_process,
-    yazi_job_id = self.yazi_job_id,
-    input_path = paths[1],
-  }
   return self, context
 end
 
