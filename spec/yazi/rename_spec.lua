@@ -90,7 +90,6 @@ describe("process_events_emitted_from_yazi", function()
         from = "/my-tmp/file1",
         to = "/my-tmp/file2",
       },
-      timestamp = "2021-09-01T00:00:00Z",
       id = "123",
     }
 
@@ -110,7 +109,6 @@ describe("process_events_emitted_from_yazi", function()
     local event = {
       type = "move",
       id = "123",
-      timestamp = "2021-09-01T00:00:00Z",
       data = {
         items = {
           {

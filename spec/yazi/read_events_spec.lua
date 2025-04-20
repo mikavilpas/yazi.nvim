@@ -12,7 +12,6 @@ describe("parsing yazi event file events", function()
     assert.are.same(events, {
       {
         type = "rename",
-        timestamp = "1712242143209837",
         id = "1712242143209837",
         data = {
           tab = 0,
@@ -33,7 +32,6 @@ describe("parsing yazi event file events", function()
     assert.are.same(events, {
       {
         type = "delete",
-        timestamp = "1712766606832135",
         id = "1712766606832135",
         data = {
           urls = { "/tmp/test-directory/test_2" },

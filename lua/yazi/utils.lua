@@ -212,6 +212,7 @@ function M.parse_events(event_lines)
   for _, line in ipairs(event_lines) do
     local parts = vim.split(line, ",")
     local type = parts[1]
+    local yazi_id = parts[3]
 
     -- selene: allow(if_same_then_else)
     if type == "NvimCycleBuffer" then
@@ -224,30 +225,24 @@ function M.parse_events(event_lines)
       -- example of a rename event:
 
       -- rename,1712242143209837,1712242143209837,{"tab":0,"from":"/Users/mikavilpas/git/yazi/LICENSE","to":"/Users/mikavilpas/git/yazi/LICENSE2"}
-      local timestamp = parts[2]
-      local id = parts[3]
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziRenameEvent
       local event = {
         type = type,
-        timestamp = timestamp,
-        id = id,
+        id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
     elseif type == "move" then
       -- example of a move event:
       -- move,1712854829131439,1712854829131439,{"items":[{"from":"/tmp/test/test","to":"/tmp/test"}]}
-      local timestamp = parts[2]
-      local id = parts[3]
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziMoveEvent
       local event = {
         type = type,
-        timestamp = timestamp,
-        id = id,
+        id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -265,15 +260,12 @@ function M.parse_events(event_lines)
     elseif type == "delete" then
       -- example of a delete event:
       -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
-      local timestamp = parts[2]
-      local id = parts[3]
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziDeleteEvent
       local event = {
         type = type,
-        timestamp = timestamp,
-        id = id,
+        id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -281,15 +273,12 @@ function M.parse_events(event_lines)
       -- example of a trash event:
       -- trash,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
 
-      local timestamp = parts[2]
-      local id = parts[3]
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziTrashEvent
       local event = {
         type = type,
-        timestamp = timestamp,
-        id = id,
+        id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -297,15 +286,12 @@ function M.parse_events(event_lines)
       -- example of a change directory (cd) event:
       -- cd,1716307611001689,1716307611001689,{"tab":0,"url":"/tmp/test-directory"}
 
-      local timestamp = parts[2]
-      local id = parts[3]
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziChangeDirectoryEvent
       local event = {
         type = type,
-        timestamp = timestamp,
-        id = id,
+        id = yazi_id,
         url = vim.json.decode(data_string)["url"],
       }
       table.insert(events, event)
@@ -313,7 +299,6 @@ function M.parse_events(event_lines)
       -- example of a hover event:
       -- hover,0,1720375364822700,{"tab":0,"url":"/tmp/test-directory/test"}
       local data_string = table.concat(parts, ",", 4, #parts)
-      local yazi_id = parts[3]
       local json = vim.json.decode(data_string, {
         luanil = {
           array = true,
@@ -338,7 +323,6 @@ function M.parse_events(event_lines)
       -- It could look like this (with optional data at the end)
       -- MyMessageNoData,0,1731774290298033,
       local data_string = table.concat(parts, ",", 4, #parts)
-      local yazi_id = parts[3]
 
       ---@type YaziCustomDDSEvent
       local event = {

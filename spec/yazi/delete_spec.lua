@@ -14,7 +14,6 @@ describe("process_delete_event", function()
     ---@type YaziDeleteEvent
     local event = {
       type = "delete",
-      timestamp = "1712766606832135",
       id = "1712766606832135",
       data = { urls = { "/abc/def" } },
     }
@@ -33,7 +32,6 @@ describe("process_delete_event", function()
     ---@type YaziDeleteEvent
     local event = {
       type = "delete",
-      timestamp = "1712766606832135",
       id = "1712766606832135",
       data = { urls = { "/abc" } },
     }
@@ -52,7 +50,6 @@ describe("process_delete_event", function()
     ---@type YaziDeleteEvent
     local event = {
       type = "delete",
-      timestamp = "1712766606832135",
       id = "1712766606832135",
       data = { urls = { "/abc/ghi" } },
     }
@@ -71,7 +68,6 @@ describe("process_delete_event", function()
     ---@type YaziDeleteEvent
     local delete_event = {
       type = "delete",
-      timestamp = "1712766606832135",
       id = "1712766606832135",
       data = { urls = { "/def/file" } },
     }
@@ -79,7 +75,6 @@ describe("process_delete_event", function()
     ---@type YaziRenameEvent
     local rename_event = {
       type = "rename",
-      timestamp = "1712766606832135",
       id = "1712766606832135",
       data = { from = "/def/other-file", to = "/def/file" },
     }
