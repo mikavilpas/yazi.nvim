@@ -22,6 +22,7 @@ YaziProcess.__index = YaziProcess
 ---@param config YaziConfig
 ---@param paths Path[]
 ---@param callbacks yazi.Callbacks
+---@return YaziProcess, YaziActiveContext
 function YaziProcess:start(config, paths, callbacks)
   os.remove(config.chosen_file_path)
 
@@ -77,7 +78,14 @@ function YaziProcess:start(config, paths, callbacks)
   self.ya_process:start()
   callbacks.on_maybe_started(self)
 
-  return self
+  ---@type YaziActiveContext
+  local context = {
+    api = self.api,
+    ya_process = self.ya_process,
+    yazi_job_id = self.yazi_job_id,
+    input_path = paths[1],
+  }
+  return self, context
 end
 
 function YaziProcess:nvim_0_10_termopen(config, on_exit, yazi_cmd)
