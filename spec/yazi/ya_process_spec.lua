@@ -87,7 +87,6 @@ describe("process_events()", function()
       ya:process_events({
         {
           type = "cd",
-          timestamp = "2021-09-01T12:00:00Z",
           id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
@@ -101,13 +100,11 @@ describe("process_events()", function()
       ya:process_events({
         {
           type = "cd",
-          timestamp = "2021-09-01T12:00:00Z",
           id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
         {
           type = "cd",
-          timestamp = "2021-09-01T12:00:00Z",
           id = "cd_123",
           url = "/tmp/directory",
         } --[[@as YaziChangeDirectoryEvent]],
@@ -133,7 +130,6 @@ describe("process_events()", function()
         local events = {
           {
             type = "rename",
-            timestamp = "2021-09-01T12:00:00Z",
             id = "rename_123",
             data = {
               from = "/tmp/old_path",
@@ -176,7 +172,6 @@ describe("process_events()", function()
         local events = {
           {
             type = "move",
-            timestamp = "2021-09-01T12:00:00Z",
             id = "rename_123",
             data = {
               items = {

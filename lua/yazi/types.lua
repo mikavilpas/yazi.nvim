@@ -74,13 +74,11 @@
 
 ---@class (exact) YaziRenameEvent
 ---@field public type "rename"
----@field public timestamp string
 ---@field public id string
 ---@field public data YaziEventDataRenameOrMove
 
 ---@class (exact) YaziMoveEvent
 ---@field public type "move"
----@field public timestamp string
 ---@field public id string
 ---@field public data {items: YaziEventDataRenameOrMove[]}
 
@@ -90,19 +88,16 @@
 
 ---@class (exact) YaziDeleteEvent
 ---@field public type "delete"
----@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
 
 ---@class (exact) YaziTrashEvent
 ---@field public type "trash"
----@field public timestamp string
 ---@field public id string
 ---@field public data {urls: string[]}
 
 ---@class (exact) YaziChangeDirectoryEvent
 ---@field public type "cd"
----@field public timestamp string
 ---@field public id string
 ---@field public url string
 
