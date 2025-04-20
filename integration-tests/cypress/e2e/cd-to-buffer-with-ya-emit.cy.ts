@@ -1,9 +1,8 @@
 import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
+import { yaziText } from "./utils/yazi-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
 // https://docs.cypress.io/api/commands/type#Typing-tab-key-does-not-work
-
-const yaziText = "NOR"
 
 describe("revealing another open split (buffer) in yazi", () => {
   beforeEach(() => {

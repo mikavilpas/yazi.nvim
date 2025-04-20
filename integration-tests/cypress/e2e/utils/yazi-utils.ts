@@ -3,6 +3,8 @@ import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 
 const darkTheme = flavors.macchiato.colors
 
+export const yaziText = "NOR"
+
 export function isFileSelectedInYazi(text: string): void {
   cy.contains(text).should(
     "have.css",
