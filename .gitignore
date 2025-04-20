@@ -12,3 +12,4 @@ integration-tests/server/build
 *.pem
 integration-tests/test-environment/testdirs
 integration-tests/cypress/screenshots
+integration-tests/cypress/videos
