@@ -17,3 +17,7 @@ run = """shell "ya pub-to 0 MyMessageWithData --json '{\\"somedata\\": 123}'""""
 [[manager.prepend_keymap]]
 on = "i"
 run = """quit"""
+
+[[manager.prepend_keymap]]
+on = "I"
+run = """shell "ya pub-to 0 NvimCycleBuffer""""

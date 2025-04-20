@@ -50,7 +50,7 @@ function M.yazi(config, input_path, args)
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
 
-  local yazi_process, context = YaziProcess:start(config, paths, {
+  local yazi_process, yazi_context = YaziProcess:start(config, paths, {
     on_maybe_started = function(yazi)
       if not (args and args.reveal_path) then
         return
@@ -100,7 +100,8 @@ function M.yazi(config, input_path, args)
       selected_files,
       events,
       hovered_url,
-      last_directory
+      last_directory,
+      context
     )
       if exit_code ~= 0 then
         print(
@@ -127,7 +128,11 @@ function M.yazi(config, input_path, args)
       -- processed a second time here.
       assert(#events == 0 or not config.future_features.process_events_live)
 
-      yazi_event_handling.process_events_emitted_from_yazi(events)
+      yazi_event_handling.process_events_emitted_from_yazi(
+        events,
+        config,
+        context
+      )
 
       if last_directory == nil then
         if path:is_file() then
@@ -158,11 +163,11 @@ function M.yazi(config, input_path, args)
 
   local yazi_buffer = win.content_buffer
   if config.set_keymappings_function ~= nil then
-    config.set_keymappings_function(yazi_buffer, config, context)
+    config.set_keymappings_function(yazi_buffer, config, yazi_context)
   end
 
   if config.keymaps ~= false then
-    require("yazi.config").set_keymappings(yazi_buffer, config, context)
+    require("yazi.config").set_keymappings(yazi_buffer, config, yazi_context)
   end
 
   win.on_resized = function(event)

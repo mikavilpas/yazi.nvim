@@ -214,7 +214,13 @@ function M.parse_events(event_lines)
     local type = parts[1]
 
     -- selene: allow(if_same_then_else)
-    if type == "rename" then
+    if type == "NvimCycleBuffer" then
+      ---@type YaziNvimCycleBufferEvent
+      local event = {
+        type = "cycle-buffer",
+      }
+      table.insert(events, event)
+    elseif type == "rename" then
       -- example of a rename event:
 
       -- rename,1712242143209837,1712242143209837,{"tab":0,"from":"/Users/mikavilpas/git/yazi/LICENSE","to":"/Users/mikavilpas/git/yazi/LICENSE2"}

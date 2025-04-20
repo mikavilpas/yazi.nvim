@@ -1,7 +1,15 @@
 ---@module "yazi"
 
-require("yazi").config.forwarded_dds_events =
-  { "MyMessageNoData", "MyMessageWithData" }
+do
+  local config = require("yazi").config
+  assert(config, "yazi.config is not set")
+
+  config.forwarded_dds_events = vim.tbl_extend(
+    "force",
+    config.forwarded_dds_events or {},
+    { "MyMessageNoData", "MyMessageWithData" }
+  )
+end
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "YaziDDSCustom",
