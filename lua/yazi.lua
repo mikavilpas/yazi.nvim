@@ -50,7 +50,7 @@ function M.yazi(config, input_path, args)
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
 
-  local yazi_process = YaziProcess:start(config, paths, {
+  local yazi_process, context = YaziProcess:start(config, paths, {
     on_maybe_started = function(yazi)
       if not (args and args.reveal_path) then
         return
@@ -155,13 +155,6 @@ function M.yazi(config, input_path, args)
   })
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
-
-  ---@type YaziActiveContext
-  local context = {
-    api = yazi_process.api,
-    input_path = path,
-    ya_process = yazi_process.ya_process,
-  }
 
   local yazi_buffer = win.content_buffer
   if config.set_keymappings_function ~= nil then
