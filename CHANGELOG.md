@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.2...v10.1.0) (2025-04-20)
+
+
+### Features
+
+* allow a yazi keymap to cycle through open buffers ([#894](https://github.com/mikavilpas/yazi.nvim/issues/894)) ([7656e82](https://github.com/mikavilpas/yazi.nvim/commit/7656e826faf1aadaa366bd9fbf1dad42310c210f))
+
 ## [10.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.1...v10.0.2) (2025-04-12)
 
 
