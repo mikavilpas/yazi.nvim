@@ -59,6 +59,11 @@
 ---@field public replace_in_directory? fun(directory: Path, selected_files?: Path[]): nil # called to start a replacement operation on some directory; by default uses grug-far.nvim
 ---@field public replace_in_selected_files? fun(selected_files?: Path[]): nil # called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim
 ---@field public resolve_relative_path_application? string # the application that will be used to resolve relative paths. By default, this is GNU `realpath` on Linux and `grealpath` on macOS
+---@field public bufdelete_implementation? YaziBufdeleteImpl # how to delete (close) a buffer. Defaults to `snacks.bufdelete` from https://github.com/folke/snacks.nvim, which maintains the window layout.
+
+---@alias YaziBufdeleteImpl
+---| "snacks-if-available" # the implementation from https://github.com/folke/snacks.nvim, which maintains the window layout. If not available, falls back to the builtin implementation in `vim.api.nvim_buf_delete()`, which does not maintain the window layout.
+---| fun(bufnr: integer) # a custom implementation provided by the user
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi
 ---@field public hovered_buffer? vim.api.keyset.highlight # the color of a buffer that is hovered over in yazi

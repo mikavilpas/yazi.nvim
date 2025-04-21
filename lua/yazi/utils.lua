@@ -417,27 +417,46 @@ function M.is_buffer_open(path)
   return false
 end
 
-function M.bufdelete(bufnr)
-  local ok, bufdelete = pcall(function()
-    return require("snacks.bufdelete")
-  end)
-  if ok then
-    return bufdelete.delete({ buf = bufnr, force = true, wipe = true })
-  else
+---@param implementation YaziBufdeleteImpl
+---@param bufnr integer
+function M.bufdelete(implementation, bufnr)
+  if implementation == "snacks-if-available" then
+    local ok, bufdelete = pcall(function()
+      return require("snacks.bufdelete")
+    end)
+    if ok then
+      return bufdelete.delete({ buf = bufnr, force = true, wipe = true })
+    else
+      vim.api.nvim_buf_call(bufnr, function()
+        vim.api.nvim_buf_delete(bufnr, { force = true })
+      end)
+    end
+  elseif implementation == "builtin" then
     vim.api.nvim_buf_call(bufnr, function()
       vim.api.nvim_buf_delete(bufnr, { force = true })
     end)
+  else
+    -- the user has a custom implementation. Call it.
+    if type(implementation) == "function" then
+      implementation(bufnr)
+    else
+      error("Invalid bufdelete implementation: " .. tostring(implementation))
+    end
   end
 end
 
+---@param config YaziConfig
 ---@param instruction RenameableBuffer
 ---@return nil
-function M.rename_or_close_buffer(instruction)
+function M.rename_or_close_buffer(config, instruction)
   -- If the target buffer is already open in neovim, just close the old buffer.
   -- It causes an error to try to rename to a buffer that's already open.
   if M.is_buffer_open(instruction.path.filename) then
     pcall(function()
-      M.bufdelete(instruction.bufnr)
+      M.bufdelete(
+        config.integrations.bufdelete_implementation,
+        instruction.bufnr
+      )
     end)
   end
 

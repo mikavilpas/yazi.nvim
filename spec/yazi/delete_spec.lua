@@ -8,6 +8,8 @@ describe("process_delete_event", function()
     reset.clear_all_buffers()
   end)
 
+  local config = require("yazi.config").default()
+
   it("deletes a buffer that matches the delete event exactly", function()
     local buffer = buffers.add_listed_buffer("/abc/def")
 
@@ -18,7 +20,7 @@ describe("process_delete_event", function()
       data = { urls = { "/abc/def" } },
     }
 
-    yazi_event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, config, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -36,7 +38,7 @@ describe("process_delete_event", function()
       data = { urls = { "/abc" } },
     }
 
-    yazi_event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, config, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -54,7 +56,8 @@ describe("process_delete_event", function()
       data = { urls = { "/abc/ghi" } },
     }
 
-    local deletions = yazi_event_handling.process_delete_event(event, {})
+    local deletions =
+      yazi_event_handling.process_delete_event(event, config, {})
 
     -- NOTE waiting for something not to happen is not possible to do reliably.
     -- Inspect the return value so we can at least get some level of
@@ -79,8 +82,11 @@ describe("process_delete_event", function()
       data = { from = "/def/other-file", to = "/def/file" },
     }
 
-    local deletions =
-      yazi_event_handling.process_delete_event(delete_event, { rename_event })
+    local deletions = yazi_event_handling.process_delete_event(
+      delete_event,
+      config,
+      { rename_event }
+    )
 
     assert.are.same({}, deletions)
   end)

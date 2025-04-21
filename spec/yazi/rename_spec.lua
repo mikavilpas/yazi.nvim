@@ -79,6 +79,12 @@ describe("process_events_emitted_from_yazi", function()
     reset.clear_all_buffers()
   end)
 
+  local config = require("yazi.config").default()
+
+  ---@type YaziActiveContext
+  ---@diagnostic disable-next-line: missing-fields
+  local context = {}
+
   it("closes a buffer that was renamed to another open buffer", function()
     buffers.add_listed_buffer("/my-tmp/file1")
     buffers.add_listed_buffer("/my-tmp/file2")
@@ -93,7 +99,11 @@ describe("process_events_emitted_from_yazi", function()
       id = "123",
     }
 
-    yazi_event_handling.process_events_emitted_from_yazi({ event })
+    yazi_event_handling.process_events_emitted_from_yazi(
+      { event },
+      config,
+      context
+    )
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
@@ -119,7 +129,11 @@ describe("process_events_emitted_from_yazi", function()
       },
     }
 
-    yazi_event_handling.process_events_emitted_from_yazi({ event })
+    yazi_event_handling.process_events_emitted_from_yazi(
+      { event },
+      config,
+      context
+    )
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do

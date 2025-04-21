@@ -88,6 +88,7 @@ function M.default()
         })
       end,
       resolve_relative_path_application = relpath,
+      bufdelete_implementation = "snacks-if-available",
     },
 
     floating_window_scaling_factor = 0.9,
