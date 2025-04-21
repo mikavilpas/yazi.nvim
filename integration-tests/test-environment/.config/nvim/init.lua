@@ -32,7 +32,11 @@ vim.o.swapfile = false
 local thisfile = vim.fn.expand("<sfile>")
 local repo_root = vim.fn.fnamemodify(thisfile, ":h:h:h:h:h:h:h")
 
-vim.lsp.set_log_level("debug")
+-- uncomment to debug lsp things. Details will be available in the following
+-- files:
+-- - yazi.nvim/integration-tests/test-environment/testdirs/dir-spyjPG/.local/state/nvim/lsp.log
+-- - yazi.nvim/integration-tests/test-environment/.repro/data/emmylua_ls/logs
+-- vim.lsp.set_log_level("debug")
 
 -- for CI, use a single log file location and put it in a known location. This
 -- way it's easy to display the log file contents after each test using
@@ -84,6 +88,7 @@ local plugins = {
   { "ibhagwan/fzf-lua" },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
+
   {
     "folke/snacks.nvim",
     priority = 1000,
@@ -115,13 +120,25 @@ local plugins = {
     "mason-org/mason-lspconfig.nvim",
     opts = {},
     config = function()
-      -- make sure mason-lspconfig does not automatically enable any LSP
-      -- servers that might be installed on the system. We want to only use the
-      -- LSP servers that are included in the test setup.
+      ---@diagnostic disable-next-line: missing-fields
       require("mason-lspconfig").setup({
+        -- make sure mason-lspconfig does not automatically enable any LSP
+        -- servers that might be installed on the system. We want to only use the
+        -- LSP servers that are included in the test setup.
         automatic_enable = false,
       })
-      vim.lsp.enable("lua_ls")
+      vim.lsp.config("emmylua_ls", {
+        root_markers = {
+          -- The default config prefers a `luarc.json` file which is found at
+          -- the root of the yazi.nvim repository. Here we need to find the
+          -- file inside the test environment instead, so that the tests can
+          -- run in isolation.
+          --
+          -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/emmylua_ls.lua
+          ".emmyrc.json",
+        },
+      })
+      vim.lsp.enable("emmylua_ls")
     end,
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
