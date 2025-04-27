@@ -11,6 +11,11 @@ function M.hijack_netrw(yazi_augroup)
       return
     end
 
+    -- don't hijack if using a protocol that netrw should handle (e.g. scp, ftp)
+    if string.find(vim.api.nvim_buf_get_name(bufnr), "://") then
+      return
+    end
+
     local winid = vim.api.nvim_get_current_win()
     local dir_bufnr = vim.api.nvim_get_current_buf()
 
