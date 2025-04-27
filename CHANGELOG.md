@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v10.1.0...v10.1.1) (2025-04-27)
+
+
+### Bug Fixes
+
+* don't hijack when using a protocol netrw should handle ([#906](https://github.com/mikavilpas/yazi.nvim/issues/906)) ([caa08ae](https://github.com/mikavilpas/yazi.nvim/commit/caa08ae4d568aca447fd1b06b7a4d7ed1f1cc1f4))
+
 ## [10.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.0.2...v10.1.0) (2025-04-20)
 
 
