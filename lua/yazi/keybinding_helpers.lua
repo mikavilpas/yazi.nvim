@@ -90,12 +90,6 @@ function YaziOpenerActions.cycle_open_buffers(_config, context)
     if
       buffer.renameable_buffer:matches_exactly(current_cycle_position.filename)
     then
-      Log:debug(
-        string.format(
-          'Found buffer for path: "%s", will open the next buffer',
-          context.input_path
-        )
-      )
       local other_buffers = vim.list_slice(visible_buffers, i + 1)
       other_buffers = vim.list_extend(other_buffers, visible_buffers, 1, i - 1)
       local next_buffer = vim.iter(other_buffers):find(function(b)
@@ -118,6 +112,13 @@ function YaziOpenerActions.cycle_open_buffers(_config, context)
       end
 
       local nextfile = next_buffer.renameable_buffer.path.filename
+      Log:debug(
+        string.format(
+          'Found buffer for path: "%s", will open the next buffer: "%s"',
+          context.input_path,
+          nextfile
+        )
+      )
 
       -- make sure the type is a string, because plenary thinks it is `string|unknown`
       assert(type(nextfile) == "string", "Expected filename to be a string")

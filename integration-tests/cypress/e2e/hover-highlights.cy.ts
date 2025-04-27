@@ -1,8 +1,8 @@
-import type { NeovimContext } from "cypress/support/tui-sandbox"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
 import tinycolor2 from "tinycolor2"
 import {
   darkBackgroundColors,
+  hoverFileAndVerifyItsHovered,
   isHoveredInNeovim,
   isNotHoveredInNeovim,
   lightBackgroundColors,
@@ -19,23 +19,10 @@ describe("highlighting the buffer with 'hover' events", () => {
   // there really are multiple colors present. Work around this by matching a
   // substring of the text instead of the whole text.
 
-  /** HACK in CI, there can be timing issues where the first hover event is
-   * lost. Right now we work around this by selecting another file first, then
-   * hovering the desired file.
-   */
-  function hoverAnotherFile(nvim: NeovimContext, file: MyTestDirectoryFile) {
-    // select another file (hacky) by going to the parent directory
-    cy.typeIntoTerminal("h")
-
-    const path = nvim.dir.rootPathAbsolute + "/" + file
-    nvim.runLuaCode({
-      luaCode: `return Yazi_reveal_path("${path}")`,
-    })
-  }
-
   it("can highlight the buffer when hovered", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
         "add_command_to_reveal_a_file.lua",
       ],
@@ -45,10 +32,11 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
       // yazi should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
-      hoverAnotherFile(nvim, "initial-file.txt")
+      hoverFileAndVerifyItsHovered(nvim, "initial-file.txt")
 
       // yazi is shown and adjacent files should be visible now
       //
@@ -67,6 +55,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   it("can remove the highlight when the cursor is moved away", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
         "add_command_to_reveal_a_file.lua",
       ],
@@ -80,7 +69,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       // yazi is shown and adjacent files should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
 
-      hoverAnotherFile(nvim, "initial-file.txt")
+      hoverFileAndVerifyItsHovered(nvim, "initial-file.txt")
 
       // the current file is highlighted by default when
       // opening yazi. This should have sent the 'hover' event and caused the
@@ -88,7 +77,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       isHoveredInNeovim("If you see this text, Neovim is ready!")
 
       // hover another file - the highlight should be removed
-      hoverAnotherFile(nvim, "file2.txt")
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
       // make sure yazi is focused on the correct file. Sometimes if the keys
       // are sent too quickly, they are included in an incorrect order.
       cy.contains("Hello")
@@ -100,6 +89,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   it("can move the highlight to another buffer when hovering over it", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
         "add_command_to_reveal_a_file.lua",
       ],
@@ -121,15 +111,16 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi - the initial file should be highlighted
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("-- TERMINAL --")
 
       // yazi should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
-      hoverAnotherFile(nvim, "file2.txt")
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
       isHoveredInNeovim(file2Text)
 
       // select the other file - the highlight should move to it
-      hoverAnotherFile(nvim, "initial-file.txt")
+      hoverFileAndVerifyItsHovered(nvim, "initial-file.txt")
 
       isNotHoveredInNeovim(file2Text)
       isHoveredInNeovim("If you see this text, Neovim is ready!")
@@ -143,22 +134,26 @@ describe("highlighting the buffer with 'hover' events", () => {
     //
     it("for a dark colorscheme, hovers appear lighter in color", () => {
       cy.startNeovim({
-        startupScriptModifications: ["add_command_to_reveal_a_file.lua"],
+        startupScriptModifications: [
+          "add_command_to_reveal_a_file.lua",
+          "add_yazi_context_assertions.lua",
+        ],
       }).then((nvim) => {
         // wait until text on the start screen is visible
         isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
+        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
         // yazi should be visible now
         cy.contains(nvim.dir.contents["file2.txt"].name)
-        hoverAnotherFile(nvim, "file2.txt")
+        hoverFileAndVerifyItsHovered(nvim, "file2.txt")
 
         // yazi is shown and adjacent files should be visible now
         //
         // highlight the initial file
-        hoverAnotherFile(nvim, "initial-file.txt")
+        hoverFileAndVerifyItsHovered(nvim, "initial-file.txt")
 
         cy.contains("Error").should("not.exist")
 
@@ -176,6 +171,7 @@ describe("highlighting the buffer with 'hover' events", () => {
     it("for a light colorscheme, hovers appear darker", () => {
       cy.startNeovim({
         startupScriptModifications: [
+          "add_yazi_context_assertions.lua",
           "use_light_neovim_colorscheme.lua",
           "add_command_to_reveal_a_file.lua",
         ],
@@ -187,15 +183,16 @@ describe("highlighting the buffer with 'hover' events", () => {
 
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
+        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
         // yazi should be visible now
         cy.contains(nvim.dir.contents["file2.txt"].name)
-        hoverAnotherFile(nvim, "file2.txt")
+        hoverFileAndVerifyItsHovered(nvim, "file2.txt")
 
         // yazi is shown and adjacent files should be visible now
         //
         // highlight the initial file
-        hoverAnotherFile(nvim, "initial-file.txt")
+        hoverFileAndVerifyItsHovered(nvim, "initial-file.txt")
         cy.contains("Error").should("not.exist")
 
         // the background color should be different from the default color
@@ -213,6 +210,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   it("supports external integrations to hover events", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "notify_hover_events.lua",
         "add_command_to_reveal_a_file.lua",
       ],
@@ -222,10 +220,11 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
       // yazi should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
-      hoverAnotherFile(nvim, "file2.txt")
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
 
       cy.typeIntoTerminal("q")
       nvim
@@ -244,6 +243,7 @@ describe("highlighting the buffer with 'hover' events", () => {
   it("can highlight buffers that are open in the current yazi directory", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
         "add_command_to_reveal_a_file.lua",
       ],
@@ -257,10 +257,11 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
       // yazi should be visible now
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
-      hoverAnotherFile(nvim, "file3.txt")
+      hoverFileAndVerifyItsHovered(nvim, "file3.txt")
 
       isHoveredInNeovim(
         "f you see this text, Neovim is ready!",

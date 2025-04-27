@@ -26,8 +26,9 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "add_yazi_context_assertions.lua",
       ],
-    }).then((_nvim) => {
+    }).then((nvim) => {
       // sanity check to make sure the files are open
       cy.contains(view.leftFile.text)
       cy.contains(view.centerFile.text)
@@ -41,6 +42,7 @@ describe("revealing another open split (buffer) in yazi", () => {
 
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains(yaziText)
 
       // Switch to the other buffers' directories in yazi. This should make
@@ -84,14 +86,16 @@ describe("revealing another open split (buffer) in yazi", () => {
         ],
       },
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
       ],
-    }).then((_nvim) => {
+    }).then((nvim) => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains(yaziText)
 
       cy.typeIntoTerminal("{control+i}")

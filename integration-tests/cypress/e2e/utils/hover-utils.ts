@@ -1,4 +1,8 @@
 import { flavors } from "@catppuccin/palette"
+import type { RunLuaCodeOutput } from "@tui-sandbox/library/src/server/types"
+import type { NeovimContext } from "cypress/support/tui-sandbox"
+import type { MyTestDirectoryFile } from "MyTestDirectory"
+import { assertYaziIsReady } from "./yazi-utils"
 
 const darkTheme = flavors.macchiato.colors
 const lightTheme = flavors.latte.colors
@@ -36,4 +40,35 @@ export function isNotHoveredInNeovim(text: string): void {
     "background-color",
     darkBackgroundColors.normal,
   )
+}
+
+/** HACK in CI, there can be timing issues where the first hover event is
+ * lost. Right now we work around this by selecting another file first, then
+ * hovering the desired file.
+ */
+export function hoverFileAndVerifyItsHovered(
+  nvim: NeovimContext,
+  file: MyTestDirectoryFile,
+): Cypress.Chainable<RunLuaCodeOutput> {
+  assertYaziIsReady(nvim)
+  // select another file (hacky) by going to the parent directory
+  cy.typeIntoTerminal("h")
+
+  const path = nvim.dir.rootPathAbsolute + "/" + file
+  return nvim
+    .runLuaCode({
+      luaCode: `return Yazi_reveal_path("${path}")`,
+    })
+    .then(() => assertYaziIsHovering(nvim, file))
+}
+
+export function assertYaziIsHovering(
+  nvim: NeovimContext,
+  file: MyTestDirectoryFile,
+): Cypress.Chainable<RunLuaCodeOutput> {
+  const path = `${nvim.dir.rootPathAbsolute}/${file}`
+  return nvim.waitForLuaCode({
+    luaAssertion: `Yazi_is_hovering("${path}")`,
+    timeoutMs: 5000,
+  })
 }

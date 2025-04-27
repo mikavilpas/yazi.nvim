@@ -16,8 +16,8 @@ local YaziProcess = {}
 YaziProcess.__index = YaziProcess
 
 ---@class yazi.Callbacks
----@field on_maybe_started fun(yazi_process: YaziProcess) # when yazi has been started. Note that it might not be ready and initialized yet. We don't have a way to detect this.
 ---@field on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil, context: YaziActiveContext)
+---@field on_ya_first_event fun(api: YaziProcessApi)
 
 ---@param config YaziConfig
 ---@param paths Path[]
@@ -32,7 +32,9 @@ function YaziProcess:start(config, paths, callbacks)
   local yazi_id = string.format("%.0f", vim.uv.hrtime())
   self.api = YaziProcessApi.new(config, yazi_id)
 
-  self.ya_process = YaProcess.new(config, yazi_id)
+  self.ya_process = YaProcess.new(config, yazi_id, function()
+    callbacks.on_ya_first_event(self.api)
+  end, assert(paths[1]).filename)
 
   local yazi_cmd = self.ya_process:get_yazi_command(paths)
   Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
@@ -85,7 +87,6 @@ function YaziProcess:start(config, paths, callbacks)
   end
 
   self.ya_process:start(context)
-  callbacks.on_maybe_started(self)
 
   return self, context
 end

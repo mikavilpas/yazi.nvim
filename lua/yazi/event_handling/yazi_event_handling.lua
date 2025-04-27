@@ -114,6 +114,7 @@ function M.process_events_emitted_from_yazi(events, config, context)
       ---@cast event YaziTrashEvent
       M.process_delete_event(event, remaining_events)
     elseif event.type == "cycle-buffer" then
+      require("yazi.log"):debug("YaziNvimCycleBufferEvent received")
       ---@cast event YaziNvimCycleBufferEvent
       require("yazi.keybinding_helpers").cycle_open_buffers(config, context)
     end
