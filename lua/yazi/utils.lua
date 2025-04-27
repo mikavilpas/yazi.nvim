@@ -309,12 +309,22 @@ function M.parse_events(event_lines)
       -- sometimes ya sends a hover event without a url, not sure why
       ---@type string | nil
       local url = json["url"]
-
-      ---@type YaziHoverEvent
+      if url ~= nil then
+        ---@type YaziHoverEvent
+        local event = {
+          yazi_id = yazi_id,
+          type = type,
+          url = url or "",
+        }
+        table.insert(events, event)
+      end
+    elseif type == "hey" then
+      -- example of a hey event:
+      -- hey,0,69016966727041,{"peers":{"1745849494365272":{"abilities":["hey"]},"69016966727041":{"abilities":["dds-emit","@yank","extract"]},"1745849492676175":{"abilities":["hover","move","hey","bulk","cd","delete","rename","trash","NvimCycleBuffer"]}},"version":"25.4.8 VERGEN_IDEMPOTENT_OUTPUT"}
+      ---@type YaziHeyEvent
       local event = {
         yazi_id = yazi_id,
         type = type,
-        url = url or "",
       }
       table.insert(events, event)
     else

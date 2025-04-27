@@ -287,9 +287,12 @@ describe("opening files", () => {
     })
 
     it("can rename a buffer that's open in Neovim", () => {
-      cy.startNeovim().then((nvim) => {
+      cy.startNeovim({
+        startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      }).then((nvim) => {
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
+        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
         isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
         // select only the current file to make the test easier
         cy.typeIntoTerminal("v")

@@ -27,9 +27,10 @@ describe("revealing another open split (buffer) in yazi", () => {
         ],
       },
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
       ],
-    }).then((_nvim) => {
+    }).then((nvim) => {
       // sanity check to make sure the files are open
       cy.contains(view.leftFile.text)
       cy.contains(view.centerFile.text)
@@ -44,6 +45,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(yaziText)
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.

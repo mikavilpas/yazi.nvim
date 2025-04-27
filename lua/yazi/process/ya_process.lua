@@ -5,32 +5,51 @@ local utils = require("yazi.utils")
 local YaziSessionHighlighter =
   require("yazi.buffer_highlighting.yazi_session_highlighter")
 
----@class (exact) YaProcess
+---@class YaProcess
 ---@field public events YaziEvent[] "The events that have been received from yazi"
----@field public new fun(config: YaziConfig, yazi_id: string): YaProcess
 ---@field public hovered_url? string "The path that is currently hovered over in this yazi."
 ---@field public cwd? string "The path that the yazi process is currently in."
 ---@field private config YaziConfig
----@field private yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
+---@field public yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
 ---@field private highlighter YaziSessionHighlighter
+---@field private on_first_output? fun()
+---@field public ready boolean
 local YaProcess = {}
 ---@diagnostic disable-next-line: inject-field
 YaProcess.__index = YaProcess
 
 ---@param config YaziConfig
 ---@param yazi_id string
-function YaProcess.new(config, yazi_id)
+---@param on_first_output fun(self: YaProcess, event: YaziEvent)
+---@param initial_file string
+function YaProcess.new(config, yazi_id, on_first_output, initial_file)
   local self = setmetatable({}, YaProcess)
 
   self.yazi_id = yazi_id
+  self.hovered_url = initial_file
   self.config = config
   self.events = {}
   self.retries = 0
   self.highlighter = YaziSessionHighlighter.new()
+  self.on_first_output = on_first_output
+  self.ready = false
 
   return self
+end
+
+function YaProcess:is_ready()
+  local has_process = self.ya_process ~= nil
+  local on_first_output_called = self.on_first_output == nil
+  local is_ready = self.ready == true
+  local ready = has_process and on_first_output_called and is_ready
+  return ready,
+    {
+      has_process = has_process,
+      on_first_output_called = on_first_output_called,
+      is_ready = is_ready,
+    }
 end
 
 ---@param items string[]
@@ -94,6 +113,10 @@ function YaProcess:start(context)
     "cd",
     "hover",
     "bulk",
+    -- when ya starts, it will send a "hi" event to all yazis. They respond
+    -- with "hey" to acknowledge this. We can use this to detect when ya is
+    -- ready, so that integration-tests can safely start.
+    "hey",
   }
 
   ---@type table<string,boolean>
@@ -156,12 +179,14 @@ function YaProcess:start(context)
       data = data or ""
       data = data:gsub("\n+", "\n")
 
-      Log:debug(string.format("ya stdout: '%s'", data))
+      if not data:match("^hey") then
+        Log:debug(string.format("ya stdout: '%s'", data))
+      end
 
       data = vim.split(data, "\n", { plain = true, trimempty = true })
 
       local parsed = utils.safe_parse_events(data)
-      Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
+      -- Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
 
       self:process_events(parsed, interesting_events, context)
     end,
@@ -183,14 +208,26 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   for _, event in ipairs(events) do
-    if event.type == "hover" then
-      ---@cast event YaziHoverEvent
+    if self.ready ~= true and event.type == "hey" then
+      ---@cast event YaziHeyEvent
       if event.yazi_id == self.yazi_id then
         Log:debug(
-          string.format("Changing the last hovered_url to %s", event.url)
+          string.format("ya process is ready, yazi_id: %s", self.yazi_id)
         )
-        self.hovered_url = event.url
+        self.ready = true
+        self.on_first_output()
+        self.on_first_output = nil
       end
+    elseif event.type == "hover" then
+      ---@cast event YaziHoverEvent
+      Log:debug(
+        string.format(
+          "Changing the hovered url from %s to %s",
+          self.hovered_url,
+          event.url
+        )
+      )
+      self.hovered_url = event.url
       vim.schedule(function()
         self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
         nvim_event_handling.emit("YaziDDSHover", event)
@@ -235,7 +272,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
 
           if self.config.future_features.process_events_live == true then
             yazi_event_handling.process_events_emitted_from_yazi(
-              events,
+              { event },
               self.config,
               context
             )
@@ -249,7 +286,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         if self.config.future_features.process_events_live == true then
           vim.schedule(function()
             yazi_event_handling.process_events_emitted_from_yazi(
-              events,
+              { event },
               self.config,
               context
             )

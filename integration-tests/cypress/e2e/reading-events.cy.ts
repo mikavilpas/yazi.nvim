@@ -8,27 +8,32 @@ describe("reading events", () => {
   })
 
   it("can read 'cd' events and use telescope in the latest directory", () => {
-    cy.startNeovim()
-    // wait until text on the start screen is visible
-    cy.contains("If you see this text, Neovim is ready!")
-    // start yazi
-    cy.typeIntoTerminal("{upArrow}")
+    cy.startNeovim({
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
+      //
+      // wait until text on the start screen is visible
+      cy.contains("If you see this text, Neovim is ready!")
+      // start yazi
+      cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
-    // move to the parent directory. This should make yazi send the "cd" event,
-    // indicating that the directory was changed
-    cy.contains("subdirectory")
-    cy.typeIntoTerminal("/subdirectory{enter}")
-    cy.typeIntoTerminal("{rightArrow}")
-    cy.typeIntoTerminal("{control+s}")
+      // move to the parent directory. This should make yazi send the "cd" event,
+      // indicating that the directory was changed
+      cy.contains("subdirectory")
+      cy.typeIntoTerminal("/subdirectory{enter}")
+      cy.typeIntoTerminal("{rightArrow}")
+      cy.typeIntoTerminal("{control+s}")
 
-    // telescope should now be visible. Let's search for the contents of the
-    // file, which we know beforehand
-    cy.contains("Grep in")
-    cy.typeIntoTerminal("This")
+      // telescope should now be visible. Let's search for the contents of the
+      // file, which we know beforehand
+      cy.contains("Grep in")
+      cy.typeIntoTerminal("This")
 
-    // we should see text indicating the search is limited to the current
-    // directory
-    cy.contains("This is other-sub-file.txt")
+      // we should see text indicating the search is limited to the current
+      // directory
+      cy.contains("This is other-sub-file.txt")
+    })
   })
 
   it("can read 'trash' events and close an open buffer when its file was trashed", () => {
@@ -36,6 +41,7 @@ describe("reading events", () => {
 
     cy.startNeovim({
       filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
     }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
@@ -47,6 +53,7 @@ describe("reading events", () => {
 
       // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
@@ -81,6 +88,7 @@ describe("reading events", () => {
 
     cy.startNeovim({
       filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
     }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
@@ -98,6 +106,7 @@ describe("reading events", () => {
 
       // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
@@ -132,13 +141,16 @@ describe("'rename' events", () => {
   })
 
   it("can read 'rename' events and update the buffer name when the file was renamed", () => {
-    cy.startNeovim().then((nvim) => {
+    cy.startNeovim({
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
       // start yazi and wait for the current file to be highlighted
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
         "have.css",
         "background-color",
@@ -167,6 +179,7 @@ describe("'rename' events", () => {
       cy.contains("E13").should("not.exist")
 
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("dir with spaces" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
@@ -196,6 +209,7 @@ describe("'rename' events", () => {
       filename: {
         openInVerticalSplits: ["file2.txt", "file3.txt"],
       },
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
     }).then((nvim) => {
       // wait for the files to be open
       cy.contains("file2.txt" satisfies MyTestDirectoryFile)
@@ -203,6 +217,7 @@ describe("'rename' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
 
       cy.typeIntoTerminal("r")
@@ -232,13 +247,17 @@ describe("'rename' events", () => {
   })
 
   it("can rename twice and keep track of the correct file name", () => {
-    cy.startNeovim({ filename: "initial-file.txt" }).then((nvim) => {
+    cy.startNeovim({
+      filename: "initial-file.txt",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 
       // wait for yazi to start
       cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
@@ -255,7 +274,6 @@ describe("'rename' events", () => {
       cy.contains(newFileName)
 
       // rename a second time, returning to the original name
-      // cy.typeIntoTerminal("{upArrow}")
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("{backspace}")
@@ -275,7 +293,10 @@ describe("'rename' events", () => {
 
   it("can publish YaziRenamedOrMoved events when a file is renamed", () => {
     cy.startNeovim({
-      startupScriptModifications: ["notify_rename_events.lua"],
+      startupScriptModifications: [
+        "notify_rename_events.lua",
+        "add_yazi_context_assertions.lua",
+      ],
     }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
@@ -283,6 +304,7 @@ describe("'rename' events", () => {
 
       // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // start file renaming
@@ -314,6 +336,7 @@ describe("'rename' events", () => {
   it("reports the correct last_directory when yazi is closed", () => {
     cy.startNeovim({
       startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
         "modify_yazi_config_log_yazi_closed_successfully.lua",
       ],
     }).then((nvim) => {
@@ -323,6 +346,7 @@ describe("'rename' events", () => {
 
       // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
       cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // move to another directory
@@ -356,12 +380,16 @@ describe("'rename' events", () => {
   describe("custom YaziDDSCustom events", () => {
     it("emits events the user has subscribed to", () => {
       cy.startNeovim({
-        startupScriptModifications: ["notify_custom_events.lua"],
+        startupScriptModifications: [
+          "notify_custom_events.lua",
+          "add_yazi_context_assertions.lua",
+        ],
       }).then((nvim) => {
         // The user can set a config option to specify custom yazi dds events that
         // they want to subscribe to. These are emitted as YaziDDSCustom events.
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
+        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
         cy.contains(nvim.dir.contents["file2.txt"].name)
 
         // publish the custom MyMessageNoData event that we subscribed to in

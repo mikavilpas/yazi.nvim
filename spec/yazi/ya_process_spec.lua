@@ -90,7 +90,7 @@ describe("process_events()", function()
           id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
-      }, {})
+      }, {}, {})
 
       assert.are.same("/tmp", ya.cwd)
     end)
@@ -108,7 +108,7 @@ describe("process_events()", function()
           id = "cd_123",
           url = "/tmp/directory",
         } --[[@as YaziChangeDirectoryEvent]],
-      }, {})
+      }, {}, {} --[[@as YaziActiveContext]])
 
       assert.are.same("/tmp/directory", ya.cwd)
     end)
@@ -213,7 +213,12 @@ describe("process_events()", function()
       "gets published when YaziBulkEvent events are received from yazi",
       function()
         local config = require("yazi.config").default()
-        local ya = ya_process.new(config, "yazi_id_123")
+        local ya = ya_process.new(
+          config,
+          "yazi_id_123",
+          function() end,
+          "/tmp/new_path1"
+        )
 
         ---@type YaziBulkEvent[]
         local events = {
@@ -282,11 +287,10 @@ describe("opening yazi in a terminal", function()
       local jobstart_spy = spy.new(function() end)
       vim.fn.jobstart = jobstart_spy
 
-      require("yazi.process.yazi_process"):start(
-        config,
-        { path },
-        { on_exit = function() end, on_maybe_started = function() end }
-      )
+      require("yazi.process.yazi_process"):start(config, { path }, {
+        on_exit = function() end,
+        on_ya_first_event = function() end,
+      })
 
       local call = jobstart_spy.calls[#jobstart_spy.calls]
       assert(call)
