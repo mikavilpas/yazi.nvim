@@ -324,6 +324,10 @@ return {
       end,
       -- `grealpath` on OSX, (GNU) `realpath` otherwise
       resolve_relative_path_application = "",
+      -- how to delete (close) a buffer. Defaults to `snacks.bufdelete` from
+      -- https://github.com/folke/snacks.nvim, which maintains the window
+      -- layout.
+      bufdelete_implementation = "snacks-if-available",
     },
 
     future_features = {

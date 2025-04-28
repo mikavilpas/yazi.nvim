@@ -34,6 +34,8 @@ describe("process_trash_event", function()
     snapshot:revert()
   end)
 
+  local config = require("yazi.config").default()
+
   it("deletes a buffer that matches the trash event exactly", function()
     local buffer = buffers.add_listed_buffer("/abc/def")
 
@@ -44,7 +46,7 @@ describe("process_trash_event", function()
       data = { urls = { "/abc/def" } },
     }
 
-    yazi_event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, config, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -63,7 +65,7 @@ describe("process_trash_event", function()
       data = { urls = { "/abc" } },
     }
 
-    yazi_event_handling.process_delete_event(event, {})
+    yazi_event_handling.process_delete_event(event, config, {})
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -82,7 +84,8 @@ describe("process_trash_event", function()
       data = { urls = { "/abc/ghi" } },
     }
 
-    local deletions = yazi_event_handling.process_delete_event(event, {})
+    local deletions =
+      yazi_event_handling.process_delete_event(event, config, {})
     assert.are.same({}, deletions)
   end)
 
@@ -103,8 +106,11 @@ describe("process_trash_event", function()
       data = { from = "/def/other-file", to = "/def/file" },
     }
 
-    local deletions =
-      yazi_event_handling.process_delete_event(delete_event, { rename_event })
+    local deletions = yazi_event_handling.process_delete_event(
+      delete_event,
+      config,
+      { rename_event }
+    )
     assert.are.same({}, deletions)
   end)
 end)
