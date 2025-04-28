@@ -1,5 +1,17 @@
 # Changelog
 
+## [10.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.1.1...v10.2.0) (2025-04-28)
+
+
+### Features
+
+* **api:** allow accessing the yazi context from the lua API ([f2e480d](https://github.com/mikavilpas/yazi.nvim/commit/f2e480d35573f164870bada19343a0ef5d7d01ad))
+
+
+### Bug Fixes
+
+* make toggling yazi more reliable ([5ab0c65](https://github.com/mikavilpas/yazi.nvim/commit/5ab0c65b6b7d21ce7f75f470c6e9a4ec9ea9cb24))
+
 ## [10.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v10.1.0...v10.1.1) (2025-04-27)
 
 
