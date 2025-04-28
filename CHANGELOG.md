@@ -1,5 +1,12 @@
 # Changelog
 
+## [10.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.2.0...v10.3.0) (2025-04-28)
+
+
+### Features
+
+* allow overriding the buffer deletion implementation ([#909](https://github.com/mikavilpas/yazi.nvim/issues/909)) ([c82087d](https://github.com/mikavilpas/yazi.nvim/commit/c82087dfddce9c8622a2c40fb53d241c0e814c7e))
+
 ## [10.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.1.1...v10.2.0) (2025-04-28)
 
 
