@@ -238,22 +238,22 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         string.format("Changing the cwd from %s to %s", self.cwd, event.url)
       )
       self.cwd = event.url
+    elseif event.type == "cycle-buffer" then
+      vim.schedule(function()
+        ---@cast event YaziNvimCycleBufferEvent
+        yazi_event_handling.process_events_emitted_from_yazi(
+          { event },
+          self.config,
+          context
+        )
+      end)
     else
       if not self.config.future_features.process_events_live then
         -- these events will be processed when yazi exits
         self.events[#self.events + 1] = event
       end
 
-      if event.type == "cycle-buffer" then
-        vim.schedule(function()
-          ---@cast event YaziNvimCycleBufferEvent
-          yazi_event_handling.process_events_emitted_from_yazi(
-            { event },
-            self.config,
-            context
-          )
-        end)
-      elseif
+      if
         event.type == "rename"
         or event.type == "move"
         or event.type == "bulk"
