@@ -1,5 +1,16 @@
 # Changelog
 
+## [11.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.3.0...v11.0.0) (2025-04-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove nvim-0.10 termopen fallback completely
+
+### Code Refactoring
+
+* remove nvim-0.10 termopen fallback completely ([97039da](https://github.com/mikavilpas/yazi.nvim/commit/97039da8fd75fceeaf3f62c7bd969f296abb9b76))
+
 ## [10.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.2.0...v10.3.0) (2025-04-28)
 
 
