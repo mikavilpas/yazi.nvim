@@ -47,53 +47,8 @@ function YaziProcess:start(config, paths, callbacks)
     input_path = paths[1],
   }
 
-  if not config.future_features.use_nvim_0_10_termopen then
-    Log:debug("Using nvim-0.11 jobstart to start yazi.")
-    self.yazi_job_id = vim.fn.jobstart(yazi_cmd, {
-      term = true,
-      env = {
-        -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
-        -- neovim specific functionality
-        NVIM_CWD = vim.uv.cwd(),
-      },
-      on_exit = function(_, code)
-        self.ya_process:kill()
-        local events = self.ya_process:wait(1000)
-
-        local chosen_files = {}
-        if utils.file_exists(config.chosen_file_path) == true then
-          chosen_files = vim.fn.readfile(config.chosen_file_path)
-        end
-
-        local last_directory = nil
-        if self.ya_process.cwd ~= nil then
-          last_directory = plenary_path:new(self.ya_process.cwd) --[[@as Path]]
-        end
-
-        callbacks.on_exit(
-          code,
-          chosen_files,
-          events,
-          self.ya_process.hovered_url,
-          last_directory,
-          context
-        )
-      end,
-    })
-  else
-    Log:debug("Using nvim-0.10 termopen to start yazi.")
-    self.yazi_job_id =
-      self:nvim_0_10_termopen(config, callbacks.on_exit, yazi_cmd)
-  end
-
-  self.ya_process:start(context)
-
-  return self, context
-end
-
-function YaziProcess:nvim_0_10_termopen(config, on_exit, yazi_cmd)
-  ---@diagnostic disable-next-line: deprecated
-  return vim.fn.termopen(yazi_cmd, {
+  self.yazi_job_id = vim.fn.jobstart(yazi_cmd, {
+    term = true,
     env = {
       -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
       -- neovim specific functionality
@@ -113,15 +68,20 @@ function YaziProcess:nvim_0_10_termopen(config, on_exit, yazi_cmd)
         last_directory = plenary_path:new(self.ya_process.cwd) --[[@as Path]]
       end
 
-      on_exit(
+      callbacks.on_exit(
         code,
         chosen_files,
         events,
         self.ya_process.hovered_url,
-        last_directory
+        last_directory,
+        context
       )
     end,
   })
+
+  self.ya_process:start(context)
+
+  return self, context
 end
 
 return YaziProcess
