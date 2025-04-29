@@ -29,7 +29,6 @@ function M.default()
     log_level = vim.log.levels.OFF,
     open_for_directories = false,
     future_features = {
-      use_nvim_0_10_termopen = vim.fn.has("nvim-0.11") ~= 1,
       process_events_live = true,
     },
     open_multiple_tabs = false,

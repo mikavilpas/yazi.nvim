@@ -331,13 +331,6 @@ return {
     },
 
     future_features = {
-      -- Neovim nightly 0.11 has deprecated `termopen` in favor of `jobstart`
-      -- (https://github.com/neovim/neovim/pull/31343). By default on nightly,
-      -- this option is `false` and `jobstart` is used. Some users have
-      -- reported issues with this, and can set this to `true` to keep using
-      -- the old `termopen` for the time being.
-      nvim_0_10_termopen_fallback = false,
-
       -- By default, this is `true`, which means yazi.nvim processes events
       -- before yazi has been closed. If this is `false`, events are processed
       -- in a batch when the user closes yazi. If this is `true`, events are
