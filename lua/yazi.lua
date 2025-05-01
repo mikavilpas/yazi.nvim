@@ -55,7 +55,7 @@ function M.yazi(config, input_path, args)
   local yazi_process, yazi_context = YaziProcess:start(config, paths, {
     on_ya_first_event = function(api)
       if not (args and args.reveal_path) then
-        Log:debug("No reveal_path provided, skipping reveal")
+        Log:debug("No reveal_path provided, skipping initial reveal")
         return
       end
 
