@@ -68,10 +68,6 @@ function WindowHighlight:set_highlight(
     vim.api.nvim_set_hl(0, highlight_name, color)
   end
 
-  Log:debug(
-    string.format("Setting winhighlight for window_id %s", self.window_id)
-  )
-
   vim.api.nvim_set_option_value(
     "winhighlight",
     "Normal:" .. highlight_name,
