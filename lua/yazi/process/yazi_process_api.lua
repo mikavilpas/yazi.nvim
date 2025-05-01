@@ -21,7 +21,11 @@ end
 ---@return vim.SystemObj
 function YaziProcessApi:reveal(path)
   require("yazi.log"):debug(
-    string.format("Using ya to reveal path: '%s'", path)
+    string.format(
+      "Using 'ya emit-to %s' to reveal path: '%s'",
+      self.yazi_id,
+      path
+    )
   )
   return vim.system(
     { "ya", "emit-to", self.yazi_id, "reveal", "--str", path },
