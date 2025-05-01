@@ -82,12 +82,6 @@ end
 function WindowHighlight:reset_to_normal()
   if vim.api.nvim_win_is_valid(self.window_id) then
     -- Revert winhighlight to its old value
-    Log:debug(
-      string.format(
-        "Disposing of the DisposableHighlight for window_id %s",
-        self.window_id
-      )
-    )
     vim.api.nvim_set_option_value("winhighlight", self.first_winhighlight, {
       win = self.window_id,
     })
