@@ -42,6 +42,17 @@ export function isNotHoveredInNeovim(text: string): void {
   )
 }
 
+export function isHoveredInNeovimWithSameDirectory(
+  text: string,
+  color?: string,
+): void {
+  cy.contains(text).should(
+    "have.css",
+    "background-color",
+    color ?? darkBackgroundColors.hoveredInSameDirectory,
+  )
+}
+
 /** HACK in CI, there can be timing issues where the first hover event is
  * lost. Right now we work around this by selecting another file first, then
  * hovering the desired file.

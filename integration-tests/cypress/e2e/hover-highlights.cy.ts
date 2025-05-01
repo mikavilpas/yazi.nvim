@@ -4,6 +4,7 @@ import {
   darkBackgroundColors,
   hoverFileAndVerifyItsHovered,
   isHoveredInNeovim,
+  isHoveredInNeovimWithSameDirectory,
   isNotHoveredInNeovim,
   lightBackgroundColors,
 } from "./utils/hover-utils"
@@ -273,6 +274,64 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.typeIntoTerminal("q")
       isNotHoveredInNeovim("f you see this text, Neovim is ready!")
       isNotHoveredInNeovim("Hello")
+    })
+  })
+
+  const view = {
+    leftFile: { text: "ello from file_1.txt" },
+    centerFile: { text: "This is file_2.txt" },
+    rightFile: { text: "You are looking at file_3.txt" },
+  } as const
+
+  it("can highlight after `:Yazi cwd`", () => {
+    cy.startNeovim({
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
+        "add_command_to_reveal_a_file.lua",
+      ],
+      filename: {
+        openInVerticalSplits: [
+          "highlights/file_1.txt",
+          "highlights/file_2.txt",
+          "highlights/file_3.txt",
+        ],
+      },
+    }).then((nvim) => {
+      // wait until text on the start screen is visible
+      // sanity check to make sure the files are open
+      cy.contains(view.leftFile.text)
+      cy.contains(view.centerFile.text)
+      cy.contains(view.rightFile.text)
+
+      nvim.runExCommand({ command: `:Yazi cwd` })
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+
+      // before doing anything, both files should be unhovered (have the
+      // default background color)
+      isNotHoveredInNeovim(view.leftFile.text)
+      isNotHoveredInNeovim(view.centerFile.text)
+      isNotHoveredInNeovim(view.rightFile.text)
+
+      cy.typeIntoTerminal("I")
+      isHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
+
+      cy.typeIntoTerminal("I")
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
+      isHoveredInNeovim(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
+
+      cy.typeIntoTerminal("I")
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovim(view.rightFile.text)
+
+      cy.typeIntoTerminal("I")
+      isHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
     })
   })
 })
