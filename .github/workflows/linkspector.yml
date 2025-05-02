@@ -9,7 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Run linkspector
-        uses: umbrelladocs/action-linkspector@v1.3.4
+        # needs to be pinned to 1.2.5 avoid
+        # https://github.com/UmbrellaDocs/action-linkspector/issues/30
+        uses: umbrelladocs/action-linkspector@v1.2.5
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
