@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.0...v11.0.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* not being able to cycle buffers with `tab` after `:Yazi cwd` ([#922](https://github.com/mikavilpas/yazi.nvim/issues/922)) ([9b242be](https://github.com/mikavilpas/yazi.nvim/commit/9b242bef20df648b5d08ebfb4e62e227bc059623))
+
 ## [11.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v10.3.0...v11.0.0) (2025-04-29)
 
 
