@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.1...v11.0.2) (2025-05-02)
+
+
+### Bug Fixes
+
+* do not crash cycle buffers if only one is visible ([9be42be](https://github.com/mikavilpas/yazi.nvim/commit/9be42be7bd29b21bbb07a4ca1df3ade912766699))
+
 ## [11.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.0...v11.0.1) (2025-05-02)
 
 
