@@ -72,4 +72,26 @@ describe("revealing another open split (buffer) in yazi", () => {
       isNotHoveredInNeovim(view.rightFile.text)
     })
   })
+
+  it(`"NvimCycleBuffer" does nothing for only one split`, () => {
+    cy.startNeovim({
+      filename: "initial-file.txt",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "modify_yazi_config_and_add_hovered_buffer_background.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi and wait for it to be visible
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains(yaziText)
+      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+
+      cy.typeIntoTerminal("I")
+      nvim.runExCommand({ command: "messages" }).then((result) => {
+        expect(result.value).not.to.contain("Error")
+      })
+    })
+  })
 })
