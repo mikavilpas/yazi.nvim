@@ -1,5 +1,5 @@
 import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
-import { yaziText } from "./utils/yazi-utils"
+import { assertYaziIsReady, yaziText } from "./utils/yazi-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
 // https://docs.cypress.io/api/commands/type#Typing-tab-key-does-not-work
@@ -42,7 +42,7 @@ describe("revealing another open split (buffer) in yazi", () => {
 
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains(yaziText)
 
       // Switch to the other buffers' directories in yazi. This should make
@@ -95,7 +95,7 @@ describe("revealing another open split (buffer) in yazi", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains(yaziText)
 
       cy.typeIntoTerminal("{control+i}")

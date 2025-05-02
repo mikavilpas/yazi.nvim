@@ -1,5 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("toggling yazi to pseudo-continue the previous session", () => {
   beforeEach(() => {
@@ -69,7 +70,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       // toggle yazi and set up a session that hovers a directory
       cy.typeIntoTerminal("{upArrow}")
       cy.log("yazi should be visible, showing other files")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       hoverFileAndVerifyItsHovered(nvim, "dir with spaces/file1.txt")
 
       // yazi should be visible, showing other files
