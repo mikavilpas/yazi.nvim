@@ -24,9 +24,9 @@ return {
     local msg = string.format("Running yazi.nvim version %s", yazi.version)
     vim.health.info(msg)
 
-    if vim.fn.has("nvim-0.10.0") ~= 1 then
+    if vim.fn.has("nvim-0.11.0") ~= 1 then
       vim.health.warn(
-        "yazi.nvim requires Neovim >= 0.10.0. You might have unexpected issues."
+        "yazi.nvim requires Neovim >= 0.11.0. You might have unexpected issues."
       )
     end
 
