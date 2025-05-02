@@ -1,5 +1,5 @@
 import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
-import { yaziText } from "./utils/yazi-utils"
+import { assertYaziIsReady, yaziText } from "./utils/yazi-utils"
 
 // The yazi keymappings need to be defined in the yazi config. The test
 // environment contains the mapping in the .config/yazi/keymap.toml file
@@ -45,7 +45,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(yaziText)
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.
@@ -86,7 +86,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(yaziText)
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       cy.typeIntoTerminal("I")
       nvim.runExCommand({ command: "messages" }).then((result) => {

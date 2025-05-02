@@ -8,6 +8,7 @@ import {
   isNotHoveredInNeovim,
   lightBackgroundColors,
 } from "./utils/hover-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("highlighting the buffer with 'hover' events", () => {
   beforeEach(() => {
@@ -33,7 +34,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // yazi should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -112,7 +113,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi - the initial file should be highlighted
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("-- TERMINAL --")
 
       // yazi should be visible now
@@ -145,7 +146,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
-        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+        assertYaziIsReady(nvim)
 
         // yazi should be visible now
         cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -184,7 +185,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
         // start yazi
         cy.typeIntoTerminal("{upArrow}")
-        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+        assertYaziIsReady(nvim)
 
         // yazi should be visible now
         cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -221,7 +222,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // yazi should be visible now
       cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -258,7 +259,7 @@ describe("highlighting the buffer with 'hover' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // yazi should be visible now
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
@@ -305,7 +306,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains(view.rightFile.text)
 
       nvim.runExCommand({ command: `:Yazi cwd` })
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // before doing anything, both files should be unhovered (have the
       // default background color)

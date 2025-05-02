@@ -7,12 +7,7 @@ import { inspect } from "util"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
-const yaziLogFile = path.join(
-  __dirname,
-  "test-environment",
-  ".repro",
-  "yazi.log",
-)
+const yaziLogFile = path.resolve(__dirname, "test-environment/.repro/yazi.log")
 
 console.log(`yaziLogFile: ${yaziLogFile}`)
 

@@ -1,6 +1,7 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("reading events", () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe("reading events", () => {
       cy.contains("If you see this text, Neovim is ready!")
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // move to the parent directory. This should make yazi send the "cd" event,
       // indicating that the directory was changed
@@ -53,7 +54,7 @@ describe("reading events", () => {
 
       // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
@@ -106,7 +107,7 @@ describe("reading events", () => {
 
       // start yazi and wait for it to display contents
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
       // start file deletion
@@ -150,7 +151,7 @@ describe("'rename' events", () => {
 
       // start yazi and wait for the current file to be highlighted
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
         "have.css",
         "background-color",
@@ -179,7 +180,7 @@ describe("'rename' events", () => {
       cy.contains("E13").should("not.exist")
 
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("dir with spaces" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
@@ -217,7 +218,7 @@ describe("'rename' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
 
       cy.typeIntoTerminal("r")
@@ -257,7 +258,7 @@ describe("'rename' events", () => {
 
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
 
       // wait for yazi to start
       cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
@@ -304,7 +305,7 @@ describe("'rename' events", () => {
 
       // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // start file renaming
@@ -346,7 +347,7 @@ describe("'rename' events", () => {
 
       // start yazi and wait for it to be ready
       cy.typeIntoTerminal("{upArrow}")
-      nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+      assertYaziIsReady(nvim)
       cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
       // move to another directory
@@ -389,7 +390,7 @@ describe("'rename' events", () => {
         // they want to subscribe to. These are emitted as YaziDDSCustom events.
         cy.contains("If you see this text, Neovim is ready!")
         cy.typeIntoTerminal("{upArrow}")
-        nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+        assertYaziIsReady(nvim)
         cy.contains(nvim.dir.contents["file2.txt"].name)
 
         // publish the custom MyMessageNoData event that we subscribed to in
