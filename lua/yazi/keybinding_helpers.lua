@@ -87,6 +87,14 @@ function YaziOpenerActions.cycle_open_buffers(_config, context)
       )
     )
     return
+  elseif #visible_buffers == 1 then
+    Log:debug(
+      string.format(
+        'Only one visible buffer found for path: "%s" - cannot cycle and will do nothing',
+        context.input_path
+      )
+    )
+    return
   end
 
   Log:debug(
