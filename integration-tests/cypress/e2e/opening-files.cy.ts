@@ -9,6 +9,7 @@ import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
+  yaziNormalModeText,
 } from "./utils/yazi-utils"
 
 describe("opening files", () => {
@@ -267,7 +268,7 @@ describe("opening files", () => {
       // open yazi. It should open two tabs, one for each file in the quickfix
       // list
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains("NOR")
+      cy.contains(yaziNormalModeText)
 
       isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
       isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
