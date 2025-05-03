@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.2...v11.0.3) (2025-05-03)
+
+
+### Bug Fixes
+
+* cycling buffers with `<tab>` works with only one buffer open ([#931](https://github.com/mikavilpas/yazi.nvim/issues/931)) ([4338c9e](https://github.com/mikavilpas/yazi.nvim/commit/4338c9ed1be56228b05afe143d270f4b11c3b365))
+
 ## [11.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.1...v11.0.2) (2025-05-02)
 
 
