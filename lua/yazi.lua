@@ -59,10 +59,11 @@ function M.yazi(config, input_path, args)
         return
       end
 
-      local original_retries = 15
-      local retries_remaining = original_retries
-      local function try()
-        local success, result = pcall(function()
+      local retries = 15
+      require("yazi.process.retry").retry({
+        delay = 50,
+        retries = retries,
+        action = function(retries_remaining)
           local reveal_job = api:reveal(args.reveal_path)
           local completed = reveal_job:wait(500)
           assert(
@@ -84,35 +85,28 @@ function M.yazi(config, input_path, args)
               retries_remaining
             )
           )
-        end)
-
-        if not success then
-          retries_remaining = retries_remaining - 1
-          if retries_remaining == 0 then
-            Log:debug(
-              string.format(
-                "Failed to reveal path '%s' after %s retries. Details: %s",
-                args.reveal_path,
-                original_retries,
-                vim.inspect(result)
-              )
-            )
-            return
-          end
-
+          return nil
+        end,
+        on_failure = function(_, retries_remaining)
           Log:debug(
             string.format(
-              "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s. Details: %s",
+              "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s",
               args.reveal_path,
-              retries_remaining,
+              retries_remaining
+            )
+          )
+        end,
+        on_final_failure = function(result)
+          Log:debug(
+            string.format(
+              "Failed to reveal path '%s' after %s retries. Details: %s",
+              args.reveal_path,
+              retries,
               vim.inspect(result)
             )
           )
-          vim.defer_fn(try, 50)
-        end
-      end
-
-      vim.defer_fn(try, 50) -- give yazi a moment to start up before we try to reveal the path
+        end,
+      })
     end,
     on_exit = function(
       exit_code,
