@@ -2,8 +2,6 @@
 
 local utils = require("yazi.utils")
 local plenaryIterators = require("plenary.iterators")
-local lsp_delete = require("yazi.lsp.delete")
-local lsp_rename = require("yazi.lsp.rename")
 
 local M = {}
 
@@ -38,7 +36,7 @@ function M.process_delete_event(event, config, remaining_events)
               config.integrations.bufdelete_implementation,
               buffer.bufnr
             )
-            lsp_delete.file_deleted(buffer.path.filename)
+            require("yazi.lsp.delete").file_deleted(buffer.path.filename)
           end)
         end
       end
@@ -87,6 +85,7 @@ end
 ---@param config YaziConfig
 ---@param context YaziActiveContext
 function M.process_events_emitted_from_yazi(events, config, context)
+  local lsp_rename = require("yazi.lsp.rename")
   for i, event in ipairs(events) do
     if event.type == "rename" then
       ---@cast event YaziRenameEvent
