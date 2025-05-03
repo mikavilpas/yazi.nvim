@@ -1,5 +1,10 @@
-import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
-import { assertYaziIsReady, yaziText } from "./utils/yazi-utils"
+import {
+  assertYaziIsHovering,
+  hoverFileAndVerifyItsHovered,
+  isHoveredInNeovim,
+  isNotHoveredInNeovim,
+} from "./utils/hover-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 // The yazi keymappings need to be defined in the yazi config. The test
 // environment contains the mapping in the .config/yazi/keymap.toml file
@@ -44,7 +49,6 @@ describe("revealing another open split (buffer) in yazi", () => {
 
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(yaziText)
       assertYaziIsReady(nvim)
 
       // Switch to the other buffers' directories in yazi. This should make
@@ -73,25 +77,26 @@ describe("revealing another open split (buffer) in yazi", () => {
     })
   })
 
-  it(`"NvimCycleBuffer" does nothing for only one split`, () => {
+  it(`"NvimCycleBuffer" works for only one split`, () => {
     cy.startNeovim({
       filename: "initial-file.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
         "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "add_command_to_reveal_a_file.lua",
       ],
     }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
 
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(yaziText)
       assertYaziIsReady(nvim)
 
+      // focus another file
+      hoverFileAndVerifyItsHovered(nvim, "highlights/file_2.txt")
+
       cy.typeIntoTerminal("I")
-      nvim.runExCommand({ command: "messages" }).then((result) => {
-        expect(result.value).not.to.contain("Error")
-      })
+      assertYaziIsHovering(nvim, "initial-file.txt")
     })
   })
 })
