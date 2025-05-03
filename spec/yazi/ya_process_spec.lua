@@ -2,8 +2,6 @@ local assert = require("luassert")
 local ya_process = require("yazi.process.ya_process")
 local spy = require("luassert.spy")
 
-require("plenary.async").tests.add_to_env()
-
 describe("the get_yazi_command() function", function()
   it("specifies opening multiple tabs when enabled in the config", function()
     local config = require("yazi.config").default()
