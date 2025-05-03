@@ -5,7 +5,7 @@ import type { NeovimContext } from "cypress/support/tui-sandbox"
 
 const darkTheme = flavors.macchiato.colors
 
-export const yaziText = "NOR"
+export const yaziNormalModeText = "NOR"
 
 export function isFileSelectedInYazi(text: string): void {
   cy.contains(text).should(

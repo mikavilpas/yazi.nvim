@@ -2,6 +2,7 @@ import assert from "assert"
 import {
   isDirectorySelectedInYazi,
   isFileSelectedInYazi,
+  yaziNormalModeText,
 } from "./utils/yazi-utils"
 
 describe("rename events with LSP support", () => {
@@ -31,7 +32,7 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open and display the footer
-      cy.contains("NOR")
+      cy.contains(yaziNormalModeText)
 
       isFileSelectedInYazi("config.lua")
       cy.typeIntoTerminal("r")
@@ -81,7 +82,7 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open and display the footer
-      cy.contains("NOR")
+      cy.contains(yaziNormalModeText)
 
       cy.typeIntoTerminal("gg")
       // the directory contents should be visible. This is how we know the
@@ -91,7 +92,7 @@ describe("rename events with LSP support", () => {
       cy.contains("Rename:")
       cy.typeIntoTerminal("2{enter}")
       cy.typeIntoTerminal("q")
-      cy.contains("NOR").should("not.exist")
+      cy.contains(yaziNormalModeText).should("not.exist")
 
       // The LSP server asks for confirmation. Other LSPs don't seem to do
       // this, but it works...
@@ -136,7 +137,7 @@ describe("move events with LSP support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open and display the footer
-      cy.contains("NOR")
+      cy.contains(yaziNormalModeText)
 
       isFileSelectedInYazi("config.lua")
       // start the move command
