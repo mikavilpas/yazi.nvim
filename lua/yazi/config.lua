@@ -5,13 +5,6 @@ local M = {}
 function M.default()
   local openers = require("yazi.openers")
 
-  local relpath = nil
-  if vim.uv.os_uname().sysname == "Darwin" then
-    relpath = "grealpath"
-  else
-    relpath = "realpath"
-  end
-
   local border = "rounded"
   pcall(function()
     -- Neovim 0.11 supports configuring floating window borders for all plugins
@@ -86,7 +79,9 @@ function M.default()
           },
         })
       end,
-      resolve_relative_path_application = relpath,
+      resolve_relative_path_application = vim.uv.os_uname().sysname == "Darwin"
+          and "grealpath"
+        or "realpath",
       bufdelete_implementation = "snacks-if-available",
     },
 
