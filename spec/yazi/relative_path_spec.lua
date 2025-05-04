@@ -41,12 +41,16 @@ describe("relative_path", function()
   end)
 
   -- test basic cases, not necessarily the entire feature set of GNU realpath
+  local realpath_application =
+    yazi.config.integrations.resolve_relative_path_application
+  assert(realpath_application)
 
   it("returns the relative path from a directory to a subdirectory", function()
     local subdirectory = vim.fs.joinpath(base_dir, "subdirectory")
 
     vim.fn.mkdir(subdirectory)
-    local result = utils.relative_path(yazi.config, base_dir, subdirectory)
+    local result =
+      utils.relative_path(realpath_application, base_dir, subdirectory)
 
     assert.are.same("subdirectory", result)
   end)
@@ -55,7 +59,7 @@ describe("relative_path", function()
     local subfile = vim.fs.joinpath(base_dir, "subfile")
     create_file(subfile)
 
-    local result = utils.relative_path(yazi.config, base_dir, subfile)
+    local result = utils.relative_path(realpath_application, base_dir, subfile)
 
     assert.are.same("subfile", result)
   end)
@@ -70,7 +74,7 @@ describe("relative_path", function()
     local subdirectory = vim.fs.joinpath(base_dir, "subdirectory")
     vim.fn.mkdir(subdirectory)
 
-    local result = utils.relative_path(yazi.config, file, subdirectory)
+    local result = utils.relative_path(realpath_application, file, subdirectory)
 
     assert.are.same("subdirectory", result)
   end)

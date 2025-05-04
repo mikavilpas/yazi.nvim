@@ -3,15 +3,15 @@ local plenary_path = require("plenary.path")
 
 local M = {}
 
----@param config YaziConfig
+---@param realpath_application string
 ---@param current_file_dir string
 ---@param selected_file string
 ---@return string
-function M.relative_path(config, current_file_dir, selected_file)
-  local command = config.integrations.resolve_relative_path_application
+function M.relative_path(realpath_application, current_file_dir, selected_file)
+  local command = realpath_application
   assert(
     command ~= nil,
-    "resolve_relative_path_application must be set. Please report this as a bug."
+    "realpath_application must be set. Please report this as a bug."
   )
 
   if vim.fn.executable(command) == 0 then
