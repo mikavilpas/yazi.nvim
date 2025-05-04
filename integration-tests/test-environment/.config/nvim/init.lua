@@ -65,6 +65,7 @@ local plugins = {
       future_features = {},
       integrations = {
         grep_in_directory = "telescope",
+        picker_add_copy_relative_path_action = "snacks.picker",
       },
     },
   },
@@ -82,7 +83,32 @@ local plugins = {
   { "ibhagwan/fzf-lua" },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
-  { "folke/snacks.nvim", opts = {} },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      picker = {
+        win = {
+          input = {
+            keys = {
+              ["<C-y>"] = { "yazi_copy_relative_path", mode = { "n", "i" } },
+            },
+          },
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader><space>",
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = "Smart Find Files",
+      },
+    },
+  },
   {
     "neovim/nvim-lspconfig",
     dependencies = {

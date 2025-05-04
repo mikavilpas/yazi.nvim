@@ -43,8 +43,8 @@ describe("rename events with LSP support", () => {
       // The LSP server asks for confirmation. Other LSPs don't seem to do
       // this, but it works...
       cy.contains("Do you want to modify the require path?")
-      cy.contains("1: Modify")
-      cy.typeIntoTerminal("1{enter}")
+      cy.contains("1. Modify")
+      cy.typeIntoTerminal("{enter}")
       cy.contains("Do you want to modify the require path?").should("not.exist")
 
       // go back to the init.lua file and verify the require path was updated
@@ -97,7 +97,7 @@ describe("rename events with LSP support", () => {
       // The LSP server asks for confirmation. Other LSPs don't seem to do
       // this, but it works...
       cy.contains("Do you want to modify the require path?")
-      cy.contains("1: Modify")
+      cy.contains("1. Modify")
       cy.typeIntoTerminal("1{enter}")
       cy.contains("Do you want to modify the require path?").should("not.exist")
 
@@ -154,7 +154,7 @@ describe("move events with LSP support", () => {
 
       // The LSP server should be asking for confirmation
       cy.contains("Do you want to modify the require path?")
-      cy.contains("1: Modify")
+      cy.contains("1. Modify")
       cy.typeIntoTerminal("1{enter}")
       cy.contains("Do you want to modify the require path?").should("not.exist")
 
