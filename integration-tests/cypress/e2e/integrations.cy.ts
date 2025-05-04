@@ -1,3 +1,4 @@
+import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
 
 describe("grug-far integration (search and replace)", () => {
@@ -250,6 +251,46 @@ describe("snacks.picker integration (grep)", () => {
       // snacks.picker should be open now. Don't test it for now because it
       // might be unstable. If you want to try it manually, you can verify
       // that it does not find the text in should-be-excluded-file
+    })
+  })
+
+  it("can optionally setup a keybinding to copy the relative paths to files", () => {
+    cy.visit("/")
+    cy.startNeovim({}).then((nvim) => {
+      // wait until the file contents are visible
+      cy.contains("If you see this text, Neovim is ready!")
+      cy.typeIntoTerminal("dd")
+
+      // open the snacks.picker
+      cy.typeIntoTerminal("  ")
+      cy.contains("Smart")
+
+      cy.typeIntoTerminal("dir with spaces")
+
+      // select both files
+      cy.contains("file1.txt")
+      cy.contains("file2.txt")
+      cy.typeIntoTerminal("{control+i}{control+i}")
+
+      // press the keybinding to copy the relative paths
+      cy.typeIntoTerminal("{control+y}")
+
+      // paste the contents of the clipboard into the buffer so that it's
+      // slightly easier to debug visually
+      cy.typeIntoTerminal("p")
+      cy.contains("Smart").should("not.exist")
+
+      // verify that the clipboard register contains the relative paths
+      nvim
+        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+        .then((result) => {
+          const value = result.value?.valueOf()
+          assert(typeof value === "string")
+          expect(value.split("\n")).to.eql([
+            "../../dir with spaces/file1.txt",
+            "../../dir with spaces/file2.txt",
+          ])
+        })
     })
   })
 })

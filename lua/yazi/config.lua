@@ -83,6 +83,7 @@ function M.default()
           and "grealpath"
         or "realpath",
       bufdelete_implementation = "snacks-if-available",
+      picker_add_copy_relative_path_action = nil,
     },
 
     floating_window_scaling_factor = 0.9,
