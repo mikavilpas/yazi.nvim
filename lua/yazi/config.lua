@@ -267,7 +267,7 @@ function M.set_keymappings(yazi_buffer, config, context)
           api = context.api,
           on_file_opened = function(chosen_file)
             local relative_path = require("yazi.utils").relative_path(
-              config,
+              config.integrations.resolve_relative_path_application,
               context.input_path.filename,
               chosen_file
             )
@@ -279,7 +279,7 @@ function M.set_keymappings(yazi_buffer, config, context)
             for _, path in ipairs(chosen_files) do
               relative_paths[#relative_paths + 1] =
                 require("yazi.utils").relative_path(
-                  config,
+                  config.integrations.resolve_relative_path_application,
                   context.input_path.filename,
                   path
                 )
