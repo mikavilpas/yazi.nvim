@@ -24,9 +24,9 @@ return {
     keys = {
       {
         "<up>",
-        function()
-          require("yazi").yazi()
-        end,
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
       },
     },
   },
