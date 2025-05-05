@@ -12,12 +12,12 @@
     "@catppuccin/palette": "1.7.1",
     "cypress": "14.3.2",
     "wait-on": "8.0.3",
-    "zod": "3.24.3"
+    "zod": "3.24.4"
   },
   "devDependencies": {
     "@eslint/js": "9.26.0",
-    "@tui-sandbox/library": "10.2.1",
-    "@types/node": "22.15.3",
+    "@tui-sandbox/library": "10.2.2",
+    "@types/node": "22.15.8",
     "@types/tinycolor2": "1.4.6",
     "concurrently": "9.1.2",
     "eslint": "9.26.0",
@@ -26,6 +26,6 @@
     "tinycolor2": "1.6.0",
     "type-fest": "4.40.1",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.31.1"
+    "typescript-eslint": "8.32.0"
   }
 }
