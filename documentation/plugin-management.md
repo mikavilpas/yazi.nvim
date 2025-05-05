@@ -31,6 +31,7 @@ return {
     },
   },
   {
+    -- example: include a plugin
     "Rolv-Apneseth/starship.yazi",
     lazy = true,
     build = function(plugin)
@@ -135,13 +136,15 @@ return {
     -- example: a yazi plugin monorepo which provides multiple plugins for
     -- yazi. To use it, you need to specify the sub_dir for the plugin you want
     -- to install.
-    "redbeardymcgee/yazi-plugins",
+    -- example: include multiple plugins from a monorepo. There are lots of
+    -- plugins available in e.g. https://github.com/yazi-rs/plugins
+    "yazi-rs/plugins",
+    name = "yazi-rs-plugins",
     lazy = true,
+    -- stylua: ignore
     build = function(plugin)
-      -- This is a plugin like flash.nvim in neovim - it allows you to jump to
-      -- a line by typing the first few characters of the line.
-      -- https://github.com/redbeardymcgee/yazi-plugins
-      require("yazi.plugin").build_plugin(plugin, { sub_dir = "easyjump.yazi" })
+      require("yazi.plugin").build_plugin(plugin, { sub_dir = "git.yazi" })
+      require("yazi.plugin").build_plugin(plugin, { sub_dir = "vcs-files.yazi" })
     end,
   },
   {
@@ -152,16 +155,10 @@ return {
     build = function(plugin)
       -- NOTE: you can customize the yazi directory, by default it is
       -- `~/.config/yazi/`
-      require("yazi.plugin").build_plugin(plugin, { yazi_dir = vim.fs.normalize("~/.config/yazi/") })
-    end,
-  },
-  {
-    -- An archive previewer plugin for Yazi, using ouch.
-    -- https://github.com/ndtoan96/ouch.yazi
-    "ndtoan96/ouch.yazi",
-    lazy = true,
-    build = function(plugin)
-      require("yazi.plugin").build_plugin(plugin)
+      require("yazi.plugin").build_plugin(
+        plugin,
+        { yazi_dir = vim.fs.normalize("~/.config/yazi/") }
+      )
     end,
   },
 }
