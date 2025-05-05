@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.3...v11.1.0) (2025-05-05)
+
+
+### Features
+
+* **snacks:** add copy relative path action to snacks.nvim picker ([#938](https://github.com/mikavilpas/yazi.nvim/issues/938)) ([07fcb3b](https://github.com/mikavilpas/yazi.nvim/commit/07fcb3b28992b58f8b51a115e35fa00ddc40bc43))
+
 ## [11.0.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.2...v11.0.3) (2025-05-03)
 
 
