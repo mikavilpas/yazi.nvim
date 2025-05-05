@@ -48,8 +48,8 @@ jobs:
           git: https://github.com/sxyazi/yazi
           # tag: v25.3.2
           commit:
-            # https://github.com/sxyazi/yazi/commit/37e8747c01b2
-            37e8747c01b2
+            # https://github.com/sxyazi/yazi/commit/ca96c5bd987c
+            ca96c5bd987c
 
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3.3.0
@@ -59,8 +59,8 @@ jobs:
           git: https://github.com/sxyazi/yazi
           # tag: v25.3.2
           commit:
-            # https://github.com/sxyazi/yazi/commit/37e8747c01b2
-            37e8747c01b2
+            # https://github.com/sxyazi/yazi/commit/ca96c5bd987c
+            ca96c5bd987c
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1.1.0
