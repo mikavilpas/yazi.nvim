@@ -51,8 +51,10 @@ Neovim.
     technical explanation is available
     [here](documentation/for-developers/lsp-renaming.md).
 - Customizable keybindings
-- 🆕 Plugin management for Yazi plugins and flavors
+- Plugin management for Yazi plugins and flavors
   ([documentation](./documentation/plugin-management.md))
+- 🆕 Send custom commands to yazi
+  ([documentation](./documentation/emitting-commands-to-yazi.md))
 
 For previewing images with yazi, see Yazi's documentation related to Neovim
 [here](https://yazi-rs.github.io/docs/image-preview/#neovim).

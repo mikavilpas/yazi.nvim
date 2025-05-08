@@ -99,4 +99,22 @@ describe("revealing another open split (buffer) in yazi", () => {
       assertYaziIsHovering(nvim, "initial-file.txt")
     })
   })
+
+  it(`can use the "on_yazi_ready" hook to run code after yazi is ready`, () => {
+    cy.startNeovim({
+      filename: "initial-file.txt",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "add_keybinding_to_start_yazi_and_find.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi and wait for it to be visible
+      cy.typeIntoTerminal(" r")
+      assertYaziIsReady(nvim)
+
+      cy.contains("Find next:")
+    })
+  })
 })

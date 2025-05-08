@@ -49,6 +49,7 @@
 
 ---@class (exact) YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil
+---@field public on_yazi_ready fun(buffer: integer, config: YaziConfig, process_api: YaziProcessApi):nil
 ---@field public yazi_closed_successfully fun(chosen_file: string | nil, config: YaziConfig, state: YaziClosedState): nil
 ---@field public yazi_opened_multiple_files fun(chosen_files: string[], config: YaziConfig, state: YaziClosedState): nil
 

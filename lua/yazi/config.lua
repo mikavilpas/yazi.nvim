@@ -43,6 +43,7 @@ function M.default()
     set_keymappings_function = nil,
     hooks = {
       yazi_opened = function() end,
+      on_yazi_ready = function() end,
       yazi_closed_successfully = function() end,
       yazi_opened_multiple_files = openers.open_multiple_files,
     },
