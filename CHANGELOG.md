@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.1.0...v11.2.0) (2025-05-09)
+
+
+### Features
+
+* allow emitting arbitrary yazi commands after yazi is ready ([#946](https://github.com/mikavilpas/yazi.nvim/issues/946)) ([c9a8c7b](https://github.com/mikavilpas/yazi.nvim/commit/c9a8c7be76356e93aad8949710a4c82f675ee114))
+
 ## [11.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.0.3...v11.1.0) (2025-05-05)
 
 
