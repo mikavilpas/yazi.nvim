@@ -112,8 +112,8 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { "williamboman/mason.nvim", opts = {} },
-      { "williamboman/mason-lspconfig.nvim", opts = {} },
+      { "williamboman/mason.nvim", version = "^1.0.0", opts = {} },
+      { "williamboman/mason-lspconfig.nvim", version = "^1.0.0", opts = {} },
     },
     config = function()
       ---@diagnostic disable-next-line: missing-fields
