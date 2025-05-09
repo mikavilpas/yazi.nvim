@@ -51,62 +51,66 @@ function M.yazi(config, input_path, args)
 
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
+  local yazi_buffer = win.content_buffer
 
   local yazi_process, yazi_context = YaziProcess:start(config, paths, {
     on_ya_first_event = function(api)
-      if not (args and args.reveal_path) then
-        Log:debug("No reveal_path provided, skipping initial reveal")
-        return
-      end
+      config.hooks.on_yazi_ready(yazi_buffer, config, api)
+      do
+        if not (args and args.reveal_path) then
+          Log:debug("No reveal_path provided, skipping initial reveal")
+          return
+        end
 
-      local retries = 15
-      require("yazi.process.retry").retry({
-        delay = 50,
-        retries = retries,
-        action = function(retries_remaining)
-          local reveal_job = api:reveal(args.reveal_path)
-          local completed = reveal_job:wait(500)
-          assert(
-            completed.code == 0,
-            string.format(
-              "Failed to reveal path '%s' with exit code: %s, details: %s",
-              args.reveal_path,
-              completed.code,
-              vim.inspect({
-                stdout = completed.stdout,
-                stderr = completed.stderr,
-              })
+        local retries = 15
+        require("yazi.process.retry").retry({
+          delay = 50,
+          retries = retries,
+          action = function(retries_remaining)
+            local reveal_job = api:reveal(args.reveal_path)
+            local completed = reveal_job:wait(500)
+            assert(
+              completed.code == 0,
+              string.format(
+                "Failed to reveal path '%s' with exit code: %s, details: %s",
+                args.reveal_path,
+                completed.code,
+                vim.inspect({
+                  stdout = completed.stdout,
+                  stderr = completed.stderr,
+                })
+              )
             )
-          )
-          Log:debug(
-            string.format(
-              "Revealed path '%s' successfully after retries_remaining: %s",
-              args.reveal_path,
-              retries_remaining
+            Log:debug(
+              string.format(
+                "Revealed path '%s' successfully after retries_remaining: %s",
+                args.reveal_path,
+                retries_remaining
+              )
             )
-          )
-          return nil
-        end,
-        on_failure = function(_, retries_remaining)
-          Log:debug(
-            string.format(
-              "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s",
-              args.reveal_path,
-              retries_remaining
+            return nil
+          end,
+          on_failure = function(_, retries_remaining)
+            Log:debug(
+              string.format(
+                "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s",
+                args.reveal_path,
+                retries_remaining
+              )
             )
-          )
-        end,
-        on_final_failure = function(result)
-          Log:debug(
-            string.format(
-              "Failed to reveal path '%s' after %s retries. Details: %s",
-              args.reveal_path,
-              retries,
-              vim.inspect(result)
+          end,
+          on_final_failure = function(result)
+            Log:debug(
+              string.format(
+                "Failed to reveal path '%s' after %s retries. Details: %s",
+                args.reveal_path,
+                retries,
+                vim.inspect(result)
+              )
             )
-          )
-        end,
-      })
+          end,
+        })
+      end
     end,
     on_exit = function(
       exit_code,
@@ -194,7 +198,6 @@ function M.yazi(config, input_path, args)
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
-  local yazi_buffer = win.content_buffer
   if config.set_keymappings_function ~= nil then
     config.set_keymappings_function(yazi_buffer, config, yazi_context)
   end
