@@ -44,7 +44,7 @@ end
 --- Tell yazi to open the currently selected file(s).
 ---@see https://yazi-rs.github.io/docs/configuration/keymap#manager.open
 function YaziProcessApi:open()
-  vim.system({ "ya", "emit-to", self.yazi_id, "open" }, { timeout = 1000 })
+  self:emit_to_yazi({ "open" })
 end
 
 return YaziProcessApi
