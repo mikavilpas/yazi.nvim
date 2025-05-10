@@ -130,3 +130,11 @@ local plugins = {
 require("lazy").setup({ spec = plugins })
 
 vim.cmd.colorscheme("catppuccin-macchiato")
+do
+  local colors = require("catppuccin.palettes").get_palette("macchiato")
+  vim.api.nvim_set_hl(
+    0,
+    "SnacksPickerPickWin",
+    { bg = colors.peach, fg = "#000000" }
+  )
+end

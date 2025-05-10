@@ -343,4 +343,30 @@ function YaziOpenerActions.change_working_directory(context)
   end
 end
 
+---@param config YaziConfig
+---@param context YaziActiveContext
+function YaziOpenerActions.open_and_pick_window(config, context)
+  YaziOpenerActions.select_current_file_and_close_yazi(config, {
+    api = context.api,
+    on_file_opened = function(chosen_file, _, _)
+      if config.integrations.pick_window_implementation ~= "snacks.picker" then
+        require("yazi.log"):debug(
+          string.format(
+            "snacks_picker integration is unexpected (%s). Cannot pick window.",
+            vim.inspect(config.integrations.pick_window_implementation)
+          )
+        )
+        return
+      end
+
+      local snacks_picker_util = require("snacks.picker.util")
+      local picked_win_id = snacks_picker_util.pick_win()
+      if picked_win_id and vim.api.nvim_win_is_valid(picked_win_id) then
+        vim.api.nvim_set_current_win(picked_win_id)
+        require("yazi.openers").open_file(chosen_file)
+      end
+    end,
+  })
+end
+
 return YaziOpenerActions
