@@ -6,16 +6,9 @@ function M.default()
   local openers = require("yazi.openers")
 
   local border = "rounded"
-  pcall(function()
-    -- Neovim 0.11 supports configuring floating window borders for all plugins
-    -- centrally with the "winborder" setting. Older Neovim versions do not
-    -- have this available, so we need to prevent the "Unknown option
-    -- 'winborder'" error which happens if the option is not available.
-    -- https://github.com/neovim/neovim/pull/31074
-    if vim.o.winborder ~= "" then
-      border = vim.o.winborder
-    end
-  end)
+  if vim.o.winborder ~= "" then
+    border = vim.o.winborder
+  end
 
   ---@type YaziConfig
   return {
