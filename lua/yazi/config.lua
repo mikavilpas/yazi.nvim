@@ -32,6 +32,7 @@ function M.default()
       copy_relative_path_to_selected_files = "<c-y>",
       send_to_quickfix_list = "<c-q>",
       change_working_directory = "<c-\\>",
+      open_and_pick_window = "<c-o>",
     },
     set_keymappings_function = nil,
     hooks = {
@@ -78,6 +79,7 @@ function M.default()
         or "realpath",
       bufdelete_implementation = "snacks-if-available",
       picker_add_copy_relative_path_action = nil,
+      pick_window_implementation = "snacks.picker",
     },
 
     floating_window_scaling_factor = 0.9,
@@ -178,6 +180,12 @@ function M.set_keymappings(yazi_buffer, config, context)
     end, { buffer = yazi_buffer })
   end
 
+  if config.keymaps.open_and_pick_window ~= false then
+    vim.keymap.set({ "t" }, config.keymaps.open_and_pick_window, function()
+      keybinding_helpers.open_and_pick_window(config, context)
+    end, { buffer = yazi_buffer })
+  end
+
   if config.keymaps.show_help ~= false then
     vim.keymap.set({ "t" }, config.keymaps.show_help, function()
       local w = vim.api.nvim_win_get_width(0)
@@ -190,7 +198,7 @@ function M.set_keymappings(yazi_buffer, config, context)
         bufpos = { 5, 30 },
         noautocmd = true,
         width = math.min(46, math.floor(w * 0.5)),
-        height = math.min(14, math.floor(h * 0.5)),
+        height = math.min(15, math.floor(h * 0.5)),
         border = config.yazi_floating_window_border,
       })
 
@@ -204,6 +212,9 @@ function M.set_keymappings(yazi_buffer, config, context)
         "yazi.nvim help (`q` or " .. config.keymaps.show_help .. " to close):",
         "",
         "" .. show(config.keymaps.open_file_in_tab) .. " - open file in tab",
+        ""
+          .. show(config.keymaps.open_and_pick_window)
+          .. " - open file and pick window",
         ""
           .. show(config.keymaps.open_file_in_horizontal_split)
           .. " - open file in horizontal split",

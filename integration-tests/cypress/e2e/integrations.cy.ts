@@ -1,5 +1,8 @@
+import { flavors } from "@catppuccin/palette"
 import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils"
+import { textIsVisibleWithBackgroundColor } from "./utils/text-utils"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
@@ -291,6 +294,34 @@ describe("snacks.picker integration (grep)", () => {
             "../../dir with spaces/file2.txt",
           ])
         })
+    })
+  })
+})
+
+describe("snacks open_and_pick_window integration", () => {
+  it("can open a file in a specific split window", () => {
+    cy.visit("/")
+    cy.startNeovim({
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "add_command_to_reveal_a_file.lua",
+      ],
+    }).then((nvim) => {
+      nvim.runExCommand({ command: "vsplit" })
+      cy.typeIntoTerminal("{upArrow}")
+
+      const file = "routes/posts.$postId/adjacent-file.txt"
+      hoverFileAndVerifyItsHovered(nvim, file)
+      cy.typeIntoTerminal("{control+o}")
+
+      // wait until the picker is showing labels for the splits. They will be
+      // labeled "a" and "s", and will have a particular background color
+      textIsVisibleWithBackgroundColor("s", flavors.macchiato.colors.peach.rgb)
+
+      cy.typeIntoTerminal("s")
+      nvim.runExCommand({ command: "buffers" }).and((result) => {
+        expect(result.value).to.contain("adjacent-file.txt")
+      })
     })
   })
 })
