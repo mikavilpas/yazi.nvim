@@ -15,13 +15,10 @@ vim.cmd("Lazy! sync")
 --
 -- The recommendation is to add a specific version to avoid issues in the
 -- future
-require("mason")
-require("mason-lspconfig").setup({
-  -- TODO why does automatic_installation not work?
-  -- ensure_installed = { "lua_ls@3.13.5" },
-  -- automatic_installation = true,
-})
+require("mason-registry").refresh()
 
--- TODO this seems to report some minor error but it works after that. Should
--- clean this up, though.
-vim.cmd("LspInstall lua_ls@3.13.5")
+-- NOTE: installing mason packages seems to report errors in headless mode, but
+-- it seems to install the package anyway
+-- https://github.com/williamboman/mason.nvim/issues/960#issuecomment-1528081759
+local command = require("mason.api.command")
+command.MasonInstall({ "lua_ls" }, { version = "3.13.5" })
