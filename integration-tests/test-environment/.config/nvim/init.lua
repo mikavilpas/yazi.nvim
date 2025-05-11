@@ -112,18 +112,11 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { "williamboman/mason.nvim", version = "^1.0.0", opts = {} },
-      { "williamboman/mason-lspconfig.nvim", version = "^1.0.0", opts = {} },
+      { "mason-org/mason.nvim", opts = {} },
+      { "mason-org/mason-lspconfig.nvim", opts = {} },
     },
     config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("mason-lspconfig").setup({
-        handlers = {
-          lua_ls = function()
-            require("lspconfig")["lua_ls"].setup({})
-          end,
-        },
-      })
+      vim.lsp.enable("lua_ls")
     end,
   },
 }
