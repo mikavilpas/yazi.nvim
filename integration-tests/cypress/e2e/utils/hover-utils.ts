@@ -7,7 +7,8 @@ import { assertYaziIsReady } from "./yazi-utils"
 const darkTheme = flavors.macchiato.colors
 const lightTheme = flavors.latte.colors
 
-export function rgbify(color: (typeof darkTheme)["surface0"]["rgb"]): string {
+export type CatppuccinRgb = (typeof flavors.macchiato.colors)["surface0"]["rgb"]
+export function rgbify(color: CatppuccinRgb): string {
   return `rgb(${color.r.toString()}, ${color.g.toString()}, ${color.b.toString()})`
 }
 
@@ -56,6 +57,9 @@ export function isHoveredInNeovimWithSameDirectory(
 /** HACK in CI, there can be timing issues where the first hover event is
  * lost. Right now we work around this by selecting another file first, then
  * hovering the desired file.
+ *
+ * Requires the {add_command_to_reveal_a_file.lua} script to be loaded from
+ * config-modifications.
  */
 export function hoverFileAndVerifyItsHovered(
   nvim: NeovimContext,
