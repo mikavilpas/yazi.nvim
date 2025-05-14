@@ -53,7 +53,7 @@ function YaziProcess:start(config, paths, callbacks)
       -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
       -- neovim specific functionality
       NVIM_CWD = vim.uv.cwd(),
-      YAZI_CONFIG_HOME = config.config_home
+      YAZI_CONFIG_HOME = config.config_home,
     },
     on_exit = function(_, code)
       self.ya_process:kill()
