@@ -23,6 +23,7 @@
 ---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"
 ---@field public forwarded_dds_events? string[] "Yazi events to listen to. These are published as neovim autocmds so that the user can set up custom handlers for themselves. Defaults to `nil`."
 ---@field public future_features? yazi.OptInFeatures # Features that are not yet stable, but can be tested by the user. These features might change or be removed in the future. They may also become built-in features that are on by default, making it unnecessary to opt into using them.
+---@field public config_home? string # optional path for nvim yazi to find a custom yazi.toml
 
 ---@class(exact) yazi.OptInFeatures
 ---@field process_events_live? boolean # By default, this is `true`, which means yazi.nvim processes events before yazi has been closed. If this is `false`, events are processed in a batch when the user closes yazi. If this is `true`, events are processed immediately.
