@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.3.0...v11.4.0) (2025-05-14)
+
+
+### Features
+
+* add option for nvim yazi to use a custom config file  ([#957](https://github.com/mikavilpas/yazi.nvim/issues/957)) ([fc77617](https://github.com/mikavilpas/yazi.nvim/commit/fc77617ae40a360dad5bb253300d96aa5013ba11))
+
 ## [11.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.2.0...v11.3.0) (2025-05-11)
 
 
