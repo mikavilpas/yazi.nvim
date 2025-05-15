@@ -21,4 +21,4 @@ require("mason-registry").refresh()
 -- it seems to install the package anyway
 -- https://github.com/williamboman/mason.nvim/issues/960#issuecomment-1528081759
 local command = require("mason.api.command")
-command.MasonInstall({ "lua_ls" }, { version = "3.13.5" })
+command.MasonInstall({ "lua_ls" }, { version = "3.14.0" })
