@@ -12,6 +12,12 @@ function M.create_yazi_commands()
         require("yazi").toggle()
       end,
     },
+    logs = {
+      impl = function()
+        local path = require("yazi.log"):get_logfile_path()
+        vim.cmd.edit(path)
+      end,
+    },
   }
 
   ---@param opts table :h lua-guide-commands-create
@@ -35,7 +41,8 @@ function M.create_yazi_commands()
           .. "\nUse any of the next instead:"
           .. "\n  * `:Yazi`"
           .. "\n  * `:Yazi cwd`"
-          .. "\n  * `:Yazi toggle`",
+          .. "\n  * `:Yazi toggle`"
+          .. "\n  * `:Yazi logs`",
         vim.log.levels.ERROR,
         { title = "Yazi.nvim" }
       )
@@ -47,7 +54,7 @@ function M.create_yazi_commands()
 
   vim.api.nvim_create_user_command("Yazi", yazi_cmd, {
     nargs = "*", -- Allow no arguments or multiple arguments
-    desc = "Valid yazi commands are `Yazi`, `Yazi cwd`, `Yazi toggle`",
+    desc = "Valid yazi commands are `Yazi`, `Yazi cwd`, `Yazi toggle`, `Yazi logs`",
     complete = function(arg_lead, cmdline, _)
       -- Get the subcommand.
       local subcmd_key, subcmd_arg_lead =
