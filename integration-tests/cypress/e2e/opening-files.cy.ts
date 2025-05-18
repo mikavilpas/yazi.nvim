@@ -19,7 +19,6 @@ describe("opening files", () => {
 
   it("can display yazi in a floating terminal", () => {
     cy.startNeovim().then(() => {
-      cy.contains("If you see this text, Neovim is ready!")
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
@@ -611,6 +610,18 @@ describe("opening files from visual mode", () => {
         expect(result.value).to.contain(
           "dir with spaces/file2.txt" satisfies MyTestDirectoryFile,
         )
+      })
+    })
+  })
+
+  it("can open the log file with `:Yazi logs`", () => {
+    cy.startNeovim().then((nvim) => {
+      // wait until text on the start screen is visible
+      cy.contains("If you see this text, Neovim is ready!")
+      nvim.runExCommand({ command: "Yazi logs" })
+
+      nvim.runExCommand({ command: "buffers" }).and((result) => {
+        expect(result.value).to.contain("test-environment/.repro/yazi.log")
       })
     })
   })

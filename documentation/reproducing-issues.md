@@ -4,14 +4,20 @@ Since Neovim is very configurable and extensible, it's possible that some issues
 are caused by plugins or configuration. This can also make it very difficult to
 provide a fix. To help us diagnose the issue, please follow these steps:
 
+1. Run the following to try to identify common issues:
+
+   ```vim
+   :checkhealth yazi
+   ```
+
 1. copy [repro.lua](../repro.lua) to a directory on your system
-2. run `nvim -u repro.lua -c "lua require('lazy').update()"` in that directory
+1. run `nvim -u repro.lua -c "lua require('lazy').update()"` in that directory
    - this will start Neovim with a minimal configuration, completely defined by
      that one file.
-3. try to reproduce the issue
+1. try to reproduce the issue
    - if you can't reproduce the issue, make changes to the file to make it more
      similar to your configuration until you can reproduce it.
-4. when reporting the issue, attach the contents of your `repro.lua` file to the
+1. when reporting the issue, attach the contents of your `repro.lua` file to the
    issue report.
 
 ## Logging
@@ -31,13 +37,13 @@ To enable logging, you can do one of the following:
 
 ### Reading the log file
 
-To find the log file, execute
+To open the log file, execute the following:
 
 ```vim
-:checkhealth yazi
+:Yazi logs
 ```
 
-It will show where your log file is. It's recommended to "tail" the log file to
+If inspecting a complicated issue, it's recommended to "tail" the log file to
 see any new messages as soon as they arrive:
 
 ```sh
