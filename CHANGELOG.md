@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.4.0...v11.5.0) (2025-05-18)
+
+
+### Features
+
+* **log:** add `:Yazi logs` command to open the log file ([a9e454e](https://github.com/mikavilpas/yazi.nvim/commit/a9e454e2219b6c2953d248b74ed24f0de5837c6e))
+
 ## [11.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.3.0...v11.4.0) (2025-05-14)
 
 
