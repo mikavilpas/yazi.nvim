@@ -64,8 +64,11 @@ function YaziOpenerActions.select_current_file_and_close_yazi(config, callbacks)
   callbacks.api:open()
 end
 
----@param visible_buffer YaziVisibleBuffer
+---@param visible_buffer? YaziVisibleBuffer
 local function show_visible_buffer(visible_buffer)
+  if not visible_buffer then
+    return "nil"
+  end
   local renameable_buffer = visible_buffer.renameable_buffer
   return renameable_buffer.path:make_relative(vim.uv.cwd())
 end
