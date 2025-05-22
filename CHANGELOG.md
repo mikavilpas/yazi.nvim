@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.0...v11.5.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* crash when pressing tab if visible-buffer is nil ([#973](https://github.com/mikavilpas/yazi.nvim/issues/973)) ([b0d0985](https://github.com/mikavilpas/yazi.nvim/commit/b0d0985c4d2035cc6f796b81cf282abb1b0a8451))
+
 ## [11.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.4.0...v11.5.0) (2025-05-18)
 
 
