@@ -36,18 +36,18 @@ importers:
         specifier: 8.0.3
         version: 8.0.3
       zod:
-        specifier: 3.25.31
-        version: 3.25.31
+        specifier: 3.25.33
+        version: 3.25.33
     devDependencies:
       '@eslint/js':
         specifier: 9.27.0
         version: 9.27.0
       '@tui-sandbox/library':
         specifier: 10.3.0
-        version: 10.3.0(cypress@14.4.0)(prettier@3.5.3)(type-fest@4.41.0)(typescript@5.8.3)(zod@3.25.31)
+        version: 10.3.0(cypress@14.4.0)(prettier@3.5.3)(type-fest@4.41.0)(typescript@5.8.3)(zod@3.25.33)
       '@types/node':
-        specifier: 22.15.23
-        version: 22.15.23
+        specifier: 22.15.24
+        version: 22.15.24
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -401,8 +401,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@22.15.23':
-    resolution: {integrity: sha512-7Ec1zaFPF4RJ0eXu1YT/xgiebqwqoJz8rYPDi/O2BcZ++Wpt0Kq9cl0eg6NN6bYbPnR67ZLo7St5Q3UK0SnARw==}
+  '@types/node@22.15.24':
+    resolution: {integrity: sha512-w9CZGm9RDjzTh/D+hFwlBJ3ziUaVw7oufKA3vOFSOZlzmW9AkZnfjPb+DLnrV6qtgL/LNmP0/2zBNCFHL3F0ng==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -2467,8 +2467,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod@3.25.31:
-    resolution: {integrity: sha512-SVCtUpZ1D9TFcRnCY7wlCpGEzV4+2HlXnJiwrgq1T93m98BIT6M5lbxRrEm7v6pYZXV4QNQo1t2KVv93JXk6XA==}
+  zod@3.25.33:
+    resolution: {integrity: sha512-RnBGYCwJFrLi/hUmeqbYjSIrS/strWjN5PHWgUfyVq96nKycSa4gp4+p6hQGwvcabZs0DWRGzyLhEeQWl+5NhA==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -2718,7 +2718,7 @@ snapshots:
     dependencies:
       typescript: 5.8.3
 
-  '@tui-sandbox/library@10.3.0(cypress@14.4.0)(prettier@3.5.3)(type-fest@4.41.0)(typescript@5.8.3)(zod@3.25.31)':
+  '@tui-sandbox/library@10.3.0(cypress@14.4.0)(prettier@3.5.3)(type-fest@4.41.0)(typescript@5.8.3)(zod@3.25.33)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.1.2(@trpc/server@11.1.2(typescript@5.8.3))(typescript@5.8.3)
@@ -2739,7 +2739,7 @@ snapshots:
       type-fest: 4.41.0
       typescript: 5.8.3
       winston: 3.17.0
-      zod: 3.25.31
+      zod: 3.25.33
     transitivePeerDependencies:
       - supports-color
 
@@ -2759,7 +2759,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@22.15.23':
+  '@types/node@22.15.24':
     dependencies:
       undici-types: 6.21.0
 
@@ -2777,7 +2777,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.15.23
+      '@types/node': 22.15.24
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.33.0(@typescript-eslint/parser@8.33.0(eslint@9.27.0)(typescript@5.8.3))(eslint@9.27.0)(typescript@5.8.3)':
@@ -3096,7 +3096,7 @@ snapshots:
     dependencies:
       devtools-protocol: 0.0.1439962
       mitt: 3.0.1
-      zod: 3.25.31
+      zod: 3.25.33
 
   ci-info@4.2.0: {}
 
@@ -5191,6 +5191,6 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod@3.25.31: {}
+  zod@3.25.33: {}
 
   zwitch@2.0.4: {}
