@@ -1,0 +1,21 @@
+name: Linkspector
+on: [pull_request]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  check-links:
+    name: runner / linkspector
+    # Temporarily work around this issue by downgrading the runner OS
+    # https://github.com/UmbrellaDocs/action-linkspector/issues/32
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - name: Run linkspector
+        # needs to be pinned to 1.2.5 avoid
+        # https://github.com/UmbrellaDocs/action-linkspector/issues/30
+        uses: umbrelladocs/action-linkspector@v1.2.5
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          fail_on_error: true
