@@ -49,7 +49,7 @@ jobs:
           # commit:
           #   # https://github.com/sxyazi/yazi/commit/ea90b0477ecc
           #   ea90b0477ecc
-          tag: v25.5.28
+          tag: v25.5.31
 
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3.3.0
@@ -60,7 +60,7 @@ jobs:
           # commit:
           #   # https://github.com/sxyazi/yazi/commit/ea90b0477ecc
           #   ea90b0477ecc
-          tag: v25.5.28
+          tag: v25.5.31
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1.1.0
