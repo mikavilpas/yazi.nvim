@@ -74,7 +74,7 @@ local function get_window_dimensions(config)
     height = size(vim.o.lines, config.floating_window_scaling_factor.height)
     width = size(vim.o.columns, config.floating_window_scaling_factor.width)
   end
- 
+
   local total_lines = vim.o.lines
   if vim.o.cmdheight == 0 then
     total_lines = total_lines - 1
