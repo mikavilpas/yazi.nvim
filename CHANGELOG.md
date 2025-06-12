@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.5.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.1...v11.5.2) (2025-06-12)
+
+
+### Bug Fixes
+
+* **ui:** correctly center floating window when cmdheight=0 ([c363b1a](https://github.com/mikavilpas/yazi.nvim/commit/c363b1a9e51d273a494d30a7f7230e78017cb9a8))
+
 ## [11.5.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.0...v11.5.1) (2025-05-22)
 
 
