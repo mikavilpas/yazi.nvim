@@ -251,6 +251,9 @@ describe("snacks.picker integration (grep)", () => {
         expect(result.value).to.equal("i")
       })
 
+      // verify that the picker shows the correct title
+      cy.contains("Grep in 2 paths")
+
       // snacks.picker should be open now. Don't test it for now because it
       // might be unstable. If you want to try it manually, you can verify
       // that it does not find the text in should-be-excluded-file
