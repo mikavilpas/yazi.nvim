@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.5.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.2...v11.5.3) (2025-06-14)
+
+
+### Bug Fixes
+
+* snacks picker grep not showing the title ([6f4b36c](https://github.com/mikavilpas/yazi.nvim/commit/6f4b36c5d49cd4a141f632cf548145e0ad759050))
+
 ## [11.5.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.1...v11.5.2) (2025-06-12)
 
 
