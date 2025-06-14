@@ -218,6 +218,7 @@ function YaziOpenerActions.grep_in_directory(config, chosen_file)
       -- HACK something seems to exit insert mode when the picker is shown.
       -- Wait a bit to hack around this.
       require("snacks.picker").grep({
+        title = "Grep in " .. last_directory,
         dirs = { last_directory },
         on_show = function()
           vim.cmd("startinsert")
@@ -267,6 +268,7 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
       -- HACK something seems to exit insert mode when the picker is shown.
       -- Wait a bit to hack around this.
       require("snacks.picker").grep({
+        title = string.format("Grep in %d paths", #files_relative),
         dirs = files_relative,
       })
     end, 50)
