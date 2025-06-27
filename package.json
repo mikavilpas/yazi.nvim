@@ -15,9 +15,9 @@
   "devDependencies": {
     "@umbrelladocs/linkspector": "0.4.5",
     "markdownlint-cli2": "0.18.1",
-    "prettier": "3.5.3",
+    "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "4.1.0",
-    "prettier-plugin-packagejson": "2.5.15"
+    "prettier-plugin-packagejson": "2.5.17"
   },
   "packageManager": "pnpm@10.12.4+sha512.5ea8b0deed94ed68691c9bad4c955492705c5eeb8a87ef86bc62c74a26b037b08ff9570f108b2e4dbd1dd1a9186fea925e527f141c648e85af45631074680184",
   "pnpm": {

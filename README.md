@@ -25,7 +25,6 @@ Neovim.
   - if you have selected a file path in visual mode, yazi will open that file
     instead of current file
 - Integrations to other plugins and tools, if they are installed:
-
   - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim),
     [fzf-lua.nvim](https://github.com/ibhagwan/fzf-lua) and
     [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md):
