@@ -10,11 +10,11 @@ local YaziSessionHighlighter =
 ---@field public hovered_url? string "The path that is currently hovered over in this yazi."
 ---@field public cwd? string "The path that the yazi process is currently in."
 ---@field private config YaziConfig
----@field public yazi_id? string "The YAZI_ID of the yazi process. Can be nil if this feature is not in use."
+---@field public yazi_id string "The YAZI_ID of the yazi process"
 ---@field private ya_process vim.SystemObj
 ---@field private retries integer
 ---@field private highlighter YaziSessionHighlighter
----@field private on_first_output? fun()
+---@field private on_first_output fun()
 ---@field public ready boolean
 local YaProcess = {}
 ---@diagnostic disable-next-line: inject-field
