@@ -42,6 +42,7 @@ vim.env.YAZI_NVIM_LOG_PATH =
 
 -- install the following plugins
 ---@module "lazy"
+---@module "snacks"
 ---@type LazySpec
 local plugins = {
   {
