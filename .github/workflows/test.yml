@@ -19,6 +19,7 @@ jobs:
       - name: Set up dependencies
         run: |
           # ripgrep is a dependency of telescope and fzf-lua
+          sudo apt-get update
           sudo apt-get install ripgrep
           rg --version
 
