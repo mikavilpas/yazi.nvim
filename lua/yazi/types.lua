@@ -18,6 +18,7 @@
 ---@field public floating_window_scaling_factor? number | YaziFloatingWindowScaling "the scaling factor for the floating window. 1 means 100%, 0.9 means 90%, etc."
 ---@field public yazi_floating_window_winblend? number "the transparency of the yazi floating window (0-100). See :h winblend"
 ---@field public yazi_floating_window_border? any "the type of border to use. See nvim_open_win() for the values your neovim version supports"
+---@field public yazi_floating_window_zindex? number "the zindex of the yazi floating window. Can be used to make the yazi window fullscreen. See `:h nvim_open_win()` for more information."
 ---@field public log_level? yazi.LogLevel
 ---@field public clipboard_register? string the register to use for copying. Defaults to "*", the system clipboard
 ---@field public highlight_hovered_buffers_in_same_directory? boolean "highlight buffers in the same directory as the hovered buffer"

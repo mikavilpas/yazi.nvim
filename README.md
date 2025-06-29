@@ -246,6 +246,15 @@ return {
     -- the transparency of the yazi floating window (0-100). See :h winblend
     yazi_floating_window_winblend = 0,
 
+    -- the type of border to use for the floating window. Can be many values,
+    -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
+    -- more information, see :h nvim_open_win
+    yazi_floating_window_border = "rounded",
+
+    -- the zindex of the yazi floating window. Can be used to make the yazi
+    -- window fullscreen. See `:h nvim_open_win()` for more information.
+    yazi_floating_window_zindex = nil,
+
     -- the log level to use. Off by default, but can be used to diagnose
     -- issues. You can find the location of the log file by running
     -- `:checkhealth yazi` in Neovim. Also check out the "reproducing issues"
@@ -282,11 +291,6 @@ return {
     -- completely override the keymappings for yazi. This function will be
     -- called in the context of the yazi terminal buffer.
     set_keymappings_function = function(yazi_buffer_id, config, context) end,
-
-    -- the type of border to use for the floating window. Can be many values,
-    -- including 'none', 'rounded', 'single', 'double', 'shadow', etc. For
-    -- more information, see :h nvim_open_win
-    yazi_floating_window_border = "rounded",
 
     -- some yazi.nvim commands copy text to the clipboard. This is the register
     -- yazi.nvim should use for copying. Defaults to "*", the system clipboard

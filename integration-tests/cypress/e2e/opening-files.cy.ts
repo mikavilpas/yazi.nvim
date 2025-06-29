@@ -28,6 +28,29 @@ describe("opening files", () => {
     })
   })
 
+  it("can display yazi fullscreen", () => {
+    cy.startNeovim({}).then((nvim) => {
+      // wait until text on the start screen is visible
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // normally, when yazi is started, a message is shown at the bottom
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("-- TERMINAL --")
+      cy.typeIntoTerminal("q")
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      // load a config-modification that makes yazi fullscreen
+      nvim.runExCommand({
+        command: `luafile ${"config-modifications/make_yazi_fullscreen.lua" satisfies MyTestDirectoryFile}`,
+      })
+
+      cy.typeIntoTerminal("{upArrow}")
+
+      // yazi should now be covering the entire screen
+      cy.contains("-- TERMINAL --").should("not.exist")
+    })
+  })
+
   it("can open a file that was selected in yazi", () => {
     cy.startNeovim({
       startupScriptModifications: [

@@ -103,6 +103,7 @@ function YaziFloatingWindow:open_and_display()
     width = dimensions.width,
     height = dimensions.height,
     border = self.config.yazi_floating_window_border,
+    zindex = self.config.yazi_floating_window_zindex,
   }
 
   local yazi_buffer = vim.api.nvim_create_buf(false, true)

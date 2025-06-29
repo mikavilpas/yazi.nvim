@@ -68,6 +68,10 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("disable_a_keybinding.lua"),
           type: z.literal("file"),
         }),
+        "make_yazi_fullscreen.lua": z.object({
+          name: z.literal("make_yazi_fullscreen.lua"),
+          type: z.literal("file"),
+        }),
         "modify_yazi_config_and_add_hovered_buffer_background.lua": z.object({
           name: z.literal(
             "modify_yazi_config_and_add_hovered_buffer_background.lua",
@@ -264,6 +268,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/add_keybinding_to_start_yazi_and_find.lua",
   "config-modifications/add_yazi_context_assertions.lua",
   "config-modifications/disable_a_keybinding.lua",
+  "config-modifications/make_yazi_fullscreen.lua",
   "config-modifications/modify_yazi_config_and_add_hovered_buffer_background.lua",
   "config-modifications/modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
   "config-modifications/modify_yazi_config_and_open_multiple_files.lua",
