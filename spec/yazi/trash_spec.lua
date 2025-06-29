@@ -3,7 +3,7 @@ local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 local reset = require("spec.yazi.helpers.reset")
 local stub = require("luassert.stub")
 local buffers = require("spec.yazi.helpers.buffers")
-local snacks_bufdelete = require("snacks.bufdelete")
+local snacks_bufdelete = require("yazi.integrations.snacks_bufdelete")
 
 describe("process_trash_event", function()
   local snapshot

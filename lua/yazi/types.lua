@@ -27,7 +27,7 @@
 ---@field public config_home? string # optional path for nvim yazi to find a custom yazi.toml
 
 ---@class(exact) yazi.OptInFeatures
----@field process_events_live? boolean # By default, this is `true`, which means yazi.nvim processes events before yazi has been closed. If this is `false`, events are processed in a batch when the user closes yazi. If this is `true`, events are processed immediately.
+---@field process_events_live2? boolean # By default, this is `true`, which means yazi.nvim processes events before yazi has been closed. If this is `false`, events are processed in a batch when the user closes yazi. If this is `true`, events are processed immediately.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
@@ -68,6 +68,7 @@
 
 ---@alias YaziBufdeleteImpl
 ---| "snacks-if-available" # the implementation from https://github.com/folke/snacks.nvim, which maintains the window layout. If not available, falls back to the builtin implementation in `vim.api.nvim_buf_delete()`, which does not maintain the window layout.
+---| "bundled-snacks" # the implementation from snacks.nvim that is bundled with yazi.nvim. This is the same as "snacks-if-available", but does not require snacks.nvim to be installed.
 ---| fun(bufnr: integer) # a custom implementation provided by the user
 
 ---@class (exact) YaziConfigHighlightGroups # Defines the highlight groups that will be used in yazi

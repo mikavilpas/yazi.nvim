@@ -248,7 +248,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         )
       end)
     else
-      if not self.config.future_features.process_events_live then
+      if not self.config.future_features.process_events_live2 then
         -- these events will be processed when yazi exits
         self.events[#self.events + 1] = event
       end
@@ -270,7 +270,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
             }))
           end
 
-          if self.config.future_features.process_events_live == true then
+          if self.config.future_features.process_events_live2 == true then
             yazi_event_handling.process_events_emitted_from_yazi(
               { event },
               self.config,
@@ -283,7 +283,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
           nvim_event_handling.emit("YaziDDSCustom", event)
         end)
       else
-        if self.config.future_features.process_events_live == true then
+        if self.config.future_features.process_events_live2 == true then
           vim.schedule(function()
             yazi_event_handling.process_events_emitted_from_yazi(
               { event },

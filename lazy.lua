@@ -15,17 +15,6 @@ return {
   --
   -- https://github.com/nvim-lua/plenary.nvim/
   { "nvim-lua/plenary.nvim", lazy = true },
-  -- { "folke/snacks.nvim", lazy = true },
-
-  --
-  -- TODO enable after https://github.com/nvim-neorocks/nvim-busted-action/issues/4 is resolved
-  --
-  -- {
-  --   -- Neovim plugin that adds support for file operations using built-in LSP
-  --   -- https://github.com/antosha417/nvim-lsp-file-operations
-  --   'antosha417/nvim-lsp-file-operations',
-  --   lazy = true,
-  -- },
 
   {
     "mikavilpas/yazi.nvim",

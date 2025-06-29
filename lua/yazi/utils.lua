@@ -427,10 +427,12 @@ function M.bufdelete(implementation, bufnr)
     if ok then
       return bufdelete.delete({ buf = bufnr, force = true, wipe = true })
     else
-      vim.api.nvim_buf_call(bufnr, function()
-        vim.api.nvim_buf_delete(bufnr, { force = true })
-      end)
+      bufdelete = require("yazi.integrations.snacks_bufdelete")
+      bufdelete.delete({ buf = bufnr, force = true, wipe = true })
     end
+  elseif implementation == "bundled-snacks" then
+    local bufdelete = require("yazi.integrations.snacks_bufdelete")
+    bufdelete.delete({ buf = bufnr, force = true, wipe = true })
   elseif implementation == "builtin" then
     vim.api.nvim_buf_call(bufnr, function()
       vim.api.nvim_buf_delete(bufnr, { force = true })
