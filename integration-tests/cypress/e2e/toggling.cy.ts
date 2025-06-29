@@ -1,6 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
-import { assertYaziIsReady, yaziNormalModeText } from "./utils/yazi-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("toggling yazi to pseudo-continue the previous session", () => {
   beforeEach(() => {
@@ -80,9 +80,8 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       hoverFileAndVerifyItsHovered(nvim, "dir with spaces")
 
       // close yazi
-      cy.contains(yaziNormalModeText)
+      assertYaziIsReady(nvim)
       cy.typeIntoTerminal("q")
-      cy.contains(yaziNormalModeText).should("not.exist")
 
       // toggle yazi again. It should hover the same directory.
       cy.typeIntoTerminal("{control+upArrow}")

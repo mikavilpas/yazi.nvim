@@ -9,7 +9,6 @@ import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
-  yaziNormalModeText,
 } from "./utils/yazi-utils"
 
 describe("opening files", () => {
@@ -271,6 +270,7 @@ describe("opening files", () => {
       filename: "file2.txt",
       startupScriptModifications: [
         "modify_yazi_config_and_open_multiple_files.lua",
+        "add_yazi_context_assertions.lua",
       ],
     }).then((nvim) => {
       cy.contains("Hello")
@@ -290,7 +290,7 @@ describe("opening files", () => {
       // open yazi. It should open two tabs, one for each file in the quickfix
       // list
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(yaziNormalModeText)
+      assertYaziIsReady(nvim)
 
       isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
       isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
