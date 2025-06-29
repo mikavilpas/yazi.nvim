@@ -1,5 +1,5 @@
 import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
-import { assertYaziIsReady, yaziNormalModeText } from "./utils/yazi-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
 // https://docs.cypress.io/api/commands/type#Typing-tab-key-does-not-work
@@ -43,7 +43,6 @@ describe("revealing another open split (buffer) in yazi", () => {
       // start yazi and wait for it to be visible
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
-      cy.contains(yaziNormalModeText)
 
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.
@@ -96,7 +95,6 @@ describe("revealing another open split (buffer) in yazi", () => {
       // start yazi
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
-      cy.contains(yaziNormalModeText)
 
       cy.typeIntoTerminal("{control+i}")
 

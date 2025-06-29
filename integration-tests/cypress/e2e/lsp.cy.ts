@@ -1,8 +1,8 @@
 import assert from "assert"
 import {
+  assertYaziIsReady,
   isDirectorySelectedInYazi,
   isFileSelectedInYazi,
-  yaziNormalModeText,
 } from "./utils/yazi-utils"
 
 describe("rename events with LSP support", () => {
@@ -11,7 +11,10 @@ describe("rename events with LSP support", () => {
     // can use the LSP server to rename the file and all its references in the
     // project.
     cy.visit("/")
-    cy.startNeovim({ filename: "lua-project/config.lua" }).then((nvim) => {
+    cy.startNeovim({
+      filename: "lua-project/config.lua",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
@@ -30,9 +33,7 @@ describe("rename events with LSP support", () => {
       })
 
       cy.typeIntoTerminal("{upArrow}")
-
-      // wait for yazi to open and display the footer
-      cy.contains(yaziNormalModeText)
+      assertYaziIsReady(nvim)
 
       isFileSelectedInYazi("config.lua")
       cy.typeIntoTerminal("r")
@@ -58,7 +59,10 @@ describe("rename events with LSP support", () => {
     // is renamed in yazi, yazi.nvim should notify the LSP server to rename the
     // file and update all its references in the project.
     cy.visit("/")
-    cy.startNeovim({ filename: "lua-project/init.lua" }).then((nvim) => {
+    cy.startNeovim({
+      filename: "lua-project/init.lua",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- 609a3a37-42da-494d-908e-749d3aedca58`)
 
@@ -80,9 +84,7 @@ describe("rename events with LSP support", () => {
       cy.contains(`local utils = require("utils.utils")`)
 
       cy.typeIntoTerminal("{upArrow}")
-
-      // wait for yazi to open and display the footer
-      cy.contains(yaziNormalModeText)
+      assertYaziIsReady(nvim)
 
       cy.typeIntoTerminal("gg")
       // the directory contents should be visible. This is how we know the
@@ -92,7 +94,6 @@ describe("rename events with LSP support", () => {
       cy.contains("Rename:")
       cy.typeIntoTerminal("2{enter}")
       cy.typeIntoTerminal("q")
-      cy.contains(yaziNormalModeText).should("not.exist")
 
       // The LSP server asks for confirmation. Other LSPs don't seem to do
       // this, but it works...
@@ -112,7 +113,10 @@ describe("move events with LSP support", () => {
     // This is like renaming, but moving the file. The result is the same, but
     // yazi sends a different event (move vs rename) for it.
     cy.visit("/")
-    cy.startNeovim({ filename: "lua-project/config.lua" }).then((nvim) => {
+    cy.startNeovim({
+      filename: "lua-project/config.lua",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
@@ -137,7 +141,7 @@ describe("move events with LSP support", () => {
       cy.typeIntoTerminal("{upArrow}")
 
       // wait for yazi to open and display the footer
-      cy.contains(yaziNormalModeText)
+      assertYaziIsReady(nvim)
 
       isFileSelectedInYazi("config.lua")
       // start the move command
