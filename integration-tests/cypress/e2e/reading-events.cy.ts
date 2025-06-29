@@ -57,6 +57,17 @@ describe("reading events", () => {
       assertYaziIsReady(nvim)
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
+      nvim
+        .runLuaCode({
+          luaCode: `return require("yazi").config.integrations.bufdelete_implementation`,
+        })
+        .then((result) => {
+          // sanity check: make sure the default bufdelete_implementation is
+          // set as expected for this test
+          assert(result.value)
+          expect(result.value).eql("bundled-snacks")
+        })
+
       // start file deletion
       cy.typeIntoTerminal("d")
       cy.contains("Trash 1 selected file?")
@@ -89,7 +100,10 @@ describe("reading events", () => {
 
     cy.startNeovim({
       filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
-      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "add_command_to_show_loaded_packages.lua",
+      ],
     }).then((nvim) => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
@@ -110,6 +124,17 @@ describe("reading events", () => {
       assertYaziIsReady(nvim)
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
 
+      nvim
+        .runLuaCode({
+          luaCode: `return require("yazi").config.integrations.bufdelete_implementation`,
+        })
+        .then((result) => {
+          // sanity check: make sure the default bufdelete_implementation is
+          // set as expected for this test
+          assert(result.value)
+          expect(result.value).eql("bundled-snacks")
+        })
+
       // start file deletion
       cy.typeIntoTerminal("D")
       cy.contains("Permanently delete 1 selected file?")
@@ -125,10 +150,9 @@ describe("reading events", () => {
       cy.get(nvim.dir.contents["initial-file.txt"].name).should("not.exist")
       cy.contains("If you see this text, Neovim is ready").should("not.exist")
 
-      // make sure two windows are open. The test environment uses snacks.nvim
-      // which should make sure the window layout is preserved when closing
-      // the deleted buffer. The default in neovim is to also close the
-      // window.
+      // make sure two windows are open. The window layout should be preserved
+      // when closing the deleted buffer. The default in neovim is to also
+      // close the window.
       nvim.runExCommand({ command: `echo winnr("$")` }).then((result) => {
         expect(result.value).to.match(/2/)
       })

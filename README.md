@@ -30,10 +30,10 @@ Neovim.
     [snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md):
     you can grep/search in the directory yazi is in. Select some files to limit
     the search to those files only.
-  - Using
+  - Using a bundled version of
     [snacks.bufdelete](https://github.com/folke/snacks.nvim/blob/main/docs/bufdelete.md)
-    to have yazi close buffers and preserve the window layout. This is
-    recommended!
+    to have yazi close buffers and preserve the window layout. This happens when
+    files that are open are deleted in yazi.
   - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can
     search and replace in the directory yazi is in
   - Copy the relative path from the start file to the currently hovered file.
@@ -66,8 +66,6 @@ First, make sure you have the requirements:
 - yazi [0.4.0](https://github.com/sxyazi/yazi/releases/tag/v0.4.0) or later
 - New features might require a recent version of yazi (see
   [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md))
-- [snacks.nvim](https://github.com/folke/snacks.nvim) (for usage with
-  `process_events_live`)
 
 > [!TIP]
 >
@@ -95,9 +93,7 @@ you need to install the dependencies yourself. Also see the discussion in
   "mikavilpas/yazi.nvim",
   event = "VeryLazy",
   dependencies = {
-    -- check the installation instructions at
-    -- https://github.com/folke/snacks.nvim
-    "folke/snacks.nvim"
+    { "nvim-lua/plenary.nvim", lazy = true },
   },
   keys = {
     -- 👇 in this section, choose your own keymappings!
@@ -310,6 +306,9 @@ return {
       -- when yazi opened multiple files. The default is to send them to the
       -- quickfix list, but if you want to change that, you can define it here
       yazi_opened_multiple_files = function(chosen_files, config, state) end,
+
+      -- This function is called when yazi is ready to process events.
+      on_yazi_ready = function(buffer, config, process_api) end,
     },
 
     -- highlight buffers in the same directory as the hovered buffer
@@ -337,10 +336,11 @@ return {
       -- `grealpath` on OSX, (GNU) `realpath` otherwise
       resolve_relative_path_application = "",
 
-      -- how to delete (close) a buffer. Defaults to `snacks.bufdelete` from
-      -- https://github.com/folke/snacks.nvim, which maintains the window
-      -- layout.
-      bufdelete_implementation = "snacks-if-available",
+      -- how to delete (close) a buffer. Defaults to a bundled version of
+      -- `snacks.bufdelete`, copied from https://github.com/folke/snacks.nvim,
+      -- which maintains the window layout. See the `types.lua` file for more
+      -- information for the available options.
+      bufdelete_implementation = "bundled-snacks",
 
       -- add an action to a file picker to copy the relative path to the
       -- selected file(s). The implementation is the same as for the
@@ -359,7 +359,7 @@ return {
       -- before yazi has been closed. If this is `false`, events are processed
       -- in a batch when the user closes yazi. If this is `true`, events are
       -- processed immediately.
-      process_events_live = true,
+      process_events_live2 = true,
     },
   },
 }

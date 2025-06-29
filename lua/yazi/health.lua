@@ -35,7 +35,7 @@ return {
     end
 
     -- example data:
-    -- Yazi 0.3.1 (4112bf4 2024-08-15)
+    -- Yazi 25.6.11 (8657e6b6 2025-06-29)
     local raw_version = vim.fn.system("yazi --version")
 
     -- parse the version
@@ -74,7 +74,7 @@ return {
     end
 
     -- example data:
-    -- Ya 0.3.1 (4112bf4 2024-08-15)
+    -- Ya 25.6.11 (8657e6b6 2025-06-29)
     local raw_ya_version = vim.fn.system("ya --version") or ""
     local ya_semver = raw_ya_version:match("[Yy]a (%w+%.%w+%.%w+)")
     if ya_semver == nil then
@@ -110,17 +110,6 @@ return {
       vim.health.info(
         "You have enabled `open_for_directories` in your config. Because of this, please make sure you are loading yazi when Neovim starts."
       )
-    end
-
-    if config.future_features.process_events_live then
-      local ok = pcall(function()
-        return require("snacks")
-      end)
-      if not ok then
-        vim.health.warn(
-          "The `snacks` library is not found. Please install it to enable the `process_events_live` feature."
-        )
-      end
     end
 
     local resolver = config.integrations.resolve_relative_path_application

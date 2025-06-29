@@ -15,7 +15,7 @@ function M.default()
     log_level = vim.log.levels.OFF,
     open_for_directories = false,
     future_features = {
-      process_events_live = true,
+      process_events_live2 = true,
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,
@@ -77,7 +77,7 @@ function M.default()
       resolve_relative_path_application = vim.uv.os_uname().sysname == "Darwin"
           and "grealpath"
         or "realpath",
-      bufdelete_implementation = "snacks-if-available",
+      bufdelete_implementation = "bundled-snacks",
       picker_add_copy_relative_path_action = nil,
       pick_window_implementation = "snacks.picker",
     },
