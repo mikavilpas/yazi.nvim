@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.3...v11.6.0) (2025-06-29)
+
+
+### Features
+
+* can set the zindex of the yazi floating window ([#1016](https://github.com/mikavilpas/yazi.nvim/issues/1016)) ([635ff65](https://github.com/mikavilpas/yazi.nvim/commit/635ff65cdf33da03a109146ccc38fae367b68d8c))
+
 ## [11.5.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.2...v11.5.3) (2025-06-14)
 
 
