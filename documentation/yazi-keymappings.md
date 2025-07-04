@@ -32,10 +32,12 @@ Define the key you want to use in yazi's keymap.toml config:
 on = "<C-p>"
 run = """shell 'ya pub-to 0 MyMessageNoData'"""
 
-# send an event that also has json data
+# send an event that also has json data.
+# yazi allows using shell variables like $0, see the documentation here
+# https://yazi-rs.github.io/docs/configuration/keymap/#mgr.shell
 [[manager.prepend_keymap]]
 on = "<C-h>"
-run = """shell "ya pub-to 0 MyMessageWithData --json '{\\"somedata\\": 123}'""""
+run = """shell "ya pub-to 0 MyMessageWithData --json \\"{\\"selected_file\\": \\"$0\\"}\\"""""
 ```
 
 ### Define a handler in yazi.nvim

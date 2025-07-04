@@ -11,11 +11,16 @@ do
   )
 end
 
+-- selene: allow(global_usage)
+_G.YaziTestDDSCustomEvents = {}
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "YaziDDSCustom",
   -- see `:help event-args`
   ---@param event yazi.AutoCmdEvent
   callback = function(event)
+    -- selene: allow(global_usage)
+    table.insert(_G.YaziTestDDSCustomEvents, event)
     -- printing the messages will allow seeing them with `:messages` in tests
     print(vim.inspect({
       string.format(

@@ -1,6 +1,7 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import z from "zod"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("reading events", () => {
@@ -433,8 +434,29 @@ describe("'rename' events", () => {
           expect(result.value).to.match(
             /Just received a YaziDDSCustom event 'MyMessageWithData'!/,
           )
-          expect(result.value).to.match(/somedata/)
+          expect(result.value).to.match(/selected_file/)
         })
+
+        nvim
+          .runLuaCode({ luaCode: `return _G.YaziTestDDSCustomEvents` })
+          .should((result) => {
+            const schema = z.array(
+              z
+                .object({
+                  data: z.object({
+                    yazi_id: z.string(),
+                    type: z.string(),
+                    raw_data: z.string(),
+                  }),
+                })
+                .loose(),
+            )
+            const value = schema.parse(result.value)
+            const rawData = value.map((a) => a.data.raw_data)
+            expect(rawData.join("\n")).to.match(
+              new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
+            )
+          })
       })
     })
   })
