@@ -1,4 +1,5 @@
 import assert from "assert"
+import { waitForRenameToHaveBeenConfirmed } from "./utils/lsp-utils"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
@@ -12,8 +13,11 @@ describe("rename events with LSP support", () => {
     // project.
     cy.visit("/")
     cy.startNeovim({
-      filename: "lua-project/config.lua",
-      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      filename: "lua-project/lua/config.lua",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "accept_lsp_rename_confirmations_immediately.lua",
+      ],
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
@@ -41,16 +45,11 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("2{enter}")
       cy.typeIntoTerminal("q")
 
-      // The LSP server asks for confirmation. Other LSPs don't seem to do
-      // this, but it works...
-      cy.contains("Do you want to modify the require path?")
-      cy.contains("1. Modify")
-      cy.typeIntoTerminal("{enter}")
-      cy.contains("Do you want to modify the require path?").should("not.exist")
+      waitForRenameToHaveBeenConfirmed(nvim)
 
       // go back to the init.lua file and verify the require path was updated
       nvim.runExCommand({ command: `edit %:h/init.lua` })
-      cy.contains(`local config = require("config2")`)
+      cy.contains(`local config = require('config2')`)
     })
   })
 
@@ -60,8 +59,11 @@ describe("rename events with LSP support", () => {
     // file and update all its references in the project.
     cy.visit("/")
     cy.startNeovim({
-      filename: "lua-project/init.lua",
-      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      filename: "lua-project/lua/init.lua",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "accept_lsp_rename_confirmations_immediately.lua",
+      ],
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- 609a3a37-42da-494d-908e-749d3aedca58`)
@@ -95,15 +97,10 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("2{enter}")
       cy.typeIntoTerminal("q")
 
-      // The LSP server asks for confirmation. Other LSPs don't seem to do
-      // this, but it works...
-      cy.contains("Do you want to modify the require path?")
-      cy.contains("1. Modify")
-      cy.typeIntoTerminal("1{enter}")
-      cy.contains("Do you want to modify the require path?").should("not.exist")
+      waitForRenameToHaveBeenConfirmed(nvim)
 
       // the require path should have been updated
-      cy.contains(`local utils = require("utils2.utils")`)
+      cy.contains(`local utils = require('utils2.utils')`)
     })
   })
 })
@@ -114,8 +111,11 @@ describe("move events with LSP support", () => {
     // yazi sends a different event (move vs rename) for it.
     cy.visit("/")
     cy.startNeovim({
-      filename: "lua-project/config.lua",
-      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      filename: "lua-project/lua/config.lua",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "accept_lsp_rename_confirmations_immediately.lua",
+      ],
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
@@ -136,7 +136,7 @@ describe("move events with LSP support", () => {
 
       nvim.runBlockingShellCommand({
         command: "mkdir newdir",
-        cwdRelative: "lua-project",
+        cwdRelative: "lua-project/lua",
       })
       cy.typeIntoTerminal("{upArrow}")
 
@@ -156,15 +156,11 @@ describe("move events with LSP support", () => {
       cy.typeIntoTerminal("p")
       cy.typeIntoTerminal("q")
 
-      // The LSP server should be asking for confirmation
-      cy.contains("Do you want to modify the require path?")
-      cy.contains("1. Modify")
-      cy.typeIntoTerminal("1{enter}")
-      cy.contains("Do you want to modify the require path?").should("not.exist")
+      waitForRenameToHaveBeenConfirmed(nvim)
 
       // go back to the init.lua file and verify the require path was updated
       nvim.runExCommand({ command: `edit %:h/../init.lua` })
-      cy.contains(`local config = require("newdir.config")`)
+      cy.contains(`local config = require('newdir.config')`)
     })
   })
 })

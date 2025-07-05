@@ -48,6 +48,10 @@ export const MyTestDirectorySchema = z.object({
       name: z.literal("config-modifications/"),
       type: z.literal("directory"),
       contents: z.object({
+        "accept_lsp_rename_confirmations_immediately.lua": z.object({
+          name: z.literal("accept_lsp_rename_confirmations_immediately.lua"),
+          type: z.literal("file"),
+        }),
         "add_command_to_count_open_buffers.lua": z.object({
           name: z.literal("add_command_to_count_open_buffers.lua"),
           type: z.literal("file"),
@@ -181,25 +185,31 @@ export const MyTestDirectorySchema = z.object({
       name: z.literal("lua-project/"),
       type: z.literal("directory"),
       contents: z.object({
-        ".luarc.json": z.object({
-          name: z.literal(".luarc.json"),
+        ".emmyrc.json": z.object({
+          name: z.literal(".emmyrc.json"),
           type: z.literal("file"),
         }),
-        "config.lua": z.object({
-          name: z.literal("config.lua"),
-          type: z.literal("file"),
-        }),
-        "init.lua": z.object({
-          name: z.literal("init.lua"),
-          type: z.literal("file"),
-        }),
-        utils: z.object({
-          name: z.literal("utils/"),
+        lua: z.object({
+          name: z.literal("lua/"),
           type: z.literal("directory"),
           contents: z.object({
-            "utils.lua": z.object({
-              name: z.literal("utils.lua"),
+            "config.lua": z.object({
+              name: z.literal("config.lua"),
               type: z.literal("file"),
+            }),
+            "init.lua": z.object({
+              name: z.literal("init.lua"),
+              type: z.literal("file"),
+            }),
+            utils: z.object({
+              name: z.literal("utils/"),
+              type: z.literal("directory"),
+              contents: z.object({
+                "utils.lua": z.object({
+                  name: z.literal("utils.lua"),
+                  type: z.literal("file"),
+                }),
+              }),
             }),
           }),
         }),
@@ -267,6 +277,7 @@ export const testDirectoryFiles = z.enum([
   ".config/yazi/keymap.toml",
   ".config/yazi",
   ".config",
+  "config-modifications/accept_lsp_rename_confirmations_immediately.lua",
   "config-modifications/add_command_to_count_open_buffers.lua",
   "config-modifications/add_command_to_reveal_a_file.lua",
   "config-modifications/add_command_to_show_loaded_packages.lua",
@@ -297,11 +308,12 @@ export const testDirectoryFiles = z.enum([
   "highlights/file_3.txt",
   "highlights",
   "initial-file.txt",
-  "lua-project/.luarc.json",
-  "lua-project/config.lua",
-  "lua-project/init.lua",
-  "lua-project/utils/utils.lua",
-  "lua-project/utils",
+  "lua-project/.emmyrc.json",
+  "lua-project/lua/config.lua",
+  "lua-project/lua/init.lua",
+  "lua-project/lua/utils/utils.lua",
+  "lua-project/lua/utils",
+  "lua-project/lua",
   "lua-project",
   "other-subdirectory/other-sub-file.txt",
   "other-subdirectory",
