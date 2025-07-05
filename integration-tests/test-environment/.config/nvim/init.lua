@@ -114,6 +114,15 @@ local plugins = {
     -- https://github.com/mason-org/mason-lspconfig.nvim?tab=readme-ov-file#recommended-setup-for-lazynvim
     "mason-org/mason-lspconfig.nvim",
     opts = {},
+    config = function()
+      -- make sure mason-lspconfig does not automatically enable any LSP
+      -- servers that might be installed on the system. We want to only use the
+      -- LSP servers that are included in the test setup.
+      require("mason-lspconfig").setup({
+        automatic_enable = false,
+      })
+      vim.lsp.enable("lua_ls")
+    end,
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "neovim/nvim-lspconfig",
@@ -131,5 +140,3 @@ do
     { bg = colors.peach, fg = "#000000" }
   )
 end
-
-vim.lsp.enable("lua-language-server")
