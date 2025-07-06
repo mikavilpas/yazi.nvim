@@ -20,7 +20,6 @@ M.active_contexts = vim.ringbuf(2)
 function M.yazi(config, input_path, args)
   local utils = require("yazi.utils")
   local YaziProcess = require("yazi.process.yazi_process")
-  local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   if utils.is_yazi_available() ~= true then
     print(
@@ -112,14 +111,7 @@ function M.yazi(config, input_path, args)
         })
       end
     end,
-    on_exit = function(
-      exit_code,
-      selected_files,
-      events,
-      hovered_url,
-      last_directory,
-      context
-    )
+    on_exit = function(exit_code, selected_files, hovered_url, last_directory)
       if exit_code ~= 0 then
         print(
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
@@ -132,28 +124,11 @@ function M.yazi(config, input_path, args)
 
       Log:debug(
         string.format(
-          "yazi process exited successfully with code: %s, selected_files %s, and events %s",
+          "yazi process exited successfully with code: %s, selected_files %s",
           exit_code,
-          vim.inspect(selected_files),
-          vim.inspect(events)
+          vim.inspect(selected_files)
         )
       )
-
-      do
-        -- process events.
-        --
-        -- This is the legacy implementation used when
-        -- `future_features.process_events_live2 = false`. When that is used,
-        -- events should be processed in ya_process.lua and should not be
-        -- processed a second time here.
-        assert(#events == 0 or not config.future_features.process_events_live2)
-
-        yazi_event_handling.process_events_emitted_from_yazi(
-          events,
-          config,
-          context
-        )
-      end
 
       if last_directory == nil then
         if path:is_file() then

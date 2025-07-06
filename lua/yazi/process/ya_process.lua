@@ -6,7 +6,6 @@ local YaziSessionHighlighter =
   require("yazi.buffer_highlighting.yazi_session_highlighter")
 
 ---@class YaProcess
----@field public events YaziEvent[] "The events that have been received from yazi"
 ---@field public hovered_url? string "The path that is currently hovered over in this yazi."
 ---@field public cwd? string "The path that the yazi process is currently in."
 ---@field private config YaziConfig
@@ -30,7 +29,6 @@ function YaProcess.new(config, yazi_id, on_first_output, initial_file)
   self.yazi_id = yazi_id
   self.hovered_url = initial_file
   self.config = config
-  self.events = {}
   self.retries = 0
   self.highlighter = YaziSessionHighlighter.new()
   self.on_first_output = on_first_output
@@ -100,7 +98,6 @@ end
 function YaProcess:wait(timeout)
   Log:debug("Waiting for ya process to exit")
   self.ya_process:wait(timeout)
-  return self.events
 end
 
 ---@param context YaziActiveContext
@@ -248,11 +245,6 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         )
       end)
     else
-      if not self.config.future_features.process_events_live2 then
-        -- these events will be processed when yazi exits
-        self.events[#self.events + 1] = event
-      end
-
       if
         event.type == "rename"
         or event.type == "move"
@@ -270,32 +262,24 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
             }))
           end
 
-          if self.config.future_features.process_events_live2 == true then
-            yazi_event_handling.process_events_emitted_from_yazi(
-              { event },
-              self.config,
-              context
-            )
-          end
+          yazi_event_handling.process_events_emitted_from_yazi(
+            { event },
+            self.config,
+            context
+          )
         end)
       elseif forwarded_event_kinds[event.type] ~= nil then
         vim.schedule(function()
           nvim_event_handling.emit("YaziDDSCustom", event)
         end)
       else
-        if self.config.future_features.process_events_live2 == true then
-          vim.schedule(function()
-            yazi_event_handling.process_events_emitted_from_yazi(
-              { event },
-              self.config,
-              context
-            )
-          end)
-        else
-          Log:debug(
-            string.format("Ignoring unknown event: %s", vim.inspect(event))
+        vim.schedule(function()
+          yazi_event_handling.process_events_emitted_from_yazi(
+            { event },
+            self.config,
+            context
           )
-        end
+        end)
       end
     end
   end
