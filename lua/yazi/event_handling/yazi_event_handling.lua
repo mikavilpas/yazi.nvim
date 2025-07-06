@@ -64,10 +64,9 @@ local function handle_rename_move_bulk_event(config, event_data)
   end
 end
 
----@param event YaziEvent
+---@param event YaziRenameEvent | YaziMoveEvent | YaziBulkEvent | YaziDeleteEvent | YaziTrashEvent
 ---@param config YaziConfig
----@param context YaziActiveContext
-function M.process_event_emitted_from_yazi(event, config, context)
+function M.process_file_event(event, config)
   local lsp_rename = require("yazi.lsp.rename")
 
   if event.type == "rename" then
@@ -95,10 +94,9 @@ function M.process_event_emitted_from_yazi(event, config, context)
   elseif event.type == "delete" or event.type == "trash" then
     ---@cast event YaziDeleteEvent | YaziTrashEvent
     M.process_delete_event(event, config)
-  elseif event.type == "cycle-buffer" then
-    require("yazi.log"):debug("YaziNvimCycleBufferEvent received")
-    ---@cast event YaziNvimCycleBufferEvent
-    require("yazi.keybinding_helpers").cycle_open_buffers(config, context)
+  else
+    -- programmer error - all of these events that are handled by this function
+    error(string.format("Unexpected event type '%s'", event.type))
   end
 end
 

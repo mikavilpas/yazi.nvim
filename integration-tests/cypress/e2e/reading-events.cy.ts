@@ -26,6 +26,9 @@ describe("reading events", () => {
       cy.contains("subdirectory")
       cy.typeIntoTerminal("/subdirectory{enter}")
       cy.typeIntoTerminal("{rightArrow}")
+      nvim.waitForLuaCode({
+        luaAssertion: `Yazi_is_in_directory("${"other-subdirectory" satisfies MyTestDirectoryFile}")`,
+      })
       cy.typeIntoTerminal("{control+s}")
 
       // telescope should now be visible. Let's search for the contents of the

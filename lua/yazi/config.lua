@@ -141,7 +141,7 @@ function M.set_keymappings(yazi_buffer, config, context)
 
   if config.keymaps.cycle_open_buffers ~= false then
     vim.keymap.set({ "t" }, config.keymaps.cycle_open_buffers, function()
-      keybinding_helpers.cycle_open_buffers(config, context)
+      keybinding_helpers.cycle_open_buffers(context)
     end, { buffer = yazi_buffer })
   end
 

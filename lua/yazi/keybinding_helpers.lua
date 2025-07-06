@@ -73,10 +73,9 @@ local function show_visible_buffer(visible_buffer)
   return renameable_buffer.path:make_relative(vim.uv.cwd())
 end
 
----@param _config YaziConfig
 ---@param context YaziActiveContext
 ---@diagnostic disable-next-line: unused-local
-function YaziOpenerActions.cycle_open_buffers(_config, context)
+function YaziOpenerActions.cycle_open_buffers(context)
   assert(context.input_path, "No input path found")
   assert(context.input_path.filename, "No input path filename found")
 

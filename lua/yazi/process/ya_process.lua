@@ -2,52 +2,59 @@
 
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
-local YaziSessionHighlighter =
-  require("yazi.buffer_highlighting.yazi_session_highlighter")
 
----@class YaProcess
----@field public hovered_url? string "The path that is currently hovered over in this yazi."
----@field public cwd? string "The path that the yazi process is currently in."
+---@class(exact) YaProcess
+---@field public known_yazis table<string, YaziState> # yazi_id -> ready state
+---@field public is_running boolean "Whether the ya process is currently running. `false" if the process has exited."
 ---@field private config YaziConfig
----@field public yazi_id string "The YAZI_ID of the yazi process"
----@field private ya_process vim.SystemObj
+---@field public ya_process vim.SystemObj
 ---@field private retries integer
----@field private highlighter YaziSessionHighlighter
----@field private on_first_output fun()
----@field public ready boolean
 local YaProcess = {}
 ---@diagnostic disable-next-line: inject-field
 YaProcess.__index = YaProcess
 
+YaProcess.known_yazis = setmetatable({}, {
+  __mode = "v", -- see `:help lua-weaktable`
+})
+
 ---@param config YaziConfig
----@param yazi_id string
----@param on_first_output fun(self: YaProcess, event: YaziEvent)
----@param initial_file string
-function YaProcess.new(config, yazi_id, on_first_output, initial_file)
+---@diagnostic disable-next-line: inject-field
+function YaProcess.new(config)
   local self = setmetatable({}, YaProcess)
 
-  self.yazi_id = yazi_id
-  self.hovered_url = initial_file
   self.config = config
   self.retries = 0
-  self.highlighter = YaziSessionHighlighter.new()
-  self.on_first_output = on_first_output
-  self.ready = false
+  self.is_running = false
 
   return self
 end
 
-function YaProcess:is_ready()
+--- Connect a yazi instance so that it can receive events from the ya process.
+---@param state YaziState
+function YaProcess:register_yazi(state)
+  if not YaProcess.known_yazis[state.yazi_id] then
+    Log:debug(string.format("Registering yazi with id %s", state.yazi_id))
+    YaProcess.known_yazis[state.yazi_id] = state
+  else
+    Log:debug(
+      string.format(
+        "Yazi with id %s already registered, ignoring.",
+        state.yazi_id
+      )
+    )
+  end
+end
+
+---@param yazi_id string
+function YaProcess:is_ready(yazi_id)
+  local state = YaProcess.known_yazis[yazi_id]
   local has_process = self.ya_process ~= nil
-  local on_first_output_called = self.on_first_output == nil
-  local is_ready = self.ready == true
-  local ready = has_process and on_first_output_called and is_ready
-  return ready,
-    {
-      has_process = has_process,
-      on_first_output_called = on_first_output_called,
-      is_ready = is_ready,
-    }
+  local is_ready = state.ready == true
+  local ready = has_process and is_ready
+  return ready, {
+    has_process = has_process,
+    is_ready = is_ready,
+  }
 end
 
 ---@param items string[]
@@ -64,8 +71,9 @@ local function remove_duplicates(items)
   return result
 end
 
+---@param yazi_id string
 ---@param paths Path[]
-function YaProcess:get_yazi_command(paths)
+function YaProcess:get_yazi_command(yazi_id, paths)
   local command_words = { "yazi" }
 
   if self.config.open_multiple_tabs == true then
@@ -79,9 +87,9 @@ function YaProcess:get_yazi_command(paths)
   table.insert(command_words, "--chooser-file")
   table.insert(command_words, self.config.chosen_file_path)
 
-  if self.yazi_id then
+  if yazi_id then
     table.insert(command_words, "--client-id")
-    table.insert(command_words, self.yazi_id)
+    table.insert(command_words, yazi_id)
   end
 
   command_words = remove_duplicates(command_words)
@@ -93,14 +101,12 @@ end
 function YaProcess:kill_and_wait(timeout)
   Log:debug("Killing ya process")
   pcall(self.ya_process.kill, self.ya_process, "sigterm")
-  self.highlighter:clear_highlights()
 
   Log:debug("Waiting for ya process to exit")
   self.ya_process:wait(timeout)
 end
 
----@param context YaziActiveContext
-function YaProcess:start(context)
+function YaProcess:start()
   local event_kinds = {
     "rename",
     "delete",
@@ -160,7 +166,7 @@ function YaProcess:start(context)
           )
           self.retries = self.retries + 1
           vim.defer_fn(function()
-            self:start(context)
+            self:start()
           end, 50)
         else
           Log:debug("Failed to open ya after 5 retries")
@@ -184,72 +190,41 @@ function YaProcess:start(context)
       local parsed = utils.safe_parse_events(data)
       -- Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
 
-      self:process_events(parsed, interesting_events, context)
+      self:process_events(parsed, interesting_events)
     end,
 
     ---@param obj vim.SystemCompleted
     on_exit = function(obj)
       Log:debug(string.format("ya process exited with code: %s", obj.code))
+      self.is_running = false
     end,
   })
+  self.is_running = true
 
   return self
 end
 
 ---@param events YaziEvent[]
 ---@param forwarded_event_kinds table<string,boolean>
----@param context YaziActiveContext
-function YaProcess:process_events(events, forwarded_event_kinds, context)
+function YaProcess:process_events(events, forwarded_event_kinds)
   local nvim_event_handling = require("yazi.event_handling.nvim_event_handling")
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   for _, event in ipairs(events) do
-    if self.ready ~= true and event.type == "hey" then
-      ---@cast event YaziHeyEvent
-      if event.yazi_id == self.yazi_id then
-        Log:debug(
-          string.format("ya process is ready, yazi_id: %s", self.yazi_id)
-        )
-        self.ready = true
-        self.on_first_output()
-        self.on_first_output = nil
-      end
-    elseif event.type == "hover" then
-      ---@cast event YaziHoverEvent
-      Log:debug(
-        string.format(
-          "Changing the hovered url from %s to %s",
-          self.hovered_url,
-          event.url
-        )
-      )
-      self.hovered_url = event.url
+    if
+      -- handle these events globally, not per yazi instance
+      event.type == "rename"
+      or event.type == "move"
+      or event.type == "bulk"
+      or event.type == "trash"
+      or event.type == "delete"
+    then
       vim.schedule(function()
-        self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
-        nvim_event_handling.emit("YaziDDSHover", event)
-      end)
-    elseif event.type == "cd" then
-      ---@cast event YaziHoverEvent
-      Log:debug(
-        string.format("Changing the cwd from %s to %s", self.cwd, event.url)
-      )
-      self.cwd = event.url
-    elseif event.type == "cycle-buffer" then
-      vim.schedule(function()
-        ---@cast event YaziNvimCycleBufferEvent
-        yazi_event_handling.process_event_emitted_from_yazi(
-          event,
-          self.config,
-          context
-        )
-      end)
-    else
-      if
-        event.type == "rename"
-        or event.type == "move"
-        or event.type == "bulk"
-      then
-        vim.schedule(function()
+        if
+          event.type == "rename"
+          or event.type == "move"
+          or event.type == "bulk"
+        then
           local success, result = pcall(function()
             nvim_event_handling.emit_renamed_or_moved_event(event)
           end)
@@ -260,25 +235,76 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
               result,
             }))
           end
+        end
 
-          yazi_event_handling.process_event_emitted_from_yazi(
-            event,
-            self.config,
-            context
+        yazi_event_handling.process_file_event(event, self.config)
+      end)
+    else
+      -- forward events that are meant to be received by a specific yazi
+      -- instance that yazi.nvim controls
+      local state = YaProcess.known_yazis[event.yazi_id]
+      if not state then
+        if forwarded_event_kinds[event.type] ~= nil then
+          vim.schedule(function()
+            nvim_event_handling.emit("YaziDDSCustom", event)
+          end)
+        elseif event.type == "cycle-buffer" then
+          -- ideally cycle-buffer events should state which yazi.nvim instance
+          -- should receive and handle them. Right now this is not supported,
+          -- and it seems like the user must make changes to their
+          -- configuration to make this happen. Let's work around this to "just
+          -- work" in 90% of the cases, and we can have a more accurate
+          -- implementation available later on if needed.
+          local context = require("yazi").active_contexts:peek()
+          if context then
+            vim.schedule(function()
+              ---@cast context YaziActiveContext
+              ---@cast event YaziNvimCycleBufferEvent
+              require("yazi.keybinding_helpers").cycle_open_buffers(context)
+            end)
+          end
+        else
+          Log:debug(
+            string.format(
+              "Ignoring event for unknown yazi_id %s. Event: %s",
+              event.yazi_id,
+              vim.inspect(event)
+            )
           )
-        end)
-      elseif forwarded_event_kinds[event.type] ~= nil then
-        vim.schedule(function()
-          nvim_event_handling.emit("YaziDDSCustom", event)
-        end)
+        end
       else
-        vim.schedule(function()
-          yazi_event_handling.process_event_emitted_from_yazi(
-            event,
-            self.config,
-            context
-          )
-        end)
+        if event.type == "hey" then
+          -- mark the yazi as ready
+
+          ---@cast event YaziHeyEvent
+          if state then -- might receive `hey` multiple times
+            if state.on_first_output ~= nil then
+              Log:debug(
+                string.format("ya has become ready, yazi_id: %s", event.yazi_id)
+              )
+              state.on_first_output()
+              state.on_first_output = nil
+            end
+            state.ready = true
+          else
+            Log:debug(
+              string.format(
+                "Received 'hey' event for unknown yazi_id: %s",
+                event.yazi_id
+              )
+            )
+          end
+        elseif event.type == "cd" or event.type == "hover" then
+          state.on_event(event)
+        else
+          -- TODO what events are these exactly?
+          vim.schedule(function()
+            yazi_event_handling.process_event_emitted_from_yazi(
+              event,
+              self.config
+            )
+          end)
+        end
       end
     end
   end

@@ -10,14 +10,14 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
 
-    local ya = ya_process.new(config, yazi_id)
+    local ya = ya_process.new(config)
 
     local paths = {
       { filename = "file1" },
       { filename = "file2" },
     }
 
-    local command = ya:get_yazi_command(paths)
+    local command = ya:get_yazi_command(yazi_id, paths)
 
     assert.are.same(
       "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
@@ -32,14 +32,14 @@ describe("the get_yazi_command() function", function()
       config.open_multiple_tabs = false
       config.chosen_file_path = "/tmp/chosen_file_path"
 
-      local ya = ya_process.new(config, yazi_id)
+      local ya = ya_process.new(config)
 
       local paths = {
         { filename = "file1" },
         { filename = "file2" },
       }
 
-      local command = ya:get_yazi_command(paths)
+      local command = ya:get_yazi_command(yazi_id, paths)
 
       assert.are.same(
         "yazi 'file1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
@@ -53,7 +53,7 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
 
-    local ya = ya_process.new(config, yazi_id)
+    local ya = ya_process.new(config)
 
     local paths = {
       { filename = "file1" },
@@ -65,7 +65,7 @@ describe("the get_yazi_command() function", function()
       { filename = "file3" },
     }
 
-    local command = ya:get_yazi_command(paths)
+    local command = ya:get_yazi_command(yazi_id, paths)
 
     assert.are.same(
       "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
@@ -75,45 +75,6 @@ describe("the get_yazi_command() function", function()
 end)
 
 describe("process_events()", function()
-  describe("cd events", function()
-    -- processing cd events is important so that keymaps can retrieve the cwd
-    -- and operate on it
-
-    local config = require("yazi.config").default()
-
-    it("stores the current working directory (cwd)", function()
-      local ya = ya_process.new(config, yazi_id)
-
-      ya:process_events({
-        {
-          type = "cd",
-          yazi_id = "cd_123",
-          url = "/tmp",
-        } --[[@as YaziChangeDirectoryEvent]],
-      }, {}, {})
-
-      assert.are.same("/tmp", ya.cwd)
-    end)
-
-    it("overrides the previous cwd when it's changed multiple times", function()
-      local ya = ya_process.new(config, yazi_id)
-      ya:process_events({
-        {
-          type = "cd",
-          yazi_id = "cd_123",
-          url = "/tmp",
-        } --[[@as YaziChangeDirectoryEvent]],
-        {
-          type = "cd",
-          yazi_id = "cd_123",
-          url = "/tmp/directory",
-        } --[[@as YaziChangeDirectoryEvent]],
-      }, {}, {} --[[@as YaziActiveContext]])
-
-      assert.are.same("/tmp/directory", ya.cwd)
-    end)
-  end)
-
   describe("YaziRenamedOrMoved events", function()
     before_each(function()
       -- delete the autocmd to prevent it from being called multiple times
@@ -124,7 +85,7 @@ describe("process_events()", function()
       "gets published when YaziRenameEvent events are received from yazi",
       function()
         local config = require("yazi.config").default()
-        local ya = ya_process.new(config, yazi_id)
+        local ya = ya_process.new(config)
 
         ---@type YaziRenameEvent[]
         local events = {
@@ -166,7 +127,7 @@ describe("process_events()", function()
       "gets published when YaziMoveEvent events are received from yazi",
       function()
         local config = require("yazi.config").default()
-        local ya = ya_process.new(config, yazi_id)
+        local ya = ya_process.new(config)
 
         ---@type YaziMoveEvent[]
         local events = {
@@ -213,12 +174,7 @@ describe("process_events()", function()
       "gets published when YaziBulkEvent events are received from yazi",
       function()
         local config = require("yazi.config").default()
-        local ya = ya_process.new(
-          config,
-          yazi_id,
-          function() end,
-          "/tmp/new_path1"
-        )
+        local ya = ya_process.new(config)
 
         ---@type YaziBulkEvent[]
         local events = {
