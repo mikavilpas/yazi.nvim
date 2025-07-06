@@ -12,7 +12,7 @@ describe("parsing yazi event file events", function()
     assert.are.same(events, {
       {
         type = "rename",
-        id = "1712242143209837",
+        yazi_id = "1712242143209837",
         data = {
           tab = 0,
           from = "/Users/mikavilpas/git/yazi/file",
@@ -32,7 +32,7 @@ describe("parsing yazi event file events", function()
     assert.are.same(events, {
       {
         type = "delete",
-        id = "1712766606832135",
+        yazi_id = "1712766606832135",
         data = {
           urls = { "/tmp/test-directory/test_2" },
         },

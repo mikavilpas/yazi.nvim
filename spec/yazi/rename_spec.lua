@@ -96,7 +96,7 @@ describe("process_events_emitted_from_yazi", function()
         from = "/my-tmp/file1",
         to = "/my-tmp/file2",
       },
-      id = "123",
+      yazi_id = "123",
     }
 
     yazi_event_handling.process_events_emitted_from_yazi(
@@ -118,7 +118,7 @@ describe("process_events_emitted_from_yazi", function()
     ---@type YaziMoveEvent
     local event = {
       type = "move",
-      id = "123",
+      yazi_id = "123",
       data = {
         items = {
           {
