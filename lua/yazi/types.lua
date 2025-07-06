@@ -45,9 +45,12 @@
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi
+---@field highlighter YaziSessionHighlighter
 ---@field ya_process YaProcess the ya process that is currently running, listening for events from yazi
 ---@field input_path Path the path that is first selected by yazi when it's opened
 ---@field cycled_file? RenameableBuffer the last file that was cycled to with e.g. the <tab> key
+---@field hovered_file string the file that is currently hovered over in yazi
+---@field cwd? string the current working directory of the yazi process
 
 ---@class (exact) YaziConfigHooks
 ---@field public yazi_opened fun(preselected_path: string | nil, buffer: integer, config: YaziConfig):nil
