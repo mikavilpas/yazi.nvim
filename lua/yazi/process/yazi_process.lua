@@ -16,7 +16,7 @@ local YaziProcess = {}
 YaziProcess.__index = YaziProcess
 
 ---@class yazi.Callbacks
----@field on_exit fun(code: integer, selected_files: string[], events: YaziEvent[], hovered_url: string | nil, last_cwd: Path | nil, context: YaziActiveContext)
+---@field on_exit fun(code: integer, selected_files: string[], hovered_url: string | nil, last_cwd: Path | nil, context: YaziActiveContext)
 ---@field on_ya_first_event fun(api: YaziProcessApi)
 
 ---@param config YaziConfig
@@ -57,7 +57,7 @@ function YaziProcess:start(config, paths, callbacks)
     },
     on_exit = function(_, code)
       self.ya_process:kill()
-      local events = self.ya_process:wait(1000)
+      self.ya_process:wait(1000)
 
       local chosen_files = {}
       if utils.file_exists(config.chosen_file_path) == true then
@@ -72,7 +72,6 @@ function YaziProcess:start(config, paths, callbacks)
       callbacks.on_exit(
         code,
         chosen_files,
-        events,
         self.ya_process.hovered_url,
         last_directory,
         context

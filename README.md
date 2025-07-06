@@ -355,11 +355,7 @@ return {
     },
 
     future_features = {
-      -- By default, this is `true`, which means yazi.nvim processes events
-      -- before yazi has been closed. If this is `false`, events are processed
-      -- in a batch when the user closes yazi. If this is `true`, events are
-      -- processed immediately.
-      process_events_live2 = true,
+      -- (any unstable features will be added here in the future)
     },
   },
 }
