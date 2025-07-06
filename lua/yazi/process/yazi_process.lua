@@ -56,8 +56,7 @@ function YaziProcess:start(config, paths, callbacks)
       YAZI_CONFIG_HOME = config.config_home,
     },
     on_exit = function(_, code)
-      self.ya_process:kill()
-      self.ya_process:wait(1000)
+      self.ya_process:kill_and_wait(1000)
 
       local chosen_files = {}
       if utils.file_exists(config.chosen_file_path) == true then

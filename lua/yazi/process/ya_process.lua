@@ -89,13 +89,12 @@ function YaProcess:get_yazi_command(paths)
   return table.concat(command_words, " ")
 end
 
-function YaProcess:kill()
+---@param timeout integer
+function YaProcess:kill_and_wait(timeout)
   Log:debug("Killing ya process")
   pcall(self.ya_process.kill, self.ya_process, "sigterm")
   self.highlighter:clear_highlights()
-end
 
-function YaProcess:wait(timeout)
   Log:debug("Waiting for ya process to exit")
   self.ya_process:wait(timeout)
 end
