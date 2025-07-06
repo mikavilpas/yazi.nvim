@@ -84,12 +84,12 @@
 
 ---@class (exact) YaziRenameEvent
 ---@field public type "rename"
----@field public id string
+---@field public yazi_id string
 ---@field public data YaziEventDataRenameOrMove
 
 ---@class (exact) YaziMoveEvent
 ---@field public type "move"
----@field public id string
+---@field public yazi_id string
 ---@field public data {items: YaziEventDataRenameOrMove[]}
 
 ---@class (exact) YaziEventDataRenameOrMove
@@ -98,17 +98,17 @@
 
 ---@class (exact) YaziDeleteEvent
 ---@field public type "delete"
----@field public id string
+---@field public yazi_id string
 ---@field public data {urls: string[]}
 
 ---@class (exact) YaziTrashEvent
 ---@field public type "trash"
----@field public id string
+---@field public yazi_id string
 ---@field public data {urls: string[]}
 
 ---@class (exact) YaziChangeDirectoryEvent
 ---@field public type "cd"
----@field public id string
+---@field public yazi_id string
 ---@field public url string
 
 ---@class (exact) YaziHoverEvent "The event that is emitted when the user hovers over a file in yazi"

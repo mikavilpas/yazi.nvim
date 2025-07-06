@@ -230,7 +230,7 @@ function M.parse_events(event_lines)
       ---@type YaziRenameEvent
       local event = {
         type = type,
-        id = yazi_id,
+        yazi_id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -242,7 +242,7 @@ function M.parse_events(event_lines)
       ---@type YaziMoveEvent
       local event = {
         type = type,
-        id = yazi_id,
+        yazi_id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -265,7 +265,7 @@ function M.parse_events(event_lines)
       ---@type YaziDeleteEvent
       local event = {
         type = type,
-        id = yazi_id,
+        yazi_id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -278,7 +278,7 @@ function M.parse_events(event_lines)
       ---@type YaziTrashEvent
       local event = {
         type = type,
-        id = yazi_id,
+        yazi_id = yazi_id,
         data = vim.json.decode(data_string),
       }
       table.insert(events, event)
@@ -291,7 +291,7 @@ function M.parse_events(event_lines)
       ---@type YaziChangeDirectoryEvent
       local event = {
         type = type,
-        id = yazi_id,
+        yazi_id = yazi_id,
         url = vim.json.decode(data_string)["url"],
       }
       table.insert(events, event)

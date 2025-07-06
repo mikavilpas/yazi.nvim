@@ -85,7 +85,7 @@ describe("process_events()", function()
       ya:process_events({
         {
           type = "cd",
-          id = "cd_123",
+          yazi_id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
       }, {}, {})
@@ -98,12 +98,12 @@ describe("process_events()", function()
       ya:process_events({
         {
           type = "cd",
-          id = "cd_123",
+          yazi_id = "cd_123",
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
         {
           type = "cd",
-          id = "cd_123",
+          yazi_id = "cd_123",
           url = "/tmp/directory",
         } --[[@as YaziChangeDirectoryEvent]],
       }, {}, {} --[[@as YaziActiveContext]])
@@ -128,7 +128,7 @@ describe("process_events()", function()
         local events = {
           {
             type = "rename",
-            id = "rename_123",
+            yazi_id = "rename_123",
             data = {
               from = "/tmp/old_path",
               to = "/tmp/new_path",
@@ -170,7 +170,7 @@ describe("process_events()", function()
         local events = {
           {
             type = "move",
-            id = "rename_123",
+            yazi_id = "rename_123",
             data = {
               items = {
                 {
