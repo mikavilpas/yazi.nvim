@@ -245,29 +245,5 @@ declare global {
 }
 
 afterEach(async () => {
-  if (!testNeovim) return
-
-  let timeoutId: NodeJS.Timeout | undefined = undefined
-  const timeout = new Promise<void>((_, reject) => {
-    timeoutId = setTimeout(() => {
-      Cypress.log({
-        name: "timeout when waiting for :messages to finish. Neovim might be stuck or showing a message.",
-      })
-      reject(
-        new Error(
-          "timeout when waiting for :messages to finish. Neovim might be stuck or showing a message.",
-        ),
-      )
-    }, 5_000)
-  })
-
-  try {
-    await Promise.race([
-      timeout,
-      testNeovim.runExCommand({ command: "messages" }),
-    ])
-  } finally {
-    clearTimeout(timeoutId) // Ensure the timeout is cleared
-    testNeovim = undefined
-  }
+  testNeovim = undefined
 })
