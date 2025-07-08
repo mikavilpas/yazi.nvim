@@ -20,7 +20,7 @@ describe("process_delete_event", function()
       data = { urls = { "/abc/def" } },
     }
 
-    yazi_event_handling.process_delete_event(event, config, {})
+    yazi_event_handling.process_delete_event(event, config)
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -38,7 +38,7 @@ describe("process_delete_event", function()
       data = { urls = { "/abc" } },
     }
 
-    yazi_event_handling.process_delete_event(event, config, {})
+    yazi_event_handling.process_delete_event(event, config)
 
     vim.wait(1000, function()
       return not vim.api.nvim_buf_is_valid(buffer)
@@ -56,38 +56,11 @@ describe("process_delete_event", function()
       data = { urls = { "/abc/ghi" } },
     }
 
-    local deletions =
-      yazi_event_handling.process_delete_event(event, config, {})
+    local deletions = yazi_event_handling.process_delete_event(event, config)
 
     -- NOTE waiting for something not to happen is not possible to do reliably.
     -- Inspect the return value so we can at least get some level of
     -- confidence.
-    assert.are.same({}, deletions)
-  end)
-
-  it("doesn't delete a buffer that was renamed to in a later event", function()
-    buffers.add_listed_buffer("/def/file")
-
-    ---@type YaziDeleteEvent
-    local delete_event = {
-      type = "delete",
-      yazi_id = "1712766606832135",
-      data = { urls = { "/def/file" } },
-    }
-
-    ---@type YaziRenameEvent
-    local rename_event = {
-      type = "rename",
-      yazi_id = "1712766606832135",
-      data = { from = "/def/other-file", to = "/def/file" },
-    }
-
-    local deletions = yazi_event_handling.process_delete_event(
-      delete_event,
-      config,
-      { rename_event }
-    )
-
     assert.are.same({}, deletions)
   end)
 end)

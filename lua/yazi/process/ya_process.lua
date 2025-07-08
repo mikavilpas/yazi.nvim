@@ -237,8 +237,8 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
     elseif event.type == "cycle-buffer" then
       vim.schedule(function()
         ---@cast event YaziNvimCycleBufferEvent
-        yazi_event_handling.process_events_emitted_from_yazi(
-          { event },
+        yazi_event_handling.process_event_emitted_from_yazi(
+          event,
           self.config,
           context
         )
@@ -261,8 +261,8 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
             }))
           end
 
-          yazi_event_handling.process_events_emitted_from_yazi(
-            { event },
+          yazi_event_handling.process_event_emitted_from_yazi(
+            event,
             self.config,
             context
           )
@@ -273,8 +273,8 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         end)
       else
         vim.schedule(function()
-          yazi_event_handling.process_events_emitted_from_yazi(
-            { event },
+          yazi_event_handling.process_event_emitted_from_yazi(
+            event,
             self.config,
             context
           )

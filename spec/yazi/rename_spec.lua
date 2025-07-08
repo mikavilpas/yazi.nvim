@@ -99,11 +99,7 @@ describe("process_events_emitted_from_yazi", function()
       yazi_id = "123",
     }
 
-    yazi_event_handling.process_events_emitted_from_yazi(
-      { event },
-      config,
-      context
-    )
+    yazi_event_handling.process_event_emitted_from_yazi(event, config, context)
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
@@ -129,11 +125,7 @@ describe("process_events_emitted_from_yazi", function()
       },
     }
 
-    yazi_event_handling.process_events_emitted_from_yazi(
-      { event },
-      config,
-      context
-    )
+    yazi_event_handling.process_event_emitted_from_yazi(event, config, context)
 
     local open_buffers = utils.get_open_buffers()
     for _, buffer in ipairs(open_buffers) do
