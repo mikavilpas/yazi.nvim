@@ -1,8 +1,12 @@
 import { flavors } from "@catppuccin/palette"
 import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
-import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils"
+import {
+  assertYaziIsHovering,
+  hoverFileAndVerifyItsHovered,
+} from "./utils/hover-utils"
 import { textIsVisibleWithBackgroundColor } from "./utils/text-utils"
+import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {
@@ -177,12 +181,16 @@ describe("fzf-lua integration (grep)", () => {
     // https://github.com/ibhagwan/fzf-lua
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
-      startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
+      startupScriptModifications: [
+        "modify_yazi_config_use_fzf_lua.lua",
+        "add_yazi_context_assertions.lua",
+      ],
     }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
       cy.contains(
         nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
           .name,
@@ -199,7 +207,7 @@ describe("fzf-lua integration (grep)", () => {
 
       // search for some file content. This should match
       // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
-      cy.typeIntoTerminal("this")
+      cy.typeIntoTerminal("this", { delay: 30 })
 
       // some results should be visible
       cy.contains(
@@ -225,16 +233,17 @@ describe("snacks.picker integration (grep)", () => {
     cy.visit("/")
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
-      startupScriptModifications: ["modify_yazi_config_use_snacks_picker.lua"],
+      startupScriptModifications: [
+        "modify_yazi_config_use_snacks_picker.lua",
+        "add_yazi_context_assertions.lua",
+      ],
     }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      assertYaziIsReady(nvim)
+      assertYaziIsHovering(nvim, "routes/posts.$postId/route.tsx")
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left
