@@ -1,0 +1,1 @@
+../../nvim/lua/plugins.lua

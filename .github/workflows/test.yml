@@ -78,8 +78,11 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm tui neovim prepare
-        working-directory: integration-tests
+      - working-directory: integration-tests
+        run: |
+          # NVIM_APPNAME=nvim is the default, but spelled out here for clarity
+          NVIM_APPNAME=nvim pnpm tui neovim prepare
+          NVIM_APPNAME=nvim_integrations pnpm tui neovim prepare
 
       # need to work around https://github.com/cypress-io/github-action/issues/1246
       - run: pnpm --filter integration-tests exec cypress install

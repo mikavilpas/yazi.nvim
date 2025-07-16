@@ -10,7 +10,8 @@
     "cy:run": "pnpm --filter ./integration-tests/ cy:run",
     "dev": "pnpm --filter ./integration-tests/ dev",
     "markdownlint": "markdownlint-cli2 README.md",
-    "prettier": "prettier --check ."
+    "prettier": "prettier --check .",
+    "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
     "@umbrelladocs/linkspector": "0.4.6",

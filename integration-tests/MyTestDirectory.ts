@@ -26,6 +26,41 @@ export const MyTestDirectorySchema = z.object({
               name: z.literal("init.lua"),
               type: z.literal("file"),
             }),
+            lua: z.object({
+              name: z.literal("lua/"),
+              type: z.literal("directory"),
+              contents: z.object({
+                "plugins.lua": z.object({
+                  name: z.literal("plugins.lua"),
+                  type: z.literal("file"),
+                }),
+              }),
+            }),
+            "prepare.lua": z.object({
+              name: z.literal("prepare.lua"),
+              type: z.literal("file"),
+            }),
+          }),
+        }),
+        nvim_integrations: z.object({
+          name: z.literal("nvim_integrations/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "init.lua": z.object({
+              name: z.literal("init.lua"),
+              type: z.literal("file"),
+            }),
+            lua: z.object({
+              name: z.literal("lua/"),
+              type: z.literal("directory"),
+              contents: z.object({
+                "plugins.lua": z.object({
+                  name: z.literal("plugins.lua"),
+                  type: z.literal("file-symlink"),
+                  target: z.literal("../../nvim/lua/plugins.lua"),
+                }),
+              }),
+            }),
             "prepare.lua": z.object({
               name: z.literal("prepare.lua"),
               type: z.literal("file"),
@@ -272,8 +307,15 @@ export type MyTestDirectory = MyTestDirectoryContentsSchemaType["contents"]
 
 export const testDirectoryFiles = z.enum([
   ".config/nvim/init.lua",
+  ".config/nvim/lua/plugins.lua",
+  ".config/nvim/lua",
   ".config/nvim/prepare.lua",
   ".config/nvim",
+  ".config/nvim_integrations/init.lua",
+  ".config/nvim_integrations/lua/plugins.lua",
+  ".config/nvim_integrations/lua",
+  ".config/nvim_integrations/prepare.lua",
+  ".config/nvim_integrations",
   ".config/yazi/keymap.toml",
   ".config/yazi",
   ".config",

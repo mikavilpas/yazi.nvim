@@ -16,6 +16,7 @@ describe("grug-far integration (search and replace)", () => {
   it("can use grug-far.nvim to search and replace in the directory of the hovered file", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains("this file is adjacent-file.txt")
@@ -47,6 +48,7 @@ describe("grug-far integration (search and replace)", () => {
   it("can search and replace, limited to selected files only", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
@@ -90,6 +92,7 @@ describe("telescope integration (search)", () => {
   it("can use telescope.nvim to search in the current directory", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
@@ -110,6 +113,7 @@ describe("telescope integration (search)", () => {
   it("can use telescope.nvim to search, limited to the selected files only", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
@@ -147,6 +151,7 @@ describe("fzf-lua integration (grep)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
@@ -185,6 +190,7 @@ describe("fzf-lua integration (grep)", () => {
         "modify_yazi_config_use_fzf_lua.lua",
         "add_yazi_context_assertions.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
@@ -237,6 +243,7 @@ describe("snacks.picker integration (grep)", () => {
         "modify_yazi_config_use_snacks_picker.lua",
         "add_yazi_context_assertions.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
@@ -271,7 +278,9 @@ describe("snacks.picker integration (grep)", () => {
 
   it("can optionally setup a keybinding to copy the relative paths to files", () => {
     cy.visit("/")
-    cy.startNeovim({}).then((nvim) => {
+    cy.startNeovim({
+      NVIM_APPNAME: "nvim_integrations",
+    }).then((nvim) => {
       // wait until the file contents are visible
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("dd")
@@ -318,6 +327,7 @@ describe("snacks open_and_pick_window integration", () => {
         "add_yazi_context_assertions.lua",
         "add_command_to_reveal_a_file.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       nvim.runExCommand({ command: "vsplit" })
       cy.typeIntoTerminal("{upArrow}")

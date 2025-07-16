@@ -18,6 +18,7 @@ describe("rename events with LSP support", () => {
         "add_yazi_context_assertions.lua",
         "accept_lsp_rename_confirmations_immediately.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
@@ -64,6 +65,7 @@ describe("rename events with LSP support", () => {
         "add_yazi_context_assertions.lua",
         "accept_lsp_rename_confirmations_immediately.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- 609a3a37-42da-494d-908e-749d3aedca58`)
@@ -116,6 +118,7 @@ describe("move events with LSP support", () => {
         "add_yazi_context_assertions.lua",
         "accept_lsp_rename_confirmations_immediately.lua",
       ],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)

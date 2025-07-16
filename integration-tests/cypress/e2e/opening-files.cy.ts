@@ -70,7 +70,7 @@ describe("opening files", () => {
     })
   })
 
-  it("can open a file that was selected in yazi", () => {
+  it("can open yazi and hover a filename selected in visual mode", () => {
     cy.startNeovim().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -363,9 +363,10 @@ describe("opening files", () => {
 
         // close yazi
         cy.typeIntoTerminal("q")
+        cy.contains("-- TERMINAL --").should("not.exist")
 
         // the file should now be renamed - ask neovim to confirm this
-        nvim.runExCommand({ command: "buffers" }).and((result) => {
+        nvim.runExCommand({ command: "ls" }).and((result) => {
           expect(result.value).to.contain("renamed-file.txt")
         })
       })
