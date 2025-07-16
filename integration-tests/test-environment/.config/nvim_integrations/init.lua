@@ -55,6 +55,83 @@ vim.list_extend(plugins, {
       -- allows logging debug data, which can be shown in CI when cypress tests fail
       log_level = vim.log.levels.DEBUG,
       future_features = {},
+      integrations = {
+        grep_in_directory = "telescope",
+        picker_add_copy_relative_path_action = "snacks.picker",
+      },
+    },
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    lazy = true,
+    opts = {
+      pickers = {
+        live_grep = {
+          theme = "dropdown",
+        },
+      },
+    },
+  },
+  { "ibhagwan/fzf-lua" },
+  { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@module "snacks"
+    ---@type snacks.Config
+    opts = {
+      picker = {
+        win = {
+          input = {
+            keys = {
+              ["<C-y>"] = { "yazi_copy_relative_path", mode = { "n", "i" } },
+            },
+          },
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader><space>",
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = "Smart Find Files",
+      },
+    },
+  },
+
+  {
+    -- https://github.com/mason-org/mason-lspconfig.nvim?tab=readme-ov-file#recommended-setup-for-lazynvim
+    "mason-org/mason-lspconfig.nvim",
+    opts = {},
+    config = function()
+      ---@diagnostic disable-next-line: missing-fields
+      require("mason-lspconfig").setup({
+        -- make sure mason-lspconfig does not automatically enable any LSP
+        -- servers that might be installed on the system. We want to only use the
+        -- LSP servers that are included in the test setup.
+        automatic_enable = false,
+      })
+      vim.lsp.config("emmylua_ls", {
+        root_markers = {
+          -- The default config prefers a `luarc.json` file which is found at
+          -- the root of the yazi.nvim repository. Here we need to find the
+          -- file inside the test environment instead, so that the tests can
+          -- run in isolation.
+          --
+          -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/emmylua_ls.lua
+          ".emmyrc.json",
+        },
+      })
+      vim.lsp.enable("emmylua_ls")
+    end,
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
     },
   },
 })

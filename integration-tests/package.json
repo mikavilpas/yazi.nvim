@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "cy:run": "concurrently --success command-cypress --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'wait-on --timeout 60000 http://127.0.0.1:3000 && npx cypress run'",
-    "dev": "pnpm tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
+    "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
     "eslint": "eslint --max-warnings=0 ."
   },
   "dependencies": {

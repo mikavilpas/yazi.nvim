@@ -12,6 +12,7 @@ describe("reading events", () => {
   it("can read 'cd' events and use telescope in the latest directory", () => {
     cy.startNeovim({
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       //
       // wait until text on the start screen is visible
