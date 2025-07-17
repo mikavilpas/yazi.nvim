@@ -1,5 +1,4 @@
 local plenary_path = require("plenary.path")
-local plenary_iterators = require("plenary.iterators")
 
 ---@param path string
 local function remove_trailing_slash(path)
@@ -46,13 +45,12 @@ end
 ---@return boolean
 function RenameableBuffer:matches_parent(path)
   path = remove_trailing_slash(path)
-  local found = plenary_iterators
-    .iter(self.path:parents())
-    :find(function(parent_path)
-      return path == parent_path
-    end)
-
-  return found ~= nil
+  for _, parent in ipairs(self.path:parents()) do
+    if parent == path then
+      return true
+    end
+  end
+  return false
 end
 
 --- When hovering over a file or a directory `other`, return true if this
