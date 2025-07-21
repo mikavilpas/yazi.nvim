@@ -415,6 +415,11 @@ describe("'rename' events", () => {
         // The user can set a config option to specify custom yazi dds events that
         // they want to subscribe to. These are emitted as YaziDDSCustom events.
         cy.contains("If you see this text, Neovim is ready!")
+        nvim.runExCommand({ command: "pwd" }).then((result) => {
+          const dir = z.string().parse(result.value)
+          expect(dir + "/").to.eql(nvim.dir.testEnvironmentPath)
+        })
+
         cy.typeIntoTerminal("{upArrow}")
         assertYaziIsReady(nvim)
         cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -423,7 +428,7 @@ describe("'rename' events", () => {
         // notify_custom_events.lua
         cy.typeIntoTerminal("{control+p}")
 
-        // also publish MyMessageWithData that contains json data
+        // also publish MyChangeWorkingDirectoryCommand that contains json data
         cy.typeIntoTerminal("{control+h}")
 
         cy.typeIntoTerminal("q")
@@ -433,7 +438,7 @@ describe("'rename' events", () => {
             /Just received a YaziDDSCustom event 'MyMessageNoData'!/,
           )
           expect(result.value).to.match(
-            /Just received a YaziDDSCustom event 'MyMessageWithData'!/,
+            /Just received a YaziDDSCustom event 'MyChangeWorkingDirectoryCommand'!/,
           )
           expect(result.value).to.match(/selected_file/)
         })
@@ -458,6 +463,11 @@ describe("'rename' events", () => {
               new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
             )
           })
+
+        // should have changed the working directory
+        nvim.runExCommand({ command: "pwd" }).then((result) => {
+          expect(result.value).to.eql(nvim.dir.rootPathAbsolute)
+        })
       })
     })
   })
