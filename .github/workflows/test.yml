@@ -48,8 +48,8 @@ jobs:
           crate: yazi-fm
           git: https://github.com/sxyazi/yazi
           commit:
-            # https://github.com/mikavilpas/yazi/commit/6366e46c23da43f7aae7f083d00fd989321b9638 (2025-07-11)
-            6366e46c23da43f7aae7f083d00fd989321b9638
+            # https://github.com/sxyazi/yazi/commit/74bd98031e04 (2025-07-20)
+            74bd98031e04
           # tag: v25.5.31
 
       - name: Compile and install yazi from source
@@ -59,8 +59,8 @@ jobs:
           crate: yazi-cli
           git: https://github.com/sxyazi/yazi
           commit:
-            # https://github.com/sxyazi/yazi/commit/6366e46c23da43f7aae7f083d00fd989321b9638 (2025-07-11)
-            6366e46c23da43f7aae7f083d00fd989321b9638
+            # https://github.com/sxyazi/yazi/commit/74bd98031e04 (2025-07-20)
+            74bd98031e04
           # tag: v25.5.31
 
       - name: Run tests
