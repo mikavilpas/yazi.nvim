@@ -28,14 +28,14 @@ Define the key you want to use in yazi's keymap.toml config:
 # keymap.toml
 #
 # send an event with no data
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<C-p>"
 run = """shell 'ya pub-to 0 MyMessageNoData'"""
 
 # send an event that also has json data.
 # yazi allows using shell variables like $0, see the documentation here
 # https://yazi-rs.github.io/docs/configuration/keymap/#mgr.shell
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<C-h>"
 run = """shell "ya pub-to 0 MyMessageWithData --json \\"{\\"selected_file\\": \\"$0\\"}\\"""""
 ```
@@ -99,7 +99,7 @@ running.
 ```toml
 # Augment https://yazi-rs.github.io/docs/tips/#cd-to-git-root - go to the nvim
 # cwd when neovim is open, and to the git root when it is not
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = ["g", "r"]
 run = '''
   shell 'ya pub dds-cd --str "${NVIM_CWD:-$(git rev-parse --show-toplevel 2>/dev/null)}"'
