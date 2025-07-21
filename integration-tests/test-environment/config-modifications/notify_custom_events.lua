@@ -7,7 +7,7 @@ do
   config.forwarded_dds_events = vim.tbl_extend(
     "force",
     config.forwarded_dds_events or {},
-    { "MyMessageNoData", "MyMessageWithData" }
+    { "MyMessageNoData", "MyChangeWorkingDirectoryCommand" }
   )
 end
 
@@ -29,5 +29,15 @@ vim.api.nvim_create_autocmd("User", {
       ),
       event.data,
     }))
+
+    if event.data.type == "MyChangeWorkingDirectoryCommand" then
+      local json = vim.json.decode(event.data.raw_data)
+      local selected_file = assert(json.selected_file)
+
+      local new_cwd = vim.fn.fnamemodify(selected_file, ":p:h")
+
+      -- change Neovim's current working directory
+      vim.cmd("cd " .. new_cwd)
+    end
   end,
 })

@@ -37,7 +37,10 @@ run = """shell 'ya pub-to 0 MyMessageNoData'"""
 # https://yazi-rs.github.io/docs/configuration/keymap/#mgr.shell
 [[mgr.prepend_keymap]]
 on = "<C-h>"
-run = """shell "ya pub-to 0 MyMessageWithData --json \\"{\\"selected_file\\": \\"$0\\"}\\"""""
+run = """shell --
+json=$(printf '{"selected_file": "%s"}' "$0")
+ya pub-to 0 MyChangeWorkingDirectoryCommand --json "$json"
+"""
 ```
 
 ### Define a handler in yazi.nvim
@@ -49,7 +52,7 @@ Add the following code to your configuration:
 ---@module "yazi"
 
 require("yazi").config.forwarded_dds_events =
-  { "MyMessageNoData", "MyMessageWithData" }
+  { "MyMessageNoData", "MyChangeWorkingDirectoryCommand" }
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "YaziDDSCustom",
@@ -64,6 +67,16 @@ vim.api.nvim_create_autocmd("User", {
       ),
       event.data,
     }))
+
+    if event.data.type == "MyChangeWorkingDirectoryCommand" then
+      local json = vim.json.decode(event.data.raw_data)
+      local selected_file = assert(json.selected_file)
+
+      local new_cwd = vim.fn.fnamemodify(selected_file, ":p:h")
+
+      -- change Neovim's current working directory
+      vim.cmd("cd " .. new_cwd)
+    end
   end,
 })
 ```
