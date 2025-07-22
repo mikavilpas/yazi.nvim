@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.6.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.0...v11.6.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* **logs:** clearly log when `emit_to_yazi` succeeds ([17d6822](https://github.com/mikavilpas/yazi.nvim/commit/17d6822f0bc15fb91e29112d42e3c93e59d19104))
+
 ## [11.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.5.3...v11.6.0) (2025-06-29)
 
 
