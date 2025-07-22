@@ -20,16 +20,27 @@ end
 ---@param args string[]
 ---@return vim.SystemObj
 function YaziProcessApi:emit_to_yazi(args)
-  require("yazi.log"):debug(
+  local Log = require("yazi.log")
+  Log:debug(
     string.format(
-      "Using 'ya emit-to %s' with args: '%s'",
+      "emit_to_yazi: Using 'ya emit-to %s' with args: '%s'",
       self.yazi_id,
       vim.inspect(args)
     )
   )
   return vim.system(
     { "ya", "emit-to", self.yazi_id, unpack(args) },
-    { timeout = 1000 }
+    { timeout = 1000 },
+    function(result)
+      Log:debug(
+        string.format(
+          "emit_to_yazi: ya succeeded: 'ya emit-to %s' with args: '%s' and result '%s'",
+          self.yazi_id,
+          vim.inspect(args),
+          vim.inspect(result)
+        )
+      )
+    end
   )
 end
 
