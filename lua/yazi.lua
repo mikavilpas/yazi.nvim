@@ -66,12 +66,12 @@ function M.yazi(config, input_path, args)
           description = string.format("reveal path '%s'", args.reveal_path),
           delay = 50,
           retries = retries,
-          action = function()
+          action = vim.schedule_wrap(function()
             local reveal_job = api:reveal(args.reveal_path)
             local completed = reveal_job:wait(500)
             assert(completed.code == 0)
             return nil
-          end,
+          end),
         })
       end
     end,
