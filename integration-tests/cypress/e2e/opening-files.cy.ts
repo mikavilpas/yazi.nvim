@@ -362,6 +362,7 @@ describe("opening files", () => {
         cy.typeIntoTerminal("y{enter}")
 
         // close yazi
+        cy.contains("-- TERMINAL --")
         cy.typeIntoTerminal("q")
         cy.contains("-- TERMINAL --").should("not.exist")
 
