@@ -29,3 +29,7 @@ vim.keymap.set("n", "<leader>r", function()
   })
 end)
 ```
+
+An end-to-end tested example of this can be found in
+[add_keybinding_to_start_yazi_and_find.lua](../integration-tests/test-environment/config-modifications/yazi_config/add_keybinding_to_start_yazi_and_find.lua)
+file.
