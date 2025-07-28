@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.6.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.1...v11.6.2) (2025-07-28)
+
+
+### Bug Fixes
+
+* bulk renaming closing yazi in nvim `0.11.3` ([1968f71](https://github.com/mikavilpas/yazi.nvim/commit/1968f71ed8097942e9b15d22b6c132ffc576ef41))
+
 ## [11.6.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.0...v11.6.1) (2025-07-22)
 
 
