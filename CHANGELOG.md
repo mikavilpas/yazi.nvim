@@ -1,5 +1,17 @@
 # Changelog
 
+## [11.6.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.2...v11.6.3) (2025-07-28)
+
+
+### Bug Fixes
+
+* internal retry logic didn't log results on failure ([52b413b](https://github.com/mikavilpas/yazi.nvim/commit/52b413b2993061d75ff3b92f26f563d44d9c6abc))
+
+
+### Performance Improvements
+
+* fix `Yazi toggle` always failing the first try ([f594ead](https://github.com/mikavilpas/yazi.nvim/commit/f594ead1faad9ad9180670aafa2332c039151ac1))
+
 ## [11.6.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.1...v11.6.2) (2025-07-28)
 
 
