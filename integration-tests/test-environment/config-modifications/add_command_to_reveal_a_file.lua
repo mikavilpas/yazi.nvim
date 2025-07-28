@@ -8,7 +8,19 @@ function Yazi_reveal_path(path)
   local Log = require("yazi.log")
   if context then
     Log:debug("Revealing path in yazi context: " .. vim.inspect(path))
-    context.api:reveal(path)
+
+    require("yazi.process.retry").retry({
+      description = "Revealing path in yazi context",
+      delay = 50,
+      retries = 10,
+      action = function()
+        local job = context.api:reveal(path)
+        local completed = job:wait(1000)
+
+        assert(completed.code == 0)
+        return nil
+      end,
+    })
   else
     Log:debug("No active yazi context found")
   end
