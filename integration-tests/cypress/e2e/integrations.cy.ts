@@ -150,7 +150,7 @@ describe("fzf-lua integration (grep)", () => {
   it("can use fzf-lua.nvim to search in the current directory", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
-      startupScriptModifications: ["modify_yazi_config_use_fzf_lua.lua"],
+      startupScriptModifications: ["yazi_config/use_fzf_lua.lua"],
       NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       cy.contains("this file is adjacent-file.txt")
@@ -187,7 +187,7 @@ describe("fzf-lua integration (grep)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
       startupScriptModifications: [
-        "modify_yazi_config_use_fzf_lua.lua",
+        "yazi_config/use_fzf_lua.lua",
         "add_yazi_context_assertions.lua",
       ],
       NVIM_APPNAME: "nvim_integrations",
@@ -240,7 +240,7 @@ describe("snacks.picker integration (grep)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
       startupScriptModifications: [
-        "modify_yazi_config_use_snacks_picker.lua",
+        "yazi_config/use_snacks_picker.lua",
         "add_yazi_context_assertions.lua",
       ],
       NVIM_APPNAME: "nvim_integrations",

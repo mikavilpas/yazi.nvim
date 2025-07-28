@@ -5,8 +5,8 @@ describe("the help menu", () => {
     cy.visit("/")
     cy.startNeovim({
       startupScriptModifications: [
-        "modify_yazi_config_and_set_help_key.lua",
-        "disable_a_keybinding.lua",
+        "yazi_config/set_help_key.lua",
+        "yazi_config/disable_a_keybinding.lua",
       ],
     }).then((nvim) => {
       // wait until text on the start screen is visible

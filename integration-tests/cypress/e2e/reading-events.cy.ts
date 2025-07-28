@@ -364,7 +364,7 @@ describe("'rename' events", () => {
     cy.startNeovim({
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "modify_yazi_config_log_yazi_closed_successfully.lua",
+        "yazi_config/log_yazi_closed_successfully.lua",
       ],
     }).then((nvim) => {
       // the default file should already be open

@@ -99,55 +99,8 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("add_command_to_show_loaded_packages.lua"),
           type: z.literal("file"),
         }),
-        "add_keybinding_to_start_yazi_and_find.lua": z.object({
-          name: z.literal("add_keybinding_to_start_yazi_and_find.lua"),
-          type: z.literal("file"),
-        }),
         "add_yazi_context_assertions.lua": z.object({
           name: z.literal("add_yazi_context_assertions.lua"),
-          type: z.literal("file"),
-        }),
-        "disable_a_keybinding.lua": z.object({
-          name: z.literal("disable_a_keybinding.lua"),
-          type: z.literal("file"),
-        }),
-        "make_yazi_fullscreen.lua": z.object({
-          name: z.literal("make_yazi_fullscreen.lua"),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_and_add_hovered_buffer_background.lua": z.object({
-          name: z.literal(
-            "modify_yazi_config_and_add_hovered_buffer_background.lua",
-          ),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_and_highlight_buffers_in_same_directory.lua":
-          z.object({
-            name: z.literal(
-              "modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
-            ),
-            type: z.literal("file"),
-          }),
-        "modify_yazi_config_and_open_multiple_files.lua": z.object({
-          name: z.literal("modify_yazi_config_and_open_multiple_files.lua"),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_and_set_help_key.lua": z.object({
-          name: z.literal("modify_yazi_config_and_set_help_key.lua"),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_log_yazi_closed_successfully.lua": z.object({
-          name: z.literal(
-            "modify_yazi_config_log_yazi_closed_successfully.lua",
-          ),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_use_fzf_lua.lua": z.object({
-          name: z.literal("modify_yazi_config_use_fzf_lua.lua"),
-          type: z.literal("file"),
-        }),
-        "modify_yazi_config_use_snacks_picker.lua": z.object({
-          name: z.literal("modify_yazi_config_use_snacks_picker.lua"),
           type: z.literal("file"),
         }),
         "notify_custom_events.lua": z.object({
@@ -169,6 +122,52 @@ export const MyTestDirectorySchema = z.object({
         "use_light_neovim_colorscheme.lua": z.object({
           name: z.literal("use_light_neovim_colorscheme.lua"),
           type: z.literal("file"),
+        }),
+        yazi_config: z.object({
+          name: z.literal("yazi_config/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "add_hovered_buffer_background.lua": z.object({
+              name: z.literal("add_hovered_buffer_background.lua"),
+              type: z.literal("file"),
+            }),
+            "add_keybinding_to_start_yazi_and_find.lua": z.object({
+              name: z.literal("add_keybinding_to_start_yazi_and_find.lua"),
+              type: z.literal("file"),
+            }),
+            "disable_a_keybinding.lua": z.object({
+              name: z.literal("disable_a_keybinding.lua"),
+              type: z.literal("file"),
+            }),
+            "highlight_buffers_in_same_directory.lua": z.object({
+              name: z.literal("highlight_buffers_in_same_directory.lua"),
+              type: z.literal("file"),
+            }),
+            "log_yazi_closed_successfully.lua": z.object({
+              name: z.literal("log_yazi_closed_successfully.lua"),
+              type: z.literal("file"),
+            }),
+            "make_yazi_fullscreen.lua": z.object({
+              name: z.literal("make_yazi_fullscreen.lua"),
+              type: z.literal("file"),
+            }),
+            "open_multiple_files.lua": z.object({
+              name: z.literal("open_multiple_files.lua"),
+              type: z.literal("file"),
+            }),
+            "set_help_key.lua": z.object({
+              name: z.literal("set_help_key.lua"),
+              type: z.literal("file"),
+            }),
+            "use_fzf_lua.lua": z.object({
+              name: z.literal("use_fzf_lua.lua"),
+              type: z.literal("file"),
+            }),
+            "use_snacks_picker.lua": z.object({
+              name: z.literal("use_snacks_picker.lua"),
+              type: z.literal("file"),
+            }),
+          }),
         }),
       }),
     }),
@@ -323,22 +322,23 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/add_command_to_count_open_buffers.lua",
   "config-modifications/add_command_to_reveal_a_file.lua",
   "config-modifications/add_command_to_show_loaded_packages.lua",
-  "config-modifications/add_keybinding_to_start_yazi_and_find.lua",
   "config-modifications/add_yazi_context_assertions.lua",
-  "config-modifications/disable_a_keybinding.lua",
-  "config-modifications/make_yazi_fullscreen.lua",
-  "config-modifications/modify_yazi_config_and_add_hovered_buffer_background.lua",
-  "config-modifications/modify_yazi_config_and_highlight_buffers_in_same_directory.lua",
-  "config-modifications/modify_yazi_config_and_open_multiple_files.lua",
-  "config-modifications/modify_yazi_config_and_set_help_key.lua",
-  "config-modifications/modify_yazi_config_log_yazi_closed_successfully.lua",
-  "config-modifications/modify_yazi_config_use_fzf_lua.lua",
-  "config-modifications/modify_yazi_config_use_snacks_picker.lua",
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",
   "config-modifications/notify_rename_events.lua",
   "config-modifications/report_loaded_yazi_modules.lua",
   "config-modifications/use_light_neovim_colorscheme.lua",
+  "config-modifications/yazi_config/add_hovered_buffer_background.lua",
+  "config-modifications/yazi_config/add_keybinding_to_start_yazi_and_find.lua",
+  "config-modifications/yazi_config/disable_a_keybinding.lua",
+  "config-modifications/yazi_config/highlight_buffers_in_same_directory.lua",
+  "config-modifications/yazi_config/log_yazi_closed_successfully.lua",
+  "config-modifications/yazi_config/make_yazi_fullscreen.lua",
+  "config-modifications/yazi_config/open_multiple_files.lua",
+  "config-modifications/yazi_config/set_help_key.lua",
+  "config-modifications/yazi_config/use_fzf_lua.lua",
+  "config-modifications/yazi_config/use_snacks_picker.lua",
+  "config-modifications/yazi_config",
   "config-modifications",
   "dir with spaces/file1.txt",
   "dir with spaces/file2.txt",
