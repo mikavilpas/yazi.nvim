@@ -87,9 +87,10 @@ function M.process_event_emitted_from_yazi(event, config, context)
   elseif event.type == "bulk" then
     ---@cast event YaziBulkEvent
     for from, to in pairs(event.changes) do
-      lsp_rename.file_renamed(from, to)
-
-      handle_rename_move_bulk_event(config, { from = from, to = to })
+      vim.schedule(function()
+        lsp_rename.file_renamed(from, to)
+        handle_rename_move_bulk_event(config, { from = from, to = to })
+      end)
     end
   elseif event.type == "delete" or event.type == "trash" then
     ---@cast event YaziDeleteEvent | YaziTrashEvent
