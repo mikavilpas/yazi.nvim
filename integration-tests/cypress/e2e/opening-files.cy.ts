@@ -40,7 +40,7 @@ describe("opening files", () => {
 
       // load a config-modification that makes yazi fullscreen
       nvim.runExCommand({
-        command: `luafile ${"config-modifications/make_yazi_fullscreen.lua" satisfies MyTestDirectoryFile}`,
+        command: `luafile ${"config-modifications/yazi_config/make_yazi_fullscreen.lua" satisfies MyTestDirectoryFile}`,
       })
 
       cy.typeIntoTerminal("{upArrow}")
@@ -269,7 +269,7 @@ describe("opening files", () => {
     cy.startNeovim({
       filename: "file2.txt",
       startupScriptModifications: [
-        "modify_yazi_config_and_open_multiple_files.lua",
+        "yazi_config/open_multiple_files.lua",
         "add_yazi_context_assertions.lua",
       ],
     }).then((nvim) => {
@@ -529,9 +529,7 @@ describe("opening files", () => {
           "dir with spaces/file1.txt",
         ],
       },
-      startupScriptModifications: [
-        "modify_yazi_config_and_open_multiple_files.lua",
-      ],
+      startupScriptModifications: ["yazi_config/open_multiple_files.lua"],
     }).then((nvim) => {
       cy.contains("Hello")
 

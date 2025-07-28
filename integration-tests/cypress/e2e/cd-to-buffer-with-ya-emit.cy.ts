@@ -25,7 +25,7 @@ describe("revealing another open split (buffer) in yazi", () => {
         ],
       },
       startupScriptModifications: [
-        "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "yazi_config/add_hovered_buffer_background.lua",
         "add_yazi_context_assertions.lua",
       ],
     }).then((nvim) => {
@@ -86,7 +86,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "yazi_config/add_hovered_buffer_background.lua",
       ],
     }).then((nvim) => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)

@@ -33,7 +33,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "yazi_config/add_hovered_buffer_background.lua",
       ],
     }).then((nvim) => {
       // sanity check to make sure the files are open
@@ -82,7 +82,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       filename: "initial-file.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "modify_yazi_config_and_add_hovered_buffer_background.lua",
+        "yazi_config/add_hovered_buffer_background.lua",
         "add_command_to_reveal_a_file.lua",
       ],
     }).then((nvim) => {
@@ -105,7 +105,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       filename: "initial-file.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "add_keybinding_to_start_yazi_and_find.lua",
+        "yazi_config/add_keybinding_to_start_yazi_and_find.lua",
       ],
     }).then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
