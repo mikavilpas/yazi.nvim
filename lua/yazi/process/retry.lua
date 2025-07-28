@@ -38,10 +38,11 @@ function retry.retry(params)
       else
         require("yazi.log"):debug(
           string.format(
-            "yazi.retry: failed with '%s', retrying after %sms. retries_remaining: %s",
+            "yazi.retry: failed with '%s', retrying after %sms. retries_remaining: %s, result: %s",
             params.description,
             params.delay,
-            retries_remaining
+            retries_remaining,
+            vim.inspect(result)
           )
         )
       end
