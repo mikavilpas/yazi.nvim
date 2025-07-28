@@ -63,6 +63,7 @@ function M.yazi(config, input_path, args)
 
         local retries = 15
         require("yazi.process.retry").retry({
+          description = string.format("reveal path '%s'", args.reveal_path),
           delay = 50,
           retries = retries,
           action = function()
@@ -70,25 +71,6 @@ function M.yazi(config, input_path, args)
             local completed = reveal_job:wait(500)
             assert(completed.code == 0)
             return nil
-          end,
-          on_failure = function(_, retries_remaining)
-            Log:debug(
-              string.format(
-                "Failed to reveal path '%s', retrying after 50ms. retries_remaining: %s",
-                args.reveal_path,
-                retries_remaining
-              )
-            )
-          end,
-          on_final_failure = function(result)
-            Log:debug(
-              string.format(
-                "Failed to reveal path '%s' after %s retries. Details: %s",
-                args.reveal_path,
-                retries,
-                vim.inspect(result)
-              )
-            )
           end,
         })
       end
