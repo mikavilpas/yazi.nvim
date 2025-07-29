@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.4...v11.7.0) (2025-07-29)
+
+
+### Features
+
+* support installing plugins from deeply nested subdirectories ([#1078](https://github.com/mikavilpas/yazi.nvim/issues/1078)) ([52705bc](https://github.com/mikavilpas/yazi.nvim/commit/52705bcab62094c1c5d89ad72226b51f95dc9fba))
+
 ## [11.6.4](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.3...v11.6.4) (2025-07-29)
 
 
