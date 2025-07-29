@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.6.4](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.3...v11.6.4) (2025-07-29)
+
+
+### Bug Fixes
+
+* remove snaks dependency from yazi.nvim rockspec ([5c6869f](https://github.com/mikavilpas/yazi.nvim/commit/5c6869fd77951ae9d6b1b6d87b422faaae03bf59))
+
 ## [11.6.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.2...v11.6.3) (2025-07-28)
 
 
