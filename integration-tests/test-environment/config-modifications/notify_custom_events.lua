@@ -4,11 +4,8 @@ do
   local config = require("yazi").config
   assert(config, "yazi.config is not set")
 
-  config.forwarded_dds_events = vim.tbl_extend(
-    "force",
-    config.forwarded_dds_events or {},
-    { "MyMessageNoData", "MyChangeWorkingDirectoryCommand" }
-  )
+  table.insert(config.forwarded_dds_events, "MyMessageNoData")
+  table.insert(config.forwarded_dds_events, "MyChangeWorkingDirectoryCommand")
 end
 
 -- selene: allow(global_usage)
