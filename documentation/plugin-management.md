@@ -145,6 +145,17 @@ return {
     build = function(plugin)
       require("yazi.plugin").build_plugin(plugin, { sub_dir = "git.yazi" })
       require("yazi.plugin").build_plugin(plugin, { sub_dir = "vcs-files.yazi" })
+
+      -- example: installing from a deeply nested subdirectory
+      require("yazi.plugin").build_plugin({
+        dir = plugin_monorepo_dir,
+        name = "yazi-plugins",
+      }, {
+        yazi_dir = yazi_dir,
+        sub_dir = vim.fs.joinpath("deeply", "nested", "plugin.yazi"),
+        -- install as ~/.config/yazi/plugins/plugin.yazi
+        name = "plugin.yazi",
+      })
     end,
   },
   {
