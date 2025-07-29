@@ -92,4 +92,60 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       )
     })
   })
+
+  it("removes old, internal yazi states on `collectgarbage()`", () => {
+    // The states of previous yazis are kept around internally until lua
+    // decides to collectgarbage(). This happens periodically and usually is
+    // not an issue as long as they are eventually collected.
+    //
+    // Here we test that collectgarbage() is able to remove the old states by
+    // forcing it to happen. Normally it happens automatically and
+    // periodically.
+    cy.startNeovim({
+      filename: "dir with spaces/file1.txt",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+    }).then((nvim) => {
+      // wait until text on the start screen is visible
+      cy.contains("this is the first file")
+
+      {
+        // toggle yazi a couple of times to populate the internal states
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains("-- TERMINAL --")
+        assertYaziIsReady(nvim)
+        cy.typeIntoTerminal("q")
+        cy.contains("-- TERMINAL --").should("not.exist")
+
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains("-- TERMINAL --")
+        assertYaziIsReady(nvim)
+        cy.typeIntoTerminal("q")
+        cy.contains("-- TERMINAL --").should("not.exist")
+
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains("-- TERMINAL --")
+        assertYaziIsReady(nvim)
+        cy.typeIntoTerminal("q")
+        cy.contains("-- TERMINAL --").should("not.exist")
+      }
+
+      nvim
+        .runLuaCode({
+          luaCode: `return vim.tbl_count(require("yazi.process.ya_process").known_yazis)`,
+        })
+        .then((result) => expect(result.value).eql(3))
+
+      // force garbage collection to happen right away
+      nvim.runLuaCode({ luaCode: `collectgarbage()` })
+
+      nvim
+        .runLuaCode({
+          luaCode: `return vim.tbl_count(require("yazi.process.ya_process").known_yazis)`,
+        })
+        .then((result) => {
+          // one yazi seems to be always kept around, but it's not a problem
+          expect(result.value).to.be.lessThan(2)
+        })
+    })
+  })
 })
