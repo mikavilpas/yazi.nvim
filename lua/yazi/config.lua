@@ -49,9 +49,6 @@ function M.default()
       grep_in_selected_files = "telescope",
       replace_in_directory = function(directory)
         -- limit the search to the given path
-        --
-        -- `prefills.flags` get passed to ripgrep as is
-        -- https://github.com/MagicDuck/grug-far.nvim/issues/146
         local filter = directory:make_relative(vim.uv.cwd())
         require("grug-far").open({
           prefills = {
