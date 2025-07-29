@@ -104,6 +104,41 @@ describe("installing a plugin", function()
 
       assert.are.same(plugin_dir, symlink)
     end)
+
+    it(
+      "can install a plugin from a monorepo subdirectory that's deeply nested",
+      function()
+        local plugin_monorepo_dir = vim.fs.joinpath(base_dir, "yazi-plugins")
+        local plugin_dir = vim.fs.joinpath(
+          plugin_monorepo_dir,
+          "deeply",
+          "nested",
+          "easyjump.yazi"
+        )
+        local yazi_dir = vim.fs.joinpath(base_dir, "fake-yazi-dir")
+
+        vim.fn.mkdir(plugin_monorepo_dir)
+        vim.fn.mkdir(plugin_dir, "p")
+        vim.fn.mkdir(yazi_dir)
+        vim.fn.mkdir(vim.fs.joinpath(yazi_dir, "plugins"))
+
+        plugin.build_plugin({
+          dir = plugin_monorepo_dir,
+          name = "yazi-plugins",
+        }, {
+          yazi_dir = yazi_dir,
+          sub_dir = vim.fs.joinpath("deeply", "nested", "easyjump.yazi"),
+          name = "easyjump.yazi",
+        })
+
+        -- verify that the plugin was symlinked
+        local symlink = vim.uv.fs_readlink(
+          vim.fs.joinpath(yazi_dir, "plugins", "easyjump.yazi")
+        )
+
+        assert.are.same(plugin_dir, symlink)
+      end
+    )
   end)
 
   describe("installing a flavor", function()
@@ -147,6 +182,41 @@ describe("installing a plugin", function()
 
       assert.are.same(flavor_dir, symlink)
     end)
+
+    it(
+      "can install a flavor from a monorepo subdirectory that's deeply nested",
+      function()
+        local flavor_monorepo_dir = vim.fs.joinpath(base_dir, "yazi-flavors")
+        local flavor_dir = vim.fs.joinpath(
+          flavor_monorepo_dir,
+          "deeply",
+          "nested",
+          "flavor123.yazi"
+        )
+        local yazi_dir = vim.fs.joinpath(base_dir, "fake-yazi-dir")
+
+        vim.fn.mkdir(flavor_monorepo_dir)
+        vim.fn.mkdir(flavor_dir, "p")
+        vim.fn.mkdir(yazi_dir)
+        vim.fn.mkdir(vim.fs.joinpath(yazi_dir, "flavors"))
+
+        plugin.build_flavor({
+          dir = flavor_monorepo_dir,
+          name = "yazi-flavors",
+        }, {
+          yazi_dir = yazi_dir,
+          sub_dir = vim.fs.joinpath("deeply", "nested", "flavor123.yazi"),
+          name = "flavor123.yazi",
+        })
+
+        -- verify that the flavor was symlinked
+        local symlink = vim.uv.fs_readlink(
+          vim.fs.joinpath(yazi_dir, "flavors", "flavor123.yazi")
+        )
+
+        assert.are.same(flavor_dir, symlink)
+      end
+    )
   end)
 
   describe("symlink", function()

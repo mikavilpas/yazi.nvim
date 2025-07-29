@@ -32,7 +32,7 @@ local M = {}
 --- For more information, see the yazi.nvim documentation.
 ---
 ---@param plugin YaziLazyNvimSpec
----@param options? { yazi_dir: string, sub_dir?: string }
+---@param options? { yazi_dir: string, sub_dir?: string, name?: string }
 function M.build_plugin(plugin, options)
   local yazi_dir = options and options.yazi_dir
     or vim.fn.expand("~/.config/yazi")
@@ -48,7 +48,9 @@ function M.build_plugin(plugin, options)
       name = plugin.name,
       dir = vim.fs.joinpath(plugin.dir, options.sub_dir),
     }
-    to = vim.fs.normalize(vim.fs.joinpath(yazi_plugins_dir, options.sub_dir))
+    to = vim.fs.normalize(
+      vim.fs.joinpath(yazi_plugins_dir, options.name or options.sub_dir)
+    )
   end
 
   return M.symlink(plugin, to)
@@ -75,7 +77,7 @@ end
 --- ```
 ---
 ---@param flavor YaziLazyNvimSpec
----@param options? { yazi_dir: string, sub_dir?: string }
+---@param options? { yazi_dir: string, sub_dir?: string, name?: string }
 function M.build_flavor(flavor, options)
   local yazi_dir = options and options.yazi_dir
     or vim.fn.expand("~/.config/yazi")
@@ -91,7 +93,9 @@ function M.build_flavor(flavor, options)
       name = flavor.name,
       dir = vim.fs.joinpath(flavor.dir, options.sub_dir),
     }
-    to = vim.fs.normalize(vim.fs.joinpath(yazi_flavors_dir, options.sub_dir))
+    to = vim.fs.normalize(
+      vim.fs.joinpath(yazi_flavors_dir, options.name or options.sub_dir)
+    )
   end
 
   return M.symlink(flavor, to)
