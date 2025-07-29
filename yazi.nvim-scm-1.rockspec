@@ -9,7 +9,6 @@ dependencies = {
   -- Add runtime dependencies here
   -- e.g. "plenary.nvim",
   "plenary.nvim",
-  "snacks.nvim",
 }
 test_dependencies = {
   "nlua",
