@@ -75,6 +75,9 @@ function M.default()
       bufdelete_implementation = "bundled-snacks",
       picker_add_copy_relative_path_action = nil,
       pick_window_implementation = "snacks.picker",
+      yazi_plugins = {
+        key_event = false,
+      },
     },
 
     floating_window_scaling_factor = 0.9,

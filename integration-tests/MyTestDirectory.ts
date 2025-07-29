@@ -71,8 +71,32 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("yazi/"),
           type: z.literal("directory"),
           contents: z.object({
+            ".luarc.json": z.object({
+              name: z.literal(".luarc.json"),
+              type: z.literal("file-symlink"),
+              target: z.literal("../../../../yazi-plugins/.luarc.json"),
+            }),
             "keymap.toml": z.object({
               name: z.literal("keymap.toml"),
+              type: z.literal("file"),
+            }),
+          }),
+        }),
+        yazi_with_plugins: z.object({
+          name: z.literal("yazi_with_plugins/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            ".luarc.json": z.object({
+              name: z.literal(".luarc.json"),
+              type: z.literal("file-symlink"),
+              target: z.literal("../../../../yazi-plugins/.luarc.json"),
+            }),
+            "init.lua": z.object({
+              name: z.literal("init.lua"),
+              type: z.literal("file"),
+            }),
+            "yazi.toml": z.object({
+              name: z.literal("yazi.toml"),
               type: z.literal("file"),
             }),
           }),
@@ -143,6 +167,10 @@ export const MyTestDirectorySchema = z.object({
               name: z.literal("highlight_buffers_in_same_directory.lua"),
               type: z.literal("file"),
             }),
+            "load_yazi_with_plugins_config.lua": z.object({
+              name: z.literal("load_yazi_with_plugins_config.lua"),
+              type: z.literal("file"),
+            }),
             "log_yazi_closed_successfully.lua": z.object({
               name: z.literal("log_yazi_closed_successfully.lua"),
               type: z.literal("file"),
@@ -153,6 +181,10 @@ export const MyTestDirectorySchema = z.object({
             }),
             "open_multiple_files.lua": z.object({
               name: z.literal("open_multiple_files.lua"),
+              type: z.literal("file"),
+            }),
+            "prepare_key_event_plugin.lua": z.object({
+              name: z.literal("prepare_key_event_plugin.lua"),
               type: z.literal("file"),
             }),
             "set_help_key.lua": z.object({
@@ -315,8 +347,13 @@ export const testDirectoryFiles = z.enum([
   ".config/nvim_integrations/lua",
   ".config/nvim_integrations/prepare.lua",
   ".config/nvim_integrations",
+  ".config/yazi/.luarc.json",
   ".config/yazi/keymap.toml",
   ".config/yazi",
+  ".config/yazi_with_plugins/.luarc.json",
+  ".config/yazi_with_plugins/init.lua",
+  ".config/yazi_with_plugins/yazi.toml",
+  ".config/yazi_with_plugins",
   ".config",
   "config-modifications/accept_lsp_rename_confirmations_immediately.lua",
   "config-modifications/add_command_to_count_open_buffers.lua",
@@ -332,9 +369,11 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/yazi_config/add_keybinding_to_start_yazi_and_find.lua",
   "config-modifications/yazi_config/disable_a_keybinding.lua",
   "config-modifications/yazi_config/highlight_buffers_in_same_directory.lua",
+  "config-modifications/yazi_config/load_yazi_with_plugins_config.lua",
   "config-modifications/yazi_config/log_yazi_closed_successfully.lua",
   "config-modifications/yazi_config/make_yazi_fullscreen.lua",
   "config-modifications/yazi_config/open_multiple_files.lua",
+  "config-modifications/yazi_config/prepare_key_event_plugin.lua",
   "config-modifications/yazi_config/set_help_key.lua",
   "config-modifications/yazi_config/use_fzf_lua.lua",
   "config-modifications/yazi_config/use_snacks_picker.lua",

@@ -1,0 +1,7 @@
+# https://yazi-rs.github.io/docs/configuration/yazi
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[mgr]
+# make yazi look different in this configuration than in ../yazi so that it's
+# easier to see which configuration is being used
+ratio = [2, 2, 0]

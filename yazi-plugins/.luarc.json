@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "Lua 5.4",
+    "pathStrict": true
+  },
+  "type": {
+    "checkTableShape": true
+  },
+  "workspace": {
+    "library": ["./yazi-rs-plugins/types.yazi/main.lua"]
+  }
+}

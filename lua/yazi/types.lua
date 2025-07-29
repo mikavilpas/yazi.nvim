@@ -64,6 +64,10 @@
 ---@field public bufdelete_implementation? YaziBufdeleteImpl # how to delete (close) a buffer. Defaults to `snacks.bufdelete` from https://github.com/folke/snacks.nvim, which maintains the window layout.
 ---@field public picker_add_copy_relative_path_action? "snacks.picker" # add an action to a file picker to copy the relative path to the selected file(s). The implementation is the same as for the `copy_relative_path_to_selected_files` yazi.nvim keymap. Currently only snacks.nvim is supported. Documentation can be found in the keybindings section of the readme. The default is `nil`, which means no action is added.
 ---@field public pick_window_implementation? "snacks.picker" # the implementation to use for picking a window. The default is `snacks.picker`, which uses the snacks.nvim picker's "pick_win" action.
+---@field public yazi_plugins? YaziConfigIntegrationsPlugins
+
+---@class (exact) YaziConfigIntegrationsPlugins
+---@field key_event? boolean # whether to enable the key_event plugin integration. The plugin must be installed for this to work.
 
 ---@alias YaziBufdeleteImpl
 ---| "snacks-if-available" # the implementation from https://github.com/folke/snacks.nvim, which maintains the window layout. If not available, falls back to the builtin implementation in `vim.api.nvim_buf_delete()`, which does not maintain the window layout.

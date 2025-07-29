@@ -1,0 +1,1 @@
+require("key-event"):setup()

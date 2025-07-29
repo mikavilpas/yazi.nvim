@@ -210,6 +210,10 @@ function M.setup(opts)
   then
     require("yazi.integrations.snacks_relative_path").setup_copy_relative_path_picker_action_once()
   end
+
+  if M.config.integrations.yazi_plugins.key_event == true then
+    require("yazi.integrations.plugins.key_event").setup_once()
+  end
 end
 
 return M

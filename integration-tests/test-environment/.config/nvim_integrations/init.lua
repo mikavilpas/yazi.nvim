@@ -60,6 +60,13 @@ vim.list_extend(plugins, {
         picker_add_copy_relative_path_action = "snacks.picker",
       },
     },
+    build = function(spec)
+      require("yazi.plugin").build_plugin(spec, {
+        sub_dir = "yazi-plugins/key-event.yazi",
+        name = "key-event.yazi",
+        yazi_dir = vim.fs.normalize("~/.config/yazi_with_plugins/"),
+      })
+    end,
   },
 
   {

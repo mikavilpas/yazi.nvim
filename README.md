@@ -52,8 +52,10 @@ Neovim.
 - Customizable keybindings
 - Plugin management for Yazi plugins and flavors
   ([documentation](./documentation/plugin-management.md))
-- 🆕 Send custom commands to yazi
+- Send custom commands to yazi
   ([documentation](./documentation/emitting-commands-to-yazi.md))
+- 🆕 Integrations with yazi plugins
+  [documentation](./documentation/integrations-with-yazi-plugins.md)
 
 For previewing images with yazi, see Yazi's documentation related to Neovim
 [here](https://yazi-rs.github.io/docs/image-preview/#neovim).
@@ -352,6 +354,10 @@ return {
       -- - nil (default, no action added)
       -- - "snacks.picker" (snacks.nvim)
       picker_add_copy_relative_path_action = nil,
+
+      yazi_plugins = {
+        key_event = false
+      }
     },
 
     future_features = {
