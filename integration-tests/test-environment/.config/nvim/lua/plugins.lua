@@ -1,4 +1,5 @@
-local repo_root = vim.fn.fnamemodify(vim.uv.os_environ().HOME, ":h:h:h:h")
+_G.yazi_nvim_repo_root =
+  vim.fn.fnamemodify(vim.uv.os_environ().HOME, ":h:h:h:h")
 
 -- install the following plugins
 ---@module "lazy"
@@ -7,7 +8,7 @@ local plugins = {
   {
     "mikavilpas/yazi.nvim",
     -- for tests, always use the code from this repository
-    dir = repo_root,
+    dir = _G.yazi_nvim_repo_root,
     event = "VeryLazy",
     keys = {
       { "<up>", mode = { "n", "v" }, "<cmd>Yazi<cr>" },
