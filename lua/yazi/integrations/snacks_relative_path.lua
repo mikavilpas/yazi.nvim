@@ -1,7 +1,7 @@
 local M = {}
 
 --
-function M.setup_copy_relative_path_picker_action()
+function M.setup_copy_relative_path_picker_action_once()
   local snacks_picker = require("snacks.picker")
 
   local yazi_copy_relative_path = "yazi_copy_relative_path"
