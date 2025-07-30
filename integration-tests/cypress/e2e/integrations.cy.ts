@@ -163,7 +163,7 @@ describe("fzf-lua integration (grep)", () => {
       cy.typeIntoTerminal("{control+s}")
 
       // wait for fzf-lua to be visible
-      cy.contains("to Regex Search")
+      cy.contains("to Fuzzy Search")
 
       cy.typeIntoTerminal("this")
 
@@ -209,7 +209,7 @@ describe("fzf-lua integration (grep)", () => {
       cy.typeIntoTerminal("{control+s}")
 
       // fzf-lua should be open now
-      cy.contains("to Regex Search")
+      cy.contains("to Fuzzy Search")
 
       // search for some file content. This should match
       // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
