@@ -87,7 +87,7 @@ describe("process_events()", function()
       ya:process_events({
         {
           type = "cd",
-          yazi_id = "cd_123",
+          yazi_id = yazi_id,
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
       }, {}, {})
@@ -95,17 +95,31 @@ describe("process_events()", function()
       assert.are.same("/tmp", ya.cwd)
     end)
 
+    it("ignores cd events from yazis with a different yazi_id", function()
+      local ya = ya_process.new(config, yazi_id)
+
+      ya:process_events({
+        {
+          type = "cd",
+          yazi_id = "cd_123", -- different yazi_id
+          url = "/tmp",
+        } --[[@as YaziChangeDirectoryEvent]],
+      }, {}, {})
+
+      assert.are.same(nil, ya.cwd)
+    end)
+
     it("overrides the previous cwd when it's changed multiple times", function()
       local ya = ya_process.new(config, yazi_id)
       ya:process_events({
         {
           type = "cd",
-          yazi_id = "cd_123",
+          yazi_id = yazi_id,
           url = "/tmp",
         } --[[@as YaziChangeDirectoryEvent]],
         {
           type = "cd",
-          yazi_id = "cd_123",
+          yazi_id = yazi_id,
           url = "/tmp/directory",
         } --[[@as YaziChangeDirectoryEvent]],
       }, {}, {} --[[@as YaziActiveContext]])
