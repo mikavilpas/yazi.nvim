@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.7.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.0...v11.7.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* only handle `cd` events for the current yazi instance ([2241764](https://github.com/mikavilpas/yazi.nvim/commit/2241764c47bf49878626787dc44afb95a8b53fed))
+
 ## [11.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.6.4...v11.7.0) (2025-07-29)
 
 
