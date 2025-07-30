@@ -208,7 +208,7 @@ function M.setup(opts)
     M.config.integrations.picker_add_copy_relative_path_action
     == "snacks.picker"
   then
-    require("yazi.integrations.snacks_relative_path").setup_copy_relative_path_picker_action()
+    require("yazi.integrations.snacks_relative_path").setup_copy_relative_path_picker_action_once()
   end
 end
 
