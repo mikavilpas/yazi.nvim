@@ -228,7 +228,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
         nvim_event_handling.emit("YaziDDSHover", event)
       end)
-    elseif event.type == "cd" then
+    elseif event.type == "cd" and event.yazi_id == self.yazi_id then
       ---@cast event YaziHoverEvent
       Log:debug(
         string.format("Changing the cwd from %s to %s", self.cwd, event.url)
