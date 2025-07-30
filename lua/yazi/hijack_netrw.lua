@@ -1,7 +1,13 @@
 local M = {}
 
+M.is_setup_done = false
+
 ---@param yazi_augroup integer
 function M.hijack_netrw(yazi_augroup)
+  if M.is_setup_done then
+    return
+  end
+
   local Log = require("yazi.log")
 
   ---@param file string
@@ -80,6 +86,8 @@ function M.hijack_netrw(yazi_augroup)
     vim.b.netrw_curdir or vim.fn.expand("%:p"),
     vim.api.nvim_get_current_buf()
   )
+
+  M.is_setup_done = true
 end
 
 return M
