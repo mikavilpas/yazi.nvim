@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.7.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.1...v11.7.2) (2025-07-30)
+
+
+### Bug Fixes
+
+* only hijack netrw once on multiple yazi.setup() calls ([2c4880e](https://github.com/mikavilpas/yazi.nvim/commit/2c4880ecf1f79d508716269400d6ed8fe8205e85))
+
 ## [11.7.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.0...v11.7.1) (2025-07-30)
 
 
