@@ -84,6 +84,11 @@ function YaProcess:get_yazi_command(paths)
     table.insert(command_words, self.yazi_id)
   end
 
+  if self.config.future_features.use_cwd_file then
+    table.insert(command_words, "--cwd-file")
+    table.insert(command_words, self.config.cwd_file_path)
+  end
+
   command_words = remove_duplicates(command_words)
 
   return table.concat(command_words, " ")

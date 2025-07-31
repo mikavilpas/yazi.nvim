@@ -7,6 +7,7 @@
 ---@class (exact) YaziConfig
 ---@field public open_for_directories? boolean
 ---@field public chosen_file_path? string "the path to a temporary file that will be created by yazi to store the chosen file path"
+---@field public cwd_file_path? string "the path to a temporary file that will be created by yazi to store the last directory that yazi was in before it was closed"
 ---@field public open_multiple_tabs? boolean "open multiple open files in yazi tabs when opening yazi"
 ---@field public enable_mouse_support? boolean
 ---@field public open_file_function? fun(chosen_file: string, config: YaziConfig, state: YaziClosedState): nil "a function that will be called when a file is chosen in yazi"
@@ -27,6 +28,7 @@
 ---@field public config_home? string # optional path for nvim yazi to find a custom yazi.toml
 
 ---@class(exact) yazi.OptInFeatures
+---@field public use_cwd_file? boolean # use a file to store the last directory that yazi was in before it was closed. Defaults to `true`.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
