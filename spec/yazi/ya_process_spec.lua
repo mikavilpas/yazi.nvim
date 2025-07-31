@@ -9,6 +9,7 @@ describe("the get_yazi_command() function", function()
     local config = require("yazi.config").default()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
+    config.cwd_file_path = "/tmp/cwd_file_path"
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -20,7 +21,7 @@ describe("the get_yazi_command() function", function()
     local command = ya:get_yazi_command(paths)
 
     assert.are.same(
-      "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
+      "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
       command
     )
   end)
@@ -31,6 +32,7 @@ describe("the get_yazi_command() function", function()
       local config = require("yazi.config").default()
       config.open_multiple_tabs = false
       config.chosen_file_path = "/tmp/chosen_file_path"
+      config.cwd_file_path = "/tmp/cwd_file_path"
 
       local ya = ya_process.new(config, yazi_id)
 
@@ -42,7 +44,7 @@ describe("the get_yazi_command() function", function()
       local command = ya:get_yazi_command(paths)
 
       assert.are.same(
-        "yazi 'file1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
+        "yazi 'file1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
         command
       )
     end
@@ -52,6 +54,7 @@ describe("the get_yazi_command() function", function()
     local config = require("yazi.config").default()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
+    config.cwd_file_path = "/tmp/cwd_file_path"
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -68,7 +71,7 @@ describe("the get_yazi_command() function", function()
     local command = ya:get_yazi_command(paths)
 
     assert.are.same(
-      "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123",
+      "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
       command
     )
   end)

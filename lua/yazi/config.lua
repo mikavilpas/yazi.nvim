@@ -14,7 +14,9 @@ function M.default()
   return {
     log_level = vim.log.levels.OFF,
     open_for_directories = false,
-    future_features = {},
+    future_features = {
+      use_cwd_file = true,
+    },
     open_multiple_tabs = false,
     enable_mouse_support = false,
     open_file_function = openers.open_file,
