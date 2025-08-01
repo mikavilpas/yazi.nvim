@@ -71,12 +71,15 @@ function YaziProcess:start(config, paths, callbacks)
         last_directory =
           plenary_path:new(vim.fn.readfile(config.cwd_file_path)[1])
         require("yazi.log"):debug(
-          string.format("using cwd from cwd_file_path", self.ya_process.cwd)
+          string.format(
+            "using cwd found from the cwd_file_path: '%s'",
+            last_directory
+          )
         )
       elseif self.ya_process.cwd ~= nil then
         last_directory = plenary_path:new(self.ya_process.cwd)
         require("yazi.log"):debug(
-          string.format("using ya process cwd: %s", self.ya_process.cwd)
+          string.format("using ya process cwd: '%s'", self.ya_process.cwd)
         ) --[[@as Path]]
       end
 
