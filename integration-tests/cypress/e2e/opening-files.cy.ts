@@ -673,8 +673,9 @@ describe("changing the change_neovim_cwd_on_close", () => {
       assertNeovimCwd(nvim, startPath)
 
       // allow change_neovim_cwd_on_close, which makes the pwd change
-      nvim.runExCommand({
-        command: `lua dofile('${"config-modifications/yazi_config/enable_change_neovim_cwd_on_close.lua" satisfies MyTestDirectoryFile}')`,
+      nvim.doFile({
+        luaFile:
+          "config-modifications/yazi_config/enable_change_neovim_cwd_on_close.lua",
       })
 
       // verify the pwd changes
