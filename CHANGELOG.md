@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.8.0...v11.9.0) (2025-08-01)
+
+
+### Features
+
+* allow customizing the way file paths are escaped ([#1099](https://github.com/mikavilpas/yazi.nvim/issues/1099)) ([a1448e1](https://github.com/mikavilpas/yazi.nvim/commit/a1448e16f4e27383cee2b6986cc1bb7bec413881))
+
 ## [11.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.3...v11.8.0) (2025-08-01)
 
 
