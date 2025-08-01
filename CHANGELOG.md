@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.7.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.2...v11.7.3) (2025-08-01)
+
+
+### Bug Fixes
+
+* resolve the last directory using the `--cwd-file` option ([6611873](https://github.com/mikavilpas/yazi.nvim/commit/6611873f7aa4b15a2c1c451638ad1f8ada9d0c7d))
+
 ## [11.7.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.1...v11.7.2) (2025-07-30)
 
 
