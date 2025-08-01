@@ -16,6 +16,7 @@ function M.default()
     open_for_directories = false,
     future_features = {
       use_cwd_file = true,
+      new_shell_escaping = true,
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,

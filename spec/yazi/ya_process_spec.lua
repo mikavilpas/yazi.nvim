@@ -10,6 +10,7 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
+    config.future_features.new_shell_escaping = false
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -33,6 +34,7 @@ describe("the get_yazi_command() function", function()
       config.open_multiple_tabs = false
       config.chosen_file_path = "/tmp/chosen_file_path"
       config.cwd_file_path = "/tmp/cwd_file_path"
+      config.future_features.new_shell_escaping = false
 
       local ya = ya_process.new(config, yazi_id)
 
@@ -55,6 +57,7 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
+    config.future_features.new_shell_escaping = false
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -84,7 +87,7 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
-    config.future_features.new_shell_escaping = true
+    assert(config.future_features.new_shell_escaping)
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -104,6 +107,7 @@ describe("the get_yazi_command() function", function()
       local config = require("yazi.config").default()
       config.chosen_file_path = "/tmp/chosen_file_path"
       config.cwd_file_path = "/tmp/cwd_file_path"
+      config.future_features.new_shell_escaping = false
 
       local ya = ya_process.new(config, yazi_id)
 
@@ -119,6 +123,7 @@ describe("the get_yazi_command() function", function()
       local config = require("yazi.config").default()
       config.chosen_file_path = "/tmp/chosen_file_path"
       config.cwd_file_path = "/tmp/cwd_file_path"
+      config.future_features.new_shell_escaping = false
 
       config.integrations.escape_path_implementation = function(path)
         -- replace / with \
