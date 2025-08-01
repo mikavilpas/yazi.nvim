@@ -4,7 +4,7 @@ local configModule = require("yazi.config")
 
 local M = {}
 
-M.version = "11.8.0" -- x-release-please-version
+M.version = "11.9.0" -- x-release-please-version
 
 -- The last known state of yazi when it was closed
 ---@type YaziPreviousState
