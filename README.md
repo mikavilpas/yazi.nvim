@@ -229,6 +229,11 @@ return {
     -- https://github.com/mikavilpas/yazi.nvim/pull/359
     open_multiple_tabs = false,
 
+    -- when yazi is closed with no file chosen, change the Neovim working
+    -- directory to the directory that yazi was in before it was closed. Defaults
+    -- to being off (`false`)
+    change_neovim_cwd_on_close = false,
+
     highlight_groups = {
       -- See https://github.com/mikavilpas/yazi.nvim/pull/180
       hovered_buffer = nil,

@@ -1,10 +1,12 @@
 import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
+import path from "path"
 import { z } from "zod"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
 } from "./utils/hover-utils"
+import { assertNeovimCwd } from "./utils/neovim-utils"
 import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
@@ -609,12 +611,12 @@ describe("opening files from visual mode", () => {
 
       // enter a relative file path
       cy.typeIntoTerminal("dd")
-      const path = nvim.dir.rootPathAbsolute + "/dir with spaces/file2.txt"
+      const filepath = nvim.dir.rootPathAbsolute + "/dir with spaces/file2.txt"
 
       // make sure the path points to the unique test environment for this test
-      assert(path.includes("testdirs/dir-"))
+      assert(filepath.includes("testdirs/dir-"))
       nvim.runLuaCode({
-        luaCode: `vim.api.nvim_command('normal! i${path}')`,
+        luaCode: `vim.api.nvim_command('normal! i${filepath}')`,
       })
       cy.typeIntoTerminal("V{upArrow}")
 
@@ -645,6 +647,49 @@ describe("opening files from visual mode", () => {
 
       nvim.runExCommand({ command: "buffers" }).and((result) => {
         expect(result.value).to.contain("test-environment/.repro/yazi.log")
+      })
+    })
+  })
+})
+
+describe("changing the change_neovim_cwd_on_close", () => {
+  it("can change the cwd if no files are selected", () => {
+    cy.visit("/")
+    cy.startNeovim({
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      filename: "subdirectory/subdirectory-file.txt",
+    }).then((nvim) => {
+      cy.contains("Hello from the subdirectory!")
+
+      assert(nvim.dir.testEnvironmentPath.endsWith("/"))
+      const startPath = nvim.dir.testEnvironmentPath.slice(0, -1)
+
+      // verify the pwd does not change without enabling the setting
+      assertNeovimCwd(nvim, startPath)
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("-- TERMINAL --")
+      cy.typeIntoTerminal("q")
+      cy.contains("-- TERMINAL --").should("not.exist")
+      assertNeovimCwd(nvim, startPath)
+
+      // allow change_neovim_cwd_on_close, which makes the pwd change
+      nvim.runExCommand({
+        command: `lua dofile('${"config-modifications/yazi_config/enable_change_neovim_cwd_on_close.lua" satisfies MyTestDirectoryFile}')`,
+      })
+
+      // verify the pwd changes
+      cy.typeIntoTerminal("{upArrow}")
+      cy.contains("-- TERMINAL --")
+      cy.typeIntoTerminal("q")
+      cy.contains("-- TERMINAL --").should("not.exist")
+      nvim.runExCommand({ command: "pwd" }).then((result) => {
+        const pwd = z.string().parse(result.value)
+        expect(pwd).to.eql(
+          path.resolve(
+            nvim.dir.rootPathAbsolute,
+            "subdirectory" satisfies MyTestDirectoryFile,
+          ),
+        )
       })
     })
   })

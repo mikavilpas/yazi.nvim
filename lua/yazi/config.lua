@@ -19,6 +19,7 @@ function M.default()
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,
+    change_neovim_cwd_on_close = false,
     open_file_function = openers.open_file,
     clipboard_register = "*",
     keymaps = {

@@ -139,6 +139,10 @@ export const MyTestDirectorySchema = z.object({
               name: z.literal("disable_a_keybinding.lua"),
               type: z.literal("file"),
             }),
+            "enable_change_neovim_cwd_on_close.lua": z.object({
+              name: z.literal("enable_change_neovim_cwd_on_close.lua"),
+              type: z.literal("file"),
+            }),
             "highlight_buffers_in_same_directory.lua": z.object({
               name: z.literal("highlight_buffers_in_same_directory.lua"),
               type: z.literal("file"),
@@ -331,6 +335,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/yazi_config/add_hovered_buffer_background.lua",
   "config-modifications/yazi_config/add_keybinding_to_start_yazi_and_find.lua",
   "config-modifications/yazi_config/disable_a_keybinding.lua",
+  "config-modifications/yazi_config/enable_change_neovim_cwd_on_close.lua",
   "config-modifications/yazi_config/highlight_buffers_in_same_directory.lua",
   "config-modifications/yazi_config/log_yazi_closed_successfully.lua",
   "config-modifications/yazi_config/make_yazi_fullscreen.lua",
