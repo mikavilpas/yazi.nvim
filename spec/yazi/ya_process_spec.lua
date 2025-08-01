@@ -76,6 +76,29 @@ describe("the get_yazi_command() function", function()
     )
   end)
 
+  it("returns a table if new_shell_escaping is used", function()
+    -- Doing this lets vim.fn.jobstart() handle the escaping for shell
+    -- arguments, which might work more reliably across different systems.
+    -- https://github.com/mikavilpas/yazi.nvim/issues/1101
+    local config = require("yazi.config").default()
+    config.open_multiple_tabs = true
+    config.chosen_file_path = "/tmp/chosen_file_path"
+    config.cwd_file_path = "/tmp/cwd_file_path"
+    config.future_features.new_shell_escaping = true
+
+    local ya = ya_process.new(config, yazi_id)
+
+    local paths = { { filename = "file1" } }
+    local command = ya:get_yazi_command(paths)
+
+    assert(type(command) == "table")
+
+    assert.are_equal(
+      "yazi file1 --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
+      table.concat(command, " ")
+    )
+  end)
+
   describe("escape_path_implementation", function()
     it("can handle paths with spaces", function()
       local config = require("yazi.config").default()
