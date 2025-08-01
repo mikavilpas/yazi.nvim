@@ -8,7 +8,7 @@
 // be written with confidence that the files and directories they expect are
 // actually found. Otherwise the tests are brittle and can break easily.
 
-import { z } from "zod"
+import * as z from "zod"
 
 export const MyTestDirectorySchema = z.object({
   name: z.literal("test-environment/"),

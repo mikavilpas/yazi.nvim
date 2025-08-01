@@ -20,6 +20,7 @@ import type {
   ExCommandClientInput,
   LuaCodeClientInput,
   PollLuaCodeClientInput,
+  RunLuaFileClientInput,
 } from "@tui-sandbox/library/src/server/applications/neovim/neovimRouter"
 import type { StartTerminalGenericArguments } from "@tui-sandbox/library/src/server/applications/terminal/TerminalTestApplication"
 import type { BlockingCommandClientInput } from "@tui-sandbox/library/src/server/blockingCommandInputSchema"
@@ -60,6 +61,13 @@ export type NeovimContext = {
    * finish before returning. Requires neovim to be running. */
   runLuaCode(input: LuaCodeClientInput): Cypress.Chainable<RunLuaCodeOutput>
 
+  /** Runs a Lua file in neovim after it has started. Can be used to keep
+   * complex lua logic in a separate file, still being able to run it after
+   * startup. This way additional tools like lua LSP servers, linters, etc. can
+   * be used to ensure the code is correct.
+   */
+  doFile(input: MyRunLuaFileClientInput): Cypress.Chainable<RunExCommandOutput>
+
   /**
    * Like runLuaCode, but waits until the given code (maybe using lua's return
    * assert()) does not raise an error, and returns the first successful result.
@@ -97,6 +105,11 @@ export type MyStartNeovimServerArguments = OverrideProperties<
   }
 >
 
+export type MyRunLuaFileClientInput = OverrideProperties<
+  RunLuaFileClientInput,
+  { luaFile: MyTestDirectoryFile }
+>
+
 Cypress.Commands.add(
   "startNeovim",
   (startArguments?: MyStartNeovimServerArguments) => {
@@ -112,6 +125,7 @@ Cypress.Commands.add(
         nvim_runExCommand: underlyingNeovim.runExCommand,
         nvim_runLuaCode: underlyingNeovim.runLuaCode,
         nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode,
+        nvim_doFile: underlyingNeovim.doFile,
       })
 
       const api: NeovimContext = {
@@ -123,6 +137,9 @@ Cypress.Commands.add(
         },
         runLuaCode(input) {
           return cy.nvim_runLuaCode(input)
+        },
+        doFile(input) {
+          return cy.nvim_doFile(input)
         },
         waitForLuaCode(input) {
           return cy.nvim_waitForLuaCode(input)
@@ -223,6 +240,7 @@ declare global {
       ): Chainable<BlockingShellCommandOutput>
 
       nvim_runLuaCode(input: LuaCodeClientInput): Chainable<RunLuaCodeOutput>
+      nvim_doFile(input: MyRunLuaFileClientInput): Chainable<RunExCommandOutput>
       nvim_waitForLuaCode(
         input: PollLuaCodeClientInput,
       ): Chainable<RunLuaCodeOutput>
