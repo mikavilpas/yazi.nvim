@@ -320,6 +320,14 @@ return {
     highlight_hovered_buffers_in_same_directory = true,
 
     integrations = {
+      -- a function that will be used to escape paths before passing them to
+      -- external commands. Defaults to `vim.fn.shellescape`. Depending on your OS
+      -- + shell + neovim settings, you might need to customize this for
+      -- yazi.nvim to work correctly with paths that contain special characters.
+      -- Defaults to `vim.fn.shellescape`, which is usually sufficient for most
+      -- users.
+      escape_path_implementation = vim.fn.shellescape,
+
       --- What should be done when the user wants to grep in a directory
       grep_in_directory = function(directory)
         -- the default implementation uses telescope if available, otherwise nothing

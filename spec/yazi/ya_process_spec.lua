@@ -75,6 +75,44 @@ describe("the get_yazi_command() function", function()
       command
     )
   end)
+
+  describe("escape_path_implementation", function()
+    it("can handle paths with spaces", function()
+      local config = require("yazi.config").default()
+      config.chosen_file_path = "/tmp/chosen_file_path"
+      config.cwd_file_path = "/tmp/cwd_file_path"
+
+      local ya = ya_process.new(config, yazi_id)
+
+      local command = ya:get_yazi_command({ { filename = "file 1" } })
+
+      assert.are.same(
+        "yazi 'file 1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
+        command
+      )
+    end)
+
+    it("allows customizing the way shellescape is done", function()
+      local config = require("yazi.config").default()
+      config.chosen_file_path = "/tmp/chosen_file_path"
+      config.cwd_file_path = "/tmp/cwd_file_path"
+
+      config.integrations.escape_path_implementation = function(path)
+        -- replace / with \
+        local result = path:gsub("/", "\\")
+        return result
+      end
+
+      local ya = ya_process.new(config, yazi_id)
+
+      local command = ya:get_yazi_command({ { filename = "file/1" } })
+
+      assert.are.same(
+        "yazi file\\1 --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
+        command
+      )
+    end)
+  end)
 end)
 
 describe("process_events()", function()
