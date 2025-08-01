@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.9.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.1...v11.9.2) (2025-08-01)
+
+
+### Bug Fixes
+
+* enable new shell escaping feature by default ([#1104](https://github.com/mikavilpas/yazi.nvim/issues/1104)) ([fb4256c](https://github.com/mikavilpas/yazi.nvim/commit/fb4256c23e5746c292ee7dcff7c240115c161753))
+
 ## [11.9.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.0...v11.9.1) (2025-08-01)
 
 
