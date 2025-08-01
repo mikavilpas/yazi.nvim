@@ -494,6 +494,16 @@ function M.on_yazi_exited(prev_win, window, config, selected_files, state)
   vim.api.nvim_set_current_win(prev_win)
   if #selected_files <= 0 then
     config.hooks.yazi_closed_successfully(nil, config, state)
+
+    if config.change_neovim_cwd_on_close then
+      require("yazi.log"):debug(
+        string.format(
+          "No files were selected, so changing Neovim's current working directory to the last yazi directory '%s'.",
+          state.last_directory
+        )
+      )
+      vim.cmd.cd(state.last_directory.filename)
+    end
     return
   end
 
