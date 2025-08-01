@@ -30,6 +30,7 @@
 
 ---@class(exact) yazi.OptInFeatures
 ---@field public use_cwd_file? boolean # use a file to store the last directory that yazi was in before it was closed. Defaults to `true`.
+---@field public new_shell_escaping? boolean # use a new shell escaping implementation that is more robust and works on more platforms. Defaults to `true`. If set to `false`, the old shell escaping implementation will be used, which is less robust and may not work on all platforms.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
