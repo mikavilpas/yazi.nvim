@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.9.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.0...v11.9.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* avoid using shell escaping for passing paths to yazi ([#1102](https://github.com/mikavilpas/yazi.nvim/issues/1102)) ([994a76d](https://github.com/mikavilpas/yazi.nvim/commit/994a76d28968606063aace8e9246c59c86272784))
+
 ## [11.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.8.0...v11.9.0) (2025-08-01)
 
 
