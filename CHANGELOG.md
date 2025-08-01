@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.3...v11.8.0) (2025-08-01)
+
+
+### Features
+
+* **opt-in:** change Neovim's cwd when no files are selected in yazi ([bb70218](https://github.com/mikavilpas/yazi.nvim/commit/bb70218ad093f7924295f9c7a7d740d6c507e718))
+
 ## [11.7.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.7.2...v11.7.3) (2025-08-01)
 
 
