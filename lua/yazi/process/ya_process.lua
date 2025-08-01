@@ -69,11 +69,15 @@ function YaProcess:get_yazi_command(paths)
   local command_words = { "yazi" }
 
   if self.config.open_multiple_tabs == true then
-    for _, path in ipairs(paths) do
-      table.insert(command_words, vim.fn.shellescape(path.filename))
+    for _, p in ipairs(paths) do
+      local path =
+        self.config.integrations.escape_path_implementation(p.filename)
+      table.insert(command_words, path)
     end
   else
-    table.insert(command_words, vim.fn.shellescape(paths[1].filename))
+    local path =
+      self.config.integrations.escape_path_implementation(paths[1].filename)
+    table.insert(command_words, path)
   end
 
   table.insert(command_words, "--chooser-file")

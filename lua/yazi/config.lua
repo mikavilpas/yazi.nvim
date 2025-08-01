@@ -48,6 +48,7 @@ function M.default()
       hovered_buffer_in_same_directory = nil,
     },
     integrations = {
+      escape_path_implementation = vim.fn.shellescape,
       grep_in_directory = "telescope",
       grep_in_selected_files = "telescope",
       replace_in_directory = function(directory)
