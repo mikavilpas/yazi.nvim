@@ -178,7 +178,8 @@ These are the default keybindings that are available when yazi is open:
   - `<c-y>`: copy the relative path of the selected file(s) to the clipboard.
     Requires GNU `realpath` or `grealpath` on OSX
     - also available for the snacks.nvim picker, see
-      [here](documentation/copy-relative-path-to-files.md) for more information
+      [documentation/copy-relative-path-to-files.md](documentation/copy-relative-path-to-files.md)
+      for more information
   - `<tab>`: make yazi jump to the open buffers in Neovim. See
     [#232](https://github.com/mikavilpas/yazi.nvim/pull/232) for more
     information
