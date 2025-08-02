@@ -199,7 +199,6 @@ These are the default keybindings that are available when yazi is open:
 You can optionally configure yazi.nvim by setting any of the options below.
 
 ```lua
-
 return {
   -- ... other lazy.nvim configuration from above
 
@@ -320,14 +319,6 @@ return {
     highlight_hovered_buffers_in_same_directory = true,
 
     integrations = {
-      -- a function that will be used to escape paths before passing them to
-      -- external commands. Defaults to `vim.fn.shellescape`. Depending on your OS
-      -- + shell + neovim settings, you might need to customize this for
-      -- yazi.nvim to work correctly with paths that contain special characters.
-      -- Defaults to `vim.fn.shellescape`, which is usually sufficient for most
-      -- users.
-      escape_path_implementation = vim.fn.shellescape,
-
       --- What should be done when the user wants to grep in a directory
       grep_in_directory = function(directory)
         -- the default implementation uses telescope if available, otherwise nothing
@@ -365,6 +356,15 @@ return {
       -- - nil (default, no action added)
       -- - "snacks.picker" (snacks.nvim)
       picker_add_copy_relative_path_action = nil,
+
+      -- Only used when `future_features.new_shell_escaping` is off. A function
+      -- that will be used to escape paths before passing them to external
+      -- commands. Defaults to `vim.fn.shellescape`. Depending on your OS +
+      -- shell + neovim settings, you might need to customize this for
+      -- yazi.nvim to work correctly with paths that contain special
+      -- characters. Defaults to `vim.fn.shellescape`, which is usually
+      -- sufficient for most users.
+      escape_path_implementation = vim.fn.shellescape,
     },
 
     future_features = {
