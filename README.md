@@ -368,7 +368,15 @@ return {
     },
 
     future_features = {
-      -- (any unstable features will be added here in the future)
+      -- use a file to store the last directory that yazi was in before it was
+      -- closed. Defaults to `true`.
+      use_cwd_file = true,
+
+      -- use a new shell escaping implementation that is more robust and works
+      -- on more platforms. Defaults to `true`. If set to `false`, the old
+      -- shell escaping implementation will be used, which is less robust and
+      -- may not work on all platforms.
+      new_shell_escaping = true,
     },
   },
 }
