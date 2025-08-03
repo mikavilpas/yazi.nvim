@@ -1,9 +1,9 @@
 import { flavors } from "@catppuccin/palette"
+import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
 import type { RunLuaCodeOutput } from "@tui-sandbox/library/src/server/types"
 import type { NeovimContext } from "cypress/support/tui-sandbox"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
 import { assertYaziIsReady } from "./yazi-utils"
-
 const darkTheme = flavors.macchiato.colors
 const lightTheme = flavors.latte.colors
 
@@ -27,29 +27,20 @@ export const lightBackgroundColors = {
 
 // only works for the dark colorscheme for now
 export function isHoveredInNeovim(text: string, color?: string): void {
-  cy.contains(text).should(
-    "have.css",
-    "background-color",
-    color ?? darkBackgroundColors.hovered,
-  )
+  textIsVisibleWithBackgroundColor(text, color ?? darkBackgroundColors.hovered)
 }
 
 // only works for the dark colorscheme for now
 export function isNotHoveredInNeovim(text: string): void {
-  cy.contains(text).should(
-    "have.css",
-    "background-color",
-    darkBackgroundColors.normal,
-  )
+  textIsVisibleWithBackgroundColor(text, darkBackgroundColors.normal)
 }
 
 export function isHoveredInNeovimWithSameDirectory(
   text: string,
   color?: string,
 ): void {
-  cy.contains(text).should(
-    "have.css",
-    "background-color",
+  textIsVisibleWithBackgroundColor(
+    text,
     color ?? darkBackgroundColors.hoveredInSameDirectory,
   )
 }

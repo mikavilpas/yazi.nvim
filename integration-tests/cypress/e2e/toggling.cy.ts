@@ -1,4 +1,5 @@
 import { flavors } from "@catppuccin/palette"
+import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
@@ -85,9 +86,8 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
 
       // toggle yazi again. It should hover the same directory.
       cy.typeIntoTerminal("{control+upArrow}")
-      cy.contains("dir with spaces").should(
-        "have.css",
-        "background-color",
+      textIsVisibleWithBackgroundColor(
+        "dir with spaces",
         rgbify(flavors.macchiato.colors.blue.rgb),
       )
     })
