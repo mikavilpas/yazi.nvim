@@ -1,5 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
+import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
 import z from "zod"
 import { assertYaziIsReady } from "./utils/yazi-utils"
@@ -178,9 +179,8 @@ describe("'rename' events", () => {
       // start yazi and wait for the current file to be highlighted
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
-      cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
-        "have.css",
-        "background-color",
+      textIsVisibleWithBackgroundColor(
+        nvim.dir.contents["initial-file.txt"].name,
         rgbify(flavors.macchiato.colors.text.rgb),
       )
 
