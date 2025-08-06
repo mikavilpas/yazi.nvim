@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "cy:run": "concurrently --success command-cypress --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'wait-on --timeout 60000 http://127.0.0.1:3000 && npx cypress run'",
     "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
     "eslint": "eslint --max-warnings=0 ."
   },
@@ -19,7 +18,6 @@
     "@tui-sandbox/library": "11.6.0",
     "@types/node": "24.2.0",
     "@types/tinycolor2": "1.4.6",
-    "concurrently": "9.2.0",
     "eslint": "9.32.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",

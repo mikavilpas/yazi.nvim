@@ -7,7 +7,6 @@
   "license": "ISC",
   "author": "",
   "scripts": {
-    "cy:run": "pnpm --filter ./integration-tests/ cy:run",
     "dev": "pnpm --filter ./integration-tests/ dev",
     "markdownlint": "markdownlint-cli2 README.md",
     "prettier": "prettier --check .",
