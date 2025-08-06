@@ -51,9 +51,6 @@ importers:
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
-      concurrently:
-        specifier: 9.2.0
-        version: 9.2.0
       eslint:
         specifier: 9.32.0
         version: 9.32.0
