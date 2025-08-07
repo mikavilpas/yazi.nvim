@@ -33,8 +33,8 @@ importers:
         specifier: 9.2.0
         version: 9.2.0
       cypress:
-        specifier: 14.5.3
-        version: 14.5.3
+        specifier: 14.5.4
+        version: 14.5.4
       wait-on:
         specifier: 8.0.4
         version: 8.0.4
@@ -46,8 +46,8 @@ importers:
         specifier: 9.32.0
         version: 9.32.0
       '@tui-sandbox/library':
-        specifier: 11.6.0
-        version: 11.6.0(cypress@14.5.3)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(zod@4.0.15)
+        specifier: 11.6.1
+        version: 11.6.1(cypress@14.5.4)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(zod@4.0.15)
       '@types/node':
         specifier: 24.2.0
         version: 24.2.0
@@ -231,8 +231,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@11.6.0':
-    resolution: {integrity: sha512-H6nmttFsDIJZzfFFjSGnf6VLRRGShGOSSD+un1tOYsEt2b/yT7rf2YxsYnVHau53FamwOY0eFQlUTwb/KSsSOQ==}
+  '@tui-sandbox/library@11.6.1':
+    resolution: {integrity: sha512-APVopITC4BbHH0Rf+c601cD6lqn3PjalZFDDxgJaVzcJAUKjJDCEQggORUP7MKFQ2CU93uF87wpL+vJk/2HYrg==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -559,8 +559,8 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chalk@5.4.1:
-    resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
+  chalk@5.5.0:
+    resolution: {integrity: sha512-1tm8DTaJhPBG3bIkVeZt1iZM9GfSX2lzOeDVZH9R9ffRHpmHvxZ/QhgQH/aDTkswQVt+YHdXAdS/In/30OjCbg==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
   character-entities-legacy@3.0.0:
@@ -706,8 +706,8 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  cypress@14.5.3:
-    resolution: {integrity: sha512-syLwKjDeMg77FRRx68bytLdlqHXDT4yBVh0/PPkcgesChYDjUZbwxLqMXuryYKzAyJsPsQHUDW1YU74/IYEUIA==}
+  cypress@14.5.4:
+    resolution: {integrity: sha512-0Dhm4qc9VatOcI1GiFGVt8osgpPdqJLHzRwcAB5MSD/CAAts3oybvPUPawHyvJZUd8osADqZe/xzMsZ8sDTjXw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
@@ -2106,8 +2106,8 @@ packages:
     resolution: {integrity: sha512-WMi/OQ2axVTf/ykqCQgXiIct+mSQDFdH2fkwhPwgEwvJ1kSzZRiinb0zF2Xb8u4+OqPChmyI6MEu4EezNJz+FQ==}
     hasBin: true
 
-  tmp@0.2.3:
-    resolution: {integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==}
+  tmp@0.2.4:
+    resolution: {integrity: sha512-UdiSoX6ypifLmrfQ/XfiawN6hkjSBpCjhKxxZcWlUUmoXLaCKQU0bx4HF/tdDK2uzRuchf1txGvrWBzYREssoQ==}
     engines: {node: '>=14.14'}
 
   to-regex-range@5.0.1:
@@ -2501,7 +2501,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.6.0(cypress@14.5.3)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(zod@4.0.15)':
+  '@tui-sandbox/library@11.6.1(cypress@14.5.4)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(zod@4.0.15)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.4.4(@trpc/server@11.4.4(typescript@5.9.2))(typescript@5.9.2)
@@ -2511,7 +2511,7 @@ snapshots:
       '@xterm/xterm': 5.5.0
       concurrently: 9.2.0
       cors: 2.8.5
-      cypress: 14.5.3
+      cypress: 14.5.4
       dree: 5.1.5
       express: 5.1.0
       neovim: 5.3.0
@@ -2868,7 +2868,7 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chalk@5.4.1: {}
+  chalk@5.5.0: {}
 
   character-entities-legacy@3.0.0: {}
 
@@ -3003,7 +3003,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress@14.5.3:
+  cypress@14.5.4:
     dependencies:
       '@cypress/request': 3.0.9
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
@@ -3045,7 +3045,7 @@ snapshots:
       request-progress: 3.0.0
       semver: 7.7.2
       supports-color: 8.1.1
-      tmp: 0.2.3
+      tmp: 0.2.4
       tree-kill: 1.2.2
       untildify: 4.0.0
       yauzl: 2.10.0
@@ -3733,7 +3733,7 @@ snapshots:
 
   log-symbols@6.0.0:
     dependencies:
-      chalk: 5.4.1
+      chalk: 5.5.0
       is-unicode-supported: 1.3.0
 
   log-update@4.0.0:
@@ -4220,7 +4220,7 @@ snapshots:
 
   ora@8.2.0:
     dependencies:
-      chalk: 5.4.1
+      chalk: 5.5.0
       cli-cursor: 5.0.0
       cli-spinners: 2.9.2
       is-interactive: 2.0.0
@@ -4718,7 +4718,7 @@ snapshots:
     dependencies:
       tldts-core: 6.1.86
 
-  tmp@0.2.3: {}
+  tmp@0.2.4: {}
 
   to-regex-range@5.0.1:
     dependencies:
