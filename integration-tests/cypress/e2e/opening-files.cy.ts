@@ -1,6 +1,6 @@
 import assert from "assert"
 import type { MyTestDirectoryFile } from "MyTestDirectory"
-import path from "path"
+import path, { join } from "path"
 import { z } from "zod"
 import {
   assertYaziIsHovering,
@@ -433,16 +433,67 @@ describe("opening files", () => {
           ].name,
         ).should("not.exist")
 
-        // the relative path should now be in the clipboard. Let's paste it to
-        // the file to verify this.
+        // the relative path should now be in the clipboard.
         // NOTE: the test-setup configures the `"` register to be the clipboard
-        cy.typeIntoTerminal("o{enter}{esc}")
         nvim
           .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
           .then((result) => {
             expect(result.value).to.eql(
               "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
             )
+          })
+      })
+    })
+
+    it("can customize the way the relative path is copied", () => {
+      cy.startNeovim({
+        filename: "highlights/file_1.txt",
+        startupScriptModifications: [
+          "add_yazi_context_assertions.lua",
+          "add_command_to_reveal_a_file.lua",
+          "yazi_config/resolve_relative_files_from_cwd.lua",
+        ],
+      }).then((nvim) => {
+        cy.contains("Hello from file_1.txt")
+        nvim.runExCommand({
+          command: `cd ${join(nvim.dir.testEnvironmentPathRelative, nvim.dir.contents.highlights.name)}`,
+        })
+
+        cy.typeIntoTerminal("{upArrow}")
+        assertYaziIsReady(nvim)
+        hoverFileAndVerifyItsHovered(nvim, ".config/nvim/init.lua")
+
+        cy.contains("NOR")
+        cy.typeIntoTerminal("{control+y}")
+
+        // yazi should now be closed
+        cy.contains("NOR").should("not.exist")
+
+        // the relative path should now be in the clipboard.
+        // NOTE: the test-setup configures the `"` register to be the clipboard
+        nvim
+          .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+          .then((result) => {
+            expect(result.value).to.eql(
+              `../${".config/nvim/init.lua" satisfies MyTestDirectoryFile}`,
+            )
+          })
+
+        // test that multiple files can be selected and copied
+        cy.typeIntoTerminal("{control+upArrow}")
+        cy.contains("NOR")
+        cy.typeIntoTerminal("{control+a}{control+y}")
+        cy.contains("NOR").should("not.exist")
+
+        nvim
+          .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+          .then((result) => {
+            const expected = [
+              `../${".config/nvim/lua" satisfies MyTestDirectoryFile}`,
+              `../${".config/nvim/init.lua" satisfies MyTestDirectoryFile}`,
+              `../${".config/nvim/prepare.lua" satisfies MyTestDirectoryFile}`,
+            ].join("\n")
+            expect(result.value).to.eql(expected)
           })
       })
     })
@@ -481,10 +532,8 @@ describe("opening files", () => {
           ].name,
         ).should("not.exist")
 
-        // the relative path should now be in the clipboard. Let's paste it to
-        // the file to verify this.
+        // the relative path should now be in the clipboard.
         // NOTE: the test-setup configures the `"` register to be the clipboard
-        cy.typeIntoTerminal("o{enter}{esc}")
         nvim
           .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
           .then((result) => {

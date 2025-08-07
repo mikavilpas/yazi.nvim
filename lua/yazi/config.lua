@@ -77,6 +77,7 @@ function M.default()
       resolve_relative_path_application = vim.uv.os_uname().sysname == "Darwin"
           and "grealpath"
         or "realpath",
+      resolve_relative_path_implementation = nil,
       bufdelete_implementation = "bundled-snacks",
       picker_add_copy_relative_path_action = nil,
       pick_window_implementation = "snacks.picker",
@@ -269,26 +270,25 @@ function M.set_keymappings(yazi_buffer, config, context)
       { "t" },
       config.keymaps.copy_relative_path_to_selected_files,
       function()
+        local get_relative_path =
+          require("yazi.integrations.get_relative_path").get_relative_path
+
         keybinding_helpers.select_current_file_and_close_yazi(config, {
           api = context.api,
           on_file_opened = function(chosen_file)
-            local relative_path = require("yazi.utils").relative_path(
-              config.integrations.resolve_relative_path_application,
-              context.input_path.filename,
-              chosen_file
-            )
-
+            local relative_path = get_relative_path(config, {
+              selected_file = chosen_file,
+              source_dir = context.input_path.filename,
+            })
             vim.fn.setreg(config.clipboard_register, relative_path, "c")
           end,
           on_multiple_files_opened = function(chosen_files)
             local relative_paths = {}
-            for _, path in ipairs(chosen_files) do
-              relative_paths[#relative_paths + 1] =
-                require("yazi.utils").relative_path(
-                  config.integrations.resolve_relative_path_application,
-                  context.input_path.filename,
-                  path
-                )
+            for _, chosen_file in ipairs(chosen_files) do
+              relative_paths[#relative_paths + 1] = get_relative_path(config, {
+                selected_file = chosen_file,
+                source_dir = context.input_path.filename,
+              })
             end
 
             vim.fn.setreg(
