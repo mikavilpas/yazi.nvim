@@ -29,6 +29,9 @@ importers:
       '@catppuccin/palette':
         specifier: 1.7.1
         version: 1.7.1
+      concurrently:
+        specifier: 9.2.0
+        version: 9.2.0
       cypress:
         specifier: 14.5.3
         version: 14.5.3
