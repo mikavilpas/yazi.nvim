@@ -438,7 +438,7 @@ describe("opening files", () => {
       nvim
         .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
         .then((result) => {
-          expect(result.value).to.contain(
+          expect(result.value).to.eql(
             "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
           )
         })
