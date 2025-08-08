@@ -159,6 +159,10 @@ export const MyTestDirectorySchema = z.object({
               name: z.literal("open_multiple_files.lua"),
               type: z.literal("file"),
             }),
+            "resolve_relative_files_from_cwd.lua": z.object({
+              name: z.literal("resolve_relative_files_from_cwd.lua"),
+              type: z.literal("file"),
+            }),
             "set_help_key.lua": z.object({
               name: z.literal("set_help_key.lua"),
               type: z.literal("file"),
@@ -340,6 +344,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/yazi_config/log_yazi_closed_successfully.lua",
   "config-modifications/yazi_config/make_yazi_fullscreen.lua",
   "config-modifications/yazi_config/open_multiple_files.lua",
+  "config-modifications/yazi_config/resolve_relative_files_from_cwd.lua",
   "config-modifications/yazi_config/set_help_key.lua",
   "config-modifications/yazi_config/use_fzf_lua.lua",
   "config-modifications/yazi_config/use_snacks_picker.lua",

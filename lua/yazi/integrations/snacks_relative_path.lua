@@ -43,8 +43,10 @@ function M.setup_copy_relative_path_picker_action_once()
       local full_path = vim.fs.joinpath(cwd, assert(selected_file.file))
       local relative_path = require("yazi.utils").relative_path(
         config.integrations.resolve_relative_path_application,
-        current_file_dir,
-        full_path
+        {
+          source_dir = current_file_dir,
+          selected_file = full_path,
+        }
       )
       table.insert(relative_paths, relative_path)
     end

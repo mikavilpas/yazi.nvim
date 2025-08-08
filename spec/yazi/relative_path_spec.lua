@@ -49,8 +49,10 @@ describe("relative_path", function()
     local subdirectory = vim.fs.joinpath(base_dir, "subdirectory")
 
     vim.fn.mkdir(subdirectory)
-    local result =
-      utils.relative_path(realpath_application, base_dir, subdirectory)
+    local result = utils.relative_path(realpath_application, {
+      source_dir = base_dir,
+      selected_file = subdirectory,
+    })
 
     assert.are.same("subdirectory", result)
   end)
@@ -59,7 +61,10 @@ describe("relative_path", function()
     local subfile = vim.fs.joinpath(base_dir, "subfile")
     create_file(subfile)
 
-    local result = utils.relative_path(realpath_application, base_dir, subfile)
+    local result = utils.relative_path(realpath_application, {
+      source_dir = base_dir,
+      selected_file = subfile,
+    })
 
     assert.are.same("subfile", result)
   end)
@@ -74,8 +79,56 @@ describe("relative_path", function()
     local subdirectory = vim.fs.joinpath(base_dir, "subdirectory")
     vim.fn.mkdir(subdirectory)
 
-    local result = utils.relative_path(realpath_application, file, subdirectory)
+    local result = utils.relative_path(
+      realpath_application,
+      -- file,
+      -- subdirectory
+      {
+        source_dir = file,
+        selected_file = subdirectory,
+      }
+    )
 
     assert.are.same("subdirectory", result)
+  end)
+end)
+
+describe("resolve_relative_path_implementation in the config", function()
+  local snapshot
+
+  before_each(function()
+    snapshot = assert:snapshot()
+  end)
+
+  after_each(function()
+    snapshot:revert()
+  end)
+
+  it("can fallback to the default_implementation", function()
+    local get_relative_path =
+      require("yazi.integrations.get_relative_path").get_relative_path
+    local config = require("yazi.config").default()
+
+    -- stub the default implementation
+    local default_implementation_stub = stub(utils, "relative_path", function()
+      return "default_relative_path"
+    end)
+
+    -- the user adds an implementation that falls back to the default
+    -- implementation
+    config.integrations.resolve_relative_path_implementation = function(
+      chosen_file,
+      default_implementation
+    )
+      return default_implementation(chosen_file)
+    end
+
+    -- call the implementation
+    local result = get_relative_path(config, "path/to/target")
+
+    assert
+      .stub(default_implementation_stub)
+      .was_called_with(config.integrations.resolve_relative_path_application, "path/to/target")
+    assert.are.same("default_relative_path", result)
   end)
 end)

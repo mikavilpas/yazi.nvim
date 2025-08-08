@@ -4,10 +4,9 @@ local plenary_path = require("plenary.path")
 local M = {}
 
 ---@param realpath_application string
----@param current_file_dir string
----@param selected_file string
+---@param args YaziGetRelativePathImplementationArguments
 ---@return string
-function M.relative_path(realpath_application, current_file_dir, selected_file)
+function M.relative_path(realpath_application, args)
   local command = realpath_application
   assert(
     command ~= nil,
@@ -27,7 +26,7 @@ function M.relative_path(realpath_application, current_file_dir, selected_file)
   assert(command ~= nil, "realpath command must be set")
 
   ---@type Path
-  local start_path = plenary_path:new(current_file_dir)
+  local start_path = plenary_path:new(args.source_dir)
   local start_directory = nil
   if start_path:is_dir() then
     start_directory = start_path
@@ -39,7 +38,7 @@ function M.relative_path(realpath_application, current_file_dir, selected_file)
     command,
     "--relative-to",
     start_directory.filename,
-    selected_file,
+    args.selected_file,
   })
   local result = job:wait(1000)
 

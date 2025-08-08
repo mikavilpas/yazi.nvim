@@ -342,6 +342,12 @@ return {
       -- `grealpath` on OSX, (GNU) `realpath` otherwise
       resolve_relative_path_application = "",
 
+      -- the way to resolve relative paths. The default_implementation can be
+      -- customized with a function. See
+      -- documentation/copy-relative-path-to-files.md for more information.
+      resolve_relative_path_implementation = function(args, get_relative_path)
+      end,
+
       -- how to delete (close) a buffer. Defaults to a bundled version of
       -- `snacks.bufdelete`, copied from https://github.com/folke/snacks.nvim,
       -- which maintains the window layout. See the `types.lua` file for more
