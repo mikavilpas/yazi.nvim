@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.10.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.2...v11.10.0) (2025-08-08)
+
+
+### Features
+
+* custom copy_relative_path_to_selected_files implementation ([#1122](https://github.com/mikavilpas/yazi.nvim/issues/1122)) ([76d7843](https://github.com/mikavilpas/yazi.nvim/commit/76d7843b76a537d9df1ca942db3597924d934620))
+
 ## [11.9.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.1...v11.9.2) (2025-08-01)
 
 
