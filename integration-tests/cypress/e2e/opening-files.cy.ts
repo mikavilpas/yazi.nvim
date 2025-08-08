@@ -402,99 +402,103 @@ describe("opening files", () => {
     })
   })
 
-  it("can copy the relative path to the initial file", () => {
-    // the copied path should be relative to the file/directory yazi was
-    // started in (the initial file)
+  describe("copy_relative_path_to_selected_files", () => {
+    it("can copy the relative path to the initial file", () => {
+      // the copied path should be relative to the file/directory yazi was
+      // started in (the initial file)
 
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
-    }).then((nvim) => {
-      cy.contains("If you see this text, Neovim is ready!")
+      cy.startNeovim({
+        startupScriptModifications: [
+          "add_yazi_context_assertions.lua",
+          "add_command_to_reveal_a_file.lua",
+        ],
+      }).then((nvim) => {
+        cy.contains("If you see this text, Neovim is ready!")
 
-      cy.typeIntoTerminal("{upArrow}")
-      assertYaziIsReady(nvim)
-      hoverFileAndVerifyItsHovered(
-        nvim,
-        "routes/posts.$postId/adjacent-file.txt",
-      )
-      // the file contents should now be visible
-      cy.contains("this file is adjacent-file.txt")
+        cy.typeIntoTerminal("{upArrow}")
+        assertYaziIsReady(nvim)
+        hoverFileAndVerifyItsHovered(
+          nvim,
+          "routes/posts.$postId/adjacent-file.txt",
+        )
+        // the file contents should now be visible
+        cy.contains("this file is adjacent-file.txt")
 
-      cy.typeIntoTerminal("{control+y}")
+        cy.typeIntoTerminal("{control+y}")
 
-      // yazi should now be closed
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      ).should("not.exist")
+        // yazi should now be closed
+        cy.contains(
+          nvim.dir.contents.routes.contents["posts.$postId"].contents[
+            "route.tsx"
+          ].name,
+        ).should("not.exist")
 
-      // the relative path should now be in the clipboard. Let's paste it to
-      // the file to verify this.
-      // NOTE: the test-setup configures the `"` register to be the clipboard
-      cy.typeIntoTerminal("o{enter}{esc}")
-      nvim
-        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
-        .then((result) => {
-          expect(result.value).to.eql(
-            "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
-          )
-        })
+        // the relative path should now be in the clipboard. Let's paste it to
+        // the file to verify this.
+        // NOTE: the test-setup configures the `"` register to be the clipboard
+        cy.typeIntoTerminal("o{enter}{esc}")
+        nvim
+          .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+          .then((result) => {
+            expect(result.value).to.eql(
+              "routes/posts.$postId/adjacent-file.txt" satisfies MyTestDirectoryFile,
+            )
+          })
+      })
     })
-  })
 
-  it("can copy the relative paths of multiple selected files", () => {
-    // similarly, the copied path should be relative to the file/directory yazi
-    // was started in (the initial file)
+    it("can copy the relative paths of multiple selected files", () => {
+      // similarly, the copied path should be relative to the file/directory yazi
+      // was started in (the initial file)
 
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
-    }).then((nvim) => {
-      cy.contains("If you see this text, Neovim is ready!")
+      cy.startNeovim({
+        startupScriptModifications: [
+          "add_yazi_context_assertions.lua",
+          "add_command_to_reveal_a_file.lua",
+        ],
+      }).then((nvim) => {
+        cy.contains("If you see this text, Neovim is ready!")
 
-      cy.typeIntoTerminal("{upArrow}")
-      assertYaziIsReady(nvim)
-      cy.contains(nvim.dir.contents["file2.txt"].name)
+        cy.typeIntoTerminal("{upArrow}")
+        assertYaziIsReady(nvim)
+        cy.contains(nvim.dir.contents["file2.txt"].name)
 
-      // enter another directory and select a file
-      hoverFileAndVerifyItsHovered(
-        nvim,
-        "routes/posts.$postId/adjacent-file.txt",
-      )
-      // select all files
-      cy.typeIntoTerminal("{control+a}")
+        // enter another directory and select a file
+        hoverFileAndVerifyItsHovered(
+          nvim,
+          "routes/posts.$postId/adjacent-file.txt",
+        )
+        // select all files
+        cy.typeIntoTerminal("{control+a}")
 
-      // copy the relative paths to the selected files
-      cy.typeIntoTerminal("{control+y}")
+        // copy the relative paths to the selected files
+        cy.typeIntoTerminal("{control+y}")
 
-      // yazi should now be closed
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      ).should("not.exist")
+        // yazi should now be closed
+        cy.contains(
+          nvim.dir.contents.routes.contents["posts.$postId"].contents[
+            "route.tsx"
+          ].name,
+        ).should("not.exist")
 
-      // the relative path should now be in the clipboard. Let's paste it to
-      // the file to verify this.
-      // NOTE: the test-setup configures the `"` register to be the clipboard
-      cy.typeIntoTerminal("o{enter}{esc}")
-      nvim
-        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
-        .then((result) => {
-          expect(result.value).to.eql(
-            (
-              [
-                "routes/posts.$postId/adjacent-file.txt",
-                "routes/posts.$postId/route.tsx",
-                "routes/posts.$postId/should-be-excluded-file.txt",
-              ] satisfies MyTestDirectoryFile[]
-            ).join("\n"),
-          )
-        })
+        // the relative path should now be in the clipboard. Let's paste it to
+        // the file to verify this.
+        // NOTE: the test-setup configures the `"` register to be the clipboard
+        cy.typeIntoTerminal("o{enter}{esc}")
+        nvim
+          .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
+          .then((result) => {
+            expect(result.value).to.eql(
+              (
+                [
+                  "routes/posts.$postId/adjacent-file.txt",
+                  "routes/posts.$postId/route.tsx",
+                  "routes/posts.$postId/should-be-excluded-file.txt",
+                ] satisfies MyTestDirectoryFile[]
+              ).join("\n"),
+            )
+          })
+      })
     })
   })
 
