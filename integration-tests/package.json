@@ -12,14 +12,14 @@
     "concurrently": "9.2.0",
     "cypress": "14.5.4",
     "wait-on": "8.0.4",
-    "zod": "4.0.15"
+    "zod": "4.0.16"
   },
   "devDependencies": {
-    "@eslint/js": "9.32.0",
+    "@eslint/js": "9.33.0",
     "@tui-sandbox/library": "11.6.3",
-    "@types/node": "24.2.0",
+    "@types/node": "24.2.1",
     "@types/tinycolor2": "1.4.6",
-    "eslint": "9.32.0",
+    "eslint": "9.33.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
