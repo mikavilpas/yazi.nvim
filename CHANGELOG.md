@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.10.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.0...v11.10.1) (2025-08-09)
+
+
+### Bug Fixes
+
+* **log:** correctly log yazi command when it's a table ([b74e5a5](https://github.com/mikavilpas/yazi.nvim/commit/b74e5a5f44826f872a94e74515c73e8d9d54bd66))
+
 ## [11.10.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.9.2...v11.10.0) (2025-08-08)
 
 
