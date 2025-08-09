@@ -37,7 +37,9 @@ function YaziProcess:start(config, paths, callbacks)
   end, assert(paths[1]).filename)
 
   local yazi_cmd = self.ya_process:get_yazi_command(paths)
-  Log:debug(string.format("Opening yazi with the command: (%s).", yazi_cmd))
+  Log:debug(
+    string.format("Opening yazi with the command: (%s).", vim.inspect(yazi_cmd))
+  )
 
   ---@type YaziActiveContext
   local context = {
