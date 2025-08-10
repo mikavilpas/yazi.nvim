@@ -91,6 +91,7 @@ you need to install the dependencies yourself. Also see the discussion in
 ---@type LazySpec
 {
   "mikavilpas/yazi.nvim",
+  version = "*", -- use the latest stable version
   event = "VeryLazy",
   dependencies = {
     { "nvim-lua/plenary.nvim", lazy = true },

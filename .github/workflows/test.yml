@@ -101,3 +101,21 @@ jobs:
           name: cypress-screenshots
           path: integration-tests/cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+
+  automerge:
+    needs: build
+    name: Automerge Dependabot PRs
+    runs-on: ubuntu-latest
+    permissions:
+      # NOTE: no special token needs to be generated if these permissions are
+      # used. However, "Workflow permissions > Allow GitHub Actions to create
+      # and approve pull requests" needs to be enabled under
+      # github.com/user/repo/settings/actions
+      # https://github.com/fastify/github-action-merge-dependabot/issues/359
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3.11.1
+        with:
+          # https://github.com/fastify/github-action-merge-dependabot?tab=readme-ov-file
+          github-token: ${{ secrets.GITHUB_TOKEN }}
