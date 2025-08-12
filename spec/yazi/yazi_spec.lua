@@ -12,6 +12,12 @@ local yazi_process = require("yazi.process.yazi_process")
 
 local plugin = require("yazi")
 
+before_each(function()
+  local reset = require("spec.yazi.helpers.reset")
+  reset.clear_all_buffers()
+  reset.close_all_windows()
+end)
+
 describe("opening a file", function()
   after_each(function()
     package.loaded["yazi.process.yazi_process"] = yazi_process
