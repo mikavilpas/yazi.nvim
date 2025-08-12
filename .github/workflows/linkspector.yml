@@ -10,7 +10,7 @@ jobs:
     # https://github.com/UmbrellaDocs/action-linkspector/issues/32
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v5.0.0
       - name: Run linkspector
         # needs to be pinned to 1.2.5 avoid
         # https://github.com/UmbrellaDocs/action-linkspector/issues/30
