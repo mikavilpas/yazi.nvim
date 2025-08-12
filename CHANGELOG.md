@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.10.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.1...v11.10.2) (2025-08-12)
+
+
+### Bug Fixes
+
+* yazi window displays a nice name for other plugins to see ([#1132](https://github.com/mikavilpas/yazi.nvim/issues/1132)) ([95c77fd](https://github.com/mikavilpas/yazi.nvim/commit/95c77fd414ade2e9de6fc8cac710710d4e774721))
+
 ## [11.10.1](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.0...v11.10.1) (2025-08-09)
 
 
