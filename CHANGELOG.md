@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.10.3](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.2...v11.10.3) (2025-08-13)
+
+
+### Bug Fixes
+
+* set buffer name for yazi floating window correctly ([03c6d6b](https://github.com/mikavilpas/yazi.nvim/commit/03c6d6b516aa848cd90c9a0cd9a943891d45f4b2))
+
 ## [11.10.2](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.1...v11.10.2) (2025-08-12)
 
 
