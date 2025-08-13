@@ -463,11 +463,11 @@ describe("opening files", () => {
         assertYaziIsReady(nvim)
         hoverFileAndVerifyItsHovered(nvim, ".config/nvim/init.lua")
 
-        cy.contains("NOR")
+        cy.contains("-- TERMINAL --")
         cy.typeIntoTerminal("{control+y}")
 
         // yazi should now be closed
-        cy.contains("NOR").should("not.exist")
+        cy.contains("-- TERMINAL --").should("not.exist")
 
         // the relative path should now be in the clipboard.
         // NOTE: the test-setup configures the `"` register to be the clipboard
@@ -481,9 +481,9 @@ describe("opening files", () => {
 
         // test that multiple files can be selected and copied
         cy.typeIntoTerminal("{control+upArrow}")
-        cy.contains("NOR")
+        cy.contains("-- TERMINAL --")
         cy.typeIntoTerminal("{control+a}{control+y}")
-        cy.contains("NOR").should("not.exist")
+        cy.contains("-- TERMINAL --").should("not.exist")
 
         nvim
           .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
