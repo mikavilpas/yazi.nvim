@@ -47,7 +47,7 @@ jobs:
           # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
           # crates.io must be built with `cargo install --force yazi-build`
           # https://github.com/sxyazi/yazi/blob/2ec3a6c645324295331c0f2ef6d4d946cf11c06b/yazi-fm/build.rs?plain=1#L23-L25
-          crate: yazi-build
+          crate: yazi
           git: https://github.com/sxyazi/yazi
           commit:
             # https://github.com/sxyazi/yazi/commit/2ec3a6c645324295331c0f2ef6d4d946cf11c06b (2025-08-14)
