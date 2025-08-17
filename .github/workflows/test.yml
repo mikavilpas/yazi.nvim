@@ -54,6 +54,17 @@ jobs:
             2ec3a6c645324295331c0f2ef6d4d946cf11c06b
           # tag: v25.5.31
 
+      - name: Make sure yazi and ya are installed
+        run: |
+          which yazi || {
+            echo "yazi is not installed, but it should be installed by the previous step"
+            exit 1
+          }
+          which ya || {
+            echo "ya is not installed, but it should be installed by the previous step"
+            exit 1
+          }
+
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@v1.1.0
         with:
