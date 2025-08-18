@@ -63,9 +63,10 @@ For previewing images with yazi, see Yazi's documentation related to Neovim
 First, make sure you have the requirements:
 
 - Neovim 0.11.0 or later (nightly)
-- yazi [0.4.0](https://github.com/sxyazi/yazi/releases/tag/v0.4.0) or later
-- New features might require a recent version of yazi (see
-  [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md))
+- a recent version of [yazi](https://github.com/sxyazi/yazi/releases/)
+  - New features might require a recent version of yazi (see
+    [installing-yazi-from-source.md](documentation/installing-yazi-from-source.md))
+- if on Windows, the minimum supported version is Windows 11
 
 > [!TIP]
 >
