@@ -41,17 +41,26 @@ jobs:
             exit 1
           }
 
+      - name: Compile and install `yazi-fm` from source
+        uses: baptiste0928/cargo-install@v3.3.1
+        with:
+          # yazi-fm is the `yazi` executable
+          crate: yazi-fm
+          git: https://github.com/sxyazi/yazi
+          commit:
+            # https://github.com/sxyazi/yazi/commit/d5f225bc4adc22231b6e254431183518747fadb9 (2025-08-05)
+            d5f225bc4adc22231b6e254431183518747fadb9
+          # tag: v25.5.31
+
       - name: Compile and install yazi from source
         uses: baptiste0928/cargo-install@v3.3.1
         with:
-          # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
-          # crates.io must be built with `cargo install --force yazi-build`
-          # https://github.com/sxyazi/yazi/blob/2ec3a6c645324295331c0f2ef6d4d946cf11c06b/yazi-fm/build.rs?plain=1#L23-L25
-          crate: yazi-build
+          # yazi-cli is the `ya` command line interface
+          crate: yazi-cli
           git: https://github.com/sxyazi/yazi
           commit:
-            # https://github.com/sxyazi/yazi/commit/2ec3a6c645324295331c0f2ef6d4d946cf11c06b (2025-08-14)
-            2ec3a6c645324295331c0f2ef6d4d946cf11c06b
+            # https://github.com/sxyazi/yazi/commit/d5f225bc4adc22231b6e254431183518747fadb9 (2025-08-05)
+            d5f225bc4adc22231b6e254431183518747fadb9
           # tag: v25.5.31
 
       - name: Make sure yazi and ya are installed
