@@ -10,7 +10,7 @@
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
     "concurrently": "9.2.0",
-    "cypress": "14.5.4",
+    "cypress": "15.0.0",
     "wait-on": "8.0.4",
     "zod": "4.0.17"
   },
@@ -19,6 +19,7 @@
     "@tui-sandbox/library": "11.6.4",
     "@types/node": "24.3.0",
     "@types/tinycolor2": "1.4.6",
+    "assert": "2.1.0",
     "eslint": "9.33.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",

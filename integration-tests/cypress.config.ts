@@ -2,10 +2,7 @@ import { defineConfig } from "cypress"
 import fs from "fs"
 import { readFile, rm } from "fs/promises"
 import path from "path"
-import { fileURLToPath } from "url"
 import { inspect } from "util"
-
-const __dirname = fileURLToPath(new URL(".", import.meta.resolve(".")))
 
 const yaziLogFile = path.resolve(__dirname, "test-environment/.repro/yazi.log")
 
