@@ -21,4 +21,4 @@ require("mason-registry").refresh()
 -- it seems to install the package anyway
 -- https://github.com/williamboman/mason.nvim/issues/960#issuecomment-1528081759
 local command = require("mason.api.command")
-command.MasonInstall({ "emmylua_ls" }, { version = "0.11.0" })
+command.MasonInstall({ "emmylua_ls" }, { version = "0.12.0" })
