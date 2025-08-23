@@ -10,7 +10,7 @@ on:
 
 jobs:
   prettier:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: prettier
     steps:
       - uses: actions/checkout@v5.0.0
@@ -27,7 +27,7 @@ jobs:
 
   stylua:
     name: stylua
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5.0.0
       - uses: JohnnyMorganz/stylua-action@v4.1.0
