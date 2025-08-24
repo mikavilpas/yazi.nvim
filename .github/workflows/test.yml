@@ -19,27 +19,21 @@ jobs:
       - name: Set up dependencies
         run: |
           # ripgrep is a dependency of telescope and fzf-lua
-          sudo apt-get update
-          sudo apt-get install ripgrep
-          rg --version
-
+          #
           # fd is a dependency of telescope and fzf-lua
           # https://github.com/sharkdp/fd?tab=readme-ov-file#on-ubuntu
           # make sure it's available as `fd` - there seems to be some conflict in Ubuntu
+          #
+          # realpath is used to resolve relative paths in yazi.nvim
+          sudo apt-get update
+          sudo apt-get install ripgrep fd-find fzf
+
           sudo apt-get install fd-find
           sudo ln -s $(which fdfind) /usr/local/bin/fd
           fd --version
-
-          # install fzf
-          sudo apt install fzf
           fzf --version
-
-          # realpath is used to resolve relative paths in yazi.nvim
-          which realpath || {
-            # just fail with an error message if realpath is not found
-            echo "realpath is not installed, but it should be part of GNU coreutils and included in Ubuntu"
-            exit 1
-          }
+          rg --version
+          which realpath || { exit 1; }
 
       - name: Compile and install `yazi-fm` from source
         uses: baptiste0928/cargo-install@v3.3.2
