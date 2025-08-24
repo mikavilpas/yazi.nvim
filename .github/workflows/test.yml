@@ -50,21 +50,18 @@ jobs:
 
       - name: Make sure yazi and ya are installed
         run: |
-          echo "Cargo binaries:"
-          ls -laR $HOME/.cargo/bin
+          which yazi && which ya || {
+            echo "yazi or ya are not installed, but should be installed by the previous step"
 
-          echo "cargo-install binaries:"
-          ls -laR $HOME/.cargo-install/
+            echo "Cargo binaries:"
+            ls -laR $HOME/.cargo/bin
 
-          echo "PATH:"
-          echo $PATH
+            echo "cargo-install binaries:"
+            ls -laR $HOME/.cargo-install/
 
-          which yazi || {
-            echo "yazi is not installed, but it should be installed by the previous step"
-            exit 1
-          }
-          which ya || {
-            echo "ya is not installed, but it should be installed by the previous step"
+            echo "PATH:"
+            echo $PATH
+
             exit 1
           }
 
