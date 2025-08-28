@@ -124,7 +124,9 @@ function YaziFloatingWindow:open_and_display()
     buffer = yazi_buffer,
     once = true,
     callback = function()
-      vim.api.nvim_buf_set_name(yazi_buffer, "yazi")
+      vim.defer_fn(function()
+        vim.api.nvim_buf_set_name(yazi_buffer, "yazi")
+      end, 50)
     end,
   })
 
