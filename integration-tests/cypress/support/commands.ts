@@ -1,6 +1,8 @@
 /// <reference types="cypress" />
 
-afterEach(() => {
-  cy.task("showYaziLog")
-  cy.task("removeYaziLog")
+afterEach(function () {
+  if (this.currentTest?.state === "failed") {
+    cy.task("showYaziLog")
+    cy.task("removeYaziLog")
+  }
 })
