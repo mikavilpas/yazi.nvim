@@ -18,8 +18,8 @@ jobs:
         yazi-version:
           - name: nightly
             method: cargo-install
-            # https://github.com/sxyazi/yazi/commit/c27ef58116794de7f559bca74e60e6e13ae92051 (2025-08-23)
-            commit: c27ef58116794de7f559bca74e60e6e13ae92051
+            # https://github.com/sxyazi/yazi/commit/eb537733a2c5b09649b56284b74dbdd4e70006ec (2025-08-30)
+            commit: eb537733a2c5b09649b56284b74dbdd4e70006ec
           - name: stable
             method: download
             url: https://github.com/sxyazi/yazi/releases/download/v25.5.28/yazi-x86_64-unknown-linux-gnu.zip
