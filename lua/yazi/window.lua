@@ -120,15 +120,6 @@ function YaziFloatingWindow:open_and_display()
   )
 
   vim.bo[yazi_buffer].filetype = "yazi"
-  vim.api.nvim_create_autocmd("TermOpen", {
-    buffer = yazi_buffer,
-    once = true,
-    callback = function()
-      vim.defer_fn(function()
-        vim.api.nvim_buf_set_name(yazi_buffer, "yazi")
-      end, 50)
-    end,
-  })
 
   vim.cmd("setlocal bufhidden=hide")
   vim.cmd("setlocal nocursorcolumn")
