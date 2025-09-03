@@ -1,5 +1,12 @@
 # Changelog
 
+## [11.10.5](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.4...v11.10.5) (2025-09-03)
+
+
+### Bug Fixes
+
+* yazi shifting to the left on open ([#1169](https://github.com/mikavilpas/yazi.nvim/issues/1169)) ([bbe81d4](https://github.com/mikavilpas/yazi.nvim/commit/bbe81d4dbc790b7c870a376666400b0915336faf))
+
 ## [11.10.4](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.3...v11.10.4) (2025-08-28)
 
 
