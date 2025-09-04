@@ -46,11 +46,11 @@ importers:
         specifier: 9.34.0
         version: 9.34.0
       '@tui-sandbox/library':
-        specifier: 11.7.1
-        version: 11.7.1(cypress@15.1.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.4)(zod@4.1.5)
+        specifier: 11.8.0
+        version: 11.8.0(cypress@15.1.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.4)(zod@4.1.5)
       '@types/node':
-        specifier: 24.3.0
-        version: 24.3.0
+        specifier: 24.3.1
+        version: 24.3.1
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -390,8 +390,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@11.7.1':
-    resolution: {integrity: sha512-Vso/9vsJMlBRcvY2CXsiQloJWXGdDsRGX2iLIX+eRsV78uYVtlibRivaUeXLzt5EprmsBLgwj479hdyyAKOB9w==}
+  '@tui-sandbox/library@11.8.0':
+    resolution: {integrity: sha512-mQwGsDpDRilK8i03loDMnLrAe4OgZWnAIvBmjur9Bmxe7Nbc33TPFw8k6z2nZJkTgdySAmrFFE4c0USUKIYxvg==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -420,8 +420,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.3.0':
-    resolution: {integrity: sha512-aPTXCrfwnDLj4VvXrm+UUCQjNEvJgNA8s5F1cvwQU+3KNltTOkBm1j30uNLyqqPNe7gE3KFzImYoZEfLhp4Yow==}
+  '@types/node@24.3.1':
+    resolution: {integrity: sha512-3vXmQDXy+woz+gnrTvuvNrPzekOi+Ds0ReMxw0LzBiK3a+1k0kQn9f2NWk+lgD4rJehFUmYy2gMhJ2ZI+7YP9g==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -1363,6 +1363,10 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
+  iconv-lite@0.7.0:
+    resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
+    engines: {node: '>=0.10.0'}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -1856,8 +1860,8 @@ packages:
     resolution: {integrity: sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==}
     engines: {node: '>= 0.6'}
 
-  neovim@5.3.0:
-    resolution: {integrity: sha512-32Cypq6qh7vzJ5wuVPPzIsBdOlvwo0do8/3jxLu+RGdneFSJjh5CYi0ScHHAw/2HLtIjRKhRjJMXeze21M+uyw==}
+  neovim@5.4.0:
+    resolution: {integrity: sha512-95YXs6d5p8M0k8xrmJHQ9aVLv9ebpM3ZQnmTaSpbJtPSdxFaKq7szCP1Ou+S8K++rEsh7BvTPwqdtdlwQfT0pw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1971,9 +1975,8 @@ packages:
     resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
     engines: {node: 20 || >=22}
 
-  path-to-regexp@8.2.0:
-    resolution: {integrity: sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ==}
-    engines: {node: '>=16'}
+  path-to-regexp@8.3.0:
+    resolution: {integrity: sha512-7jdwVIRtsP8MYpdXSwOS0YdD0Du+qOoF/AEPIt88PcCFrZCzx41oxku1jD88hZBwbNUIEfpqvuhjFaMAqMTWnA==}
 
   path-type@6.0.0:
     resolution: {integrity: sha512-Vj7sf++t5pBD637NSfkxpHSMfWaeig5+DKWLhcqIYx6mWQz5hdJTGDVMQiJcw1ZYkhs7AazKDGpRVji1LJCZUQ==}
@@ -2088,9 +2091,9 @@ packages:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
 
-  raw-body@3.0.0:
-    resolution: {integrity: sha512-RmkhL8CAyCRPXCE28MMH0z2PNWQBNk2Q09ZdxM9IOOXwxwZbN+qbWaatPkdkWIKL2ZVDImrN/pK5HTRz2PcS4g==}
-    engines: {node: '>= 0.8'}
+  raw-body@3.0.1:
+    resolution: {integrity: sha512-9G8cA+tuMS75+6G/TzW8OtLzmBDMo8p1JRxN5AZ+LAp8uxGA8V8GZm4GQ4/N5QNQEnLmg6SS7wyuSmbKepiKqA==}
+    engines: {node: '>= 0.10'}
 
   readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -2523,8 +2526,8 @@ packages:
     resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
     engines: {node: '>= 12.0.0'}
 
-  winston@3.14.1:
-    resolution: {integrity: sha512-CJi4Il/msz8HkdDfXOMu+r5Au/oyEjFiOZzbX2d23hRLY0narGjqfE5lFlrT5hfYJhPtM8b85/GNFsxIML/RVA==}
+  winston@3.15.0:
+    resolution: {integrity: sha512-RhruH2Cj0bV0WgNL+lOfoUBI4DVfdUNjVnJGVovWZmrcKtrFTTRzgXYK2O9cymSGjrERCtaAeHwMNnUWXlwZow==}
     engines: {node: '>= 12.0.0'}
 
   winston@3.17.0:
@@ -2844,7 +2847,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.7.1(cypress@15.1.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.4)(zod@4.1.5)':
+  '@tui-sandbox/library@11.8.0(cypress@15.1.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.4)(zod@4.1.5)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.5.0(@trpc/server@11.5.0(typescript@5.9.2))(typescript@5.9.2)
@@ -2857,7 +2860,7 @@ snapshots:
       cypress: 15.1.0
       dree: 5.1.5
       express: 5.1.0
-      neovim: 5.3.0
+      neovim: 5.4.0
       node-pty: 1.0.0
       prettier: 3.6.2
       tsx: 4.20.5
@@ -2885,7 +2888,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.3.0':
+  '@types/node@24.3.1':
     dependencies:
       undici-types: 7.10.0
 
@@ -2903,7 +2906,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.3.0
+      '@types/node': 24.3.1
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.42.0(@typescript-eslint/parser@8.42.0(eslint@9.34.0)(typescript@5.9.2))(eslint@9.34.0)(typescript@5.9.2)':
@@ -3175,7 +3178,7 @@ snapshots:
       iconv-lite: 0.6.3
       on-finished: 2.4.1
       qs: 6.14.0
-      raw-body: 3.0.0
+      raw-body: 3.0.1
       type-is: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -3966,6 +3969,10 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
+  iconv-lite@0.7.0:
+    dependencies:
+      safer-buffer: 2.1.2
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -4615,10 +4622,10 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  neovim@5.3.0:
+  neovim@5.4.0:
     dependencies:
       '@msgpack/msgpack': 2.8.0
-      winston: 3.14.1
+      winston: 3.15.0
 
   netmask@2.0.2: {}
 
@@ -4757,7 +4764,7 @@ snapshots:
       lru-cache: 11.1.0
       minipass: 7.1.2
 
-  path-to-regexp@8.2.0: {}
+  path-to-regexp@8.3.0: {}
 
   path-type@6.0.0: {}
 
@@ -4865,11 +4872,11 @@ snapshots:
 
   range-parser@1.2.1: {}
 
-  raw-body@3.0.0:
+  raw-body@3.0.1:
     dependencies:
       bytes: 3.1.2
       http-errors: 2.0.0
-      iconv-lite: 0.6.3
+      iconv-lite: 0.7.0
       unpipe: 1.0.0
 
   readable-stream@3.6.2:
@@ -4934,7 +4941,7 @@ snapshots:
       depd: 2.0.0
       is-promise: 4.0.0
       parseurl: 1.3.3
-      path-to-regexp: 8.2.0
+      path-to-regexp: 8.3.0
     transitivePeerDependencies:
       - supports-color
 
@@ -5373,7 +5380,7 @@ snapshots:
       readable-stream: 3.6.2
       triple-beam: 1.4.1
 
-  winston@3.14.1:
+  winston@3.15.0:
     dependencies:
       '@colors/colors': 1.6.0
       '@dabh/diagnostics': 2.0.3
