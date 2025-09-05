@@ -89,6 +89,7 @@ jobs:
           cache: "pnpm"
       - run: pnpm install
       - working-directory: integration-tests
+        name: Prepare Neovim for integration tests
         run: |
           # NVIM_APPNAME=nvim is the default, but spelled out here for clarity
           NVIM_APPNAME=nvim pnpm tui neovim prepare
