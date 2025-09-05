@@ -17,5 +17,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./cypress", "./eslint.config.mjs"]
+  "include": ["./cypress", "./eslint.config.mjs", "./tui-sandbox.config.ts"]
 }
