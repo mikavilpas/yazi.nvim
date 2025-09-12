@@ -26,6 +26,7 @@ import type { StartTerminalGenericArguments } from "@tui-sandbox/library/src/ser
 import type { BlockingCommandClientInput } from "@tui-sandbox/library/src/server/blockingCommandInputSchema"
 import type { OverrideProperties } from "type-fest"
 import type {
+  MyNeovimAppName,
   MyTestDirectory,
   MyTestDirectoryFile,
 } from "../../MyTestDirectory"
@@ -96,6 +97,7 @@ export type NeovimContext = {
 export type MyStartNeovimServerArguments = OverrideProperties<
   StartNeovimGenericArguments,
   {
+    NVIM_APPNAME?: MyNeovimAppName
     filename?:
       | MyTestDirectoryFile
       | { openInVerticalSplits: MyTestDirectoryFile[] }

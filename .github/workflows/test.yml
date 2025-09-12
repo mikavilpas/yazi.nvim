@@ -88,6 +88,9 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
+
+      - uses: jdx/mise-action@v3.2.0
+
       - working-directory: integration-tests
         name: Prepare Neovim for integration tests
         run: |

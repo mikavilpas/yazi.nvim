@@ -1,0 +1,3 @@
+[tools]
+"github:EmmyLuaLs/emmylua-analyzer-rust" = "0.13.0"
+lua = "5.1"
