@@ -11,13 +11,13 @@
     "@catppuccin/palette": "1.7.1",
     "concurrently": "9.2.1",
     "cypress": "15.2.0",
-    "wait-on": "8.0.4",
+    "wait-on": "8.0.5",
     "zod": "4.1.8"
   },
   "devDependencies": {
     "@eslint/js": "9.35.0",
     "@tui-sandbox/library": "11.8.1",
-    "@types/node": "24.3.1",
+    "@types/node": "24.3.2",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
     "eslint": "9.35.0",
