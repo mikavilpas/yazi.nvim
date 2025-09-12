@@ -26,23 +26,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5.0.0
-      - name: Set up dependencies
-        run: |
-          # ripgrep is a dependency of telescope and fzf-lua
-          #
-          # fd is a dependency of telescope and fzf-lua
-          # https://github.com/sharkdp/fd?tab=readme-ov-file#on-ubuntu
-          # make sure it's available as `fd` - there seems to be some conflict in Ubuntu
-          #
-          # realpath is used to resolve relative paths in yazi.nvim
-          sudo apt-get update
-          sudo apt-get install ripgrep fd-find fzf
-          sudo ln -s $(which fdfind) /usr/local/bin/fd
-
-          fd --version
-          fzf --version
-          rg --version
-          which realpath || { exit 1; }
 
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
@@ -90,6 +73,20 @@ jobs:
       - run: pnpm install
 
       - uses: jdx/mise-action@v3.2.0
+
+      - name: Verify that dependencies are available
+        run: |
+          # ripgrep is a dependency of telescope and fzf-lua
+          #
+          # fd is a dependency of telescope and fzf-lua
+          # https://github.com/sharkdp/fd?tab=readme-ov-file#on-ubuntu
+          # make sure it's available as `fd` - there seems to be some conflict in Ubuntu
+          #
+          # realpath is used to resolve relative paths in yazi.nvim
+          fd --version
+          fzf --version
+          rg --version
+          which realpath || { exit 1; }
 
       - working-directory: integration-tests
         name: Prepare Neovim for integration tests
