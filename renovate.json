@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": true,
+  "extends": ["config:recommended", "group:allNonMajor"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["lua"],
+      "allowedVersions": "<=5.1"
+    }
+  ]
+}
