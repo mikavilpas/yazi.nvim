@@ -24,6 +24,9 @@ jobs:
             method: download
             url: https://github.com/sxyazi/yazi/releases/download/v25.5.28/yazi-x86_64-unknown-linux-gnu.zip
 
+    env:
+      MISE_ENV: ci
+
     steps:
       - uses: actions/checkout@v5.0.0
 

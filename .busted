@@ -1,8 +1,8 @@
 return {
   _all = {
     coverage = false,
-    lpath = 'lua/?.lua;lua/?/init.lua',
-    lua = '~/.luarocks/bin/nlua',
+    lpath = "lua/?.lua;lua/?/init.lua",
+    lua = "./lua_modules/bin/nlua",
   },
   default = {
     verbose = true,
