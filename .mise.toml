@@ -1,9 +1,10 @@
 
 [tools]
 # fd is a dependency of telescope and fzf-lua
-fd = "10.3.0"
-fzf = "0.65.2"
+"ubi:sharkdp/fd" = "10.3.0"
+"ubi:junegunn/fzf" = "0.65.2"
 "github:EmmyLuaLs/emmylua-analyzer-rust" = "0.13.0"
 lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
-rg = "14.1.1"
+"ubi:BurntSushi/ripgrep" = { version = "14.1.1", exe = "rg" }
+"ubi:JohnnyMorganz/stylua" = "2.1.0"
