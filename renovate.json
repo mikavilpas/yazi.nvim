@@ -4,7 +4,7 @@
   "extends": ["config:recommended", "group:allNonMajor"],
   "packageRules": [
     {
-      "matchPackageNames": ["lua"],
+      "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
     }
   ]
