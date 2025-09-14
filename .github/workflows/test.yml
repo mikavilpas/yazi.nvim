@@ -64,6 +64,8 @@ jobs:
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
+          before: |
+            mise run build
 
       - uses: pnpm/action-setup@v4.1.0
         with:
