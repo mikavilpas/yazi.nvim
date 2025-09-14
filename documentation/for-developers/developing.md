@@ -2,39 +2,17 @@
 
 ## Install dependencies
 
-- install luarocks, which is used to install dependencies for the tests:
-
-  ```sh
-  # for osx
-  brew install luarocks
-  ```
-
-- install [nlua](https://github.com/mfussenegger/nlua), the neovim lua
-  interpreter, which is used to run the tests.
-
-- install [just](https://github.com/casey/just), which is used to run the
-  development commands that are defined in the justfile.
+- install [mise](https://mise.jdx.dev/getting-started.html), which is used to
+  download dependency applications as well as running development tasks
 
 Next, install all the dependencies with the following command:
 
 ```sh
-just
+mise i
 ```
 
-When successful, the output will greet you with a message similar to the
-following:
-
-```text
-Available recipes:
-    build      # Build the project
-    check      # Check the code for errors (lint + test + format)
-    default
-    format     # Reformat all code
-    help
-    lint       # Check the code for lint errors
-    test       # Run all tests
-    test-focus # Run only the tests marked with #focus somewhere in the test name
-```
+When successful, the output will greet you with the names of the available
+development tasks.
 
 ## Neovim development tools
 
@@ -65,9 +43,9 @@ This project has two types of tests
 2. integration tests. These are run with
    [tui-sandbox](https://github.com/mikavilpas/tui-sandbox), an interactive
    testing framework for terminal applications. It uses
-   [cypress](https://www.cypress.io/), which is
-   - very visual
-   - slower to run but still very nice
+   [cypress](https://www.cypress.io/), which
+   - is very visual
+   - is slower to run but still very nice
    - can make assertions about the actual UI and integration with yazi
    - (optionally) can be run to drive the development of new features - this is
      explained in depth in the
@@ -79,18 +57,18 @@ This project has two types of tests
 
 ```sh
 # run all tests
-just test
+mise test
 # NOTE: if you get an error about "busted.runner" not being found, you may need
 # to run the following command:
 eval $(luarocks path --no-bin --lua-version 5.1)
 
 # run only the tests marked with #focus in their name
-just test-focus
+mise test-focus
 ```
 
-Recommended: use a file watcher to run tests automatically when files change. I
-like [watchexec 🦀](https://github.com/watchexec/watchexec), and I run it with
-`watchexec just test`
+Recommended: use a file watcher to run tests automatically when files change.
+Mise bundles [watchexec 🦀](https://github.com/watchexec/watchexec), and you run
+it with `mise watch test`
 
 Optionally, you can install test integration plugins for Neovim to start the
 tests from within Neovim. See the "Tools" section of
@@ -121,6 +99,9 @@ Run the following commands in the root of the project:
 # activate the correct version of node
 fnm use
 # or fnm install <version> if you don't have the correct version installed
+
+# get access to pnpm
+corepack enable pnpm
 
 # install the dependencies
 pnpm install # or `pnpm i`

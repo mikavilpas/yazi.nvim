@@ -24,6 +24,9 @@ jobs:
             method: download
             url: https://github.com/sxyazi/yazi/releases/download/v25.5.28/yazi-x86_64-unknown-linux-gnu.zip
 
+    env:
+      MISE_ENV: ci
+
     steps:
       - uses: actions/checkout@v5.0.0
 
@@ -56,12 +59,6 @@ jobs:
           yazi --version
           ya --version
 
-      - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@v1.1.0
-        with:
-          nvim_version: ${{ matrix.neovim_version }}
-          luarocks_version: "3.11.1"
-
       - uses: pnpm/action-setup@v4.1.0
         with:
           # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
@@ -73,6 +70,14 @@ jobs:
       - run: pnpm install
 
       - uses: jdx/mise-action@v3.2.0
+
+      - name: Run tests
+        uses: nvim-neorocks/nvim-busted-action@v1.1.0
+        with:
+          nvim_version: ${{ matrix.neovim_version }}
+          luarocks_version: "3.11.1"
+          before: |
+            mise run build
 
       - name: Verify that dependencies are available
         run: |

@@ -8,3 +8,39 @@ lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 "ubi:BurntSushi/ripgrep" = { version = "14.1.1", exe = "rg" }
 "ubi:JohnnyMorganz/stylua" = "2.1.0"
+
+
+[tasks]
+test = "luarocks test --local"
+test-focus = "luarocks test --local -- --filter focus"
+format = "stylua lua/ spec/ integration-tests/ ./repro.lua"
+
+[tasks.check]
+description = "Check the code for errors (lint + test + format)"
+depends = ["lint", "test", "format"]
+
+[tasks.build]
+description = "Install dependencies"
+run = """
+luarocks init --no-gitignore
+luarocks install busted 2.2.0-1
+luarocks install nlua 0.3.2-1
+
+mise tasks
+"""
+
+[tasks.lint]
+run = """
+selene ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
+
+if rg "#focus" --glob "*.lua" ./spec/; then
+  echo "\n";
+  echo "Error: {{ vars.COLOR_GREEN }}#focus{{ vars.COLOR_RESET }} tags found in the codebase.\n";
+  echo "Please remove them to prevent issues with not accidentally running all tests.";
+  exit 1; \
+fi
+"""
+
+[vars]
+COLOR_RESET = '\033[0m'
+COLOR_GREEN = '\033[1;32m'

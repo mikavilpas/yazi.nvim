@@ -1,0 +1,2 @@
+# installing lua seems slow in CI (requires building from source), so disable it 
+settings.disable_tools = ["lua"]
