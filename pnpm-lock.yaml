@@ -47,7 +47,7 @@ importers:
         version: 9.35.0
       '@tui-sandbox/library':
         specifier: 11.8.1
-        version: 11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)
+        version: 11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)
       '@types/node':
         specifier: 24.3.2
         version: 24.3.2
@@ -70,8 +70,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 4.41.0
-        version: 4.41.0
+        specifier: 5.0.0
+        version: 5.0.0
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -2367,6 +2367,10 @@ packages:
     os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
     hasBin: true
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   tar-fs@3.1.0:
     resolution: {integrity: sha512-5Mty5y/sOF1YWj1J6GiBodjlDc05CUR8PKXrsnFAiSG0xA+GHeWLovaZPYUDXkH/1iKRf2+M5+OrRgzC7O9b7w==}
 
@@ -2458,9 +2462,9 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@4.41.0:
-    resolution: {integrity: sha512-TeTSQ6H5YHvpqVwBRcnLDCBnDOHWYu7IvGbHT6N8AOymcr9PJGjc1GTtiWZTYg0NCgYwvnYWEkVChQAr9bjfwA==}
-    engines: {node: '>=16'}
+  type-fest@5.0.0:
+    resolution: {integrity: sha512-GeJop7+u7BYlQ6yQCAY1nBQiRSHR+6OdCEtd8Bwp9a3NK3+fWAVjOaPKJDteB9f6cIJ0wt4IfnScjLG450EpXA==}
+    engines: {node: '>=20'}
 
   type-is@2.0.1:
     resolution: {integrity: sha512-OZs6gsjF4vMp32qrCbiVSkrFmXtG/AZhY3t0iAMrMBiAZyV9oALtXO8hsrHbMXF9x6L3grlFuwW2oAz7cav+Gw==}
@@ -2905,7 +2909,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@4.41.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)':
+  '@tui-sandbox/library@11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.5.1(@trpc/server@11.5.1(typescript@5.9.2))(typescript@5.9.2)
@@ -2922,7 +2926,7 @@ snapshots:
       node-pty: 1.0.0
       prettier: 3.6.2
       tsx: 4.20.5
-      type-fest: 4.41.0
+      type-fest: 5.0.0
       typescript: 5.9.2
       wait-on: 8.0.5
       winston: 3.17.0
@@ -5242,6 +5246,8 @@ snapshots:
 
   systeminformation@5.27.7: {}
 
+  tagged-tag@1.0.0: {}
+
   tar-fs@3.1.0:
     dependencies:
       pump: 3.0.3
@@ -5326,7 +5332,9 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@4.41.0: {}
+  type-fest@5.0.0:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@2.0.1:
     dependencies:
