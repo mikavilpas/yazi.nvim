@@ -14,9 +14,9 @@ jobs:
     name: LuaRocks upload
     steps:
       - name: Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: LuaRocks Upload
-        uses: nvim-neorocks/luarocks-tag-release@v7.2.0
+        uses: nvim-neorocks/luarocks-tag-release@adbca66e871a519055f4917c6af5fbf19f656f5d # v7.2.0
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:

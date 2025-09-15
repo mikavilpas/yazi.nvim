@@ -7,8 +7,8 @@ jobs:
     name: selene
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5.0.0
-      - uses: NTBBloodbath/selene-action@v1.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: NTBBloodbath/selene-action@23ef05dd5c4d687f4d3c939f76a1c342baf454aa # v1.0.0
         with:
           # Github secret token
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -23,4 +23,4 @@ jobs:
     name: markdownlint
     runs-on: ubuntu-latest
     steps:
-      - uses: DavidAnson/markdownlint-cli2-action@v20.0.0
+      - uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20.0.0
