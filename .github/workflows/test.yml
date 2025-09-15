@@ -28,11 +28,11 @@ jobs:
       MISE_ENV: ci
 
     steps:
-      - uses: actions/checkout@v5.0.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
-        uses: baptiste0928/cargo-install@v3.3.2
+        uses: baptiste0928/cargo-install@b687c656bda5733207e629b50a22bf68974a0305 # v3.3.2
         with:
           # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
           # crates.io must be built with `cargo install --force yazi-build`
@@ -59,20 +59,20 @@ jobs:
           yazi --version
           ya --version
 
-      - uses: pnpm/action-setup@v4.1.0
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
         with:
           # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
           run_install: false
-      - uses: actions/setup-node@v5.0.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
 
-      - uses: jdx/mise-action@v3.2.0
+      - uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e86d566 # v3.2.0
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@v1.1.0
+        uses: nvim-neorocks/nvim-busted-action@7aac8af2368e20955f4ba84ca5ed3a7ae85ef340 # v1.1.0
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
@@ -109,7 +109,7 @@ jobs:
           install: false
           command: pnpm tui run
 
-      - uses: actions/upload-artifact@v4.6.2
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         # add the line below to store screenshots only on failures
         # if: failure()
         if: failure()
