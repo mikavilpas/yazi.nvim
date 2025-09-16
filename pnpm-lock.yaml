@@ -36,8 +36,8 @@ importers:
         specifier: 15.2.0
         version: 15.2.0
       wait-on:
-        specifier: 8.0.5
-        version: 8.0.5
+        specifier: 9.0.0
+        version: 9.0.0
       zod:
         specifier: 4.1.8
         version: 4.1.8
@@ -47,7 +47,7 @@ importers:
         version: 9.35.0
       '@tui-sandbox/library':
         specifier: 11.8.1
-        version: 11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)
+        version: 11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@9.0.0)(zod@4.1.8)
       '@types/node':
         specifier: 24.5.0
         version: 24.5.0
@@ -2549,9 +2549,9 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  wait-on@8.0.5:
-    resolution: {integrity: sha512-J3WlS0txVHkhLRb2FsmRg3dkMTCV1+M6Xra3Ho7HzZDHpE7DCOnoSoCJsZotrmW3uRMhvIJGSKUKrh/MeF4iag==}
-    engines: {node: '>=12.0.0'}
+  wait-on@9.0.0:
+    resolution: {integrity: sha512-bKOl7CJ4zGhKW4qvoasLM5t2NtLUcc1Ar2N6XeYCQpW0w+DMdLC0YH1JUH3bTWDCsHblapHMzhtFmmPc+ITNJw==}
+    engines: {node: '>=20.0.0'}
     hasBin: true
 
   which-typed-array@1.1.19:
@@ -2909,7 +2909,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@8.0.5)(zod@4.1.8)':
+  '@tui-sandbox/library@11.8.1(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.0)(typescript@5.9.2)(wait-on@9.0.0)(zod@4.1.8)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.5.1(@trpc/server@11.5.1(typescript@5.9.2))(typescript@5.9.2)
@@ -2928,7 +2928,7 @@ snapshots:
       tsx: 4.20.5
       type-fest: 5.0.0
       typescript: 5.9.2
-      wait-on: 8.0.5
+      wait-on: 9.0.0
       winston: 3.17.0
       zod: 4.1.8
     transitivePeerDependencies:
@@ -5432,7 +5432,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  wait-on@8.0.5:
+  wait-on@9.0.0:
     dependencies:
       axios: 1.12.1
       joi: 18.0.1
