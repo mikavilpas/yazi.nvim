@@ -72,7 +72,7 @@ jobs:
       - uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e86d566 # v3.2.0
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@7aac8af2368e20955f4ba84ca5ed3a7ae85ef340 # v1.1.0
+        uses: nvim-neorocks/nvim-busted-action@d30f6d4d794c0e77b6edb530872205f98ae969c4 # v1.1.1
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
