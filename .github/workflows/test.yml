@@ -40,7 +40,7 @@ jobs:
           crate: yazi-build
           git: https://github.com/sxyazi/yazi
           commit: ${{ matrix.yazi-version.commit }}
-          tag: ${{ matrix.yazi-version.tag }}
+          # tag: ${{ matrix.yazi-version.tag }}
 
       - name: Download prebuilt yazi version
         if: matrix.yazi-version.method == 'download'
@@ -49,12 +49,12 @@ jobs:
           mkdir -p yazi-zip
           unzip yazi.zip
           chmod +x yazi-x86_64-unknown-linux-gnu/{yazi,ya}
-          mv -v yazi-x86_64-unknown-linux-gnu/{yazi,ya} $HOME/.cargo/bin/
+          mv -v yazi-x86_64-unknown-linux-gnu/{yazi,ya} "$HOME/.cargo/bin/"
 
       - name: Make sure yazi and ya are installed
         run: |
           echo "PATH:"
-          echo $PATH
+          echo "$PATH"
 
           yazi --version
           ya --version
