@@ -24,3 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20.0.0
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: actionlint
+        uses: raven-actions/actionlint@v2.0.1
