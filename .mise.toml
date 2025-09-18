@@ -8,6 +8,7 @@ lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 "ubi:BurntSushi/ripgrep" = { version = "14.1.1", exe = "rg" }
 "ubi:JohnnyMorganz/stylua" = "2.2.0"
+actionlint = "1.7.7"
 
 
 [tasks]
