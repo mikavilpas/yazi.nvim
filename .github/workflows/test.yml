@@ -18,11 +18,12 @@ jobs:
         yazi-version:
           - name: nightly
             method: cargo-install
-            # https://github.com/sxyazi/yazi/commit/3c42195bacdd73fc1d8e84cc4190c24016b89bf6 (2025-09-04)
+            # https://github.com/sxyazi/yazi/commit/3c42195bacdd73fc1d8e84cc4190c24016b89bf6
             commit: 3c42195bacdd73fc1d8e84cc4190c24016b89bf6
           - name: stable
             method: download
-            url: https://github.com/sxyazi/yazi/releases/download/v25.5.28/yazi-x86_64-unknown-linux-gnu.zip
+            # renovate: datasource=github-releases depName=sxyazi/yazi
+            version: v25.5.28
 
     env:
       MISE_ENV: ci
@@ -45,7 +46,9 @@ jobs:
       - name: Download prebuilt yazi version
         if: matrix.yazi-version.method == 'download'
         run: |
-          curl -L ${{ matrix.yazi-version.url }} -o yazi.zip
+          URL="https://github.com/sxyazi/yazi/releases/download/${{ matrix.yazi-version.version }}/yazi-x86_64-unknown-linux-gnu.zip"
+          echo "Downloading yazi from $URL"
+          curl -L $URL -o yazi.zip
           mkdir -p yazi-zip
           unzip yazi.zip
           chmod +x yazi-x86_64-unknown-linux-gnu/{yazi,ya}

@@ -7,5 +7,17 @@
       "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
     }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [".github/workflows/test.yml"],
+      "matchStrings": [
+        // https://regex101.com/?flavor=javascript&flags=g&regex=ENV%20YARN_VERSION%3D(%3F%3CcurrentValue%3E.*%3F)%5Cn&testString=FROM%20node%3A12%0AENV%20YARN_VERSION%3D1.19.1%0ARUN%20curl%20-o-%20-L%20https%3A%2F%2Fyarnpkg.com%2Finstall.sh%20%7C%20bash%20-s%20--%20--version%20%24%7BYARN_VERSION%7D
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(versioning=(?<versioning>.*?))?\\s\\S+?:\\s*?(?<currentValue>\\S+)"
+      ],
+
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    }
   ]
 }
