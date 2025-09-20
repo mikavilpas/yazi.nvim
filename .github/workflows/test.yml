@@ -23,7 +23,7 @@ jobs:
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
-            version: v25.5.28
+            version: v25.5.31
 
     env:
       MISE_ENV: ci
