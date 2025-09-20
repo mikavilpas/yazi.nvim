@@ -30,7 +30,7 @@ Define the key you want to use in yazi's keymap.toml config:
 # send an event with no data
 [[mgr.prepend_keymap]]
 on = "<C-p>"
-run = """shell 'ya pub-to 0 MyMessageNoData'"""
+run = """shell 'ya pub-to 0 my-message-no-data'"""
 
 # send an event that also has json data.
 # yazi allows using shell variables like $0, see the documentation here
@@ -39,7 +39,7 @@ run = """shell 'ya pub-to 0 MyMessageNoData'"""
 on = "<C-h>"
 run = """shell --
 json=$(printf '{"selected_file": "%s"}' "$0")
-ya pub-to 0 MyChangeWorkingDirectoryCommand --json "$json"
+ya pub-to 0 my-change-working-directory-command --json "$json"
 """
 ```
 
@@ -52,7 +52,7 @@ Add the following code to your configuration:
 ---@module "yazi"
 
 require("yazi").config.forwarded_dds_events =
-  { "MyMessageNoData", "MyChangeWorkingDirectoryCommand" }
+  { "my-message-no-data", "my-change-working-directory-command" }
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "YaziDDSCustom",
@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("User", {
       event.data,
     }))
 
-    if event.data.type == "MyChangeWorkingDirectoryCommand" then
+    if event.data.type == "my-change-working-directory-command" then
       local json = vim.json.decode(event.data.raw_data)
       local selected_file = assert(json.selected_file)
 

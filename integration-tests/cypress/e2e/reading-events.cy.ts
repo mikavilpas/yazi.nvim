@@ -424,21 +424,21 @@ describe("'rename' events", () => {
         assertYaziIsReady(nvim)
         cy.contains(nvim.dir.contents["file2.txt"].name)
 
-        // publish the custom MyMessageNoData event that we subscribed to in
+        // publish the custom my-message-no-data event that we subscribed to in
         // notify_custom_events.lua
         cy.typeIntoTerminal("{control+p}")
 
-        // also publish MyChangeWorkingDirectoryCommand that contains json data
+        // also publish my-change-working-directory-command that contains json data
         cy.typeIntoTerminal("{control+h}")
 
         cy.typeIntoTerminal("q")
         cy.contains(nvim.dir.contents["file2.txt"].name).should("not.exist")
         nvim.runExCommand({ command: "messages" }).should((result) => {
           expect(result.value).to.match(
-            /Just received a YaziDDSCustom event 'MyMessageNoData'!/,
+            /Just received a YaziDDSCustom event 'my-message-no-data'!/,
           )
           expect(result.value).to.match(
-            /Just received a YaziDDSCustom event 'MyChangeWorkingDirectoryCommand'!/,
+            /Just received a YaziDDSCustom event 'my-change-working-directory-command'!/,
           )
           expect(result.value).to.match(/selected_file/)
         })

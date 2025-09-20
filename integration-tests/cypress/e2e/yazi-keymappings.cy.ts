@@ -13,7 +13,7 @@ describe("revealing another open split (buffer) in yazi", () => {
     cy.visit("/")
   })
 
-  it(`can react to the "NvimCycleBuffer" event`, () => {
+  it(`can react to the "nvim-cycle-buffer" event`, () => {
     // This event signifies yazi.nvim should cycle_open_buffers, which makes
     // yazi focus the next visible neovim split as the current file.
     //
@@ -77,7 +77,7 @@ describe("revealing another open split (buffer) in yazi", () => {
     })
   })
 
-  it(`"NvimCycleBuffer" works for only one split`, () => {
+  it(`"nvim-cycle-buffer" works for only one split`, () => {
     cy.startNeovim({
       filename: "initial-file.txt",
       startupScriptModifications: [
