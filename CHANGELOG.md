@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.0.0...v13.0.1) (2025-09-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v4.1.10 ([#1225](https://github.com/mikavilpas/yazi.nvim/issues/1225)) ([04fc18b](https://github.com/mikavilpas/yazi.nvim/commit/04fc18bf42b16851293310266764a69d71a1dbf0))
+
 ## [13.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v12.0.0...v13.0.0) (2025-09-20)
 
 
