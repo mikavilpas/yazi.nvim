@@ -214,7 +214,7 @@ function M.parse_events(event_lines)
     local yazi_id = parts[3]
 
     -- selene: allow(if_same_then_else)
-    if type == "NvimCycleBuffer" then
+    if type == "nvim-cycle-buffer" then
       ---@type YaziNvimCycleBufferEvent
       local event = {
         type = "cycle-buffer",
@@ -319,7 +319,7 @@ function M.parse_events(event_lines)
       end
     elseif type == "hey" then
       -- example of a hey event:
-      -- hey,0,69016966727041,{"peers":{"1745849494365272":{"abilities":["hey"]},"69016966727041":{"abilities":["dds-emit","@yank","extract"]},"1745849492676175":{"abilities":["hover","move","hey","bulk","cd","delete","rename","trash","NvimCycleBuffer"]}},"version":"25.4.8 VERGEN_IDEMPOTENT_OUTPUT"}
+      -- hey,0,69016966727041,{"peers":{"1745849494365272":{"abilities":["hey"]},"69016966727041":{"abilities":["dds-emit","@yank","extract"]},"1745849492676175":{"abilities":["hover","move","hey","bulk","cd","delete","rename","trash","nvim-cycle-buffer"]}},"version":"25.4.8 VERGEN_IDEMPOTENT_OUTPUT"}
       ---@type YaziHeyEvent
       local event = {
         yazi_id = yazi_id,
@@ -330,7 +330,7 @@ function M.parse_events(event_lines)
       require("yazi.log"):debug(string.format("Unknown event type: %s", type))
       -- Custom user event.
       -- It could look like this (with optional data at the end)
-      -- MyMessageNoData,0,1731774290298033,
+      -- my-message-no-data,0,1731774290298033,
       local data_string = table.concat(parts, ",", 4, #parts)
 
       ---@type YaziCustomDDSEvent

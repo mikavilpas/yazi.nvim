@@ -4,8 +4,11 @@ do
   local config = require("yazi").config
   assert(config, "yazi.config is not set")
 
-  table.insert(config.forwarded_dds_events, "MyMessageNoData")
-  table.insert(config.forwarded_dds_events, "MyChangeWorkingDirectoryCommand")
+  table.insert(config.forwarded_dds_events, "my-message-no-data")
+  table.insert(
+    config.forwarded_dds_events,
+    "my-change-working-directory-command"
+  )
 end
 
 -- selene: allow(global_usage)
@@ -27,7 +30,7 @@ vim.api.nvim_create_autocmd("User", {
       event.data,
     }))
 
-    if event.data.type == "MyChangeWorkingDirectoryCommand" then
+    if event.data.type == "my-change-working-directory-command" then
       local json = vim.json.decode(event.data.raw_data)
       local selected_file = assert(json.selected_file)
 
