@@ -16,7 +16,6 @@ function M.default()
     open_for_directories = false,
     future_features = {
       use_cwd_file = true,
-      new_shell_escaping = true,
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,
@@ -49,7 +48,6 @@ function M.default()
       hovered_buffer_in_same_directory = nil,
     },
     integrations = {
-      escape_path_implementation = vim.fn.shellescape,
       grep_in_directory = "telescope",
       grep_in_selected_files = "telescope",
       replace_in_directory = function(directory)
