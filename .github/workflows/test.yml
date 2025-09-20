@@ -11,7 +11,7 @@ jobs:
     name:
       "Test (neovim ${{ matrix.neovim_version }}, yazi ${{
       matrix.yazi-version.name }})"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         neovim_version: ["nightly", "stable"]
