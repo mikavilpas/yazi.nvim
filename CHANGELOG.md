@@ -1,5 +1,22 @@
 # Changelog
 
+## [12.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.5...v12.0.0) (2025-09-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* removed `integrations.escape_path_implementation` (function) and `future_features.new_shell_escaping` (boolean).
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#1205](https://github.com/mikavilpas/yazi.nvim/issues/1205)) ([ecb88a9](https://github.com/mikavilpas/yazi.nvim/commit/ecb88a97210a3774bfee3db93e96ae7bf5c09663))
+* **deps:** update dependency wait-on to v9 ([#1203](https://github.com/mikavilpas/yazi.nvim/issues/1203)) ([4230d1f](https://github.com/mikavilpas/yazi.nvim/commit/4230d1fc6a3ecf682aa3bfcd3fc0c893b1056b2e))
+
+
+### Code Refactoring
+
+* disable custom shell escaping as unneeded ([#1217](https://github.com/mikavilpas/yazi.nvim/issues/1217)) ([4f4dd4b](https://github.com/mikavilpas/yazi.nvim/commit/4f4dd4bc6437818cf3be5f2d7122fa98298d0021))
+
 ## [11.10.5](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.4...v11.10.5) (2025-09-03)
 
 
