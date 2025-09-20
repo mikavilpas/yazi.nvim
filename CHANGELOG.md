@@ -1,5 +1,16 @@
 # Changelog
 
+## [13.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v12.0.0...v13.0.0) (2025-09-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* custom events need to use kebab-case ([#1222](https://github.com/mikavilpas/yazi.nvim/issues/1222))
+
+### Code Refactoring
+
+* custom events need to use kebab-case ([#1222](https://github.com/mikavilpas/yazi.nvim/issues/1222)) ([d05dadf](https://github.com/mikavilpas/yazi.nvim/commit/d05dadf065eb743c0fb0e2a316ce0af72299f9b9))
+
 ## [12.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v11.10.5...v12.0.0) (2025-09-20)
 
 
