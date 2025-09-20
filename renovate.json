@@ -13,9 +13,8 @@
       "customType": "regex",
       "managerFilePatterns": [".github/workflows/test.yml"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(versioning=(?<versioning>.*?))?\\s\\S+?:\\s*?(?<currentValue>\\S+)"
+        "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(?:\\s+versioning=(?<versioning>\\S+))?\\s*[\\r\\n]+[^:]+:\\s*(?<currentValue>\\S+)"
       ],
-
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ]
