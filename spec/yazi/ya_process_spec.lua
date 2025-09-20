@@ -10,7 +10,6 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
-    config.future_features.new_shell_escaping = false
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -21,10 +20,17 @@ describe("the get_yazi_command() function", function()
 
     local command = ya:get_yazi_command(paths)
 
-    assert.are.same(
-      "yazi 'file1' 'file2' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
-      command
-    )
+    assert.are.same({
+      "yazi",
+      "file1",
+      "file2",
+      "--chooser-file",
+      "/tmp/chosen_file_path",
+      "--client-id",
+      "yazi_id_123",
+      "--cwd-file",
+      "/tmp/cwd_file_path",
+    }, command)
   end)
 
   it(
@@ -34,7 +40,6 @@ describe("the get_yazi_command() function", function()
       config.open_multiple_tabs = false
       config.chosen_file_path = "/tmp/chosen_file_path"
       config.cwd_file_path = "/tmp/cwd_file_path"
-      config.future_features.new_shell_escaping = false
 
       local ya = ya_process.new(config, yazi_id)
 
@@ -45,10 +50,16 @@ describe("the get_yazi_command() function", function()
 
       local command = ya:get_yazi_command(paths)
 
-      assert.are.same(
-        "yazi 'file1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
-        command
-      )
+      assert.are.same({
+        "yazi",
+        "file1",
+        "--chooser-file",
+        "/tmp/chosen_file_path",
+        "--client-id",
+        "yazi_id_123",
+        "--cwd-file",
+        "/tmp/cwd_file_path",
+      }, command)
     end
   )
 
@@ -57,7 +68,6 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
-    config.future_features.new_shell_escaping = false
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -73,10 +83,18 @@ describe("the get_yazi_command() function", function()
 
     local command = ya:get_yazi_command(paths)
 
-    assert.are.same(
-      "yazi 'file1' 'file2' 'file3' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
-      command
-    )
+    assert.are.same({
+      "yazi",
+      "file1",
+      "file2",
+      "file3",
+      "--chooser-file",
+      "/tmp/chosen_file_path",
+      "--client-id",
+      "yazi_id_123",
+      "--cwd-file",
+      "/tmp/cwd_file_path",
+    }, command)
   end)
 
   it("returns a table if new_shell_escaping is used", function()
@@ -87,7 +105,6 @@ describe("the get_yazi_command() function", function()
     config.open_multiple_tabs = true
     config.chosen_file_path = "/tmp/chosen_file_path"
     config.cwd_file_path = "/tmp/cwd_file_path"
-    assert(config.future_features.new_shell_escaping)
 
     local ya = ya_process.new(config, yazi_id)
 
@@ -100,46 +117,6 @@ describe("the get_yazi_command() function", function()
       "yazi file1 --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
       table.concat(command, " ")
     )
-  end)
-
-  describe("escape_path_implementation", function()
-    it("can handle paths with spaces", function()
-      local config = require("yazi.config").default()
-      config.chosen_file_path = "/tmp/chosen_file_path"
-      config.cwd_file_path = "/tmp/cwd_file_path"
-      config.future_features.new_shell_escaping = false
-
-      local ya = ya_process.new(config, yazi_id)
-
-      local command = ya:get_yazi_command({ { filename = "file 1" } })
-
-      assert.are.same(
-        "yazi 'file 1' --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
-        command
-      )
-    end)
-
-    it("allows customizing the way shellescape is done", function()
-      local config = require("yazi.config").default()
-      config.chosen_file_path = "/tmp/chosen_file_path"
-      config.cwd_file_path = "/tmp/cwd_file_path"
-      config.future_features.new_shell_escaping = false
-
-      config.integrations.escape_path_implementation = function(path)
-        -- replace / with \
-        local result = path:gsub("/", "\\")
-        return result
-      end
-
-      local ya = ya_process.new(config, yazi_id)
-
-      local command = ya:get_yazi_command({ { filename = "file/1" } })
-
-      assert.are.same(
-        "yazi file\\1 --chooser-file /tmp/chosen_file_path --client-id yazi_id_123 --cwd-file /tmp/cwd_file_path",
-        command
-      )
-    end)
   end)
 end)
 

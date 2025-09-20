@@ -67,26 +67,13 @@ end
 ---@param paths Path[]
 function YaProcess:get_yazi_command(paths)
   local command_words = { "yazi" }
-  local new_shell_escaping = self.config.future_features.new_shell_escaping
 
   if self.config.open_multiple_tabs == true then
     for _, path in ipairs(paths) do
-      if new_shell_escaping then
-        table.insert(command_words, path.filename)
-      else
-        local escaped_path =
-          self.config.integrations.escape_path_implementation(path.filename)
-        table.insert(command_words, escaped_path)
-      end
+      table.insert(command_words, path.filename)
     end
   else
-    if new_shell_escaping then
-      table.insert(command_words, paths[1].filename)
-    else
-      local path =
-        self.config.integrations.escape_path_implementation(paths[1].filename)
-      table.insert(command_words, path)
-    end
+    table.insert(command_words, paths[1].filename)
   end
 
   table.insert(command_words, "--chooser-file")
@@ -104,11 +91,7 @@ function YaProcess:get_yazi_command(paths)
 
   command_words = remove_duplicates(command_words)
 
-  if new_shell_escaping then
-    return command_words
-  else
-    return table.concat(command_words, " ")
-  end
+  return command_words
 end
 
 ---@param timeout integer

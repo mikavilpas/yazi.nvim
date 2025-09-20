@@ -366,15 +366,6 @@ return {
       -- - nil (default, no action added)
       -- - "snacks.picker" (snacks.nvim)
       picker_add_copy_relative_path_action = nil,
-
-      -- Only used when `future_features.new_shell_escaping` is off. A function
-      -- that will be used to escape paths before passing them to external
-      -- commands. Defaults to `vim.fn.shellescape`. Depending on your OS +
-      -- shell + neovim settings, you might need to customize this for
-      -- yazi.nvim to work correctly with paths that contain special
-      -- characters. Defaults to `vim.fn.shellescape`, which is usually
-      -- sufficient for most users.
-      escape_path_implementation = vim.fn.shellescape,
     },
 
     future_features = {

@@ -30,7 +30,6 @@
 
 ---@class(exact) yazi.OptInFeatures
 ---@field public use_cwd_file? boolean # use a file to store the last directory that yazi was in before it was closed. Defaults to `true`.
----@field public new_shell_escaping? boolean # use a new shell escaping implementation that is more robust and works on more platforms. Defaults to `true`. If set to `false`, the old shell escaping implementation will be used, which is less robust and may not work on all platforms.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
@@ -69,7 +68,6 @@
 ---@field public bufdelete_implementation? YaziBufdeleteImpl # how to delete (close) a buffer. Defaults to `snacks.bufdelete` from https://github.com/folke/snacks.nvim, which maintains the window layout.
 ---@field public picker_add_copy_relative_path_action? "snacks.picker" # add an action to a file picker to copy the relative path to the selected file(s). The implementation is the same as for the `copy_relative_path_to_selected_files` yazi.nvim keymap. Currently only snacks.nvim is supported. Documentation can be found in the keybindings section of the readme. The default is `nil`, which means no action is added.
 ---@field public pick_window_implementation? "snacks.picker" # the implementation to use for picking a window. The default is `snacks.picker`, which uses the snacks.nvim picker's "pick_win" action.
----@field public escape_path_implementation? fun(path: string): string # a function that will be used to escape paths before passing them to external commands. Defaults to `vim.fn.shellescape`. Depending on your OS + shell + neovim settings, you might need to customize this for yazi.nvim to work correctly with paths that contain special characters. Defaults to `vim.fn.shellescape`, which is usually sufficient for most users.
 
 ---@class YaziGetRelativePathImplementationArguments
 ---@field source_dir string the starting path, where the relative path is calculated from
