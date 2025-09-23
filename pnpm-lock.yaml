@@ -33,8 +33,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       cypress:
-        specifier: 15.2.0
-        version: 15.2.0
+        specifier: 15.3.0
+        version: 15.3.0
       wait-on:
         specifier: 9.0.1
         version: 9.0.1
@@ -47,7 +47,7 @@ importers:
         version: 9.36.0
       '@tui-sandbox/library':
         specifier: 11.8.2
-        version: 11.8.2(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)
+        version: 11.8.2(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)
       '@types/node':
         specifier: 24.5.2
         version: 24.5.2
@@ -451,6 +451,9 @@ packages:
   '@types/tinycolor2@1.4.6':
     resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
 
+  '@types/tmp@0.2.6':
+    resolution: {integrity: sha512-chhaNf2oKHlRkDGt+tiKE2Z5aJ6qalm7Z9rlLdBwmOiAAf09YQvvoLXjWK4HWPF1xU/fqvMgfNfpVoBscA/tKA==}
+
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
 
@@ -766,10 +769,6 @@ packages:
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
 
-  check-more-types@2.24.0:
-    resolution: {integrity: sha512-Pj779qHxV2tuapviy1bSZNEL1maXr13bPYpsvSDB68HlYcYuhlDrmGd63i0JHMCLKzc7rUSNIrpdJlhVlNwrxA==}
-    engines: {node: '>= 0.8.0'}
-
   chromium-bidi@7.1.1:
     resolution: {integrity: sha512-L2BKQ0rSLADgbPMIdDh3wnYHs3EiUiMay2Sq0CTolheaADmWIf6Pe+T9LJRcnh5rcMz0U7MVk0cQVvKsGRMa1g==}
     peerDependencies:
@@ -900,9 +899,9 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  cypress@15.2.0:
-    resolution: {integrity: sha512-J4ehSzOSb58SkXyldCe9y/oZ8ep8Bl6+q9kDUjnkqNqc2ZKzDq5KSbhIc2lHFAFR5Jtj10oNqr9JRAZbr8DA8A==}
-    engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
+  cypress@15.3.0:
+    resolution: {integrity: sha512-g9rDhoK9y8wW4Vx3Ppr8dtfvThXxPL3mJsV5e98fG+6EerrhXKmeRT2sL86cvNRtEZouXJfsuVL1lqiMuGNGcg==}
+    engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
   dashdash@1.14.1:
@@ -1595,10 +1594,6 @@ packages:
 
   kuler@2.0.0:
     resolution: {integrity: sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A==}
-
-  lazy-ass@1.6.0:
-    resolution: {integrity: sha512-cc8oEVoctTvsFZ/Oje/kGnHbpWHYBe8IAJe4C0QNc3t8uM/0Y8+erSz/7Y1ALuXTEZTMvxXwO6YbX1ey3ujiZw==}
-    engines: {node: '> 0.8'}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -2898,7 +2893,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.8.2(cypress@15.2.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)':
+  '@tui-sandbox/library@11.8.2(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.5.1(@trpc/server@11.5.1(typescript@5.9.2))(typescript@5.9.2)
@@ -2908,7 +2903,7 @@ snapshots:
       '@xterm/xterm': 5.5.0
       concurrently: 9.2.1
       cors: 2.8.5
-      cypress: 15.2.0
+      cypress: 15.3.0
       dree: 5.1.5
       express: 5.1.0
       neovim: 5.4.0
@@ -2948,6 +2943,8 @@ snapshots:
   '@types/sizzle@2.3.10': {}
 
   '@types/tinycolor2@1.4.6': {}
+
+  '@types/tmp@0.2.6': {}
 
   '@types/triple-beam@1.3.5': {}
 
@@ -3296,8 +3293,6 @@ snapshots:
 
   character-reference-invalid@2.0.1: {}
 
-  check-more-types@2.24.0: {}
-
   chromium-bidi@7.1.1(devtools-protocol@0.0.1464554):
     dependencies:
       devtools-protocol: 0.0.1464554
@@ -3422,19 +3417,19 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress@15.2.0:
+  cypress@15.3.0:
     dependencies:
       '@cypress/request': 3.0.9
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.10
+      '@types/tmp': 0.2.6
       arch: 2.2.0
       blob-util: 2.0.2
       bluebird: 3.7.2
       buffer: 5.7.1
       cachedir: 2.4.0
       chalk: 4.1.2
-      check-more-types: 2.24.0
       ci-info: 4.3.0
       cli-cursor: 3.1.0
       cli-table3: 0.6.1
@@ -3451,7 +3446,6 @@ snapshots:
       fs-extra: 9.1.0
       hasha: 5.2.2
       is-installed-globally: 0.4.0
-      lazy-ass: 1.6.0
       listr2: 3.14.0(enquirer@2.4.1)
       lodash: 4.17.21
       log-symbols: 4.1.0
@@ -4204,8 +4198,6 @@ snapshots:
   kleur@4.1.5: {}
 
   kuler@2.0.0: {}
-
-  lazy-ass@1.6.0: {}
 
   levn@0.4.1:
     dependencies:
