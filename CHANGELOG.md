@@ -1,5 +1,14 @@
 # Changelog
 
+## [13.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.0.0...v13.0.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#1227](https://github.com/mikavilpas/yazi.nvim/issues/1227)) ([fda4736](https://github.com/mikavilpas/yazi.nvim/commit/fda4736c8c4e6eb7035ab9c0be1c17fa9dca0b6e))
+* **deps:** update dependency cypress to v15.3.0 ([#1237](https://github.com/mikavilpas/yazi.nvim/issues/1237)) ([4e85f6e](https://github.com/mikavilpas/yazi.nvim/commit/4e85f6efca6945913cf27d0cf26ab9e272c93ed3))
+* **deps:** update dependency zod to v4.1.10 ([#1225](https://github.com/mikavilpas/yazi.nvim/issues/1225)) ([04fc18b](https://github.com/mikavilpas/yazi.nvim/commit/04fc18bf42b16851293310266764a69d71a1dbf0))
+
 ## [13.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v12.0.0...v13.0.0) (2025-09-20)
 
 
