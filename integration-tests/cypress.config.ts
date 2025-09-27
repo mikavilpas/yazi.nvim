@@ -1,5 +1,5 @@
 import { defineConfig } from "cypress"
-import fs from "fs"
+import fs, { accessSync } from "fs"
 import { readFile, rm } from "fs/promises"
 import path from "path"
 import { inspect } from "util"
@@ -50,6 +50,28 @@ export default defineConfig({
             console.error(err)
             return null // something must be returned
           }
+        },
+
+        async showLspLogFile({
+          logFilePath,
+        }: {
+          logFilePath: string
+        }): Promise<null> {
+          accessSync(logFilePath) // throws if not accessible
+
+          try {
+            const log = await readFile(logFilePath, "utf-8")
+            console.log(
+              `${logFilePath}`,
+              inspect(log.split("\n"), { maxArrayLength: null, colors: true }),
+            )
+          } catch (err) {
+            console.error(
+              `Error reading log file at ${logFilePath}. Does the file exist? Is it accessible? ${err}`,
+              err,
+            )
+          }
+          return null // something must be returned
         },
       })
     },

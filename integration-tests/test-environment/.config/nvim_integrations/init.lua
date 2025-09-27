@@ -147,3 +147,5 @@ do
     { bg = colors.peach, fg = "#000000" }
   )
 end
+
+vim.lsp.log.set_level("debug")

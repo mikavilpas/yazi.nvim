@@ -73,6 +73,9 @@ jobs:
       - run: pnpm install
 
       - uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e86d566 # v3.2.0
+        with:
+          cache: false
+          log_level: debug
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@d30f6d4d794c0e77b6edb530872205f98ae969c4 # v1.1.1
@@ -95,6 +98,9 @@ jobs:
           fzf --version
           rg --version
           which realpath || { exit 1; }
+
+          file "$(which emmylua_ls)"
+          emmylua_ls --version
 
       - working-directory: integration-tests
         name: Prepare Neovim for integration tests
