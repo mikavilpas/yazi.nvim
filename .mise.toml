@@ -1,3 +1,4 @@
+settings.idiomatic_version_file_enable_tools = []
 
 [tools]
 # fd is a dependency of telescope and fzf-lua
