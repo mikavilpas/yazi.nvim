@@ -31,6 +31,10 @@ function M.yazi(config, input_path, args)
   config =
     vim.tbl_deep_extend("force", configModule.default(), M.config, config or {})
 
+  -- M.config called from M.setup is different
+  -- from this one. Must be called explicitly
+  M.yazi_nest_config = config
+
   local Log = require("yazi.log")
   Log.level = config.log_level
 
@@ -51,11 +55,11 @@ function M.yazi(config, input_path, args)
 
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
-  local yazi_buffer = win.content_buffer
+  vim.g.yazi_buffer = win.content_buffer
 
   local yazi_process, yazi_context = YaziProcess:start(config, paths, {
     on_ya_first_event = function(api)
-      config.hooks.on_yazi_ready(yazi_buffer, config, api)
+      config.hooks.on_yazi_ready(vim.g.yazi_buffer, config, api)
       do
         if not (args and args.reveal_path) then
           Log:debug("No reveal_path provided, skipping initial reveal")
@@ -139,15 +143,18 @@ function M.yazi(config, input_path, args)
   })
 
   M.active_contexts:push(yazi_context)
+  -- Sometimes M.active_contexts:peek() causes vim.keymap.set
+  -- to fail, so we copy the context variable directly
+  M.yazi_nest_context = yazi_context
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
   if config.set_keymappings_function ~= nil then
-    config.set_keymappings_function(yazi_buffer, config, yazi_context)
+    config.set_keymappings_function(vim.g.yazi_buffer, config, yazi_context)
   end
 
   if config.keymaps ~= false then
-    require("yazi.config").set_keymappings(yazi_buffer, config, yazi_context)
+    require("yazi.config").set_keymappings(vim.g.yazi_buffer, config, yazi_context)
   end
 
   win.on_resized = function(event)
@@ -211,6 +218,70 @@ function M.setup(opts)
   then
     require("yazi.integrations.snacks_relative_path").setup_copy_relative_path_picker_action_once()
   end
+
+  -- #739: The plugin isn't aware of nested nvim sessions inside
+  -- yazi, so the child process must control the parent via RPC.
+  local chan_request = function(chan, cmd, args)
+    vim.rpcrequest(
+      chan,
+      "nvim_exec_lua",
+      string.dump(cmd),
+      args
+    )
+  end
+
+  vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "/tmp/yazi-*",
+    callback = function()
+      if vim.env.NVIM == nil then return end
+      local chan = vim.fn.sockconnect("pipe", vim.env.NVIM, { rpc = true })
+      local cmd = function(cfg)
+        vim.keymap.del({ "t" }, cfg.open_file_in_vertical_split, { buffer = vim.g.yazi_buffer })
+        vim.keymap.del({ "t" }, cfg.open_file_in_horizontal_split, { buffer = vim.g.yazi_buffer })
+        vim.keymap.del({ "t" }, cfg.open_file_in_tab, { buffer = vim.g.yazi_buffer })
+      end
+      chan_request(chan, cmd, { M.config.keymaps })
+    end,
+  })
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    pattern = "/tmp/yazi-*",
+    callback = function()
+      if vim.env.NVIM == nil then return end
+      local chan = vim.fn.sockconnect("pipe", vim.env.NVIM, { rpc = true })
+      local cmd = function()
+        vim.api.nvim_exec_autocmds("User", { pattern = "YaziNestedClosed" })
+      end
+      chan_request(chan, cmd, {})
+    end
+  })
+
+  vim.api.nvim_create_autocmd("User", {
+    group = yazi_augroup,
+    pattern = "YaziNestedClosed",
+    callback = function()
+      local config = M.yazi_nest_config
+      local context = M.yazi_nest_context
+      local keybinding_helpers = require("yazi.keybinding_helpers")
+      vim.keymap.set(
+        { "t" },
+        config.keymaps.open_file_in_vertical_split,
+        function() keybinding_helpers.open_file_in_vertical_split(config, context.api) end,
+        { buffer = vim.g.yazi_buffer }
+      )
+      vim.keymap.set(
+        { "t" },
+        config.keymaps.open_file_in_horizontal_split,
+        function() keybinding_helpers.open_file_in_horizontal_split(config, context.api) end,
+        { buffer = vim.g.yazi_buffer }
+      )
+      vim.keymap.set(
+        { "t" },
+        config.keymaps.open_file_in_tab,
+        function() keybinding_helpers.open_file_in_tab(config, context.api) end,
+        { buffer = vim.g.yazi_buffer }
+      )
+    end
+  })
 end
 
 return M
