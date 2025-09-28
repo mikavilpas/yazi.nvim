@@ -9,21 +9,20 @@ on:
 jobs:
   build:
     name:
-      "Test (neovim ${{ matrix.neovim_version }}, yazi ${{
-      matrix.yazi-version.name }})"
+      "Test (neovim ${{ matrix.neovim_version }}, yazi ${{ matrix.yazi.name }})"
     runs-on: ubuntu-24.04
     strategy:
       matrix:
         neovim_version: ["nightly", "stable"]
-        yazi-version:
+        yazi:
           - name: nightly
             method: cargo-install
-            # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
-            commit: 25d5554a9a4071afb7d30fad5a6cb19a9eb98718
+            # renovate: datasource=git-refs depName=sxyazi/yazi packageName=https://github.com/sxyazi/yazi
+            YAZI_VERSION: 25d5554a9a4071afb7d30fad5a6cb19a9eb98718
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
-            version: v25.5.31
+            YAZI_VERSION: v25.5.31
 
     env:
       MISE_ENV: ci
@@ -32,7 +31,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Compile and install `yazi-fm` from source
-        if: matrix.yazi-version.method == 'cargo-install'
+        if: matrix.yazi.method == 'cargo-install'
         uses: baptiste0928/cargo-install@b687c656bda5733207e629b50a22bf68974a0305 # v3.3.2
         with:
           # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
@@ -40,13 +39,13 @@ jobs:
           # https://github.com/sxyazi/yazi/blob/2ec3a6c645324295331c0f2ef6d4d946cf11c06b/yazi-fm/build.rs?plain=1#L23-L25
           crate: yazi-build
           git: https://github.com/sxyazi/yazi
-          commit: ${{ matrix.yazi-version.commit }}
+          commit: ${{ matrix.yazi.YAZI_VERSION }}
           # tag: ${{ matrix.yazi-version.tag }}
 
       - name: Download prebuilt yazi version
-        if: matrix.yazi-version.method == 'download'
+        if: matrix.yazi.method == 'download'
         run: |
-          URL="https://github.com/sxyazi/yazi/releases/download/${{ matrix.yazi-version.version }}/yazi-x86_64-unknown-linux-gnu.zip"
+          URL="https://github.com/sxyazi/yazi/releases/download/${{ matrix.yazi.YAZI_VERSION }}/yazi-x86_64-unknown-linux-gnu.zip"
           echo "Downloading yazi from $URL"
           curl -L $URL -o yazi.zip
           mkdir -p yazi-zip
