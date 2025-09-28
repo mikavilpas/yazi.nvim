@@ -46,8 +46,8 @@ importers:
         specifier: 9.36.0
         version: 9.36.0
       '@tui-sandbox/library':
-        specifier: 11.8.3
-        version: 11.8.3(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)
+        specifier: 11.8.4
+        version: 11.8.4(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)
       '@types/node':
         specifier: 24.5.2
         version: 24.5.2
@@ -409,8 +409,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@11.8.3':
-    resolution: {integrity: sha512-Mnh5TYZmTvLZbUY/T+2DZmDeajuqQegvmqSrTKkmKTpAehauKNm1mgyTRc73WfyFAukpbLs5JT+cdQqqmU8szw==}
+  '@tui-sandbox/library@11.8.4':
+    resolution: {integrity: sha512-mwPPfcTEH3za2wVli8hHJEbI24hKnIvX/Aym8UEjAq3hNkPzvWn5mFBaVybp6h+pDyTUFMTBvqgtF1uV+14G7w==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -2428,8 +2428,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  tsx@4.20.5:
-    resolution: {integrity: sha512-+wKjMNU9w/EaQayHXb7WA7ZaHY6hN8WgfvHNQ3t1PnU91/7O8TcTnIhCDYTZwnt8JsO9IBqZ30Ln1r7pPF52Aw==}
+  tsx@4.20.6:
+    resolution: {integrity: sha512-ytQKuwgmrrkDTFP4LjR0ToE2nqgy886GpvRSpU0JAnrdBYppuY5rLkRUYPU1yCryb24SsKBTL/hlDQAEFVwtZg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -2893,7 +2893,7 @@ snapshots:
     dependencies:
       typescript: 5.9.2
 
-  '@tui-sandbox/library@11.8.3(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)':
+  '@tui-sandbox/library@11.8.4(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.2)(wait-on@9.0.1)(zod@4.1.11)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.6.0(@trpc/server@11.6.0(typescript@5.9.2))(typescript@5.9.2)
@@ -2909,7 +2909,7 @@ snapshots:
       neovim: 5.4.0
       node-pty: 1.0.0
       prettier: 3.6.2
-      tsx: 4.20.5
+      tsx: 4.20.6
       type-fest: 5.0.1
       typescript: 5.9.2
       wait-on: 9.0.1
@@ -5292,7 +5292,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsx@4.20.5:
+  tsx@4.20.6:
     dependencies:
       esbuild: 0.25.9
       get-tsconfig: 4.10.1
