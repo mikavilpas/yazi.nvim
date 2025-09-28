@@ -1,16 +1,31 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "automerge": true,
-  "extends": [
-    "config:best-practices",
-    "group:allNonMajor",
-    "customManagers:githubActionsVersions"
-  ],
+  "extends": ["config:best-practices", "group:allNonMajor"],
   "commitBodyTable": true,
   "packageRules": [
     {
       "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "managerFilePatterns": [".github/workflows/test.yml"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=github-releases\\s+depName=(?<depName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentValue>\\S+)"
+      ]
+    },
+    {
+      "customType": "regex",
+      "datasourceTemplate": "git-refs",
+      "currentValueTemplate": "main",
+      "managerFilePatterns": [".github/workflows/test.yml"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)"
+      ]
     }
   ]
 }
