@@ -230,7 +230,7 @@ function M.setup(opts)
   end
 
   vim.api.nvim_create_autocmd("VimEnter", {
-    pattern = "/tmp/yazi-*",
+    pattern = "*/yazi-*/bulk-*",
     callback = function()
       if vim.env.NVIM == nil then
         return
