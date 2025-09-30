@@ -25,7 +25,7 @@
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
     "type-fest": "5.0.1",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "typescript-eslint": "8.45.0"
   }
 }
