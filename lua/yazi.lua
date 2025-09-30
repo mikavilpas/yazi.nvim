@@ -154,7 +154,11 @@ function M.yazi(config, input_path, args)
   end
 
   if config.keymaps ~= false then
-    require("yazi.config").set_keymappings(vim.g.yazi_buffer, config, yazi_context)
+    require("yazi.config").set_keymappings(
+      vim.g.yazi_buffer,
+      config,
+      yazi_context
+    )
   end
 
   win.on_resized = function(event)
@@ -222,23 +226,32 @@ function M.setup(opts)
   -- #739: The plugin isn't aware of nested nvim sessions inside
   -- yazi, so the child process must control the parent via RPC.
   local chan_request = function(chan, cmd, args)
-    vim.rpcrequest(
-      chan,
-      "nvim_exec_lua",
-      string.dump(cmd),
-      args
-    )
+    vim.rpcrequest(chan, "nvim_exec_lua", string.dump(cmd), args)
   end
 
   vim.api.nvim_create_autocmd("VimEnter", {
     pattern = "/tmp/yazi-*",
     callback = function()
-      if vim.env.NVIM == nil then return end
+      if vim.env.NVIM == nil then
+        return
+      end
       local chan = vim.fn.sockconnect("pipe", vim.env.NVIM, { rpc = true })
       local cmd = function(cfg)
-        vim.keymap.del({ "t" }, cfg.open_file_in_vertical_split, { buffer = vim.g.yazi_buffer })
-        vim.keymap.del({ "t" }, cfg.open_file_in_horizontal_split, { buffer = vim.g.yazi_buffer })
-        vim.keymap.del({ "t" }, cfg.open_file_in_tab, { buffer = vim.g.yazi_buffer })
+        vim.keymap.del(
+          { "t" },
+          cfg.open_file_in_vertical_split,
+          { buffer = vim.g.yazi_buffer }
+        )
+        vim.keymap.del(
+          { "t" },
+          cfg.open_file_in_horizontal_split,
+          { buffer = vim.g.yazi_buffer }
+        )
+        vim.keymap.del(
+          { "t" },
+          cfg.open_file_in_tab,
+          { buffer = vim.g.yazi_buffer }
+        )
       end
       chan_request(chan, cmd, { M.config.keymaps })
     end,
@@ -246,13 +259,15 @@ function M.setup(opts)
   vim.api.nvim_create_autocmd("VimLeavePre", {
     pattern = "/tmp/yazi-*",
     callback = function()
-      if vim.env.NVIM == nil then return end
+      if vim.env.NVIM == nil then
+        return
+      end
       local chan = vim.fn.sockconnect("pipe", vim.env.NVIM, { rpc = true })
       local cmd = function()
         vim.api.nvim_exec_autocmds("User", { pattern = "YaziNestedClosed" })
       end
       chan_request(chan, cmd, {})
-    end
+    end,
   })
 
   vim.api.nvim_create_autocmd("User", {
@@ -265,22 +280,23 @@ function M.setup(opts)
       vim.keymap.set(
         { "t" },
         config.keymaps.open_file_in_vertical_split,
-        function() keybinding_helpers.open_file_in_vertical_split(config, context.api) end,
+        function()
+          keybinding_helpers.open_file_in_vertical_split(config, context.api)
+        end,
         { buffer = vim.g.yazi_buffer }
       )
       vim.keymap.set(
         { "t" },
         config.keymaps.open_file_in_horizontal_split,
-        function() keybinding_helpers.open_file_in_horizontal_split(config, context.api) end,
+        function()
+          keybinding_helpers.open_file_in_horizontal_split(config, context.api)
+        end,
         { buffer = vim.g.yazi_buffer }
       )
-      vim.keymap.set(
-        { "t" },
-        config.keymaps.open_file_in_tab,
-        function() keybinding_helpers.open_file_in_tab(config, context.api) end,
-        { buffer = vim.g.yazi_buffer }
-      )
-    end
+      vim.keymap.set({ "t" }, config.keymaps.open_file_in_tab, function()
+        keybinding_helpers.open_file_in_tab(config, context.api)
+      end, { buffer = vim.g.yazi_buffer })
+    end,
   })
 end
 
