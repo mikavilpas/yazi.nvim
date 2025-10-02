@@ -49,8 +49,8 @@ importers:
         specifier: 11.8.4
         version: 11.8.4(cypress@15.3.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.3)(wait-on@9.0.1)(zod@4.1.11)
       '@types/node':
-        specifier: 24.6.1
-        version: 24.6.1
+        specifier: 24.6.2
+        version: 24.6.2
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -439,8 +439,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.6.1':
-    resolution: {integrity: sha512-ljvjjs3DNXummeIaooB4cLBKg2U6SPI6Hjra/9rRIy7CpM0HpLtG9HptkMKAb4HYWy5S7HUvJEuWgr/y0U8SHw==}
+  '@types/node@24.6.2':
+    resolution: {integrity: sha512-d2L25Y4j+W3ZlNAeMKcy7yDsK425ibcAOO2t7aPTz6gNMH0z2GThtwENCDc0d/Pw9wgyRqE5Px1wkV7naz8ang==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -2100,6 +2100,7 @@ packages:
   puppeteer@24.14.0:
     resolution: {integrity: sha512-GB7suRDkp9pUnxpNGAORICQCtw11KFbg6U2iJXVTflzJLK5D1qzq8xOOmLgN/QnDBpDMdpn96ri52XkuN83Giw==}
     engines: {node: '>=18'}
+    deprecated: < 24.15.0 is no longer supported
     hasBin: true
 
   qs@6.14.0:
@@ -2934,7 +2935,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.6.1':
+  '@types/node@24.6.2':
     dependencies:
       undici-types: 7.13.0
 
@@ -2954,7 +2955,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.6.1
+      '@types/node': 24.6.2
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.36.0)(typescript@5.9.3))(eslint@9.36.0)(typescript@5.9.3)':
