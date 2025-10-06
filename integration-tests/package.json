@@ -12,7 +12,7 @@
     "concurrently": "9.2.1",
     "cypress": "15.3.0",
     "wait-on": "9.0.1",
-    "zod": "4.1.11"
+    "zod": "4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "9.37.0",
@@ -26,6 +26,6 @@
     "tinycolor2": "1.6.0",
     "type-fest": "5.0.1",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.45.0"
+    "typescript-eslint": "8.46.0"
   }
 }
