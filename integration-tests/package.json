@@ -10,7 +10,7 @@
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
     "concurrently": "9.2.1",
-    "cypress": "15.3.0",
+    "cypress": "15.4.0",
     "wait-on": "9.0.1",
     "zod": "4.1.12"
   },
