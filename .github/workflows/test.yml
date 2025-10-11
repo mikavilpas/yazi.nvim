@@ -31,24 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Install UBI
-        shell: bash
-        run: |
-          mkdir -p "$HOME/bin"
-          curl --silent --location \
-              https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
-              sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install tools with UBI
-        shell: bash
-        run: |
-          EMMYLUA_LS_VERSION="$(mise ls --current ubi:EmmyLuaLs/emmylua-analyzer-rust --json | jq --raw-output '.[0].requested_version')"
-          "$HOME/bin/ubi" --in "$HOME/bin" --project EmmyLuaLs/emmylua-analyzer-rust --tag "$EMMYLUA_LS_VERSION" --matching-regex "^emmylua_ls" --exe emmylua_ls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
         uses: baptiste0928/cargo-install@b687c656bda5733207e629b50a22bf68974a0305 # v3.3.2
@@ -91,6 +73,24 @@ jobs:
       - run: pnpm install
 
       - uses: jdx/mise-action@e3d7b8d67a7958d1207f6ed871e83b1ea780e7b0 # v3.3.1
+
+      - name: Install UBI
+        shell: bash
+        run: |
+          mkdir -p "$HOME/bin"
+          curl --silent --location \
+              https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
+              sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install tools with UBI
+        shell: bash
+        run: |
+          EMMYLUA_LS_VERSION="$(mise ls --current ubi:EmmyLuaLs/emmylua-analyzer-rust --json | jq --raw-output '.[0].requested_version')"
+          "$HOME/bin/ubi" --in "$HOME/bin" --project EmmyLuaLs/emmylua-analyzer-rust --tag "$EMMYLUA_LS_VERSION" --matching-regex "^emmylua_ls" --exe emmylua_ls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@d30f6d4d794c0e77b6edb530872205f98ae969c4 # v1.1.1
