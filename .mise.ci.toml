@@ -1,2 +1,5 @@
 # installing lua seems slow in CI (requires building from source), so disable it 
-settings.disable_tools = ["lua"]
+settings.disable_tools = ["lua", "ubi:EmmyLuaLs/emmylua-analyzer-rust"]
+
+[tools]
+jq = "1.8.1"
