@@ -46,11 +46,11 @@ importers:
         specifier: 9.37.0
         version: 9.37.0
       '@tui-sandbox/library':
-        specifier: 11.8.6
-        version: 11.8.6(cypress@15.4.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.3)(wait-on@9.0.1)(zod@4.1.12)
+        specifier: 11.9.1
+        version: 11.9.1(cypress@15.4.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.3)(wait-on@9.0.1)(zod@4.1.12)
       '@types/node':
-        specifier: 24.7.1
-        version: 24.7.1
+        specifier: 24.7.2
+        version: 24.7.2
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -412,8 +412,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@11.8.6':
-    resolution: {integrity: sha512-nIi/zqRZ+WCDVLK+3Mr3GEkm7GkMbnNK7/BswCuEwNia9G5omscpSzSz170wIQKpn+j8ahSwVBJYjLed160YIA==}
+  '@tui-sandbox/library@11.9.1':
+    resolution: {integrity: sha512-WoNi2uR3qPUNwwRR0DfM60k1xTnuZdVcHrcjReLe0ghCV9PqNA6AFLXTAl8nRhE3bz2c1a8/ybVx73zi/843rA==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -442,8 +442,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@24.7.1':
-    resolution: {integrity: sha512-CmyhGZanP88uuC5GpWU9q+fI61j2SkhO3UGMUdfYRE6Bcy0ccyzn1Rqj9YAB/ZY4kOXmNf0ocah5GtphmLMP6Q==}
+  '@types/node@24.7.2':
+    resolution: {integrity: sha512-/NbVmcGTP+lj5oa4yiYxxeBjRivKQ5Ns1eSZeB99ExsEQ6rX5XYU1Zy/gGxY/ilqtD4Etx9mKyrPxZRetiahhA==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -2899,7 +2899,7 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@11.8.6(cypress@15.4.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.3)(wait-on@9.0.1)(zod@4.1.12)':
+  '@tui-sandbox/library@11.9.1(cypress@15.4.0)(prettier@3.6.2)(type-fest@5.0.1)(typescript@5.9.3)(wait-on@9.0.1)(zod@4.1.12)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.6.0(@trpc/server@11.6.0(typescript@5.9.3))(typescript@5.9.3)
@@ -2940,7 +2940,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@24.7.1':
+  '@types/node@24.7.2':
     dependencies:
       undici-types: 7.14.0
 
@@ -2960,7 +2960,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.7.1
+      '@types/node': 24.7.2
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.46.0(@typescript-eslint/parser@8.46.0(eslint@9.37.0)(typescript@5.9.3))(eslint@9.37.0)(typescript@5.9.3)':
