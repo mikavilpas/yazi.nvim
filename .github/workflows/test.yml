@@ -27,6 +27,7 @@ jobs:
 
     env:
       MISE_ENV: ci
+      MISE_LOG_LEVEL: warn
 
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -76,7 +77,8 @@ jobs:
         with:
           install: true
           install_args: "ripgrep fd fzf"
-          log_level: debug
+        env:
+          MISE_LOG_LEVEL: debug
 
       - name: Install UBI
         shell: bash
