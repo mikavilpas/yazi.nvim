@@ -87,7 +87,7 @@ jobs:
       - name: Install tools with UBI
         shell: bash
         run: |
-          EMMYLUA_LS_VERSION="$(mise ls --current ubi:EmmyLuaLs/emmylua-analyzer-rust --json | jq --raw-output '.[0].requested_version')"
+          EMMYLUA_LS_VERSION="0.14.0"
           "$HOME/bin/ubi" --in "$HOME/bin" --project EmmyLuaLs/emmylua-analyzer-rust --tag "$EMMYLUA_LS_VERSION" --matching-regex "^emmylua_ls" --exe emmylua_ls
         env:
           MISE_ENV: "" # allow looking in the default mise environment
