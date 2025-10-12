@@ -88,7 +88,7 @@ jobs:
               https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
               sh
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Install tools with UBI
         shell: bash
@@ -97,7 +97,7 @@ jobs:
           "$HOME/bin/ubi" --in "$HOME/bin" --project EmmyLuaLs/emmylua-analyzer-rust --tag "$EMMYLUA_LS_VERSION" --matching-regex "^emmylua_ls" --exe emmylua_ls
         env:
           MISE_ENV: "" # allow looking in the default mise environment
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@d30f6d4d794c0e77b6edb530872205f98ae969c4 # v1.1.1
