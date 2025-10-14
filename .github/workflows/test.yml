@@ -111,6 +111,8 @@ jobs:
         with:
           install: false
           command: pnpm tui run
+        env:
+          MISE_QUIET: "1"
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         # add the line below to store screenshots only on failures
