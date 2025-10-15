@@ -67,6 +67,16 @@ export const MyTestDirectorySchema = z.object({
             }),
           }),
         }),
+        nvim_no_package_manager: z.object({
+          name: z.literal("nvim_no_package_manager/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "init.lua": z.object({
+              name: z.literal("init.lua"),
+              type: z.literal("file"),
+            }),
+          }),
+        }),
         yazi: z.object({
           name: z.literal("yazi/"),
           type: z.literal("directory"),
@@ -114,6 +124,16 @@ export const MyTestDirectorySchema = z.object({
         "notify_rename_events.lua": z.object({
           name: z.literal("notify_rename_events.lua"),
           type: z.literal("file"),
+        }),
+        nvim_no_package_manager: z.object({
+          name: z.literal("nvim_no_package_manager/"),
+          type: z.literal("directory"),
+          contents: z.object({
+            "load_yazi_instead_of_netrw.lua": z.object({
+              name: z.literal("load_yazi_instead_of_netrw.lua"),
+              type: z.literal("file"),
+            }),
+          }),
         }),
         "report_loaded_yazi_modules.lua": z.object({
           name: z.literal("report_loaded_yazi_modules.lua"),
@@ -323,6 +343,8 @@ export const testDirectoryFiles = z.enum([
   ".config/nvim_integrations/lua",
   ".config/nvim_integrations/prepare.lua",
   ".config/nvim_integrations",
+  ".config/nvim_no_package_manager/init.lua",
+  ".config/nvim_no_package_manager",
   ".config/yazi/keymap.toml",
   ".config/yazi",
   ".config",
@@ -334,6 +356,8 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",
   "config-modifications/notify_rename_events.lua",
+  "config-modifications/nvim_no_package_manager/load_yazi_instead_of_netrw.lua",
+  "config-modifications/nvim_no_package_manager",
   "config-modifications/report_loaded_yazi_modules.lua",
   "config-modifications/use_light_neovim_colorscheme.lua",
   "config-modifications/yazi_config/add_hovered_buffer_background.lua",
@@ -379,4 +403,7 @@ export const testDirectoryFiles = z.enum([
   ".",
 ])
 export type MyTestDirectoryFile = z.infer<typeof testDirectoryFiles>
-export type MyNeovimAppName = "nvim" | "nvim_integrations"
+export type MyNeovimAppName =
+  | "nvim"
+  | "nvim_integrations"
+  | "nvim_no_package_manager"

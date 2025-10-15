@@ -5,4 +5,8 @@ export const config: TestServerConfig = createDefaultConfig(
   process.cwd(),
   process.env,
 )
-config.integrations.neovim.NVIM_APPNAMEs = ["nvim", "nvim_integrations"]
+config.integrations.neovim.NVIM_APPNAMEs = [
+  "nvim",
+  "nvim_integrations",
+  "nvim_no_package_manager",
+]
