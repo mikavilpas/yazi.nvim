@@ -74,4 +74,25 @@ describe("opening directories", () => {
       ).should("not.exist")
     })
   })
+
+  describe("when loading yazi without a package manager", () => {
+    it("can open a directory when starting with `neovim .`", () => {
+      cy.visit("/")
+      cy.startNeovim({
+        // `neovim .` specifies to open the current directory when neovim is
+        // starting
+        filename: ".",
+        NVIM_APPNAME: "nvim_no_package_manager",
+        startupScriptModifications: [
+          "nvim_no_package_manager/load_yazi_instead_of_netrw.lua",
+        ],
+      }).then((nvim) => {
+        // yazi should now be visible, showing the names of adjacent files
+        cy.contains("-- TERMINAL --")
+        cy.contains(nvim.dir.contents["file2.txt"].name)
+
+        cy.typeIntoTerminal("{downArrow}")
+      })
+    })
+  })
 })
