@@ -74,13 +74,7 @@ jobs:
       - name: Download prebuilt yazi version
         if: matrix.yazi-version.method == 'download'
         run: |
-          URL="https://github.com/sxyazi/yazi/releases/download/${{ matrix.yazi-version.version }}/yazi-x86_64-unknown-linux-gnu.zip"
-          echo "Downloading yazi from $URL"
-          curl -L $URL -o yazi.zip
-          mkdir -p yazi-zip
-          unzip yazi.zip
-          chmod +x yazi-x86_64-unknown-linux-gnu/{yazi,ya}
-          mv -v yazi-x86_64-unknown-linux-gnu/{yazi,ya} "$HOME/.cargo/bin/"
+          ubi --project sxyazi/yazi --tag "${{ matrix.yazi-version.version }}" --extract-all
 
       - name: Make sure yazi and ya are installed
         run: |
