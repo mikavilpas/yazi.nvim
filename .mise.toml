@@ -6,7 +6,7 @@
 "ubi:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.16.0", exe = "emmylua_ls", matching_regex = "^emmylua_ls" }
 lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
-"ubi:BurntSushi/ripgrep" = { version = "14.1.1", exe = "rg" }
+"ubi:BurntSushi/ripgrep" = { version = "15.0.0", exe = "rg" }
 "ubi:JohnnyMorganz/stylua" = "2.3.0"
 actionlint = "1.7.8"
 
