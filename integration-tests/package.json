@@ -10,22 +10,22 @@
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
     "concurrently": "9.2.1",
-    "cypress": "15.4.0",
+    "cypress": "15.5.0",
     "wait-on": "9.0.1",
     "zod": "4.1.12"
   },
   "devDependencies": {
-    "@eslint/js": "9.37.0",
-    "@tui-sandbox/library": "11.8.6",
-    "@types/node": "24.7.1",
+    "@eslint/js": "9.38.0",
+    "@tui-sandbox/library": "11.9.1",
+    "@types/node": "24.8.1",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
-    "eslint": "9.37.0",
+    "eslint": "9.38.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "5.0.1",
+    "type-fest": "5.1.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.46.0"
+    "typescript-eslint": "8.46.1"
   }
 }
