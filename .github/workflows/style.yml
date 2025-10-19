@@ -33,6 +33,7 @@ jobs:
       - uses: JohnnyMorganz/stylua-action@479972f01e665acfcba96ada452c36608bdbbb5e # v4.1.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          # renovate: datasource=github-releases depName=JohnnyMorganz/StyLua
           version: v2.0.2
           # CLI arguments
           args: --color always --check --allow-hidden .
