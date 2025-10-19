@@ -35,4 +35,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           version: v2.0.2
           # CLI arguments
-          args: --color always --check .
+          args: --color always --check --allow-hidden .
