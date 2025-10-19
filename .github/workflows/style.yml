@@ -34,6 +34,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # renovate: datasource=github-releases depName=JohnnyMorganz/StyLua
-          version: v2.0.2
+          version: v2.3.0
           # CLI arguments
           args: --color always --check --allow-hidden .
