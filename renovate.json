@@ -15,7 +15,8 @@
       "datasourceTemplate": "github-releases",
       "managerFilePatterns": [
         ".github/workflows/test.yml",
-        ".github/workflows/style.yml"
+        ".github/workflows/style.yml",
+        ".github/workflows/lint.yml"
       ],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=github-releases\\s+depName=(?<depName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentValue>\\S+)"
