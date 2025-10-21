@@ -39,7 +39,6 @@ jobs:
               TARGET="$HOME/.local/bin" sh
 
           ubi --project mikefarah/yq
-          ubi --project jdx/mise
 
           VERSION=$(yq '.tools."ubi:EmmyLuaLs/emmylua-analyzer-rust".version' .mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "0.14.0" --exe emmylua_ls --matching-regex "^emmylua_ls"
@@ -97,7 +96,9 @@ jobs:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
           before: |
-            mise run build
+            luarocks init --no-gitignore
+            luarocks install busted 2.2.0-1
+            luarocks install nlua 0.3.2-1
 
       - name: Verify that dependencies are available
         run: |
