@@ -39,7 +39,7 @@ jobs:
               TARGET="$HOME/.local/bin" sh
 
           ubi --project mikefarah/yq
-          ubi --project jdx/mise
+          ubi --project jdx/mise --tag "$MISE_VERSION"
 
           VERSION=$(yq '.tools."ubi:EmmyLuaLs/emmylua-analyzer-rust".version' .mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "0.14.0" --exe emmylua_ls --matching-regex "^emmylua_ls"
@@ -55,6 +55,8 @@ jobs:
           ls -alR bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # renovate: datasource=github-releases depName=jdx/mise
+          MISE_VERSION: v2025.10.11
 
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
