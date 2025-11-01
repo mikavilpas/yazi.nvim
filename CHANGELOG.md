@@ -1,5 +1,22 @@
 # Changelog
 
+## [13.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.0.0...v13.0.1) (2025-11-01)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#1227](https://github.com/mikavilpas/yazi.nvim/issues/1227)) ([fda4736](https://github.com/mikavilpas/yazi.nvim/commit/fda4736c8c4e6eb7035ab9c0be1c17fa9dca0b6e))
+* **deps:** update all non-major dependencies ([#1272](https://github.com/mikavilpas/yazi.nvim/issues/1272)) ([2097573](https://github.com/mikavilpas/yazi.nvim/commit/2097573480ffecf3c1a361471597ca1fe41b043d))
+* **deps:** update all non-major dependencies ([#1280](https://github.com/mikavilpas/yazi.nvim/issues/1280)) ([dedb461](https://github.com/mikavilpas/yazi.nvim/commit/dedb461698bd093aa19ce1a82c2d7a940e6ce6de))
+* **deps:** update dependency cypress to v15.3.0 ([#1237](https://github.com/mikavilpas/yazi.nvim/issues/1237)) ([4e85f6e](https://github.com/mikavilpas/yazi.nvim/commit/4e85f6efca6945913cf27d0cf26ab9e272c93ed3))
+* **deps:** update dependency cypress to v15.4.0 ([#1274](https://github.com/mikavilpas/yazi.nvim/issues/1274)) ([a0e181c](https://github.com/mikavilpas/yazi.nvim/commit/a0e181c0cf219eeaee4a6632c6b133efd98f2a47))
+* **deps:** update dependency zod to v4.1.10 ([#1225](https://github.com/mikavilpas/yazi.nvim/issues/1225)) ([04fc18b](https://github.com/mikavilpas/yazi.nvim/commit/04fc18bf42b16851293310266764a69d71a1dbf0))
+
+
+### Reverts
+
+* "refactor(renovate): use the built-in githubActionsVersions manager ([#1251](https://github.com/mikavilpas/yazi.nvim/issues/1251))" ([#1254](https://github.com/mikavilpas/yazi.nvim/issues/1254)) ([477924b](https://github.com/mikavilpas/yazi.nvim/commit/477924bba094252f834245db2b3fc43d047fb74a))
+
 ## [13.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v12.0.0...v13.0.0) (2025-09-20)
 
 
