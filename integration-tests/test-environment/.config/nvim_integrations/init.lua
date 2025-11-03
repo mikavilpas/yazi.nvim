@@ -67,7 +67,7 @@ vim.list_extend(plugins, {
 
   {
     "nvim-telescope/telescope.nvim",
-    -- renovate: datasource=git-refs packageName=nvim-telescope/telescope.nvim
+    -- renovate: datasource=git-refs-master packageName=https://github.com/nvim-telescope/telescope.nvim
     commit = "b4da76b",
     lazy = true,
     opts = {
@@ -79,13 +79,13 @@ vim.list_extend(plugins, {
     },
   },
   {
-    "ibhagwan/fzf-lua",
-    -- renovate: datasource=git-refs depName=ibhagwan/fzf-lua
+    "https://github.com/ibhagwan/fzf-lua",
+    -- renovate: datasource=git-refs packageName=https://github.com/ibhagwan/fzf-lua
     commit = "a8458b7",
   },
   {
     "https://github.com/MagicDuck/grug-far.nvim",
-    -- renovate: datasource=git-refs depName=MagicDuck/grug-far.nvim
+    -- renovate: datasource=git-refs packageName=https://github.com/MagicDuck/grug-far.nvim
     commit = "3e72397",
     opts = {},
   },
