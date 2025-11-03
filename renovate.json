@@ -23,17 +23,35 @@
       ]
     },
     {
+      "description": [
+        "git-refs main branch",
+        "make sure the packageName is a full url like https://github.com/MagicDuck/grug-far.nvim"
+      ],
       "customType": "regex",
       "datasourceTemplate": "git-refs",
       "currentValueTemplate": "main",
       "managerFilePatterns": [
         ".github/workflows/test.yml",
-        "integration-tests/test-environment/.config/nvim/init.lua",
-        "integration-tests/test-environment/.config/nvim_integrations/init.lua"
+        "integration-tests/test-environment/.config/**/*.lua"
       ],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)",
-        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+).*?commit = \"?(?<currentValue>[^\",]+)\"?"
+        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+)\\s*?commit = \"?(?<currentValue>[^\",]+)\"?"
+      ]
+    },
+    {
+      "description": [
+        "git-refs master branch",
+        "make sure the packageName is a full url like https://github.com/MagicDuck/grug-far.nvim"
+      ],
+      "customType": "regex",
+      "datasourceTemplate": "git-refs",
+      "currentValueTemplate": "master",
+      "managerFilePatterns": [
+        "integration-tests/test-environment/.config/**/*.lua"
+      ],
+      "matchStrings": [
+        "-- renovate: datasource=git-refs-master packageName=(?<packageName>[^\\s]+)\\s*?commit = \"(?<currentValue>.+?)\""
       ]
     },
     {
@@ -41,8 +59,7 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "managerFilePatterns": [
-        "integration-tests/test-environment/.config/nvim/init.lua",
-        "integration-tests/test-environment/.config/nvim_integrations/init.lua"
+        "integration-tests/test-environment/.config/**/*.lua"
       ],
       "matchStrings": [
         "-- renovate: datasource=github-releases depName=(?<depName>[^\\s]+)[\\s\\S]*?version\\s*=\\s*\"?(?<currentValue>[^\",]+)\"?"
