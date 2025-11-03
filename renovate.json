@@ -26,9 +26,14 @@
       "customType": "regex",
       "datasourceTemplate": "git-refs",
       "currentValueTemplate": "main",
-      "managerFilePatterns": [".github/workflows/test.yml"],
+      "managerFilePatterns": [
+        ".github/workflows/test.yml",
+        "integration-tests/test-environment/.config/nvim/init.lua",
+        "integration-tests/test-environment/.config/nvim_integrations/init.lua"
+      ],
       "matchStrings": [
-        "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)"
+        "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)",
+        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+).*?commit = \"?(?<currentValue>[^\",]+)\"?"
       ]
     },
     {
@@ -40,7 +45,7 @@
         "integration-tests/test-environment/.config/nvim_integrations/init.lua"
       ],
       "matchStrings": [
-        "--\\s*renovate:\\s*datasource=github-releases\\s+depName=(?<depName>\\S+)\\s*[\\r\\n]+[^=]+=\\s*\"?(?<currentValue>[^\",]+)\"?"
+        "-- renovate: datasource=github-releases depName=(?<depName>[^\\s]+)[\\s\\S]*?version\\s*=\\s*\"?(?<currentValue>[^\",]+)\"?"
       ]
     }
   ]

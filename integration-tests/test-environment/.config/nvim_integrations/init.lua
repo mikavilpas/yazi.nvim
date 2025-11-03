@@ -67,6 +67,8 @@ vim.list_extend(plugins, {
 
   {
     "nvim-telescope/telescope.nvim",
+    -- renovate: datasource=git-refs packageName=nvim-telescope/telescope.nvim
+    commit = "b4da76b",
     lazy = true,
     opts = {
       pickers = {
@@ -76,11 +78,22 @@ vim.list_extend(plugins, {
       },
     },
   },
-  { "ibhagwan/fzf-lua" },
-  { "https://github.com/MagicDuck/grug-far.nvim", opts = {} },
+  {
+    "ibhagwan/fzf-lua",
+    -- renovate: datasource=git-refs depName=ibhagwan/fzf-lua
+    commit = "a8458b7",
+  },
+  {
+    "https://github.com/MagicDuck/grug-far.nvim",
+    -- renovate: datasource=git-refs depName=MagicDuck/grug-far.nvim
+    commit = "3e72397",
+    opts = {},
+  },
 
   {
     "folke/snacks.nvim",
+    -- renovate: datasource=github-releases depName=folke/snacks.nvim
+    version = "v2.28.0",
     priority = 1000,
     lazy = false,
     ---@module "snacks"
@@ -110,6 +123,8 @@ vim.list_extend(plugins, {
   {
     -- https://github.com/mason-org/mason-lspconfig.nvim?tab=readme-ov-file#recommended-setup-for-lazynvim
     "mason-org/mason-lspconfig.nvim",
+    -- renovate: datasource=github-releases depName=mason-org/mason-lspconfig.nvim
+    version = "v2.1.0",
     opts = {},
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -133,11 +148,20 @@ vim.list_extend(plugins, {
       vim.lsp.enable("emmylua_ls")
     end,
     dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
-      "neovim/nvim-lspconfig",
+      {
+        "https://github.com/mason-org/mason.nvim",
+        opts = {},
+        -- renovate: datasource=github-releases depName=mason-org/mason.nvim
+        version = "v2.1.0",
+      },
+      {
+        "neovim/nvim-lspconfig",
+        -- renovate: datasource=github-releases depName=neovim/nvim-lspconfig
+        version = "v2.5.0",
+      },
     },
   },
-})
+} --[[@as LazySpec[][]])
 
 require("lazy").setup({ spec = plugins })
 
