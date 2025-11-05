@@ -1,5 +1,5 @@
 -- renovate: datasource=github-releases depName=folke/lazy.nvim
-local lazy_version = "v11.17.3"
+local lazy_version = "v11.17.4"
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -93,7 +93,7 @@ vim.list_extend(plugins, {
   {
     "folke/snacks.nvim",
     -- renovate: datasource=github-releases depName=folke/snacks.nvim
-    version = "v2.28.0",
+    version = "v2.29.0",
     priority = 1000,
     lazy = false,
     ---@module "snacks"
