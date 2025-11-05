@@ -1,5 +1,5 @@
 -- renovate: datasource=github-releases depName=folke/lazy.nvim
-local lazy_version = "v11.17.3"
+local lazy_version = "v11.17.4"
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
