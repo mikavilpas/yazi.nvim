@@ -93,7 +93,7 @@ vim.list_extend(plugins, {
   {
     "folke/snacks.nvim",
     -- renovate: datasource=github-releases depName=folke/snacks.nvim
-    version = "v2.29.0",
+    version = "v2.30.0",
     priority = 1000,
     lazy = false,
     ---@module "snacks"
