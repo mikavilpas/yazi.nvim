@@ -80,13 +80,12 @@ local function get_window_dimensions(config)
     total_lines = total_lines - 1
   end
 
-  local row = math.floor((total_lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
 
   return {
     height = height,
     width = width,
-    row = row,
+    row = 2,
     col = col,
   }
 end
