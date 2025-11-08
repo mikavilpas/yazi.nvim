@@ -45,7 +45,7 @@ jobs:
           ubi --project jdx/mise
 
           VERSION=$(yq '.tools."ubi:EmmyLuaLs/emmylua-analyzer-rust".version' .mise.toml)
-          ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "0.14.0" --exe emmylua_ls --matching-regex "^emmylua_ls"
+          ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
 
           VERSION=$(yq '.tools."ubi:BurntSushi/ripgrep".version' .mise.toml)
           ubi --project BurntSushi/ripgrep --tag "$VERSION" --exe rg
