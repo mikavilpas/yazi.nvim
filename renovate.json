@@ -36,7 +36,7 @@
       ],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)",
-        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+)\\s*?commit = \"?(?<currentValue>[^\",]+)\"?"
+        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+)\\s*?commit = \"?(?<currentDigest>[^\",]+)\"?"
       ]
     },
     {
@@ -51,7 +51,7 @@
         "integration-tests/test-environment/.config/**/*.lua"
       ],
       "matchStrings": [
-        "-- renovate: datasource=git-refs-master packageName=(?<packageName>[^\\s]+)\\s*?commit = \"(?<currentValue>.+?)\""
+        "-- renovate: datasource=git-refs-master packageName=(?<packageName>[^\\s]+)\\s*?commit = \"(?<currentDigest>.+?)\""
       ]
     },
     {
