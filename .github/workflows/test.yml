@@ -19,7 +19,7 @@ jobs:
           - name: nightly
             method: cargo-install
             # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
-            commit: 587950bb5b643647f99daf73a98b3707f6f3b1b5
+            commit: 4b56e7323530224a99442d408f9e44038399b2e3
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
@@ -27,6 +27,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
 
       - name: Install tools with UBI
         shell: bash
@@ -55,6 +58,9 @@ jobs:
           ls -alR bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install the mold linker
+        uses: rui314/setup-mold@725a8794d15fc7563f59595bd9556495c0564878 # v1
 
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
