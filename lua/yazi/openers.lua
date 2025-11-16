@@ -48,8 +48,8 @@ function M.send_files_to_quickfix_list(chosen_files)
 
       ---@type vim.quickfix.entry
       return {
-        filename = path, -- This is true path
-        text = path, -- This is for full path display only
+        filename = path,
+        text = path,
         col = 1,
         lnum = 1,
       }
