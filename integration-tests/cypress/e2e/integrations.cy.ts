@@ -289,7 +289,14 @@ describe("snacks.picker integration (grep)", () => {
       cy.typeIntoTerminal("  ")
       cy.contains("Smart")
 
-      cy.typeIntoTerminal("dir with spaces")
+      cy.typeIntoTerminal(
+        // the filter has issues with special characters, so only type part of
+        // the name
+        ("dir with (parens ) and spaces" satisfies MyTestDirectoryFile).slice(
+          0,
+          "dir with".length,
+        ),
+      )
 
       // select both files
       cy.contains("file1.txt")
@@ -311,8 +318,8 @@ describe("snacks.picker integration (grep)", () => {
           const value = result.value?.valueOf()
           assert(typeof value === "string")
           expect(value.split("\n")).to.eql([
-            "../../dir with spaces/file1.txt",
-            "../../dir with spaces/file2.txt",
+            `../../${"dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile}`,
+            `../../${"dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile}`,
           ])
         })
     })
