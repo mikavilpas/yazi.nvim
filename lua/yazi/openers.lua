@@ -2,7 +2,7 @@ local M = {}
 
 ---@param chosen_file string
 function M.open_file(chosen_file)
-  vim.cmd(string.format("edit %s", vim.fn.fnameescape(chosen_file)))
+  vim.cmd(string.format("edit %s", vim.fs.normalize(vim.fn.fnameescape(chosen_file))))
 end
 
 ---@param chosen_file string
