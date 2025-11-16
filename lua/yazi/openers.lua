@@ -7,7 +7,7 @@ end
 
 ---@param chosen_file string
 function M.open_file_in_vertical_split(chosen_file)
-  local is_directory = vim.fs.isdirectory(chosen_file) == 1
+  local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
     vim.cmd(string.format("vsplit %s", vim.fs.normalize(chosen_file)))
   end
@@ -15,7 +15,7 @@ end
 
 ---@param chosen_file string
 function M.open_file_in_horizontal_split(chosen_file)
-  local is_directory = vim.fs.isdirectory(chosen_file) == 1
+  local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
     vim.cmd(string.format("split %s", vim.fs.normalize(chosen_file)))
   end
@@ -23,7 +23,7 @@ end
 
 ---@param chosen_file string
 function M.open_file_in_tab(chosen_file)
-  local is_directory = vim.fs.isdirectory(chosen_file) == 1
+  local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
     vim.cmd(string.format("tabedit %s", vim.fs.normalize(chosen_file)))
   end
