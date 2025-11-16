@@ -1,7 +1,7 @@
 import assert from "assert"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
 import path, { join } from "path"
 import { z } from "zod"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,

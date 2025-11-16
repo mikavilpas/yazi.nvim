@@ -1,6 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import assert from "assert"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
