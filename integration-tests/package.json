@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
-    "eslint": "eslint --max-warnings=0 ."
+    "lint": "pnpx oxlint --type-aware --deny-warnings --report-unused-disable-directives && eslint --max-warnings=0 ."
   },
   "dependencies": {
     "@catppuccin/palette": "1.7.1",
@@ -23,6 +23,9 @@
     "eslint": "9.39.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
+    "eslint-plugin-oxlint": "1.28.0",
+    "oxlint": "1.28.0",
+    "oxlint-tsgolint": "0.6.0",
     "tinycolor2": "1.6.0",
     "type-fest": "5.2.0",
     "typescript": "5.9.3",

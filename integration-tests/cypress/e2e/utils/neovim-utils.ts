@@ -1,8 +1,8 @@
 import type { RunExCommandOutput } from "@tui-sandbox/library/src/server/types"
-import type { NeovimContext } from "cypress/support/tui-sandbox"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
 import type { LiteralUnion } from "type-fest"
 import * as z from "zod"
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory"
+import type { NeovimContext } from "../../support/tui-sandbox"
 
 export function assertNeovimCwd(
   nvim: NeovimContext,

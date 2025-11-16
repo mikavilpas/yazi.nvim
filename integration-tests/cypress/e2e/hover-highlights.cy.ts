@@ -1,5 +1,6 @@
-import type { MyTestDirectoryFile } from "MyTestDirectory"
 import tinycolor2 from "tinycolor2"
+import { z } from "zod"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   darkBackgroundColors,
   hoverFileAndVerifyItsHovered,
@@ -232,7 +233,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       nvim
         .runLuaCode({ luaCode: `return _G.yazi_test_events` })
         .should((result) => {
-          const events = result.value as unknown[]
+          const events = z.array(z.unknown()).parse(result.value)
           expect(events.length).to.be.greaterThan(1)
 
           const firstEvent = JSON.stringify(events[0])

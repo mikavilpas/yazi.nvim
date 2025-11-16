@@ -1,8 +1,8 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
-import z from "zod"
+import { z } from "zod"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
@@ -27,7 +27,7 @@ describe("reading events", () => {
 
       // move to the parent directory. This should make yazi send the "cd" event,
       // indicating that the directory was changed
-      cy.contains("subdirectory")
+      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("/subdirectory{enter}")
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal("{control+s}")
@@ -357,7 +357,7 @@ describe("'rename' events", () => {
       nvim
         .runLuaCode({ luaCode: `return _G.yazi_test_events` })
         .should((result) => {
-          const events = result.value as unknown[]
+          const events = z.array(z.unknown()).parse(result.value)
           expect(events).to.have.length(1)
         })
     })
@@ -405,9 +405,10 @@ describe("'rename' events", () => {
         .should((result) => {
           assert(result.value)
           assert(typeof result.value === "object")
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-          const data = result.value as any
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
+          const data = z
+            .object({ last_directory: z.string() })
+            .parse(result.value)
           expect(data["last_directory"]).to.contain(
             "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
           )

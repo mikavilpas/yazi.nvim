@@ -1,6 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
