@@ -199,8 +199,8 @@ export const MyTestDirectorySchema = z.object({
         }),
       }),
     }),
-    "dir with spaces": z.object({
-      name: z.literal("dir with spaces/"),
+    "dir with (parens ) and spaces": z.object({
+      name: z.literal("dir with (parens ) and spaces/"),
       type: z.literal("directory"),
       contents: z.object({
         "file1.txt": z.object({
@@ -374,9 +374,9 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/yazi_config/use_snacks_picker.lua",
   "config-modifications/yazi_config",
   "config-modifications",
-  "dir with spaces/file1.txt",
-  "dir with spaces/file2.txt",
-  "dir with spaces",
+  "dir with (parens ) and spaces/file1.txt",
+  "dir with (parens ) and spaces/file2.txt",
+  "dir with (parens ) and spaces",
   "file2.txt",
   "file3.txt",
   "highlights/file_1.txt",
