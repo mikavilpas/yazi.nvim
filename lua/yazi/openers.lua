@@ -31,8 +31,11 @@ end
 
 ---@param chosen_files string[]
 function M.open_multiple_files(chosen_files)
-  local quoted = vim.tbl_map(vim.fs.normalize, chosen_files)
-  vim.cmd.args({ table.concat(quoted, " ") })
+  local quote_path = function(path)
+    return vim.fn.fnameescape(vim.fs.normalize(path))
+  end
+  local quoted_paths = vim.tbl_map(quote_path, chosen_files)
+  vim.cmd.args({ table.concat(quoted_paths, " ") })
 end
 
 ---@param chosen_files string[]
