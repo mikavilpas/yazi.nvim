@@ -712,7 +712,7 @@ describe("opening files from visual mode", () => {
   })
 })
 
-describe("changing the change_neovim_cwd_on_close", () => {
+describe("changing the cwd on close (change_neovim_cwd_on_close)", () => {
   it("can change the cwd if no files are selected", () => {
     cy.visit("/")
     cy.startNeovim({
