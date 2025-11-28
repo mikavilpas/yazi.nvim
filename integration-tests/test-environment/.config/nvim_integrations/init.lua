@@ -1,5 +1,5 @@
 -- renovate: datasource=github-releases depName=folke/lazy.nvim
-local lazy_version = "v11.17.4"
+local lazy_version = "v11.17.5"
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -68,7 +68,7 @@ vim.list_extend(plugins, {
   {
     "nvim-telescope/telescope.nvim",
     -- renovate: datasource=git-refs-master packageName=https://github.com/nvim-telescope/telescope.nvim
-    commit = "b4da76b",
+    commit = "f0caedf064aa8c926325d7fe64c141d29b8e7853",
     lazy = true,
     opts = {
       pickers = {
@@ -81,19 +81,19 @@ vim.list_extend(plugins, {
   {
     "https://github.com/ibhagwan/fzf-lua",
     -- renovate: datasource=git-refs packageName=https://github.com/ibhagwan/fzf-lua
-    commit = "a8458b7",
+    commit = "9a0704e8af8f8442110ff22a83b5608366b235df",
   },
   {
     "https://github.com/MagicDuck/grug-far.nvim",
     -- renovate: datasource=git-refs packageName=https://github.com/MagicDuck/grug-far.nvim
-    commit = "3e72397",
+    commit = "b58b2d65863f4ebad88b10a1ddd519e5380466e0",
     opts = {},
   },
 
   {
     "folke/snacks.nvim",
     -- renovate: datasource=github-releases depName=folke/snacks.nvim
-    version = "v2.29.0",
+    version = "v2.30.0",
     priority = 1000,
     lazy = false,
     ---@module "snacks"

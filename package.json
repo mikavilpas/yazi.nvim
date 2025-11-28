@@ -8,18 +8,19 @@
   "author": "",
   "scripts": {
     "dev": "pnpm --filter ./integration-tests/ dev",
+    "lint": "pnpm --filter ./integration-tests/ lint",
     "markdownlint": "markdownlint-cli2 README.md",
     "prettier": "prettier --check .",
     "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
     "@umbrelladocs/linkspector": "0.4.7",
-    "markdownlint-cli2": "0.18.1",
+    "markdownlint-cli2": "0.19.1",
     "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "2.5.19"
   },
-  "packageManager": "pnpm@10.20.0+sha512.cf9998222162dd85864d0a8102e7892e7ba4ceadebbf5a31f9c2fce48dfce317a9c53b9f6464d1ef9042cba2e02ae02a9f7c143a2b438cd93c91840f0192b9dd",
+  "packageManager": "pnpm@10.23.0+sha512.21c4e5698002ade97e4efe8b8b4a89a8de3c85a37919f957e7a0f30f38fbc5bbdd05980ffe29179b2fb6e6e691242e098d945d1601772cad0fef5fb6411e2a4b",
   "pnpm": {
     "onlyBuiltDependencies": [
       "core-js",

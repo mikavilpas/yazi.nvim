@@ -1,5 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
@@ -59,7 +60,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
     // directory. We work around this by sending a "reveal" event to yazi to
     // hover the directory instead.
     cy.startNeovim({
-      filename: "dir with spaces/file1.txt",
+      filename: "dir with (parens ) and spaces/file1.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
         "add_command_to_reveal_a_file.lua",
@@ -72,13 +73,16 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       cy.typeIntoTerminal("{upArrow}")
       cy.log("yazi should be visible, showing other files")
       assertYaziIsReady(nvim)
-      hoverFileAndVerifyItsHovered(nvim, "dir with spaces/file1.txt")
+      hoverFileAndVerifyItsHovered(
+        nvim,
+        "dir with (parens ) and spaces/file1.txt",
+      )
 
       // yazi should be visible, showing other files
       cy.contains(nvim.dir.contents["file2.txt"].name)
 
       // focus "dir with spaces" in the parent directory
-      hoverFileAndVerifyItsHovered(nvim, "dir with spaces")
+      hoverFileAndVerifyItsHovered(nvim, "dir with (parens ) and spaces")
 
       // close yazi
       assertYaziIsReady(nvim)
@@ -87,7 +91,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       // toggle yazi again. It should hover the same directory.
       cy.typeIntoTerminal("{control+upArrow}")
       textIsVisibleWithBackgroundColor(
-        "dir with spaces",
+        "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
         rgbify(flavors.macchiato.colors.blue.rgb),
       )
     })

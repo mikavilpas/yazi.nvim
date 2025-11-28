@@ -1,7 +1,7 @@
 import assert from "assert"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
 import path, { join } from "path"
 import { z } from "zod"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
@@ -94,29 +94,29 @@ describe("opening files", () => {
       // use a complicated filename to test that the filename is recognized
       // even in these cases
       nvim.runLuaCode({
-        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {"aaaaaa./dir with spaces/file2.txt__aaaaaaaa"})`,
+        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {"aaaaaa./dir with (parens ) and spaces/file2.txt__aaaaaaaa"})`,
       })
 
       // select the file name only
       cy.typeIntoTerminal("_f.vt_")
 
       getSelectedFilePath().should(
-        "match",
-        new RegExp("dir with spaces/file2.txt" satisfies MyTestDirectoryFile),
+        "contain",
+        "dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile,
       )
 
       // add text that contains a filename delimited with spaces to test that
       // extra spaces are ignored
       nvim.runLuaCode({
-        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {" ./dir with spaces/file2.txt "})`,
+        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {" ./dir with (parens ) and spaces/file2.txt "})`,
       })
       cy.typeIntoTerminal(
         // this time select the entire line, including the spaces
         "V",
       )
       getSelectedFilePath().should(
-        "match",
-        new RegExp("dir with spaces/file2.txt" satisfies MyTestDirectoryFile),
+        "contain",
+        "dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile,
       )
     })
   })
@@ -552,12 +552,15 @@ describe("opening files", () => {
   })
 
   it("can open multiple files in a directory whose name contains a space character", () => {
-    cy.startNeovim({ filename: "dir with spaces/file1.txt" }).then((nvim) => {
+    cy.startNeovim({
+      filename: "dir with (parens ) and spaces/file1.txt",
+    }).then((nvim) => {
       cy.contains("this is the first file")
 
       cy.typeIntoTerminal("{upArrow}")
       cy.contains(
-        nvim.dir.contents["dir with spaces"].contents["file2.txt"].name,
+        nvim.dir.contents["dir with (parens ) and spaces"].contents["file2.txt"]
+          .name,
       )
 
       // select all files and open them
@@ -565,11 +568,11 @@ describe("opening files", () => {
       cy.typeIntoTerminal("{enter}")
 
       nvim.runExCommand({ command: "buffers" }).then((result) => {
-        expect(result.value).to.match(
-          new RegExp("dir with spaces/file1.txt" satisfies MyTestDirectoryFile),
+        expect(result.value).to.contain(
+          "dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile,
         )
-        expect(result.value).to.match(
-          new RegExp("dir with spaces/file2.txt" satisfies MyTestDirectoryFile),
+        expect(result.value).to.contain(
+          "dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile,
         )
       })
     })
@@ -581,7 +584,7 @@ describe("opening files", () => {
         openInVerticalSplits: [
           "initial-file.txt",
           "file2.txt",
-          "dir with spaces/file1.txt",
+          "dir with (parens ) and spaces/file1.txt",
         ],
       },
       startupScriptModifications: ["yazi_config/open_multiple_files.lua"],
@@ -606,13 +609,16 @@ describe("opening files", () => {
       // directory, so other adjacent files should be visible than before
       cy.typeIntoTerminal("3")
       cy.contains(
-        nvim.dir.contents["dir with spaces"].contents["file1.txt"].name,
+        nvim.dir.contents["dir with (parens ) and spaces"].contents["file1.txt"]
+          .name,
       )
       isFileSelectedInYazi(
-        nvim.dir.contents["dir with spaces"].contents["file1.txt"].name,
+        nvim.dir.contents["dir with (parens ) and spaces"].contents["file1.txt"]
+          .name,
       )
       isFileNotSelectedInYazi(
-        nvim.dir.contents["dir with spaces"].contents["file2.txt"].name,
+        nvim.dir.contents["dir with (parens ) and spaces"].contents["file2.txt"]
+          .name,
       )
     })
   })
@@ -625,7 +631,7 @@ describe("opening files from visual mode", () => {
 
   it("can open a relative file", () => {
     cy.startNeovim({
-      filename: "dir with spaces/file1.txt",
+      filename: "dir with (parens ) and spaces/file1.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
         "add_command_to_reveal_a_file.lua",
@@ -640,7 +646,7 @@ describe("opening files from visual mode", () => {
 
       // wait for yazi to open. it should have the correct file selected, and
       // the file's contents should be visible in the preview pane in yazi.
-      assertYaziIsHovering(nvim, "dir with spaces/file2.txt")
+      assertYaziIsHovering(nvim, "dir with (parens ) and spaces/file2.txt")
       cy.contains("this is the second file")
 
       // Open the file and verify that the correct file was opened.
@@ -652,7 +658,7 @@ describe("opening files from visual mode", () => {
         // very test. Better to check that does not happen.
         expect(result.value).to.contain(nvim.dir.testEnvironmentPathRelative)
         expect(result.value).to.contain(
-          "dir with spaces/file2.txt" satisfies MyTestDirectoryFile,
+          "dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile,
         )
       })
     })
@@ -664,7 +670,8 @@ describe("opening files from visual mode", () => {
 
       // enter a relative file path
       cy.typeIntoTerminal("dd")
-      const filepath = nvim.dir.rootPathAbsolute + "/dir with spaces/file2.txt"
+      const filepath =
+        nvim.dir.rootPathAbsolute + "/dir with (parens ) and spaces/file2.txt"
 
       // make sure the path points to the unique test environment for this test
       assert(filepath.includes("testdirs/dir-"))
@@ -686,7 +693,7 @@ describe("opening files from visual mode", () => {
         // very test. Better to check that does not happen.
         expect(result.value).to.contain(nvim.dir.testEnvironmentPathRelative)
         expect(result.value).to.contain(
-          "dir with spaces/file2.txt" satisfies MyTestDirectoryFile,
+          "dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile,
         )
       })
     })
@@ -705,7 +712,7 @@ describe("opening files from visual mode", () => {
   })
 })
 
-describe("changing the change_neovim_cwd_on_close", () => {
+describe("changing the cwd on close (change_neovim_cwd_on_close)", () => {
   it("can change the cwd if no files are selected", () => {
     cy.visit("/")
     cy.startNeovim({

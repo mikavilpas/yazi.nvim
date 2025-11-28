@@ -1,9 +1,12 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
-import type { MyTestDirectoryFile } from "MyTestDirectory"
-import z from "zod"
-import { assertYaziIsReady } from "./utils/yazi-utils"
+import { z } from "zod"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory"
+import {
+  assertYaziIsReady,
+  isDirectorySelectedInYazi,
+} from "./utils/yazi-utils"
 
 describe("reading events", () => {
   beforeEach(() => {
@@ -24,7 +27,7 @@ describe("reading events", () => {
 
       // move to the parent directory. This should make yazi send the "cd" event,
       // indicating that the directory was changed
-      cy.contains("subdirectory")
+      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("/subdirectory{enter}")
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal("{control+s}")
@@ -207,7 +210,7 @@ describe("'rename' events", () => {
 
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
-      cy.contains("dir with spaces" satisfies MyTestDirectoryFile)
+      cy.contains("dir with (parens ) and spaces" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("{backspace}")
@@ -217,9 +220,9 @@ describe("'rename' events", () => {
       cy.get("Rename").should("not.exist")
 
       cy.typeIntoTerminal("q")
-      cy.contains("dir with spaces" satisfies MyTestDirectoryFile).should(
-        "not.exist",
-      )
+      cy.contains(
+        "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
+      ).should("not.exist")
       nvim.runExCommand({ command: ":buffers" }).should((result) => {
         expect(result.value).to.match(
           new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
@@ -354,7 +357,7 @@ describe("'rename' events", () => {
       nvim
         .runLuaCode({ luaCode: `return _G.yazi_test_events` })
         .should((result) => {
-          const events = result.value as unknown[]
+          const events = z.array(z.unknown()).parse(result.value)
           expect(events).to.have.length(1)
         })
     })
@@ -376,11 +379,17 @@ describe("'rename' events", () => {
       assertYaziIsReady(nvim)
       cy.contains("config-modifications" satisfies MyTestDirectoryFile)
 
-      // move to another directory
-      cy.typeIntoTerminal(
-        `/${"dir with spaces" satisfies MyTestDirectoryFile}{enter}`,
-      )
-      cy.typeIntoTerminal("{rightArrow}")
+      {
+        // move to another directory
+        cy.typeIntoTerminal("f") // filter mode
+        cy.contains("Filter:")
+        cy.typeIntoTerminal(`spaces{enter}`)
+        cy.contains("Filter:").should("not.exist")
+        isDirectorySelectedInYazi(
+          "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
+        )
+        cy.typeIntoTerminal("{rightArrow}")
+      }
       cy.contains("this is the first file")
 
       // close yazi
@@ -396,10 +405,13 @@ describe("'rename' events", () => {
         .should((result) => {
           assert(result.value)
           assert(typeof result.value === "object")
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-          const data = result.value as any
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          expect(data["last_directory"]).to.match(/dir with spaces$/)
+
+          const data = z
+            .object({ last_directory: z.string() })
+            .parse(result.value)
+          expect(data["last_directory"]).to.contain(
+            "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
+          )
         })
     })
   })
