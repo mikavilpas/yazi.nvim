@@ -2,7 +2,7 @@
 
 ---@module "plenary.path"
 
----@alias YaziFloatingWindowScaling { height: number, width: number }
+---@alias YaziFloatingWindowScaling { height: number, width: number, row: number, col: number }
 
 ---@class (exact) YaziConfig
 ---@field public open_for_directories? boolean
