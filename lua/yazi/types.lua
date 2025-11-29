@@ -57,6 +57,7 @@
 ---@field public on_yazi_ready fun(buffer: integer, config: YaziConfig, process_api: YaziProcessApi):nil
 ---@field public yazi_closed_successfully fun(chosen_file: string | nil, config: YaziConfig, state: YaziClosedState): nil
 ---@field public yazi_opened_multiple_files fun(chosen_files: string[], config: YaziConfig, state: YaziClosedState): nil
+---@field public before_opening_window? fun(window_options: vim.api.keyset.win_config): nil
 
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? "telescope" | "fzf-lua" | "snacks.picker" | fun(directory: string): nil # implementation to be called when the user wants to grep in a directory. Defaults to `"telescope"`

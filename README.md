@@ -331,6 +331,8 @@ return {
 
       -- This function is called when yazi is ready to process events.
       on_yazi_ready = function(buffer, config, process_api) end,
+
+      before_opening_window = function(window_options) end,
     },
 
     -- highlight buffers in the same directory as the hovered buffer

@@ -106,6 +106,10 @@ function YaziFloatingWindow:open_and_display()
     zindex = self.config.yazi_floating_window_zindex,
   }
 
+  if self.config.hooks.before_opening_window ~= nil then
+    self.config.hooks.before_opening_window(opts)
+  end
+
   local yazi_buffer = vim.api.nvim_create_buf(false, true)
   -- create file window, enter the window, and use the options defined in opts
   local win = vim.api.nvim_open_win(yazi_buffer, true, opts)
