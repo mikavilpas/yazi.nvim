@@ -97,3 +97,37 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
     })
   })
 })
+
+describe("before_opening_window", () => {
+  beforeEach(() => {
+    cy.visit("/")
+  })
+
+  it("can customize the window properties before opening it", () => {
+    cy.startNeovim({
+      filename: "dir with (parens ) and spaces/file1.txt",
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "yazi_config/customize_window_properties.lua",
+      ],
+    }).then((nvim) => {
+      // wait until text on the start screen is visible
+      cy.contains("this is the first file")
+
+      const line = "This line should be visible if the window is customized"
+      {
+        // add some text that would be hidden if the window weren't customized
+        const lines = Array<string>(15).fill(``)
+        lines.push(line)
+        nvim.runLuaCode({
+          luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {${lines.map((l) => `"${l.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`).join(", ")}})`,
+        })
+      }
+
+      cy.typeIntoTerminal("{upArrow}")
+
+      assertYaziIsReady(nvim)
+      cy.contains(line)
+    })
+  })
+})
