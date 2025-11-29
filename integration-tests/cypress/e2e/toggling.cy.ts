@@ -2,6 +2,7 @@ import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
+import { setBufferLines } from "./utils/neovim-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("toggling yazi to pseudo-continue the previous session", () => {
@@ -119,9 +120,7 @@ describe("before_opening_window", () => {
         // add some text that would be hidden if the window weren't customized
         const lines = Array<string>(15).fill(``)
         lines.push(line)
-        nvim.runLuaCode({
-          luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {${lines.map((l) => `"${l.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`).join(", ")}})`,
-        })
+        setBufferLines(nvim, lines)
       }
 
       cy.typeIntoTerminal("{upArrow}")

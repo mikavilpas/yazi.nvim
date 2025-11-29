@@ -6,7 +6,7 @@ import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
 } from "./utils/hover-utils"
-import { assertNeovimCwd } from "./utils/neovim-utils"
+import { assertNeovimCwd, setBufferLines } from "./utils/neovim-utils"
 import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
@@ -93,9 +93,9 @@ describe("opening files", () => {
       //
       // use a complicated filename to test that the filename is recognized
       // even in these cases
-      nvim.runLuaCode({
-        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {"aaaaaa./dir with (parens ) and spaces/file2.txt__aaaaaaaa"})`,
-      })
+      setBufferLines(nvim, [
+        "aaaaaa./dir with (parens ) and spaces/file2.txt__aaaaaaaa",
+      ])
 
       // select the file name only
       cy.typeIntoTerminal("_f.vt_")
@@ -107,9 +107,7 @@ describe("opening files", () => {
 
       // add text that contains a filename delimited with spaces to test that
       // extra spaces are ignored
-      nvim.runLuaCode({
-        luaCode: `vim.api.nvim_buf_set_lines(0, 0, -1, false, {" ./dir with (parens ) and spaces/file2.txt "})`,
-      })
+      setBufferLines(nvim, [" ./dir with (parens ) and spaces/file2.txt "])
       cy.typeIntoTerminal(
         // this time select the entire line, including the spaces
         "V",
