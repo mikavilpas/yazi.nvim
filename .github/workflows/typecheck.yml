@@ -14,6 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - uses: stevearc/nvim-typecheck-action@v2
+        # allow failing until https://github.com/stevearc/nvim-typecheck-action/issues/5 is resolved
+        continue-on-error: true
         with:
           path: lua
           level: Information
