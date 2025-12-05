@@ -21,3 +21,5 @@ jobs:
             # space separated
             https://github.com/nvim-lua/plenary.nvim
             https://github.com/folke/snacks.nvim
+          # allow failing until https://github.com/stevearc/nvim-typecheck-action/issues/5 is resolved
+          luals-version: 3.15.0
