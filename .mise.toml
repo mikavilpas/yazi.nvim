@@ -3,7 +3,7 @@
 # fd is a dependency of telescope and fzf-lua
 "ubi:sharkdp/fd" = "10.3.0"
 "ubi:junegunn/fzf" = "0.67.0"
-"ubi:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.17.0", exe = "emmylua_ls", matching_regex = "^emmylua_ls" }
+"ubi:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.18.0", exe = "emmylua_ls", matching_regex = "^emmylua_ls" }
 lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 "ubi:BurntSushi/ripgrep" = { version = "15.1.0", exe = "rg" }
