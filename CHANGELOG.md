@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.0...v13.1.1) (2025-12-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency cypress to v15.7.1 ([#1436](https://github.com/mikavilpas/yazi.nvim/issues/1436)) ([dcee7b0](https://github.com/mikavilpas/yazi.nvim/commit/dcee7b039db5e21b97e5417fb7e607bcc7bed6ca))
+
 ## [13.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.0.0...v13.1.0) (2025-11-29)
 
 
