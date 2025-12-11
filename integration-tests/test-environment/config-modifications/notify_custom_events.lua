@@ -21,14 +21,6 @@ vim.api.nvim_create_autocmd("User", {
   callback = function(event)
     -- selene: allow(global_usage)
     table.insert(_G.YaziTestDDSCustomEvents, event)
-    -- printing the messages will allow seeing them with `:messages` in tests
-    print(vim.inspect({
-      string.format(
-        "Just received a YaziDDSCustom event '%s'!",
-        event.data.type
-      ),
-      event.data,
-    }))
 
     if event.data.type == "my-change-working-directory-command" then
       local json = vim.json.decode(event.data.raw_data)

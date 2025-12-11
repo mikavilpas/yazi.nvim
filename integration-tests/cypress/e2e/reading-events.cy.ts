@@ -445,15 +445,6 @@ describe("'rename' events", () => {
 
         cy.typeIntoTerminal("q")
         cy.contains(nvim.dir.contents["file2.txt"].name).should("not.exist")
-        nvim.runExCommand({ command: "messages" }).should((result) => {
-          expect(result.value).to.match(
-            /Just received a YaziDDSCustom event 'my-message-no-data'!/,
-          )
-          expect(result.value).to.match(
-            /Just received a YaziDDSCustom event 'my-change-working-directory-command'!/,
-          )
-          expect(result.value).to.match(/selected_file/)
-        })
 
         nvim
           .runLuaCode({ luaCode: `return _G.YaziTestDDSCustomEvents` })
