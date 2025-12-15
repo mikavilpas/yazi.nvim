@@ -111,11 +111,6 @@ jobs:
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
-          before: |
-            # copied from .mise.toml
-            luarocks init --no-gitignore
-            luarocks install busted 2.2.0-1
-            luarocks install nlua 0.3.2-1
 
       - name: Verify that dependencies are available
         run: |
