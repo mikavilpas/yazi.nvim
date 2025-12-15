@@ -42,7 +42,6 @@ jobs:
               TARGET="$HOME/.local/bin" sh
 
           ubi --project mikefarah/yq
-          ubi --project jdx/mise
 
           VERSION=$(yq '.tools."ubi:EmmyLuaLs/emmylua-analyzer-rust".version' .mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
@@ -58,6 +57,16 @@ jobs:
           ls -alR bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Lua
+        uses: leso-kn/gh-actions-lua@master
+        with:
+          luaVersion: "5.1"
+
+      - name: Setup LuaRocks
+        uses: hishamhm/gh-actions-luarocks@master
+        with:
+          luarocksVersion: "3.11.1"
 
       - name: Install the mold linker
         uses: rui314/setup-mold@725a8794d15fc7563f59595bd9556495c0564878 # v1
@@ -103,7 +112,10 @@ jobs:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
           before: |
-            mise run build
+            # copied from .mise.toml
+            luarocks init --no-gitignore
+            luarocks install busted 2.2.0-1
+            luarocks install nlua 0.3.2-1
 
       - name: Verify that dependencies are available
         run: |
