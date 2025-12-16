@@ -15,12 +15,12 @@
     "zod": "4.1.13"
   },
   "devDependencies": {
-    "@eslint/js": "9.39.1",
+    "@eslint/js": "9.39.2",
     "@tui-sandbox/library": "11.11.0",
     "@types/node": "24.10.3",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
     "eslint-plugin-oxlint": "1.32.0",
