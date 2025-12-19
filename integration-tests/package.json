@@ -12,11 +12,11 @@
     "concurrently": "9.2.1",
     "cypress": "15.7.1",
     "wait-on": "9.0.3",
-    "zod": "4.2.0"
+    "zod": "4.2.1"
   },
   "devDependencies": {
     "@eslint/js": "9.39.2",
-    "@tui-sandbox/library": "11.11.0",
+    "@tui-sandbox/library": "11.11.1",
     "@types/node": "24.10.4",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
