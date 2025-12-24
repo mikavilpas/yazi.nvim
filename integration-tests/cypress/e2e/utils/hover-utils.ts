@@ -1,6 +1,6 @@
 import { flavors } from "@catppuccin/palette"
-import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
-import type { RunLuaCodeOutput } from "@tui-sandbox/library/src/server/types"
+import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
+import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory"
 import type { NeovimContext } from "../../support/tui-sandbox"
 import { assertYaziIsReady } from "./yazi-utils"

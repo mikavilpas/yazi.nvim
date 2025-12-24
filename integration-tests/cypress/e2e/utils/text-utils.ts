@@ -1,5 +1,4 @@
-import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
-import type { CatppuccinRgb } from "./hover-utils"
+import { rgbify, type CatppuccinRgb } from "./hover-utils"
 
 /** Problem: cypress provides the `contains` method, but it only checks the
  * first match on the page.
