@@ -1,5 +1,5 @@
 import { flavors } from "@catppuccin/palette"
-import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
+import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
 import { setBufferLines } from "./utils/neovim-utils"

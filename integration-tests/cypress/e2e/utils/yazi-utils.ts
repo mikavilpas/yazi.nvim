@@ -1,7 +1,6 @@
 import { flavors } from "@catppuccin/palette"
-import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
-import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
-import type { RunLuaCodeOutput } from "@tui-sandbox/library/src/server/types"
+import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
+import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
 import type { NeovimContext } from "../../support/tui-sandbox"
 
 const darkTheme = flavors.macchiato.colors

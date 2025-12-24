@@ -1,7 +1,7 @@
 import type {
   RunExCommandOutput,
   RunLuaCodeOutput,
-} from "@tui-sandbox/library/dist/src/server/types"
+} from "@tui-sandbox/library/server"
 import type { LiteralUnion } from "type-fest"
 import * as z from "zod"
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory"

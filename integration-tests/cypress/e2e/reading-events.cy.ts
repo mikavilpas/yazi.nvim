@@ -1,6 +1,5 @@
 import { flavors } from "@catppuccin/palette"
-import { rgbify } from "@tui-sandbox/library/dist/src/client/color-utilities"
-import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library/dist/src/client/cypress-assertions"
+import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import { z } from "zod"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
