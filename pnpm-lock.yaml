@@ -46,8 +46,8 @@ importers:
         specifier: 9.39.2
         version: 9.39.2
       '@tui-sandbox/library':
-        specifier: 12.0.0
-        version: 12.0.0(cypress@15.8.1)(prettier@3.7.4)(type-fest@5.3.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.2.1)
+        specifier: 12.1.0
+        version: 12.1.0(cypress@15.8.1)(prettier@3.7.4)(type-fest@5.3.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.2.1)
       '@types/node':
         specifier: 24.10.4
         version: 24.10.4
@@ -491,8 +491,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@12.0.0':
-    resolution: {integrity: sha512-6JhGLDSY7pil8WPdIqcNWr1B7T1k3QUu+aBZTakm+WRfJ9XRecxU0NgJEwNPcEB80nW02uTV/BCFn4D06zDouQ==}
+  '@tui-sandbox/library@12.1.0':
+    resolution: {integrity: sha512-gKxaO1F177gsTrFT5JOeXnmmu2HJlwhM+Ob/zRVdhc0870KBdQG6LNzQ/0QZPIivOWbLHxKxApNaG8/jb37Uuw==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -615,6 +615,9 @@ packages:
     resolution: {integrity: sha512-HRQI1QbbQJoVIlPhn/P30aW2fEyLj2gvZQt/Gbkae/dtCEeB9fEvWdpoI6GMY0eVRzg9KWL16I9Q7Awg3M77hA==}
     engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     hasBin: true
+
+  '@xterm/addon-clipboard@0.2.0':
+    resolution: {integrity: sha512-Dl31BCtBhLaUEECUbEiVcCLvLBbaeGYdT7NofB8OJkGTD3MWgBsaLjXvfGAD4tQNHhm6mbKyYkR7XD8kiZsdNg==}
 
   '@xterm/addon-fit@0.10.0':
     resolution: {integrity: sha512-UFYkDm4HUahf2lnEyHvio51TNGiLK66mqP2JoATy7hRZeXaGMRDr00JiSF7m63vR5WKATF605yEggJKsw0JpMQ==}
@@ -1625,6 +1628,9 @@ packages:
   joi@18.0.1:
     resolution: {integrity: sha512-IiQpRyypSnLisQf3PwuN2eIHAsAIGZIrLZkd4zdvIar2bDyhM91ubRjy8a3eYablXsh9BeI/c7dmPYHca5qtoA==}
     engines: {node: '>= 20'}
+
+  js-base64@3.7.8:
+    resolution: {integrity: sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -3048,11 +3054,12 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@12.0.0(cypress@15.8.1)(prettier@3.7.4)(type-fest@5.3.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.2.1)':
+  '@tui-sandbox/library@12.1.0(cypress@15.8.1)(prettier@3.7.4)(type-fest@5.3.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.2.1)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)
       '@trpc/server': 11.8.1(typescript@5.9.3)
+      '@xterm/addon-clipboard': 0.2.0
       '@xterm/addon-fit': 0.10.0(@xterm/xterm@5.5.0)
       '@xterm/addon-unicode11': 0.8.0(@xterm/xterm@5.5.0)
       '@xterm/xterm': 5.5.0
@@ -3229,6 +3236,10 @@ snapshots:
   '@umbrelladocs/rdformat-validator@1.0.0':
     dependencies:
       commander: 14.0.0
+
+  '@xterm/addon-clipboard@0.2.0':
+    dependencies:
+      js-base64: 3.7.8
 
   '@xterm/addon-fit@0.10.0(@xterm/xterm@5.5.0)':
     dependencies:
@@ -4295,6 +4306,8 @@ snapshots:
       '@hapi/tlds': 1.1.3
       '@hapi/topo': 6.0.2
       '@standard-schema/spec': 1.0.0
+
+  js-base64@3.7.8: {}
 
   js-tokens@4.0.0: {}
 
