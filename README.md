@@ -47,16 +47,16 @@ Neovim.
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open
   buffers in Neovim
   - The files are also kept in sync with currently running LSP servers. A
-    technical explanation is available
-    [here](documentation/for-developers/lsp-renaming.md).
+    technical explanation is available in
+    [documentation/for-developers/lsp-renaming.md](documentation/for-developers/lsp-renaming.md).
 - Customizable keybindings
 - Plugin management for Yazi plugins and flavors
   ([documentation](./documentation/plugin-management.md))
 - 🆕 Send custom commands to yazi
   ([documentation](./documentation/emitting-commands-to-yazi.md))
 
-For previewing images with yazi, see Yazi's documentation related to Neovim
-[here](https://yazi-rs.github.io/docs/image-preview/#neovim).
+For previewing images with yazi, see Yazi's
+[documentation related to Neovim](https://yazi-rs.github.io/docs/image-preview/#neovim).
 
 ## 📦 Installation
 
@@ -431,5 +431,6 @@ Please see [COMMUNITY.md](./COMMUNITY.md) for more information on the project!
 
 See [reproducing-issues.md](./documentation/reproducing-issues.md).
 
-Powershell users: see [here](https://github.com/mikavilpas/yazi.nvim/issues/675)
-for Powershell specific configuration.
+Powershell users: see
+[issue 675](https://github.com/mikavilpas/yazi.nvim/issues/675) for Powershell
+specific configuration.
