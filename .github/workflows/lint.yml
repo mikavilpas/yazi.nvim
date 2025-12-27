@@ -25,7 +25,9 @@ jobs:
     name: markdownlint
     runs-on: ubuntu-24.04
     steps:
-      - uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101 # v22.0.0
+      # https://github.com/rvben/rumdl?tab=readme-ov-file#github-actions
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - uses: rvben/rumdl@f7bf9e39201877cc83cb83160cacaa95829c521d # v0
 
   actionlint:
     runs-on: ubuntu-24.04

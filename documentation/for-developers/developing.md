@@ -148,7 +148,7 @@ code:
    version by commenting the `dir` setting from the plugin specification.
 
 An example can be found
-[here](https://github.com/mikavilpas/dotfiles/blob/75e070ce6ac45b7ed8ac4c818f77abadbdd4b152/.config/nvim/lua/plugins/my-file-manager.lua?plain=1#L9).
+[in my config](https://github.com/mikavilpas/dotfiles/blob/75e070ce6ac45b7ed8ac4c818f77abadbdd4b152/.config/nvim/lua/plugins/my-file-manager.lua?plain=1#L9).
 
 ## Resources
 
