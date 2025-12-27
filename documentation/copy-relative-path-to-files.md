@@ -55,7 +55,8 @@ do the following in your config:
 
 - create a snacks.nvim keymap available in the picker, e.g. for `<C-y>` in
   normal and insert mode
-- ```lua
+
+  ```lua
   ---@module "lazy"
   ---@type LazySpec
   return {

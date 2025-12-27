@@ -44,12 +44,11 @@ to the project.
    ```
 
 4. In case there are any issues, you can try these steps:
-
-- Check <https://yazi-rs.github.io/docs/installation/> and see if you have
-  followed all steps correctly
-- Yazi has a `yazi --debug` command that can help you debug issues specific to
-  yazi
-- In yazi.nvim, you can run `:checkhealth yazi` to see if everything works
+   - Check <https://yazi-rs.github.io/docs/installation/> and see if you have
+     followed all steps correctly
+   - Yazi has a `yazi --debug` command that can help you debug issues specific
+     to yazi
+   - In yazi.nvim, you can run `:checkhealth yazi` to see if everything works
 
 5. If you still have issues, please open an issue:
    <https://github.com/mikavilpas/yazi.nvim/issues>

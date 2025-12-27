@@ -31,6 +31,7 @@ To enable logging, you can do one of the following:
 
 - set `log_level = vim.log.levels.DEBUG,` in your yazi configuration
 - or, call yazi manually with logging on by running
+
   ```vim
   :lua require('yazi').yazi({log_level = vim.log.levels.DEBUG})
   ```
