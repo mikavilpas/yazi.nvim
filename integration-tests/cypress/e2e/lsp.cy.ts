@@ -157,9 +157,8 @@ describe("move events with LSP support", () => {
 
       // paste the file in and quit. This should trigger the lsp move operation.
       cy.typeIntoTerminal("p")
-      cy.typeIntoTerminal("q")
-
       waitForRenameToHaveBeenConfirmed(nvim)
+      cy.typeIntoTerminal("q")
 
       // go back to the init.lua file and verify the require path was updated
       nvim.runExCommand({ command: `edit %:h/../init.lua` })
