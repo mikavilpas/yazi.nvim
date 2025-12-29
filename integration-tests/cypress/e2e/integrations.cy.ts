@@ -1,11 +1,11 @@
 import { flavors } from "@catppuccin/palette"
+import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
 } from "./utils/hover-utils"
-import { textIsVisibleWithBackgroundColor } from "./utils/text-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
 describe("grug-far integration (search and replace)", () => {
@@ -345,7 +345,10 @@ describe("snacks open_and_pick_window integration", () => {
 
       // wait until the picker is showing labels for the splits. They will be
       // labeled "a" and "s", and will have a particular background color
-      textIsVisibleWithBackgroundColor("s", flavors.macchiato.colors.peach.rgb)
+      textIsVisibleWithBackgroundColor(
+        "s",
+        rgbify(flavors.macchiato.colors.peach.rgb),
+      )
 
       cy.typeIntoTerminal("s")
       nvim.runExCommand({ command: "buffers" }).and((result) => {
