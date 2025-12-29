@@ -2,6 +2,7 @@ import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import { z } from "zod"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory"
+import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
@@ -14,7 +15,10 @@ describe("reading events", () => {
 
   it("can read 'cd' events and use telescope in the latest directory", () => {
     cy.startNeovim({
-      startupScriptModifications: ["add_yazi_context_assertions.lua"],
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "add_command_to_reveal_a_file.lua",
+      ],
       NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       //
@@ -26,8 +30,9 @@ describe("reading events", () => {
 
       // move to the parent directory. This should make yazi send the "cd" event,
       // indicating that the directory was changed
-      cy.contains("subdirectory" satisfies MyTestDirectoryFile)
-      cy.typeIntoTerminal("/subdirectory{enter}")
+      cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
+      hoverFileAndVerifyItsHovered(nvim, "other-subdirectory")
+      cy.typeIntoTerminal("{enter}")
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal("{control+s}")
 
@@ -258,7 +263,8 @@ describe("'rename' events", () => {
       // the rename dialog covers the name of the file. we can use this to
       // check that the correct new filename has been entered.
       cy.contains("file3.txt" satisfies MyTestDirectoryFile).should("not.exist")
-      cy.typeIntoTerminal("{backspace}3")
+      cy.typeIntoTerminal("{control+e}{control+u}")
+      cy.typeIntoTerminal("file3.txt" satisfies MyTestDirectoryFile)
       cy.contains("file3.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("{enter}")
       // a yazi dialog should pop up
