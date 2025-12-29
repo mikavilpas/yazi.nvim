@@ -73,12 +73,14 @@ describe("reading events", () => {
           expect(result.value).eql("bundled-snacks")
         })
 
-      // start file deletion
+      // start file deletion. The file contents should still be visible
+      cy.contains("changed")
       cy.typeIntoTerminal("d")
       cy.contains("Trash 1 selected file?")
       cy.typeIntoTerminal("y")
 
       cy.get("Move 1 selected file to trash").should("not.exist")
+      cy.contains("changed").should("not.exist") // wait for trash event to be handled
 
       // close yazi
       cy.typeIntoTerminal("q")
@@ -148,6 +150,7 @@ describe("reading events", () => {
       cy.get("Delete 1 selected file permanently").should("not.exist")
 
       // close yazi
+      cy.contains("changed").should("not.exist") // wait for delete event to be handled
       cy.typeIntoTerminal("q")
 
       // internally, we should have received a delete event from yazi, and yazi.nvim should

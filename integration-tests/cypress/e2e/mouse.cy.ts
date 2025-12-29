@@ -16,7 +16,9 @@ describe("mouse support", () => {
 
       // click outside of the yazi floating window. This should close it
       // because it's designed to close when it loses focus
-      cy.contains("If you see this text, Neovim is ready!").click()
+      cy.contains("If you see this text, Neovim is ready!").click({
+        force: true,
+      })
 
       // clicking outside of the yazi window should close it, after which
       // Neovim should not be showing adjacent files
