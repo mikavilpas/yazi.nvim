@@ -1,3 +1,5 @@
+import { flavors } from "@catppuccin/palette"
+import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
 import path, { join } from "path"
 import { z } from "zod"
@@ -480,7 +482,14 @@ describe("opening files", () => {
         // test that multiple files can be selected and copied
         cy.typeIntoTerminal("{control+upArrow}")
         cy.contains("-- TERMINAL --")
-        cy.typeIntoTerminal("{control+a}{control+y}")
+        // cy.typeIntoTerminal("{control+a}{control+y}")
+        cy.typeIntoTerminal("{control+a}")
+        // yazi should be showing the number of selected files
+        textIsVisibleWithBackgroundColor(
+          "3",
+          rgbify(flavors.macchiato.colors.yellow.rgb),
+        )
+        cy.typeIntoTerminal("{control+y}")
         cy.contains("-- TERMINAL --").should("not.exist")
 
         nvim
