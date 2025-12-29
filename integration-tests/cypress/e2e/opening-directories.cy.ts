@@ -1,3 +1,5 @@
+import { findFileInYazi } from "./utils/yazi-utils"
+
 describe("opening directories", () => {
   it("can open a directory when starting with `neovim .`", () => {
     cy.visit("/")
@@ -49,9 +51,11 @@ describe("opening directories", () => {
       cy.contains("-- TERMINAL --")
       cy.contains(nvim.dir.contents["file2.txt"].name)
 
-      // select a directory
-      cy.typeIntoTerminal("/routes{enter}")
-      // the contents of the directory should now be visible
+      // select a directory and wait for yazi to have found it
+      findFileInYazi("routes")
+      cy.typeIntoTerminal("{enter}")
+
+      // the contents of the directory should now be visible in yazi
       cy.contains("posts.$postId")
 
       // open the directory

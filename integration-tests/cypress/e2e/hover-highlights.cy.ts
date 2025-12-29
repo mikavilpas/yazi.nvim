@@ -104,9 +104,6 @@ describe("highlighting the buffer with 'hover' events", () => {
       // open an adjacent file and wait for it to be displayed
       cy.typeIntoTerminal(
         `:vsplit ${nvim.dir.testEnvironmentPathRelative}/${testFile}{enter}`,
-        {
-          delay: 0,
-        },
       )
 
       const file2Text = "Hello"
