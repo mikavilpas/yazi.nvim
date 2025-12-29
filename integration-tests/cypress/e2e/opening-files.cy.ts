@@ -353,8 +353,10 @@ describe("opening files", () => {
         cy.contains(new RegExp("yazi-\\d+/bulk-\\d+"))
 
         // edit the name of the file
+        cy.contains("initial-file.txt")
         cy.typeIntoTerminal("cc")
         cy.typeIntoTerminal("renamed-file.txt{esc}")
+        cy.contains("renamed-file.txt")
         cy.typeIntoTerminal(":xa{enter}")
 
         // yazi must now ask for confirmation
@@ -464,6 +466,7 @@ describe("opening files", () => {
         hoverFileAndVerifyItsHovered(nvim, ".config/nvim/init.lua")
 
         cy.contains("-- TERMINAL --")
+        cy.contains("NOR")
         cy.typeIntoTerminal("{control+y}")
 
         // yazi should now be closed
@@ -482,6 +485,7 @@ describe("opening files", () => {
         // test that multiple files can be selected and copied
         cy.typeIntoTerminal("{control+upArrow}")
         cy.contains("-- TERMINAL --")
+        cy.contains("NOR")
         // cy.typeIntoTerminal("{control+a}{control+y}")
         cy.typeIntoTerminal("{control+a}")
         // yazi should be showing the number of selected files
