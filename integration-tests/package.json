@@ -24,7 +24,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
     "eslint-plugin-oxlint": "1.35.0",
-    "oxlint": "1.35.0",
+    "oxlint": "1.36.0",
     "oxlint-tsgolint": "0.10.0",
     "tinycolor2": "1.6.0",
     "type-fest": "5.3.1",
