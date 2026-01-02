@@ -9,13 +9,12 @@
   "scripts": {
     "dev": "pnpm --filter ./integration-tests/ dev",
     "lint": "pnpm --filter ./integration-tests/ lint",
-    "markdownlint": "markdownlint-cli2 README.md",
+    "markdownlint": "rumdl check",
     "prettier": "prettier --check .",
     "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
     "@umbrelladocs/linkspector": "0.4.7",
-    "markdownlint-cli2": "0.20.0",
     "prettier": "3.7.4",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "2.5.20"
