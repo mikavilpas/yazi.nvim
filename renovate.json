@@ -1,74 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "automerge": true,
-  "extends": ["config:best-practices", "group:allNonMajor"],
-  "commitBodyTable": true,
+  "extends": ["local>mikavilpas/mika-renovate"],
   "packageRules": [
-    {
-      "matchUpdateTypes": ["digest"],
-      "automerge": true,
-      "automergeType": "branch"
-    },
     {
       "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
-    }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        ".github/workflows/test.yml",
-        ".github/workflows/style.yml",
-        ".github/workflows/lint.yml"
-      ],
-      "matchStrings": [
-        "#\\s*renovate:\\s*datasource=github-releases\\s+depName=(?<depName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentValue>\\S+)"
-      ]
-    },
-    {
-      "description": [
-        "git-refs main branch",
-        "make sure the packageName is a full url like https://github.com/MagicDuck/grug-far.nvim"
-      ],
-      "customType": "regex",
-      "datasourceTemplate": "git-refs",
-      "currentValueTemplate": "main",
-      "managerFilePatterns": [
-        ".github/workflows/test.yml",
-        "integration-tests/test-environment/.config/**/*.lua"
-      ],
-      "matchStrings": [
-        "#\\s*renovate:\\s*datasource=git-refs\\s+packageName=(?<packageName>\\S+)\\s*[\\r\\n]+[^:]+:\\s*(?<currentDigest>\\S+)",
-        "-- renovate: datasource=git-refs packageName=(?<packageName>[^\\s]+)\\s*?commit = \"?(?<currentDigest>[^\",]+)\"?"
-      ]
-    },
-    {
-      "description": [
-        "git-refs master branch",
-        "make sure the packageName is a full url like https://github.com/MagicDuck/grug-far.nvim"
-      ],
-      "customType": "regex",
-      "datasourceTemplate": "git-refs",
-      "currentValueTemplate": "master",
-      "managerFilePatterns": [
-        "integration-tests/test-environment/.config/**/*.lua"
-      ],
-      "matchStrings": [
-        "-- renovate: datasource=git-refs-master packageName=(?<packageName>[^\\s]+)\\s*?commit = \"(?<currentDigest>.+?)\""
-      ]
-    },
-    {
-      "description": ["lua file github-releases"],
-      "customType": "regex",
-      "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        "integration-tests/test-environment/.config/**/*.lua"
-      ],
-      "matchStrings": [
-        "-- renovate: datasource=github-releases depName=(?<depName>[^\\s]+)[\\s\\S]*?version\\s*=\\s*\"?(?<currentValue>[^\",]+)\"?"
-      ]
     }
   ]
 }
