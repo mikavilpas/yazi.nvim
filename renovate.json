@@ -5,6 +5,11 @@
   "commitBodyTable": true,
   "packageRules": [
     {
+      "matchUpdateTypes": ["digest"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
       "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
     }
