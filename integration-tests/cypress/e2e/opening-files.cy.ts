@@ -633,6 +633,75 @@ describe("opening files", () => {
       )
     })
   })
+
+  describe("opening files from search results", () => {
+    // yazi can include extra context information in its search results that
+    // can confuse neovim when looking for matching files.
+    // https://github.com/mikavilpas/yazi.nvim/issues/1528
+    beforeEach(() => {
+      cy.visit("/")
+    })
+
+    it("can open files from fd search results", () => {
+      cy.startNeovim({}).then((nvim) => {
+        // wait until text on the start screen is visible
+        cy.contains("If you see this text, Neovim is ready!")
+        cy.typeIntoTerminal("{upArrow}")
+
+        // yazi should now be visible, showing the names of adjacent files
+        isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+
+        cy.typeIntoTerminal("s") // start fd search
+        cy.contains("Search via fd")
+
+        const file_3 = nvim.dir.contents.highlights.contents["file_3.txt"].name
+        cy.typeIntoTerminal(file_3)
+        cy.typeIntoTerminal("{enter}")
+        cy.contains("search:") // the search state indicator should be visible
+        isFileSelectedInYazi(file_3)
+
+        cy.typeIntoTerminal("{enter}") // open the file
+        cy.contains("-- TERMINAL --").should("not.exist") // wait for yazi to close
+        cy.contains("You are looking at file_3.txt")
+      })
+    })
+
+    it("can open multiple files from fd search results", () => {
+      // https://github.com/mikavilpas/yazi.nvim/issues/1528
+
+      cy.startNeovim({
+        filename: "highlights/file_1.txt",
+      }).then((nvim) => {
+        // wait until text on the start screen is visible
+        cy.contains("Hello from file_1.txt")
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains(nvim.dir.contents.highlights.contents["file_2.txt"].name)
+
+        // yazi should now be visible, showing the names of adjacent files
+        cy.typeIntoTerminal("s") // start fd search
+        cy.contains("Search via fd")
+        cy.typeIntoTerminal(".txt{enter}")
+        cy.contains("search:") // the search state indicator should be visible
+
+        cy.typeIntoTerminal("{control+a}") // select all files
+        cy.contains("3") // the number of selected files should be visible
+        cy.typeIntoTerminal("{control+v}") // open in vertical splits
+
+        cy.contains("-- TERMINAL --").should("not.exist") // wait for yazi to close
+        nvim.runExCommand({ command: "ls" }).then((result) => {
+          expect(result.value).to.contain(
+            "highlights/file_1.txt" satisfies MyTestDirectoryFile,
+          )
+          expect(result.value).to.contain(
+            "highlights/file_2.txt" satisfies MyTestDirectoryFile,
+          )
+          expect(result.value).to.contain(
+            "highlights/file_3.txt" satisfies MyTestDirectoryFile,
+          )
+        })
+      })
+    })
+  })
 })
 
 describe("opening files from visual mode", () => {
