@@ -165,6 +165,8 @@ describe("fzf-lua integration (grep)", () => {
       // wait for fzf-lua to be visible
       cy.contains("to Fuzzy Search")
 
+      // HACK for some reason, an extra "i" gets typed in my testing environment. Remove it.
+      cy.typeIntoTerminal("{backspace}")
       cy.typeIntoTerminal("this")
 
       // results should be visible
@@ -213,6 +215,9 @@ describe("fzf-lua integration (grep)", () => {
 
       // search for some file content. This should match
       // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
+      //
+      // HACK for some reason, an extra "i" gets typed in my testing environment. Remove it.
+      cy.typeIntoTerminal("{backspace}")
       cy.typeIntoTerminal("this", { delay: 30 })
 
       // some results should be visible
