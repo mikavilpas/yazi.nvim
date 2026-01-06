@@ -48,6 +48,10 @@ export type TerminalTestApplicationContext = {
     system(): Cypress.Chainable<string>
     primary(): Cypress.Chainable<string>
   }
+
+  title: {
+    current(): Cypress.Chainable<string>
+  }
 }
 
 /** The api that can be used in tests after a Neovim instance has been started. */
@@ -99,6 +103,10 @@ export type NeovimContext = {
   clipboard: {
     system(): Cypress.Chainable<string>
     primary(): Cypress.Chainable<string>
+  }
+
+  title: {
+    current(): Cypress.Chainable<string>
   }
 }
 
@@ -169,6 +177,10 @@ Cypress.Commands.add(
             return cy.then(() => underlyingNeovim.clipboard.system())
           },
         },
+
+        title: {
+          current: () => cy.then(() => underlyingNeovim.title.get()),
+        },
       }
 
       return api
@@ -210,12 +222,11 @@ Cypress.Commands.add(
           cy.typeIntoTerminal(text, options)
         },
         clipboard: {
-          primary() {
-            return cy.then(() => terminal.clipboard.primary())
-          },
-          system() {
-            return cy.then(() => terminal.clipboard.system())
-          },
+          primary: () => cy.then(() => terminal.clipboard.primary()),
+          system: () => cy.then(() => terminal.clipboard.system()),
+        },
+        title: {
+          current: () => cy.then(() => terminal.title.get()),
         },
       }
 
