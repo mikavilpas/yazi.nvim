@@ -22,23 +22,10 @@ importers:
         version: 2.5.20(prettier@3.7.4)
 
   integration-tests:
-    dependencies:
+    devDependencies:
       '@catppuccin/palette':
         specifier: 1.7.1
         version: 1.7.1
-      concurrently:
-        specifier: 9.2.1
-        version: 9.2.1
-      cypress:
-        specifier: 15.8.1
-        version: 15.8.1
-      wait-on:
-        specifier: 9.0.3
-        version: 9.0.3
-      zod:
-        specifier: 4.3.4
-        version: 4.3.4
-    devDependencies:
       '@eslint/js':
         specifier: 9.39.2
         version: 9.39.2
@@ -54,6 +41,12 @@ importers:
       assert:
         specifier: 2.1.0
         version: 2.1.0
+      concurrently:
+        specifier: 9.2.1
+        version: 9.2.1
+      cypress:
+        specifier: 15.8.1
+        version: 15.8.1
       eslint:
         specifier: 9.39.2
         version: 9.39.2
@@ -84,6 +77,12 @@ importers:
       typescript-eslint:
         specifier: 8.51.0
         version: 8.51.0(eslint@9.39.2)(typescript@5.9.3)
+      wait-on:
+        specifier: 9.0.3
+        version: 9.0.3
+      zod:
+        specifier: 4.3.4
+        version: 4.3.4
 
 packages:
 
