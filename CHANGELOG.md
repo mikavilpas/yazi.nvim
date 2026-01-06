@@ -1,5 +1,17 @@
 # Changelog
 
+## [13.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.0...v13.1.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#1476](https://github.com/mikavilpas/yazi.nvim/issues/1476)) ([00b7fc0](https://github.com/mikavilpas/yazi.nvim/commit/00b7fc02c617729accd240b641cecdefbfe0c160))
+* **deps:** update all non-major dependencies ([#1480](https://github.com/mikavilpas/yazi.nvim/issues/1480)) ([34e2964](https://github.com/mikavilpas/yazi.nvim/commit/34e2964ead65b98c545bcd3cb8f2713116d33c17))
+* **deps:** update all non-major dependencies ([#1482](https://github.com/mikavilpas/yazi.nvim/issues/1482)) ([7f3310e](https://github.com/mikavilpas/yazi.nvim/commit/7f3310ea30f99c314f5b69db21d91e62ca0b5929))
+* **deps:** update dependency cypress to v15.7.1 ([#1436](https://github.com/mikavilpas/yazi.nvim/issues/1436)) ([dcee7b0](https://github.com/mikavilpas/yazi.nvim/commit/dcee7b039db5e21b97e5417fb7e607bcc7bed6ca))
+* **deps:** update dependency cypress to v15.8.1 ([#1484](https://github.com/mikavilpas/yazi.nvim/issues/1484)) ([0754bf5](https://github.com/mikavilpas/yazi.nvim/commit/0754bf5cee9a0c64d5755d685d1d9d4c18c75fcc))
+* support yazi URIs with extra context ([#1532](https://github.com/mikavilpas/yazi.nvim/issues/1532)) ([c720b57](https://github.com/mikavilpas/yazi.nvim/commit/c720b5744de9cd58fcf6e05750e5cec9b8374730))
+
 ## [13.1.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.0.0...v13.1.0) (2025-11-29)
 
 
