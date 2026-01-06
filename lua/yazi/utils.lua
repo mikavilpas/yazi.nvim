@@ -226,11 +226,16 @@ function M.parse_events(event_lines)
       -- rename,1712242143209837,1712242143209837,{"tab":0,"from":"/Users/mikavilpas/git/yazi/LICENSE","to":"/Users/mikavilpas/git/yazi/LICENSE2"}
       local data_string = table.concat(parts, ",", 4, #parts)
 
+      local data = vim.json.decode(data_string)
       ---@type YaziRenameEvent
       local event = {
         type = type,
         yazi_id = yazi_id,
-        data = vim.json.decode(data_string),
+        data = {
+          tab = data.tab,
+          from = M.url_to_path(data.from),
+          to = M.url_to_path(data.to),
+        },
       }
       table.insert(events, event)
     elseif type == "move" then
@@ -242,8 +247,22 @@ function M.parse_events(event_lines)
       local event = {
         type = type,
         yazi_id = yazi_id,
-        data = vim.json.decode(data_string),
+        data = {
+          items = {},
+        },
       }
+
+      do
+        local data = vim.json.decode(data_string).items
+        if data ~= nil then
+          for _, item in ipairs(data) do
+            item.from = M.url_to_path(item.from)
+            item.to = M.url_to_path(item.to)
+            table.insert(event.data.items, item)
+          end
+        end
+      end
+
       table.insert(events, event)
     elseif type == "bulk" then
       -- example of a bulk event:
@@ -253,33 +272,55 @@ function M.parse_events(event_lines)
       ---@type YaziBulkEvent
       local event = {
         type = "bulk",
-        changes = data["changes"],
+        changes = {},
       }
+
+      for from, to in pairs(data["changes"]) do
+        event.changes[M.url_to_path(from)] = M.url_to_path(to)
+      end
+
       table.insert(events, event)
     elseif type == "delete" then
       -- example of a delete event:
       -- delete,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
       local data_string = table.concat(parts, ",", 4, #parts)
-
       ---@type YaziDeleteEvent
       local event = {
         type = type,
         yazi_id = yazi_id,
-        data = vim.json.decode(data_string),
+        data = {
+          urls = {},
+        },
       }
+
+      do
+        local json = vim.json.decode(data_string)
+
+        for _, url in ipairs(json["urls"]) do
+          table.insert(event.data.urls, M.url_to_path(url))
+        end
+      end
+
       table.insert(events, event)
     elseif type == "trash" then
       -- example of a trash event:
       -- trash,1712766606832135,1712766606832135,{"urls":["/tmp/test-directory/test_2"]}
 
       local data_string = table.concat(parts, ",", 4, #parts)
+      local json = vim.json.decode(data_string)
 
       ---@type YaziTrashEvent
       local event = {
         type = type,
         yazi_id = yazi_id,
-        data = vim.json.decode(data_string),
+        data = {
+          urls = {},
+        },
       }
+      for _, url in ipairs(json["urls"]) do
+        table.insert(event.data.urls, M.url_to_path(url))
+      end
+
       table.insert(events, event)
     elseif type == "cd" then
       -- example of a change directory (cd) event:
@@ -291,7 +332,7 @@ function M.parse_events(event_lines)
       local event = {
         type = type,
         yazi_id = yazi_id,
-        url = vim.json.decode(data_string)["url"],
+        url = M.url_to_path(vim.json.decode(data_string)["url"]),
       }
       table.insert(events, event)
     elseif type == "hover" then
@@ -313,7 +354,7 @@ function M.parse_events(event_lines)
         local event = {
           yazi_id = yazi_id,
           type = type,
-          url = url or "",
+          url = url and M.url_to_path(url) or "",
         }
         table.insert(events, event)
       end
@@ -344,6 +385,15 @@ function M.parse_events(event_lines)
   end
 
   return events
+end
+
+-- yazi may include additional information in urls
+-- https://github.com/sxyazi/yazi/issues/3510#issuecomment-3710915309
+---@param input string
+---@return string
+function M.url_to_path(input)
+  local url = input:gsub("^.-://.-/", "")
+  return url
 end
 
 ---@param event_lines string[]
@@ -479,6 +529,11 @@ end
 ---@param selected_files string[]
 ---@param state YaziClosedState
 function M.on_yazi_exited(prev_win, window, config, selected_files, state)
+  for i, file in ipairs(selected_files) do
+    -- strip out extra URI context from file URIs like
+    -- search://keyword:3:3//full/path/to/file.ext
+    selected_files[i] = M.url_to_path(file)
+  end
   vim.cmd("silent! :checktime")
 
   window:close()
