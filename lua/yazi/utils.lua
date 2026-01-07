@@ -130,6 +130,16 @@ function M.selected_file_path(path)
     path = vim.fn.expand("%:p")
   end
 
+  -- if the path uses a non-file URI scheme (e.g. fugitive://, oil://), fall
+  -- back to the current working directory. Yazi only understands file paths.
+  if
+    path
+    and string.find(path, "://")
+    and not string.find(path, "^file://")
+  then
+    path = vim.fn.getcwd()
+  end
+
   -- if the path is still empty (no file loaded / invalid buffer), try to get
   -- the directory of the current file.
   if path == "" or path == nil then
