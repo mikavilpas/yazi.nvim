@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.1...v13.1.2) (2026-01-07)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#1533](https://github.com/mikavilpas/yazi.nvim/issues/1533)) ([f57292e](https://github.com/mikavilpas/yazi.nvim/commit/f57292eac34dd1b37e1c01e7d6f81eb455806be3))
+* opening yazi in a fugitive buffer falls back to cwd ([#1540](https://github.com/mikavilpas/yazi.nvim/issues/1540)) ([a4137c3](https://github.com/mikavilpas/yazi.nvim/commit/a4137c315c10f148f036fb92ca1bab9c0fcaf4e3))
+
 ## [13.1.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.0...v13.1.1) (2026-01-06)
 
 
