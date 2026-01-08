@@ -36,11 +36,9 @@ to the project.
    ```sh
    # in the yazi repository:
 
-   # Install `yazi`, the main application
-   cargo install --path yazi-fm --locked
-
-   # Install `ya`, the command line interface that's internally used by yazi.nvim
-   cargo install --path yazi-cli --locked
+   # Install `yazi`, the main application as well as `ya`, the command line
+   # interface that's internally used by yazi.nvim
+   cargo build --release --locked && mv -v target/release/yazi target/release/ya ~/.cargo/bin/
    ```
 
 4. In case there are any issues, you can try these steps:
