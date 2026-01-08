@@ -230,7 +230,15 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
       )
       self.hovered_url = event.url
       vim.schedule(function()
-        self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
+        if self.config.highlight_hovered_buffers_in_same_directory then
+          self.highlighter:highlight_buffers_when_hovered(
+            event.url,
+            self.config
+          )
+        else
+          Log:debug("Skipping buffer highlighting (disabled in config)")
+        end
+
         nvim_event_handling.emit("YaziDDSHover", event)
       end)
     elseif event.type == "cd" and event.yazi_id == self.yazi_id then
