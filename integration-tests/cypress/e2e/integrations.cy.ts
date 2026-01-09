@@ -261,6 +261,7 @@ describe("snacks.picker integration (grep)", () => {
       // this directory so two will be selected and one will be left
       // unselected
       cy.typeIntoTerminal("vk")
+      cy.contains("SEL") // wait for yazi's selection mode to be ready
       cy.typeIntoTerminal("{control+s}")
 
       // wait until the snacks.picker is visible
