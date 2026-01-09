@@ -1,4 +1,8 @@
-import { isHoveredInNeovim, isNotHoveredInNeovim } from "./utils/hover-utils"
+import {
+  isHoveredInNeovim,
+  isHoveredInNeovimWithSameDirectory,
+  isNotHoveredInNeovim,
+} from "./utils/hover-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
@@ -25,7 +29,7 @@ describe("revealing another open split (buffer) in yazi", () => {
         ],
       },
       startupScriptModifications: [
-        "yazi_config/add_hovered_buffer_background.lua",
+        "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_yazi_context_assertions.lua",
       ],
     }).then((nvim) => {
@@ -47,25 +51,25 @@ describe("revealing another open split (buffer) in yazi", () => {
       // Switch to the other buffers' directories in yazi. This should make
       // yazi send a hover event for the new, highlighted file.
       cy.typeIntoTerminal("{control+i}")
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
       isHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
 
       cy.typeIntoTerminal("{control+i}")
       isHoveredInNeovim(view.rightFile.text)
-      isNotHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
 
       cy.typeIntoTerminal("{control+i}")
       isHoveredInNeovim(view.leftFile.text)
-      isNotHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
 
       // tab once more to make sure it wraps around
       cy.typeIntoTerminal("{control+i}")
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
       isHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
     })
   })
 
@@ -85,8 +89,8 @@ describe("revealing another open split (buffer) in yazi", () => {
         ],
       },
       startupScriptModifications: [
+        "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_yazi_context_assertions.lua",
-        "yazi_config/add_hovered_buffer_background.lua",
       ],
     }).then((nvim) => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)

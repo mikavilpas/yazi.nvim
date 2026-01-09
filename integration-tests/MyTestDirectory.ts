@@ -147,10 +147,6 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("yazi_config/"),
           type: z.literal("directory"),
           contents: z.object({
-            "add_hovered_buffer_background.lua": z.object({
-              name: z.literal("add_hovered_buffer_background.lua"),
-              type: z.literal("file"),
-            }),
             "add_keybinding_to_start_yazi_and_find.lua": z.object({
               name: z.literal("add_keybinding_to_start_yazi_and_find.lua"),
               type: z.literal("file"),
@@ -364,7 +360,6 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/nvim_no_package_manager",
   "config-modifications/report_loaded_yazi_modules.lua",
   "config-modifications/use_light_neovim_colorscheme.lua",
-  "config-modifications/yazi_config/add_hovered_buffer_background.lua",
   "config-modifications/yazi_config/add_keybinding_to_start_yazi_and_find.lua",
   "config-modifications/yazi_config/customize_window_properties.lua",
   "config-modifications/yazi_config/disable_a_keybinding.lua",

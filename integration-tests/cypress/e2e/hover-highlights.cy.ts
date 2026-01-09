@@ -26,7 +26,7 @@ describe("highlighting the buffer with 'hover' events", () => {
     cy.startNeovim({
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "yazi_config/add_hovered_buffer_background.lua",
+        "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_command_to_reveal_a_file.lua",
       ],
     }).then((nvim) => {

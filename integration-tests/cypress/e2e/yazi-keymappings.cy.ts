@@ -2,6 +2,7 @@ import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
   isHoveredInNeovim,
+  isHoveredInNeovimWithSameDirectory,
   isNotHoveredInNeovim,
 } from "./utils/hover-utils"
 import { assertYaziIsReady } from "./utils/yazi-utils"
@@ -33,7 +34,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       },
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "yazi_config/add_hovered_buffer_background.lua",
+        "yazi_config/highlight_buffers_in_same_directory.lua",
       ],
     }).then((nvim) => {
       // sanity check to make sure the files are open
@@ -55,25 +56,25 @@ describe("revealing another open split (buffer) in yazi", () => {
       // yazi send a hover event for the new, highlighted file.
       //
       cy.typeIntoTerminal("I")
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
       isHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
 
       cy.typeIntoTerminal("I")
       isHoveredInNeovim(view.rightFile.text)
-      isNotHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
 
       cy.typeIntoTerminal("I")
       isHoveredInNeovim(view.leftFile.text)
-      isNotHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.centerFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
 
       // tab once more to make sure it wraps around
       cy.typeIntoTerminal("I")
-      isNotHoveredInNeovim(view.leftFile.text)
+      isHoveredInNeovimWithSameDirectory(view.leftFile.text)
       isHoveredInNeovim(view.centerFile.text)
-      isNotHoveredInNeovim(view.rightFile.text)
+      isHoveredInNeovimWithSameDirectory(view.rightFile.text)
     })
   })
 
@@ -82,7 +83,7 @@ describe("revealing another open split (buffer) in yazi", () => {
       filename: "initial-file.txt",
       startupScriptModifications: [
         "add_yazi_context_assertions.lua",
-        "yazi_config/add_hovered_buffer_background.lua",
+        "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_command_to_reveal_a_file.lua",
       ],
     }).then((nvim) => {
