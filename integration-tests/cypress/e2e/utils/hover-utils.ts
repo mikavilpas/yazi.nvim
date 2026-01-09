@@ -57,9 +57,18 @@ export function hoverFileAndVerifyItsHovered(
   file: MyTestDirectoryFile,
 ): Cypress.Chainable<RunLuaCodeOutput> {
   assertYaziIsReady(nvim)
-  // select another file (hacky) by going to the parent directory
-  cy.typeIntoTerminal("h")
+  {
+    // select another file (hacky) and wait for it to be hovered
+    const dir = "config-modifications" satisfies MyTestDirectoryFile
+    const path = nvim.dir.rootPathAbsolute + "/" + dir
+    nvim
+      .runLuaCode({
+        luaCode: `return Yazi_reveal_path("${path}")`,
+      })
+      .then(() => assertYaziIsHovering(nvim, dir))
+  }
 
+  // now select the desired file
   const path = nvim.dir.rootPathAbsolute + "/" + file
   return nvim
     .runLuaCode({
