@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.2...v13.1.3) (2026-01-10)
+
+
+### Bug Fixes
+
+* **config:** respect config.highlight_hovered_buffers_in_same_directory ([#1546](https://github.com/mikavilpas/yazi.nvim/issues/1546)) ([5d36ee9](https://github.com/mikavilpas/yazi.nvim/commit/5d36ee9d59f995ca73d52522c5da82629c4cdd06)), closes [#1542](https://github.com/mikavilpas/yazi.nvim/issues/1542)
+
 ## [13.1.2](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.1...v13.1.2) (2026-01-07)
 
 
