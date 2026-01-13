@@ -146,6 +146,7 @@ function YaProcess:start(context)
     -- • text: (boolean) Handle stdout and stderr as text.
     -- Replaces `\r\n` with `\n`.
     text = true,
+    stdin = false, -- Prevent EBADF after terminal spawn
     stderr = function(err, data)
       if err then
         Log:debug(string.format("ya stderr error: '%s'", data))
