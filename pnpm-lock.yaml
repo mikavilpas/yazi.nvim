@@ -31,7 +31,7 @@ importers:
         version: 9.39.2
       '@tui-sandbox/library':
         specifier: 12.3.0
-        version: 12.3.0(cypress@15.9.0)(prettier@3.7.4)(type-fest@5.4.0)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)
+        version: 12.3.0(cypress@15.9.0)(prettier@3.7.4)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)
       '@types/node':
         specifier: 24.10.8
         version: 24.10.8
@@ -69,8 +69,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 5.4.0
-        version: 5.4.0
+        specifier: 5.4.1
+        version: 5.4.1
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2399,8 +2399,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@5.4.0:
-    resolution: {integrity: sha512-wfkA6r0tBpVfGiyO+zbf9e10QkRQSlK9F2UvyfnjoCmrvH2bjHyhPzhugSBOuq1dog3P0+FKckqe+Xf6WKVjwg==}
+  type-fest@5.4.1:
+    resolution: {integrity: sha512-xygQcmneDyzsEuKZrFbRMne5HDqMs++aFzefrJTgEIKjQ3rekM+RPfFCVq2Gp1VIDqddoYeppCj4Pcb+RZW0GQ==}
     engines: {node: '>=20'}
 
   type-is@2.0.1:
@@ -2874,7 +2874,7 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@12.3.0(cypress@15.9.0)(prettier@3.7.4)(type-fest@5.4.0)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)':
+  '@tui-sandbox/library@12.3.0(cypress@15.9.0)(prettier@3.7.4)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)
@@ -2892,7 +2892,7 @@ snapshots:
       node-pty: 1.0.0
       prettier: 3.7.4
       tsx: 4.21.0
-      type-fest: 5.4.0
+      type-fest: 5.4.1
       typescript: 5.9.3
       wait-on: 9.0.3
       winston: 3.19.0
@@ -5139,7 +5139,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@5.4.0:
+  type-fest@5.4.1:
     dependencies:
       tagged-tag: 1.0.0
 
