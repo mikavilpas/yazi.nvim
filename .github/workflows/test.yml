@@ -102,7 +102,7 @@ jobs:
       - run: pnpm install
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@d30f6d4d794c0e77b6edb530872205f98ae969c4 # v1.1.1
+        uses: nvim-neorocks/nvim-busted-action@bbcfe82d35b8fb4660ef6ed4124e1fd9cef4688b # v1.2.0
         with:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
