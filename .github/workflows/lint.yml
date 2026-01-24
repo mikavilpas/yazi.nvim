@@ -8,7 +8,7 @@ jobs:
     name: selene
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: NTBBloodbath/selene-action@23ef05dd5c4d687f4d3c939f76a1c342baf454aa # v1.0.0
         with:
           # Github secret token
@@ -19,7 +19,7 @@ jobs:
             ./integration-tests/test-environment/config-modifications
           # selene version
           # renovate: datasource=github-releases depName=Kampfkarren/selene
-          version: 0.29.0
+          version: 0.30.0
 
   markdownlint:
     name: markdownlint
@@ -42,7 +42,7 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
         with:
           # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
