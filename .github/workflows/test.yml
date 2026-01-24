@@ -20,13 +20,13 @@ jobs:
             method: cargo-install
             # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
             commit: ca4cc594136e313b47f8da0f3699b7ea9699a959
-          - name: v25.12.29
-            method: download
-            version: v25.12.29
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
             version: v26.1.22
+          - name: v25.12.29
+            method: download
+            version: v25.12.29
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
