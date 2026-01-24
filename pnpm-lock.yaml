@@ -12,14 +12,14 @@ importers:
         specifier: 0.4.7
         version: 0.4.7(typescript@5.9.3)
       prettier:
-        specifier: 3.8.0
-        version: 3.8.0
+        specifier: 3.8.1
+        version: 3.8.1
       prettier-plugin-organize-imports:
         specifier: 4.3.0
-        version: 4.3.0(prettier@3.8.0)(typescript@5.9.3)
+        version: 4.3.0(prettier@3.8.1)(typescript@5.9.3)
       prettier-plugin-packagejson:
         specifier: 3.0.0
-        version: 3.0.0(prettier@3.8.0)
+        version: 3.0.0(prettier@3.8.1)
 
   integration-tests:
     devDependencies:
@@ -31,7 +31,7 @@ importers:
         version: 9.39.2
       '@tui-sandbox/library':
         specifier: 12.3.0
-        version: 12.3.0(cypress@15.9.0)(prettier@3.8.0)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)
+        version: 12.3.0(cypress@15.9.0)(prettier@3.8.1)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)
       '@types/node':
         specifier: 24.10.9
         version: 24.10.9
@@ -2027,8 +2027,8 @@ packages:
       prettier:
         optional: true
 
-  prettier@3.8.0:
-    resolution: {integrity: sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA==}
+  prettier@3.8.1:
+    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2874,7 +2874,7 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@12.3.0(cypress@15.9.0)(prettier@3.8.0)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)':
+  '@tui-sandbox/library@12.3.0(cypress@15.9.0)(prettier@3.8.1)(type-fest@5.4.1)(typescript@5.9.3)(wait-on@9.0.3)(zod@4.3.5)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)
@@ -2890,7 +2890,7 @@ snapshots:
       express: 5.2.1
       neovim: 5.4.0
       node-pty: 1.0.0
-      prettier: 3.8.0
+      prettier: 3.8.1
       tsx: 4.21.0
       type-fest: 5.4.1
       typescript: 5.9.3
@@ -4690,18 +4690,18 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-organize-imports@4.3.0(prettier@3.8.0)(typescript@5.9.3):
+  prettier-plugin-organize-imports@4.3.0(prettier@3.8.1)(typescript@5.9.3):
     dependencies:
-      prettier: 3.8.0
+      prettier: 3.8.1
       typescript: 5.9.3
 
-  prettier-plugin-packagejson@3.0.0(prettier@3.8.0):
+  prettier-plugin-packagejson@3.0.0(prettier@3.8.1):
     dependencies:
       sort-package-json: 3.6.0
     optionalDependencies:
-      prettier: 3.8.0
+      prettier: 3.8.1
 
-  prettier@3.8.0: {}
+  prettier@3.8.1: {}
 
   pretty-bytes@5.6.0: {}
 
