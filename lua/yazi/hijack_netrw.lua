@@ -37,6 +37,7 @@ function M.hijack_netrw(yazi_augroup)
         next_buffer
       )
     )
+
     vim.schedule(function()
       Log:debug(
         string.format("Deleting buffer %s for directory %s", dir_bufnr, file)
@@ -48,16 +49,26 @@ function M.hijack_netrw(yazi_augroup)
           string.format("Set buffer %s for window %s", next_buffer, winid)
         )
       end)
-      vim.api.nvim_buf_delete(bufnr, { force = true })
-      if next_buffer ~= empty_buffer then
+
+      local deletion_successful = false
+      -- check to see if bufnr exists before deleting
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        deletion_successful =
+          pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
+      end
+      if
+        next_buffer ~= empty_buffer and vim.api.nvim_buf_is_valid(empty_buffer)
+      then
         vim.api.nvim_buf_delete(empty_buffer, { force = true })
       end
-      Log:debug(
-        string.format("Deleted buffer %s for directory %s", bufnr, file)
-      )
+      if deletion_successful then
+        Log:debug(
+          string.format("Deleted buffer %s for directory %s", bufnr, file)
+        )
 
-      Log:debug(string.format("Opening yazi for directory %s", file))
-      require("yazi").yazi(M.config, file)
+        Log:debug(string.format("Opening yazi for directory %s", file))
+        require("yazi").yazi(M.config, file)
+      end
     end)
   end
 
