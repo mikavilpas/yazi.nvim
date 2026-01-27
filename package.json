@@ -14,8 +14,8 @@
     "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.8.1",
-    "@commitlint/config-conventional": "19.8.1",
+    "@commitlint/cli": "20.3.1",
+    "@commitlint/config-conventional": "20.3.1",
     "@commitlint/types": "20.3.1",
     "@umbrelladocs/linkspector": "0.4.7",
     "prettier": "3.8.1",
