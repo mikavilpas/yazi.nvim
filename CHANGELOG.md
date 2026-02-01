@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.3...v13.1.4) (2026-02-01)
+
+
+### Bug Fixes
+
+* enhance buffer deletion with validity checks ([#1592](https://github.com/mikavilpas/yazi.nvim/issues/1592)) ([b741ebc](https://github.com/mikavilpas/yazi.nvim/commit/b741ebcae805479bb30f226fa871df279e83408f))
+
 ## [13.1.3](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.2...v13.1.3) (2026-01-10)
 
 
