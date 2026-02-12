@@ -157,7 +157,7 @@ vim.list_extend(plugins, {
       {
         "neovim/nvim-lspconfig",
         -- renovate: datasource=github-releases depName=neovim/nvim-lspconfig
-        version = "v2.5.0",
+        version = "v2.6.0",
       },
     },
   },
