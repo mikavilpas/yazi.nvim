@@ -69,7 +69,7 @@ jobs:
 
       - name: Compile and install `yazi-fm` from source
         if: matrix.yazi-version.method == 'cargo-install'
-        uses: baptiste0928/cargo-install@b687c656bda5733207e629b50a22bf68974a0305 # v3.3.2
+        uses: baptiste0928/cargo-install@f204293d9709061b7bc1756fec3ec4e2cd57dec0 # v3.4.0
         with:
           # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
           # crates.io must be built with `cargo install --force yazi-build`
