@@ -19,7 +19,7 @@
     "eslint": "10.0.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
-    "eslint-plugin-oxlint": "1.49.0",
+    "eslint-plugin-oxlint": "1.50.0",
     "oxlint": "1.50.0",
     "oxlint-tsgolint": "0.14.2",
     "tinycolor2": "1.6.0",
