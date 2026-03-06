@@ -49,16 +49,16 @@ jobs:
 
           ubi --project mikefarah/yq
 
-          VERSION=$(yq '.tools."ubi:EmmyLuaLs/emmylua-analyzer-rust".version' .mise.toml)
+          VERSION=$(yq '.tools."github:EmmyLuaLs/emmylua-analyzer-rust".version' mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
 
-          VERSION=$(yq '.tools."ubi:BurntSushi/ripgrep".version' .mise.toml)
+          VERSION=$(yq '.tools."github:BurntSushi/ripgrep".version' mise.toml)
           ubi --project BurntSushi/ripgrep --tag "$VERSION" --exe rg
 
-          VERSION=$(yq '.tools."ubi:junegunn/fzf"' .mise.toml)
+          VERSION=$(yq '.tools."github:junegunn/fzf"' mise.toml)
           ubi --project junegunn/fzf --tag "v$VERSION"
 
-          VERSION=$(yq '.tools."ubi:sharkdp/fd"' .mise.toml)
+          VERSION=$(yq '.tools."github:sharkdp/fd"' mise.toml)
           ubi --project sharkdp/fd --tag "v$VERSION"
           ls -alR bin
         env:
@@ -110,7 +110,7 @@ jobs:
           nvim_version: ${{ matrix.neovim_version }}
           luarocks_version: "3.11.1"
           before: |
-            # copied from .mise.toml
+            # copied from mise.toml
             luarocks init --no-gitignore
             luarocks install busted 2.2.0-1
             luarocks install nlua 0.3.2-1
