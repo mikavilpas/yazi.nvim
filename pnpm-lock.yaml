@@ -39,8 +39,8 @@ importers:
         specifier: 10.0.1
         version: 10.0.1(eslint@10.0.2(jiti@2.6.1))
       '@tui-sandbox/library':
-        specifier: 12.3.0
-        version: 12.3.0(cypress@15.11.0)(prettier@3.8.1)(type-fest@5.4.4)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)
+        specifier: 12.3.1
+        version: 12.3.1(cypress@15.11.0)(prettier@3.8.1)(type-fest@5.4.4)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)
       '@types/node':
         specifier: 24.11.0
         version: 24.11.0
@@ -594,19 +594,19 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.8.1':
-    resolution: {integrity: sha512-L/SJFGanr9xGABmuDoeXR4xAdHJmsXsiF9OuH+apecJ+8sUITzVT1EPeqp0ebqA6lBhEl5pPfg3rngVhi/h60Q==}
+  '@trpc/client@11.11.0':
+    resolution: {integrity: sha512-tIPeetFO8GT/o0In+Lk5JA3f29m8qCBSaKNatQdAx6BOfZFjpqHOaoAsCmE/MdUu9AVhPRPorcoqUlZUdDc5gA==}
     peerDependencies:
-      '@trpc/server': 11.8.1
+      '@trpc/server': 11.11.0
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.8.1':
-    resolution: {integrity: sha512-P4rzZRpEL7zDFgjxK65IdyH0e41FMFfTkQkuq0BA5tKcr7E6v9/v38DEklCpoDN6sPiB1Sigy/PUEzHENhswDA==}
+  '@trpc/server@11.11.0':
+    resolution: {integrity: sha512-5CBK5Oit8qv2k2zgIHrUsa12tnCIVpZIJLvMa4n2tejuWz/d7Qb1B1v9zZioapr7y8sEvnk8zPcNnxcT2LlQxg==}
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@12.3.0':
-    resolution: {integrity: sha512-Id3RY3t+eVmasps3/N1TBK88X7TOqcIVqKclvcVluFOLp5pGiW6ccudt4GSCQ1Ld7qswbqSdTIQcVflEeK9Z9A==}
+  '@tui-sandbox/library@12.3.1':
+    resolution: {integrity: sha512-+1TcJr4xzLpYLQlrRP/x7yjUwl/4hoz4HU2DFD8RhDaHtsZygDkmYRMtJ9MH2KCCRkd8rfERXMQtVngyXDBEkA==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -1077,8 +1077,8 @@ packages:
   core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
 
-  cors@2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+  cors@2.8.6:
+    resolution: {integrity: sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==}
     engines: {node: '>= 0.10'}
 
   cosmiconfig-typescript-loader@6.2.0:
@@ -2252,10 +2252,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  qs@6.14.0:
-    resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
-    engines: {node: '>=0.6'}
-
   qs@6.14.1:
     resolution: {integrity: sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==}
     engines: {node: '>=0.6'}
@@ -3157,26 +3153,26 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)':
+  '@trpc/client@11.11.0(@trpc/server@11.11.0(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
-      '@trpc/server': 11.8.1(typescript@5.9.3)
+      '@trpc/server': 11.11.0(typescript@5.9.3)
       typescript: 5.9.3
 
-  '@trpc/server@11.8.1(typescript@5.9.3)':
+  '@trpc/server@11.11.0(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@12.3.0(cypress@15.11.0)(prettier@3.8.1)(type-fest@5.4.4)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)':
+  '@tui-sandbox/library@12.3.1(cypress@15.11.0)(prettier@3.8.1)(type-fest@5.4.4)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)':
     dependencies:
       '@catppuccin/palette': 1.7.1
-      '@trpc/client': 11.8.1(@trpc/server@11.8.1(typescript@5.9.3))(typescript@5.9.3)
-      '@trpc/server': 11.8.1(typescript@5.9.3)
+      '@trpc/client': 11.11.0(@trpc/server@11.11.0(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/server': 11.11.0(typescript@5.9.3)
       '@xterm/addon-clipboard': 0.2.0
       '@xterm/addon-fit': 0.11.0
       '@xterm/addon-unicode11': 0.9.0
       '@xterm/xterm': 6.0.0
       concurrently: 9.2.1
-      cors: 2.8.5
+      cors: 2.8.6
       cypress: 15.11.0
       dree: 5.1.5
       express: 5.2.1
@@ -3691,7 +3687,7 @@ snapshots:
 
   core-util-is@1.0.2: {}
 
-  cors@2.8.5:
+  cors@2.8.6:
     dependencies:
       object-assign: 4.1.1
       vary: 1.1.2
@@ -4060,7 +4056,7 @@ snapshots:
       once: 1.4.0
       parseurl: 1.3.3
       proxy-addr: 2.0.7
-      qs: 6.14.0
+      qs: 6.14.1
       range-parser: 1.2.1
       router: 2.2.0
       send: 1.2.0
@@ -5124,10 +5120,6 @@ snapshots:
       - supports-color
       - typescript
       - utf-8-validate
-
-  qs@6.14.0:
-    dependencies:
-      side-channel: 1.1.0
 
   qs@6.14.1:
     dependencies:
