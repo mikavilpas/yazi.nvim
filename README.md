@@ -41,7 +41,6 @@ Neovim.
     [realpath (1)](https://www.man7.org/linux/man-pages/man1/realpath.1.html) on
     linux and windows, or
     [grealpath](https://formulae.brew.sh/formula/coreutils) on osx
-
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open

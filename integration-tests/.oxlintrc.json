@@ -21,6 +21,7 @@
   ],
   "rules": {
     "for-direction": "error",
+    "no-relative-parent-imports": "off",
     "no-async-promise-executor": "error",
     "no-case-declarations": "error",
     "no-class-assign": "error",
