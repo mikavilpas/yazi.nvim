@@ -45,6 +45,17 @@ export function isHoveredInNeovimWithSameDirectory(
   )
 }
 
+export function assertYaziIsHovering(
+  nvim: NeovimContext,
+  file: MyTestDirectoryFile,
+): Cypress.Chainable<RunLuaCodeOutput> {
+  const path = `${nvim.dir.rootPathAbsolute}/${file}`
+  return nvim.waitForLuaCode({
+    luaAssertion: `Yazi_is_hovering("${path}")`,
+    timeoutMs: 5000,
+  })
+}
+
 /** HACK in CI, there can be timing issues where the first hover event is
  * lost. Right now we work around this by selecting another file first, then
  * hovering the desired file.
@@ -75,15 +86,4 @@ export function hoverFileAndVerifyItsHovered(
       luaCode: `return Yazi_reveal_path("${path}")`,
     })
     .then(() => assertYaziIsHovering(nvim, file))
-}
-
-export function assertYaziIsHovering(
-  nvim: NeovimContext,
-  file: MyTestDirectoryFile,
-): Cypress.Chainable<RunLuaCodeOutput> {
-  const path = `${nvim.dir.rootPathAbsolute}/${file}`
-  return nvim.waitForLuaCode({
-    luaAssertion: `Yazi_is_hovering("${path}")`,
-    timeoutMs: 5000,
-  })
 }
