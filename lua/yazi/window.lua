@@ -136,10 +136,15 @@ function YaziFloatingWindow:open_and_display()
   vim.cmd("setlocal winhl=NormalFloat:YaziFloat,FloatBorder:YaziFloatBorder")
   vim.cmd("set winblend=" .. self.config.yazi_floating_window_winblend)
 
-  vim.api.nvim_create_autocmd({ "WinLeave" }, {
+  -- When another floating window (e.g. an LSP confirmation dialog) takes
+  -- focus and then closes, re-enter terminal insert mode so that keypresses
+  -- go to yazi instead of being interpreted as normal mode commands.
+  vim.api.nvim_create_autocmd({ "WinEnter" }, {
     buffer = yazi_buffer,
     callback = function()
-      self:close()
+      if vim.api.nvim_get_current_buf() == yazi_buffer then
+        vim.cmd("startinsert")
+      end
     end,
   })
 
