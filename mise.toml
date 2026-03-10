@@ -2,7 +2,7 @@
 # fd is a dependency of telescope and fzf-lua
 "github:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.21.0", asset_pattern = "emmylua_ls-*" }
 "github:junegunn/fzf" = "0.70.0"
-"github:sharkdp/fd" = "10.4.1"
+"github:sharkdp/fd" = "10.4.2"
 lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 "github:BurntSushi/ripgrep" = { version = "15.1.0", exe = "rg" }
