@@ -150,12 +150,46 @@ function M.yazi(config, input_path, args)
     require("yazi.config").set_keymappings(yazi_buffer, config, yazi_context)
   end
 
+  local active = true
+  local resize_tick = 0
+  local reopen_tick = 0
+
+  vim.api.nvim_buf_attach(yazi_buffer, false, {
+    on_lines = function()
+      if not active or reopen_tick == resize_tick then
+        return
+      end
+
+      reopen_tick = resize_tick
+      vim.schedule(function()
+        if not active or reopen_tick ~= resize_tick then
+          return
+        end
+
+        if win:reopen_preserving_buffer() == nil then
+          return
+        end
+
+        local ok = pcall(vim.api.nvim__redraw, {
+          win = win.win,
+          valid = false,
+          flush = true,
+          cursor = true,
+        })
+        if not ok then
+          pcall(vim.cmd, "redraw!")
+        end
+      end)
+    end,
+    on_detach = function()
+      active = false
+      return true
+    end,
+  })
+
   win.on_resized = function(event)
-    vim.fn.jobresize(
-      yazi_process.yazi_job_id,
-      event.win_width,
-      event.win_height
-    )
+    resize_tick = resize_tick + 1
+    vim.fn.jobresize(yazi_process.yazi_job_id, event.win_width, event.win_height)
   end
 
   vim.schedule(function()

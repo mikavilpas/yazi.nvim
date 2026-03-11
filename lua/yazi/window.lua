@@ -91,7 +91,7 @@ local function get_window_dimensions(config)
   }
 end
 
-function YaziFloatingWindow:open_and_display()
+local function open_window(self, yazi_buffer, enter)
   local dimensions = get_window_dimensions(self.config)
 
   ---@type vim.api.keyset.win_config
@@ -110,11 +110,47 @@ function YaziFloatingWindow:open_and_display()
     self.config.hooks.before_opening_window(opts)
   end
 
-  local yazi_buffer = vim.api.nvim_create_buf(false, true)
-  -- create file window, enter the window, and use the options defined in opts
-  local win = vim.api.nvim_open_win(yazi_buffer, true, opts)
+  local win = vim.api.nvim_open_win(yazi_buffer, enter, opts)
   self.win = win
   self.content_buffer = yazi_buffer
+  vim.api.nvim_set_option_value("bufhidden", "hide", { buf = yazi_buffer })
+  vim.api.nvim_set_option_value("cursorcolumn", false, { win = win })
+  vim.api.nvim_set_option_value(
+    "winhl",
+    "NormalFloat:YaziFloat,FloatBorder:YaziFloatBorder",
+    { win = win }
+  )
+  vim.api.nvim_set_option_value(
+    "winblend",
+    self.config.yazi_floating_window_winblend,
+    { win = win }
+  )
+
+  return win
+end
+
+function YaziFloatingWindow:reopen_preserving_buffer()
+  if
+    not self.content_buffer
+    or not vim.api.nvim_buf_is_valid(self.content_buffer)
+    or not vim.api.nvim_buf_is_loaded(self.content_buffer)
+  then
+    return nil
+  end
+
+  local enter = self.win and vim.api.nvim_get_current_win() == self.win
+  local previous_win = self.win
+
+  if previous_win and vim.api.nvim_win_is_valid(previous_win) then
+    vim.api.nvim_win_close(previous_win, true)
+  end
+
+  return open_window(self, self.content_buffer, enter)
+end
+
+function YaziFloatingWindow:open_and_display()
+  local yazi_buffer = vim.api.nvim_create_buf(false, true)
+  open_window(self, yazi_buffer, true)
   Log:debug(
     string.format(
       "YaziFloatingWindow opening (content_buffer: %s, win: %s)",
@@ -125,16 +161,12 @@ function YaziFloatingWindow:open_and_display()
 
   vim.bo[yazi_buffer].filetype = "yazi"
 
-  vim.cmd("setlocal bufhidden=hide")
-  vim.cmd("setlocal nocursorcolumn")
   vim.api.nvim_set_hl(0, "YaziFloat", { link = "Normal", default = true })
   vim.api.nvim_set_hl(
     0,
     "YaziFloatBorder",
     { link = "FloatBorder", default = true }
   )
-  vim.cmd("setlocal winhl=NormalFloat:YaziFloat,FloatBorder:YaziFloatBorder")
-  vim.cmd("set winblend=" .. self.config.yazi_floating_window_winblend)
 
   -- When another floating window (e.g. an LSP confirmation dialog) takes
   -- focus and then closes, re-enter terminal insert mode so that keypresses
@@ -155,9 +187,13 @@ function YaziFloatingWindow:open_and_display()
   vim.api.nvim_create_autocmd({ "VimResized" }, {
     buffer = yazi_buffer,
     callback = function()
+      if not (self.win and vim.api.nvim_win_is_valid(self.win)) then
+        return
+      end
+
       local dims = get_window_dimensions(self.config)
 
-      vim.api.nvim_win_set_config(win, {
+      vim.api.nvim_win_set_config(self.win, {
         width = dims.width,
         height = dims.height,
         row = dims.row,
