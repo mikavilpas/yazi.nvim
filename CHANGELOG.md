@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.4...v13.1.5) (2026-03-13)
+
+
+### Bug Fixes
+
+* **ci:** update workflow references for mise.toml migration ([bf585ee](https://github.com/mikavilpas/yazi.nvim/commit/bf585eec88e59f2f9068611d5674b1aa653ce507))
+* don't allow new dialogs stealing focus to close yazi ([#1678](https://github.com/mikavilpas/yazi.nvim/issues/1678)) ([4ebfe99](https://github.com/mikavilpas/yazi.nvim/commit/4ebfe99ce1a505c801ec87de7205d481bf7771c0))
+
 ## [13.1.4](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.3...v13.1.4) (2026-02-01)
 
 
