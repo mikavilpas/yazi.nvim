@@ -1,10 +1,15 @@
 import assert from "assert"
-import { waitForRenameToHaveBeenConfirmed } from "./utils/lsp-utils"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
   isFileSelectedInYazi,
 } from "./utils/yazi-utils"
+
+const waitConfirmRenameDialog = (): void => {
+  cy.contains("Do you want to modify the require path?")
+  cy.typeIntoTerminal("{enter}")
+  cy.contains("Do you want to modify the require path?").should("not.exist")
+}
 
 describe("rename events with LSP support", () => {
   it("can rename a file with LSP support", () => {
@@ -14,10 +19,7 @@ describe("rename events with LSP support", () => {
     cy.visit("/")
     cy.startNeovim({
       filename: "lua-project/lua/config.lua",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "accept_lsp_rename_confirmations_immediately.lua",
-      ],
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
@@ -44,9 +46,10 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("2{enter}")
+      // wait for emmylua-analyzer-rust to show up a confirmation dialog
+      waitConfirmRenameDialog()
       cy.typeIntoTerminal("q")
-
-      waitForRenameToHaveBeenConfirmed(nvim)
+      cy.contains("NOR").should("not.exist") // yazi should close
 
       // go back to the init.lua file and verify the require path was updated
       nvim.runExCommand({ command: `edit %:h/init.lua` })
@@ -61,10 +64,7 @@ describe("rename events with LSP support", () => {
     cy.visit("/")
     cy.startNeovim({
       filename: "lua-project/lua/init.lua",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "accept_lsp_rename_confirmations_immediately.lua",
-      ],
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
@@ -97,9 +97,8 @@ describe("rename events with LSP support", () => {
       cy.typeIntoTerminal("r")
       cy.contains("Rename:")
       cy.typeIntoTerminal("2{enter}")
+      waitConfirmRenameDialog()
       cy.typeIntoTerminal("q")
-
-      waitForRenameToHaveBeenConfirmed(nvim)
 
       // the require path should have been updated
       cy.contains(`local utils = require('utils2.utils')`)
@@ -114,10 +113,7 @@ describe("move events with LSP support", () => {
     cy.visit("/")
     cy.startNeovim({
       filename: "lua-project/lua/config.lua",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "accept_lsp_rename_confirmations_immediately.lua",
-      ],
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
     }).then((nvim) => {
       // wait until text on the start screen is visible
@@ -157,7 +153,7 @@ describe("move events with LSP support", () => {
 
       // paste the file in and quit. This should trigger the lsp move operation.
       cy.typeIntoTerminal("p")
-      waitForRenameToHaveBeenConfirmed(nvim)
+      waitConfirmRenameDialog()
       cy.typeIntoTerminal("q")
 
       // go back to the init.lua file and verify the require path was updated
