@@ -10,6 +10,7 @@ console.log(`yaziLogFile: ${yaziLogFile}`)
 
 export default defineConfig({
   e2e: {
+    allowCypressEnv: false,
     baseUrl: "http://localhost:3000",
     video: true,
     setupNodeEvents(on, _config) {
