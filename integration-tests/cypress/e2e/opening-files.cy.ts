@@ -364,11 +364,14 @@ describe("opening files", () => {
 
         // answer yes
         cy.typeIntoTerminal("y{enter}")
+        cy.contains("Continue to rename? (y/N):").should("not.exist")
 
         // close yazi
-        cy.contains("-- TERMINAL --")
+        cy.contains("config-modifications" satisfies MyTestDirectoryFile)
         cy.typeIntoTerminal("q")
-        cy.contains("-- TERMINAL --").should("not.exist")
+        cy.contains(
+          "config-modifications" satisfies MyTestDirectoryFile,
+        ).should("not.exist")
 
         // the file should now be renamed - ask neovim to confirm this
         nvim.runExCommand({ command: "ls" }).and((result) => {
