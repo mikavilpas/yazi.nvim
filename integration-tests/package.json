@@ -23,7 +23,7 @@
     "oxlint": "1.56.0",
     "oxlint-tsgolint": "0.17.0",
     "tinycolor2": "1.6.0",
-    "type-fest": "5.4.4",
+    "type-fest": "5.5.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.57.1",
     "wait-on": "9.0.4",
