@@ -81,7 +81,7 @@ vim.list_extend(plugins, {
   {
     "https://github.com/ibhagwan/fzf-lua",
     -- renovate: datasource=git-refs packageName=https://github.com/ibhagwan/fzf-lua
-    commit = "6e41ba7505f35a6f054ca682b043aa0cea36c2ef",
+    commit = "8a79ee54d6216d10b2f153921a12b152be0c1a20",
   },
   {
     "https://github.com/MagicDuck/grug-far.nvim",
