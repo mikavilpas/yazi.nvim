@@ -8,7 +8,7 @@
     "lint": "pnpx oxlint --type-aware --deny-warnings --report-unused-disable-directives && eslint --max-warnings=0 ."
   },
   "devDependencies": {
-    "@catppuccin/palette": "1.7.1",
+    "@catppuccin/palette": "1.8.0",
     "@eslint/js": "10.0.1",
     "@tui-sandbox/library": "12.3.2",
     "@types/node": "24.12.0",
