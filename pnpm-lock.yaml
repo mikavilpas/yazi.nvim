@@ -40,7 +40,7 @@ importers:
         version: 10.0.1(eslint@10.1.0(jiti@2.6.1))
       '@tui-sandbox/library':
         specifier: 12.3.2
-        version: 12.3.2(cypress@15.12.0)(prettier@3.8.1)(type-fest@5.5.0)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)
+        version: 12.3.2(cypress@15.13.0)(prettier@3.8.1)(type-fest@5.5.0)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)
       '@types/node':
         specifier: 24.12.0
         version: 24.12.0
@@ -54,8 +54,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       cypress:
-        specifier: 15.12.0
-        version: 15.12.0
+        specifier: 15.13.0
+        version: 15.13.0
       eslint:
         specifier: 10.1.0
         version: 10.1.0(jiti@2.6.1)
@@ -1121,8 +1121,8 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  cypress@15.12.0:
-    resolution: {integrity: sha512-B2BRcudLfA4NZZP5QpA45J70bu1heCH59V1yKRLHAtiC49r7RV03X5ifUh7Nfbk8QNg93RAsc6oAmodm/+j0pA==}
+  cypress@15.13.0:
+    resolution: {integrity: sha512-hJ9sY++TUC/HlUzHVJpIrDyqKMjlhx5PTXl/A7eA91JNEtUWkJAqefQR5mo9AtLra/9+m+JJaMg2U5Qd0a74Fw==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -3175,7 +3175,7 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
-  '@tui-sandbox/library@12.3.2(cypress@15.12.0)(prettier@3.8.1)(type-fest@5.5.0)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)':
+  '@tui-sandbox/library@12.3.2(cypress@15.13.0)(prettier@3.8.1)(type-fest@5.5.0)(typescript@5.9.3)(wait-on@9.0.4)(zod@4.3.6)':
     dependencies:
       '@catppuccin/palette': 1.7.1
       '@trpc/client': 11.12.0(@trpc/server@11.12.0(typescript@5.9.3))(typescript@5.9.3)
@@ -3186,7 +3186,7 @@ snapshots:
       '@xterm/xterm': 6.0.0
       concurrently: 9.2.1
       cors: 2.8.6
-      cypress: 15.12.0
+      cypress: 15.13.0
       dree: 5.1.5
       express: 5.2.1
       neovim: 5.4.0
@@ -3727,7 +3727,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress@15.12.0:
+  cypress@15.13.0:
     dependencies:
       '@cypress/request': 3.0.10
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
