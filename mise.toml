@@ -1,6 +1,6 @@
 [tools]
 # fd is a dependency of telescope and fzf-lua
-"github:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.21.0", asset_pattern = "emmylua_ls-*" }
+"github:EmmyLuaLs/emmylua-analyzer-rust" = { version = "0.22.0", asset_pattern = "emmylua_ls-*" }
 "github:junegunn/fzf" = "0.70.0"
 "github:sharkdp/fd" = "10.4.2"
 lua = "5.1"
