@@ -2,29 +2,7 @@ name: Linkspector
 on: [pull_request]
 permissions:
   contents: read
-  pull-requests: write
 jobs:
   check-links:
-    name: runner / linkspector
-    # Temporarily work around this issue by downgrading the runner OS
-    # https://github.com/UmbrellaDocs/action-linkspector/issues/32
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
-        with:
-          # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
-          run_install: false
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: .nvmrc
-          cache: "pnpm"
-      - run: pnpm install
-      - name: Run linkspector
-        # needs to be pinned to 1.2.5 avoid
-        # https://github.com/UmbrellaDocs/action-linkspector/issues/30
-        uses: umbrelladocs/action-linkspector@37c85bcde51b30bf929936502bac6bfb7e8f0a4d # v1.4.1
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
-          fail_on_error: true
+    uses: mikavilpas/dotfiles/.github/workflows/linkspector.yml@main
+    secrets: inherit
