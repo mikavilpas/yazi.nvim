@@ -89,7 +89,7 @@ you need to install the dependencies yourself. Also see the discussion in
 
 ```lua
 ---@type LazySpec
-{
+return {
   "mikavilpas/yazi.nvim",
   version = "*", -- use the latest stable version
   event = "VeryLazy",
