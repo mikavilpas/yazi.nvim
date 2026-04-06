@@ -5,5 +5,5 @@ permissions:
   contents: read
 jobs:
   check-links:
-    uses: mikavilpas/dotfiles/.github/workflows/linkspector.yml@46bc75f9510634a4ed3470381dd2c75d6088f893 # main
+    uses: mikavilpas/dotfiles/.github/workflows/linkspector.yml@7cd15141907036765dd800643396ea97d61995c2 # main
     secrets: inherit
