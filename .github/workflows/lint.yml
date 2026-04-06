@@ -27,7 +27,7 @@ jobs:
     steps:
       # https://github.com/rvben/rumdl?tab=readme-ov-file#github-actions
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: rvben/rumdl@8e22c9b16f49c7209355106f731500cc1aacef20 # v0
+      - uses: rvben/rumdl@6540b53fa24e83f9693e36889e0f9c765aa90349 # v0
 
   actionlint:
     runs-on: ubuntu-24.04
