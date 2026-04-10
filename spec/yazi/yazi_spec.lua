@@ -1,5 +1,3 @@
----@module "plenary.path"
-
 local assert = require("luassert")
 local mock = require("luassert.mock")
 local match = require("luassert.match")
@@ -109,7 +107,7 @@ describe("opening a file", function()
     it(
       "uses the parent directory of the input_path as the last_directory when no last_directory is available",
       function()
-        local plenary_path = require("plenary.path")
+        local YaziPath = require("yazi.path")
         -- it can happen that we don't know what the last_directory was when
         -- yazi has exited. This currently happens when `ya` is started too
         -- late - yazi has already reported its `cd` event before `ya` starts
@@ -134,10 +132,7 @@ describe("opening a file", function()
           function(chosen_file, _config, state)
             assert.equal(target_file, chosen_file)
             assert.equal("/tmp", state.last_directory.filename)
-            assert.equal(
-              "/tmp",
-              plenary_path:new(target_file):parent().filename
-            )
+            assert.equal("/tmp", YaziPath:new(target_file):parent().filename)
           end
         )
 

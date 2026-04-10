@@ -1,10 +1,8 @@
----@module "plenary.path"
-
 local YaProcess = require("yazi.process.ya_process")
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
 local YaziProcessApi = require("yazi.process.yazi_process_api")
-local plenary_path = require("plenary.path")
+local YaziPath = require("yazi.path")
 
 ---@class YaziProcess
 ---@field public api YaziProcessApi
@@ -16,11 +14,11 @@ local YaziProcess = {}
 YaziProcess.__index = YaziProcess
 
 ---@class yazi.Callbacks
----@field on_exit fun(code: integer, selected_files: string[], hovered_url: string | nil, last_cwd: Path | nil, context: YaziActiveContext)
+---@field on_exit fun(code: integer, selected_files: string[], hovered_url: string | nil, last_cwd: YaziPath | nil, context: YaziActiveContext)
 ---@field on_ya_first_event fun(api: YaziProcessApi)
 
 ---@param config YaziConfig
----@param paths Path[]
+---@param paths YaziPath[]
 ---@param callbacks yazi.Callbacks
 ---@return YaziProcess, YaziActiveContext
 function YaziProcess:start(config, paths, callbacks)
@@ -70,8 +68,7 @@ function YaziProcess:start(config, paths, callbacks)
         config.future_features.use_cwd_file == true
         and utils.file_exists(config.cwd_file_path) == true
       then
-        last_directory =
-          plenary_path:new(vim.fn.readfile(config.cwd_file_path)[1])
+        last_directory = YaziPath:new(vim.fn.readfile(config.cwd_file_path)[1])
         require("yazi.log"):debug(
           string.format(
             "using cwd found from the cwd_file_path: '%s'",
@@ -79,7 +76,7 @@ function YaziProcess:start(config, paths, callbacks)
           )
         )
       elseif self.ya_process.cwd ~= nil then
-        last_directory = plenary_path:new(self.ya_process.cwd)
+        last_directory = YaziPath:new(self.ya_process.cwd)
         require("yazi.log"):debug(
           string.format("using ya process cwd: '%s'", self.ya_process.cwd)
         ) --[[@as Path]]

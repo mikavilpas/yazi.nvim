@@ -1,4 +1,4 @@
-local Path = require("plenary").path
+local Path = require("yazi.path")
 
 local log =
   require("yazi.lsp.embedded-lsp-file-operations.lsp-file-operations.log")

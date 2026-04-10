@@ -1,5 +1,5 @@
 local RenameableBuffer = require("yazi.renameable_buffer")
-local plenary_path = require("plenary.path")
+local YaziPath = require("yazi.path")
 
 local M = {}
 
@@ -25,8 +25,8 @@ function M.relative_path(realpath_application, args)
 
   assert(command ~= nil, "realpath command must be set")
 
-  ---@type Path
-  local start_path = plenary_path:new(args.source_dir)
+  ---@type YaziPath
+  local start_path = YaziPath:new(args.source_dir)
   local start_directory = nil
   if start_path:is_dir() then
     start_directory = start_path
@@ -151,8 +151,8 @@ function M.selected_file_path(path)
     path = vim.fn.expand("%:p")
   end
 
-  ---@type Path
-  return plenary_path:new(path)
+  ---@type YaziPath
+  return YaziPath:new(path)
 end
 
 ---@param path string?
@@ -167,12 +167,12 @@ function M.selected_file_paths(path)
     -- get the paths of the files in the quickfix window
     local qflist = vim.fn.getqflist()
 
-    ---@type Path[]
+    ---@type YaziPath[]
     local filenames = {}
     for _, entry in ipairs(qflist) do
       if entry.bufnr and entry.bufnr > 0 then
         local filename = vim.api.nvim_buf_get_name(entry.bufnr)
-        local new_path = plenary_path:new(filename)
+        local new_path = YaziPath:new(filename)
         table.insert(filenames, new_path)
       end
     end
@@ -180,7 +180,7 @@ function M.selected_file_paths(path)
     return filenames
   end
 
-  ---@type Path[]
+  ---@type YaziPath[]
   local paths = { selected_file_path }
   for _, buffer in ipairs(M.get_visible_open_buffers()) do
     -- NOTE: yazi can only display up to 9 paths, and it's an error to give any
@@ -199,15 +199,11 @@ function M.selected_file_paths(path)
 end
 
 ---@param file_path string
----@return Path
+---@return YaziPath
 function M.dir_of(file_path)
-  ---@type Path
-  local path = plenary_path:new(file_path)
+  ---@type YaziPath
+  local path = YaziPath:new(file_path)
   local parent = path:parent()
-
-  -- for some reason, plenary is documented as returning table|unknown[]. we
-  -- want the table version only
-  assert(type(parent) == "table", "parent must be a table")
 
   return parent
 end
