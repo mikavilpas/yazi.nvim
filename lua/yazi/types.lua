@@ -1,7 +1,5 @@
 -- TODO all config properties are optional when given, but mandatory inside the plugin
 
----@module "plenary.path"
-
 ---@alias YaziFloatingWindowScaling { height: number, width: number }
 
 ---@class (exact) YaziConfig
@@ -49,7 +47,7 @@
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi
 ---@field ya_process YaProcess the ya process that is currently running, listening for events from yazi
----@field input_path Path the path that is first selected by yazi when it's opened
+---@field input_path YaziPath the path that is first selected by yazi when it's opened
 ---@field cycled_file? RenameableBuffer the last file that was cycled to with e.g. the <tab> key
 
 ---@class (exact) YaziConfigHooks
@@ -61,9 +59,9 @@
 
 ---@class (exact) YaziConfigIntegrations # Defines settings for integrations with other plugins and tools
 ---@field public grep_in_directory? "telescope" | "fzf-lua" | "snacks.picker" | fun(directory: string): nil # implementation to be called when the user wants to grep in a directory. Defaults to `"telescope"`
----@field public grep_in_selected_files? "telescope" | "fzf-lua" | "snacks.picker" | fun(selected_files: Path[], relative_paths: string[]): nil # called to grep on files that were selected in yazi. Defaults to `"telescope"`
----@field public replace_in_directory? fun(directory: Path, selected_files?: Path[]): nil # called to start a replacement operation on some directory; by default uses grug-far.nvim
----@field public replace_in_selected_files? fun(selected_files?: Path[]): nil # called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim
+---@field public grep_in_selected_files? "telescope" | "fzf-lua" | "snacks.picker" | fun(selected_files: YaziPath[], relative_paths: string[]): nil # called to grep on files that were selected in yazi. Defaults to `"telescope"`
+---@field public replace_in_directory? fun(directory: YaziPath, selected_files?: YaziPath[]): nil # called to start a replacement operation on some directory; by default uses grug-far.nvim
+---@field public replace_in_selected_files? fun(selected_files?: YaziPath[]): nil # called to start a replacement operation on files that were selected in yazi; by default uses grug-far.nvim
 ---@field public resolve_relative_path_application? string # the application that will be used to resolve relative paths. By default, this is GNU `realpath` on Linux and `grealpath` on macOS
 ---@field public resolve_relative_path_implementation? fun(args: YaziGetRelativePathImplementationArguments, default_implementation: fun(args: YaziGetRelativePathImplementationArguments): string): string # the way to resolve relative paths. The default_implementation can be customized with a function. See ../../documentation/copy-relative-path-to-files.md for more information.
 ---@field public bufdelete_implementation? YaziBufdeleteImpl # how to delete (close) a buffer. Defaults to `snacks.bufdelete` from https://github.com/folke/snacks.nvim, which maintains the window layout.
@@ -89,7 +87,7 @@
 ---@field public last_hovered? string
 
 ---@class (exact) YaziClosedState # describes the state of yazi when it was closed; the last known state
----@field public last_directory Path # the last directory that yazi was in before it was closed
+---@field public last_directory YaziPath # the last directory that yazi was in before it was closed
 
 ---@class (exact) YaziRenameEvent
 ---@field public type "rename"

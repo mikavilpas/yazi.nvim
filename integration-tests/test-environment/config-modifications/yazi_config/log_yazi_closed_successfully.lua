@@ -10,7 +10,7 @@ require("yazi").setup(
         _G.yazi_closed_successfully_hook_test_results = {
           chosen_file = chosen_file,
           last_directory = state.last_directory
-            and state.last_directory:normalize(vim.uv.cwd()),
+            and state.last_directory:make_relative(vim.uv.cwd()),
         }
       end,
     },

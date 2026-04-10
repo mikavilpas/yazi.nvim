@@ -320,7 +320,7 @@ end)
 
 describe("opening yazi in a terminal", function()
   local config = require("yazi.config").default()
-  local path = require("plenary.path"):new()
+  local path = require("yazi.path"):new("")
 
   local snapshot
 
