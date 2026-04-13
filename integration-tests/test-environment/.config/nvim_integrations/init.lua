@@ -68,7 +68,7 @@ vim.list_extend(plugins, {
   {
     "nvim-telescope/telescope.nvim",
     -- renovate: datasource=git-refs-master packageName=https://github.com/nvim-telescope/telescope.nvim
-    commit = "cfb85dcf7f822b79224e9e6aef9e8c794211b20b",
+    commit = "f7c673b8e46e8f233ff581d3624a517d33a7e264",
     lazy = true,
     opts = {
       pickers = {
