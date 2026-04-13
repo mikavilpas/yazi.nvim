@@ -86,7 +86,7 @@ vim.list_extend(plugins, {
   {
     "https://github.com/MagicDuck/grug-far.nvim",
     -- renovate: datasource=git-refs packageName=https://github.com/MagicDuck/grug-far.nvim
-    commit = "dc4684e163971bb1f5bfb93fbd4bb3e892bf9b15",
+    commit = "21604255d0e8f9968322f61f2b6c09e5efe1285a",
     opts = {},
   },
 
