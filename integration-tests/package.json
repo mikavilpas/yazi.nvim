@@ -10,7 +10,7 @@
   "devDependencies": {
     "@catppuccin/palette": "1.8.0",
     "@eslint/js": "10.0.1",
-    "@tui-sandbox/library": "12.4.0",
+    "@tui-sandbox/library": "12.4.1",
     "@types/node": "24.12.2",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
@@ -20,7 +20,7 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.3.0",
     "eslint-plugin-oxlint": "1.59.0",
-    "oxlint": "1.59.0",
+    "oxlint": "1.60.0",
     "oxlint-tsgolint": "0.20.0",
     "tinycolor2": "1.6.0",
     "type-fest": "5.5.0",
