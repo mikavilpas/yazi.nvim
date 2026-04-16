@@ -1,0 +1,7 @@
+name: Documentation
+on: [pull_request]
+permissions:
+  contents: read
+jobs:
+  check-links:
+    uses: mikavilpas/dotfiles/.github/workflows/docs.yml@main
