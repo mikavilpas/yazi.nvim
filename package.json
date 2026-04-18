@@ -17,7 +17,7 @@
     "@commitlint/cli": "20.5.0",
     "@commitlint/config-conventional": "20.5.0",
     "@commitlint/types": "20.5.0",
-    "prettier": "3.8.2",
+    "prettier": "3.8.3",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "3.0.2"
   },
