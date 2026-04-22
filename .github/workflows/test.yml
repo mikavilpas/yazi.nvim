@@ -140,7 +140,7 @@ jobs:
       - run: pnpm --filter integration-tests exec cypress install
 
       - name: Cypress test
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@783cb3f07983868532cabaedaa1e6c00ff4786a8 # v7.1.9
         with:
           install: false
           command: pnpm tui run
