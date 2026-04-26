@@ -1,4 +1,4 @@
-local plenary_path = require("plenary.path")
+local YaziPath = require("yazi.path")
 
 ---@param path string
 local function remove_trailing_slash(path)
@@ -14,7 +14,7 @@ end
 ---@field __index RenameableBuffer
 ---@field bufnr number
 ---@field original_path string
----@field path Path
+---@field path YaziPath
 local RenameableBuffer = {}
 RenameableBuffer.__index = RenameableBuffer
 
@@ -27,7 +27,7 @@ function RenameableBuffer.new(bufnr, path)
 
   self.bufnr = bufnr
   self.original_path = path
-  self.path = plenary_path:new(path)
+  self.path = YaziPath:new(path)
 
   return self
 end
@@ -71,7 +71,7 @@ end
 ---@return nil
 function RenameableBuffer:rename(path)
   path = remove_trailing_slash(path)
-  self.path = plenary_path:new(path)
+  self.path = YaziPath:new(path)
 end
 
 ---@param parent_from string the parent directory that was renamed
@@ -83,7 +83,7 @@ function RenameableBuffer:rename_parent(parent_from, parent_to)
 
   local new_path = parent_to .. rest
 
-  self.path = plenary_path:new(new_path)
+  self.path = YaziPath:new(new_path)
 end
 
 return RenameableBuffer

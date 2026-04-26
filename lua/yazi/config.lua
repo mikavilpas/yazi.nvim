@@ -1,5 +1,3 @@
----@module "plenary.path"
-
 local M = {}
 
 function M.default()

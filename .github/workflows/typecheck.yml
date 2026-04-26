@@ -19,5 +19,4 @@ jobs:
           level: Information
           libraries:
             # space separated
-            https://github.com/nvim-lua/plenary.nvim
             https://github.com/folke/snacks.nvim

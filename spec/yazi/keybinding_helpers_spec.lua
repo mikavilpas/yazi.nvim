@@ -2,7 +2,7 @@ local assert = require("luassert")
 local config_module = require("yazi.config")
 local keybinding_helpers = require("yazi.keybinding_helpers")
 local match = require("luassert.match")
-local plenary_path = require("plenary.path")
+local YaziPath = require("yazi.path")
 local stub = require("luassert.stub")
 local spy = require("luassert.spy")
 
@@ -164,7 +164,7 @@ describe("keybinding_helpers", function()
     it("uses yazi's input_path if no cwd is available yet", function()
       ---@diagnostic disable-next-line: missing-fields
       keybinding_helpers.change_working_directory({
-        input_path = plenary_path:new("/tmp"),
+        input_path = YaziPath:new("/tmp"),
         ---@diagnostic disable-next-line: missing-fields
         ya_process = {
           cwd = nil,
@@ -181,7 +181,7 @@ describe("keybinding_helpers", function()
         vim_fn_stub.returns("/tmp")
         ---@diagnostic disable-next-line: missing-fields
         keybinding_helpers.change_working_directory({
-          input_path = plenary_path:new("/tmp"),
+          input_path = YaziPath:new("/tmp"),
           ---@diagnostic disable-next-line: missing-fields
           ya_process = {
             cwd = "/tmp",

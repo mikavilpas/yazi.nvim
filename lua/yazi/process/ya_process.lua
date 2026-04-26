@@ -1,5 +1,3 @@
----@module "plenary.path"
-
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
 local YaziSessionHighlighter =
@@ -64,7 +62,7 @@ local function remove_duplicates(items)
   return result
 end
 
----@param paths Path[]
+---@param paths YaziPath[]
 function YaProcess:get_yazi_command(paths)
   local command_words = { "yazi" }
 

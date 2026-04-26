@@ -11,11 +11,6 @@
 
 ---@type LazySpec
 return {
-  -- Needed for file path resolution mainly
-  --
-  -- https://github.com/nvim-lua/plenary.nvim/
-  { "nvim-lua/plenary.nvim", lazy = true },
-
   {
     "mikavilpas/yazi.nvim",
     ---@type YaziConfig | {}
