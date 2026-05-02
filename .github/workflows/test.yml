@@ -37,7 +37,23 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Install tools with UBI
+      - name: Install tools with mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+        env:
+          # mise's `auto_install` etc. cause activation/exec to install every
+          # tool in the trusted config. Disable so only `install_args` is honored.
+          MISE_AUTO_INSTALL: "false"
+          MISE_EXEC_AUTO_INSTALL: "false"
+          MISE_NOT_FOUND_AUTO_INSTALL: "false"
+        with:
+          # prettier-ignore
+          install_args: >-
+            github:EmmyLuaLs/emmylua-analyzer-rust
+            github:BurntSushi/ripgrep
+            github:junegunn/fzf
+            github:sharkdp/fd
+
+      - name: Bootstrap ubi for yazi download
         shell: bash
         run: |
           mkdir -p "$HOME/.local/bin"
@@ -46,19 +62,6 @@ jobs:
           curl --silent --location \
               https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
               TARGET="$HOME/.local/bin" sh
-
-          VERSION=$(yq '.tools."github:EmmyLuaLs/emmylua-analyzer-rust".version' mise.toml)
-          ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
-
-          VERSION=$(yq '.tools."github:BurntSushi/ripgrep".version' mise.toml)
-          ubi --project BurntSushi/ripgrep --tag "$VERSION" --exe rg
-
-          VERSION=$(yq '.tools."github:junegunn/fzf"' mise.toml)
-          ubi --project junegunn/fzf --tag "v$VERSION"
-
-          VERSION=$(yq '.tools."github:sharkdp/fd"' mise.toml)
-          ubi --project sharkdp/fd --tag "v$VERSION"
-          ls -alR bin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
