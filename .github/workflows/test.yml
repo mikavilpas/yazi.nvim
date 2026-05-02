@@ -47,8 +47,6 @@ jobs:
               https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
               TARGET="$HOME/.local/bin" sh
 
-          ubi --project mikefarah/yq
-
           VERSION=$(yq '.tools."github:EmmyLuaLs/emmylua-analyzer-rust".version' mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
 
