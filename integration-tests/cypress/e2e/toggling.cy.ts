@@ -1,9 +1,9 @@
 import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
-import type { MyTestDirectoryFile } from "../../MyTestDirectory"
-import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils"
-import { setBufferLines } from "./utils/neovim-utils"
-import { assertYaziIsReady } from "./utils/yazi-utils"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
+import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils.js"
+import { setBufferLines } from "./utils/neovim-utils.js"
+import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 describe("toggling yazi to pseudo-continue the previous session", () => {
   beforeEach(() => {

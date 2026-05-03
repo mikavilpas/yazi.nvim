@@ -2,8 +2,8 @@ import {
   isHoveredInNeovim,
   isHoveredInNeovimWithSameDirectory,
   isNotHoveredInNeovim,
-} from "./utils/hover-utils"
-import { assertYaziIsReady } from "./utils/yazi-utils"
+} from "./utils/hover-utils.js"
+import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
 // https://docs.cypress.io/api/commands/type#Typing-tab-key-does-not-work

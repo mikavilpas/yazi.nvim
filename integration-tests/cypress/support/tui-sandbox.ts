@@ -8,6 +8,10 @@ import type {
   GenericTerminalBrowserApi,
 } from "@tui-sandbox/library/browser/neovim-client.js"
 import type { MyNeovimConfigModification } from "@tui-sandbox/library/client"
+import {
+  drawTextBox,
+  extractTerminalContent,
+} from "@tui-sandbox/library/client"
 import type {
   AllKeys,
   BlockingCommandClientInput,
@@ -27,7 +31,7 @@ import type {
   MyNeovimAppName,
   MyTestDirectory,
   MyTestDirectoryFile,
-} from "../../MyTestDirectory"
+} from "../../MyTestDirectory.js"
 
 export type TerminalTestApplicationContext = {
   /** Types text into the terminal, making the terminal application receive the
@@ -138,6 +142,7 @@ Cypress.Commands.add(
         startArguments as StartNeovimGenericArguments,
       )
       testNeovim = underlyingNeovim
+      testEnvironmentPath = underlyingNeovim.dir.testEnvironmentPath
 
       // wrap everything so that Cypress can await all the commands
       Cypress.Commands.addAll({
@@ -209,6 +214,8 @@ Cypress.Commands.add(
           } satisfies AllKeys<BrowserTerminalSettings>,
         })
 
+      testEnvironmentPath = terminal.dir.testEnvironmentPath
+
       Cypress.Commands.addAll({
         terminal_runBlockingShellCommand: terminal.runBlockingShellCommand,
       })
@@ -245,6 +252,7 @@ Cypress.Commands.add(
 )
 
 let testNeovim: GenericNeovimBrowserApi | undefined
+let testEnvironmentPath: string | undefined
 
 before(function () {
   // disable Cypress's default behavior of logging all XMLHttpRequests and
@@ -303,6 +311,66 @@ declare global {
   }
 }
 
-afterEach(async () => {
+afterEach(function () {
   testNeovim = undefined
+
+  if (testEnvironmentPath) {
+    const testErr = this.currentTest?.err
+    const terminalContent = getTerminalContent() ?? ""
+
+    const snapshot = {
+      testTitle: this.currentTest?.fullTitle() ?? "unknown",
+      testState: this.currentTest?.state ?? "unknown",
+      terminalContent,
+      error: testErr?.message ?? null,
+      timestamp: new Date().toISOString(),
+    }
+
+    // Write to testdirs/ which is already gitignored for all tui-sandbox consumers.
+    // YAML is used so that multiline terminal content is human/AI-readable
+    // without escape sequences.
+    const snapshotPath = `${testEnvironmentPath}/testdirs/.terminal-snapshot.yaml`
+    const indentedContent = snapshot.terminalContent
+      .split("\n")
+      .map((line) => `  ${line}`)
+      .join("\n")
+    const testFile = this.currentTest?.file ?? "unknown"
+    const yaml = [
+      `testTitle: ${JSON.stringify(snapshot.testTitle)}`,
+      `testFile: ${JSON.stringify(testFile)}`,
+      `testState: ${snapshot.testState}`,
+      `error: ${snapshot.error ? JSON.stringify(snapshot.error) : "null"}`,
+      `timestamp: ${JSON.stringify(snapshot.timestamp)}`,
+      `terminalContent: |`,
+      indentedContent,
+    ].join("\n")
+    cy.writeFile(snapshotPath, yaml, { log: false })
+  }
+})
+
+/** Read the current terminal content from the xterm.js DOM. */
+function getTerminalContent(): string | undefined {
+  const rows = Cypress.$("div.xterm-rows > div")
+  const rowTexts = rows.toArray().map((row) => Cypress.$(row).text())
+  return extractTerminalContent(rowTexts)
+}
+
+// On test failure in headless mode (cypress run / CI), append the terminal
+// buffer contents to the error message so it appears in logs. In interactive
+// mode (cypress open), the terminal is already visible on screen so this
+// would just add noise.
+//
+// Registered via beforeEach + cy.on (per-test) so that tests can override
+// with their own cy.on('fail') handler to swallow expected errors.
+beforeEach(function () {
+  cy.on("fail", (err: Error) => {
+    if (!Cypress.config("isInteractive")) {
+      const content = getTerminalContent()
+      if (content) {
+        err.message += `\n\n${drawTextBox("Terminal content at failure", content)}`
+      }
+    }
+
+    throw err
+  })
 })

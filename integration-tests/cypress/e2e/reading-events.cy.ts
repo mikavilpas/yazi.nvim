@@ -1,12 +1,12 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import { z } from "zod"
-import type { MyTestDirectoryFile } from "../../MyTestDirectory"
-import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
+import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils.js"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
-} from "./utils/yazi-utils"
+} from "./utils/yazi-utils.js"
 
 describe("reading events", () => {
   beforeEach(() => {

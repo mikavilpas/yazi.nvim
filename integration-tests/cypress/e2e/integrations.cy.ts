@@ -1,12 +1,12 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
-import type { MyTestDirectoryFile } from "../../MyTestDirectory"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
-} from "./utils/hover-utils"
-import { assertYaziIsReady } from "./utils/yazi-utils"
+} from "./utils/hover-utils.js"
+import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 describe("grug-far integration (search and replace)", () => {
   beforeEach(() => {

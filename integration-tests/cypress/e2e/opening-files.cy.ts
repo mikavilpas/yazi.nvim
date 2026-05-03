@@ -3,17 +3,17 @@ import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
 import path, { join } from "path"
 import { z } from "zod"
-import type { MyTestDirectoryFile } from "../../MyTestDirectory"
+import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
-} from "./utils/hover-utils"
-import { assertNeovimCwd, setBufferLines } from "./utils/neovim-utils"
+} from "./utils/hover-utils.js"
+import { assertNeovimCwd, setBufferLines } from "./utils/neovim-utils.js"
 import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
   isFileSelectedInYazi,
-} from "./utils/yazi-utils"
+} from "./utils/yazi-utils.js"
 
 describe("opening files", () => {
   beforeEach(() => {
