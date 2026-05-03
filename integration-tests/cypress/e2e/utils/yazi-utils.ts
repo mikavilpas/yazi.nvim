@@ -1,8 +1,8 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
-import type { MyTestDirectoryFile } from "../../../MyTestDirectory"
-import type { NeovimContext } from "../../support/tui-sandbox"
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory.js"
+import type { NeovimContext } from "../../support/tui-sandbox.js"
 
 const darkTheme = flavors.macchiato.colors
 

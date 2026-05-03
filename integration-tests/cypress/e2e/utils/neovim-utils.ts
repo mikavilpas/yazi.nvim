@@ -4,8 +4,8 @@ import type {
 } from "@tui-sandbox/library/server"
 import type { LiteralUnion } from "type-fest"
 import * as z from "zod"
-import type { MyTestDirectoryFile } from "../../../MyTestDirectory"
-import type { NeovimContext } from "../../support/tui-sandbox"
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory.js"
+import type { NeovimContext } from "../../support/tui-sandbox.js"
 
 export function assertNeovimCwd(
   nvim: NeovimContext,

@@ -1,9 +1,9 @@
 import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
-import type { MyTestDirectoryFile } from "../../../MyTestDirectory"
-import type { NeovimContext } from "../../support/tui-sandbox"
-import { assertYaziIsReady } from "./yazi-utils"
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory.js"
+import type { NeovimContext } from "../../support/tui-sandbox.js"
+import { assertYaziIsReady } from "./yazi-utils.js"
 const darkTheme = flavors.macchiato.colors
 const lightTheme = flavors.latte.colors
 

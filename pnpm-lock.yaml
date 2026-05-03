@@ -36,8 +36,8 @@ importers:
         specifier: 10.0.1
         version: 10.0.1(eslint@10.2.1(jiti@2.6.1))
       '@tui-sandbox/library':
-        specifier: 12.5.1
-        version: 12.5.1(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.5)(zod@4.4.1)
+        specifier: 12.5.3
+        version: 12.5.3(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.5)(zod@4.4.1)
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -599,21 +599,21 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@trpc/client@11.16.0':
-    resolution: {integrity: sha512-TxIzm7OoK3baKZ0XCbuMUbI3GhgjcbKHIc4nWVKaRpCRnbSh0T31BT6fTPYwtnA/Nur8pBCGqC2B4J5hEPiPFQ==}
+  '@trpc/client@11.17.0':
+    resolution: {integrity: sha512-KpJBFrbKTDeVCFv/3ckL1XBBH5Yssn8hethI/rUy7GIpTj+VzjtPjykDqJpzobuVOz+d26cXCSu1t4I6MYI5Zg==}
     hasBin: true
     peerDependencies:
-      '@trpc/server': 11.16.0
+      '@trpc/server': 11.17.0
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.16.0':
-    resolution: {integrity: sha512-XgGuUMddrUTd04+za/WE5GFuZ1/YU9XQG0t3VL5WOIu2JspkOlq6k4RYEiqS6HSJt+S0RXaPdIoE2anIP/BBRQ==}
+  '@trpc/server@11.17.0':
+    resolution: {integrity: sha512-jbAOUe0PpUTCYqziyu+8vYXZdDXPudZgnEhWCQ2NjKnVEjfE93RqHTt1oycZJv/HNf51YlRXfEEwSIAbb161rw==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@12.5.1':
-    resolution: {integrity: sha512-O3G6C2RGVqCn4Eu2GtKiVOlGjOjlEoZf4ej1EzwojHzS7SzL0jkTICRobDP11Qt9IemTmV4SdhU8KZrY3ipvOg==}
+  '@tui-sandbox/library@12.5.3':
+    resolution: {integrity: sha512-a/DaWdWWkUsRMWyfMjk7GF8tAxG9p5Ix2436KnnS1iRii9E9tw4Bm6GFOkSB7dtvISi7ys6HNoSS2QV3szC0RQ==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -2008,6 +2008,10 @@ packages:
     resolution: {integrity: sha512-6hJPQ8N0V0P3SNmP6h2J99RLuzrWz2gvT7VnK5tKvrNqJoyS9W4/Fb8mo31UiPvy00z7DQXkP2hnKBVav76thw==}
     engines: {node: '>=20'}
 
+  string-width@8.2.1:
+    resolution: {integrity: sha512-IIaP0g3iy9Cyy18w3M9YcaDudujEAVHKt3a3QJg1+sr/oX96TbaGUubG0hJyCjCBThFH+tFpcIyoUHUn1ogaLA==}
+    engines: {node: '>=20'}
+
   string_decoder@1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
 
@@ -2634,20 +2638,20 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@trpc/client@11.16.0(@trpc/server@11.16.0(typescript@6.0.3))(typescript@6.0.3)':
+  '@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)':
     dependencies:
-      '@trpc/server': 11.16.0(typescript@6.0.3)
+      '@trpc/server': 11.17.0(typescript@6.0.3)
       typescript: 6.0.3
 
-  '@trpc/server@11.16.0(typescript@6.0.3)':
+  '@trpc/server@11.17.0(typescript@6.0.3)':
     dependencies:
       typescript: 6.0.3
 
-  '@tui-sandbox/library@12.5.1(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.5)(zod@4.4.1)':
+  '@tui-sandbox/library@12.5.3(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.5)(zod@4.4.1)':
     dependencies:
       '@catppuccin/palette': 1.8.0
-      '@trpc/client': 11.16.0(@trpc/server@11.16.0(typescript@6.0.3))(typescript@6.0.3)
-      '@trpc/server': 11.16.0(typescript@6.0.3)
+      '@trpc/client': 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
+      '@trpc/server': 11.17.0(typescript@6.0.3)
       '@xterm/addon-clipboard': 0.2.0
       '@xterm/addon-fit': 0.11.0
       '@xterm/addon-unicode11': 0.9.0
@@ -2659,7 +2663,7 @@ snapshots:
       express: 5.2.1
       neovim: 5.4.0
       prettier: 3.8.3
-      string-width: 8.2.0
+      string-width: 8.2.1
       tsx: 4.21.0
       type-fest: 5.6.0
       typescript: 6.0.3
@@ -4164,6 +4168,11 @@ snapshots:
       strip-ansi: 7.2.0
 
   string-width@8.2.0:
+    dependencies:
+      get-east-asian-width: 1.5.0
+      strip-ansi: 7.2.0
+
+  string-width@8.2.1:
     dependencies:
       get-east-asian-width: 1.5.0
       strip-ansi: 7.2.0

@@ -3,7 +3,7 @@ import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
   isFileSelectedInYazi,
-} from "./utils/yazi-utils"
+} from "./utils/yazi-utils.js"
 
 const waitConfirmRenameDialog = (): void => {
   cy.contains("Do you want to modify the require path?")

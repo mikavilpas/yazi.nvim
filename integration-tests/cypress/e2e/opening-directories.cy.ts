@@ -1,4 +1,4 @@
-import { findFileInYazi } from "./utils/yazi-utils"
+import { findFileInYazi } from "./utils/yazi-utils.js"
 
 describe("opening directories", () => {
   it("can open a directory when starting with `neovim .`", () => {

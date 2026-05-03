@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "ESNext",
     "rootDir": ".",
     "isolatedModules": true,

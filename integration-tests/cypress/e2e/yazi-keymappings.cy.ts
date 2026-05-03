@@ -4,8 +4,8 @@ import {
   isHoveredInNeovim,
   isHoveredInNeovimWithSameDirectory,
   isNotHoveredInNeovim,
-} from "./utils/hover-utils"
-import { assertYaziIsReady } from "./utils/yazi-utils"
+} from "./utils/hover-utils.js"
+import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 // The yazi keymappings need to be defined in the yazi config. The test
 // environment contains the mapping in the .config/yazi/keymap.toml file
