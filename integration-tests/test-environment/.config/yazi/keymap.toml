@@ -1,6 +1,6 @@
+#:schema https://yazi-rs.github.io/schemas/keymap.json
 # https://yazi-rs.github.io/docs/configuration/overview
 # https://yazi-rs.github.io/docs/configuration/keymap
-"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
 # NOTE: this is also documented in yazi-keymappings.md as a user facing example
 # send an event with no data
