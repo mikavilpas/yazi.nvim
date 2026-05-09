@@ -40,6 +40,12 @@ describe("the healthcheck", function()
 
   before_each(function()
     snapshot = assert:snapshot()
+    -- Busted's context isolation can clear `package.loaded["vim.health"]`
+    -- between spec files while the global `vim.health` still points to the
+    -- original module. `:checkhealth` then re-requires it, so `_check` and
+    -- `vim.health.start/info/ok` end up with two different `s_output`
+    -- upvalues and the report buffer comes back empty.
+    package.loaded["vim.health"] = vim.health
     mock_app_versions = {
       ["yazi"] = "Yazi 0.4.0 (4112bf4 2024-08-15)",
       ["yazi --help"] = [[Usage: yazi [OPTIONS] [ENTRY]
