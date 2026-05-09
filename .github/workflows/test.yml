@@ -34,6 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # master
+        if: matrix.yazi-version.method == 'cargo-install'
         with:
           toolchain: stable
 
@@ -63,6 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install the mold linker
+        if: matrix.yazi-version.method == 'cargo-install'
         uses: rui314/setup-mold@725a8794d15fc7563f59595bd9556495c0564878 # v1
 
       - name: Compile and install `yazi-fm` from source
