@@ -18,7 +18,7 @@
     "@commitlint/cli": "20.5.3",
     "@commitlint/config-conventional": "20.5.3",
     "@commitlint/types": "20.5.0",
-    "@types/node": "24.12.2",
+    "@types/node": "24.12.3",
     "knip": "6.12.2",
     "prettier": "3.8.3",
     "prettier-plugin-organize-imports": "4.3.0",
