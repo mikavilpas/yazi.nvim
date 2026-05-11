@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": [
+    "integration-tests/MyTestDirectory.ts",
+    "integration-tests/tui-sandbox.config.ts",
+    "integration-tests/test-environment/**"
+  ],
+  "ignoreDependencies": ["assert", "@commitlint/cli"],
+  "ignoreBinaries": ["rumdl"],
+  "ignoreExportsUsedInFile": true,
+  "workspaces": {
+    ".": {}
+  }
+}
