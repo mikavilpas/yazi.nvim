@@ -46,7 +46,7 @@ importers:
         version: 10.0.1(eslint@10.3.0(jiti@2.7.0))
       '@tui-sandbox/library':
         specifier: 12.5.3
-        version: 12.5.3(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
+        version: 12.5.3(cypress@15.15.0)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
       '@types/node':
         specifier: 24.12.4
         version: 24.12.4
@@ -60,8 +60,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       cypress:
-        specifier: 15.14.2
-        version: 15.14.2
+        specifier: 15.15.0
+        version: 15.15.0
       eslint:
         specifier: 10.3.0
         version: 10.3.0(jiti@2.7.0)
@@ -197,9 +197,9 @@ packages:
       conventional-commits-parser:
         optional: true
 
-  '@cypress/request@3.0.10':
-    resolution: {integrity: sha512-hauBrOdvu08vOsagkZ/Aju5XuiZx6ldsLfByg1htFeldhex+PeMrYauANzFsMJeAA0+dyPLbDoX2OYuvVoLDkQ==}
-    engines: {node: '>= 6'}
+  '@cypress/request@4.0.0':
+    resolution: {integrity: sha512-wGTQfwDMMMiz/muFw4YbCLwTh0uZsXKK+6zWBzftADpitSi6iM62C8GzEhNcng2srUiGPksOriQkA8zakW2R0g==}
+    engines: {node: '>= 14.17.0'}
 
   '@cypress/xvfb@1.2.4':
     resolution: {integrity: sha512-skbBzPggOVYCbnGgV+0dmBdW/s77ZkAOXIC1knS8NagwDjBrNC1LuXtQJeiN6l+m7lzmHtaoUw/ctJKdqkG57Q==}
@@ -898,9 +898,6 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@24.12.3':
-    resolution: {integrity: sha512-8oljBDGun9cIsZRJR6fkihn0TSXJI0UDOOhncYaERq6M0JMDoPLxyscwruJcb4GKS6dvK/d8xebYBg27h/duaQ==}
-
   '@types/node@24.12.4':
     resolution: {integrity: sha512-GUUEShf+PBCGW2KaXwcIt3Yk+e3pkKwWKb9GSyM9WQVE+ep2jzmHdGsHzu4wgcZy5fN9FBdVzjpBQsYlpfpgLA==}
 
@@ -1267,8 +1264,8 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  cypress@15.14.2:
-    resolution: {integrity: sha512-xMWg/iEImeIThRQZdnf3BFJT1a84apM/R91Feoa4vVWGuYWDphMT5jLhRVTBVlCgi+6axegF1zqhNyjhug2SsQ==}
+  cypress@15.15.0:
+    resolution: {integrity: sha512-N8qBv3AUYn6xfIG73O5O58kTClUBSZ7a3C08IQFkSGTUdEauJ3BqwTFb/f9KPZgadftoZjllC0XSwD7xNNolbA==}
     engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
@@ -2465,11 +2462,6 @@ packages:
   util@0.12.5:
     resolution: {integrity: sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==}
 
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
-    hasBin: true
-
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
@@ -2691,7 +2683,7 @@ snapshots:
     optionalDependencies:
       conventional-commits-parser: 6.3.0
 
-  '@cypress/request@3.0.10':
+  '@cypress/request@4.0.0':
     dependencies:
       aws-sign2: 0.7.0
       aws4: 1.13.2
@@ -2710,7 +2702,6 @@ snapshots:
       safe-buffer: 5.2.1
       tough-cookie: 5.1.2
       tunnel-agent: 0.6.0
-      uuid: 8.3.2
 
   '@cypress/xvfb@1.2.4(supports-color@8.1.1)':
     dependencies:
@@ -3117,7 +3108,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@tui-sandbox/library@12.5.3(cypress@15.14.2)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
+  '@tui-sandbox/library@12.5.3(cypress@15.15.0)(prettier@3.8.3)(type-fest@5.6.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
@@ -3128,7 +3119,7 @@ snapshots:
       '@xterm/xterm': 6.0.0
       concurrently: 9.2.1
       cors: 2.8.6
-      cypress: 15.14.2
+      cypress: 15.15.0
       dree: 5.1.5
       express: 5.2.1
       neovim: 5.4.0
@@ -3155,11 +3146,6 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@24.12.3':
-    dependencies:
-      undici-types: 7.16.0
-    optional: true
-
   '@types/node@24.12.4':
     dependencies:
       undici-types: 7.16.0
@@ -3176,7 +3162,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.12.3
+      '@types/node': 24.12.4
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.59.3(@typescript-eslint/parser@8.59.3(eslint@10.3.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.3.0(jiti@2.7.0))(typescript@6.0.3)':
@@ -3557,9 +3543,9 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress@15.14.2:
+  cypress@15.15.0:
     dependencies:
-      '@cypress/request': 3.0.10
+      '@cypress/request': 4.0.0
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.10
@@ -4873,8 +4859,6 @@ snapshots:
       is-generator-function: 1.1.0
       is-typed-array: 1.1.15
       which-typed-array: 1.1.19
-
-  uuid@8.3.2: {}
 
   vary@1.1.2: {}
 
