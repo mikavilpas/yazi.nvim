@@ -15,11 +15,11 @@
     "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.0.0",
-    "@commitlint/config-conventional": "21.0.0",
-    "@commitlint/types": "21.0.0",
+    "@commitlint/cli": "21.0.1",
+    "@commitlint/config-conventional": "21.0.1",
+    "@commitlint/types": "21.0.1",
     "@types/node": "24.12.4",
-    "knip": "6.13.0",
+    "knip": "6.13.1",
     "prettier": "3.8.3",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "3.0.2",
