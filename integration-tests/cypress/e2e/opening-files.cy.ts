@@ -15,6 +15,18 @@ import {
   isFileSelectedInYazi,
 } from "./utils/yazi-utils.js"
 
+function getSelectedFilePath(): Cypress.Chainable<string> {
+  const filenameSchema = z.object({ filename: z.string() })
+  return cy
+    .nvim_runLuaCode({
+      luaCode: `return require("yazi.utils").selected_file_path()`,
+    })
+    .then((result) => {
+      const value = filenameSchema.parse(result.value)
+      return value.filename satisfies string
+    })
+}
+
 describe("opening files", () => {
   beforeEach(() => {
     cy.visit("/")
@@ -77,18 +89,6 @@ describe("opening files", () => {
   it("can open yazi and hover a filename selected in visual mode", () => {
     cy.startNeovim().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
-
-      function getSelectedFilePath(): Cypress.Chainable<string> {
-        const filenameSchema = z.object({ filename: z.string() })
-        return cy
-          .nvim_runLuaCode({
-            luaCode: `return require("yazi.utils").selected_file_path()`,
-          })
-          .then((result) => {
-            const value = filenameSchema.parse(result.value)
-            return value.filename satisfies string
-          })
-      }
 
       // add text that contains a filename in the middle to test that limiting
       // the recognition of the filename works
