@@ -152,7 +152,7 @@ vim.list_extend(plugins, {
         "https://github.com/mason-org/mason.nvim",
         opts = {},
         -- renovate: datasource=github-releases depName=mason-org/mason.nvim
-        version = "v2.2.1",
+        version = "v2.3.0",
       },
       {
         "neovim/nvim-lspconfig",
