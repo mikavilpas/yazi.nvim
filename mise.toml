@@ -9,6 +9,7 @@ lua = "5.1"
 "github:JohnnyMorganz/stylua" = "2.5.2"
 "github:rvben/rumdl" = "0.2.0"
 actionlint = "1.7.12"
+pnpm = "11.2.2"
 
 [tasks]
 test = "luarocks test --local"
