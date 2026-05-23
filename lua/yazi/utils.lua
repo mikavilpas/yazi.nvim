@@ -274,7 +274,7 @@ function M.parse_events(event_lines)
       end
 
       table.insert(events, event)
-    elseif type == "bulk" then
+    elseif type == "bulk" or type == "bulk-rename" then
       -- example of a bulk event:
       -- bulk,0,1720800121065599,{"changes":{"/tmp/test-directory/test":"/tmp/test-directory/test2"}}
       local data = vim.json.decode(table.concat(parts, ",", 4, #parts))

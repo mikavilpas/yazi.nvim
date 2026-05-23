@@ -114,6 +114,7 @@ function YaProcess:start(context)
     "cd",
     "hover",
     "bulk",
+    "bulk-rename",
     -- when ya starts, it will send a "hi" event to all yazis. They respond
     -- with "hey" to acknowledge this. We can use this to detect when ya is
     -- ready, so that integration-tests can safely start.
@@ -261,6 +262,7 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         event.type == "rename"
         or event.type == "move"
         or event.type == "bulk"
+        or event.type == "bulk-rename"
       then
         vim.schedule(function()
           local success, result = pcall(function()

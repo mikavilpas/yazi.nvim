@@ -11,7 +11,7 @@ local M = {}
 ---@alias YaziNeovimEvent.YaziRenamedOrMovedData {changes: table<string, string>} # a table of old paths to new paths
 
 ---Emit an event when files are renamed or moved.
----@param event YaziRenameEvent | YaziMoveEvent | YaziBulkEvent
+---@param event YaziRenameEvent | YaziMoveEvent | YaziBulkEvent | YaziBulkRenameEvent
 ---@see YaziNeovimEvent.YaziRenamedOrMovedData
 function M.emit_renamed_or_moved_event(event)
   ---@type YaziNeovimEvent.YaziRenamedOrMovedData
@@ -29,7 +29,7 @@ function M.emit_renamed_or_moved_event(event)
     ---@type YaziRenameEvent
     local rename_event = event
     event_data.changes[rename_event.data.from] = rename_event.data.to
-  elseif event.type == "bulk" then
+  elseif event.type == "bulk" or event.type == "bulk-rename" then
     event_data.changes = event.changes
   end
 
