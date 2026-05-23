@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.6](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.5...v13.1.6) (2026-05-23)
+
+
+### Bug Fixes
+
+* bulk renames not working on nightly ([cd0532f](https://github.com/mikavilpas/yazi.nvim/commit/cd0532faf674eae7af9b6f7611248cbf2ddf2972))
+
 ## [13.1.5](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.4...v13.1.5) (2026-03-13)
 
 
