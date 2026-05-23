@@ -84,7 +84,7 @@ function M.process_event_emitted_from_yazi(event, config, context)
 
       handle_rename_move_bulk_event(config, item)
     end
-  elseif event.type == "bulk" then
+  elseif event.type == "bulk" or event.type == "bulk-rename" then
     ---@cast event YaziBulkEvent
     for from, to in pairs(event.changes) do
       vim.schedule(function()

@@ -81,6 +81,19 @@ describe("parsing yazi event file events", function()
     })
   end)
 
+  it("can parse bulk-rename events", function()
+    local data = {
+      'bulk-rename,0,1720800121065599,{"changes":{"/tmp/test-directory/test":"/tmp/test-directory/test2"}}',
+    }
+
+    local events = utils.parse_events(data)
+
+    assert.are.equal(#events, 1)
+    assert.same(events[1].changes, {
+      ["/tmp/test-directory/test"] = "/tmp/test-directory/test2",
+    })
+  end)
+
   it("can parse delete events", function()
     local data = {
       'delete,1,2,{"urls":["/tmp/test-directory/test_2"]}',
