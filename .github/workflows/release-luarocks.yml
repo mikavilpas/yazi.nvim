@@ -8,13 +8,20 @@ on:
       # Will upload to luarocks.org when a release is made
       - published
 
+permissions:
+  contents: read
+
 jobs:
   luarocks-release:
     runs-on: ubuntu-24.04
     name: LuaRocks upload
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - name: LuaRocks Upload
         uses: nvim-neorocks/luarocks-tag-release@adbca66e871a519055f4917c6af5fbf19f656f5d # v7.2.0
         env:
