@@ -10,6 +10,7 @@ lua = "5.1"
 "github:rvben/rumdl" = "0.2.0"
 actionlint = "1.7.12"
 pnpm = "11.2.2"
+zizmor = "1.25.2"
 
 [tasks]
 test = "luarocks test --local"
