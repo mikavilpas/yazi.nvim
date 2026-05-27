@@ -1,7 +1,7 @@
 import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
-import path, { join } from "path"
+import path from "path"
 import { z } from "zod"
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import {
@@ -461,7 +461,7 @@ describe("opening files", () => {
       }).then((nvim) => {
         cy.contains("Hello from file_1.txt")
         nvim.runExCommand({
-          command: `cd ${join(nvim.dir.testEnvironmentPathRelative, nvim.dir.contents.highlights.name)}`,
+          command: `cd ${path.join(nvim.dir.testEnvironmentPathRelative, nvim.dir.contents.highlights.name)}`,
         })
 
         cy.typeIntoTerminal("{upArrow}")
