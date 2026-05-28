@@ -1,15 +1,32 @@
 local M = {}
 
+---@param command string
+---@param chosen_file string
+local function edit_file(command, chosen_file)
+  local ok, err = pcall(function()
+    vim.cmd(string.format("%s %s", command, vim.fn.fnameescape(chosen_file)))
+  end)
+  if ok then
+    return
+  end
+
+  if tostring(err):find("E325:", 1, true) then
+    return
+  end
+
+  error(err, 0)
+end
+
 ---@param chosen_file string
 function M.open_file(chosen_file)
-  vim.cmd(string.format("edit %s", vim.fn.fnameescape(chosen_file)))
+  edit_file("edit", chosen_file)
 end
 
 ---@param chosen_file string
 function M.open_file_in_vertical_split(chosen_file)
   local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
-    vim.cmd(string.format("vsplit %s", vim.fn.fnameescape(chosen_file)))
+    edit_file("vsplit", chosen_file)
   end
 end
 
@@ -17,7 +34,7 @@ end
 function M.open_file_in_horizontal_split(chosen_file)
   local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
-    vim.cmd(string.format("split %s", vim.fn.fnameescape(chosen_file)))
+    edit_file("split", chosen_file)
   end
 end
 
@@ -25,7 +42,7 @@ end
 function M.open_file_in_tab(chosen_file)
   local is_directory = vim.fn.isdirectory(chosen_file) == 1
   if not is_directory then
-    vim.cmd(string.format("tabedit %s", vim.fn.fnameescape(chosen_file)))
+    edit_file("tabedit", chosen_file)
   end
 end
 
