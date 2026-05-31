@@ -1,3 +1,47 @@
+--- @param app_name "yazi" | "ya"
+--- @param raw_version string
+local function parse_version(app_name, raw_version)
+  -- example data:
+  -- Yazi 25.6.11 (8657e6b6 2025-06-29)
+  --
+  -- the beginning of the output might contain CSI sequences on some systems. See
+  -- https://github.com/mikavilpas/yazi.nvim/pull/73
+  -- https://github.com/sxyazi/yazi/commit/4c35f26e
+  local yazi_semver = raw_version:match("[Yy]azi (%w+%.%w+%.%w+)")
+    or raw_version:match("[Yy]a (%w+%.%w+%.%w+)")
+
+  if yazi_semver ~= nil then
+    return yazi_semver
+  end
+
+  -- in
+  -- https://github.com/sxyazi/yazi/commit/e892bf7d903d9efb7322f47d93c3ac6be5dd797e,
+  -- yazi made a breaking change to the output of `yazi --version`.
+  --
+  -- Handle the new output format as a fallback:
+  --
+  -- $ yazi --version
+  -- Yazi
+  --     Version: 26.5.6 (e892bf7d 2026-05-31)
+  --     Debug  : false
+  --     Triple : aarch64-apple-darwin (macos-aarch64)
+  --     Rustc  : 1.95.0 (59807616 2026-04-14)
+
+  yazi_semver = raw_version:match("Version:%s*(%w+%.%w+%.%w+)")
+
+  if yazi_semver ~= nil then
+    return yazi_semver
+  end
+
+  vim.health.warn(
+    string.format(
+      "%s --version looks unexpected, saw %s",
+      app_name,
+      raw_version
+    )
+  )
+end
+
 -- see :help :checkhealth
 -- https://github.com/neovim/neovim/blob/b7779c514632f8c7f791c92203a96d43fffa57c6/runtime/doc/pi_health.txt#L17
 return {
@@ -34,20 +78,8 @@ return {
       vim.health.warn("yazi not found on PATH")
     end
 
-    -- example data:
-    -- Yazi 25.6.11 (8657e6b6 2025-06-29)
     local raw_version = vim.fn.system("yazi --version")
-
-    -- parse the version
-    --
-    -- the beginning of the output might contain CSI sequences on some systems. See
-    -- https://github.com/mikavilpas/yazi.nvim/pull/73
-    -- https://github.com/sxyazi/yazi/commit/4c35f26e
-    local yazi_semver = raw_version:match("[Yy]azi (%w+%.%w+%.%w+)")
-
-    if yazi_semver == nil then
-      vim.health.warn("yazi --version looks unexpected, saw " .. raw_version)
-    end
+    local yazi_semver = parse_version("yazi", raw_version)
 
     local checker = require("vim.version")
     if not checker.ge(yazi_semver, "0.4.0") then
@@ -56,7 +88,9 @@ return {
       )
     else
       vim.health.info(
-        ("Found `yazi` version `%s` 👍"):format(raw_version:gsub("\n", ""))
+        ("Found `yazi` version `%s` 👍"):format(
+          yazi_semver or (raw_version:gsub("\n", ""))
+        )
       )
     end
 
@@ -76,24 +110,18 @@ return {
     -- example data:
     -- Ya 25.6.11 (8657e6b6 2025-06-29)
     local raw_ya_version = vim.fn.system("ya --version") or ""
-    local ya_semver = raw_ya_version:match("[Yy]a (%w+%.%w+%.%w+)")
-    if ya_semver == nil then
+    local ya_semver = parse_version("ya", raw_ya_version)
+
+    if not checker.ge(ya_semver, "0.4.0") then
       vim.health.warn(
-        string.format(
-          "`ya --version` looks unexpected, saw `%s` 🤔",
-          raw_ya_version
-        )
+        "The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version."
       )
     else
-      if not checker.ge(ya_semver, "0.4.0") then
-        vim.health.warn(
-          "The `ya` executable version (yazi command line interface) is too old. Please upgrade to the newest version."
+      vim.health.info(
+        ("Found `ya` version `%s` 👍"):format(
+          ya_semver or (raw_ya_version:gsub("\n", ""))
         )
-      else
-        vim.health.info(
-          ("Found `ya` version `%s` 👍"):format(raw_ya_version:gsub("\n", ""))
-        )
-      end
+      )
     end
 
     if yazi_semver ~= ya_semver then

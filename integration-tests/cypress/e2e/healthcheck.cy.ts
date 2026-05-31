@@ -3,7 +3,11 @@ import * as assert from "assert"
 describe("the healthcheck", () => {
   it("can run the :healthcheck for yazi.nvim", () => {
     cy.visit("/")
-    cy.startNeovim().then((nvim) => {
+    cy.startNeovim({
+      additionalEnvironmentVariables: {
+        MISE_NO_CONFIG: "1",
+      },
+    }).then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -21,8 +25,8 @@ describe("the healthcheck", () => {
       )
 
       // the `yazi` and `ya` applications should be found successfully
-      cy.contains(new RegExp("Found yazi version Yazi \\d+?.\\d+?.\\d+?"))
-      cy.contains(new RegExp("Found ya version Ya \\d+?.\\d+?.\\d+?"))
+      cy.contains(new RegExp("Found yazi version \\d+?.\\d+?.\\d+?"))
+      cy.contains(new RegExp("Found ya version \\d+?.\\d+?.\\d+?"))
       cy.contains("OK yazi")
       cy.contains("Neovim version:")
     })
