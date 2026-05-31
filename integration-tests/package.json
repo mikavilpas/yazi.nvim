@@ -14,7 +14,7 @@
     "@types/node": "24.12.4",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
-    "concurrently": "9.2.1",
+    "concurrently": "10.0.0",
     "cypress": "15.16.0",
     "eslint": "10.4.0",
     "eslint-config-prettier": "10.1.8",
