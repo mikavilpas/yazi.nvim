@@ -97,31 +97,81 @@ Options:
     snapshot:revert()
   end)
 
-  it("reports everything is ok", function()
-    vim.cmd("checkhealth yazi")
+  describe("old yazi version format", function()
+    it("reports everything is ok", function()
+      vim.cmd("checkhealth yazi")
 
-    assert_buffer_contains_text("Found `yazi` version `0.4.0")
-    assert_buffer_contains_text("Found `ya` version `0.4.0")
-    assert_buffer_contains_text("OK yazi")
+      assert_buffer_contains_text("Found `yazi` version `0.4.0")
+      assert_buffer_contains_text("Found `ya` version `0.4.0")
+      assert_buffer_contains_text("OK yazi")
+    end)
+
+    it("warns if the yazi version is too old", function()
+      mock_app_versions["yazi"] = "yazi 0.2.4 (f5a7ace 2024-06-23)"
+      vim.cmd("checkhealth yazi")
+
+      assert_buffer_contains_text(
+        "yazi version is too old, please upgrade to the newest version of yazi"
+      )
+    end)
+
+    it("warns if the ya version is too old", function()
+      mock_app_versions["ya"] = "Ya 0.2.4 (f5a7ace 2024-06-23)"
+
+      vim.cmd("checkhealth yazi")
+
+      assert_buffer_contains_text(
+        "WARNING The `ya` executable version (yazi command line interface) is too old."
+      )
+    end)
   end)
 
-  it("warns if the yazi version is too old", function()
-    mock_app_versions["yazi"] = "yazi 0.2.4 (f5a7ace 2024-06-23)"
-    vim.cmd("checkhealth yazi")
+  describe("new yazi version format", function()
+    -- yazi changed the output of `--version` in
+    -- https://github.com/sxyazi/yazi/commit/e892bf7d903d9efb7322f47d93c3ac6be5dd797e
+    --- @param app "Yazi" | "Ya"
+    --- @param version string
+    local function new_format(app, version)
+      return table.concat({
+        app,
+        string.format("    Version: %s (e892bf7d 2026-05-31)", version),
+        "    Debug  : false",
+        "    Triple : aarch64-apple-darwin (macos-aarch64)",
+        "    Rustc  : 1.95.0 (59807616 2026-04-14)",
+      }, "\n")
+    end
 
-    assert_buffer_contains_text(
-      "yazi version is too old, please upgrade to the newest version of yazi"
-    )
-  end)
+    before_each(function()
+      mock_app_versions["yazi"] = new_format("Yazi", "26.5.6")
+      mock_app_versions["ya"] = new_format("Ya", "26.5.6")
+    end)
 
-  it("warns if the ya version is too old", function()
-    mock_app_versions["ya"] = "Ya 0.2.4 (f5a7ace 2024-06-23)"
+    it("reports everything is ok", function()
+      vim.cmd("checkhealth yazi")
 
-    vim.cmd("checkhealth yazi")
+      assert_buffer_contains_text("Found `yazi` version `26.5.6")
+      assert_buffer_contains_text("Found `ya` version `26.5.6")
+      assert_buffer_contains_text("OK yazi")
+    end)
 
-    assert_buffer_contains_text(
-      "WARNING The `ya` executable version (yazi command line interface) is too old."
-    )
+    it("warns if the yazi version is too old", function()
+      mock_app_versions["yazi"] = new_format("Yazi", "0.2.4")
+      vim.cmd("checkhealth yazi")
+
+      assert_buffer_contains_text(
+        "yazi version is too old, please upgrade to the newest version of yazi"
+      )
+    end)
+
+    it("warns if the ya version is too old", function()
+      mock_app_versions["ya"] = new_format("Ya", "0.2.4")
+
+      vim.cmd("checkhealth yazi")
+
+      assert_buffer_contains_text(
+        "WARNING The `ya` executable version (yazi command line interface) is too old."
+      )
+    end)
   end)
 
   it("warns when yazi is not found", function()
