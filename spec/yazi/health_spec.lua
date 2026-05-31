@@ -98,6 +98,18 @@ Options:
   end)
 
   describe("old yazi version format", function()
+    -- example data: Yazi 0.4.0 (4112bf4 2024-08-15)
+    --- @param app "Yazi" | "Ya" | "yazi" | "ya"
+    --- @param version string
+    local function old_format(app, version)
+      return string.format("%s %s (4112bf4 2024-08-15)", app, version)
+    end
+
+    before_each(function()
+      mock_app_versions["yazi"] = old_format("Yazi", "0.4.0")
+      mock_app_versions["ya"] = old_format("Ya", "0.4.0")
+    end)
+
     it("reports everything is ok", function()
       vim.cmd("checkhealth yazi")
 
@@ -107,7 +119,7 @@ Options:
     end)
 
     it("warns if the yazi version is too old", function()
-      mock_app_versions["yazi"] = "yazi 0.2.4 (f5a7ace 2024-06-23)"
+      mock_app_versions["yazi"] = old_format("yazi", "0.2.4")
       vim.cmd("checkhealth yazi")
 
       assert_buffer_contains_text(
@@ -116,7 +128,7 @@ Options:
     end)
 
     it("warns if the ya version is too old", function()
-      mock_app_versions["ya"] = "Ya 0.2.4 (f5a7ace 2024-06-23)"
+      mock_app_versions["ya"] = old_format("Ya", "0.2.4")
 
       vim.cmd("checkhealth yazi")
 
