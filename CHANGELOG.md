@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.7](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.6...v13.1.7) (2026-05-31)
+
+
+### Bug Fixes
+
+* support new yazi nightly version output format ([4c65a57](https://github.com/mikavilpas/yazi.nvim/commit/4c65a579258750cfb5bef1a1d34c29b4cc911a7d))
+
 ## [13.1.6](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.5...v13.1.6) (2026-05-23)
 
 
