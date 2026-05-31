@@ -100,8 +100,8 @@ Options:
   it("reports everything is ok", function()
     vim.cmd("checkhealth yazi")
 
-    assert_buffer_contains_text("Found `yazi` version `Yazi 0.4.0")
-    assert_buffer_contains_text("Found `ya` version `Ya 0.4.0")
+    assert_buffer_contains_text("Found `yazi` version `0.4.0")
+    assert_buffer_contains_text("Found `ya` version `0.4.0")
     assert_buffer_contains_text("OK yazi")
   end)
 
@@ -126,6 +126,11 @@ Options:
 
   it("warns when yazi is not found", function()
     mock_app_versions["yazi"] = "command not found"
+    vim.cmd("checkhealth yazi")
+
+    assert_buffer_contains_text(
+      "WARNING yazi --version looks unexpected, saw command not found"
+    )
   end)
 
   it("warns when ya is not found", function()
@@ -134,7 +139,7 @@ Options:
     vim.cmd("checkhealth yazi")
 
     assert_buffer_contains_text(
-      "WARNING `ya --version` looks unexpected, saw `command not found`"
+      "WARNING ya --version looks unexpected, saw command not found"
     )
   end)
 
