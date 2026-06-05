@@ -7,7 +7,7 @@ lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 "github:BurntSushi/ripgrep" = { version = "15.1.0", exe = "rg" }
 "github:JohnnyMorganz/stylua" = "2.5.2"
-"github:rvben/rumdl" = "0.2.7"
+"github:rvben/rumdl" = "0.2.8"
 actionlint = "1.7.12"
 zizmor = "1.25.2"
 
