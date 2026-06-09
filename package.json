@@ -19,7 +19,7 @@
     "@commitlint/config-conventional": "21.0.2",
     "@commitlint/types": "21.0.1",
     "@types/node": "24.13.1",
-    "knip": "6.16.0",
+    "knip": "6.16.1",
     "prettier": "3.8.3",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-packagejson": "3.0.2",
