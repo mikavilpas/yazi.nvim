@@ -124,7 +124,7 @@ vim.list_extend(plugins, {
     -- https://github.com/mason-org/mason-lspconfig.nvim?tab=readme-ov-file#recommended-setup-for-lazynvim
     "mason-org/mason-lspconfig.nvim",
     -- renovate: datasource=github-releases depName=mason-org/mason-lspconfig.nvim
-    version = "v2.2.0",
+    version = "v2.3.0",
     opts = {},
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -152,7 +152,7 @@ vim.list_extend(plugins, {
         "https://github.com/mason-org/mason.nvim",
         opts = {},
         -- renovate: datasource=github-releases depName=mason-org/mason.nvim
-        version = "v2.3.0",
+        version = "v2.3.1",
       },
       {
         "neovim/nvim-lspconfig",
