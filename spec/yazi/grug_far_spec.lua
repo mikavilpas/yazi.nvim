@@ -1,9 +1,7 @@
----@module "plenary.path"
-
 local assert = require("luassert")
 local mock = require("luassert.mock")
 local config = require("yazi.config")
-local plenary_path = require("plenary.path")
+local YaziPath = require("yazi.path")
 
 describe("the grug-far integration (search and replace)", function()
   local mock_grug_far = { open = function() end }
@@ -19,7 +17,7 @@ describe("the grug-far integration (search and replace)", function()
   end)
 
   it("opens yazi with the current file selected", function()
-    local tmp_path = plenary_path:new("/tmp/folder with spaces/")
+    local tmp_path = YaziPath:new("/tmp/folder with spaces/")
 
     config.default().integrations.replace_in_directory(tmp_path)
 

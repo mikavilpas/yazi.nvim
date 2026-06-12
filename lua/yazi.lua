@@ -1,5 +1,3 @@
----@module "plenary"
-
 local configModule = require("yazi.config")
 
 local M = {}

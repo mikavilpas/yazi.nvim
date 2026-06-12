@@ -6,8 +6,8 @@ describe("the default configuration", function()
     reset.clear_all_buffers()
   end)
 
-  local plenary_path = require("plenary.path")
-  local last_directory = plenary_path:new(vim.fn.getcwd())
+  local YaziPath = require("yazi.path")
+  local last_directory = YaziPath:new(vim.fn.getcwd())
 
   it("opens multiple files in buffers by default", function()
     local config = require("yazi.config").default()

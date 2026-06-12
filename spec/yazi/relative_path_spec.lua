@@ -1,5 +1,3 @@
----@module "plenary.path"
-
 local assert = require("luassert")
 local utils = require("yazi.utils")
 local yazi = require("yazi")

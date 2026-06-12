@@ -1,5 +1,3 @@
----@module "plenary.path"
-
 local openers = require("yazi.openers")
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
@@ -187,7 +185,6 @@ function YaziOpenerActions.cycle_open_buffers(_config, context)
     )
   )
 
-  -- make sure the type is a string, because plenary thinks it is `string|unknown`
   context.api:reveal(next_buffer.renameable_buffer.path:absolute())
   context.cycled_file = next_buffer.renameable_buffer
 end
@@ -239,12 +236,12 @@ function YaziOpenerActions.grep_in_selected_files(config, chosen_files)
     return
   end
 
-  local plenary_path = require("plenary.path")
+  local YaziPath = require("yazi.path")
 
-  ---@type Path[]
+  ---@type YaziPath[]
   local paths = {}
   for _, path in ipairs(chosen_files) do
-    table.insert(paths, plenary_path:new(path))
+    table.insert(paths, YaziPath:new(path))
   end
 
   -- pickers typically work with file paths relative to the cwd
@@ -308,10 +305,10 @@ function YaziOpenerActions.replace_in_selected_files(config, chosen_files)
   end
 
   -- limit the replace operation to the selected files only
-  local plenary_path = require("plenary.path")
+  local YaziPath = require("yazi.path")
   local paths = {}
   for _, path in ipairs(chosen_files) do
-    table.insert(paths, plenary_path:new(path))
+    table.insert(paths, YaziPath:new(path))
   end
 
   local success, result_or_error =
