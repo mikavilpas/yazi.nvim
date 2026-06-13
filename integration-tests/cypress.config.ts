@@ -4,6 +4,7 @@ import { readFile, rm } from "fs/promises"
 import path from "path"
 import { inspect } from "util"
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname)
 const yaziLogFile = path.resolve(__dirname, "test-environment/.repro/yazi.log")
 
 console.log(`yaziLogFile: ${yaziLogFile}`)
