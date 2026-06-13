@@ -6,6 +6,7 @@ const config: UserConfig = {
   extends: ["@commitlint/config-conventional"],
   rules: {
     "body-max-line-length": [RuleConfigSeverity.Disabled],
+    "footer-max-line-length": [RuleConfigSeverity.Disabled],
   },
 }
 
