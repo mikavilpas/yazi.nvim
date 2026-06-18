@@ -55,16 +55,16 @@ jobs:
               https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
               TARGET="$HOME/.local/bin" sh
 
-          VERSION=$(yq '.tools."github:EmmyLuaLs/emmylua-analyzer-rust".version' mise.toml)
+          VERSION=$(yq '.tools."github:EmmyLuaLs/emmylua-analyzer-rust"' mise.toml)
           ubi --project EmmyLuaLs/emmylua-analyzer-rust --tag "$VERSION" --exe emmylua_ls --matching-regex "^emmylua_ls"
 
-          VERSION=$(yq '.tools."github:BurntSushi/ripgrep".version' mise.toml)
+          VERSION=$(yq '.tools.ripgrep.version' mise.toml)
           ubi --project BurntSushi/ripgrep --tag "$VERSION" --exe rg
 
-          VERSION=$(yq '.tools."github:junegunn/fzf"' mise.toml)
+          VERSION=$(yq '.tools.fzf' mise.toml)
           ubi --project junegunn/fzf --tag "v$VERSION"
 
-          VERSION=$(yq '.tools."github:sharkdp/fd"' mise.toml)
+          VERSION=$(yq '.tools.fd' mise.toml)
           ubi --project sharkdp/fd --tag "v$VERSION"
           ls -alR bin
         env:
