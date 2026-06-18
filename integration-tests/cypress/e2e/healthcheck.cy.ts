@@ -3,11 +3,7 @@ import * as assert from "assert"
 describe("the healthcheck", () => {
   it("can run the :healthcheck for yazi.nvim", () => {
     cy.visit("/")
-    cy.startNeovim({
-      additionalEnvironmentVariables: {
-        MISE_NO_CONFIG: "1",
-      },
-    }).then((nvim) => {
+    cy.startNeovim().then((nvim) => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
