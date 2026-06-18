@@ -1,6 +1,8 @@
 import { createDefaultConfig } from "@tui-sandbox/library/dist/src/server/config.js"
 import type { TestServerConfig } from "@tui-sandbox/library/dist/src/server/index.js"
 
+process.env.MISE_YES = "1"
+
 export const config: TestServerConfig = createDefaultConfig(
   process.cwd(),
   process.env,
