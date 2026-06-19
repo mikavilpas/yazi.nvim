@@ -51,6 +51,9 @@ describe("opening files", () => {
       // normally, when yazi is started, a message is shown at the bottom
       cy.typeIntoTerminal("{upArrow}")
       cy.contains("-- TERMINAL --")
+      cy.contains(
+        nvim.dir.contents["config-modifications"].name.replace("/", ""),
+      )
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
 
@@ -810,9 +813,9 @@ describe("changing the cwd on close (change_neovim_cwd_on_close)", () => {
       // verify the pwd does not change without enabling the setting
       assertNeovimCwd(nvim, startPath)
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains("-- TERMINAL --")
+      cy.contains("NOR")
       cy.typeIntoTerminal("q")
-      cy.contains("-- TERMINAL --").should("not.exist")
+      cy.contains("NOR").should("not.exist")
       assertNeovimCwd(nvim, startPath)
 
       // allow change_neovim_cwd_on_close, which makes the pwd change
@@ -823,9 +826,9 @@ describe("changing the cwd on close (change_neovim_cwd_on_close)", () => {
 
       // verify the pwd changes
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains("-- TERMINAL --")
+      cy.contains("NOR")
       cy.typeIntoTerminal("q")
-      cy.contains("-- TERMINAL --").should("not.exist")
+      cy.contains("NOR").should("not.exist")
       nvim.runExCommand({ command: "pwd" }).then((result) => {
         const pwd = z.string().parse(result.value)
         expect(pwd).to.eql(
