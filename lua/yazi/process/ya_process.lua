@@ -211,8 +211,15 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
 
   for _, event in ipairs(events) do
     if self.ready ~= true and event.type == "hey" then
-      ---@cast event YaziHeyEvent
-      if event.yazi_id == self.yazi_id then
+      ---@cast event YaziRawHeyEvent
+      -- The `hey` handshake is sent by whichever instance acts as the DDS
+      -- server, so `event.yazi_id` (the sender) is not necessarily our yazi.
+      -- Instead, detect the readiness of our yazi by looking for its client-id
+      -- in the peer list. This is robust even when other yazi instances are
+      -- running on the system. The peers are parsed lazily here as we only
+      -- need to do this once.
+      local peers = utils.parse_hey_peers(event.raw_data)
+      if peers[self.yazi_id] == true then
         Log:debug(
           string.format("ya process is ready, yazi_id: %s", self.yazi_id)
         )

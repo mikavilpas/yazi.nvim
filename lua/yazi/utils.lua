@@ -371,10 +371,19 @@ function M.parse_events(event_lines)
     elseif type == "hey" then
       -- example of a hey event:
       -- hey,0,69016966727041,{"peers":{"1745849494365272":{"abilities":["hey"]},"69016966727041":{"abilities":["dds-emit","@yank","extract"]},"1745849492676175":{"abilities":["hover","move","hey","bulk","cd","delete","rename","trash","nvim-cycle-buffer"]}},"version":"25.4.8 VERGEN_IDEMPOTENT_OUTPUT"}
-      ---@type YaziHeyEvent
+      --
+      -- NOTE: the third field (`yazi_id`) is the *sender* of the handshake,
+      -- which is the DDS server and not necessarily our yazi. The `peers` map
+      -- is keyed by client-id and lists every connected client, including our
+      -- yazi (started with `--client-id <yazi_id>`). To detect our yazi
+      -- reliably we look it up in `peers`, not in the sender field.
+      --
+      ---@type YaziRawHeyEvent
       local event = {
         yazi_id = yazi_id,
         type = type,
+        -- parsed only when needed
+        raw_data = table.concat(parts, ",", 4, #parts),
       }
       table.insert(events, event)
     else
@@ -414,6 +423,23 @@ function M.safe_parse_events(event_lines)
   end
 
   return events
+end
+
+---Parse the set of connected client-ids ("peers") from the raw JSON payload of
+---a `hey` handshake event.
+---@param raw_data string # the JSON payload of a `hey` event
+---@return table<string, boolean>
+function M.parse_hey_peers(raw_data)
+  ---@type table<string, boolean>
+  local peers = {}
+  local ok, json = pcall(vim.json.decode, raw_data)
+  if ok and json ~= nil and json.peers ~= nil then
+    for peer_id, _ in pairs(json.peers) do
+      peers[peer_id] = true
+    end
+  end
+
+  return peers
 end
 
 ---@return RenameableBuffer[]

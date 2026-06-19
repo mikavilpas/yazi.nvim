@@ -175,4 +175,36 @@ describe("parsing yazi event file events", function()
       },
     } --[[@as YaziHoverEvent[] ]])
   end)
+
+  it("can parse hey events, keeping the raw payload", function()
+    local payload =
+      '{"peers":{"1781852712628265":{"abilities":["bulk","move","hey","cd","hover"]},"263042799271791":{"abilities":["dds-exec","dds-emit","extract"]},"1781852081177795":{"abilities":["hey","hi"]}},"version":"26.5.6 ab8d634f"}'
+    local data = { "hey,0,263042799271791," .. payload }
+
+    local events = utils.parse_events(data)
+
+    assert.are.same({
+      {
+        type = "hey",
+        yazi_id = "263042799271791",
+        raw_data = payload,
+      },
+    } --[[@as YaziRawHeyEvent[] ]], events)
+  end)
+
+  it("can parse the connected peers from a hey event payload", function()
+    local payload =
+      '{"peers":{"1781852712628265":{"abilities":["bulk","move","hey","cd","hover"]},"263042799271791":{"abilities":["dds-exec","dds-emit","extract"]},"1781852081177795":{"abilities":["hey","hi"]}},"version":"26.5.6 ab8d634f"}'
+
+    assert.are.same({
+      ["1781852712628265"] = true,
+      ["263042799271791"] = true,
+      ["1781852081177795"] = true,
+    }, utils.parse_hey_peers(payload))
+  end)
+
+  it("returns no peers when a hey payload is malformed", function()
+    assert.are.same({}, utils.parse_hey_peers("not json"))
+    assert.are.same({}, utils.parse_hey_peers('{"version":"26.5.6"}'))
+  end)
 end)
