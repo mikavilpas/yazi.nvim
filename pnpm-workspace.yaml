@@ -3,6 +3,8 @@ packages:
 allowBuilds:
   cypress: true
   esbuild: true
+minimumReleaseAgeExclude:
+  - "@tui-sandbox/library@12.6.0"
 saveExact: true
 
 # https://pnpm.io/pnpm-workspace_yaml
