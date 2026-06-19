@@ -227,7 +227,13 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         self.on_first_output()
         self.on_first_output = nil
       end
-    elseif event.type == "hover" then
+    elseif event.type == "hover" and event.yazi_id == self.yazi_id then
+      -- Only track hovers from our own yazi. The DDS bus is shared across all
+      -- yazi instances on the system, so other instances (e.g. another yazi
+      -- the user has open, or a not-yet-exited one from a previous test) also
+      -- broadcast `hover` events. Honoring them would corrupt our
+      -- `hovered_url`. The `cd` handler below filters by `yazi_id` for the
+      -- same reason.
       ---@cast event YaziHoverEvent
       Log:debug(
         string.format(
