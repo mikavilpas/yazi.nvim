@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.1.8](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.7...v13.1.8) (2026-06-21)
+
+
+### Bug Fixes
+
+* only track hover events from our own yazi instance ([43a9e2d](https://github.com/mikavilpas/yazi.nvim/commit/43a9e2d0fa06de26f8f26ec4376a9ae8f4d817cb))
+
 ## [13.1.7](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.6...v13.1.7) (2026-05-31)
 
 
