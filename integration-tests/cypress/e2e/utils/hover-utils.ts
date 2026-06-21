@@ -56,34 +56,28 @@ export function assertYaziIsHovering(
   })
 }
 
-/** HACK in CI, there can be timing issues where the first hover event is
- * lost. Right now we work around this by selecting another file first, then
- * hovering the desired file.
+/** Reveal a file in yazi and wait until our yazi confirms it is hovering it.
  *
- * Requires the {add_command_to_reveal_a_file.lua} script to be loaded from
- * config-modifications.
+ * In CI the `hover` DDS event yazi emits in response to a `reveal` can be lost,
  */
 export function hoverFileAndVerifyItsHovered(
   nvim: NeovimContext,
   file: MyTestDirectoryFile,
 ): Cypress.Chainable<RunLuaCodeOutput> {
   assertYaziIsReady(nvim)
+  const modulePath = `${nvim.dir.rootPathAbsolute}/config-modifications/add_command_to_reveal_a_file.lua`
+
   {
     // select another file (hacky) and wait for it to be hovered
     const dir = "config-modifications" satisfies MyTestDirectoryFile
     const path = nvim.dir.rootPathAbsolute + "/" + dir
-    nvim
-      .runLuaCode({
-        luaCode: `return Yazi_reveal_path("${path}")`,
-      })
-      .then(() => assertYaziIsHovering(nvim, dir))
+    nvim.runLuaCode({
+      luaCode: `return dofile("${modulePath}").reveal_path_and_wait_for_hover("${path}")`,
+    })
   }
 
-  // now select the desired file
   const path = nvim.dir.rootPathAbsolute + "/" + file
-  return nvim
-    .runLuaCode({
-      luaCode: `return Yazi_reveal_path("${path}")`,
-    })
-    .then(() => assertYaziIsHovering(nvim, file))
+  return nvim.runLuaCode({
+    luaCode: `return dofile("${modulePath}").reveal_path_and_wait_for_hover("${path}")`,
+  })
 }
