@@ -9,17 +9,50 @@ on:
 permissions:
   contents: read
 
+env:
+  # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
+  NEOVIM_NIGHTLY_COMMIT: d40c07511ad220c08cd2803921346c889da74a44
+
 jobs:
+  # Build the pinned Neovim nightly once (cached by commit) and publish it as an
+  # artifact, instead of rebuilding it in every matrix job on a cache miss.
+  build-neovim-nightly:
+    name: Build pinned Neovim nightly
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
+      - name: Build pinned Neovim nightly
+        id: neovim
+        uses: ./.github/actions/setup-neovim-nightly
+        with:
+          commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
+      - name: Package Neovim nightly
+        env:
+          NEOVIM_PREFIX: ${{ steps.neovim.outputs.prefix }}
+        run: tar -czf neovim-nightly.tar.gz -C "$NEOVIM_PREFIX" .
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: neovim-nightly
+          path: neovim-nightly.tar.gz
+          retention-days: 1
+
   build:
     name:
-      "Test (neovim ${{ matrix.neovim_version }}, yazi ${{
-      matrix.yazi-version.name }})"
+      "Test (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name
+      }})"
     runs-on: ubuntu-24.04
+    needs: build-neovim-nightly
     permissions:
       contents: read
     strategy:
       matrix:
-        neovim_version: ["nightly", "stable"]
+        neovim:
+          - name: nightly
+          - name: stable
         yazi-version:
           - name: nightly
             method: cargo-install
@@ -101,6 +134,22 @@ jobs:
           yazi --version
           ya --version
 
+      - name: Download pinned Neovim nightly
+        if: matrix.neovim.name == 'nightly'
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: neovim-nightly
+          path: ${{ runner.temp }}/neovim-nightly-artifact
+
+      - name: Extract pinned Neovim nightly
+        id: neovim-nightly
+        if: matrix.neovim.name == 'nightly'
+        run: |
+          prefix="${{ runner.temp }}/neovim-nightly"
+          mkdir -p "$prefix"
+          tar -xzf "${{ runner.temp }}/neovim-nightly-artifact/neovim-nightly.tar.gz" -C "$prefix"
+          echo "prefix=$prefix" >> "$GITHUB_OUTPUT"
+
       - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
         with:
           # https://github.com/pnpm/action-setup?tab=readme-ov-file#use-cache-to-reduce-installation-time
@@ -114,9 +163,21 @@ jobs:
       - name: Run tests
         uses: nvim-neorocks/nvim-busted-action@bbcfe82d35b8fb4660ef6ed4124e1fd9cef4688b # v1.2.0
         with:
-          nvim_version: ${{ matrix.neovim_version }}
+          # This action MUST install a neovim by design. For nightly neovim we
+          # want to use our own pinned build, so the action only needs to
+          # install a real Neovim for the `stable` case.
+          nvim_version:
+            ${{ matrix.neovim.name == 'nightly' && 'stable' ||
+            matrix.neovim.name }}
           luarocks_version: "3.11.1"
           before: |
+            # The pinned action runs `rhysd/action-setup-vim` before this
+            # `before` hook, and the `luarocks test` run after it. Prepending our
+            # pinned nightly to PATH here therefore makes nlua/busted use it
+            # instead of the Neovim the action just installed.
+            if [ "${{ matrix.neovim.name }}" = "nightly" ]; then
+              echo "${{ steps.neovim-nightly.outputs.prefix }}/bin" >> "$GITHUB_PATH"
+            fi
             # copied from mise.toml
             luarocks init --no-gitignore
             luarocks install busted 2.2.0-1
