@@ -1,9 +1,22 @@
-import assert from "assert"
+import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
+import type { NeovimContext } from "../support/tui-sandbox.ts"
 import {
   assertYaziIsReady,
   isDirectorySelectedInYazi,
   isFileSelectedInYazi,
 } from "./utils/yazi-utils.js"
+
+/** It takes a bit of time for the LSP server to start. Wait until it's ready. */
+const waitForEmmyluaLsReady = (
+  nvim: NeovimContext,
+): Cypress.Chainable<RunLuaCodeOutput> =>
+  // It takes a bit of time for the LSP server to start.
+  nvim.waitForLuaCode({
+    luaAssertion: `
+      local emmylua_ls = vim.lsp.get_clients({name="emmylua_ls"})[1]
+      assert(emmylua_ls.initialized)
+      `,
+  })
 
 const waitConfirmRenameDialog = (): void => {
   cy.contains("Do you want to modify the require path?")
@@ -25,19 +38,7 @@ describe("rename events with LSP support", () => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
-      // It takes a bit of time for the LSP server to start.
-      //
-      // This is a pretty hacky way to know when the LSP server is ready. It
-      // shows an "unused" warning when it has started :)
-      nvim
-        .runLuaCode({ luaCode: `vim.lsp.get_clients({bufnr=0})` })
-        .then((result) => {
-          const clients = result.value
-          assert(!clients)
-        })
-      nvim.waitForLuaCode({
-        luaAssertion: `assert(#vim.diagnostic.get(0) > 0)`,
-      })
+      waitForEmmyluaLsReady(nvim)
 
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
@@ -70,19 +71,7 @@ describe("rename events with LSP support", () => {
       // wait until text on the start screen is visible
       cy.contains(`-- 609a3a37-42da-494d-908e-749d3aedca58`)
 
-      // It takes a bit of time for the LSP server to start.
-      //
-      // This is a pretty hacky way to know when the LSP server is ready. It
-      // shows an "unused" warning when it has started :)
-      nvim
-        .runLuaCode({ luaCode: `vim.lsp.get_clients({bufnr=0})` })
-        .then((result) => {
-          const clients = result.value
-          assert(!clients)
-        })
-      nvim.waitForLuaCode({
-        luaAssertion: `assert(#vim.diagnostic.get(0) > 0)`,
-      })
+      waitForEmmyluaLsReady(nvim)
 
       // make sure the require path is unmodified
       cy.contains(`local utils = require("utils.utils")`)
@@ -119,19 +108,7 @@ describe("move events with LSP support", () => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
-      // It takes a bit of time for the LSP server to start.
-      //
-      // This is a pretty hacky way to know when the LSP server is ready. It
-      // shows an "unused" warning when it has started :)
-      nvim
-        .runLuaCode({ luaCode: `vim.lsp.get_clients({bufnr=0})` })
-        .then((result) => {
-          const clients = result.value
-          assert(!clients)
-        })
-      nvim.waitForLuaCode({
-        luaAssertion: `assert(#vim.diagnostic.get(0) > 0)`,
-      })
+      waitForEmmyluaLsReady(nvim)
 
       nvim.runBlockingShellCommand({
         command: "mkdir newdir",
