@@ -1,5 +1,5 @@
 [tools]
-"github:EmmyLuaLs/emmylua-analyzer-rust" = "0.23.1"
+"github:EmmyLuaLs/emmylua-analyzer-rust" = "0.23.2"
 fzf = "0.73.1"
 # fd is a dependency of telescope and fzf-lua
 fd = "10.4.2"
@@ -7,9 +7,9 @@ lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
 ripgrep = { version = "15.1.0", exe = "rg" }
 "github:JohnnyMorganz/stylua" = "2.5.2"
-"github:rvben/rumdl" = "0.2.16"
+"github:rvben/rumdl" = "0.2.20"
 actionlint = "1.7.12"
-zizmor = "1.25.2"
+zizmor = "1.26.1"
 
 [tasks]
 test = "luarocks test --local"
