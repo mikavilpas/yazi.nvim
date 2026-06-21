@@ -1,0 +1,59 @@
+---
+name: "Download pinned Neovim nightly"
+description: >-
+  Download and extract the pinned Neovim nightly artifact published by the
+  companion `setup-neovim-nightly` action, exposing its install prefix so jobs
+  can use the pinned build without rebuilding it.
+
+inputs:
+  artifact-name:
+    description: "Name of the workflow artifact to download the build from."
+    required: false
+    default: neovim-nightly
+  commit:
+    description:
+      "The expected https://github.com/neovim/neovim commit. When set, the
+      extracted Neovim is asserted to report this commit, so a mismatched or
+      stale artifact fails loudly instead of being tested silently."
+    required: false
+
+outputs:
+  prefix:
+    description:
+      "Install prefix of the extracted Neovim (binary at <prefix>/bin/nvim)."
+    value: ${{ steps.config.outputs.prefix }}
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve install prefix
+      id: config
+      shell: bash
+      run: echo "prefix=${{ runner.temp }}/neovim-nightly" >> "$GITHUB_OUTPUT"
+
+    - name: Download pinned Neovim nightly
+      uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ runner.temp }}/neovim-nightly-artifact
+
+    - name: Extract pinned Neovim nightly
+      shell: bash
+      env:
+        NEOVIM_COMMIT: ${{ inputs.commit }}
+        NEOVIM_PREFIX: ${{ steps.config.outputs.prefix }}
+      run: |
+        mkdir -p "$NEOVIM_PREFIX"
+        tar -xzf "${{ runner.temp }}/neovim-nightly-artifact/neovim-nightly.tar.gz" -C "$NEOVIM_PREFIX"
+        "$NEOVIM_PREFIX/bin/nvim" --version
+
+        # When a commit is given, assert the extracted Neovim reports it, so a
+        # mismatched or stale artifact fails loudly instead of being tested
+        # silently.
+        if [ -n "$NEOVIM_COMMIT" ]; then
+          short="$(printf '%s' "$NEOVIM_COMMIT" | cut -c1-7)"
+          "$NEOVIM_PREFIX/bin/nvim" --version | grep --quiet "$short" || {
+            echo "Extracted Neovim does not report the expected commit $NEOVIM_COMMIT (looked for $short)"
+            exit 1
+          }
+        fi
