@@ -15,7 +15,7 @@
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
     "concurrently": "10.0.3",
-    "cypress": "15.17.0",
+    "cypress": "15.18.0",
     "eslint": "10.5.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.4.0",
