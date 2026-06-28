@@ -158,6 +158,12 @@ jobs:
             # instead of the Neovim the action just installed.
             if [ "${{ matrix.neovim.name }}" = "nightly" ]; then
               echo "${{ steps.neovim-nightly.outputs.prefix }}/bin" >> "$GITHUB_PATH"
+              SHORT="$(printf '%s' "$NEOVIM_COMMIT" | cut -c1-7)"
+              nvim --version
+              nvim --version | grep --quiet "$short" || {
+                echo "Extracted Neovim does not report the expected commit $NEOVIM_COMMIT (looked for $short)"
+                exit 1
+              }
             fi
             # copied from mise.toml
             luarocks init --no-gitignore
