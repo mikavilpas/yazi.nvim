@@ -26,7 +26,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Build pinned Neovim nightly
-        uses: mikavilpas/neovim-action/build-nightly@b4c85510d31c54a01ff0998741fafd871a451cf9 # v2.1.0
+        uses: mikavilpas/neovim-action/build-nightly@54d963fddfcee3412601479bf9ed529aa180631d # v3.1.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
@@ -127,7 +127,7 @@ jobs:
       - name: Download pinned Neovim nightly
         id: neovim-nightly
         if: matrix.neovim.name == 'nightly'
-        uses: mikavilpas/neovim-action/restore-nightly@b4c85510d31c54a01ff0998741fafd871a451cf9 # v2.1.0
+        uses: mikavilpas/neovim-action/restore-nightly@54d963fddfcee3412601479bf9ed529aa180631d # v3.1.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
@@ -157,11 +157,15 @@ jobs:
             # pinned nightly to PATH here therefore makes nlua/busted use it
             # instead of the Neovim the action just installed.
             if [ "${{ matrix.neovim.name }}" = "nightly" ]; then
-              echo "${{ steps.neovim-nightly.outputs.prefix }}/bin" >> "$GITHUB_PATH"
-              SHORT="$(printf '%s' "$NEOVIM_COMMIT" | cut -c1-7)"
+              prefix="${{ steps.neovim-nightly.outputs.prefix }}/bin"
+              # `>> "$GITHUB_PATH"` only affects *subsequent* steps
+              export PATH="$prefix:$PATH"
+              echo "$prefix" >> "$GITHUB_PATH"
+              short="${{ steps.neovim-nightly.outputs.short-commit }}"
+              echo "nvim resolves to: $(command -v nvim)"
               nvim --version
               nvim --version | grep --quiet "$short" || {
-                echo "Extracted Neovim does not report the expected commit $NEOVIM_COMMIT (looked for $short)"
+                echo "Extracted Neovim does not report the expected commit $NEOVIM_NIGHTLY_COMMIT (looked for $short)"
                 exit 1
               }
             fi
