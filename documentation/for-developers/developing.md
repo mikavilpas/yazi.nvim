@@ -24,8 +24,10 @@ having trouble.
   autocompletion, navigation, etc.
 - <https://github.com/folke/trouble.nvim> which shows errors and diagnostics
 - <https://github.com/stevearc/conform.nvim> which formats your code on save.
-  Configure it to use stylua and prettier using the instructions in its README
-  file
+  Configure it to use stylua using the instructions in its README file
+- <https://github.com/neovim/nvim-lspconfig/blob/master/lsp/oxfmt.lua> or
+  <https://www.lazyvim.org/extras/lang/typescript/oxc#masonnvim> for configuring
+  oxfmt for formatting code
 - <https://www.lazyvim.org/extras/lang/typescript> or similar tooling for
   working with integration tests
 

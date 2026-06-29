@@ -1,6 +1,0 @@
----
-proseWrap: always
-semi: false
-plugins:
-  - prettier-plugin-organize-imports
-  - prettier-plugin-packagejson

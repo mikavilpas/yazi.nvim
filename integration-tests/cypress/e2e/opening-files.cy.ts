@@ -1,8 +1,10 @@
-import { flavors } from "@catppuccin/palette"
-import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import assert from "assert"
 import path from "path"
+
+import { flavors } from "@catppuccin/palette"
+import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 import { z } from "zod"
+
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import {
   assertYaziIsHovering,
