@@ -26,7 +26,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Build pinned Neovim nightly
-        uses: mikavilpas/neovim-action/build-nightly@54d963fddfcee3412601479bf9ed529aa180631d # v3.1.0
+        uses: mikavilpas/neovim-action/build-nightly@673c9715ab356c92820355ad99d7c23ca564da0c # v3.2.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
@@ -127,7 +127,7 @@ jobs:
       - name: Download pinned Neovim nightly
         id: neovim-nightly
         if: matrix.neovim.name == 'nightly'
-        uses: mikavilpas/neovim-action/restore-nightly@54d963fddfcee3412601479bf9ed529aa180631d # v3.1.0
+        uses: mikavilpas/neovim-action/restore-nightly@673c9715ab356c92820355ad99d7c23ca564da0c # v3.2.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
