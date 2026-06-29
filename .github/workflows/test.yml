@@ -14,17 +14,10 @@ env:
   NEOVIM_NIGHTLY_COMMIT: 7945732ed7bb211f91112292a13b51fc3182599b
 
 jobs:
-  # Build the pinned Neovim nightly once (cached by commit) and publish it as an
-  # artifact, instead of rebuilding it in every matrix job on a cache miss.
   build-neovim-nightly:
     name: Build pinned Neovim nightly
     runs-on: ubuntu-24.04
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          persist-credentials: false
       - name: Build pinned Neovim nightly
         uses: mikavilpas/neovim-action/build-nightly@ef04210e60a28317d442169fbccdaa010cf90b88 # v3.2.2
         with:
