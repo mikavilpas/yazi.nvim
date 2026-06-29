@@ -11,7 +11,7 @@ permissions:
 
 env:
   # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
-  NEOVIM_NIGHTLY_COMMIT: 259f1173e4c3132d88674927527e5e82df32b5b8
+  NEOVIM_NIGHTLY_COMMIT: 7945732ed7bb211f91112292a13b51fc3182599b
 
 jobs:
   # Build the pinned Neovim nightly once (cached by commit) and publish it as an
