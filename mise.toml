@@ -11,6 +11,13 @@ ripgrep = { version = "15.1.0", exe = "rg" }
 actionlint = "1.7.12"
 zizmor = "1.26.1"
 
+[env]
+# busted/nlua live in this project's own luarocks tree (`luarocks init` ->
+# ./lua_modules), isolated from other projects on the machine so their rock
+# versions cannot conflict. Put its bin on PATH so `.busted`'s `lua = "nlua"`
+# resolves locally. In CI, mikavilpas/neovim-action/busted provides nlua on
+# PATH instead (an ephemeral runner has no other projects to conflict with).
+_.path = ["lua_modules/bin"]
 [tasks]
 test = "luarocks test --local"
 test-focus = "luarocks test --local -- --filter focus"

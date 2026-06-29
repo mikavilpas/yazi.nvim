@@ -125,11 +125,17 @@ jobs:
           ya --version
 
       - name: Download pinned Neovim nightly
-        id: neovim-nightly
         if: matrix.neovim.name == 'nightly'
         uses: mikavilpas/neovim-action/restore-nightly@673c9715ab356c92820355ad99d7c23ca564da0c # v3.2.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
+
+      - name: Install stable Neovim
+        if: matrix.neovim.name == 'stable'
+        uses: rhysd/action-setup-vim@febef33995d6649302e9d88dda81e071b68f16a7 # v1.6.1
+        with:
+          neovim: true
+          version: stable
 
       - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
         with:
@@ -142,37 +148,20 @@ jobs:
       - run: pnpm install
 
       - name: Run tests
-        uses: nvim-neorocks/nvim-busted-action@bbcfe82d35b8fb4660ef6ed4124e1fd9cef4688b # v1.2.0
+        # Neovim-agnostic: it tests against whatever `nvim` is already on PATH
+        # (the pinned nightly restored above, or the stable Neovim installed
+        # above), installs busted + nlua, and runs `luarocks test`.
+        uses: mikavilpas/neovim-action/busted@673c9715ab356c92820355ad99d7c23ca564da0c # v3.2.0
         with:
-          # This action MUST install a neovim by design. For nightly neovim we
-          # want to use our own pinned build, so the action only needs to
-          # install a real Neovim for the `stable` case.
-          nvim_version:
-            ${{ matrix.neovim.name == 'nightly' && 'stable' ||
-            matrix.neovim.name }}
-          luarocks_version: "3.11.1"
-          before: |
-            # The pinned action runs `rhysd/action-setup-vim` before this
-            # `before` hook, and the `luarocks test` run after it. Prepending our
-            # pinned nightly to PATH here therefore makes nlua/busted use it
-            # instead of the Neovim the action just installed.
-            if [ "${{ matrix.neovim.name }}" = "nightly" ]; then
-              prefix="${{ steps.neovim-nightly.outputs.prefix }}/bin"
-              # `>> "$GITHUB_PATH"` only affects *subsequent* steps
-              export PATH="$prefix:$PATH"
-              echo "$prefix" >> "$GITHUB_PATH"
-              short="${{ steps.neovim-nightly.outputs.short-commit }}"
-              echo "nvim resolves to: $(command -v nvim)"
-              nvim --version
-              nvim --version | grep --quiet "$short" || {
-                echo "Extracted Neovim does not report the expected commit $NEOVIM_NIGHTLY_COMMIT (looked for $short)"
-                exit 1
-              }
-            fi
-            # copied from mise.toml
-            luarocks init --no-gitignore
-            luarocks install busted 2.2.0-1
-            luarocks install nlua 0.3.2-1
+          # Hosted runners expose ImageVersion, so fail loudly if the cache key
+          # ever degrades.
+          strict: "true"
+          # `luarocks test` installs the test framework (busted/nlua) but NOT
+          # the plugin's runtime dependencies (plenary.nvim, declared in the
+          # rockspec), so install those into the same --local tree first.
+          before:
+            luarocks --lua-version 5.1 make --local --only-deps
+            yazi.nvim-scm-1.rockspec
 
       - name: Verify that dependencies are available
         run: |
@@ -212,4 +201,3 @@ jobs:
           name: cypress-screenshots
           path: integration-tests/cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
-
