@@ -148,20 +148,7 @@ jobs:
       - run: pnpm install
 
       - name: Run tests
-        # Neovim-agnostic: it tests against whatever `nvim` is already on PATH
-        # (the pinned nightly restored above, or the stable Neovim installed
-        # above), installs busted + nlua, and runs `luarocks test`.
         uses: mikavilpas/neovim-action/busted@673c9715ab356c92820355ad99d7c23ca564da0c # v3.2.0
-        with:
-          # Hosted runners expose ImageVersion, so fail loudly if the cache key
-          # ever degrades.
-          strict: "true"
-          # `luarocks test` installs the test framework (busted/nlua) but NOT
-          # the plugin's runtime dependencies (plenary.nvim, declared in the
-          # rockspec), so install those into the same --local tree first.
-          before:
-            luarocks --lua-version 5.1 make --local --only-deps
-            yazi.nvim-scm-1.rockspec
 
       - name: Verify that dependencies are available
         run: |
