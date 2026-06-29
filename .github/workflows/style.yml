@@ -12,9 +12,9 @@ permissions:
   contents: read
 
 jobs:
-  prettier:
+  oxfmt:
     runs-on: ubuntu-24.04
-    name: prettier
+    name: oxfmt
     permissions:
       contents: read
     steps:
@@ -30,7 +30,7 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
-      - run: pnpm prettier
+      - run: pnpm oxfmt --check
 
   stylua:
     name: stylua

@@ -1,8 +1,7 @@
+import eslint from "@eslint/js"
 import eslintConfigPrettier from "eslint-config-prettier"
 import noOnlyTests from "eslint-plugin-no-only-tests"
 import oxlint from "eslint-plugin-oxlint"
-
-import eslint from "@eslint/js"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config(

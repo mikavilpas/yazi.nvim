@@ -1,5 +1,6 @@
 import { flavors } from "@catppuccin/palette"
 import { textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
+
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import { hoverFileAndVerifyItsHovered, rgbify } from "./utils/hover-utils.js"
 import { setBufferLines } from "./utils/neovim-utils.js"
