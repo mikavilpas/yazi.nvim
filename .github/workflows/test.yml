@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Build pinned Neovim nightly
-        uses: mikavilpas/neovim-action/build-nightly@ef04210e60a28317d442169fbccdaa010cf90b88 # v3.2.2
+        uses: mikavilpas/neovim-action/build-nightly@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
@@ -119,7 +119,7 @@ jobs:
 
       - name: Download pinned Neovim nightly
         if: matrix.neovim.name == 'nightly'
-        uses: mikavilpas/neovim-action/restore-nightly@ef04210e60a28317d442169fbccdaa010cf90b88 # v3.2.2
+        uses: mikavilpas/neovim-action/restore-nightly@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
@@ -141,7 +141,7 @@ jobs:
       - run: pnpm install
 
       - name: Run tests
-        uses: mikavilpas/neovim-action/busted@ef04210e60a28317d442169fbccdaa010cf90b88 # v3.2.2
+        uses: mikavilpas/neovim-action/busted@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
 
       - name: Verify that dependencies are available
         run: |
