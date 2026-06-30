@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: stevearc/nvim-typecheck-action@a2c7bff1c2f1d8489106271c8f89183628d41655 # v2
+      - uses: stevearc/nvim-typecheck-action@v2
         with:
           path: lua
           level: Information
