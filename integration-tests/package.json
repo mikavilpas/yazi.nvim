@@ -16,7 +16,7 @@
     "assert": "2.1.0",
     "concurrently": "10.0.3",
     "cypress": "15.18.0",
-    "eslint": "10.5.0",
+    "eslint": "10.6.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.4.0",
     "eslint-plugin-oxlint": "1.71.0",
