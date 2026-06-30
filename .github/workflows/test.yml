@@ -12,6 +12,8 @@ permissions:
 env:
   # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
   NEOVIM_NIGHTLY_COMMIT: 7945732ed7bb211f91112292a13b51fc3182599b
+  # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
+  YAZI_NIGHTLY_COMMIT: 21550a7eb5086ba34f8eabf8aaab85f601d34a74
 
 jobs:
   build-neovim-nightly:
@@ -23,12 +25,23 @@ jobs:
         with:
           commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
 
+  build-yazi-nightly:
+    name: Build pinned Yazi nightly
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Build pinned Yazi nightly
+        uses: mikavilpas/yazi-action/build-nightly@ce23d96fd6b2ba9b377257050d07bf038beb405d # v1.1.0
+        with:
+          commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
+
   build:
     name:
       "Test (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name
       }})"
     runs-on: ubuntu-24.04
-    needs: build-neovim-nightly
+    needs:
+      - build-neovim-nightly
+      - build-yazi-nightly
     permissions:
       contents: read
     strategy:
@@ -38,9 +51,7 @@ jobs:
           - name: stable
         yazi-version:
           - name: nightly
-            method: cargo-install
-            # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
-            commit: 21550a7eb5086ba34f8eabf8aaab85f601d34a74
+            method: restore-nightly
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
@@ -56,10 +67,6 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@67ef31d5b988238dd797d409d6f9574278e20537 # master
-        if: matrix.yazi-version.method == 'cargo-install'
-        with:
-          toolchain: stable
 
       - name: Install tools with UBI
         shell: bash
@@ -86,21 +93,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install the mold linker
-        if: matrix.yazi-version.method == 'cargo-install'
-        uses: rui314/setup-mold@9c9c13bf4c3f1adef0cc596abc155580bcb04444 # v1
-
-      - name: Compile and install `yazi-fm` from source
-        if: matrix.yazi-version.method == 'cargo-install'
-        uses: baptiste0928/cargo-install@f204293d9709061b7bc1756fec3ec4e2cd57dec0 # v3.4.0
+      - name: Restore the pinned Yazi nightly
+        if: matrix.yazi-version.name == 'nightly'
+        uses: mikavilpas/yazi-action/restore-nightly@ce23d96fd6b2ba9b377257050d07bf038beb405d # v1.1.0
         with:
-          # Due to Cargo's limitations, the `yazi-fm` and `yazi-cli` crates on
-          # crates.io must be built with `cargo install --force yazi-build`
-          # https://github.com/sxyazi/yazi/blob/2ec3a6c645324295331c0f2ef6d4d946cf11c06b/yazi-fm/build.rs?plain=1#L23-L25
-          crate: yazi-build
-          git: https://github.com/sxyazi/yazi
-          commit: ${{ matrix.yazi-version.commit }}
-          # tag: ${{ matrix.yazi-version.tag }}
+          commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
       - name: Download prebuilt yazi version
         if: matrix.yazi-version.method == 'download'
