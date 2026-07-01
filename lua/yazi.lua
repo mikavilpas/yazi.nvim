@@ -31,6 +31,11 @@ function M.yazi(config, input_path, args)
   config =
     vim.tbl_deep_extend("force", configModule.default(), M.config, config or {})
 
+  local nest = require("yazi.nest")
+  -- M.config called from M.setup is different
+  -- from this one. Must be called explicitly
+  nest.config = config
+
   local Log = require("yazi.log")
   Log.level = config.log_level
 
@@ -51,11 +56,12 @@ function M.yazi(config, input_path, args)
 
   local win = require("yazi.window").YaziFloatingWindow.new(config)
   win:open_and_display()
-  local yazi_buffer = win.content_buffer
+  -- variable has to be global to be accessible by the nested child process
+  _G.YaziBuffer = win.content_buffer
 
   local yazi_process, yazi_context = YaziProcess:start(config, paths, {
     on_ya_first_event = function(api)
-      config.hooks.on_yazi_ready(yazi_buffer, config, api)
+      config.hooks.on_yazi_ready(YaziBuffer, config, api)
       do
         if not (args and args.reveal_path) then
           Log:debug("No reveal_path provided, skipping initial reveal")
@@ -139,15 +145,18 @@ function M.yazi(config, input_path, args)
   })
 
   M.active_contexts:push(yazi_context)
+  -- Sometimes M.active_contexts:peek() causes vim.keymap.set
+  -- to fail, so we copy the context variable directly
+  nest.context = yazi_context
 
   config.hooks.yazi_opened(path.filename, win.content_buffer, config)
 
   if config.set_keymappings_function ~= nil then
-    config.set_keymappings_function(yazi_buffer, config, yazi_context)
+    config.set_keymappings_function(YaziBuffer, config, yazi_context)
   end
 
   if config.keymaps ~= false then
-    require("yazi.config").set_keymappings(yazi_buffer, config, yazi_context)
+    require("yazi.config").set_keymappings(YaziBuffer, config, yazi_context)
   end
 
   win.on_resized = function(event)
@@ -211,6 +220,10 @@ function M.setup(opts)
   then
     require("yazi.integrations.snacks_relative_path").setup_copy_relative_path_picker_action_once()
   end
+
+  -- #739: The plugin isn't aware of nested nvim sessions inside
+  -- yazi, so the child process must control the parent via RPC.
+  require("yazi.nest").setup(yazi_augroup, M.config)
 end
 
 return M
