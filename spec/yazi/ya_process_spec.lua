@@ -1,6 +1,7 @@
 local assert = require("luassert")
 local ya_process = require("yazi.process.ya_process")
 local spy = require("luassert.spy")
+local stub = require("luassert.stub")
 
 local yazi_id = "yazi_id_123"
 
@@ -346,6 +347,12 @@ describe("opening yazi in a terminal", function()
       end)
       local jobstart_spy = spy.new(function() end)
       vim.fn.jobstart = jobstart_spy
+
+      -- starting the yazi process also spawns the `ya` command line tool via
+      -- `vim.system`. Mock it.
+      stub(vim, "system", function()
+        return {}
+      end)
 
       require("yazi.process.yazi_process"):start(config, { path }, {
         on_exit = function() end,
