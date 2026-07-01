@@ -30,6 +30,7 @@
 
 ---@class(exact) yazi.OptInFeatures
 ---@field public use_cwd_file? boolean # use a file to store the last directory that yazi was in before it was closed. Defaults to `true`.
+---@field public yazi_plugin_keymaps? YaziPluginKeymaps # keymaps that are registered *inside yazi* by the `nvim.yazi` plugin instead of as Neovim terminal-mode maps. yazi owns these keys, so they are automatically disabled while yazi is in an input mode (bulk rename, filter, find).
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
@@ -45,6 +46,9 @@
 ---@field send_to_quickfix_list? YaziKeymap # Send the selected files to the quickfix list for later processing
 ---@field change_working_directory? YaziKeymap # Change working directory to the directory opened by yazi
 ---@field open_and_pick_window? YaziKeymap # Pick a window to open the file in
+
+---@class YaziPluginKeymaps
+---@field open_file_in_vertical_split? YaziKeymap # When a file is hovered, open it in a vertical split
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi

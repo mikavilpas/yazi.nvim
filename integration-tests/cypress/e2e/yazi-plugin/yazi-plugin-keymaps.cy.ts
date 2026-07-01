@@ -1,0 +1,61 @@
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
+import { hoverFileAndVerifyItsHovered } from "../utils/hover-utils.ts"
+import {
+  assertYaziIsReady,
+  isFileNotSelectedInYazi,
+} from "../utils/yazi-utils.ts"
+import {
+  assertNvimYaziPluginIndicatorIsVisible,
+  describeOnNightlyYazi,
+} from "./yazi-plugin-utils.ts"
+
+describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
+  beforeEach(() => {
+    cy.visit("/")
+  })
+
+  it("<c-v> can open a file in a vertical split", () => {
+    cy.startNeovim({
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+      cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
+      assertNvimYaziPluginIndicatorIsVisible()
+
+      // <c-v> is now owned by yazi (via the nvim.yazi plugin). Pressing it
+      // publishes a DDS event that yazi.nvim reacts to by opening the hovered
+      // file in a vertical split - exactly like the terminal-map version.
+      cy.typeIntoTerminal("{control+v}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      // both files must be visible (side by side in splits)
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
+    })
+  })
+
+  it("keymaps are documented in yazi's help view", () => {
+    cy.startNeovim({
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+      cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
+      assertNvimYaziPluginIndicatorIsVisible()
+
+      cy.typeIntoTerminal("~")
+      cy.contains("yazi.nvim: open file in vertical split")
+    })
+  })
+})

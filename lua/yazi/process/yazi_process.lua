@@ -49,14 +49,25 @@ function YaziProcess:start(config, paths, callbacks)
     input_path = paths[1],
   }
 
+  local env = {
+    -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
+    -- neovim specific functionality
+    NVIM_CWD = vim.uv.cwd(),
+    YAZI_CONFIG_HOME = config.config_home,
+    YAZI_NVIM_ID = yazi_id,
+  }
+
+  -- hand the user-configured `plugin_keymaps` to the `nvim.yazi` plugin, which
+  -- registers them inside yazi at runtime.
+  if config.future_features.yazi_plugin_keymaps ~= nil then
+    local plugin_keymaps = require("yazi.plugin_keymaps")
+    env[plugin_keymaps.env_var] =
+      plugin_keymaps.serialize(config.future_features.yazi_plugin_keymaps)
+  end
+
   self.yazi_job_id = vim.fn.jobstart(yazi_cmd, {
     term = true,
-    env = {
-      -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
-      -- neovim specific functionality
-      NVIM_CWD = vim.uv.cwd(),
-      YAZI_CONFIG_HOME = config.config_home,
-    },
+    env = env,
     on_exit = function(_, code)
       self.ya_process:kill_and_wait(1000)
 

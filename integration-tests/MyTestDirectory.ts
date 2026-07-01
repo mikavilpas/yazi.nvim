@@ -81,6 +81,10 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("yazi/"),
           type: z.literal("directory"),
           contents: z.object({
+            "init.lua": z.object({
+              name: z.literal("init.lua"),
+              type: z.literal("file"),
+            }),
             "keymap.toml": z.object({
               name: z.literal("keymap.toml"),
               type: z.literal("file"),
@@ -157,6 +161,10 @@ export const MyTestDirectorySchema = z.object({
             }),
             "enable_change_neovim_cwd_on_close.lua": z.object({
               name: z.literal("enable_change_neovim_cwd_on_close.lua"),
+              type: z.literal("file"),
+            }),
+            "enable_yazi_plugin_keymaps.lua": z.object({
+              name: z.literal("enable_yazi_plugin_keymaps.lua"),
               type: z.literal("file"),
             }),
             "highlight_buffers_in_same_directory.lua": z.object({
@@ -341,6 +349,7 @@ export const testDirectoryFiles = z.enum([
   ".config/nvim_integrations",
   ".config/nvim_no_package_manager/init.lua",
   ".config/nvim_no_package_manager",
+  ".config/yazi/init.lua",
   ".config/yazi/keymap.toml",
   ".config/yazi",
   ".config",
@@ -359,6 +368,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/yazi_config/customize_window_properties.lua",
   "config-modifications/yazi_config/disable_a_keybinding.lua",
   "config-modifications/yazi_config/enable_change_neovim_cwd_on_close.lua",
+  "config-modifications/yazi_config/enable_yazi_plugin_keymaps.lua",
   "config-modifications/yazi_config/highlight_buffers_in_same_directory.lua",
   "config-modifications/yazi_config/log_yazi_closed_successfully.lua",
   "config-modifications/yazi_config/make_yazi_fullscreen.lua",

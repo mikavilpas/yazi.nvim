@@ -10,9 +10,16 @@ const yaziLogFile = path.resolve(__dirname, "test-environment/.repro/yazi.log")
 
 console.log(`yaziLogFile: ${yaziLogFile}`)
 
+const isCI = process.env.CI === "true" || process.env.CI === "1"
+const runNvimYaziPluginTests = !isCI || process.env.YAZI_IS_NIGHTLY === "true"
+
 export default defineConfig({
   e2e: {
     allowCypressEnv: false,
+    expose: {
+      // allow some tests to only run when a nightly yazi is available
+      runNvimYaziPluginTests,
+    },
     baseUrl: "http://localhost:3000",
     video: true,
     setupNodeEvents(on, _config) {
