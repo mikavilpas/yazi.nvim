@@ -200,6 +200,10 @@ jobs:
         with:
           install: false
           command: pnpm tui run
+        env:
+          # The tests related to nvim.yazi can only be run in a modern yazi nightly.
+          # Gate on this to avoid failures on older yazis.
+          YAZI_IS_NIGHTLY: ${{ matrix.yazi-version.name == 'nightly' }}
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         # add the line below to store screenshots only on failures

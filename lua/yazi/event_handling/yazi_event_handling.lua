@@ -102,4 +102,59 @@ function M.process_event_emitted_from_yazi(event, config, context)
   end
 end
 
+--- dispatch a keymap action that was triggered from inside yazi by the
+--- `nvim.yazi` plugin.
+---
+---@class yazi.PluginKeymapPayload
+---@field action string # the keymap action, e.g. "open_file_in_vertical_split"
+---@field yazi_id? string # the id of the yazi instance that sent the event
+---@field hovered? string # the currently hovered path, if any
+---@field selected? string[] # the currently selected paths
+---
+---@param event YaziCustomDDSEvent
+---@param expected_yazi_id string # only handle events from our own yazi instance
+---@param config YaziConfig
+---@param context YaziActiveContext
+function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
+  local Log = require("yazi.log")
+  local keybinding_helpers = require("yazi.keybinding_helpers")
+
+  local ok, payload = pcall(vim.json.decode, event.raw_data)
+  if not ok or type(payload) ~= "table" then
+    Log:debug(
+      string.format(
+        "Could not decode yazi-nvim event payload: %s",
+        vim.inspect(event.raw_data)
+      )
+    )
+    return
+  end
+  ---@cast payload yazi.PluginKeymapPayload
+
+  -- The DDS bus is shared across all yazi instances on the system. Only react
+  -- to events from our own yazi.
+  if payload.yazi_id ~= nil and payload.yazi_id ~= expected_yazi_id then
+    Log:debug(
+      string.format(
+        "Ignoring yazi-nvim event from a different yazi (%s, ours is %s)",
+        vim.inspect(payload.yazi_id),
+        expected_yazi_id
+      )
+    )
+    return
+  end
+
+  Log:debug(
+    string.format("Handling yazi-nvim plugin keymap event: %s", payload.action)
+  )
+
+  if payload.action == "open_file_in_vertical_split" then
+    keybinding_helpers.open_file_in_vertical_split(config, context.api)
+  else
+    Log:debug(
+      string.format("Unknown yazi-nvim plugin action: %s", payload.action)
+    )
+  end
+end
+
 return M

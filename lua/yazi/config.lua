@@ -16,6 +16,7 @@ function M.default()
     open_for_directories = false,
     future_features = {
       use_cwd_file = true,
+      yazi_plugin_keymaps = {},
     },
     open_multiple_tabs = false,
     enable_mouse_support = false,
@@ -98,15 +99,26 @@ function M.set_keymappings(yazi_buffer, config, context)
     return
   end
 
-  if config.keymaps.open_file_in_vertical_split ~= false then
-    vim.keymap.set(
-      { "t" },
-      config.keymaps.open_file_in_vertical_split,
-      function()
-        keybinding_helpers.open_file_in_vertical_split(config, context.api)
-      end,
-      { buffer = yazi_buffer }
-    )
+  do
+    local vertical_split_owned_by_yazi = config.future_features.yazi_plugin_keymaps
+        ~= nil
+      and config.future_features.yazi_plugin_keymaps.open_file_in_vertical_split ~= nil
+      and config.future_features.yazi_plugin_keymaps.open_file_in_vertical_split
+        ~= false
+
+    if
+      config.keymaps.open_file_in_vertical_split ~= false
+      and not vertical_split_owned_by_yazi
+    then
+      vim.keymap.set(
+        { "t" },
+        config.keymaps.open_file_in_vertical_split,
+        function()
+          keybinding_helpers.open_file_in_vertical_split(config, context.api)
+        end,
+        { buffer = yazi_buffer }
+      )
+    end
   end
 
   if config.keymaps.open_file_in_horizontal_split ~= false then

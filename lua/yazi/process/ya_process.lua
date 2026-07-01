@@ -121,6 +121,12 @@ function YaProcess:start(context)
     "hey",
   }
 
+  -- subscribe to the events published by the `nvim.yazi` plugin if the user
+  -- has enabled it.
+  if self.config.future_features.yazi_plugin_keymaps ~= nil then
+    event_kinds[#event_kinds + 1] = "yazi-nvim"
+  end
+
   ---@type table<string,boolean>
   local interesting_events = {}
   if self.config.forwarded_dds_events ~= nil then
@@ -266,6 +272,16 @@ function YaProcess:process_events(events, forwarded_event_kinds, context)
         ---@cast event YaziNvimCycleBufferEvent
         yazi_event_handling.process_event_emitted_from_yazi(
           event,
+          self.config,
+          context
+        )
+      end)
+    elseif event.type == "yazi-nvim" then
+      ---@cast event YaziCustomDDSEvent
+      vim.schedule(function()
+        yazi_event_handling.process_plugin_keymap_event(
+          event,
+          self.yazi_id,
           self.config,
           context
         )
