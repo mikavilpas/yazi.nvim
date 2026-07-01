@@ -34,9 +34,43 @@ jobs:
         with:
           commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
-  build:
+  busted:
+    name: "Busted (neovim ${{ matrix.neovim.name }})"
+    runs-on: ubuntu-24.04
+    needs:
+      - build-neovim-nightly
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        neovim:
+          - name: nightly
+          - name: stable
+
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Download pinned Neovim nightly
+        if: matrix.neovim.name == 'nightly'
+        uses: mikavilpas/neovim-action/restore-nightly@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
+        with:
+          commit: ${{ env.NEOVIM_NIGHTLY_COMMIT }}
+
+      - name: Install stable Neovim
+        if: matrix.neovim.name == 'stable'
+        uses: rhysd/action-setup-vim@febef33995d6649302e9d88dda81e071b68f16a7 # v1.6.1
+        with:
+          neovim: true
+          version: stable
+
+      - name: Run tests
+        uses: mikavilpas/neovim-action/busted@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
+
+  e2e:
     name:
-      "Test (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name
+      "E2E (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name
       }})"
     runs-on: ubuntu-24.04
     needs:
@@ -136,9 +170,6 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
-
-      - name: Run tests
-        uses: mikavilpas/neovim-action/busted@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
 
       - name: Verify that dependencies are available
         run: |
