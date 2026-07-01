@@ -4,6 +4,7 @@ local assert = require("luassert")
 local mock = require("luassert.mock")
 local match = require("luassert.match")
 local spy = require("luassert.spy")
+local stub = require("luassert.stub")
 local test_files = require("spec.yazi.helpers.test_files")
 package.loaded["yazi.process.yazi_process"] =
   require("spec.yazi.helpers.fake_yazi_process")
@@ -12,10 +13,27 @@ local yazi_process = require("yazi.process.yazi_process")
 
 local plugin = require("yazi")
 
+local snapshot
+
 before_each(function()
   local reset = require("spec.yazi.helpers.reset")
   reset.clear_all_buffers()
   reset.close_all_windows()
+
+  snapshot = assert:snapshot()
+
+  -- `require("yazi").yazi()` bails out early unless the `yazi` and `ya`
+  -- executables are found on the PATH.
+  stub(vim.fn, "executable", function(command)
+    if command == "yazi" or command == "ya" then
+      return 1
+    end
+    return 0
+  end)
+end)
+
+after_each(function()
+  snapshot:revert()
 end)
 
 describe("opening a file", function()
