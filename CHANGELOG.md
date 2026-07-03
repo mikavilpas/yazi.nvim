@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.2.0...v13.3.0) (2026-07-03)
+
+
+### Features
+
+* **yazi.plugin:** add silent option to symlink function ([e40afad](https://github.com/mikavilpas/yazi.nvim/commit/e40afade52b9f34686bcf06a032283aa88a32a62))
+
 ## [13.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.8...v13.2.0) (2026-07-03)
 
 
