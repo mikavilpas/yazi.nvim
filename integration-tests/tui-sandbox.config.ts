@@ -12,3 +12,4 @@ config.integrations.neovim.NVIM_APPNAMEs = [
   "nvim_integrations",
   "nvim_no_package_manager",
 ]
+config.formatter = { use: "oxfmt" }
