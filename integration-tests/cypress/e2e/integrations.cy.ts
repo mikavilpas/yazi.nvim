@@ -65,6 +65,7 @@ describe("grug-far integration (search and replace)", () => {
       cy.typeIntoTerminal("vj")
       cy.typeIntoTerminal("{control+g}")
 
+      cy.contains("Grug FAR")
       cy.typeIntoTerminal("ithis")
       cy.typeIntoTerminal("{esc}")
 
