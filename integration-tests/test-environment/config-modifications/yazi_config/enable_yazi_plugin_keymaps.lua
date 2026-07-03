@@ -7,6 +7,7 @@ require("yazi").setup(
       yazi_plugin_keymaps = {
         open_file_in_vertical_split = "<c-v>",
         open_file_in_horizontal_split = "<c-x>",
+        open_file_in_tab = "<c-t>",
       },
     },
   }
