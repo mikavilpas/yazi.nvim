@@ -150,6 +150,8 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
 
   if payload.action == "open_file_in_vertical_split" then
     keybinding_helpers.open_file_in_vertical_split(config, context.api)
+  elseif payload.action == "open_file_in_horizontal_split" then
+    keybinding_helpers.open_file_in_horizontal_split(config, context.api)
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)

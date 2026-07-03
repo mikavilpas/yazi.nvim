@@ -99,29 +99,32 @@ function M.set_keymappings(yazi_buffer, config, context)
     return
   end
 
-  do
-    local vertical_split_owned_by_yazi = config.future_features.yazi_plugin_keymaps
-        ~= nil
-      and config.future_features.yazi_plugin_keymaps.open_file_in_vertical_split ~= nil
-      and config.future_features.yazi_plugin_keymaps.open_file_in_vertical_split
-        ~= false
-
-    if
-      config.keymaps.open_file_in_vertical_split ~= false
-      and not vertical_split_owned_by_yazi
-    then
-      vim.keymap.set(
-        { "t" },
-        config.keymaps.open_file_in_vertical_split,
-        function()
-          keybinding_helpers.open_file_in_vertical_split(config, context.api)
-        end,
-        { buffer = yazi_buffer }
-      )
-    end
+  ---@param action "open_file_in_vertical_split" | "open_file_in_horizontal_split"
+  local function owned_by_yazi_plugin(action)
+    local plugin_keymaps = config.future_features.yazi_plugin_keymaps
+    return plugin_keymaps ~= nil
+      and plugin_keymaps[action] ~= nil
+      and plugin_keymaps[action] ~= false
   end
 
-  if config.keymaps.open_file_in_horizontal_split ~= false then
+  if
+    config.keymaps.open_file_in_vertical_split ~= false
+    and not owned_by_yazi_plugin("open_file_in_vertical_split")
+  then
+    vim.keymap.set(
+      { "t" },
+      config.keymaps.open_file_in_vertical_split,
+      function()
+        keybinding_helpers.open_file_in_vertical_split(config, context.api)
+      end,
+      { buffer = yazi_buffer }
+    )
+  end
+
+  if
+    config.keymaps.open_file_in_horizontal_split ~= false
+    and not owned_by_yazi_plugin("open_file_in_horizontal_split")
+  then
     vim.keymap.set(
       { "t" },
       config.keymaps.open_file_in_horizontal_split,
