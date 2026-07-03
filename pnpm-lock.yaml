@@ -39,8 +39,8 @@ importers:
         specifier: 10.0.1
         version: 10.0.1(eslint@10.6.0(jiti@2.7.0)(supports-color@8.1.1))
       '@tui-sandbox/library':
-        specifier: 12.6.0
-        version: 12.6.0(cypress@15.18.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
+        specifier: 12.7.1
+        version: 12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
       '@types/node':
         specifier: 24.13.2
         version: 24.13.2
@@ -981,25 +981,26 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@trpc/client@11.17.0':
-    resolution: {integrity: sha512-KpJBFrbKTDeVCFv/3ckL1XBBH5Yssn8hethI/rUy7GIpTj+VzjtPjykDqJpzobuVOz+d26cXCSu1t4I6MYI5Zg==}
+  '@trpc/client@11.18.0':
+    resolution: {integrity: sha512-wOqeg3Fvl25V1ZisQhUD3K8G60ZJDlSGJNSyeXrLH24xAo5w6GSR2Kzb1cSNY9Y+IQ2YZvYGZstBU+V/ulo/ow==}
     hasBin: true
     peerDependencies:
-      '@trpc/server': 11.17.0
+      '@trpc/server': 11.18.0
       typescript: '>=5.7.2'
 
-  '@trpc/server@11.17.0':
-    resolution: {integrity: sha512-jbAOUe0PpUTCYqziyu+8vYXZdDXPudZgnEhWCQ2NjKnVEjfE93RqHTt1oycZJv/HNf51YlRXfEEwSIAbb161rw==}
+  '@trpc/server@11.18.0':
+    resolution: {integrity: sha512-JAvXOuNTxgXjIDfQaOvDq1j66LMNfDJUH1IU7Slfn8EvRv2EkH6ehu3A7zpYhjO0syHHiYg77v2lG2JFJgvw7Q==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@12.6.0':
-    resolution: {integrity: sha512-DdubiBRTlstyhB8/cUgyGN7DGXroNb9p5bD3Xslu5POXk4z35KeAsFG4cq+onemmLLt5uoaMMLLiL6bZas7CKg==}
+  '@tui-sandbox/library@12.7.1':
+    resolution: {integrity: sha512-wyENtDzLCCEcerwLix3EaYLYJedwVqcGTQipKXPeHGsXFk7Yu+McBxZH4fAgzzH7FARdejrBPuUyPr8NzZkoOQ==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
       cypress: ^13 || ^14 || ^15
+      oxfmt: '>= 0.56.0'
       prettier: '>= 3.3.3'
       type-fest: '>= 4.27.0'
       typescript: '>= 5.6.3'
@@ -2502,8 +2503,8 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zigpty@0.2.0:
-    resolution: {integrity: sha512-rEn53TjljnMVzuCi5Rx9/Do0iZkq6y+71BMOX7tBVD2DSfOyCEKobNRXHWBUkC38g3nLjSaPU2bB/hLALY7HYg==}
+  zigpty@0.2.1:
+    resolution: {integrity: sha512-MR9JqJx2wf5f4wz8zpx050AlqrmWeIW+1h0SO5iEyhG3HFRjY5luC3szS2ux2EGuPjE5OU9ZAuiCBeMWBTrqZw==}
 
   zod@4.4.3:
     resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
@@ -3128,20 +3129,20 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)':
+  '@trpc/client@11.18.0(@trpc/server@11.18.0(typescript@6.0.3))(typescript@6.0.3)':
     dependencies:
-      '@trpc/server': 11.17.0(typescript@6.0.3)
+      '@trpc/server': 11.18.0(typescript@6.0.3)
       typescript: 6.0.3
 
-  '@trpc/server@11.17.0(typescript@6.0.3)':
+  '@trpc/server@11.18.0(typescript@6.0.3)':
     dependencies:
       typescript: 6.0.3
 
-  '@tui-sandbox/library@12.6.0(cypress@15.18.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
+  '@tui-sandbox/library@12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
     dependencies:
       '@catppuccin/palette': 1.8.0
-      '@trpc/client': 11.17.0(@trpc/server@11.17.0(typescript@6.0.3))(typescript@6.0.3)
-      '@trpc/server': 11.17.0(typescript@6.0.3)
+      '@trpc/client': 11.18.0(@trpc/server@11.18.0(typescript@6.0.3))(typescript@6.0.3)
+      '@trpc/server': 11.18.0(typescript@6.0.3)
       '@xterm/addon-clipboard': 0.2.0
       '@xterm/addon-fit': 0.11.0
       '@xterm/addon-unicode11': 0.9.0
@@ -3151,6 +3152,7 @@ snapshots:
       cypress: 15.18.0
       dree: 5.1.5
       neovim: 5.4.0
+      oxfmt: 0.57.0
       prettier: 3.8.4
       sirv: 3.0.2
       string-width: 8.2.1
@@ -3159,7 +3161,7 @@ snapshots:
       typescript: 6.0.3
       wait-on: 9.0.10
       winston: 3.19.0
-      zigpty: 0.2.0
+      zigpty: 0.2.1
       zod: 4.4.3
 
   '@tybys/wasm-util@0.10.3':
@@ -4793,6 +4795,6 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zigpty@0.2.0: {}
+  zigpty@0.2.1: {}
 
   zod@4.4.3: {}
