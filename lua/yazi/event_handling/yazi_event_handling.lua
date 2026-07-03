@@ -154,6 +154,8 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
     keybinding_helpers.open_file_in_horizontal_split(config, context.api)
   elseif payload.action == "open_file_in_tab" then
     keybinding_helpers.open_file_in_tab(config, context.api)
+  elseif payload.action == "cycle_open_buffers" then
+    keybinding_helpers.cycle_open_buffers(config, context)
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)

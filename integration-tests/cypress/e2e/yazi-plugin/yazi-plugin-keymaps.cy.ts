@@ -3,7 +3,10 @@ import type {
   MyStartNeovimServerArguments,
   NeovimContext,
 } from "../../support/tui-sandbox.ts"
-import { hoverFileAndVerifyItsHovered } from "../utils/hover-utils.ts"
+import {
+  assertYaziIsHovering,
+  hoverFileAndVerifyItsHovered,
+} from "../utils/hover-utils.ts"
 import {
   assertYaziIsReady,
   isFileNotSelectedInYazi,
@@ -148,6 +151,29 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
 
       cy.contains(nvim.dir.contents["file2.txt"].name)
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
+    })
+  })
+
+  it("can cycle_open_buffers", () => {
+    openNeovimWithNvimYaziPlugin({
+      filename: "initial-file.txt",
+      startupScriptModifications: [
+        "yazi_config/highlight_buffers_in_same_directory.lua",
+        "add_command_to_reveal_a_file.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      // start yazi and wait for it to be visible
+      cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
+      assertKeymapNotOwnedByYaziNvim(nvim, "<tab>")
+
+      // focus another file
+      hoverFileAndVerifyItsHovered(nvim, "highlights/file_2.txt")
+
+      cy.typeIntoTerminal("I")
+      assertYaziIsHovering(nvim, "initial-file.txt")
     })
   })
 })

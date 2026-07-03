@@ -154,11 +154,13 @@ function M.set_keymappings(yazi_buffer, config, context)
     end
   )
 
-  if config.keymaps.cycle_open_buffers ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.cycle_open_buffers, function()
+  maybe_map(
+    config.keymaps.cycle_open_buffers,
+    plugin_keymaps.cycle_open_buffers,
+    function()
       keybinding_helpers.cycle_open_buffers(config, context)
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   if config.keymaps.replace_in_directory ~= false then
     vim.keymap.set({ "t" }, config.keymaps.replace_in_directory, function()
