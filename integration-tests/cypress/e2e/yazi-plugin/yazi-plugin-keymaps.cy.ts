@@ -1,4 +1,8 @@
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
+import type {
+  MyStartNeovimServerArguments,
+  NeovimContext,
+} from "../../support/tui-sandbox.ts"
 import { hoverFileAndVerifyItsHovered } from "../utils/hover-utils.ts"
 import {
   assertYaziIsReady,
@@ -11,18 +15,25 @@ import {
   describeOnNightlyYazi,
 } from "./yazi-plugin-utils.ts"
 
+const openNeovimWithNvimYaziPlugin = (
+  args?: MyStartNeovimServerArguments,
+): Cypress.Chainable<NeovimContext> =>
+  cy.startNeovim({
+    ...args,
+    startupScriptModifications: [
+      "add_yazi_context_assertions.lua",
+      "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ...(args?.startupScriptModifications ?? []),
+    ],
+  })
+
 describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   beforeEach(() => {
     cy.visit("/")
   })
 
   it("<c-v> can open a file in a vertical split", () => {
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/enable_yazi_plugin_keymaps.lua",
-      ],
-    }).then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
@@ -47,12 +58,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("<c-v> can open multiple files in vertical splits", () => {
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/enable_yazi_plugin_keymaps.lua",
-      ],
-    }).then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
       // this should test that the DDS events include details of multiple
       // files, not just one
       cy.contains("If you see this text, Neovim is ready!")
@@ -84,12 +90,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("<c-x> can open a file in a horizontal split", () => {
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/enable_yazi_plugin_keymaps.lua",
-      ],
-    }).then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
@@ -111,12 +112,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("keymaps are documented in yazi's help view", () => {
-    cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/enable_yazi_plugin_keymaps.lua",
-      ],
-    }).then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
