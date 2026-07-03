@@ -146,11 +146,13 @@ function M.set_keymappings(yazi_buffer, config, context)
     end, { buffer = yazi_buffer })
   end
 
-  if config.keymaps.open_file_in_tab ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.open_file_in_tab, function()
+  maybe_map(
+    config.keymaps.open_file_in_tab,
+    plugin_keymaps.open_file_in_tab,
+    function()
       keybinding_helpers.open_file_in_tab(config, context.api)
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   if config.keymaps.cycle_open_buffers ~= false then
     vim.keymap.set({ "t" }, config.keymaps.cycle_open_buffers, function()

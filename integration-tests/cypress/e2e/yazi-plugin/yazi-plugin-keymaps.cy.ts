@@ -122,4 +122,32 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       cy.contains("yazi.nvim: open file in vertical split")
     })
   })
+
+  it("can open a file in a new tab", () => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+
+      cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
+      assertNvimYaziPluginIndicatorIsVisible()
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-t>")
+
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
+      cy.typeIntoTerminal("{control+t}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      cy.contains(
+        // match some text from inside the file
+        "Hello",
+      )
+      nvim.runExCommand({ command: "tabnext" })
+
+      cy.contains("If you see this text, Neovim is ready!")
+
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
+    })
+  })
 })
