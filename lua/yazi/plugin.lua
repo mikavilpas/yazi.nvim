@@ -32,7 +32,7 @@ local M = {}
 --- For more information, see the yazi.nvim documentation.
 ---
 ---@param plugin YaziLazyNvimSpec
----@param options? { yazi_dir: string, sub_dir?: string, name?: string }
+---@param options? { yazi_dir: string, sub_dir?: string, name?: string, silent?: boolean }
 function M.build_plugin(plugin, options)
   local yazi_dir = options and options.yazi_dir
     or vim.fn.expand("~/.config/yazi")
@@ -53,7 +53,7 @@ function M.build_plugin(plugin, options)
     )
   end
 
-  return M.symlink(plugin, to)
+  return M.symlink(plugin, to, { silent = options and options.silent })
 end
 
 --- Helper utility for compatibility with
@@ -105,8 +105,9 @@ end
 --- flavors, prefer using `build_plugin` and `build_flavor` instead.
 ---@param spec YaziLazyNvimSpec
 ---@param to string
+---@param options? { silent?: boolean }
 ---@return YaziSpecInstallationResultSuccess | YaziSpecInstallationResultFailure
-function M.symlink(spec, to)
+function M.symlink(spec, to, options)
   -- Check if the symlink already exists, which will happen on repeated calls
   local existing_stat = vim.uv.fs_lstat(to)
   if existing_stat and existing_stat.type == "link" then
@@ -122,7 +123,9 @@ function M.symlink(spec, to)
       from = spec.dir,
       message = "yazi.nvim: failed to install",
     }
-    vim.notify(vim.inspect(result))
+    if not (options or {}).silent then
+      vim.notify(vim.inspect(result))
+    end
     return result
   end
 
@@ -148,7 +151,9 @@ function M.symlink(spec, to)
     to = to,
   }
 
-  vim.notify(vim.inspect(result))
+  if not (options or {}).silent then
+    vim.notify(vim.inspect(result))
+  end
   return result
 end
 
