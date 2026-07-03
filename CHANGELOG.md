@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.2.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.8...v13.2.0) (2026-07-03)
+
+
+### Features
+
+* start nvim.yazi plugin for yazi-owned keymaps ([9f4cfa7](https://github.com/mikavilpas/yazi.nvim/commit/9f4cfa70c1ed08ad3c04fba3ce8b5192770a2fad))
+
 ## [13.1.8](https://github.com/mikavilpas/yazi.nvim/compare/v13.1.7...v13.1.8) (2026-06-21)
 
 
