@@ -6,6 +6,7 @@ import {
   isFileSelectedInYazi,
 } from "../utils/yazi-utils.ts"
 import {
+  assertKeymapNotOwnedByYaziNvim,
   assertNvimYaziPluginIndicatorIsVisible,
   describeOnNightlyYazi,
 } from "./yazi-plugin-utils.ts"
@@ -28,6 +29,8 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
       hoverFileAndVerifyItsHovered(nvim, "file2.txt")
       assertNvimYaziPluginIndicatorIsVisible()
+
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-v>")
 
       // <c-v> is now owned by yazi (via the nvim.yazi plugin). Pressing it
       // publishes a DDS event that yazi.nvim reacts to by opening the hovered
@@ -62,6 +65,8 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal("j")
       isFileSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-v>")
 
       // <c-v> is now owned by yazi (via the nvim.yazi plugin). Pressing it
       // publishes a DDS event that yazi.nvim reacts to by opening the hovered
