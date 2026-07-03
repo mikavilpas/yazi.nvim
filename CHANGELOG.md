@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.5.0...v13.6.0) (2026-07-03)
+
+
+### Features
+
+* **nvim.yazi:** implement cycle_open_buffers with tab (by default) ([#2022](https://github.com/mikavilpas/yazi.nvim/issues/2022)) ([b8adb7a](https://github.com/mikavilpas/yazi.nvim/commit/b8adb7a9d0ec1a1d69406d542a10af6c1d654582))
+
 ## [13.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.4.0...v13.5.0) (2026-07-03)
 
 
