@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.3.0...v13.4.0) (2026-07-03)
+
+
+### Features
+
+* **yazi.plugin:** implement open_file_in_horizontal_split (&lt;c-x&gt;) ([#2016](https://github.com/mikavilpas/yazi.nvim/issues/2016)) ([c65e1e1](https://github.com/mikavilpas/yazi.nvim/commit/c65e1e15001945ae74900954ba319062418ea36c))
+
 ## [13.3.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.2.0...v13.3.0) (2026-07-03)
 
 
