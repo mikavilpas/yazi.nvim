@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.5.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.4.0...v13.5.0) (2026-07-03)
+
+
+### Features
+
+* **nvim.yazi:** implement opening a file in a new tab ([#2020](https://github.com/mikavilpas/yazi.nvim/issues/2020)) ([913177d](https://github.com/mikavilpas/yazi.nvim/commit/913177dd18895235d74ed4c8e5ddc37ca0e3eefa))
+
 ## [13.4.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.3.0...v13.4.0) (2026-07-03)
 
 
