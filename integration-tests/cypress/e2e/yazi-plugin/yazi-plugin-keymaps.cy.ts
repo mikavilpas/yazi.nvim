@@ -83,6 +83,33 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
     })
   })
 
+  it("<c-x> can open a file in a horizontal split", () => {
+    cy.startNeovim({
+      startupScriptModifications: [
+        "add_yazi_context_assertions.lua",
+        "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ],
+    }).then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+      cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+      hoverFileAndVerifyItsHovered(nvim, "file2.txt")
+      assertNvimYaziPluginIndicatorIsVisible()
+
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-x>")
+
+      cy.typeIntoTerminal("{control+x}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      // both files must be visible
+      cy.contains(nvim.dir.contents["file2.txt"].name)
+      cy.contains(nvim.dir.contents["initial-file.txt"].name)
+    })
+  })
+
   it("keymaps are documented in yazi's help view", () => {
     cy.startNeovim({
       startupScriptModifications: [
