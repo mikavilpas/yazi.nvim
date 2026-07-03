@@ -99,41 +99,38 @@ function M.set_keymappings(yazi_buffer, config, context)
     return
   end
 
-  ---@param action "open_file_in_vertical_split" | "open_file_in_horizontal_split"
-  local function owned_by_yazi_plugin(action)
-    local plugin_keymaps = config.future_features.yazi_plugin_keymaps
-    return plugin_keymaps ~= nil
-      and plugin_keymaps[action] ~= nil
-      and plugin_keymaps[action] ~= false
+  local plugin_keymaps = config.future_features.yazi_plugin_keymaps or {}
+
+  local function maybe_map(nvim_key, plugin_key, action)
+    -- don't create a mapping if the user has disabled it
+    local want_yazi_keymap = nvim_key ~= false
+    -- don't create a neovim side mapping if the user has opted into using a
+    -- nvim.yazi plugin keymap.
+    local want_plugin_keymap = plugin_keymaps ~= nil
+      and plugin_key ~= nil
+      and plugin_key ~= false
+    local should_map = want_yazi_keymap and not want_plugin_keymap
+
+    if should_map then
+      vim.keymap.set({ "t" }, nvim_key, action, { buffer = yazi_buffer })
+    end
   end
 
-  if
-    config.keymaps.open_file_in_vertical_split ~= false
-    and not owned_by_yazi_plugin("open_file_in_vertical_split")
-  then
-    vim.keymap.set(
-      { "t" },
-      config.keymaps.open_file_in_vertical_split,
-      function()
-        keybinding_helpers.open_file_in_vertical_split(config, context.api)
-      end,
-      { buffer = yazi_buffer }
-    )
-  end
+  maybe_map(
+    config.keymaps.open_file_in_vertical_split,
+    plugin_keymaps.open_file_in_vertical_split,
+    function()
+      keybinding_helpers.open_file_in_vertical_split(config, context.api)
+    end
+  )
 
-  if
-    config.keymaps.open_file_in_horizontal_split ~= false
-    and not owned_by_yazi_plugin("open_file_in_horizontal_split")
-  then
-    vim.keymap.set(
-      { "t" },
-      config.keymaps.open_file_in_horizontal_split,
-      function()
-        keybinding_helpers.open_file_in_horizontal_split(config, context.api)
-      end,
-      { buffer = yazi_buffer }
-    )
-  end
+  maybe_map(
+    config.keymaps.open_file_in_horizontal_split,
+    plugin_keymaps.open_file_in_horizontal_split,
+    function()
+      keybinding_helpers.open_file_in_horizontal_split(config, context.api)
+    end
+  )
 
   if config.keymaps.grep_in_directory ~= false then
     vim.keymap.set({ "t" }, config.keymaps.grep_in_directory, function()
