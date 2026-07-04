@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["typescript", "unicorn", "import"],
+  "jsPlugins": [
+    // https://github.com/levibuzolic/eslint-plugin-no-only-tests#oxlint
+    "eslint-plugin-no-only-tests"
+  ],
   "categories": {
     "correctness": "error",
     "perf": "warn",
@@ -15,11 +19,14 @@
     "**/vite.config.js",
     "**/cypress.config.ts",
     "**/test-environment/",
-    "eslint.config.mjs",
     "dist/",
     "cypress/support/tui-sandbox.ts"
   ],
   "rules": {
+    "no-only-tests/no-only-tests": "error",
+    "prefer-const": "error",
+    "unified-signatures": "error",
+    "no-useless-assignment": "error",
     "for-direction": "error",
     "no-relative-parent-imports": "off",
     "no-async-promise-executor": "error",

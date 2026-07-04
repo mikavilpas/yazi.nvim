@@ -5,27 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
-    "lint": "pnpx oxlint --type-aware --deny-warnings --report-unused-disable-directives && eslint --max-warnings=0 ."
+    "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives"
   },
   "devDependencies": {
     "@catppuccin/palette": "1.8.0",
-    "@eslint/js": "10.0.1",
     "@tui-sandbox/library": "12.7.1",
     "@types/node": "24.13.2",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
     "concurrently": "10.0.3",
     "cypress": "15.18.0",
-    "eslint": "10.6.0",
-    "eslint-config-prettier": "10.1.8",
     "eslint-plugin-no-only-tests": "3.4.0",
-    "eslint-plugin-oxlint": "1.72.0",
     "oxlint": "1.72.0",
     "oxlint-tsgolint": "0.24.0",
     "tinycolor2": "1.6.0",
     "type-fest": "5.7.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.62.1",
     "wait-on": "9.0.10",
     "zod": "4.4.3"
   }
