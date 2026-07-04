@@ -1,5 +1,13 @@
 # Changelog
 
+## [13.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.6.0...v13.7.0) (2026-07-04)
+
+
+### Features
+
+* **nvim.yazi:** implement grep_in_directory in the yazi plugin ([#2024](https://github.com/mikavilpas/yazi.nvim/issues/2024)) ([8cb2f50](https://github.com/mikavilpas/yazi.nvim/commit/8cb2f500a3b0c39cc872f9fb7161d6b4306e225b))
+* **nvim.yazi:** implement replace_in_directory in the yazi plugin ([0f020e6](https://github.com/mikavilpas/yazi.nvim/commit/0f020e66cfb0e7b3bdc8027fd5a81f624a91e528))
+
 ## [13.6.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.5.0...v13.6.0) (2026-07-03)
 
 
