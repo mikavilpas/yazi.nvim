@@ -10,6 +10,7 @@ require("yazi").setup(
         open_file_in_tab = "<c-t>",
         cycle_open_buffers = "<tab>",
         grep_in_directory = "<c-s>",
+        replace_in_directory = "<c-g>",
       },
     },
   }
