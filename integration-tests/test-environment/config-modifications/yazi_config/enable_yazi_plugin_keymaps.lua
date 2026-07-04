@@ -9,6 +9,7 @@ require("yazi").setup(
         open_file_in_horizontal_split = "<c-x>",
         open_file_in_tab = "<c-t>",
         cycle_open_buffers = "<tab>",
+        grep_in_directory = "<c-s>",
       },
     },
   }

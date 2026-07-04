@@ -52,6 +52,7 @@
 ---@field open_file_in_horizontal_split? YaziKeymap # When a file is hovered, open it in a horizontal split
 ---@field open_file_in_tab? YaziKeymap # When a file is hovered, open it in a new tab
 ---@field cycle_open_buffers? YaziKeymap # When Neovim has multiple splits open and visible, make yazi jump to the directory of the next one
+---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi

@@ -156,6 +156,16 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
     keybinding_helpers.open_file_in_tab(config, context.api)
   elseif payload.action == "cycle_open_buffers" then
     keybinding_helpers.cycle_open_buffers(config, context)
+  elseif payload.action == "grep_in_directory" then
+    keybinding_helpers.select_current_file_and_close_yazi(config, {
+      api = context.api,
+      on_file_opened = function(chosen_file, _, _)
+        keybinding_helpers.grep_in_directory(config, chosen_file)
+      end,
+      on_multiple_files_opened = function(chosen_files)
+        keybinding_helpers.grep_in_selected_files(config, chosen_files)
+      end,
+    })
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)

@@ -132,8 +132,10 @@ function M.set_keymappings(yazi_buffer, config, context)
     end
   )
 
-  if config.keymaps.grep_in_directory ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.grep_in_directory, function()
+  maybe_map(
+    config.keymaps.grep_in_directory,
+    plugin_keymaps.grep_in_directory,
+    function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
         api = context.api,
         on_file_opened = function(chosen_file, _, _)
@@ -143,8 +145,8 @@ function M.set_keymappings(yazi_buffer, config, context)
           keybinding_helpers.grep_in_selected_files(config, chosen_files)
         end,
       })
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   maybe_map(
     config.keymaps.open_file_in_tab,
