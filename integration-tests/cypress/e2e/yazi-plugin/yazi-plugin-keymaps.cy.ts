@@ -176,4 +176,64 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       assertYaziIsHovering(nvim, "initial-file.txt")
     })
   })
+
+  describe("telescope integration (search)", () => {
+    // https://github.com/nvim-telescope/telescope.nvim
+    beforeEach(() => {
+      cy.visit("/")
+    })
+
+    it("can use telescope.nvim to search in the current directory", () => {
+      openNeovimWithNvimYaziPlugin({
+        filename: "routes/posts.$postId/adjacent-file.txt",
+        NVIM_APPNAME: "nvim_integrations",
+      }).then((nvim) => {
+        cy.contains("this file is adjacent-file.txt")
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains(
+          nvim.dir.contents.routes.contents["posts.$postId"].contents[
+            "route.tsx"
+          ].name,
+        )
+
+        assertKeymapNotOwnedByYaziNvim(nvim, "<c-s>")
+        cy.typeIntoTerminal("{control+s}")
+
+        cy.contains(new RegExp(`Grep in testdirs/.*?/routes/posts.\\$postId`))
+      })
+    })
+
+    it("can use telescope.nvim to search, limited to the selected files only", () => {
+      openNeovimWithNvimYaziPlugin({
+        filename: "routes/posts.$postId/adjacent-file.txt",
+        NVIM_APPNAME: "nvim_integrations",
+      }).then((nvim) => {
+        cy.contains("this file is adjacent-file.txt")
+        cy.typeIntoTerminal("{upArrow}")
+        cy.contains(
+          nvim.dir.contents.routes.contents["posts.$postId"].contents[
+            "route.tsx"
+          ].name,
+        )
+
+        // select the current file and the file below. There are three files in
+        // this directory so two will be selected and one will be left
+        // unselected
+        cy.typeIntoTerminal("vj")
+        assertKeymapNotOwnedByYaziNvim(nvim, "<c-s>")
+        cy.typeIntoTerminal("{control+s}")
+
+        // telescope should be open now
+        cy.contains("Grep Preview")
+        cy.contains("Grep in 2 paths")
+
+        // search for some file content. This should match
+        // ../../../test-environment/routes/posts.$postId/adjacent-file.txt
+        cy.typeIntoTerminal("this")
+
+        // verify this manually for now as I'm a bit scared this will be too
+        // flaky
+      })
+    })
+  })
 })
