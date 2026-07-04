@@ -196,6 +196,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
           ].name,
         )
 
+        assertYaziIsReady(nvim)
         assertKeymapNotOwnedByYaziNvim(nvim, "<c-s>")
         cy.typeIntoTerminal("{control+s}")
 
@@ -216,6 +217,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
           ].name,
         )
 
+        assertYaziIsReady(nvim)
         // select the current file and the file below. There are three files in
         // this directory so two will be selected and one will be left
         // unselected
