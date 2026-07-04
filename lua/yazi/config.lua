@@ -164,8 +164,10 @@ function M.set_keymappings(yazi_buffer, config, context)
     end
   )
 
-  if config.keymaps.replace_in_directory ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.replace_in_directory, function()
+  maybe_map(
+    config.keymaps.replace_in_directory,
+    plugin_keymaps.replace_in_directory,
+    function()
       keybinding_helpers.select_current_file_and_close_yazi(config, {
         api = context.api,
         on_file_opened = function(chosen_file)
@@ -175,8 +177,8 @@ function M.set_keymappings(yazi_buffer, config, context)
           keybinding_helpers.replace_in_selected_files(config, chosen_files)
         end,
       })
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   if config.keymaps.send_to_quickfix_list ~= false then
     vim.keymap.set({ "t" }, config.keymaps.send_to_quickfix_list, function()

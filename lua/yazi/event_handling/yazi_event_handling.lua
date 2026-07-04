@@ -166,6 +166,16 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
         keybinding_helpers.grep_in_selected_files(config, chosen_files)
       end,
     })
+  elseif payload.action == "replace_in_directory" then
+    keybinding_helpers.select_current_file_and_close_yazi(config, {
+      api = context.api,
+      on_file_opened = function(chosen_file)
+        keybinding_helpers.replace_in_directory(config, chosen_file)
+      end,
+      on_multiple_files_opened = function(chosen_files)
+        keybinding_helpers.replace_in_selected_files(config, chosen_files)
+      end,
+    })
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)
