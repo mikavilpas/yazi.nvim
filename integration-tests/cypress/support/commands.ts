@@ -3,6 +3,6 @@
 afterEach(function () {
   if (this.currentTest?.state === "failed") {
     cy.task("showYaziLog")
-    cy.task("removeYaziLog")
   }
+  cy.task("removeYaziLog")
 })
