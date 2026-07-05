@@ -60,4 +60,6 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
       - run: pnpm install
+        env:
+          CYPRESS_INSTALL_BINARY: "0"
       - run: pnpm run lint
