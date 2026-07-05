@@ -1,3 +1,7 @@
+import path from "path"
+
+import { z } from "zod"
+
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
 import {
   assertYaziIsHovering,
@@ -324,6 +328,34 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       // items in the quickfix list should now be visible
       cy.contains(`${nvim.dir.contents["file2.txt"].name}|1 col 1|`)
       cy.contains(`${nvim.dir.contents["file3.txt"].name}|1 col 1|`)
+    })
+  })
+
+  it("can change neovim's cwd with the 'change_working_directory' key", () => {
+    openNeovimWithNvimYaziPlugin().then((nvim) => {
+      cy.contains("If you see this text, Neovim is ready!")
+      cy.typeIntoTerminal("{upArrow}")
+
+      // wait for yazi to open
+      assertYaziIsReady(nvim)
+
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-w>")
+      hoverFileAndVerifyItsHovered(nvim, "subdirectory/subdirectory-file.txt")
+
+      cy.contains("-- TERMINAL --")
+      cy.typeIntoTerminal("{control+w}")
+      cy.typeIntoTerminal("q")
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      nvim.runExCommand({ command: "pwd" }).then((result) => {
+        const pwd = z.string().parse(result.value)
+        const subdirectoryPath = path.resolve(
+          nvim.dir.rootPathAbsolute,
+          "subdirectory" satisfies MyTestDirectoryFile,
+        )
+
+        expect(pwd).to.eql(subdirectoryPath)
+      })
     })
   })
 })

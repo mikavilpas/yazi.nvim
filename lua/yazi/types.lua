@@ -55,6 +55,7 @@
 ---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
 ---@field replace_in_directory? YaziKeymap # Close yazi and open a replacer (default: grug-far.nvim) narrowed to the directory yazi is in
 ---@field send_to_quickfix_list? YaziKeymap # Send the selected files to the quickfix list for later processing
+---@field change_working_directory? YaziKeymap # Change working directory to the directory opened by yazi
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi

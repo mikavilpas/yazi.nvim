@@ -110,6 +110,7 @@ end
 ---@field yazi_id? string # the id of the yazi instance that sent the event
 ---@field hovered? string # the currently hovered path, if any
 ---@field selected? string[] # the currently selected paths
+---@field cwd? string[] # the current working directory, if present
 ---
 ---@param event YaziCustomDDSEvent
 ---@param expected_yazi_id string # only handle events from our own yazi instance
@@ -185,6 +186,8 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
         openers.send_files_to_quickfix_list({ chosen_file })
       end,
     })
+  elseif payload.action == "change_working_directory" then
+    vim.cmd({ cmd = "cd", args = { payload.cwd } })
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)

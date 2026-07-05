@@ -201,11 +201,13 @@ function M.set_keymappings(yazi_buffer, config, context)
     end
   )
 
-  if config.keymaps.change_working_directory ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.change_working_directory, function()
+  maybe_map(
+    config.keymaps.change_working_directory,
+    plugin_keymaps.change_working_directory,
+    function()
       keybinding_helpers.change_working_directory(context)
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   if config.keymaps.open_and_pick_window ~= false then
     vim.keymap.set({ "t" }, config.keymaps.open_and_pick_window, function()
