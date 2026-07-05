@@ -1,7 +1,13 @@
+import type { MyNeovimConfigModification } from "@tui-sandbox/library"
 import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
+import type { OverrideProperties } from "type-fest"
 import * as z from "zod"
 
-import type { NeovimContext } from "../../support/tui-sandbox.js"
+import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
+import type {
+  MyStartNeovimServerArguments,
+  NeovimContext,
+} from "../../support/tui-sandbox.js"
 
 export const describeOnNightlyYazi = (title: string, fn: () => void): void => {
   const runner: (title: string, fn: () => void) => void =
@@ -58,3 +64,23 @@ export function assertKeymapNotOwnedByYaziNvim(
       ).to.eql(false)
     })
 }
+
+type NonDefaultStartupModification = Exclude<
+  MyNeovimConfigModification<MyTestDirectoryFile>,
+  | "add_yazi_context_assertions.lua"
+  | "yazi_config/enable_yazi_plugin_keymaps.lua"
+>
+export const openNeovimWithNvimYaziPlugin = (
+  args?: OverrideProperties<
+    MyStartNeovimServerArguments,
+    { startupScriptModifications?: NonDefaultStartupModification[] }
+  >,
+): Cypress.Chainable<NeovimContext> =>
+  cy.startNeovim({
+    ...args,
+    startupScriptModifications: [
+      "add_yazi_context_assertions.lua",
+      "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ...(args?.startupScriptModifications ?? []),
+    ],
+  })
