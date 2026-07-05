@@ -29,7 +29,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: "pnpm"
-      - run: pnpm install
+      - run: pnpm install --filter @yazi.nvim/plugin
       - run: pnpm oxfmt --check
 
   stylua:
