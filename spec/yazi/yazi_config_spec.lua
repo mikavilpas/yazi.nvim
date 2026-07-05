@@ -21,6 +21,32 @@ describe("the default config", function()
       assert.same("single", config.yazi_floating_window_border)
     end)
 
+    it(
+      "allows customizing it with a list through the `vim.opt.winborder` option",
+      function()
+        local border =
+          { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
+        vim.opt.winborder = border
+
+        local config = require("yazi.config").default()
+
+        assert.same(border, config.yazi_floating_window_border)
+      end
+    )
+
+    it(
+      "allows customizing it with a list through the `vim.o.winborder` option",
+      function()
+        local border =
+          { "🭽", "▔", "🭾", "▕", "🭿", "▁", "🭼", "▏" }
+        vim.o.winborder = table.concat(border, ",")
+
+        local config = require("yazi.config").default()
+
+        assert.same(border, config.yazi_floating_window_border)
+      end
+    )
+
     it("yazi.setup() allows customizing it", function()
       vim.o.winborder = "double"
       require("yazi").setup({ yazi_floating_window_border = "single" })

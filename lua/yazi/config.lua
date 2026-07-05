@@ -2,13 +2,19 @@
 
 local M = {}
 
+local function get_default_yazi_border()
+  -- Examples: {}, { "single" }, or { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }.
+  local border = vim.opt.winborder:get()
+  if #border > 1 then
+    return border
+  end
+  return border[1] or "rounded"
+end
+
 function M.default()
   local openers = require("yazi.openers")
 
-  local border = "rounded"
-  if vim.o.winborder ~= "" then
-    border = vim.o.winborder
-  end
+  local border = get_default_yazi_border()
 
   ---@type YaziConfig
   return {
