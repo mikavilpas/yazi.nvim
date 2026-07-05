@@ -1,11 +1,4 @@
-import type { MyNeovimConfigModification } from "@tui-sandbox/library"
-import type { OverrideProperties } from "type-fest"
-
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
-import type {
-  MyStartNeovimServerArguments,
-  NeovimContext,
-} from "../../support/tui-sandbox.ts"
 import {
   assertYaziIsHovering,
   hoverFileAndVerifyItsHovered,
@@ -19,27 +12,8 @@ import {
   assertKeymapNotOwnedByYaziNvim,
   assertNvimYaziPluginIndicatorIsVisible,
   describeOnNightlyYazi,
+  openNeovimWithNvimYaziPlugin,
 } from "./yazi-plugin-utils.ts"
-
-type NonDefaultStartupModification = Exclude<
-  MyNeovimConfigModification<MyTestDirectoryFile>,
-  | "add_yazi_context_assertions.lua"
-  | "yazi_config/enable_yazi_plugin_keymaps.lua"
->
-const openNeovimWithNvimYaziPlugin = (
-  args?: OverrideProperties<
-    MyStartNeovimServerArguments,
-    { startupScriptModifications?: NonDefaultStartupModification[] }
-  >,
-): Cypress.Chainable<NeovimContext> =>
-  cy.startNeovim({
-    ...args,
-    startupScriptModifications: [
-      "add_yazi_context_assertions.lua",
-      "yazi_config/enable_yazi_plugin_keymaps.lua",
-      ...(args?.startupScriptModifications ?? []),
-    ],
-  })
 
 describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   beforeEach(() => {
@@ -353,6 +327,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       isFileSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
       cy.typeIntoTerminal(" ")
       isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+      assertKeymapNotOwnedByYaziNvim(nvim, "<c-q>")
       cy.typeIntoTerminal("{control+q}")
 
       // yazi should now be closed
