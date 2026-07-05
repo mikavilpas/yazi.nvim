@@ -330,4 +330,37 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       })
     })
   })
+
+  it("can send file names to the quickfix list", () => {
+    openNeovimWithNvimYaziPlugin({
+      filename: "file2.txt",
+      startupScriptModifications: ["add_command_to_reveal_a_file.lua"],
+    }).then((nvim) => {
+      cy.contains("Hello")
+      cy.typeIntoTerminal("{upArrow}")
+
+      // wait for yazi to open
+      assertYaziIsReady(nvim)
+
+      // file2.txt should be selected
+      isFileSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+
+      // select file2, the cursor moves one line down to the next file
+      cy.typeIntoTerminal(" ")
+      isFileNotSelectedInYazi("file2.txt" satisfies MyTestDirectoryFile)
+
+      // also select the next file because multiple files have to be selected
+      isFileSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal(" ")
+      isFileNotSelectedInYazi("file3.txt" satisfies MyTestDirectoryFile)
+      cy.typeIntoTerminal("{control+q}")
+
+      // yazi should now be closed
+      cy.contains("-- TERMINAL --").should("not.exist")
+
+      // items in the quickfix list should now be visible
+      cy.contains(`${nvim.dir.contents["file2.txt"].name}|1 col 1|`)
+      cy.contains(`${nvim.dir.contents["file3.txt"].name}|1 col 1|`)
+    })
+  })
 })

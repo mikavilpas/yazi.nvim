@@ -54,6 +54,7 @@
 ---@field cycle_open_buffers? YaziKeymap # When Neovim has multiple splits open and visible, make yazi jump to the directory of the next one
 ---@field grep_in_directory? YaziKeymap # Close yazi and open a grep (default: telescope) narrowed to the directory yazi is in
 ---@field replace_in_directory? YaziKeymap # Close yazi and open a replacer (default: grug-far.nvim) narrowed to the directory yazi is in
+---@field send_to_quickfix_list? YaziKeymap # Send the selected files to the quickfix list for later processing
 
 ---@class (exact) YaziActiveContext # context state for a single yazi session
 ---@field api YaziProcessApi

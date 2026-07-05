@@ -180,8 +180,10 @@ function M.set_keymappings(yazi_buffer, config, context)
     end
   )
 
-  if config.keymaps.send_to_quickfix_list ~= false then
-    vim.keymap.set({ "t" }, config.keymaps.send_to_quickfix_list, function()
+  maybe_map(
+    config.keymaps.send_to_quickfix_list,
+    plugin_keymaps.send_to_quickfix_list,
+    function()
       local openers = require("yazi.openers")
       keybinding_helpers.select_current_file_and_close_yazi(config, {
         api = context.api,
@@ -190,8 +192,8 @@ function M.set_keymappings(yazi_buffer, config, context)
           openers.send_files_to_quickfix_list({ chosen_file })
         end,
       })
-    end, { buffer = yazi_buffer })
-  end
+    end
+  )
 
   if config.keymaps.change_working_directory ~= false then
     vim.keymap.set({ "t" }, config.keymaps.change_working_directory, function()
