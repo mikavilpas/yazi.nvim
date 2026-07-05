@@ -19,7 +19,7 @@
     "@commitlint/config-conventional": "21.2.0",
     "@commitlint/types": "21.2.0",
     "@types/node": "24.13.2",
-    "knip": "6.23.0",
+    "knip": "6.24.0",
     "oxfmt": "0.57.0",
     "typescript": "6.0.3"
   },
