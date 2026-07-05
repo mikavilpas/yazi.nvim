@@ -25,5 +25,5 @@ require("yazi").setup(
 require("yazi.plugin").build_plugin({
   name = "nvim.yazi",
   source = vim.fn.expand("~/.config/yazi/plugins"),
-  dir = vim.fs.joinpath(_G.yazi_nvim_repo_root, "nvim.yazi"),
+  dir = vim.fs.joinpath(_G.yazi_nvim_repo_root, "yazi-plugin", "nvim.yazi"),
 }, { silent = true })
