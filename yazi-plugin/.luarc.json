@@ -2,7 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
   "runtime": {
     "version": "Lua 5.4",
-    "pathStrict": true
+    "pathStrict": true,
+    "path": ["?.lua", "?/init.lua", "nvim.yazi/?.lua"]
   },
   "workspace": {
     "checkThirdParty": false,
