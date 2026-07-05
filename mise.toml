@@ -23,7 +23,7 @@ _.path = ["lua_modules/bin"]
 [tasks]
 test = "luarocks test --local"
 test-focus = "luarocks test --local -- --filter focus"
-format = "stylua lua/ spec/ integration-tests/ ./repro.lua"
+format = "stylua lua/ spec/ integration-tests/ ./repro.lua yazi-plugin/nvim.yazi/"
 
 [tasks.check]
 description = "Check the code for errors (lint + test + format)"
