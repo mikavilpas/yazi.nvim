@@ -109,6 +109,10 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("add_command_to_show_loaded_packages.lua"),
           type: z.literal("file"),
         }),
+        "add_winborder.lua": z.object({
+          name: z.literal("add_winborder.lua"),
+          type: z.literal("file"),
+        }),
         "add_yazi_context_assertions.lua": z.object({
           name: z.literal("add_yazi_context_assertions.lua"),
           type: z.literal("file"),
@@ -356,6 +360,7 @@ export const testDirectoryFiles = z.enum([
   "config-modifications/add_command_to_count_open_buffers.lua",
   "config-modifications/add_command_to_reveal_a_file.lua",
   "config-modifications/add_command_to_show_loaded_packages.lua",
+  "config-modifications/add_winborder.lua",
   "config-modifications/add_yazi_context_assertions.lua",
   "config-modifications/notify_custom_events.lua",
   "config-modifications/notify_hover_events.lua",

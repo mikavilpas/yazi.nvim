@@ -89,13 +89,12 @@ describe("opening directories", () => {
         NVIM_APPNAME: "nvim_no_package_manager",
         startupScriptModifications: [
           "nvim_no_package_manager/load_yazi_instead_of_netrw.lua",
+          "add_winborder.lua",
         ],
       }).then((nvim) => {
         // yazi should now be visible, showing the names of adjacent files
         cy.contains("-- TERMINAL --")
         cy.contains(nvim.dir.contents["file2.txt"].name)
-
-        cy.typeIntoTerminal("{downArrow}")
       })
     })
   })
