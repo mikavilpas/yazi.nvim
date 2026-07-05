@@ -65,10 +65,13 @@ export function assertKeymapNotOwnedByYaziNvim(
     })
 }
 
+const pluginStartupScriptModifications = [
+  "add_yazi_context_assertions.lua",
+  "yazi_config/enable_yazi_plugin_keymaps.lua",
+] as const satisfies MyNeovimConfigModification<MyTestDirectoryFile>[]
 type NonDefaultStartupModification = Exclude<
   MyNeovimConfigModification<MyTestDirectoryFile>,
-  | "add_yazi_context_assertions.lua"
-  | "yazi_config/enable_yazi_plugin_keymaps.lua"
+  (typeof pluginStartupScriptModifications)[number]
 >
 export const openNeovimWithNvimYaziPlugin = (
   args?: OverrideProperties<
@@ -79,8 +82,7 @@ export const openNeovimWithNvimYaziPlugin = (
   cy.startNeovim({
     ...args,
     startupScriptModifications: [
-      "add_yazi_context_assertions.lua",
-      "yazi_config/enable_yazi_plugin_keymaps.lua",
+      ...pluginStartupScriptModifications,
       ...(args?.startupScriptModifications ?? []),
     ],
   })
