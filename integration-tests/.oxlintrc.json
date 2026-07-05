@@ -220,7 +220,7 @@
       }
     },
     {
-      "files": ["cypress/e2e/*.cy.ts", "cypress/support/commands.ts"],
+      "files": ["cypress/e2e/**/*.cy.ts", "cypress/support/commands.ts"],
       // cypress knows how to import its own files
       "rules": {
         "import/unambiguous": "allow",
