@@ -1,5 +1,17 @@
 # Changelog
 
+## [13.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.7.0...v13.8.0) (2026-07-05)
+
+
+### Features
+
+* **nvim.yazi:** implement send_to_quickfix_list (`<c-q>`) ([537caa1](https://github.com/mikavilpas/yazi.nvim/commit/537caa1d583d2c334bcef929d2fc0f4f4649ade0))
+
+
+### Bug Fixes
+
+* honor vim.opt.winborder settings ([#2030](https://github.com/mikavilpas/yazi.nvim/issues/2030)) ([0cab129](https://github.com/mikavilpas/yazi.nvim/commit/0cab1293f8ff75070131b9021938cb7fc5238535))
+
 ## [13.7.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.6.0...v13.7.0) (2026-07-04)
 
 
