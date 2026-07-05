@@ -1,0 +1,3 @@
+[submodule "yazi-plugin/yazi-plugins"]
+	path = yazi-plugin/yazi-plugins
+	url = https://github.com/yazi-rs/plugins/

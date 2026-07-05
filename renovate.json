@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["local>mikavilpas/mika-renovate"],
+  "git-submodules": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchDepNames": ["lua"],
