@@ -176,6 +176,15 @@ function M.process_plugin_keymap_event(event, expected_yazi_id, config, context)
         keybinding_helpers.replace_in_selected_files(config, chosen_files)
       end,
     })
+  elseif payload.action == "send_to_quickfix_list" then
+    local openers = require("yazi.openers")
+    keybinding_helpers.select_current_file_and_close_yazi(config, {
+      api = context.api,
+      on_multiple_files_opened = openers.send_files_to_quickfix_list,
+      on_file_opened = function(chosen_file)
+        openers.send_files_to_quickfix_list({ chosen_file })
+      end,
+    })
   else
     Log:debug(
       string.format("Unknown yazi-nvim plugin action: %s", payload.action)
