@@ -1,3 +1,6 @@
+import type { MyNeovimConfigModification } from "@tui-sandbox/library"
+import type { OverrideProperties } from "type-fest"
+
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
 import type {
   MyStartNeovimServerArguments,
@@ -18,8 +21,16 @@ import {
   describeOnNightlyYazi,
 } from "./yazi-plugin-utils.ts"
 
+type NonDefaultStartupModification = Exclude<
+  MyNeovimConfigModification<MyTestDirectoryFile>,
+  | "add_yazi_context_assertions.lua"
+  | "yazi_config/enable_yazi_plugin_keymaps.lua"
+>
 const openNeovimWithNvimYaziPlugin = (
-  args?: MyStartNeovimServerArguments,
+  args?: OverrideProperties<
+    MyStartNeovimServerArguments,
+    { startupScriptModifications?: NonDefaultStartupModification[] }
+  >,
 ): Cypress.Chainable<NeovimContext> =>
   cy.startNeovim({
     ...args,
