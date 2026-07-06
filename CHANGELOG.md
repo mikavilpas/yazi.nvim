@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.8.0...v13.9.0) (2026-07-06)
+
+
+### Features
+
+* **nvim.yazi:** implement change_working_directory ([86f7143](https://github.com/mikavilpas/yazi.nvim/commit/86f7143a9e14be00ca565e26785b9d1419648cc8))
+
 ## [13.8.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.7.0...v13.8.0) (2026-07-05)
 
 
