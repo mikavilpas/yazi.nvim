@@ -85,4 +85,8 @@ export const openNeovimWithNvimYaziPlugin = (
       ...pluginStartupScriptModifications,
       ...(args?.startupScriptModifications ?? []),
     ],
+    additionalEnvironmentVariables: {
+      YAZI_LOG: "debug",
+      ...args?.additionalEnvironmentVariables,
+    },
   })
