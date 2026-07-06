@@ -387,7 +387,6 @@ function M.parse_events(event_lines)
       }
       table.insert(events, event)
     else
-      require("yazi.log"):debug(string.format("Unknown event type: %s", type))
       -- Custom user event.
       -- It could look like this (with optional data at the end)
       -- my-message-no-data,0,1731774290298033,
