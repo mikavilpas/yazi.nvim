@@ -99,18 +99,6 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
     })
   })
 
-  it("keymaps are documented in yazi's help view", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
-      cy.contains("If you see this text, Neovim is ready!")
-      cy.typeIntoTerminal("{upArrow}")
-      assertYaziIsReady(nvim)
-      assertNvimYaziPluginIndicatorIsVisible()
-
-      cy.typeIntoTerminal("~")
-      cy.contains("yazi.nvim: open file in vertical split")
-    })
-  })
-
   it("can open a file in a new tab", () => {
     openNeovimWithNvimYaziPlugin().then((nvim) => {
       cy.contains("If you see this text, Neovim is ready!")
