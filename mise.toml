@@ -1,6 +1,6 @@
 [tools]
 "github:EmmyLuaLs/emmylua-analyzer-rust" = "0.23.2"
-fzf = "0.73.1"
+fzf = "0.74.0"
 # fd is a dependency of telescope and fzf-lua
 fd = "10.4.2"
 lua = "5.1"
