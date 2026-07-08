@@ -37,7 +37,7 @@ importers:
         version: 1.8.0
       '@tui-sandbox/library':
         specifier: 12.7.1
-        version: 12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
+        version: 12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
       '@types/node':
         specifier: 24.13.2
         version: 24.13.2
@@ -66,8 +66,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 5.7.0
-        version: 5.7.0
+        specifier: 5.8.0
+        version: 5.8.0
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -2064,8 +2064,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@5.7.0:
-    resolution: {integrity: sha512-1URUxUqfHFM1c+zfSPsa3gnkO7Aq21qyH75SIduNYz4SzY964rn1X2vCMQaHSHhktiw+0kPa2iyb6PUpXqB6Vg==}
+  type-fest@5.8.0:
+    resolution: {integrity: sha512-YGYEVz3Fm5iy/AybuA0oyNFq7H4CgQNfRp/qfe8nurE1kuCeNm3/vfm9X4Mtl+qLyaKJUh5xrFZwogr41SMjYA==}
     engines: {node: '>=20'}
 
   typescript@6.0.3:
@@ -2766,7 +2766,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@tui-sandbox/library@12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.7.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
+  '@tui-sandbox/library@12.7.1(cypress@15.18.0)(oxfmt@0.57.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.18.0(@trpc/server@11.18.0(typescript@6.0.3))(typescript@6.0.3)
@@ -2785,7 +2785,7 @@ snapshots:
       sirv: 3.0.2
       string-width: 8.2.1
       tsx: 4.22.4
-      type-fest: 5.7.0
+      type-fest: 5.8.0
       typescript: 6.0.3
       wait-on: 9.0.10
       winston: 3.19.0
@@ -3982,7 +3982,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@5.7.0:
+  type-fest@5.8.0:
     dependencies:
       tagged-tag: 1.0.0
 
