@@ -184,6 +184,9 @@ jobs:
           fzf --version
           rg --version
           which realpath || { exit 1; }
+          nvim --version
+          yazi --version
+          ya --version
 
       - working-directory: integration-tests
         name: Prepare Neovim for integration tests
