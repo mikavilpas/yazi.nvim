@@ -1,5 +1,4 @@
 [tools]
-"github:EmmyLuaLs/emmylua-analyzer-rust" = "0.23.2"
 fzf = "0.74.0"
 # fd is a dependency of telescope and fzf-lua
 fd = "10.4.2"
@@ -11,6 +10,14 @@ ripgrep = { version = "15.1.0", exe = "rg" }
 actionlint = "1.7.12"
 zizmor = "1.26.1"
 "aqua:Kampfkarren/selene" = "0.31.0"
+
+[tools."github:EmmyLuaLs/emmylua-analyzer-rust"]
+version = "0.23.2"
+
+[tools."github:EmmyLuaLs/emmylua-analyzer-rust".platforms]
+linux-x64 = { asset_pattern = "*_ls-linux-x64*" }
+macos-x64 = { asset_pattern = "*_ls-darwin-x64*" }
+macos-arm64 = { asset_pattern = "*_ls-darwin-arm64*" }
 
 [env]
 # busted/nlua live in this project's own luarocks tree (`luarocks init` ->
