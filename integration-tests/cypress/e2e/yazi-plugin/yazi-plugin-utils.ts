@@ -4,10 +4,7 @@ import type { OverrideProperties } from "type-fest"
 import * as z from "zod"
 
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
-import type {
-  MyStartNeovimServerArguments,
-  NeovimContext,
-} from "../../support/tui-sandbox.js"
+import type { MyStartNeovimServerArguments, NeovimContext } from "../../support/tui-sandbox.js"
 
 export const describeOnNightlyYazi = (title: string, fn: () => void): void => {
   const runner: (title: string, fn: () => void) => void =
@@ -15,8 +12,8 @@ export const describeOnNightlyYazi = (title: string, fn: () => void): void => {
   runner(title, fn)
 }
 
-export const assertNvimYaziPluginIndicatorIsVisible =
-  (): Cypress.Chainable<undefined> => cy.contains(String.fromCodePoint(0xf36f)) // nf-linux-neovim, ""
+export const assertNvimYaziPluginIndicatorIsVisible = (): Cypress.Chainable<undefined> =>
+  cy.contains(String.fromCodePoint(0xf36f)) // nf-linux-neovim, ""
 
 /**
  * Issue: yazi.nvim has both neovim keymaps as well as yazi keymaps (via
@@ -26,10 +23,7 @@ export const assertNvimYaziPluginIndicatorIsVisible =
  * Solution: call this function to assert that the yazi.nvim keymap is not
  * active for the given key.
  */
-export function assertKeymapNotOwnedByYaziNvim(
-  nvim: NeovimContext,
-  key: string,
-): Cypress.Chainable<RunLuaCodeOutput> {
+export function assertKeymapNotOwnedByYaziNvim(nvim: NeovimContext, key: string): Cypress.Chainable<RunLuaCodeOutput> {
   return nvim
     .runLuaCode({
       luaCode: `
@@ -46,17 +40,12 @@ export function assertKeymapNotOwnedByYaziNvim(
         return { buftype = vim.bo[buf].buftype, mapped = mapped }
       `,
     })
-    .then((result) => {
-      const parsed = z
-        .object({ buftype: z.string(), mapped: z.boolean() })
-        .parse(result.value)
+    .then(result => {
+      const parsed = z.object({ buftype: z.string(), mapped: z.boolean() }).parse(result.value)
 
       // sanity check: we must actually be inspecting the yazi terminal buffer,
       // otherwise "no keymap found" would be meaningless
-      expect(
-        parsed.buftype,
-        "expected to inspect the focused yazi terminal buffer",
-      ).to.eql("terminal")
+      expect(parsed.buftype, "expected to inspect the focused yazi terminal buffer").to.eql("terminal")
 
       expect(
         parsed.mapped,
@@ -81,10 +70,7 @@ export const openNeovimWithNvimYaziPlugin = (
 ): Cypress.Chainable<NeovimContext> =>
   cy.startNeovim({
     ...args,
-    startupScriptModifications: [
-      ...pluginStartupScriptModifications,
-      ...(args?.startupScriptModifications ?? []),
-    ],
+    startupScriptModifications: [...pluginStartupScriptModifications, ...(args?.startupScriptModifications ?? [])],
     additionalEnvironmentVariables: {
       YAZI_LOG: "debug",
       ...args?.additionalEnvironmentVariables,

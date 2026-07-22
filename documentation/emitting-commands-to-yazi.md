@@ -4,8 +4,7 @@
 >
 > This is an advanced feature that requires some manual coding.
 
-When Yazi is running, it supports receiving instructions to execute yazi
-commands. These can be sent using `ya emit-to`:
+When Yazi is running, it supports receiving instructions to execute yazi commands. These can be sent using `ya emit-to`:
 
 - <https://yazi-rs.github.io/docs/dds#ya-emit>
 

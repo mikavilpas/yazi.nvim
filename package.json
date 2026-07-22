@@ -6,6 +6,7 @@
   "keywords": [],
   "license": "ISC",
   "author": "",
+  "type": "module",
   "scripts": {
     "dev": "pnpm --filter ./integration-tests/ dev",
     "knip": "knip",
@@ -18,6 +19,7 @@
     "@commitlint/cli": "21.2.0",
     "@commitlint/config-conventional": "21.2.0",
     "@commitlint/types": "21.2.0",
+    "@mikavilpas/oxfmt-config": "3.0.0",
     "@types/node": "24.13.2",
     "knip": "6.25.0",
     "oxfmt": "0.58.0",

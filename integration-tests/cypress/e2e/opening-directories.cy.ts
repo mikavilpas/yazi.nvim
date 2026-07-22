@@ -7,7 +7,7 @@ describe("opening directories", () => {
       // `neovim .` specifies to open the current directory when neovim is
       // starting
       filename: ".",
-    }).then((nvim) => {
+    }).then(nvim => {
       // yazi should now be visible, showing the names of adjacent files
       cy.contains("-- TERMINAL --")
       cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -23,7 +23,7 @@ describe("opening directories", () => {
       filename: {
         openInVerticalSplits: ["initial-file.txt", "file2.txt"],
       },
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
 
       // open the current directory using a command
@@ -36,7 +36,7 @@ describe("opening directories", () => {
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      nvim.runExCommand({ command: "CountBuffers" }).then((result) => {
+      nvim.runExCommand({ command: "CountBuffers" }).then(result => {
         expect(result.value).to.equal("Number of open buffers: 2")
       })
     })
@@ -44,7 +44,7 @@ describe("opening directories", () => {
 
   it("can open a directory when pressing enter on a directory in yazi", () => {
     cy.visit("/")
-    cy.startNeovim().then((nvim) => {
+    cy.startNeovim().then(nvim => {
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
 
       cy.typeIntoTerminal("{upArrow}")
@@ -63,19 +63,13 @@ describe("opening directories", () => {
 
       // yazi should now be visible in the new directory
       cy.contains("-- TERMINAL --")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       // yazi should now be in insert mode. This means pressing q should exit.
       cy.typeIntoTerminal("q")
 
       cy.contains("-- TERMINAL --").should("not.exist")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      ).should("not.exist")
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name).should("not.exist")
     })
   })
 
@@ -87,11 +81,8 @@ describe("opening directories", () => {
         // starting
         filename: ".",
         NVIM_APPNAME: "nvim_no_package_manager",
-        startupScriptModifications: [
-          "nvim_no_package_manager/load_yazi_instead_of_netrw.lua",
-          "add_winborder.lua",
-        ],
-      }).then((nvim) => {
+        startupScriptModifications: ["nvim_no_package_manager/load_yazi_instead_of_netrw.lua", "add_winborder.lua"],
+      }).then(nvim => {
         // yazi should now be visible, showing the names of adjacent files
         cy.contains("-- TERMINAL --")
         cy.contains(nvim.dir.contents["file2.txt"].name)

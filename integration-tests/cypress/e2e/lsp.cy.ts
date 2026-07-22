@@ -1,16 +1,10 @@
 import type { RunLuaCodeOutput } from "@tui-sandbox/library/server"
 
 import type { NeovimContext } from "../support/tui-sandbox.ts"
-import {
-  assertYaziIsReady,
-  isDirectorySelectedInYazi,
-  isFileSelectedInYazi,
-} from "./utils/yazi-utils.js"
+import { assertYaziIsReady, isDirectorySelectedInYazi, isFileSelectedInYazi } from "./utils/yazi-utils.js"
 
 /** It takes a bit of time for the LSP server to start. Wait until it's ready. */
-const waitForEmmyluaLsReady = (
-  nvim: NeovimContext,
-): Cypress.Chainable<RunLuaCodeOutput> =>
+const waitForEmmyluaLsReady = (nvim: NeovimContext): Cypress.Chainable<RunLuaCodeOutput> =>
   // It takes a bit of time for the LSP server to start.
   nvim.waitForLuaCode({
     luaAssertion: `
@@ -35,7 +29,7 @@ describe("rename events with LSP support", () => {
       filename: "lua-project/lua/config.lua",
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 
@@ -68,7 +62,7 @@ describe("rename events with LSP support", () => {
       filename: "lua-project/lua/init.lua",
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains(`-- 609a3a37-42da-494d-908e-749d3aedca58`)
 
@@ -105,7 +99,7 @@ describe("move events with LSP support", () => {
       filename: "lua-project/lua/config.lua",
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains(`-- the default configuration`)
 

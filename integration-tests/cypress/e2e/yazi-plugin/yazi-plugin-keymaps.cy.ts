@@ -3,15 +3,8 @@ import path from "path"
 import { z } from "zod"
 
 import type { MyTestDirectoryFile } from "../../../MyTestDirectory.ts"
-import {
-  assertYaziIsHovering,
-  hoverFileAndVerifyItsHovered,
-} from "../utils/hover-utils.ts"
-import {
-  assertYaziIsReady,
-  isFileNotSelectedInYazi,
-  isFileSelectedInYazi,
-} from "../utils/yazi-utils.ts"
+import { assertYaziIsHovering, hoverFileAndVerifyItsHovered } from "../utils/hover-utils.ts"
+import { assertYaziIsReady, isFileNotSelectedInYazi, isFileSelectedInYazi } from "../utils/yazi-utils.ts"
 import {
   assertKeymapNotOwnedByYaziNvim,
   assertNvimYaziPluginIndicatorIsVisible,
@@ -25,7 +18,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("<c-v> can open a file in a vertical split", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then(nvim => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
@@ -50,7 +43,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("<c-v> can open multiple files in vertical splits", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then(nvim => {
       // this should test that the DDS events include details of multiple
       // files, not just one
       cy.contains("If you see this text, Neovim is ready!")
@@ -82,7 +75,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("<c-x> can open a file in a horizontal split", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then(nvim => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
@@ -104,7 +97,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("can open a file in a new tab", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then(nvim => {
       cy.contains("If you see this text, Neovim is ready!")
 
       cy.typeIntoTerminal("{upArrow}")
@@ -138,7 +131,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
         "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_command_to_reveal_a_file.lua",
       ],
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("If you see this text, Neovim is ready!")
 
       // start yazi and wait for it to be visible
@@ -164,14 +157,10 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       openNeovimWithNvimYaziPlugin({
         filename: "routes/posts.$postId/adjacent-file.txt",
         NVIM_APPNAME: "nvim_integrations",
-      }).then((nvim) => {
+      }).then(nvim => {
         cy.contains("this file is adjacent-file.txt")
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(
-          nvim.dir.contents.routes.contents["posts.$postId"].contents[
-            "route.tsx"
-          ].name,
-        )
+        cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
         assertYaziIsReady(nvim)
         assertKeymapNotOwnedByYaziNvim(nvim, "<c-s>")
@@ -185,14 +174,10 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       openNeovimWithNvimYaziPlugin({
         filename: "routes/posts.$postId/adjacent-file.txt",
         NVIM_APPNAME: "nvim_integrations",
-      }).then((nvim) => {
+      }).then(nvim => {
         cy.contains("this file is adjacent-file.txt")
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(
-          nvim.dir.contents.routes.contents["posts.$postId"].contents[
-            "route.tsx"
-          ].name,
-        )
+        cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
         assertYaziIsReady(nvim)
         // select the current file and the file below. There are three files in
@@ -225,16 +210,12 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       openNeovimWithNvimYaziPlugin({
         filename: "routes/posts.$postId/adjacent-file.txt",
         NVIM_APPNAME: "nvim_integrations",
-      }).then((nvim) => {
+      }).then(nvim => {
         // wait until text on the start screen is visible
         cy.contains("this file is adjacent-file.txt")
 
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(
-          nvim.dir.contents.routes.contents["posts.$postId"].contents[
-            "should-be-excluded-file.txt"
-          ].name,
-        )
+        cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["should-be-excluded-file.txt"].name)
         assertYaziIsReady(nvim)
         assertKeymapNotOwnedByYaziNvim(nvim, "<c-g>")
         // close yazi and start grug-far.nvim
@@ -259,14 +240,10 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       openNeovimWithNvimYaziPlugin({
         filename: "routes/posts.$postId/adjacent-file.txt",
         NVIM_APPNAME: "nvim_integrations",
-      }).then((nvim) => {
+      }).then(nvim => {
         cy.contains("this file is adjacent-file.txt")
         cy.typeIntoTerminal("{upArrow}")
-        cy.contains(
-          nvim.dir.contents.routes.contents["posts.$postId"].contents[
-            "route.tsx"
-          ].name,
-        )
+        cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
         assertYaziIsReady(nvim)
         assertKeymapNotOwnedByYaziNvim(nvim, "<c-g>")
@@ -290,9 +267,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
 
         // the files in the same directory that were not selected should not be
         // visible in the view
-        cy.contains("routes/posts.$postId/should-be-excluded-file.txt").should(
-          "not.exist",
-        )
+        cy.contains("routes/posts.$postId/should-be-excluded-file.txt").should("not.exist")
       })
     })
   })
@@ -301,7 +276,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
     openNeovimWithNvimYaziPlugin({
       filename: "file2.txt",
       startupScriptModifications: ["add_command_to_reveal_a_file.lua"],
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("Hello")
       cy.typeIntoTerminal("{upArrow}")
 
@@ -332,7 +307,7 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
   })
 
   it("can change neovim's cwd with the 'change_working_directory' key", () => {
-    openNeovimWithNvimYaziPlugin().then((nvim) => {
+    openNeovimWithNvimYaziPlugin().then(nvim => {
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("{upArrow}")
 
@@ -347,12 +322,9 @@ describeOnNightlyYazi("yazi-owned keymaps (nvim.yazi plugin, DDS)", () => {
       cy.typeIntoTerminal("q")
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      nvim.runExCommand({ command: "pwd" }).then((result) => {
+      nvim.runExCommand({ command: "pwd" }).then(result => {
         const pwd = z.string().parse(result.value)
-        const subdirectoryPath = path.resolve(
-          nvim.dir.rootPathAbsolute,
-          "subdirectory" satisfies MyTestDirectoryFile,
-        )
+        const subdirectoryPath = path.resolve(nvim.dir.rootPathAbsolute, "subdirectory" satisfies MyTestDirectoryFile)
 
         expect(pwd).to.eql(subdirectoryPath)
       })

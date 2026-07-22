@@ -20,10 +20,7 @@ export function isFileNotSelectedInYazi(text: string): void {
 }
 
 export function isFileFoundInYazi(filename: MyTestDirectoryFile): void {
-  textIsVisibleWithBackgroundColor(
-    filename,
-    rgbify(flavors.macchiato.colors.yellow.rgb),
-  )
+  textIsVisibleWithBackgroundColor(filename, rgbify(flavors.macchiato.colors.yellow.rgb))
 }
 
 /** find a directory and wait for yazi to have found it, then select it */
@@ -34,8 +31,6 @@ export function findFileInYazi(filename: MyTestDirectoryFile): void {
   isFileFoundInYazi(filename)
 }
 
-export function assertYaziIsReady(
-  nvim: NeovimContext,
-): Cypress.Chainable<RunLuaCodeOutput> {
+export function assertYaziIsReady(nvim: NeovimContext): Cypress.Chainable<RunLuaCodeOutput> {
   return nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
 }

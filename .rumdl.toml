@@ -14,7 +14,7 @@ disable = ["MD013", "MD028"]
 #    "src/**/*.md",
 #    "README.md"
 # ]
-
+line-length = 120
 # List of file/directory patterns to exclude from linting
 exclude = [
   # Common directories to exclude
@@ -41,7 +41,6 @@ respect-gitignore = true
 "README.md" = ["MD033"]
 
 # Rule-specific configurations (uncomment and modify as needed)
-
 
 # [MD003]
 # style = "atx"  # Heading style (atx, atx_closed, setext)

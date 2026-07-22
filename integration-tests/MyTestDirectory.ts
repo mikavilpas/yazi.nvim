@@ -332,11 +332,8 @@ export const MyTestDirectorySchema = z.object({
   }),
 })
 
-export const MyTestDirectoryContentsSchema =
-  MyTestDirectorySchema.shape.contents
-export type MyTestDirectoryContentsSchemaType = z.infer<
-  typeof MyTestDirectorySchema
->
+export const MyTestDirectoryContentsSchema = MyTestDirectorySchema.shape.contents
+export type MyTestDirectoryContentsSchemaType = z.infer<typeof MyTestDirectorySchema>
 
 export type MyTestDirectory = MyTestDirectoryContentsSchemaType["contents"]
 
@@ -413,7 +410,4 @@ export const testDirectoryFiles = z.enum([
   ".",
 ])
 export type MyTestDirectoryFile = z.infer<typeof testDirectoryFiles>
-export type MyNeovimAppName =
-  | "nvim"
-  | "nvim_integrations"
-  | "nvim_no_package_manager"
+export type MyNeovimAppName = "nvim" | "nvim_integrations" | "nvim_no_package_manager"

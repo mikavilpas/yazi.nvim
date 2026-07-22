@@ -4,10 +4,7 @@ import { flavors } from "@catppuccin/palette"
 import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
 
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
-import {
-  assertYaziIsHovering,
-  hoverFileAndVerifyItsHovered,
-} from "./utils/hover-utils.js"
+import { assertYaziIsHovering, hoverFileAndVerifyItsHovered } from "./utils/hover-utils.js"
 import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 describe("grug-far integration (search and replace)", () => {
@@ -19,16 +16,12 @@ describe("grug-far integration (search and replace)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("this file is adjacent-file.txt")
 
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents[
-          "should-be-excluded-file.txt"
-        ].name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["should-be-excluded-file.txt"].name)
       // close yazi and start grug-far.nvim
       cy.typeIntoTerminal("{control+g}")
       cy.contains("Grug FAR")
@@ -51,13 +44,10 @@ describe("grug-far integration (search and replace)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left
@@ -79,9 +69,7 @@ describe("grug-far integration (search and replace)", () => {
 
       // the files in the same directory that were not selected should not be
       // visible in the view
-      cy.contains("routes/posts.$postId/should-be-excluded-file.txt").should(
-        "not.exist",
-      )
+      cy.contains("routes/posts.$postId/should-be-excluded-file.txt").should("not.exist")
     })
   })
 })
@@ -96,13 +84,10 @@ describe("telescope integration (search)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       cy.typeIntoTerminal("{control+s}")
 
@@ -117,13 +102,10 @@ describe("telescope integration (search)", () => {
     cy.startNeovim({
       filename: "routes/posts.$postId/adjacent-file.txt",
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left
@@ -155,13 +137,10 @@ describe("fzf-lua integration (grep)", () => {
       filename: "routes/posts.$postId/adjacent-file.txt",
       startupScriptModifications: ["yazi_config/use_fzf_lua.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       cy.contains("this file is adjacent-file.txt")
       cy.typeIntoTerminal("{upArrow}")
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       cy.typeIntoTerminal("{control+s}")
 
@@ -173,17 +152,11 @@ describe("fzf-lua integration (grep)", () => {
       cy.typeIntoTerminal("this")
 
       // results should be visible
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents[
-          "should-be-excluded-file.txt"
-        ].name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["should-be-excluded-file.txt"].name)
 
       // results from outside the directory should not be visible. This
       // verifies the search is limited to the current directory
-      cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
-        "not.exist",
-      )
+      cy.contains(nvim.dir.contents["initial-file.txt"].name).should("not.exist")
     })
   })
 
@@ -191,21 +164,15 @@ describe("fzf-lua integration (grep)", () => {
     // https://github.com/ibhagwan/fzf-lua
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
-      startupScriptModifications: [
-        "yazi_config/use_fzf_lua.lua",
-        "add_yazi_context_assertions.lua",
-      ],
+      startupScriptModifications: ["yazi_config/use_fzf_lua.lua", "add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.typeIntoTerminal("{upArrow}")
       assertYaziIsReady(nvim)
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"]
-          .name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["route.tsx"].name)
 
       // select the current file and the file below. There are three files in
       // this directory so two will be selected and one will be left
@@ -224,17 +191,11 @@ describe("fzf-lua integration (grep)", () => {
       cy.typeIntoTerminal("this", { delay: 30 })
 
       // some results should be visible
-      cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents[
-          "adjacent-file.txt"
-        ].name,
-      )
+      cy.contains(nvim.dir.contents.routes.contents["posts.$postId"].contents["adjacent-file.txt"].name)
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
       cy.contains(
-        nvim.dir.contents.routes.contents["posts.$postId"].contents[
-          "should-be-excluded-file.txt"
-        ].name,
+        nvim.dir.contents.routes.contents["posts.$postId"].contents["should-be-excluded-file.txt"].name,
       ).should("not.exist")
     })
   })
@@ -247,12 +208,9 @@ describe("snacks.picker integration (grep)", () => {
     cy.visit("/")
     cy.startNeovim({
       filename: "routes/posts.$postId/route.tsx",
-      startupScriptModifications: [
-        "yazi_config/use_snacks_picker.lua",
-        "add_yazi_context_assertions.lua",
-      ],
+      startupScriptModifications: ["yazi_config/use_snacks_picker.lua", "add_yazi_context_assertions.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until the file contents are visible
       cy.contains("02c67730-6b74-4b7c-af61-fe5844fdc3d7")
 
@@ -272,7 +230,7 @@ describe("snacks.picker integration (grep)", () => {
       cy.contains("0/0")
 
       // snacks.picker should have started in insert mode
-      nvim.runLuaCode({ luaCode: `return vim.fn.mode()` }).should((result) => {
+      nvim.runLuaCode({ luaCode: `return vim.fn.mode()` }).should(result => {
         expect(result.value).to.equal("i")
       })
 
@@ -289,7 +247,7 @@ describe("snacks.picker integration (grep)", () => {
     cy.visit("/")
     cy.startNeovim({
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until the file contents are visible
       cy.contains("If you see this text, Neovim is ready!")
       cy.typeIntoTerminal("dd")
@@ -301,10 +259,7 @@ describe("snacks.picker integration (grep)", () => {
       cy.typeIntoTerminal(
         // the filter has issues with special characters, so only type part of
         // the name
-        ("dir with (parens ) and spaces" satisfies MyTestDirectoryFile).slice(
-          0,
-          "dir with".length,
-        ),
+        ("dir with (parens ) and spaces" satisfies MyTestDirectoryFile).slice(0, "dir with".length),
       )
 
       // select both files
@@ -321,16 +276,14 @@ describe("snacks.picker integration (grep)", () => {
       cy.contains("Smart").should("not.exist")
 
       // verify that the clipboard register contains the relative paths
-      nvim
-        .runLuaCode({ luaCode: `return vim.fn.getreg('"')` })
-        .then((result) => {
-          const value = result.value?.valueOf()
-          assert(typeof value === "string")
-          expect(value.split("\n")).to.eql([
-            `../../${"dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile}`,
-            `../../${"dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile}`,
-          ])
-        })
+      nvim.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then(result => {
+        const value = result.value?.valueOf()
+        assert(typeof value === "string")
+        expect(value.split("\n")).to.eql([
+          `../../${"dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile}`,
+          `../../${"dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile}`,
+        ])
+      })
     })
   })
 })
@@ -339,12 +292,9 @@ describe("snacks open_and_pick_window integration", () => {
   it("can open a file in a specific split window", () => {
     cy.visit("/")
     cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "add_command_to_reveal_a_file.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       nvim.runExCommand({ command: "vsplit" })
       cy.typeIntoTerminal("{upArrow}")
 
@@ -354,13 +304,10 @@ describe("snacks open_and_pick_window integration", () => {
 
       // wait until the picker is showing labels for the splits. They will be
       // labeled "a" and "s", and will have a particular background color
-      textIsVisibleWithBackgroundColor(
-        "s",
-        rgbify(flavors.macchiato.colors.peach.rgb),
-      )
+      textIsVisibleWithBackgroundColor("s", rgbify(flavors.macchiato.colors.peach.rgb))
 
       cy.typeIntoTerminal("s")
-      nvim.runExCommand({ command: "buffers" }).and((result) => {
+      nvim.runExCommand({ command: "buffers" }).and(result => {
         expect(result.value).to.contain("adjacent-file.txt")
       })
     })

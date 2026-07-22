@@ -1,8 +1,4 @@
-import {
-  isHoveredInNeovim,
-  isHoveredInNeovimWithSameDirectory,
-  isNotHoveredInNeovim,
-} from "./utils/hover-utils.js"
+import { isHoveredInNeovim, isHoveredInNeovimWithSameDirectory, isNotHoveredInNeovim } from "./utils/hover-utils.js"
 import { assertYaziIsReady } from "./utils/yazi-utils.js"
 
 // NOTE: cypress doesn't support the tab key, but control+i seems to work fine
@@ -22,17 +18,13 @@ describe("revealing another open split (buffer) in yazi", () => {
 
     cy.startNeovim({
       filename: {
-        openInVerticalSplits: [
-          "highlights/file_1.txt",
-          "highlights/file_2.txt",
-          "highlights/file_3.txt",
-        ],
+        openInVerticalSplits: ["highlights/file_1.txt", "highlights/file_2.txt", "highlights/file_3.txt"],
       },
       startupScriptModifications: [
         "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_yazi_context_assertions.lua",
       ],
-    }).then((nvim) => {
+    }).then(nvim => {
       // sanity check to make sure the files are open
       cy.contains(view.leftFile.text)
       cy.contains(view.centerFile.text)
@@ -92,7 +84,7 @@ describe("revealing another open split (buffer) in yazi", () => {
         "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_yazi_context_assertions.lua",
       ],
-    }).then((nvim) => {
+    }).then(nvim => {
       isNotHoveredInNeovim(view.leftAndCenterFile.text)
       isNotHoveredInNeovim(view.rightFile.text)
 

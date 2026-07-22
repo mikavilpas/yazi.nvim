@@ -8,10 +8,7 @@ import type {
   GenericTerminalBrowserApi,
 } from "@tui-sandbox/library/browser/neovim-client.js"
 import type { MyNeovimConfigModification } from "@tui-sandbox/library/client"
-import {
-  drawTextBox,
-  extractTerminalContent,
-} from "@tui-sandbox/library/client"
+import { drawTextBox, extractTerminalContent } from "@tui-sandbox/library/client"
 import type {
   AllKeys,
   BlockingCommandClientInput,
@@ -28,11 +25,7 @@ import type {
 } from "@tui-sandbox/library/server"
 import type { OverrideProperties } from "type-fest"
 
-import type {
-  MyNeovimAppName,
-  MyTestDirectory,
-  MyTestDirectoryFile,
-} from "../../MyTestDirectory.js"
+import type { MyNeovimAppName, MyTestDirectory, MyTestDirectoryFile } from "../../MyTestDirectory.js"
 
 export type TerminalTestApplicationContext = {
   /** Types text into the terminal, making the terminal application receive the
@@ -41,9 +34,7 @@ export type TerminalTestApplicationContext = {
 
   /** Runs a shell command in a blocking manner, waiting for the command to
    * finish before returning. Requires the terminal to be running. */
-  runBlockingShellCommand(
-    input: MyBlockingCommandClientInput,
-  ): Cypress.Chainable<BlockingShellCommandOutput>
+  runBlockingShellCommand(input: MyBlockingCommandClientInput): Cypress.Chainable<BlockingShellCommandOutput>
 
   /** The test directory, providing type-safe access to its file and directory structure */
   dir: TestDirectory<MyTestDirectory>
@@ -67,9 +58,7 @@ export type NeovimContext = {
 
   /** Runs a shell command in a blocking manner, waiting for the command to
    * finish before returning. Requires neovim to be running. */
-  runBlockingShellCommand(
-    input: MyBlockingCommandClientInput,
-  ): Cypress.Chainable<BlockingShellCommandOutput>
+  runBlockingShellCommand(input: MyBlockingCommandClientInput): Cypress.Chainable<BlockingShellCommandOutput>
 
   /** Runs a shell command in a blocking manner, waiting for the command to
    * finish before returning. Requires neovim to be running. */
@@ -90,16 +79,12 @@ export type NeovimContext = {
    * means the test can continue executing. This can avoid timing issues that are
    * otherwise hard to catch.
    */
-  waitForLuaCode(
-    input: PollLuaCodeClientInput,
-  ): Cypress.Chainable<RunLuaCodeOutput>
+  waitForLuaCode(input: PollLuaCodeClientInput): Cypress.Chainable<RunLuaCodeOutput>
 
   /** Run an ex command in neovim.
    * @example "echo expand('%:.')" current file, relative to the cwd
    */
-  runExCommand(
-    input: ExCommandClientInput,
-  ): Cypress.Chainable<RunExCommandOutput>
+  runExCommand(input: ExCommandClientInput): Cypress.Chainable<RunExCommandOutput>
 
   /** The test directory, providing type-safe access to its file and directory structure */
   dir: TestDirectory<MyTestDirectory>
@@ -121,136 +106,119 @@ export type MyStartNeovimServerArguments = OverrideProperties<
   StartNeovimGenericArguments,
   {
     NVIM_APPNAME?: MyNeovimAppName
-    filename?:
-      | MyTestDirectoryFile
-      | { openInVerticalSplits: MyTestDirectoryFile[] }
-    startupScriptModifications?: Array<
-      MyNeovimConfigModification<MyTestDirectoryFile>
-    >
+    filename?: MyTestDirectoryFile | { openInVerticalSplits: MyTestDirectoryFile[] }
+    startupScriptModifications?: Array<MyNeovimConfigModification<MyTestDirectoryFile>>
   }
 >
 
-export type MyRunLuaFileClientInput = OverrideProperties<
-  RunLuaFileClientInput,
-  { luaFile: MyTestDirectoryFile }
->
+export type MyRunLuaFileClientInput = OverrideProperties<RunLuaFileClientInput, { luaFile: MyTestDirectoryFile }>
 
-Cypress.Commands.add(
-  "startNeovim",
-  (startArguments?: MyStartNeovimServerArguments) => {
-    cy.window().then(async (win) => {
-      const underlyingNeovim: GenericNeovimBrowserApi = await win.startNeovim(
-        startArguments as StartNeovimGenericArguments,
-      )
-      testNeovim = underlyingNeovim
-      testEnvironmentPath = underlyingNeovim.dir.testEnvironmentPath
+Cypress.Commands.add("startNeovim", (startArguments?: MyStartNeovimServerArguments) => {
+  cy.window().then(async win => {
+    const underlyingNeovim: GenericNeovimBrowserApi = await win.startNeovim(
+      startArguments as StartNeovimGenericArguments,
+    )
+    testNeovim = underlyingNeovim
+    testEnvironmentPath = underlyingNeovim.dir.testEnvironmentPath
 
-      // wrap everything so that Cypress can await all the commands
-      Cypress.Commands.addAll({
-        nvim_runBlockingShellCommand: underlyingNeovim.runBlockingShellCommand,
-        nvim_runExCommand: underlyingNeovim.runExCommand,
-        nvim_runLuaCode: underlyingNeovim.runLuaCode,
-        nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode,
-        nvim_doFile: underlyingNeovim.doFile,
-      })
-
-      const api: NeovimContext = {
-        runBlockingShellCommand(input) {
-          return cy.nvim_runBlockingShellCommand(input)
-        },
-        runExCommand(input) {
-          return cy.nvim_runExCommand(input)
-        },
-        runLuaCode(input) {
-          return cy.nvim_runLuaCode(input)
-        },
-        doFile(input) {
-          return cy.nvim_doFile(input)
-        },
-        waitForLuaCode(input) {
-          return cy.nvim_waitForLuaCode(input)
-        },
-        typeIntoTerminal(text, options) {
-          cy.typeIntoTerminal(text, options)
-        },
-        dir: underlyingNeovim.dir as TestDirectory<MyTestDirectory>,
-
-        clipboard: {
-          primary() {
-            return cy.then(() => underlyingNeovim.clipboard.primary())
-          },
-          system() {
-            return cy.then(() => underlyingNeovim.clipboard.system())
-          },
-        },
-
-        title: {
-          current: () => cy.then(() => underlyingNeovim.title.get()),
-        },
-      }
-
-      return api
+    // wrap everything so that Cypress can await all the commands
+    Cypress.Commands.addAll({
+      nvim_runBlockingShellCommand: underlyingNeovim.runBlockingShellCommand,
+      nvim_runExCommand: underlyingNeovim.runExCommand,
+      nvim_runLuaCode: underlyingNeovim.runLuaCode,
+      nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode,
+      nvim_doFile: underlyingNeovim.doFile,
     })
-  },
-)
+
+    const api: NeovimContext = {
+      runBlockingShellCommand(input) {
+        return cy.nvim_runBlockingShellCommand(input)
+      },
+      runExCommand(input) {
+        return cy.nvim_runExCommand(input)
+      },
+      runLuaCode(input) {
+        return cy.nvim_runLuaCode(input)
+      },
+      doFile(input) {
+        return cy.nvim_doFile(input)
+      },
+      waitForLuaCode(input) {
+        return cy.nvim_waitForLuaCode(input)
+      },
+      typeIntoTerminal(text, options) {
+        cy.typeIntoTerminal(text, options)
+      },
+      dir: underlyingNeovim.dir as TestDirectory<MyTestDirectory>,
+
+      clipboard: {
+        primary() {
+          return cy.then(() => underlyingNeovim.clipboard.primary())
+        },
+        system() {
+          return cy.then(() => underlyingNeovim.clipboard.system())
+        },
+      },
+
+      title: {
+        current: () => cy.then(() => underlyingNeovim.title.get()),
+      },
+    }
+
+    return api
+  })
+})
 
 Cypress.Commands.add("nvim_isRunning", () => {
-  return cy.window().then(async (_) => {
+  return cy.window().then(async _ => {
     return !!testNeovim
   })
 })
 
-Cypress.Commands.add(
-  "startTerminalApplication",
-  (args: StartTerminalGenericArguments & BrowserTerminalSettings) => {
-    cy.window().then(async (win) => {
-      const terminal: GenericTerminalBrowserApi =
-        await win.startTerminalApplication({
-          serverSettings: {
-            commandToRun: args.commandToRun,
-            additionalEnvironmentVariables: args.additionalEnvironmentVariables,
-          } satisfies AllKeys<StartTerminalGenericArguments>,
-          browserSettings: {
-            configureTerminal: args.configureTerminal,
-          } satisfies AllKeys<BrowserTerminalSettings>,
-        })
-
-      testEnvironmentPath = terminal.dir.testEnvironmentPath
-
-      Cypress.Commands.addAll({
-        terminal_runBlockingShellCommand: terminal.runBlockingShellCommand,
-      })
-
-      const api: TerminalTestApplicationContext = {
-        dir: terminal.dir as TestDirectory<MyTestDirectory>,
-        runBlockingShellCommand(input) {
-          return cy.terminal_runBlockingShellCommand(input)
-        },
-        typeIntoTerminal(text, options) {
-          cy.typeIntoTerminal(text, options)
-        },
-        clipboard: {
-          primary: () => cy.then(() => terminal.clipboard.primary()),
-          system: () => cy.then(() => terminal.clipboard.system()),
-        },
-        title: {
-          current: () => cy.then(() => terminal.title.get()),
-        },
-      }
-
-      return api
+Cypress.Commands.add("startTerminalApplication", (args: StartTerminalGenericArguments & BrowserTerminalSettings) => {
+  cy.window().then(async win => {
+    const terminal: GenericTerminalBrowserApi = await win.startTerminalApplication({
+      serverSettings: {
+        commandToRun: args.commandToRun,
+        additionalEnvironmentVariables: args.additionalEnvironmentVariables,
+      } satisfies AllKeys<StartTerminalGenericArguments>,
+      browserSettings: {
+        configureTerminal: args.configureTerminal,
+      } satisfies AllKeys<BrowserTerminalSettings>,
     })
-  },
-)
 
-Cypress.Commands.add(
-  "typeIntoTerminal",
-  (text: string, options?: Partial<Cypress.TypeOptions>) => {
-    // the syntax for keys is described here:
-    // https://docs.cypress.io/api/commands/type
-    cy.get("textarea").focus().type(text, options)
-  },
-)
+    testEnvironmentPath = terminal.dir.testEnvironmentPath
+
+    Cypress.Commands.addAll({
+      terminal_runBlockingShellCommand: terminal.runBlockingShellCommand,
+    })
+
+    const api: TerminalTestApplicationContext = {
+      dir: terminal.dir as TestDirectory<MyTestDirectory>,
+      runBlockingShellCommand(input) {
+        return cy.terminal_runBlockingShellCommand(input)
+      },
+      typeIntoTerminal(text, options) {
+        cy.typeIntoTerminal(text, options)
+      },
+      clipboard: {
+        primary: () => cy.then(() => terminal.clipboard.primary()),
+        system: () => cy.then(() => terminal.clipboard.system()),
+      },
+      title: {
+        current: () => cy.then(() => terminal.title.get()),
+      },
+    }
+
+    return api
+  })
+})
+
+Cypress.Commands.add("typeIntoTerminal", (text: string, options?: Partial<Cypress.TypeOptions>) => {
+  // the syntax for keys is described here:
+  // https://docs.cypress.io/api/commands/type
+  cy.get("textarea").focus().type(text, options)
+})
 
 let testNeovim: GenericNeovimBrowserApi | undefined
 let testEnvironmentPath: string | undefined
@@ -277,37 +245,26 @@ declare global {
 
       /** Types text into the terminal, making the terminal application receive
        * the keystrokes as input. Requires neovim to be running. */
-      typeIntoTerminal(
-        text: string,
-        options?: Partial<Cypress.TypeOptions>,
-      ): Chainable<void>
+      typeIntoTerminal(text: string, options?: Partial<Cypress.TypeOptions>): Chainable<void>
 
       /** Runs a shell command in a blocking manner, waiting for the command to
        * finish before returning. Requires neovim to be running. */
-      nvim_runBlockingShellCommand(
-        input: MyBlockingCommandClientInput,
-      ): Chainable<BlockingShellCommandOutput>
+      nvim_runBlockingShellCommand(input: MyBlockingCommandClientInput): Chainable<BlockingShellCommandOutput>
 
       nvim_runLuaCode(input: LuaCodeClientInput): Chainable<RunLuaCodeOutput>
       nvim_doFile(input: MyRunLuaFileClientInput): Chainable<RunExCommandOutput>
-      nvim_waitForLuaCode(
-        input: PollLuaCodeClientInput,
-      ): Chainable<RunLuaCodeOutput>
+      nvim_waitForLuaCode(input: PollLuaCodeClientInput): Chainable<RunLuaCodeOutput>
 
       /** Run an ex command in neovim.
        * @example "echo expand('%:.')" current file, relative to the cwd
        */
-      nvim_runExCommand(
-        input: ExCommandClientInput,
-      ): Chainable<RunExCommandOutput>
+      nvim_runExCommand(input: ExCommandClientInput): Chainable<RunExCommandOutput>
 
       /** Returns true if neovim is running. Useful to conditionally run
        * afterEach actions based on whether it's running. */
       nvim_isRunning(): Chainable<boolean>
 
-      terminal_runBlockingShellCommand(
-        input: MyBlockingCommandClientInput,
-      ): Chainable<BlockingShellCommandOutput>
+      terminal_runBlockingShellCommand(input: MyBlockingCommandClientInput): Chainable<BlockingShellCommandOutput>
     }
   }
 }
@@ -333,7 +290,7 @@ afterEach(function () {
     const snapshotPath = `${testEnvironmentPath}/testdirs/.terminal-snapshot.yaml`
     const indentedContent = snapshot.terminalContent
       .split("\n")
-      .map((line) => `  ${line}`)
+      .map(line => `  ${line}`)
       .join("\n")
     const testFile = this.currentTest?.file ?? "unknown"
     const yaml = [
@@ -352,7 +309,7 @@ afterEach(function () {
 /** Read the current terminal content from the xterm.js DOM. */
 function getTerminalContent(): string | undefined {
   const rows = Cypress.$("div.xterm-rows > div")
-  const rowTexts = rows.toArray().map((row) => Cypress.$(row).text())
+  const rowTexts = rows.toArray().map(row => Cypress.$(row).text())
   return extractTerminalContent(rowTexts)
 }
 
