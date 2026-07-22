@@ -13,7 +13,7 @@ env:
   # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
   NEOVIM_NIGHTLY_COMMIT: 01c4d37959227ccb7a7fce1a8d63616ef2ed7479
   # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
-  YAZI_NIGHTLY_COMMIT: c92c4aba884c16d318a92f6bc0517ee0d2bcc414
+  YAZI_NIGHTLY_COMMIT: 58f1013348c969538352e3105f58e8d8e870a092
 
 jobs:
   build-neovim-nightly:
