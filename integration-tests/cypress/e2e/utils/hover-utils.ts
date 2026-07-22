@@ -36,14 +36,8 @@ export function isNotHoveredInNeovim(text: string): void {
   textIsVisibleWithBackgroundColor(text, darkBackgroundColors.normal)
 }
 
-export function isHoveredInNeovimWithSameDirectory(
-  text: string,
-  color?: string,
-): void {
-  textIsVisibleWithBackgroundColor(
-    text,
-    color ?? darkBackgroundColors.hoveredInSameDirectory,
-  )
+export function isHoveredInNeovimWithSameDirectory(text: string, color?: string): void {
+  textIsVisibleWithBackgroundColor(text, color ?? darkBackgroundColors.hoveredInSameDirectory)
 }
 
 export function assertYaziIsHovering(

@@ -27,8 +27,8 @@ export default defineConfig({
         // https://docs.cypress.io/app/guides/screenshots-and-videos#Delete-videos-for-specs-without-failing-or-retried-tests
         if (results && results.video) {
           // Do we have failures for any retry attempts?
-          const failures = results.tests.some((test) => {
-            return test.attempts.some((attempt) => attempt.state === "failed")
+          const failures = results.tests.some(test => {
+            return test.attempts.some(attempt => attempt.state === "failed")
           })
           if (!failures && fs.existsSync(results.video)) {
             // delete the video if the spec passed and no tests retried
@@ -51,10 +51,7 @@ export default defineConfig({
         async showYaziLog(): Promise<null> {
           try {
             const log = await readFile(yaziLogFile, "utf-8")
-            console.log(
-              `${yaziLogFile}`,
-              inspect(log.split("\n"), { maxArrayLength: null, colors: true }),
-            )
+            console.log(`${yaziLogFile}`, inspect(log.split("\n"), { maxArrayLength: null, colors: true }))
             return null
           } catch (err) {
             console.error(err)

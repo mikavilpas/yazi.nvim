@@ -14,11 +14,8 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
   it("can restore yazi hovering on the previously hovered file", () => {
     cy.startNeovim({
       filename: "initial-file.txt",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "add_command_to_reveal_a_file.lua"],
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -44,7 +41,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
   })
 
   it("can toggle yazi even if no previous session exists", () => {
-    cy.startNeovim().then((nvim) => {
+    cy.startNeovim().then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -63,11 +60,8 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
     // hover the directory instead.
     cy.startNeovim({
       filename: "dir with (parens ) and spaces/file1.txt",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "add_command_to_reveal_a_file.lua"],
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("this is the first file")
 
@@ -75,10 +69,7 @@ describe("toggling yazi to pseudo-continue the previous session", () => {
       cy.typeIntoTerminal("{upArrow}")
       cy.log("yazi should be visible, showing other files")
       assertYaziIsReady(nvim)
-      hoverFileAndVerifyItsHovered(
-        nvim,
-        "dir with (parens ) and spaces/file1.txt",
-      )
+      hoverFileAndVerifyItsHovered(nvim, "dir with (parens ) and spaces/file1.txt")
 
       // yazi should be visible, showing other files
       cy.contains(nvim.dir.contents["file2.txt"].name)
@@ -108,11 +99,8 @@ describe("before_opening_window", () => {
   it("can customize the window properties before opening it", () => {
     cy.startNeovim({
       filename: "dir with (parens ) and spaces/file1.txt",
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/customize_window_properties.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "yazi_config/customize_window_properties.lua"],
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("this is the first file")
 

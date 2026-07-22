@@ -1,6 +1,3 @@
 # https://github.com/mikavilpas/yazi.nvim/assets/ URLs time out
 # https://github.com/mikavilpas/yazi.nvim/compare/ URLs aren't valid until a release is published
-exclude = [
-  "https://github.com/mikavilpas/yazi.nvim/assets/.*",
-  "https://github.com/mikavilpas/yazi.nvim/compare/\\w+",
-]
+exclude = ["https://github.com/mikavilpas/yazi.nvim/assets/.*", "https://github.com/mikavilpas/yazi.nvim/compare/\\w+"]

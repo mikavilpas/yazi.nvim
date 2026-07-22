@@ -30,7 +30,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         "yazi_config/highlight_buffers_in_same_directory.lua",
         "add_command_to_reveal_a_file.lua",
       ],
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
@@ -63,11 +63,8 @@ describe("highlighting the buffer with 'hover' events", () => {
     //
     it("for a dark colorscheme, hovers appear lighter in color", () => {
       cy.startNeovim({
-        startupScriptModifications: [
-          "add_command_to_reveal_a_file.lua",
-          "add_yazi_context_assertions.lua",
-        ],
-      }).then((nvim) => {
+        startupScriptModifications: ["add_command_to_reveal_a_file.lua", "add_yazi_context_assertions.lua"],
+      }).then(nvim => {
         // wait until text on the start screen is visible
         isNotHoveredInNeovim("f you see this text, Neovim is ready!")
 
@@ -89,7 +86,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         // the background color should be different from the default color
         cy.contains("If you see this text, Neovim is ready!")
           .should("have.css", "background-color")
-          .should((color) => {
+          .should(color => {
             expect(tinycolor2(color).getLuminance()).to.be.greaterThan(
               tinycolor2(darkBackgroundColors.normal).getLuminance(),
             )
@@ -104,7 +101,7 @@ describe("highlighting the buffer with 'hover' events", () => {
           "use_light_neovim_colorscheme.lua",
           "add_command_to_reveal_a_file.lua",
         ],
-      }).then((nvim) => {
+      }).then(nvim => {
         // wait until text on the start screen is visible
         cy.contains("If you see this text, Neovim is ready!")
           .children()
@@ -127,7 +124,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         // the background color should be different from the default color
         cy.contains("If you see this text, Neovim is ready!")
           .should("have.css", "background-color")
-          .should((color) => {
+          .should(color => {
             expect(tinycolor2(color).getLuminance()).to.be.lessThan(
               tinycolor2(lightBackgroundColors.normal).getLuminance(),
             )
@@ -143,7 +140,7 @@ describe("highlighting the buffer with 'hover' events", () => {
         "notify_hover_events.lua",
         "add_command_to_reveal_a_file.lua",
       ],
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -156,16 +153,14 @@ describe("highlighting the buffer with 'hover' events", () => {
       hoverFileAndVerifyItsHovered(nvim, "file2.txt")
 
       cy.typeIntoTerminal("q")
-      nvim
-        .runLuaCode({ luaCode: `return _G.yazi_test_events` })
-        .should((result) => {
-          const events = z.array(z.unknown()).parse(result.value)
-          expect(events.length).to.be.greaterThan(1)
+      nvim.runLuaCode({ luaCode: `return _G.yazi_test_events` }).should(result => {
+        const events = z.array(z.unknown()).parse(result.value)
+        expect(events.length).to.be.greaterThan(1)
 
-          const firstEvent = JSON.stringify(events[0])
-          expect(firstEvent).to.contain("Just received a YaziDDSHover event!")
-          expect(firstEvent).to.contain(`"type":"hover"`)
-        })
+        const firstEvent = JSON.stringify(events[0])
+        expect(firstEvent).to.contain("Just received a YaziDDSHover event!")
+        expect(firstEvent).to.contain(`"type":"hover"`)
+      })
     })
   })
 
@@ -179,7 +174,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       filename: {
         openInVerticalSplits: ["initial-file.txt", "file2.txt"],
       },
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       isNotHoveredInNeovim("f you see this text, Neovim is ready!")
       isNotHoveredInNeovim("Hello")
@@ -192,10 +187,7 @@ describe("highlighting the buffer with 'hover' events", () => {
       cy.contains("subdirectory" satisfies MyTestDirectoryFile)
       hoverFileAndVerifyItsHovered(nvim, "file3.txt")
 
-      isHoveredInNeovim(
-        "f you see this text, Neovim is ready!",
-        darkBackgroundColors.hoveredInSameDirectory,
-      )
+      isHoveredInNeovim("f you see this text, Neovim is ready!", darkBackgroundColors.hoveredInSameDirectory)
       isHoveredInNeovim("Hello", darkBackgroundColors.hoveredInSameDirectory)
 
       // highlights are cleared when yazi is closed
@@ -219,13 +211,9 @@ describe("highlighting the buffer with 'hover' events", () => {
         "add_command_to_reveal_a_file.lua",
       ],
       filename: {
-        openInVerticalSplits: [
-          "highlights/file_1.txt",
-          "highlights/file_2.txt",
-          "highlights/file_3.txt",
-        ],
+        openInVerticalSplits: ["highlights/file_1.txt", "highlights/file_2.txt", "highlights/file_3.txt"],
       },
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait until text on the start screen is visible
       // sanity check to make sure the files are open
       cy.contains(view.leftFile.text)

@@ -16,9 +16,7 @@ jobs:
           # Github secret token
           token: ${{ secrets.GITHUB_TOKEN }}
           # selene arguments, should be the same as in ../../mise.toml
-          args:
-            --display-style=quiet ./lua/ ./spec/
-            ./integration-tests/test-environment/config-modifications
+          args: --display-style=quiet ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
           # selene version
           # renovate: datasource=github-releases depName=Kampfkarren/selene
           version: 0.31.0

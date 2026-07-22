@@ -5,6 +5,7 @@ allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
   - "@tui-sandbox/library@12.6.0 || 12.7.1"
+  - "@mikavilpas/oxfmt-config@3.0.0"
 saveExact: true
 
 # https://pnpm.io/pnpm-workspace_yaml

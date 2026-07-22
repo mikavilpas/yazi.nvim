@@ -4,10 +4,7 @@ import { z } from "zod"
 
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import { hoverFileAndVerifyItsHovered } from "./utils/hover-utils.js"
-import {
-  assertYaziIsReady,
-  isDirectorySelectedInYazi,
-} from "./utils/yazi-utils.js"
+import { assertYaziIsReady, isDirectorySelectedInYazi } from "./utils/yazi-utils.js"
 
 describe("reading events", () => {
   beforeEach(() => {
@@ -16,12 +13,9 @@ describe("reading events", () => {
 
   it("can read 'cd' events and use telescope in the latest directory", () => {
     cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_reveal_a_file.lua",
-      ],
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "add_command_to_reveal_a_file.lua"],
       NVIM_APPNAME: "nvim_integrations",
-    }).then((nvim) => {
+    }).then(nvim => {
       //
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
@@ -54,7 +48,7 @@ describe("reading events", () => {
     cy.startNeovim({
       filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
-    }).then((nvim) => {
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -72,7 +66,7 @@ describe("reading events", () => {
         .runLuaCode({
           luaCode: `return require("yazi").config.integrations.bufdelete_implementation`,
         })
-        .then((result) => {
+        .then(result => {
           // sanity check: make sure the default bufdelete_implementation is
           // set as expected for this test
           assert(result.value)
@@ -93,16 +87,14 @@ describe("reading events", () => {
 
       // internally, we should have received a trash event from yazi, and yazi.nvim should
       // have closed the buffer
-      cy.contains(nvim.dir.contents["initial-file.txt"].name).should(
-        "not.exist",
-      )
+      cy.contains(nvim.dir.contents["initial-file.txt"].name).should("not.exist")
       cy.contains("If you see this text, Neovim is ready").should("not.exist")
 
       // make sure two windows are open. The test environment uses snacks.nvim
       // which should make sure the window layout is preserved when closing
       // the deleted buffer. The default in neovim is to also close the
       // window.
-      nvim.runExCommand({ command: `echo winnr("$")` }).then((result) => {
+      nvim.runExCommand({ command: `echo winnr("$")` }).then(result => {
         expect(result.value).to.match(/2/)
       })
     })
@@ -113,11 +105,8 @@ describe("reading events", () => {
 
     cy.startNeovim({
       filename: { openInVerticalSplits: ["initial-file.txt", "file2.txt"] },
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "add_command_to_show_loaded_packages.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "add_command_to_show_loaded_packages.lua"],
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -125,7 +114,7 @@ describe("reading events", () => {
 
       // make sure If you see this text, Neovim is ready! is in the correct
       // buffer so that we are editing the correct buffer in this test
-      nvim.runExCommand({ command: "echo expand('%')" }).then((result) => {
+      nvim.runExCommand({ command: "echo expand('%')" }).then(result => {
         expect(result.value).to.match(/initial-file.txt$/)
       })
 
@@ -141,7 +130,7 @@ describe("reading events", () => {
         .runLuaCode({
           luaCode: `return require("yazi").config.integrations.bufdelete_implementation`,
         })
-        .then((result) => {
+        .then(result => {
           // sanity check: make sure the default bufdelete_implementation is
           // set as expected for this test
           assert(result.value)
@@ -167,7 +156,7 @@ describe("reading events", () => {
       // make sure two windows are open. The window layout should be preserved
       // when closing the deleted buffer. The default in neovim is to also
       // close the window.
-      nvim.runExCommand({ command: `echo winnr("$")` }).then((result) => {
+      nvim.runExCommand({ command: `echo winnr("$")` }).then(result => {
         expect(result.value).to.match(/2/)
       })
     })
@@ -182,7 +171,7 @@ describe("'rename' events", () => {
   it("can read 'rename' events and update the buffer name when the file was renamed", () => {
     cy.startNeovim({
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
-    }).then((nvim) => {
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -228,13 +217,9 @@ describe("'rename' events", () => {
       cy.get("Rename").should("not.exist")
 
       cy.typeIntoTerminal("q")
-      cy.contains(
-        "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
-      ).should("not.exist")
-      nvim.runExCommand({ command: ":buffers" }).should((result) => {
-        expect(result.value).to.match(
-          new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
-        )
+      cy.contains("dir with (parens ) and spaces" satisfies MyTestDirectoryFile).should("not.exist")
+      nvim.runExCommand({ command: ":buffers" }).should(result => {
+        expect(result.value).to.match(new RegExp("initial-file.txt" satisfies MyTestDirectoryFile))
       })
 
       // the buffer name should still be visible
@@ -248,7 +233,7 @@ describe("'rename' events", () => {
         openInVerticalSplits: ["file2.txt", "file3.txt"],
       },
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
-    }).then((nvim) => {
+    }).then(nvim => {
       // wait for the files to be open
       cy.contains("file2.txt" satisfies MyTestDirectoryFile)
       cy.contains("file3.txt" satisfies MyTestDirectoryFile)
@@ -274,13 +259,9 @@ describe("'rename' events", () => {
       cy.contains("Rename").should("not.exist")
       cy.typeIntoTerminal("q")
 
-      nvim.runExCommand({ command: ":buffers" }).should((result) => {
-        expect(result.value).to.not.match(
-          new RegExp("file2.txt" satisfies MyTestDirectoryFile),
-        )
-        expect(result.value).to.match(
-          new RegExp("file3.txt" satisfies MyTestDirectoryFile),
-        )
+      nvim.runExCommand({ command: ":buffers" }).should(result => {
+        expect(result.value).to.not.match(new RegExp("file2.txt" satisfies MyTestDirectoryFile))
+        expect(result.value).to.match(new RegExp("file3.txt" satisfies MyTestDirectoryFile))
       })
     })
   })
@@ -289,7 +270,7 @@ describe("'rename' events", () => {
     cy.startNeovim({
       filename: "initial-file.txt",
       startupScriptModifications: ["add_yazi_context_assertions.lua"],
-    }).then((nvim) => {
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -322,21 +303,16 @@ describe("'rename' events", () => {
       cy.typeIntoTerminal("q")
       cy.contains(newFileName).should("not.exist")
 
-      nvim.runExCommand({ command: ":buffers" }).should((result) => {
-        expect(result.value).to.match(
-          new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
-        )
+      nvim.runExCommand({ command: ":buffers" }).should(result => {
+        expect(result.value).to.match(new RegExp("initial-file.txt" satisfies MyTestDirectoryFile))
       })
     })
   })
 
   it("can publish YaziRenamedOrMoved events when a file is renamed", () => {
     cy.startNeovim({
-      startupScriptModifications: [
-        "notify_rename_events.lua",
-        "add_yazi_context_assertions.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["notify_rename_events.lua", "add_yazi_context_assertions.lua"],
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -363,22 +339,17 @@ describe("'rename' events", () => {
       // yazi should now be closed
       cy.contains("-- TERMINAL --").should("not.exist")
 
-      nvim
-        .runLuaCode({ luaCode: `return _G.yazi_test_events` })
-        .should((result) => {
-          const events = z.array(z.unknown()).parse(result.value)
-          expect(events).to.have.length(1)
-        })
+      nvim.runLuaCode({ luaCode: `return _G.yazi_test_events` }).should(result => {
+        const events = z.array(z.unknown()).parse(result.value)
+        expect(events).to.have.length(1)
+      })
     })
   })
 
   it("reports the correct last_directory when yazi is closed", () => {
     cy.startNeovim({
-      startupScriptModifications: [
-        "add_yazi_context_assertions.lua",
-        "yazi_config/log_yazi_closed_successfully.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["add_yazi_context_assertions.lua", "yazi_config/log_yazi_closed_successfully.lua"],
+    }).then(nvim => {
       // the default file should already be open
       cy.contains(nvim.dir.contents["initial-file.txt"].name)
       cy.contains("If you see this text, Neovim is ready!")
@@ -394,9 +365,7 @@ describe("'rename' events", () => {
         cy.contains("Filter:")
         cy.typeIntoTerminal(`spaces{enter}`)
         cy.contains("Filter:").should("not.exist")
-        isDirectorySelectedInYazi(
-          "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
-        )
+        isDirectorySelectedInYazi("dir with (parens ) and spaces" satisfies MyTestDirectoryFile)
         cy.typeIntoTerminal("{rightArrow}")
       }
       cy.contains("this is the first file")
@@ -411,16 +380,12 @@ describe("'rename' events", () => {
         .runLuaCode({
           luaCode: `return _G.yazi_closed_successfully_hook_test_results`,
         })
-        .should((result) => {
+        .should(result => {
           assert(result.value)
           assert(typeof result.value === "object")
 
-          const data = z
-            .object({ last_directory: z.string() })
-            .parse(result.value)
-          expect(data["last_directory"]).to.contain(
-            "dir with (parens ) and spaces" satisfies MyTestDirectoryFile,
-          )
+          const data = z.object({ last_directory: z.string() }).parse(result.value)
+          expect(data["last_directory"]).to.contain("dir with (parens ) and spaces" satisfies MyTestDirectoryFile)
         })
     })
   })
@@ -428,15 +393,12 @@ describe("'rename' events", () => {
   describe("custom YaziDDSCustom events", () => {
     it("emits events the user has subscribed to", () => {
       cy.startNeovim({
-        startupScriptModifications: [
-          "notify_custom_events.lua",
-          "add_yazi_context_assertions.lua",
-        ],
-      }).then((nvim) => {
+        startupScriptModifications: ["notify_custom_events.lua", "add_yazi_context_assertions.lua"],
+      }).then(nvim => {
         // The user can set a config option to specify custom yazi dds events that
         // they want to subscribe to. These are emitted as YaziDDSCustom events.
         cy.contains("If you see this text, Neovim is ready!")
-        nvim.runExCommand({ command: "pwd" }).then((result) => {
+        nvim.runExCommand({ command: "pwd" }).then(result => {
           const dir = z.string().parse(result.value)
           expect(dir + "/").to.eql(nvim.dir.testEnvironmentPath)
         })
@@ -455,29 +417,25 @@ describe("'rename' events", () => {
         cy.typeIntoTerminal("q")
         cy.contains(nvim.dir.contents["file2.txt"].name).should("not.exist")
 
-        nvim
-          .runLuaCode({ luaCode: `return _G.YaziTestDDSCustomEvents` })
-          .should((result) => {
-            const schema = z.array(
-              z
-                .object({
-                  data: z.object({
-                    yazi_id: z.string(),
-                    type: z.string(),
-                    raw_data: z.string(),
-                  }),
-                })
-                .loose(),
-            )
-            const value = schema.parse(result.value)
-            const rawData = value.map((a) => a.data.raw_data)
-            expect(rawData.join("\n")).to.match(
-              new RegExp("initial-file.txt" satisfies MyTestDirectoryFile),
-            )
-          })
+        nvim.runLuaCode({ luaCode: `return _G.YaziTestDDSCustomEvents` }).should(result => {
+          const schema = z.array(
+            z
+              .object({
+                data: z.object({
+                  yazi_id: z.string(),
+                  type: z.string(),
+                  raw_data: z.string(),
+                }),
+              })
+              .loose(),
+          )
+          const value = schema.parse(result.value)
+          const rawData = value.map(a => a.data.raw_data)
+          expect(rawData.join("\n")).to.match(new RegExp("initial-file.txt" satisfies MyTestDirectoryFile))
+        })
 
         // should have changed the working directory
-        nvim.runExCommand({ command: "pwd" }).then((result) => {
+        nvim.runExCommand({ command: "pwd" }).then(result => {
           expect(result.value).to.eql(nvim.dir.rootPathAbsolute)
         })
       })

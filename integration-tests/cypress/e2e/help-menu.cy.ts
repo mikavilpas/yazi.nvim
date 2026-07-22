@@ -4,11 +4,8 @@ describe("the help menu", () => {
   it("can show help with a keymap", () => {
     cy.visit("/")
     cy.startNeovim({
-      startupScriptModifications: [
-        "yazi_config/set_help_key.lua",
-        "yazi_config/disable_a_keybinding.lua",
-      ],
-    }).then((nvim) => {
+      startupScriptModifications: ["yazi_config/set_help_key.lua", "yazi_config/disable_a_keybinding.lua"],
+    }).then(nvim => {
       // wait until text on the start screen is visible
       cy.contains("If you see this text, Neovim is ready!")
 
@@ -24,15 +21,13 @@ describe("the help menu", () => {
       cy.contains("<del> - show this help")
 
       // the version of yazi.nvim should be shown
-      cy.readFile("../.release-please-manifest.json").then(
-        (yaziNvimManifest: unknown) => {
-          assert.ok(typeof yaziNvimManifest === "object")
-          assert.ok(yaziNvimManifest)
-          assert.ok("." in yaziNvimManifest)
-          assert.ok(typeof yaziNvimManifest["."] === "string")
-          cy.contains(`version ${yaziNvimManifest["."]}`)
-        },
-      )
+      cy.readFile("../.release-please-manifest.json").then((yaziNvimManifest: unknown) => {
+        assert.ok(typeof yaziNvimManifest === "object")
+        assert.ok(yaziNvimManifest)
+        assert.ok("." in yaziNvimManifest)
+        assert.ok(typeof yaziNvimManifest["."] === "string")
+        cy.contains(`version ${yaziNvimManifest["."]}`)
+      })
 
       // The help buffer must not be modifiable. Don't assert the text as it
       // may be translated to the developer's own language.

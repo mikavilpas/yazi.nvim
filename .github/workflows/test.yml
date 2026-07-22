@@ -69,9 +69,7 @@ jobs:
         uses: mikavilpas/neovim-action/busted@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
 
   e2e:
-    name:
-      "E2E (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name
-      }})"
+    name: "E2E (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name }})"
     runs-on: ubuntu-24.04
     needs:
       - build-neovim-nightly
