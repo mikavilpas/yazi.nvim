@@ -39,8 +39,8 @@ importers:
         specifier: 1.8.0
         version: 1.8.0
       '@tui-sandbox/library':
-        specifier: 13.0.1
-        version: 13.0.1(cypress@15.18.0)(oxfmt@0.58.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
+        specifier: 13.0.2
+        version: 13.0.2(cypress@15.18.0)(oxfmt@0.58.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
       '@types/node':
         specifier: 24.13.2
         version: 24.13.2
@@ -940,8 +940,8 @@ packages:
     peerDependencies:
       typescript: '>=5.7.2'
 
-  '@tui-sandbox/library@13.0.1':
-    resolution: {integrity: sha512-HPdRbbE9kM4SshlWXsXc9kTisUFO3ykWNAUgfEoXWCOnBQKb7pD6KPy5u4OhiJs4QpaDxeps/pxHXTyVpRLW8A==}
+  '@tui-sandbox/library@13.0.2':
+    resolution: {integrity: sha512-KsxTn70Z3RMrI4cqEoWZdURKaB/DYDTjJdzicbHKd0KDiUS1VIpN7Y9Wp6GAinfqOoic6stILR5h/C6SW6qg9w==}
     engines: {node: '>=24.0.0'}
     hasBin: true
     peerDependencies:
@@ -1958,10 +1958,6 @@ packages:
     resolution: {integrity: sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ==}
     engines: {node: '>=18'}
 
-  string-width@8.2.1:
-    resolution: {integrity: sha512-IIaP0g3iy9Cyy18w3M9YcaDudujEAVHKt3a3QJg1+sr/oX96TbaGUubG0hJyCjCBThFH+tFpcIyoUHUn1ogaLA==}
-    engines: {node: '>=20'}
-
   string-width@8.2.2:
     resolution: {integrity: sha512-GaPUh5gfdrYzqeVNZvUfT23vYYxXzKYidUcnMtJg/3rxRV63EFZy3k6xfKlmfeJD0176lnUV/Usr3XcwSvFzpg==}
     engines: {node: '>=20'}
@@ -2782,7 +2778,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@tui-sandbox/library@13.0.1(cypress@15.18.0)(oxfmt@0.58.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
+  '@tui-sandbox/library@13.0.2(cypress@15.18.0)(oxfmt@0.58.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.18.0(@trpc/server@11.18.0(typescript@6.0.3))(typescript@6.0.3)
@@ -2966,7 +2962,7 @@ snapshots:
   cli-truncate@5.2.0:
     dependencies:
       slice-ansi: 8.0.0
-      string-width: 8.2.1
+      string-width: 8.2.2
 
   cliui@8.0.1:
     dependencies:
@@ -3909,11 +3905,6 @@ snapshots:
   string-width@7.2.0:
     dependencies:
       emoji-regex: 10.6.0
-      get-east-asian-width: 1.5.0
-      strip-ansi: 7.2.0
-
-  string-width@8.2.1:
-    dependencies:
       get-east-asian-width: 1.5.0
       strip-ansi: 7.2.0
 

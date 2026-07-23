@@ -22,34 +22,22 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("nvim/"),
           type: z.literal("directory"),
           contents: z.object({
-            "init.lua": z.object({
-              name: z.literal("init.lua"),
-              type: z.literal("file"),
-            }),
+            "init.lua": z.object({ name: z.literal("init.lua"), type: z.literal("file") }),
             lua: z.object({
               name: z.literal("lua/"),
               type: z.literal("directory"),
               contents: z.object({
-                "plugins.lua": z.object({
-                  name: z.literal("plugins.lua"),
-                  type: z.literal("file"),
-                }),
+                "plugins.lua": z.object({ name: z.literal("plugins.lua"), type: z.literal("file") }),
               }),
             }),
-            "prepare.lua": z.object({
-              name: z.literal("prepare.lua"),
-              type: z.literal("file"),
-            }),
+            "prepare.lua": z.object({ name: z.literal("prepare.lua"), type: z.literal("file") }),
           }),
         }),
         nvim_integrations: z.object({
           name: z.literal("nvim_integrations/"),
           type: z.literal("directory"),
           contents: z.object({
-            "init.lua": z.object({
-              name: z.literal("init.lua"),
-              type: z.literal("file"),
-            }),
+            "init.lua": z.object({ name: z.literal("init.lua"), type: z.literal("file") }),
             lua: z.object({
               name: z.literal("lua/"),
               type: z.literal("directory"),
@@ -61,34 +49,20 @@ export const MyTestDirectorySchema = z.object({
                 }),
               }),
             }),
-            "prepare.lua": z.object({
-              name: z.literal("prepare.lua"),
-              type: z.literal("file"),
-            }),
+            "prepare.lua": z.object({ name: z.literal("prepare.lua"), type: z.literal("file") }),
           }),
         }),
         nvim_no_package_manager: z.object({
           name: z.literal("nvim_no_package_manager/"),
           type: z.literal("directory"),
-          contents: z.object({
-            "init.lua": z.object({
-              name: z.literal("init.lua"),
-              type: z.literal("file"),
-            }),
-          }),
+          contents: z.object({ "init.lua": z.object({ name: z.literal("init.lua"), type: z.literal("file") }) }),
         }),
         yazi: z.object({
           name: z.literal("yazi/"),
           type: z.literal("directory"),
           contents: z.object({
-            "init.lua": z.object({
-              name: z.literal("init.lua"),
-              type: z.literal("file"),
-            }),
-            "keymap.toml": z.object({
-              name: z.literal("keymap.toml"),
-              type: z.literal("file"),
-            }),
+            "init.lua": z.object({ name: z.literal("init.lua"), type: z.literal("file") }),
+            "keymap.toml": z.object({ name: z.literal("keymap.toml"), type: z.literal("file") }),
           }),
         }),
       }),
@@ -109,26 +83,14 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("add_command_to_show_loaded_packages.lua"),
           type: z.literal("file"),
         }),
-        "add_winborder.lua": z.object({
-          name: z.literal("add_winborder.lua"),
-          type: z.literal("file"),
-        }),
+        "add_winborder.lua": z.object({ name: z.literal("add_winborder.lua"), type: z.literal("file") }),
         "add_yazi_context_assertions.lua": z.object({
           name: z.literal("add_yazi_context_assertions.lua"),
           type: z.literal("file"),
         }),
-        "notify_custom_events.lua": z.object({
-          name: z.literal("notify_custom_events.lua"),
-          type: z.literal("file"),
-        }),
-        "notify_hover_events.lua": z.object({
-          name: z.literal("notify_hover_events.lua"),
-          type: z.literal("file"),
-        }),
-        "notify_rename_events.lua": z.object({
-          name: z.literal("notify_rename_events.lua"),
-          type: z.literal("file"),
-        }),
+        "notify_custom_events.lua": z.object({ name: z.literal("notify_custom_events.lua"), type: z.literal("file") }),
+        "notify_hover_events.lua": z.object({ name: z.literal("notify_hover_events.lua"), type: z.literal("file") }),
+        "notify_rename_events.lua": z.object({ name: z.literal("notify_rename_events.lua"), type: z.literal("file") }),
         nvim_no_package_manager: z.object({
           name: z.literal("nvim_no_package_manager/"),
           type: z.literal("directory"),
@@ -191,18 +153,9 @@ export const MyTestDirectorySchema = z.object({
               name: z.literal("resolve_relative_files_from_cwd.lua"),
               type: z.literal("file"),
             }),
-            "set_help_key.lua": z.object({
-              name: z.literal("set_help_key.lua"),
-              type: z.literal("file"),
-            }),
-            "use_fzf_lua.lua": z.object({
-              name: z.literal("use_fzf_lua.lua"),
-              type: z.literal("file"),
-            }),
-            "use_snacks_picker.lua": z.object({
-              name: z.literal("use_snacks_picker.lua"),
-              type: z.literal("file"),
-            }),
+            "set_help_key.lua": z.object({ name: z.literal("set_help_key.lua"), type: z.literal("file") }),
+            "use_fzf_lua.lua": z.object({ name: z.literal("use_fzf_lua.lua"), type: z.literal("file") }),
+            "use_snacks_picker.lua": z.object({ name: z.literal("use_snacks_picker.lua"), type: z.literal("file") }),
           }),
         }),
       }),
@@ -211,75 +164,37 @@ export const MyTestDirectorySchema = z.object({
       name: z.literal("dir with (parens ) and spaces/"),
       type: z.literal("directory"),
       contents: z.object({
-        "file1.txt": z.object({
-          name: z.literal("file1.txt"),
-          type: z.literal("file"),
-        }),
-        "file2.txt": z.object({
-          name: z.literal("file2.txt"),
-          type: z.literal("file"),
-        }),
+        "file1.txt": z.object({ name: z.literal("file1.txt"), type: z.literal("file") }),
+        "file2.txt": z.object({ name: z.literal("file2.txt"), type: z.literal("file") }),
       }),
     }),
-    "file2.txt": z.object({
-      name: z.literal("file2.txt"),
-      type: z.literal("file"),
-    }),
-    "file3.txt": z.object({
-      name: z.literal("file3.txt"),
-      type: z.literal("file"),
-    }),
+    "file2.txt": z.object({ name: z.literal("file2.txt"), type: z.literal("file") }),
+    "file3.txt": z.object({ name: z.literal("file3.txt"), type: z.literal("file") }),
     highlights: z.object({
       name: z.literal("highlights/"),
       type: z.literal("directory"),
       contents: z.object({
-        "file_1.txt": z.object({
-          name: z.literal("file_1.txt"),
-          type: z.literal("file"),
-        }),
-        "file_2.txt": z.object({
-          name: z.literal("file_2.txt"),
-          type: z.literal("file"),
-        }),
-        "file_3.txt": z.object({
-          name: z.literal("file_3.txt"),
-          type: z.literal("file"),
-        }),
+        "file_1.txt": z.object({ name: z.literal("file_1.txt"), type: z.literal("file") }),
+        "file_2.txt": z.object({ name: z.literal("file_2.txt"), type: z.literal("file") }),
+        "file_3.txt": z.object({ name: z.literal("file_3.txt"), type: z.literal("file") }),
       }),
     }),
-    "initial-file.txt": z.object({
-      name: z.literal("initial-file.txt"),
-      type: z.literal("file"),
-    }),
+    "initial-file.txt": z.object({ name: z.literal("initial-file.txt"), type: z.literal("file") }),
     "lua-project": z.object({
       name: z.literal("lua-project/"),
       type: z.literal("directory"),
       contents: z.object({
-        ".emmyrc.json": z.object({
-          name: z.literal(".emmyrc.json"),
-          type: z.literal("file"),
-        }),
+        ".emmyrc.json": z.object({ name: z.literal(".emmyrc.json"), type: z.literal("file") }),
         lua: z.object({
           name: z.literal("lua/"),
           type: z.literal("directory"),
           contents: z.object({
-            "config.lua": z.object({
-              name: z.literal("config.lua"),
-              type: z.literal("file"),
-            }),
-            "init.lua": z.object({
-              name: z.literal("init.lua"),
-              type: z.literal("file"),
-            }),
+            "config.lua": z.object({ name: z.literal("config.lua"), type: z.literal("file") }),
+            "init.lua": z.object({ name: z.literal("init.lua"), type: z.literal("file") }),
             utils: z.object({
               name: z.literal("utils/"),
               type: z.literal("directory"),
-              contents: z.object({
-                "utils.lua": z.object({
-                  name: z.literal("utils.lua"),
-                  type: z.literal("file"),
-                }),
-              }),
+              contents: z.object({ "utils.lua": z.object({ name: z.literal("utils.lua"), type: z.literal("file") }) }),
             }),
           }),
         }),
@@ -289,10 +204,7 @@ export const MyTestDirectorySchema = z.object({
       name: z.literal("other-subdirectory/"),
       type: z.literal("directory"),
       contents: z.object({
-        "other-sub-file.txt": z.object({
-          name: z.literal("other-sub-file.txt"),
-          type: z.literal("file"),
-        }),
+        "other-sub-file.txt": z.object({ name: z.literal("other-sub-file.txt"), type: z.literal("file") }),
       }),
     }),
     routes: z.object({
@@ -303,14 +215,8 @@ export const MyTestDirectorySchema = z.object({
           name: z.literal("posts.$postId/"),
           type: z.literal("directory"),
           contents: z.object({
-            "adjacent-file.txt": z.object({
-              name: z.literal("adjacent-file.txt"),
-              type: z.literal("file"),
-            }),
-            "route.tsx": z.object({
-              name: z.literal("route.tsx"),
-              type: z.literal("file"),
-            }),
+            "adjacent-file.txt": z.object({ name: z.literal("adjacent-file.txt"), type: z.literal("file") }),
+            "route.tsx": z.object({ name: z.literal("route.tsx"), type: z.literal("file") }),
             "should-be-excluded-file.txt": z.object({
               name: z.literal("should-be-excluded-file.txt"),
               type: z.literal("file"),
@@ -323,10 +229,7 @@ export const MyTestDirectorySchema = z.object({
       name: z.literal("subdirectory/"),
       type: z.literal("directory"),
       contents: z.object({
-        "subdirectory-file.txt": z.object({
-          name: z.literal("subdirectory-file.txt"),
-          type: z.literal("file"),
-        }),
+        "subdirectory-file.txt": z.object({ name: z.literal("subdirectory-file.txt"), type: z.literal("file") }),
       }),
     }),
   }),
