@@ -1,18 +1,18 @@
 [tools]
-fzf = "0.74.0"
+fzf = "0.74.1"
 # fd is a dependency of telescope and fzf-lua
 fd = "10.4.2"
 lua = "5.1"
 # ripgrep is a dependency of telescope and fzf-lua
-ripgrep = { version = "15.1.0", exe = "rg" }
+ripgrep = { version = "15.2.0", exe = "rg" }
 "github:JohnnyMorganz/stylua" = "2.5.2"
-"github:rvben/rumdl" = "0.2.30"
+"github:rvben/rumdl" = "0.2.41"
 actionlint = "1.7.12"
-zizmor = "1.26.1"
+zizmor = "1.28.0"
 "aqua:Kampfkarren/selene" = "0.31.0"
 
 [tools."github:EmmyLuaLs/emmylua-analyzer-rust"]
-version = "0.23.2"
+version = "0.24.0"
 
 [tools."github:EmmyLuaLs/emmylua-analyzer-rust".platforms]
 linux-x64 = { asset_pattern = "*_ls-linux-x64*" }
