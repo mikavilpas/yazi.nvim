@@ -1,7 +1,7 @@
 import assert from "assert"
 
 import { flavors } from "@catppuccin/palette"
-import { rgbify, textIsVisibleWithBackgroundColor } from "@tui-sandbox/library"
+import { rgbify, textIsVisibleWithBackgroundColor, textIsVisibleWithColor } from "@tui-sandbox/library"
 
 import type { MyTestDirectoryFile } from "../../MyTestDirectory.js"
 import { assertYaziIsHovering, hoverFileAndVerifyItsHovered } from "./utils/hover-utils.js"
@@ -251,7 +251,13 @@ describe("snacks.picker integration (grep)", () => {
     }).then(nvim => {
       // wait until the file contents are visible
       cy.contains("If you see this text, Neovim is ready!")
-      cy.typeIntoTerminal("dd")
+      nvim.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then(result => {
+        expect(result.value).to.equal("")
+      })
+      cy.typeIntoTerminal(`"_dd`)
+      nvim.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then(result => {
+        expect(result.value).to.eql("")
+      })
 
       // open the snacks.picker
       cy.typeIntoTerminal("  ")
@@ -262,11 +268,15 @@ describe("snacks.picker integration (grep)", () => {
         // the name
         ("dir with (parens ) and spaces" satisfies MyTestDirectoryFile).slice(0, "dir with".length),
       )
+      cy.contains("2/") // snacks shows the list of files has been filtered to 2 items
 
       // select both files
       cy.contains("file1.txt")
       cy.contains("file2.txt")
       cy.typeIntoTerminal("{control+i}{control+i}")
+      // wait for the selection to complete
+      cy.contains("(2)") // the snacks ui shows that 2 search results (files) are now visible
+      textIsVisibleWithColor("●", rgbify(flavors.macchiato.colors.peach.rgb))
 
       // press the keybinding to copy the relative paths
       cy.typeIntoTerminal("{control+y}")
@@ -280,10 +290,13 @@ describe("snacks.picker integration (grep)", () => {
       nvim.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then(result => {
         const value = result.value?.valueOf()
         assert(typeof value === "string")
-        expect(value.split("\n")).to.eql([
-          `../../${"dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile}`,
-          `../../${"dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile}`,
-        ])
+        expect(value.split("\n")).to.eql(
+          [
+            `../../${"dir with (parens ) and spaces/file1.txt" satisfies MyTestDirectoryFile}`,
+            `../../${"dir with (parens ) and spaces/file2.txt" satisfies MyTestDirectoryFile}`,
+          ],
+          `Expected the clipboard to contain the relative paths to the selected files, but got: ${JSON.stringify(value)}`,
+        )
       })
     })
   })
