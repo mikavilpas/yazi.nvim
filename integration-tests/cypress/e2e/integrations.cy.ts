@@ -230,6 +230,7 @@ describe("snacks.picker integration (grep)", () => {
       cy.contains("0/0")
 
       // snacks.picker should have started in insert mode
+      cy.contains("INSERT")
       nvim.runLuaCode({ luaCode: `return vim.fn.mode()` }).should(result => {
         expect(result.value).to.equal("i")
       })
@@ -269,11 +270,11 @@ describe("snacks.picker integration (grep)", () => {
 
       // press the keybinding to copy the relative paths
       cy.typeIntoTerminal("{control+y}")
+      cy.contains("Smart").should("not.exist")
 
       // paste the contents of the clipboard into the buffer so that it's
       // slightly easier to debug visually
       cy.typeIntoTerminal("p")
-      cy.contains("Smart").should("not.exist")
 
       // verify that the clipboard register contains the relative paths
       nvim.runLuaCode({ luaCode: `return vim.fn.getreg('"')` }).then(result => {
