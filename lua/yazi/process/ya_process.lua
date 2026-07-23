@@ -2,55 +2,36 @@
 
 local Log = require("yazi.log")
 local utils = require("yazi.utils")
-local YaziSessionHighlighter =
-  require("yazi.buffer_highlighting.yazi_session_highlighter")
+local YaziSessionHighlighter = require("yazi.buffer_highlighting.yazi_session_highlighter")
 
 ---@class YaProcess
----@field public hovered_url? string "The path that is currently hovered over in this yazi."
----@field public cwd? string "The path that the yazi process is currently in."
+---@field public hovered_url? string
+---@field public cwd? string
 ---@field private config YaziConfig
----@field public yazi_id string "The YAZI_ID of the yazi process"
----@field private ya_process vim.SystemObj
----@field private retries integer
+---@field public yazi_id string
 ---@field private highlighter YaziSessionHighlighter
 ---@field private on_first_output fun()
 ---@field public ready boolean
+---@field private event_timer userdata?
+---@field public get_pending_chunks fun(): string[]
 local YaProcess = {}
----@diagnostic disable-next-line: inject-field
 YaProcess.__index = YaProcess
 
----@param config YaziConfig
----@param yazi_id string
----@param on_first_output fun(self: YaProcess, event: YaziEvent)
----@param initial_file string
 function YaProcess.new(config, yazi_id, on_first_output, initial_file)
   local self = setmetatable({}, YaProcess)
-
   self.yazi_id = yazi_id
   self.hovered_url = initial_file
   self.config = config
-  self.retries = 0
   self.highlighter = YaziSessionHighlighter.new()
   self.on_first_output = on_first_output
   self.ready = false
-
   return self
 end
 
 function YaProcess:is_ready()
-  local has_process = self.ya_process ~= nil
-  local on_first_output_called = self.on_first_output == nil
-  local is_ready = self.ready == true
-  local ready = has_process and on_first_output_called and is_ready
-  return ready,
-    {
-      has_process = has_process,
-      on_first_output_called = on_first_output_called,
-      is_ready = is_ready,
-    }
+  return self.ready == true, { is_ready = self.ready == true }
 end
 
----@param items string[]
 local function remove_duplicates(items)
   local seen = {}
   local result = {}
@@ -60,11 +41,29 @@ local function remove_duplicates(items)
       result[#result + 1] = word
     end
   end
-
   return result
 end
 
----@param paths Path[]
+function YaProcess:get_events_list()
+  local event_kinds = {
+    "rename", "delete", "trash", "move", "cd", "hover", "bulk", "bulk-rename",
+  }
+
+  if self.config.future_features.yazi_plugin_keymaps ~= nil then
+    event_kinds[#event_kinds + 1] = "yazi-nvim"
+  end
+
+  local interesting_events = {}
+  if self.config.forwarded_dds_events ~= nil then
+    for _, event_kind in ipairs(self.config.forwarded_dds_events) do
+      event_kinds[#event_kinds + 1] = event_kind
+      interesting_events[event_kind] = true
+    end
+  end
+
+  return event_kinds, interesting_events
+end
+
 function YaProcess:get_yazi_command(paths)
   local command_words = { "yazi" }
 
@@ -89,239 +88,117 @@ function YaProcess:get_yazi_command(paths)
     table.insert(command_words, self.config.cwd_file_path)
   end
 
-  command_words = remove_duplicates(command_words)
+  local event_kinds, _ = self:get_events_list()
+  table.insert(command_words, "--local-events=" .. table.concat(event_kinds, ","))
 
-  return command_words
+  return remove_duplicates(command_words)
 end
 
----@param timeout integer
 function YaProcess:kill_and_wait(timeout)
-  Log:debug("Killing ya process")
-  pcall(self.ya_process.kill, self.ya_process, "sigterm")
+  if self.event_timer then
+    self.event_timer:stop()
+    self.event_timer:close()
+    self.event_timer = nil
+  end
   self.highlighter:clear_highlights()
-
-  Log:debug("Waiting for ya process to exit")
-  self.ya_process:wait(timeout)
 end
 
----@param context YaziActiveContext
-function YaProcess:start(context)
-  local event_kinds = {
-    "rename",
-    "delete",
-    "trash",
-    "move",
-    "cd",
-    "hover",
-    "bulk",
-    "bulk-rename",
-    -- when ya starts, it will send a "hi" event to all yazis. They respond
-    -- with "hey" to acknowledge this. We can use this to detect when ya is
-    -- ready, so that integration-tests can safely start.
-    "hey",
-  }
-
-  -- subscribe to the events published by the `nvim.yazi` plugin if the user
-  -- has enabled it.
-  if self.config.future_features.yazi_plugin_keymaps ~= nil then
-    event_kinds[#event_kinds + 1] = "yazi-nvim"
-  end
-
-  ---@type table<string,boolean>
-  local interesting_events = {}
-  if self.config.forwarded_dds_events ~= nil then
-    for _, event_kind in ipairs(self.config.forwarded_dds_events) do
-      event_kinds[#event_kinds + 1] = event_kind
-      interesting_events[event_kind] = true
+local function parse_local_events(lines)
+  local events = {}
+  for _, line in ipairs(lines) do
+    line = vim.trim(line)
+    if line ~= "" then
+      local kind, receiver, sender, json_str = line:match("^([^,]+),([^,]+),([^,]+),(.*)$")
+      if kind and json_str then
+        local ok, decoded = pcall(vim.json.decode, json_str)
+        local event = {
+          type = kind,
+          receiver = receiver,
+          yazi_id = sender,
+          raw_data = json_str,
+          data = {},
+        }
+        if ok and type(decoded) == "table" then
+          for k, v in pairs(decoded) do
+            local clean_val = (v == vim.NIL) and nil or v
+            event[k] = clean_val
+            event.data[k] = clean_val
+          end
+        end
+        table.insert(events, event)
+      end
     end
   end
+  return events
+end
 
-  local ya_command = {
-    "ya",
-    "sub",
-    table.concat(event_kinds, ","),
-  }
-  Log:debug(
-    string.format(
-      "Opening ya with the command: (%s), attempt %s",
-      table.concat(ya_command, " "),
-      self.retries
-    )
-  )
-
-  self.ya_process = vim.system(ya_command, {
-    -- • text: (boolean) Handle stdout and stderr as text.
-    -- Replaces `\r\n` with `\n`.
-    text = true,
-    stderr = function(err, data)
-      if err then
-        Log:debug(string.format("ya stderr error: '%s'", data))
-      end
-
-      if data == nil then
-        -- weird event, ignore
-        return
-      end
-
-      Log:debug(string.format("ya stderr: '%s'", data))
-
-      if data:find("No running Yazi instance found") then
-        if self.retries < 5 then
-          Log:debug(
-            "Looks like starting ya failed because yazi had not started yet. Retrying to open ya..."
-          )
-          self.retries = self.retries + 1
-          vim.defer_fn(function()
-            self:start(context)
-          end, 50)
-        else
-          Log:debug("Failed to open ya after 5 retries")
-        end
-      end
-    end,
-
-    stdout = function(err, data)
-      if err then
-        Log:debug(string.format("ya stdout error: '%s'", data))
-      end
-      data = data or ""
-      data = data:gsub("\n+", "\n")
-
-      if not data:match("^hey") then
-        Log:debug(string.format("ya stdout: '%s'", data))
-      end
-
-      data = vim.split(data, "\n", { plain = true, trimempty = true })
-
-      local parsed = utils.safe_parse_events(data)
-      -- Log:debug(string.format("Parsed events: %s", vim.inspect(parsed)))
-
-      self:process_events(parsed, interesting_events, context)
-    end,
-
-    ---@param obj vim.SystemCompleted
-    on_exit = function(obj)
-      Log:debug(string.format("ya process exited with code: %s", obj.code))
-    end,
-  })
-
+function YaProcess:start(context)
+  if not self.ready then
+    self.ready = true
+    if self.on_first_output then
+      self.on_first_output()
+      self.on_first_output = nil
+    end
+  end
+  self.read_buffer = ""
   return self
 end
 
----@param events YaziEvent[]
----@param forwarded_event_kinds table<string,boolean>
----@param context YaziActiveContext
+-- New function that processes data the millisecond it arrives over TCP
+function YaProcess:receive_chunk(chunk, context)
+  self.read_buffer = self.read_buffer .. chunk
+  local lines = vim.split(self.read_buffer, "\n", { plain = true })
+  
+  -- The last item is either an incomplete string (no newline yet) or an empty string
+  self.read_buffer = table.remove(lines) 
+
+  if #lines > 0 then
+    local parsed = parse_local_events(lines)
+    local _, interesting_events = self:get_events_list()
+    self:process_events(parsed, interesting_events, context)
+  end
+end
+
+
 function YaProcess:process_events(events, forwarded_event_kinds, context)
   local nvim_event_handling = require("yazi.event_handling.nvim_event_handling")
   local yazi_event_handling = require("yazi.event_handling.yazi_event_handling")
 
   for _, event in ipairs(events) do
-    if self.ready ~= true and event.type == "hey" then
-      ---@cast event YaziRawHeyEvent
-      -- The `hey` handshake is sent by whichever instance acts as the DDS
-      -- server, so `event.yazi_id` (the sender) is not necessarily our yazi.
-      -- Instead, detect the readiness of our yazi by looking for its client-id
-      -- in the peer list. This is robust even when other yazi instances are
-      -- running on the system. The peers are parsed lazily here as we only
-      -- need to do this once.
-      local peers = utils.parse_hey_peers(event.raw_data)
-      if peers[self.yazi_id] == true then
-        Log:debug(
-          string.format("ya process is ready, yazi_id: %s", self.yazi_id)
-        )
-        self.ready = true
-        self.on_first_output()
-        self.on_first_output = nil
-      end
-    elseif event.type == "hover" and event.yazi_id == self.yazi_id then
-      -- Only track hovers from our own yazi. The DDS bus is shared across all
-      -- yazi instances on the system, so other instances (e.g. another yazi
-      -- the user has open, or a not-yet-exited one from a previous test) also
-      -- broadcast `hover` events. Honoring them would corrupt our
-      -- `hovered_url`. The `cd` handler below filters by `yazi_id` for the
-      -- same reason.
+    if event.type == "hover" and event.yazi_id == self.yazi_id then
       ---@cast event YaziHoverEvent
-      Log:debug(
-        string.format(
-          "Changing the hovered url from %s to %s",
-          self.hovered_url,
-          event.url
-        )
-      )
       self.hovered_url = event.url
       vim.schedule(function()
-        if self.config.highlight_hovered_buffers_in_same_directory then
-          self.highlighter:highlight_buffers_when_hovered(
-            event.url,
-            self.config
-          )
-        else
-          Log:debug("Skipping buffer highlighting (disabled in config)")
+        if self.config.highlight_hovered_buffers_in_same_directory and type(event.url) == "string" then
+          self.highlighter:highlight_buffers_when_hovered(event.url, self.config)
         end
-
         nvim_event_handling.emit("YaziDDSHover", event)
       end)
     elseif event.type == "cd" and event.yazi_id == self.yazi_id then
       ---@cast event YaziHoverEvent
-      Log:debug(
-        string.format("Changing the cwd from %s to %s", self.cwd, event.url)
-      )
       self.cwd = event.url
     elseif event.type == "cycle-buffer" then
       vim.schedule(function()
-        ---@cast event YaziNvimCycleBufferEvent
-        yazi_event_handling.process_event_emitted_from_yazi(
-          event,
-          self.config,
-          context
-        )
+        yazi_event_handling.process_event_emitted_from_yazi(event, self.config, context)
       end)
     elseif event.type == "yazi-nvim" then
       ---@cast event YaziCustomDDSEvent
       vim.schedule(function()
-        yazi_event_handling.process_plugin_keymap_event(
-          event,
-          self.yazi_id,
-          self.config,
-          context
-        )
+        yazi_event_handling.process_plugin_keymap_event(event, self.yazi_id, self.config, context)
       end)
     else
-      if
-        event.type == "rename"
-        or event.type == "move"
-        or event.type == "bulk"
-        or event.type == "bulk-rename"
-      then
-        vim.schedule(function()
-          local success, result = pcall(function()
-            nvim_event_handling.emit_renamed_or_moved_event(event)
-          end)
-          if not success then
-            Log:debug(vim.inspect({
-              "Failed to emit YaziRenamedOrMoved event",
-              event,
-              result,
-            }))
-          end
-
-          yazi_event_handling.process_event_emitted_from_yazi(
-            event,
-            self.config,
-            context
-          )
-        end)
+      if event.type == "rename" or event.type == "move" or event.type == "bulk" or event.type == "bulk-rename" then
+        vim.defer_fn(function()
+          pcall(function() nvim_event_handling.emit_renamed_or_moved_event(event) end)
+          yazi_event_handling.process_event_emitted_from_yazi(event, self.config, context)
+        end, 100)
       elseif forwarded_event_kinds[event.type] ~= nil then
         vim.schedule(function()
           nvim_event_handling.emit("YaziDDSCustom", event)
         end)
       else
         vim.schedule(function()
-          yazi_event_handling.process_event_emitted_from_yazi(
-            event,
-            self.config,
-            context
-          )
+          yazi_event_handling.process_event_emitted_from_yazi(event, self.config, context)
         end)
       end
     end
