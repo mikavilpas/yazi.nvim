@@ -38,6 +38,9 @@ importers:
       '@catppuccin/palette':
         specifier: 1.8.0
         version: 1.8.0
+      '@mikavilpas/oxlint-config':
+        specifier: 3.0.0
+        version: 3.0.0(oxlint-tsgolint@0.24.0)(oxlint@1.73.0(oxlint-tsgolint@0.24.0))
       '@tui-sandbox/library':
         specifier: 13.0.2
         version: 13.0.2(cypress@15.18.0)(oxfmt@0.58.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.0.10)(zod@4.4.3)
@@ -388,6 +391,12 @@ packages:
     resolution: {integrity: sha512-4DwrRdllfMa4hxgbjFxkdvt0RY3Dr9qFoRDwfh4sfb3wjGsM0WYNTQK/xCxQ3A0T1b7h2Yxteyedi7mPjZw5Pw==}
     peerDependencies:
       oxfmt: ^0.59.0
+
+  '@mikavilpas/oxlint-config@3.0.0':
+    resolution: {integrity: sha512-Og9u2DSvNW/amDbx1iQIvDpskM3CWHYvhNWfU0ItJJ6115NfWrnb4QG2BGHmu9MeQwSdzKz+BrwS76IEjv35wA==}
+    peerDependencies:
+      oxlint: ^1.74.0
+      oxlint-tsgolint: ^7.0.2001
 
   '@msgpack/msgpack@2.8.0':
     resolution: {integrity: sha512-h9u4u/jiIRKbq25PM+zymTyW6bhTzELvOoUd+AvYriWOAKpLGnIamaET3pnHYoI5iYphAHBI4ayx0MehR+VVPQ==}
@@ -2476,6 +2485,11 @@ snapshots:
   '@mikavilpas/oxfmt-config@3.0.0(oxfmt@0.58.0)':
     dependencies:
       oxfmt: 0.58.0
+
+  '@mikavilpas/oxlint-config@3.0.0(oxlint-tsgolint@0.24.0)(oxlint@1.73.0(oxlint-tsgolint@0.24.0))':
+    dependencies:
+      oxlint: 1.73.0(oxlint-tsgolint@0.24.0)
+      oxlint-tsgolint: 0.24.0
 
   '@msgpack/msgpack@2.8.0': {}
 
