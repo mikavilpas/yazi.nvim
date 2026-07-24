@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Build pinned Yazi nightly
-        uses: mikavilpas/yazi-action/build-nightly@ce23d96fd6b2ba9b377257050d07bf038beb405d # v1.1.0
+        uses: mikavilpas/yazi-action/build-nightly@5e57d5ee3a257857d39c2310e0c81f756523df52 # v1.1.1
         with:
           commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
@@ -127,7 +127,7 @@ jobs:
 
       - name: Restore the pinned Yazi nightly
         if: matrix.yazi-version.name == 'nightly'
-        uses: mikavilpas/yazi-action/restore-nightly@ce23d96fd6b2ba9b377257050d07bf038beb405d # v1.1.0
+        uses: mikavilpas/yazi-action/restore-nightly@5e57d5ee3a257857d39c2310e0c81f756523df52 # v1.1.1
         with:
           commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
