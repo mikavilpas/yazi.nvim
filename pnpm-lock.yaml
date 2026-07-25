@@ -18,8 +18,8 @@ importers:
         specifier: 21.2.0
         version: 21.2.0
       '@mikavilpas/oxfmt-config':
-        specifier: 3.0.0
-        version: 3.0.0(oxfmt@0.60.0)
+        specifier: 3.0.2
+        version: 3.0.2(oxfmt@0.60.0)
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
@@ -387,8 +387,8 @@ packages:
   '@hapi/topo@6.0.2':
     resolution: {integrity: sha512-KR3rD5inZbGMrHmgPxsJ9dbi6zEK+C3ZwUwTa+eMwWLz7oijWUTWD2pMSNNYJAU6Qq+65NkxXjqHr/7LM2Xkqg==}
 
-  '@mikavilpas/oxfmt-config@3.0.0':
-    resolution: {integrity: sha512-4DwrRdllfMa4hxgbjFxkdvt0RY3Dr9qFoRDwfh4sfb3wjGsM0WYNTQK/xCxQ3A0T1b7h2Yxteyedi7mPjZw5Pw==}
+  '@mikavilpas/oxfmt-config@3.0.2':
+    resolution: {integrity: sha512-EN31oQttxjYzs31S3wwnyS+aS3DkSwHXPYP1Qx0DDWa7BGUbxmIFAQr6IdJNIIMv4qN6gT9doyN2ZIoGGC7z0Q==}
     peerDependencies:
       oxfmt: ^0.59.0
 
@@ -2469,7 +2469,7 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/oxfmt-config@3.0.0(oxfmt@0.60.0)':
+  '@mikavilpas/oxfmt-config@3.0.2(oxfmt@0.60.0)':
     dependencies:
       oxfmt: 0.60.0
 
