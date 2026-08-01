@@ -13,15 +13,20 @@ function M.process_delete_event(event, config)
   local deleted_buffers = {}
 
   for _, buffer in ipairs(open_buffers) do
-    for _, url in ipairs(event.data.urls) do
+    for _, uurl in ipairs(event.data.urls) do
+      local url = uurl:gsub("\\", "/")
       if buffer:matches_exactly(url) or buffer:matches_parent(url) then
         vim.schedule(function()
           utils.bufdelete(
             config.integrations.bufdelete_implementation,
             buffer.bufnr
           )
-          require("yazi.lsp.delete").file_deleted(buffer.path.filename)
+          local ok, err = pcall(require("yazi.lsp.delete").file_deleted, buffer.path.filename)
+          if not ok then
+            debug_log("LSP delete error: " .. tostring(err))
+          end
         end)
+		table.insert(deleted_buffers, buffer)
       end
     end
   end
@@ -40,6 +45,8 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(
   local renamed_buffers = {}
 
   local event = rename_or_move_event
+  local normalized_from = event.from:gsub("\\", "/")
+  local normalized_to = event.to:gsub("\\", "/")
   for _, buffer in ipairs(open_buffers) do
     if buffer:matches_exactly(event.from) then
       buffer:rename(event.to)
@@ -69,6 +76,10 @@ end
 ---@param context YaziActiveContext
 function M.process_event_emitted_from_yazi(event, config, context)
   local lsp_rename = require("yazi.lsp.rename")
+
+  -- Normalize paths to use forward slash so it works in windows also
+  event.data.from = event.from:gsub("\\", "/")
+  event.data.to = event.to:gsub("\\", "/")
 
   if event.type == "rename" then
     ---@cast event YaziRenameEvent
