@@ -138,14 +138,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Make sure yazi and ya are installed
-        run: |
-          echo "PATH:"
-          echo "$PATH"
-
-          yazi --version
-          ya --version
-
       - name: Download pinned Neovim nightly
         if: matrix.neovim.name == 'nightly'
         uses: mikavilpas/neovim-action/restore-nightly@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
@@ -195,6 +187,8 @@ jobs:
 
       # need to work around https://github.com/cypress-io/github-action/issues/1246
       - run: pnpm --filter integration-tests exec cypress install
+      - name: Start yazi in the background to try to limit DDS issues
+        run: yazi &
 
       - name: Cypress test
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7.4.1
