@@ -187,8 +187,6 @@ jobs:
 
       # need to work around https://github.com/cypress-io/github-action/issues/1246
       - run: pnpm --filter integration-tests exec cypress install
-      - name: Start yazi in the background to try to limit DDS issues
-        run: yazi &
 
       - name: Cypress test
         uses: cypress-io/github-action@fa4a118725a8f001170d49631ea89e5d66fee626 # v7.4.1
