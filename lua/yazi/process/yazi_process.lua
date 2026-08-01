@@ -36,11 +36,6 @@ function YaziProcess:start(config, paths, callbacks)
     callbacks.on_ya_first_event(self.api)
   end, assert(paths[1]).filename)
 
-  local yazi_cmd = self.ya_process:get_yazi_command(paths)
-  Log:debug(
-    string.format("Opening yazi with the command: (%s).", vim.inspect(yazi_cmd))
-  )
-
   ---@type YaziActiveContext
   local context = {
     api = self.api,
@@ -49,13 +44,27 @@ function YaziProcess:start(config, paths, callbacks)
     input_path = paths[1],
   }
 
-  local env = {
+  -- the event source may need to put something in the yazi command line, so it
+  -- has to be set up before the command is built
+  self.ya_process:open_event_source(context)
+
+  local yazi_cmd = self.ya_process:get_yazi_command(paths)
+  local terminal_cmd = self.ya_process.event_source:terminal_command(yazi_cmd)
+
+  Log:debug(
+    string.format(
+      "Opening yazi with the command: (%s).",
+      vim.inspect(terminal_cmd)
+    )
+  )
+
+  local env = vim.tbl_extend("error", {
     -- expose NVIM_CWD so that yazi keybindings can use it to offer basic
     -- neovim specific functionality
     NVIM_CWD = vim.uv.cwd(),
     YAZI_CONFIG_HOME = config.config_home,
     YAZI_NVIM_ID = yazi_id,
-  }
+  }, self.ya_process.event_source:environment())
 
   -- hand the user-configured `plugin_keymaps` to the `nvim.yazi` plugin, which
   -- registers them inside yazi at runtime.
@@ -65,7 +74,7 @@ function YaziProcess:start(config, paths, callbacks)
       plugin_keymaps.serialize(config.future_features.yazi_plugin_keymaps)
   end
 
-  self.yazi_job_id = vim.fn.jobstart(yazi_cmd, {
+  self.yazi_job_id = vim.fn.jobstart(terminal_cmd, {
     term = true,
     env = env,
     on_exit = function(_, code)
@@ -106,7 +115,7 @@ function YaziProcess:start(config, paths, callbacks)
     end,
   })
 
-  self.ya_process:start(context)
+  self.ya_process:start()
 
   return self, context
 end

@@ -27,7 +27,6 @@ describe("reading events", () => {
       // indicating that the directory was changed
       cy.contains("other-subdirectory" satisfies MyTestDirectoryFile)
       hoverFileAndVerifyItsHovered(nvim, "other-subdirectory")
-      cy.typeIntoTerminal("{enter}")
       cy.typeIntoTerminal("{rightArrow}")
       cy.typeIntoTerminal("{control+s}")
 
