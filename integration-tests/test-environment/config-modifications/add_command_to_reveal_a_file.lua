@@ -32,6 +32,27 @@ function M.reveal_path_and_wait_for_hover(path)
   -- retry it differs from `path` (otherwise we'd already be done).
   local attempts = 20
   local interval_ms = 150
+
+  -- `ya emit-to` can fail without yazi ever seeing the command, e.g. when the
+  -- DDS socket is gone ("Connection refused").
+  ---@type string | nil
+  local last_emit_error = nil
+
+  ---@param job vim.SystemObj
+  ---@param what string
+  local function reveal_and_check(job, what)
+    local result = job:wait(1000)
+    if result.code ~= 0 then
+      last_emit_error = string.format(
+        "revealing %s exited with code %s: '%s'",
+        what,
+        result.code,
+        vim.trim(result.stderr or "")
+      )
+      Log:debug("`ya emit-to` failed: " .. last_emit_error)
+    end
+  end
+
   for _ = 1, attempts do
     if context.ya_process.hovered_url == path then
       return
@@ -42,10 +63,13 @@ function M.reveal_path_and_wait_for_hover(path)
       -- Wait for the decoy reveal to be delivered before revealing the target,
       -- so yazi clearly processes them as two distinct moves rather than
       -- coalescing them into a single no-op cursor update.
-      context.api:reveal(decoy):wait(500)
+      reveal_and_check(
+        context.api:reveal(decoy),
+        string.format("the decoy '%s'", decoy)
+      )
     end
 
-    context.api:reveal(path)
+    reveal_and_check(context.api:reveal(path), string.format("'%s'", path))
     local hovered = vim.wait(interval_ms, function()
       return context.ya_process.hovered_url == path
     end, 20)
@@ -54,11 +78,19 @@ function M.reveal_path_and_wait_for_hover(path)
     end
   end
 
+  local reason = last_emit_error ~= nil
+      and string.format(
+        " The last `ya emit-to` failure was: %s",
+        last_emit_error
+      )
+    or " Every `ya emit-to` succeeded, so yazi received the reveals but never reported hovering the path."
+
   error(
     string.format(
-      "Timed out waiting for yazi to hover '%s'. Last hovered url: '%s'",
+      "Timed out waiting for yazi to hover '%s'. Last hovered url: '%s'.%s",
       path,
-      tostring(context.ya_process.hovered_url)
+      tostring(context.ya_process.hovered_url),
+      reason
     )
   )
 end
