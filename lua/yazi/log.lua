@@ -70,4 +70,11 @@ function Log:debug(message)
   end
 end
 
+---@param message string
+function Log:error(message)
+  if self:active_for_level(log_levels.ERROR) then
+    self:write_message("ERROR", message)
+  end
+end
+
 return Log

@@ -32,14 +32,29 @@ function YaziProcessApi:emit_to_yazi(args)
     { "ya", "emit-to", self.yazi_id, unpack(args) },
     { timeout = 1000 },
     function(result)
-      Log:debug(
-        string.format(
-          "emit_to_yazi: ya succeeded: 'ya emit-to %s' with args: '%s' and result '%s'",
-          self.yazi_id,
-          vim.inspect(args),
-          vim.inspect(result)
+      if result.code == 0 then
+        Log:debug(
+          string.format(
+            "emit_to_yazi: ya succeeded: 'ya emit-to %s' with args: '%s' and result '%s'",
+            self.yazi_id,
+            vim.inspect(args),
+            vim.inspect(result)
+          )
         )
-      )
+      else
+        -- The command never reached yazi. This happens e.g. when the DDS
+        -- socket is gone ("Connection refused"), so the caller's request was
+        -- silently dropped.
+        Log:error(
+          string.format(
+            "emit_to_yazi: ya failed with exit code %s: 'ya emit-to %s' with args: '%s' and stderr '%s'",
+            result.code,
+            self.yazi_id,
+            vim.inspect(args),
+            vim.trim(result.stderr or "")
+          )
+        )
+      end
     end
   )
 end
