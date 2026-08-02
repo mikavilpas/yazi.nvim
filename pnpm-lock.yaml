@@ -17,6 +17,9 @@ importers:
       '@commitlint/types':
         specifier: 21.2.0
         version: 21.2.0
+      '@mikavilpas/knip-config':
+        specifier: 1.0.0
+        version: 1.0.0(knip@6.29.0)
       '@mikavilpas/oxfmt-config':
         specifier: 3.0.2
         version: 3.0.2(oxfmt@0.61.0)
@@ -380,6 +383,11 @@ packages:
 
   '@hapi/topo@6.0.2':
     resolution: {integrity: sha512-KR3rD5inZbGMrHmgPxsJ9dbi6zEK+C3ZwUwTa+eMwWLz7oijWUTWD2pMSNNYJAU6Qq+65NkxXjqHr/7LM2Xkqg==}
+
+  '@mikavilpas/knip-config@1.0.0':
+    resolution: {integrity: sha512-RUiYuaPC5c1wlCmZSOOCDCBsdr9L15nzm7yIUa6kn4aphOUIPRVo51h+S3LgFyKFM1UGMwcQ2n1yyW5J9fufBg==}
+    peerDependencies:
+      knip: ^6.27.0
 
   '@mikavilpas/oxfmt-config@3.0.2':
     resolution: {integrity: sha512-EN31oQttxjYzs31S3wwnyS+aS3DkSwHXPYP1Qx0DDWa7BGUbxmIFAQr6IdJNIIMv4qN6gT9doyN2ZIoGGC7z0Q==}
@@ -2464,6 +2472,10 @@ snapshots:
   '@hapi/topo@6.0.2':
     dependencies:
       '@hapi/hoek': 11.0.7
+
+  '@mikavilpas/knip-config@1.0.0(knip@6.29.0)':
+    dependencies:
+      knip: 6.29.0
 
   '@mikavilpas/oxfmt-config@3.0.2(oxfmt@0.61.0)':
     dependencies:
