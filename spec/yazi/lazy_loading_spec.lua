@@ -31,6 +31,7 @@ describe("lazy loading", function()
     table.sort(yazi_modules)
     assert.are.same(yazi_modules, {
       "yazi",
+      "yazi.active_contexts",
       "yazi.config",
       "yazi.log",
       "yazi.openers",

@@ -1,5 +1,6 @@
 ---@module "plenary"
 
+local ActiveContexts = require("yazi.active_contexts")
 local configModule = require("yazi.config")
 
 local M = {}
@@ -10,7 +11,8 @@ M.version = "13.9.0" -- x-release-please-version
 ---@type YaziPreviousState
 M.previous_state = {}
 
-M.active_contexts = vim.ringbuf(2)
+-- The yazi instances that are currently running, newest first
+M.active_contexts = ActiveContexts.new(2)
 
 ---@alias yazi.Arguments {reveal_path: string}
 
@@ -76,7 +78,18 @@ function M.yazi(config, input_path, args)
         })
       end
     end,
-    on_exit = function(exit_code, selected_files, hovered_url, last_directory)
+    on_exit = function(
+      exit_code,
+      selected_files,
+      hovered_url,
+      last_directory,
+      context
+    )
+      -- this yazi is gone, so its context is no longer active. Remove it before
+      -- anything else, so that an unsuccessful exit cannot leave a dead context
+      -- behind either.
+      M.active_contexts:remove(context)
+
       if exit_code ~= 0 then
         print(
           "yazi.nvim: had trouble opening yazi. Run ':checkhealth yazi' for more information."
