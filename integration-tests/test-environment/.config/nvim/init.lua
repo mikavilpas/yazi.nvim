@@ -57,7 +57,9 @@ vim.list_extend(plugins, {
       clipboard_register = '"',
       -- allows logging debug data, which can be shown in CI when cypress tests fail
       log_level = vim.log.levels.DEBUG,
-      future_features = {},
+      future_features = {
+        use_local_events = true,
+      },
     },
   },
 })
