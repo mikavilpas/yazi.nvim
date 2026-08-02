@@ -31,6 +31,6 @@ export function findFileInYazi(filename: MyTestDirectoryFile): void {
   isFileFoundInYazi(filename)
 }
 
-export function assertYaziIsReady(nvim: NeovimContext): Cypress.Chainable<RunLuaCodeOutput> {
-  return nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()` })
+export function assertYaziIsReady(nvim: NeovimContext, timeoutMs?: number): Cypress.Chainable<RunLuaCodeOutput> {
+  return nvim.waitForLuaCode({ luaAssertion: `Yazi_is_ready()`, timeoutMs })
 }
