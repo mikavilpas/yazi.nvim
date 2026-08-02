@@ -494,10 +494,12 @@ describe("opening files", () => {
   it("can open multiple files in a directory whose name contains a space character", () => {
     cy.startNeovim({
       filename: "dir with (parens ) and spaces/file1.txt",
+      startupScriptModifications: ["add_yazi_context_assertions.lua"],
     }).then(nvim => {
       cy.contains("this is the first file")
 
       cy.typeIntoTerminal("{upArrow}")
+      assertYaziIsReady(nvim)
       cy.contains(nvim.dir.contents["dir with (parens ) and spaces"].contents["file2.txt"].name)
 
       // select all files and open them
