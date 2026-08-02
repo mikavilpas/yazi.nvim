@@ -9,7 +9,7 @@ function M.reveal_path_and_wait_for_hover(path)
   local Log = require("yazi.log")
 
   ---@type YaziActiveContext | nil
-  local context = yazi.active_contexts:peek()
+  local context = yazi.active_contexts:current()
   if not context then
     error("No active yazi context found. Is yazi running?")
   end
