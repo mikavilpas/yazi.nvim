@@ -18,11 +18,11 @@ importers:
         specifier: 21.2.0
         version: 21.2.0
       '@mikavilpas/knip-config':
-        specifier: 1.0.0
-        version: 1.0.0(knip@6.31.0)
+        specifier: 1.0.1
+        version: 1.0.1(knip@6.31.0)
       '@mikavilpas/oxfmt-config':
-        specifier: 3.0.2
-        version: 3.0.2(oxfmt@0.61.0)
+        specifier: 3.0.3
+        version: 3.0.3(oxfmt@0.61.0)
       '@types/node':
         specifier: 24.13.3
         version: 24.13.3
@@ -42,8 +42,8 @@ importers:
         specifier: 1.8.0
         version: 1.8.0
       '@mikavilpas/oxlint-config':
-        specifier: 3.0.0
-        version: 3.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.76.0(oxlint-tsgolint@7.0.2001))
+        specifier: 3.0.1
+        version: 3.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.76.0(oxlint-tsgolint@7.0.2001))
       '@tui-sandbox/library':
         specifier: 13.0.2
         version: 13.0.2(cypress@15.19.0)(oxfmt@0.61.0)(prettier@3.8.4)(type-fest@5.8.0)(typescript@6.0.3)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.4.3)
@@ -384,21 +384,21 @@ packages:
   '@hapi/topo@6.0.2':
     resolution: {integrity: sha512-KR3rD5inZbGMrHmgPxsJ9dbi6zEK+C3ZwUwTa+eMwWLz7oijWUTWD2pMSNNYJAU6Qq+65NkxXjqHr/7LM2Xkqg==}
 
-  '@mikavilpas/knip-config@1.0.0':
-    resolution: {integrity: sha512-RUiYuaPC5c1wlCmZSOOCDCBsdr9L15nzm7yIUa6kn4aphOUIPRVo51h+S3LgFyKFM1UGMwcQ2n1yyW5J9fufBg==}
+  '@mikavilpas/knip-config@1.0.1':
+    resolution: {integrity: sha512-oIIT2XH75DQYjd/E8pxI5V/Fk0w7iVYa2x+Mr3L58s2a0beCarYonEGC664KknhYoWKyBM35F6F34P3OfWT81Q==}
     peerDependencies:
-      knip: ^6.27.0
+      knip: '>=6.27.0'
 
-  '@mikavilpas/oxfmt-config@3.0.2':
-    resolution: {integrity: sha512-EN31oQttxjYzs31S3wwnyS+aS3DkSwHXPYP1Qx0DDWa7BGUbxmIFAQr6IdJNIIMv4qN6gT9doyN2ZIoGGC7z0Q==}
+  '@mikavilpas/oxfmt-config@3.0.3':
+    resolution: {integrity: sha512-dnApUBbQOz/MWYsU6I3zSO6ZgW02WIplMkBMGJdtMAP+MK9sFrk1rZI9t30hQMTgL7E6/sKZ3xy8sRNelss8tw==}
     peerDependencies:
-      oxfmt: ^0.59.0
+      oxfmt: '>=0.59.0'
 
-  '@mikavilpas/oxlint-config@3.0.0':
-    resolution: {integrity: sha512-Og9u2DSvNW/amDbx1iQIvDpskM3CWHYvhNWfU0ItJJ6115NfWrnb4QG2BGHmu9MeQwSdzKz+BrwS76IEjv35wA==}
+  '@mikavilpas/oxlint-config@3.0.1':
+    resolution: {integrity: sha512-Sp5hxzIfxDxKPkMrBNzZRnq7QjwZWsIjrt9uOzai/k/ZKKe9zzkBhdxCXA4jLOVSTmlv4BXh7rIWRdaAGc6+9g==}
     peerDependencies:
-      oxlint: ^1.74.0
-      oxlint-tsgolint: ^7.0.2001
+      oxlint: '>=1.74.0'
+      oxlint-tsgolint: '>=7.0.2001'
 
   '@msgpack/msgpack@2.8.0':
     resolution: {integrity: sha512-h9u4u/jiIRKbq25PM+zymTyW6bhTzELvOoUd+AvYriWOAKpLGnIamaET3pnHYoI5iYphAHBI4ayx0MehR+VVPQ==}
@@ -2469,15 +2469,15 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/knip-config@1.0.0(knip@6.31.0)':
+  '@mikavilpas/knip-config@1.0.1(knip@6.31.0)':
     dependencies:
       knip: 6.31.0
 
-  '@mikavilpas/oxfmt-config@3.0.2(oxfmt@0.61.0)':
+  '@mikavilpas/oxfmt-config@3.0.3(oxfmt@0.61.0)':
     dependencies:
       oxfmt: 0.61.0
 
-  '@mikavilpas/oxlint-config@3.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.76.0(oxlint-tsgolint@7.0.2001))':
+  '@mikavilpas/oxlint-config@3.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.76.0(oxlint-tsgolint@7.0.2001))':
     dependencies:
       oxlint: 1.76.0(oxlint-tsgolint@7.0.2001)
       oxlint-tsgolint: 7.0.2001
