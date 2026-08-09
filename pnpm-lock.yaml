@@ -19,7 +19,7 @@ importers:
         version: 21.2.0
       '@mikavilpas/knip-config':
         specifier: 1.0.1
-        version: 1.0.1(knip@6.31.0)
+        version: 1.0.1(knip@6.32.0)
       '@mikavilpas/oxfmt-config':
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.62.0)
@@ -27,8 +27,8 @@ importers:
         specifier: 24.13.3
         version: 24.13.3
       knip:
-        specifier: 6.31.0
-        version: 6.31.0
+        specifier: 6.32.0
+        version: 6.32.0
       oxfmt:
         specifier: 0.62.0
         version: 0.62.0
@@ -1562,8 +1562,8 @@ packages:
     resolution: {integrity: sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==}
     engines: {node: '>=8'}
 
-  get-tsconfig@4.14.0:
-    resolution: {integrity: sha512-yTb+8DXzDREzgvYmh6s9vHsSVCHeC0G3PI5bEXNBHtmshPnO+S5O7qgLEOn0I5QvMy6kpZN8K1NKGyilLb93wA==}
+  get-tsconfig@4.14.1:
+    resolution: {integrity: sha512-Dz/6HxkrxgNehhxLVeyv8sad9UzF2xBVeaKBQNDfJ5XiSXmp2gTR0eO0RWiT2NCKS5aGP9jjkOMggTN90qU50A==}
 
   getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}
@@ -1740,8 +1740,8 @@ packages:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
     engines: {'0': node >=0.6.0}
 
-  knip@6.31.0:
-    resolution: {integrity: sha512-NbeIEmUS2VUMjAkbiSNOKPJeV9wpCsr0660sUyKyMQbk4Iom0++nTLInVp4MJ+LfR4kORnw67bDi5tvO7YLnzA==}
+  knip@6.32.0:
+    resolution: {integrity: sha512-KDX9OmmOFmlvmxTkrx6Z0GHISMut+pXMSKR8eg84bovaxJKx2NdQD4JYCXveSbvieRe107W6vCD2xCpmz0qBYA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -2586,9 +2586,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/knip-config@1.0.1(knip@6.31.0)':
+  '@mikavilpas/knip-config@1.0.1(knip@6.32.0)':
     dependencies:
-      knip: 6.31.0
+      knip: 6.32.0
 
   '@mikavilpas/oxfmt-config@3.0.3(oxfmt@0.62.0)':
     dependencies:
@@ -3508,7 +3508,7 @@ snapshots:
     dependencies:
       pump: 3.0.3
 
-  get-tsconfig@4.14.0:
+  get-tsconfig@4.14.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
@@ -3677,11 +3677,11 @@ snapshots:
       json-schema: 0.4.0
       verror: 1.10.0
 
-  knip@6.31.0:
+  knip@6.32.0:
     dependencies:
       fdir: 6.5.0(picomatch@4.0.5)
       formatly: 0.3.0
-      get-tsconfig: 4.14.0
+      get-tsconfig: 4.14.1
       jiti: 2.7.0
       oxc-parser: 0.142.0
       oxc-resolver: 11.24.2
