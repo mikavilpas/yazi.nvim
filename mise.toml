@@ -12,7 +12,7 @@ zizmor = "1.29.0"
 "aqua:Kampfkarren/selene" = "0.31.0"
 
 [tools."github:EmmyLuaLs/emmylua-analyzer-rust"]
-version = "0.25.0"
+version = "0.25.1"
 
 [tools."github:EmmyLuaLs/emmylua-analyzer-rust".platforms]
 linux-x64 = { asset_pattern = "*_ls-linux-x64*" }
