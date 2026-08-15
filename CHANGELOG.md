@@ -1,5 +1,12 @@
 # Changelog
 
+## [13.9.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.9.0...v13.9.1) (2026-08-15)
+
+
+### Bug Fixes
+
+* renaming to the same filename closes the nvim buffer ([#2117](https://github.com/mikavilpas/yazi.nvim/issues/2117)) ([bd7b873](https://github.com/mikavilpas/yazi.nvim/commit/bd7b87382136588757c0ecec0cfc29c084047c51))
+
 ## [13.9.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.8.0...v13.9.0) (2026-07-06)
 
 
