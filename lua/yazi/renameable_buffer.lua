@@ -43,6 +43,12 @@ end
 
 ---@param path string
 ---@return boolean
+function RenameableBuffer:is_same(path)
+  return self.path.filename == path
+end
+
+---@param path string
+---@return boolean
 function RenameableBuffer:matches_parent(path)
   path = remove_trailing_slash(path)
   for _, parent in ipairs(self.path:parents()) do

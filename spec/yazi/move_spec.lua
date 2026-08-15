@@ -31,6 +31,22 @@ describe("get_buffers_that_need_renaming_after_yazi_exited", function()
     assert.is_number(result1.bufnr)
   end)
 
+  it("skips renaming to the same filename", function()
+    local path = "/my-tmp/file1"
+    ---@type YaziEventDataRenameOrMove
+    local move_event = {
+      from = path,
+      to = path,
+    }
+
+    local instructions =
+      yazi_event_handling.get_buffers_that_need_renaming_after_yazi_exited(
+        move_event
+      )
+
+    assert.equal(vim.tbl_count(instructions), 0)
+  end)
+
   it(
     "can detect moves to buffers open in a directory that was moved",
     function()

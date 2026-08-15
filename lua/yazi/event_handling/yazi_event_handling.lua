@@ -41,7 +41,10 @@ function M.get_buffers_that_need_renaming_after_yazi_exited(
 
   local event = rename_or_move_event
   for _, buffer in ipairs(open_buffers) do
-    if buffer:matches_exactly(event.from) then
+    -- selene: allow(empty_if)
+    if buffer:is_same(event.to) then
+      -- do nothing, the buffer is already open with the new name
+    elseif buffer:matches_exactly(event.from) then
       buffer:rename(event.to)
       renamed_buffers[buffer.bufnr] = buffer
     elseif buffer:matches_parent(event.from) then
