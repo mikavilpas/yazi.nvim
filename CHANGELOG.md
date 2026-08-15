@@ -1,5 +1,16 @@
 # Changelog
 
+## [14.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.9.1...v14.0.0) (2026-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for yazi v26.1.4, add new stable v26.8.15 ([#2120](https://github.com/mikavilpas/yazi.nvim/issues/2120))
+
+### Continuous Integration
+
+* drop support for yazi v26.1.4, add new stable v26.8.15 ([#2120](https://github.com/mikavilpas/yazi.nvim/issues/2120)) ([3246939](https://github.com/mikavilpas/yazi.nvim/commit/3246939acbc2fbf337a69ecb69a31d5aa564f2e9))
+
 ## [13.9.1](https://github.com/mikavilpas/yazi.nvim/compare/v13.9.0...v13.9.1) (2026-08-15)
 
 
