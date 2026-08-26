@@ -2,7 +2,10 @@ local M = {}
 
 ---@param chosen_file string
 function M.open_file(chosen_file)
-  vim.cmd(string.format("edit %s", vim.fn.fnameescape(chosen_file)))
+  local is_directory = vim.fn.isdirectory(chosen_file) == 1
+  if not is_directory then
+    vim.cmd(string.format("edit %s", vim.fn.fnameescape(chosen_file)))
+  end
 end
 
 ---@param chosen_file string
@@ -31,7 +34,15 @@ end
 
 ---@param chosen_files string[]
 function M.open_multiple_files(chosen_files)
-  local quoted = vim.tbl_map(vim.fn.fnameescape, chosen_files)
+  local files = vim.tbl_filter(function(file)
+    return vim.fn.isdirectory(file) ~= 1
+  end, chosen_files)
+
+  if #files == 0 then
+    return
+  end
+
+  local quoted = vim.tbl_map(vim.fn.fnameescape, files)
   vim.cmd.args({ table.concat(quoted, " ") })
 end
 

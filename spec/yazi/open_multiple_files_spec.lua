@@ -47,3 +47,39 @@ describe("the default configuration", function()
     assert.equal("/abc/test-file2.txt", quickfix_list[2].text)
   end)
 end)
+
+describe("open_multiple_files", function()
+  local base_dir = os.tmpname()
+
+  before_each(function()
+    reset.clear_all_buffers()
+
+    -- refuse to remove anything outside of /tmp/
+    assert(base_dir:match("/tmp/"), "Failed to create a temporary directory")
+    os.remove(base_dir)
+    vim.fn.mkdir(base_dir, "p")
+
+    -- on macos /tmp is a symlink to /private/tmp, and neovim resolves buffer
+    -- names to the real path
+    base_dir = vim.fn.resolve(base_dir)
+  end)
+
+  it("leaves directories out of the arglist", function()
+    local file = base_dir .. "/test-file.txt"
+    vim.fn.writefile({ "hello" }, file)
+
+    require("yazi.openers").open_multiple_files({ base_dir, file })
+
+    local buffers = vim.api.nvim_list_bufs()
+    assert.equal(1, #buffers)
+    assert.equal(file, vim.api.nvim_buf_get_name(buffers[1]))
+  end)
+
+  it("does not touch the arglist when only directories were given", function()
+    require("yazi.openers").open_multiple_files({ base_dir })
+
+    for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
+      assert.is_not.equal(base_dir, vim.api.nvim_buf_get_name(buffer))
+    end
+  end)
+end)

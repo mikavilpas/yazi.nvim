@@ -48,3 +48,24 @@ describe("open_file_in_tab", function()
     assert.stub(vim.cmd).called_at_most(0)
   end)
 end)
+
+describe("open_file", function()
+  it("does not open if the given path is a directory", function()
+    -- a directory cannot be edited - it would show the netrw file explorer (or
+    -- whichever other plugin hijacks directory buffers), which is less useful
+    -- than yazi. When yazi.nvim itself hijacks directory buffers, editing a
+    -- directory here also reopens yazi on top of it.
+    openers.open_file(base_dir)
+
+    assert.stub(vim.cmd).called_at_most(0)
+  end)
+
+  it("opens the given path when it is a file", function()
+    local file = base_dir .. "/file.txt"
+    vim.fn.writefile({ "hello" }, file)
+
+    openers.open_file(file)
+
+    assert.stub(vim.cmd).called_with(string.format("edit %s", file))
+  end)
+end)
