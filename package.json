@@ -23,8 +23,8 @@
     "@mikavilpas/oxfmt-config": "3.0.3",
     "@types/node": "24.13.3",
     "knip": "6.32.2",
-    "oxfmt": "0.64.0",
+    "oxfmt": "0.65.0",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@11.23.0+sha512.f00082e5b283a199b74e079da28d155c008fe232f44c8a06ea7ddfa014ecf719fc362f790ecc67b28106ddac2afb24c49a9a079159da560b2ce7d1e98efd11af"
+  "packageManager": "pnpm@11.24.0"
 }
