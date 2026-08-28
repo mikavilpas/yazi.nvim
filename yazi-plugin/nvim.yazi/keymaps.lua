@@ -32,14 +32,39 @@ end
 -- runs `plugin nvim -- <action>`, which invokes this plugin's `entry` and
 -- publishes a DDS event that yazi.nvim reacts to.
 ---@param keymaps { on: string, action: string, desc?: string }[]
-function M.register(keymaps)
+---@param rules? { insert: fun(self: any, index: integer, rule: table) }
+function M.register(keymaps, rules)
+  rules = rules or km.mgr.rules
   for _, mapping in ipairs(keymaps) do
-    km.mgr.rules:insert(1, {
+    rules:insert(1, {
       on = mapping.on,
       run = string.format("plugin nvim -- %s", mapping.action),
       desc = mapping.desc,
     })
   end
+end
+
+---@param rules? { insert: fun(self: any, index: integer, rule: table) }
+function M.register_guarded_open(rules)
+  M.register({
+    {
+      on = "<Enter>",
+      action = "guarded_open",
+      desc = "yazi.nvim: open selected files",
+    },
+  }, rules)
+end
+
+---@param selected { cha: { is_dir: boolean } }[]
+---@return boolean
+function M.should_open(selected)
+  for _, file in pairs(selected) do
+    if file.cha.is_dir then
+      return false
+    end
+  end
+
+  return true
 end
 
 return M

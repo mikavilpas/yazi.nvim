@@ -4,6 +4,11 @@
 --- functionality. This is needed because some features are so complex that neovim
 --- cannot implement them directly (yazi internal state is needed).
 ---
+local should_open = ya.sync(function()
+  local keymaps = require(".keymaps")
+  return keymaps.should_open(cx.active.selected)
+end)
+
 return {
   setup = function()
     require(".notify").guard("failed to add status indicator", function()
@@ -24,6 +29,7 @@ return {
       local keymaps = require(".keymaps")
       local mappings =
         keymaps.parse_from_env(os.getenv("YAZI_NVIM_PLUGIN_KEYMAPS") or "")
+      keymaps.register_guarded_open()
       keymaps.register(mappings)
     end)
   end,
@@ -37,6 +43,13 @@ return {
 
     local action = job.args[1]
     if not action then
+      return
+    end
+
+    if action == "guarded_open" then
+      if should_open() then
+        ya.manager_emit("open", {})
+      end
       return
     end
 
