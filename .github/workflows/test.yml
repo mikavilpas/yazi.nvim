@@ -87,7 +87,7 @@ jobs:
           - name: stable
             method: download
             # renovate: datasource=github-releases depName=sxyazi/yazi
-            version: v26.8.15
+            version: v26.9.1
           - name: v26.5.6
             method: download
             version: v26.5.6

@@ -123,11 +123,11 @@ Cypress.Commands.add("startNeovim", (startArguments?: MyStartNeovimServerArgumen
 
     // wrap everything so that Cypress can await all the commands
     Cypress.Commands.addAll({
-      nvim_runBlockingShellCommand: underlyingNeovim.runBlockingShellCommand,
-      nvim_runExCommand: underlyingNeovim.runExCommand,
-      nvim_runLuaCode: underlyingNeovim.runLuaCode,
-      nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode,
-      nvim_doFile: underlyingNeovim.doFile,
+      nvim_runBlockingShellCommand: underlyingNeovim.runBlockingShellCommand.bind(underlyingNeovim),
+      nvim_runExCommand: underlyingNeovim.runExCommand.bind(underlyingNeovim),
+      nvim_runLuaCode: underlyingNeovim.runLuaCode.bind(underlyingNeovim),
+      nvim_waitForLuaCode: underlyingNeovim.waitForLuaCode.bind(underlyingNeovim),
+      nvim_doFile: underlyingNeovim.doFile.bind(underlyingNeovim),
     })
 
     const api: NeovimContext = {
@@ -190,7 +190,7 @@ Cypress.Commands.add("startTerminalApplication", (args: StartTerminalGenericArgu
     testEnvironmentPath = terminal.dir.testEnvironmentPath
 
     Cypress.Commands.addAll({
-      terminal_runBlockingShellCommand: terminal.runBlockingShellCommand,
+      terminal_runBlockingShellCommand: terminal.runBlockingShellCommand.bind(terminal),
     })
 
     const api: TerminalTestApplicationContext = {
@@ -292,7 +292,7 @@ afterEach(function () {
       .split("\n")
       .map(line => `  ${line}`)
       .join("\n")
-    const testFile = this.currentTest?.file ?? "unknown"
+    const testFile = this.currentTest?.file ?? this.test?.file ?? "unknown"
     const yaml = [
       `testTitle: ${JSON.stringify(snapshot.testTitle)}`,
       `testFile: ${JSON.stringify(testFile)}`,
