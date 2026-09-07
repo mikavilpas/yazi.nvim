@@ -1,11 +1,8 @@
 packages:
-  - "./integration-tests/"
+  - integration-tests/
 allowBuilds:
   cypress: true
   esbuild: true
-minimumReleaseAgeExclude:
-  - "@mikavilpas/oxfmt-config@3.0.0"
-  - "@mikavilpas/oxlint-config@1.0.0 || 3.0.0"
 saveExact: true
 
 # https://pnpm.io/pnpm-workspace_yaml
