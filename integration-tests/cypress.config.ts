@@ -15,7 +15,6 @@ const runNvimYaziPluginTests = !isCI || process.env.YAZI_IS_NIGHTLY === "true"
 
 export default defineConfig({
   e2e: {
-    allowCypressEnv: false,
     expose: {
       // allow some tests to only run when a nightly yazi is available
       runNvimYaziPluginTests,
