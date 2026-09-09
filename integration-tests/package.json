@@ -10,19 +10,19 @@
   "devDependencies": {
     "@catppuccin/palette": "1.8.0",
     "@mikavilpas/oxlint-config": "3.0.1",
-    "@tui-sandbox/library": "13.0.2",
+    "@tui-sandbox/library": "13.0.3",
     "@types/node": "24.13.3",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
     "concurrently": "10.0.5",
     "cypress": "16.0.0",
     "eslint-plugin-no-only-tests": "3.4.0",
-    "oxlint": "1.80.0",
+    "oxlint": "1.81.0",
     "oxlint-tsgolint": "7.0.2001",
     "tinycolor2": "1.6.0",
-    "type-fest": "5.8.0",
+    "type-fest": "5.9.0",
     "typescript": "7.0.2",
     "wait-on": "9.1.0",
-    "zod": "4.5.1"
+    "zod": "4.5.4"
   }
 }
