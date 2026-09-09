@@ -8,6 +8,18 @@
     {
       "matchDepNames": ["lua"],
       "allowedVersions": "<=5.1"
+    },
+    {
+      "description": ["Update yazi stable versions in their own group."],
+      "matchPackageNames": ["sxyazi/yazi"],
+      "matchDatasources": ["github-releases"],
+      "groupName": "yazi-stable"
+    },
+    {
+      "description": ["Update yazi nightly versions in their own group."],
+      "matchPackageNames": ["https://github.com/sxyazi/yazi"],
+      "matchDatasources": ["git-refs"],
+      "groupName": "yazi-nightly"
     }
   ]
 }
