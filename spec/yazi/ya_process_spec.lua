@@ -64,6 +64,48 @@ describe("the get_yazi_command() function", function()
     end
   )
 
+  it(
+    "asks yazi to report its own events when `use_local_events` is enabled",
+    function()
+      local config = require("yazi.config").default()
+      config.chosen_file_path = "/tmp/chosen_file_path"
+      config.cwd_file_path = "/tmp/cwd_file_path"
+      config.future_features.use_local_events = true
+
+      local ya = ya_process.new(config, yazi_id)
+
+      local command = ya:get_yazi_command({ { filename = "file1" } })
+
+      assert.are.same({
+        "yazi",
+        "file1",
+        "--chooser-file",
+        "/tmp/chosen_file_path",
+        "--client-id",
+        "yazi_id_123",
+        "--cwd-file",
+        "/tmp/cwd_file_path",
+        -- note that `hey` is missing: it is part of the `ya sub` handshake,
+        -- and yazi does not publish it as a local event
+        "--local-events=rename,delete,trash,move,cd,hover,bulk,bulk-rename,yazi-nvim,nvim-cycle-buffer",
+      }, command)
+    end
+  )
+
+  it("does not use `--local-events` by default", function()
+    local config = require("yazi.config").default()
+    config.chosen_file_path = "/tmp/chosen_file_path"
+    config.cwd_file_path = "/tmp/cwd_file_path"
+
+    local ya = ya_process.new(config, yazi_id)
+
+    local command = ya:get_yazi_command({ { filename = "file1" } })
+
+    for _, word in ipairs(command) do
+      assert.is_nil(word:match("^%-%-local%-events"))
+    end
+  end)
+
   it("doesn't open duplicate tabs", function()
     local config = require("yazi.config").default()
     config.open_multiple_tabs = true

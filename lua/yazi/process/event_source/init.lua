@@ -64,6 +64,13 @@ end
 ---@param yazi_id string
 ---@return yazi.EventSource
 function M.create(config, yazi_id)
+  if config.future_features.use_local_events == true then
+    return require("yazi.process.event_source.local_events").new(
+      config,
+      yazi_id
+    )
+  end
+
   return require("yazi.process.event_source.ya_sub").new(config, yazi_id)
 end
 
