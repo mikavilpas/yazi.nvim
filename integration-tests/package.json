@@ -11,7 +11,7 @@
     "@catppuccin/palette": "1.8.0",
     "@mikavilpas/oxlint-config": "3.0.1",
     "@tui-sandbox/library": "13.0.3",
-    "@types/node": "24.13.3",
+    "@types/node": "24.13.4",
     "@types/tinycolor2": "1.4.6",
     "assert": "2.1.0",
     "concurrently": "10.0.5",
@@ -23,6 +23,6 @@
     "type-fest": "5.9.0",
     "typescript": "7.0.2",
     "wait-on": "9.1.0",
-    "zod": "4.5.4"
+    "zod": "4.6.0"
   }
 }
