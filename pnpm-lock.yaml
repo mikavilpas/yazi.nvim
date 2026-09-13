@@ -204,7 +204,7 @@ importers:
         version: 3.0.1(oxlint-tsgolint@7.0.2001)(oxlint@1.82.0(oxlint-tsgolint@7.0.2001))
       '@tui-sandbox/library':
         specifier: 13.0.3
-        version: 13.0.3(cypress@16.0.0)(oxfmt@0.67.0)(prettier@3.9.6)(type-fest@5.9.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.0)
+        version: 13.0.3(cypress@16.0.0)(oxfmt@0.67.0)(prettier@3.9.6)(type-fest@5.9.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.1)
       '@types/node':
         specifier: 24.13.4
         version: 24.13.4
@@ -242,8 +242,8 @@ importers:
         specifier: 9.1.0
         version: 9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       zod:
-        specifier: 4.6.0
-        version: 4.6.0
+        specifier: 4.6.1
+        version: 4.6.1
 
 packages:
 
@@ -2479,8 +2479,8 @@ packages:
   zod@4.5.4:
     resolution: {integrity: sha512-sC95tT5iHHH9gtpj6A81kh+NEaRAUFN+qlUPDUbRfOMvNf5QCBqsb3WgvnpVtK5Y+4UfA6KqufotuTvMGiTlsA==}
 
-  zod@4.6.0:
-    resolution: {integrity: sha512-iIvwyDnebKYpww2ta0DjaNOL8RnVLmPMhgWyOzlW9y0EIIxv5gl+H6Y0ONpt83HqjGqkk78uWp6xWtpxzZdPbw==}
+  zod@4.6.1:
+    resolution: {integrity: sha512-341aRWQsve0rvronKNTqZpjmzdbUDlFuzHaI/XLg/Ej82qffDJRRfBTCuv7+9q/rMjB6LSLyEBnW4InJeMtt/Q==}
 
 snapshots:
 
@@ -3054,7 +3054,7 @@ snapshots:
     dependencies:
       typescript: 7.0.2
 
-  '@tui-sandbox/library@13.0.3(cypress@16.0.0)(oxfmt@0.67.0)(prettier@3.9.6)(type-fest@5.9.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.0)':
+  '@tui-sandbox/library@13.0.3(cypress@16.0.0)(oxfmt@0.67.0)(prettier@3.9.6)(type-fest@5.9.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.1)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.18.0(@trpc/server@11.18.0(typescript@7.0.2))(typescript@7.0.2)
@@ -3078,7 +3078,7 @@ snapshots:
       wait-on: 9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       winston: 3.19.0
       zigpty: 0.2.1
-      zod: 4.6.0
+      zod: 4.6.1
 
   '@tybys/wasm-util@0.10.3':
     dependencies:
@@ -4511,4 +4511,4 @@ snapshots:
 
   zod@4.5.4: {}
 
-  zod@4.6.0: {}
+  zod@4.6.1: {}
