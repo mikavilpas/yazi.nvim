@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=electron'",
+    "dev": "pnpm tui neovim prepare && NVIM_APPNAME=nvim_integrations tui neovim prepare && concurrently --kill-others --names 'app,cypress' --prefix-colors 'blue,yellow' 'pnpm tui start'  'pnpm cypress open --e2e --browser=chrome'",
     "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives"
   },
   "devDependencies": {
