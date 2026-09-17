@@ -361,6 +361,12 @@ return {
       -- use a file to store the last directory that yazi was in before it was
       -- closed. Defaults to `true`.
       use_cwd_file = true,
+
+      -- read yazi's events from yazi itself instead of from a separate `ya
+      -- sub` process. See
+      -- [documentation/reading-events-from-yazi.md](./documentation/reading-events-from-yazi.md).
+      -- Defaults to `false`.
+      use_local_events = false,
     },
   },
 }

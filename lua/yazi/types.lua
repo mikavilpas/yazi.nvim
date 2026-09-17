@@ -31,6 +31,7 @@
 ---@class(exact) yazi.OptInFeatures
 ---@field public use_cwd_file? boolean # use a file to store the last directory that yazi was in before it was closed. Defaults to `true`.
 ---@field public yazi_plugin_keymaps? YaziPluginKeymaps # keymaps that are registered *inside yazi* by the `nvim.yazi` plugin instead of as Neovim terminal-mode maps. yazi owns these keys, so they are automatically disabled while yazi is in an input mode (bulk rename, filter, find).
+---@field public use_local_events? boolean # read yazi's events from yazi itself (`yazi --local-events`) instead of from a separate `ya sub` process. `ya sub` can only connect to yazi *after* yazi has started, so events that happen in the first moments (a quick rename, for example) are lost. Defaults to `false`.
 
 ---@alias YaziKeymap string | false # `string` is a keybinding such as "<c-tab>", false means the keybinding is disabled
 
