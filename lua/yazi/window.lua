@@ -181,7 +181,10 @@ function YaziFloatingWindow:open_and_display()
   -- yazi from the command line with `neovim .`, so just simulate
   -- pressing "i" to enter insert mode :) It did nothing when when I
   -- tried using vim.cmd('startinsert') or vim.cmd('normal! i')
-  if vim.fn.mode(true) == "t" then
+  -- Only when neovim is in Terminal-Normal mode ("nt"). In Terminal-Job mode
+  -- ("t") the terminal is already accepting input, and the "i" would not switch
+  -- modes but be forwarded to yazi as a literal keypress.
+  if vim.fn.mode(true) == "nt" then
     vim.api.nvim_feedkeys("i", "n", false)
   end
 
