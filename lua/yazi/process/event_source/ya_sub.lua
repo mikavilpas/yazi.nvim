@@ -104,6 +104,8 @@ function YaSubEventSource:start()
     )
   )
 
+  local stderr_head = ""
+
   self.ya_process = vim.system(ya_command, {
     -- • text: (boolean) Handle stdout and stderr as text.
     -- Replaces `\r\n` with `\n`.
@@ -120,18 +122,8 @@ function YaSubEventSource:start()
 
       Log:debug(string.format("ya stderr: '%s'", data))
 
-      if data:find("No running Yazi instance found") then
-        if self.retries < 5 then
-          Log:debug(
-            "Looks like starting ya failed because yazi had not started yet. Retrying to open ya..."
-          )
-          self.retries = self.retries + 1
-          vim.defer_fn(function()
-            self:start()
-          end, 50)
-        else
-          Log:debug("Failed to open ya after 5 retries")
-        end
+      if not stderr_head:find("\n", 1, true) then
+        stderr_head = stderr_head .. data
       end
     end,
 
@@ -148,12 +140,36 @@ function YaSubEventSource:start()
 
       self.on_lines(vim.split(data, "\n", { plain = true, trimempty = true }))
     end,
+    -- NOTE: `on_exit` is `vim.system()`'s third argument. Passing it in this
+    -- table instead would silently never run it.
+  }, function(obj)
+    Log:debug(string.format("ya process exited with code: %s", obj.code))
 
-    ---@param obj vim.SystemCompleted
-    on_exit = function(obj)
-      Log:debug(string.format("ya process exited with code: %s", obj.code))
-    end,
-  })
+    if obj.code ~= 1 then
+      return
+    end
+
+    -- data race compatibility: detect if ya could not be started because
+    -- yazi had not started yet, and retry that case only
+    local first_line = stderr_head:match("^[^\n]*") or ""
+    if not first_line:find("No running Yazi instance found", 1, true) then
+      -- ya failed for some other reason, which retrying will not fix
+      return
+    end
+
+    if self.retries >= 5 then
+      Log:debug("Failed to open ya after 5 retries")
+      return
+    end
+
+    Log:debug(
+      "Looks like starting ya failed because yazi had not started yet. Retrying to open ya..."
+    )
+    self.retries = self.retries + 1
+    vim.defer_fn(function()
+      self:start()
+    end, 50)
+  end)
 end
 
 ---@param timeout integer
