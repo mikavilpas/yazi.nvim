@@ -168,7 +168,7 @@ importers:
     devDependencies:
       '@commitlint/cli':
         specifier: 21.2.2
-        version: 21.2.2(@types/node@24.13.4)(typescript@7.0.2)
+        version: 21.2.2(@types/node@24.13.5)(typescript@7.0.2)
       '@commitlint/config-conventional':
         specifier: 21.2.2
         version: 21.2.2
@@ -182,8 +182,8 @@ importers:
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.68.0)
       '@types/node':
-        specifier: 24.13.4
-        version: 24.13.4
+        specifier: 24.13.5
+        version: 24.13.5
       knip:
         specifier: 6.35.1
         version: 6.35.1
@@ -206,8 +206,8 @@ importers:
         specifier: 13.0.3
         version: 13.0.3(cypress@16.1.0)(oxfmt@0.68.0)(prettier@3.9.6)(type-fest@5.9.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)
       '@types/node':
-        specifier: 24.13.4
-        version: 24.13.4
+        specifier: 24.13.5
+        version: 24.13.5
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -1116,8 +1116,8 @@ packages:
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
 
-  '@types/node@24.13.4':
-    resolution: {integrity: sha512-YJ7EqCstVTzIr0fMr7qul/977en+pQHrfmuKIo6Zr9i75Be21dr3MovcfvGtyvi2HAUrRerWps5sMO9I7WaxDw==}
+  '@types/node@24.13.5':
+    resolution: {integrity: sha512-TXyindR+lBr22aJIdMQzCFHPHR6cR4js838mRDCSz5hOKWZvZwsXSSiXDmjRj4iJmgl+sR9O+1mkoVBSMadNug==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -2496,12 +2496,12 @@ snapshots:
 
   '@colors/colors@1.6.0': {}
 
-  '@commitlint/cli@21.2.2(@types/node@24.13.4)(typescript@7.0.2)':
+  '@commitlint/cli@21.2.2(@types/node@24.13.5)(typescript@7.0.2)':
     dependencies:
       '@commitlint/config-conventional': 21.2.2
       '@commitlint/format': 21.2.2
       '@commitlint/lint': 21.2.2
-      '@commitlint/load': 21.2.2(@types/node@24.13.4)(typescript@7.0.2)
+      '@commitlint/load': 21.2.2(@types/node@24.13.5)(typescript@7.0.2)
       '@commitlint/read': 21.2.1
       '@commitlint/types': 21.2.0
       tinyexec: 1.0.2
@@ -2546,14 +2546,14 @@ snapshots:
       '@commitlint/rules': 21.2.2
       '@commitlint/types': 21.2.0
 
-  '@commitlint/load@21.2.2(@types/node@24.13.4)(typescript@7.0.2)':
+  '@commitlint/load@21.2.2(@types/node@24.13.5)(typescript@7.0.2)':
     dependencies:
       '@commitlint/config-validator': 21.2.0
       '@commitlint/execute-rule': 21.0.1
       '@commitlint/resolve-extends': 21.2.2
       '@commitlint/types': 21.2.0
       cosmiconfig: 9.0.1(typescript@7.0.2)
-      cosmiconfig-typescript-loader: 6.2.0(@types/node@24.13.4)(cosmiconfig@9.0.1(typescript@7.0.2))(typescript@7.0.2)
+      cosmiconfig-typescript-loader: 6.2.0(@types/node@24.13.5)(cosmiconfig@9.0.1(typescript@7.0.2))(typescript@7.0.2)
       es-toolkit: 1.46.1
       is-plain-obj: 4.1.0
       picocolors: 1.1.1
@@ -3085,7 +3085,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@types/node@24.13.4':
+  '@types/node@24.13.5':
     dependencies:
       undici-types: 7.18.2
 
@@ -3391,9 +3391,9 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@6.2.0(@types/node@24.13.4)(cosmiconfig@9.0.1(typescript@7.0.2))(typescript@7.0.2):
+  cosmiconfig-typescript-loader@6.2.0(@types/node@24.13.5)(cosmiconfig@9.0.1(typescript@7.0.2))(typescript@7.0.2):
     dependencies:
-      '@types/node': 24.13.4
+      '@types/node': 24.13.5
       cosmiconfig: 9.0.1(typescript@7.0.2)
       jiti: 2.7.0
       typescript: 7.0.2
