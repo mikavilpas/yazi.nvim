@@ -1,5 +1,13 @@
 # Changelog
 
+## [14.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v14.0.0...v14.0.1) (2026-09-19)
+
+
+### Bug Fixes
+
+* only `nvim_feedkeys("i")` when in Terminal-Normal mode ([ec70aa6](https://github.com/mikavilpas/yazi.nvim/commit/ec70aa6cfebd94ef6f5c87f5bb4e9c9cab65de88))
+* yazi 26.9.1 reports "No running Yazi" multiple times ([#2177](https://github.com/mikavilpas/yazi.nvim/issues/2177)) ([243a4d5](https://github.com/mikavilpas/yazi.nvim/commit/243a4d5dd8faea38b0fa542287e2047c0d7f8684))
+
 ## [14.0.0](https://github.com/mikavilpas/yazi.nvim/compare/v13.9.1...v14.0.0) (2026-08-15)
 
 
