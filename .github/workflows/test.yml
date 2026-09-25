@@ -18,7 +18,7 @@ env:
 jobs:
   build-neovim-nightly:
     name: Build pinned Neovim nightly
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Build pinned Neovim nightly
         uses: mikavilpas/neovim-action/build-nightly@4f1c9a2235ee7428930602c0ba3e4f20377b61d8 # v3.3.0
@@ -27,7 +27,7 @@ jobs:
 
   build-yazi-nightly:
     name: Build pinned Yazi nightly
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Build pinned Yazi nightly
         uses: mikavilpas/yazi-action/build-nightly@5e57d5ee3a257857d39c2310e0c81f756523df52 # v1.1.1
@@ -36,7 +36,7 @@ jobs:
 
   busted:
     name: "Busted (neovim ${{ matrix.neovim.name }})"
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - build-neovim-nightly
     permissions:
@@ -61,6 +61,9 @@ jobs:
       - name: Install stable Neovim
         if: matrix.neovim.name == 'stable'
         uses: rhysd/action-setup-vim@febef33995d6649302e9d88dda81e071b68f16a7 # v1.6.1
+        env:
+          # https://github.com/rhysd/action-setup-vim/issues/80
+          TMPDIR: ${{ runner.temp }}
         with:
           neovim: true
           version: stable
@@ -70,7 +73,7 @@ jobs:
 
   e2e:
     name: "E2E (neovim ${{ matrix.neovim.name }}, yazi ${{ matrix.yazi-version.name }})"
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - build-neovim-nightly
       - build-yazi-nightly
@@ -147,6 +150,9 @@ jobs:
       - name: Install stable Neovim
         if: matrix.neovim.name == 'stable'
         uses: rhysd/action-setup-vim@febef33995d6649302e9d88dda81e071b68f16a7 # v1.6.1
+        env:
+          # https://github.com/rhysd/action-setup-vim/issues/80
+          TMPDIR: ${{ runner.temp }}
         with:
           neovim: true
           version: stable
@@ -215,7 +221,7 @@ jobs:
       - build-yazi-nightly
       - busted
       - e2e
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
     steps:
