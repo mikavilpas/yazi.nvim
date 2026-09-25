@@ -2,8 +2,18 @@ local stub = require("luassert.stub")
 local assert = require("luassert")
 local yazi = require("yazi")
 
+local function get_health_buffer_lines()
+  -- `:checkhealth` runs asynchronously on newer neovim versions, so wait for
+  -- it to finish. The filetype gets set once all checks have been written, so
+  -- use that as the trigger.
+  vim.wait(5000, function()
+    return vim.bo.filetype == "checkhealth"
+  end)
+  return vim.api.nvim_buf_get_lines(0, 0, -1, false)
+end
+
 local function assert_buffer_contains_text(needle)
-  local buffer_text = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local buffer_text = get_health_buffer_lines()
   local text = table.concat(buffer_text, "\n")
   local message = string.format(
     "Expected the main string to contain the substring.\nMain string: '%s'\nSubstring: '%s'",
@@ -16,7 +26,7 @@ local function assert_buffer_contains_text(needle)
 end
 
 local function assert_buffer_does_not_contain_text(needle)
-  local buffer_text = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local buffer_text = get_health_buffer_lines()
   local text = table.concat(buffer_text, "\n")
   local message = string.format(
     "Expected the main string to not contain the substring.\nMain string: '%s'\nSubstring: '%s'",
