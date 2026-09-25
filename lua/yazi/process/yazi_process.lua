@@ -90,8 +90,11 @@ function YaziProcess:start(config, paths, callbacks)
         config.future_features.use_cwd_file == true
         and utils.file_exists(config.cwd_file_path) == true
       then
-        last_directory =
-          plenary_path:new(vim.fn.readfile(config.cwd_file_path)[1])
+        -- yazi writes a url, which for a search result carries the parameters
+        -- of the search along with the directory
+        last_directory = plenary_path:new(
+          utils.url_to_path(vim.fn.readfile(config.cwd_file_path)[1])
+        )
         require("yazi.log"):debug(
           string.format(
             "using cwd found from the cwd_file_path: '%s'",

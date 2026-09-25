@@ -405,13 +405,11 @@ function M.parse_events(event_lines)
   return events
 end
 
--- yazi may include additional information in urls
--- https://github.com/sxyazi/yazi/issues/3510#issuecomment-3710915309
 ---@param input string
 ---@return string
+---@see yazi.url.to_path the implementation, and what plugin users should call
 function M.url_to_path(input)
-  local url = input:gsub("^.-://.-/", "")
-  return url
+  return require("yazi.url").to_path(input)
 end
 
 ---@param event_lines string[]
