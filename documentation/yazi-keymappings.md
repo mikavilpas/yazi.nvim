@@ -40,6 +40,19 @@ ya pub-to 0 my-change-working-directory-command --json "$json"
 """
 ```
 
+> [!NOTE]
+>
+> A file that yazi found through a search is addressed by a url, not a plain path - it looks like
+> `fd://default:2:2/@d312safile_3.txt1aA1h0//home/user/file.txt`, where the middle part describes the search it came
+> from. Neovim cannot open such a url, so strip it down to the path before using it:
+>
+> ```lua
+> local path = require("yazi.url").to_path(url)
+> ```
+>
+> yazi.nvim does this for you for its own events. It cannot do it for the data in your own events, since only you know
+> which parts of it are paths.
+
 ### Define a handler in yazi.nvim
 
 Add the following code to your configuration:
