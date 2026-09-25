@@ -1,5 +1,12 @@
 # Changelog
 
+## [14.0.2](https://github.com/mikavilpas/yazi.nvim/compare/v14.0.1...v14.0.2) (2026-09-25)
+
+
+### Bug Fixes
+
+* adapt to yazi nightly's new file url format ([#2196](https://github.com/mikavilpas/yazi.nvim/issues/2196)) ([ffbde4d](https://github.com/mikavilpas/yazi.nvim/commit/ffbde4df1b6878e314dc7613387e27557f41c087))
+
 ## [14.0.1](https://github.com/mikavilpas/yazi.nvim/compare/v14.0.0...v14.0.1) (2026-09-25)
 
 
