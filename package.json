@@ -22,7 +22,7 @@
     "@mikavilpas/knip-config": "1.0.1",
     "@mikavilpas/oxfmt-config": "3.0.3",
     "@types/node": "24.13.6",
-    "knip": "6.37.0",
+    "knip": "6.38.0",
     "oxfmt": "0.70.0",
     "typescript": "7.0.2"
   },
