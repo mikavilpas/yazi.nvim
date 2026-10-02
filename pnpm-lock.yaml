@@ -204,7 +204,7 @@ importers:
         version: 3.0.1(oxlint-tsgolint@7.0.2003)(oxlint@1.86.0(oxlint-tsgolint@7.0.2003))
       '@tui-sandbox/library':
         specifier: 13.0.4
-        version: 13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)
+        version: 13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.4.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)
       '@types/node':
         specifier: 24.19.0
         version: 24.19.0
@@ -239,8 +239,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       wait-on:
-        specifier: 9.1.0
-        version: 9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+        specifier: 9.4.0
+        version: 9.4.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       zod:
         specifier: 4.6.5
         version: 4.6.5
@@ -1860,8 +1860,8 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  joi@18.2.8:
-    resolution: {integrity: sha512-G2TX62h58ZHuwqetJgP2F4ualakqAmZtBYe3jWen7gxQRw5xApX6crnFtuB91WC0c3ESBnva+kGSnb3+6pIQDQ==}
+  joi@18.2.9:
+    resolution: {integrity: sha512-2mD929bUVKUhOLQQEVhlf6EZ0Mlo0DeRb5MO7cViR9AXLtBauuccEtB1py9Ocxpo/P7ucnh442iY/iOwrh3IQw==}
     engines: {node: '>= 20'}
 
   js-base64@3.9.3:
@@ -2391,8 +2391,8 @@ packages:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
 
-  wait-on@9.1.0:
-    resolution: {integrity: sha512-PymrLXHLBM1Ju/Xspb2ADUhbPSMvbnuNvy/mN2hWtpbJ3da0h3Ky1LqwKPG5QSVR57liyO0iUpfipYl/s5qNvA==}
+  wait-on@9.4.0:
+    resolution: {integrity: sha512-70vjt46idCEqR3THCRFOVTcEeAhzHTMwDvhZyixUYAGmLbQ05acRTbs9E/Jk1hrL3oiAn09C+uNTopbzgMt3ng==}
     engines: {node: '>=20.0.0'}
     hasBin: true
 
@@ -3051,7 +3051,7 @@ snapshots:
     dependencies:
       typescript: 7.0.2
 
-  '@tui-sandbox/library@13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)':
+  '@tui-sandbox/library@13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.4.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.19.0(@trpc/server@11.19.0(typescript@7.0.2))(typescript@7.0.2)
@@ -3072,7 +3072,7 @@ snapshots:
       tsx: 4.23.15
       type-fest: 5.10.0
       typescript: 7.0.2
-      wait-on: 9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      wait-on: 9.4.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       winston: 3.19.0
       zigpty: 0.2.1
       zod: 4.6.5
@@ -3803,7 +3803,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  joi@18.2.8:
+  joi@18.2.9:
     dependencies:
       '@hapi/address': 5.1.1
       '@hapi/formula': 3.0.2
@@ -4396,12 +4396,11 @@ snapshots:
       core-util-is: 1.0.2
       extsprintf: 1.3.0
 
-  wait-on@9.1.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+  wait-on@9.4.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
-      joi: 18.2.8
+      joi: 18.2.9
       lodash: 4.18.1
-      minimist: 1.2.8
       rxjs: 7.8.2
     transitivePeerDependencies:
       - debug
