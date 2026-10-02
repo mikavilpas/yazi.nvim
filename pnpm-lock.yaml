@@ -204,7 +204,7 @@ importers:
         version: 3.0.1(oxlint-tsgolint@7.0.2003)(oxlint@1.86.0(oxlint-tsgolint@7.0.2003))
       '@tui-sandbox/library':
         specifier: 13.0.4
-        version: 13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)
+        version: 13.0.4(cypress@16.1.1)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)
       '@types/node':
         specifier: 24.19.0
         version: 24.19.0
@@ -218,8 +218,8 @@ importers:
         specifier: 10.0.5
         version: 10.0.5
       cypress:
-        specifier: 16.1.0
-        version: 16.1.0
+        specifier: 16.1.1
+        version: 16.1.1
       eslint-plugin-no-only-tests:
         specifier: 3.4.0
         version: 3.4.0
@@ -1505,8 +1505,8 @@ packages:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
 
-  cypress@16.1.0:
-    resolution: {integrity: sha512-t8suSUVzQyHI7v6KhhA07M9ChftdfqVZNLCekhguIb+2f0fCmI8WAih5L0oGH7K6slapNduGy5zpJ+17LmSXkQ==}
+  cypress@16.1.1:
+    resolution: {integrity: sha512-T09qNpMKssD6eEMqqfywQ8OUub/VrNCvIUFAyQCfWsJ6o4CZ5Yeapce+WoZY9FXly6+3+pk7sjEB5voxduWQlQ==}
     engines: {node: ^22.0.0 || ^24.0.0 || >=26.0.0}
     hasBin: true
 
@@ -1631,7 +1631,6 @@ packages:
 
   extsprintf@1.3.0:
     resolution: {integrity: sha512-11Ndz7Nv+mvAC1j0ktTa7fAb0vLyGGX+rMHNBYQviQDGU0Hw7lhctJANqbPhu9nV9/izT/IntTgZ7Im/9LJs9g==}
-    engines: {'0': node >=0.6.0}
 
   fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
@@ -1894,7 +1893,6 @@ packages:
 
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
-    engines: {'0': node >=0.6.0}
 
   knip@6.38.0:
     resolution: {integrity: sha512-umytiMCaZf02MV9SOO1FEDgbDf6h20VZk3ruJE0kh52kkGjYZFRUAXHJWYoLhvhoHGINO/7GXVJmQ2vxTBvl6A==}
@@ -2389,7 +2387,6 @@ packages:
 
   verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
-    engines: {'0': node >=0.6.0}
 
   wait-on@9.5.1:
     resolution: {integrity: sha512-bOtj1wRY6u+GPnNskZLcgZNHOaL5NC4+5hRCbEpVoVX6MbMrCLCqIBM2bjsAfrgst3ZC0siIo7vLb4LuYFfIow==}
@@ -3051,7 +3048,7 @@ snapshots:
     dependencies:
       typescript: 7.0.2
 
-  '@tui-sandbox/library@13.0.4(cypress@16.1.0)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)':
+  '@tui-sandbox/library@13.0.4(cypress@16.1.1)(oxfmt@0.71.0)(prettier@3.9.6)(type-fest@5.10.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.5)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.19.0(@trpc/server@11.19.0(typescript@7.0.2))(typescript@7.0.2)
@@ -3062,7 +3059,7 @@ snapshots:
       '@xterm/xterm': 6.0.0
       concurrently: 10.0.5
       cors: 2.8.6
-      cypress: 16.1.0
+      cypress: 16.1.1
       dree: 5.1.5
       neovim: 5.5.0
       oxfmt: 0.71.0
@@ -3410,7 +3407,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress@16.1.0:
+  cypress@16.1.1:
     dependencies:
       '@cypress/request': 4.0.1
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
