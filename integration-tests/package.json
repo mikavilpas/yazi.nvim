@@ -22,7 +22,7 @@
     "tinycolor2": "1.6.0",
     "type-fest": "5.10.0",
     "typescript": "7.0.2",
-    "wait-on": "9.1.0",
+    "wait-on": "9.4.0",
     "zod": "4.6.5"
   }
 }

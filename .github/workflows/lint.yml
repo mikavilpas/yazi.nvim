@@ -19,7 +19,7 @@ jobs:
           args: --display-style=quiet ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
           # selene version
           # renovate: datasource=github-releases depName=Kampfkarren/selene
-          version: 0.31.0
+          version: 0.32.0
 
   markdownlint:
     name: markdownlint
