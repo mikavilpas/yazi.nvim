@@ -21,7 +21,7 @@
     "@commitlint/types": "21.2.3",
     "@mikavilpas/knip-config": "1.0.1",
     "@mikavilpas/oxfmt-config": "3.0.3",
-    "@types/node": "24.19.0",
+    "@types/node": "24.19.1",
     "knip": "6.39.0",
     "oxfmt": "0.71.0",
     "typescript": "7.0.2"
