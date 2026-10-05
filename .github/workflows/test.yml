@@ -11,7 +11,7 @@ permissions:
 
 env:
   # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
-  NEOVIM_NIGHTLY_COMMIT: 7c53167b5dd284c769948f76358fadd6ee638c8d
+  NEOVIM_NIGHTLY_COMMIT: 561857c4a88072407c79e9707e6f2e81bce097d2
   # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
   YAZI_NIGHTLY_COMMIT: 0ea4c5d9ef75d7165c2e3b4eb8d713fc11f26c96
 
