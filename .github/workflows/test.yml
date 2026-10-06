@@ -13,7 +13,7 @@ env:
   # renovate: datasource=git-refs-master packageName=https://github.com/neovim/neovim
   NEOVIM_NIGHTLY_COMMIT: 561857c4a88072407c79e9707e6f2e81bce097d2
   # renovate: datasource=git-refs packageName=https://github.com/sxyazi/yazi
-  YAZI_NIGHTLY_COMMIT: 0ea4c5d9ef75d7165c2e3b4eb8d713fc11f26c96
+  YAZI_NIGHTLY_COMMIT: be8dc1b158b610254a67ee421900e8d3e6f2903b
 
 jobs:
   build-neovim-nightly:
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
       - name: Build pinned Yazi nightly
-        uses: mikavilpas/yazi-action/build-nightly@5e57d5ee3a257857d39c2310e0c81f756523df52 # v1.1.1
+        uses: mikavilpas/yazi-action/build-nightly@02a762c17b5c64f48179f89104073d03d877c660 # v1.1.2
         with:
           commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
@@ -133,7 +133,7 @@ jobs:
 
       - name: Restore the pinned Yazi nightly
         if: matrix.yazi-version.name == 'nightly'
-        uses: mikavilpas/yazi-action/restore-nightly@5e57d5ee3a257857d39c2310e0c81f756523df52 # v1.1.1
+        uses: mikavilpas/yazi-action/restore-nightly@02a762c17b5c64f48179f89104073d03d877c660 # v1.1.2
         with:
           commit: ${{ env.YAZI_NIGHTLY_COMMIT }}
 
