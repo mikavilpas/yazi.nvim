@@ -21,10 +21,10 @@
     "@commitlint/types": "21.2.3",
     "@mikavilpas/knip-config": "1.0.1",
     "@mikavilpas/oxfmt-config": "3.0.3",
-    "@types/node": "24.19.1",
+    "@types/node": "24.19.2",
     "knip": "6.41.0",
     "oxfmt": "0.72.0",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@12.11.1"
+  "packageManager": "pnpm@12.11.2"
 }
