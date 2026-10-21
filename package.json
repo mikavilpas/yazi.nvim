@@ -16,13 +16,13 @@
     "tui": "pnpm --filter ./integration-tests/ exec tui"
   },
   "devDependencies": {
-    "@commitlint/cli": "21.2.3",
-    "@commitlint/config-conventional": "21.2.3",
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
     "@commitlint/types": "21.2.3",
     "@mikavilpas/knip-config": "1.0.1",
     "@mikavilpas/oxfmt-config": "3.0.3",
     "@types/node": "24.19.2",
-    "knip": "6.41.0",
+    "knip": "6.42.0",
     "oxfmt": "0.73.0",
     "typescript": "7.0.2"
   },
