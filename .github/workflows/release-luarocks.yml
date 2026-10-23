@@ -23,7 +23,7 @@ jobs:
         with:
           persist-credentials: false
       - name: LuaRocks Upload
-        uses: nvim-neorocks/luarocks-tag-release@bc740723d045a7a1df8d588e4700558f072c2683 # v9.0.3
+        uses: nvim-neorocks/luarocks-tag-release@fb601543663e11ad4ad54b92a649efa7baa8a550 # v9.1.0
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:
