@@ -29,9 +29,7 @@ open yazi in a floating window in Neovim.
     have yazi close buffers and preserve the window layout. This happens when files that are open are deleted in yazi.
   - For [grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim): you can search and replace in the directory yazi is
     in
-  - Copy the relative path from the start file to the currently hovered file. Requires
-    [realpath (1)](https://www.man7.org/linux/man-pages/man1/realpath.1.html) on linux and windows, or
-    [grealpath](https://formulae.brew.sh/formula/coreutils) on osx
+  - Copy the relative path from the start file to the currently hovered file. No external path resolver is required.
 - If multiple files are selected, they can be sent to the quickfix list
 - (optionally) open yazi instead of netrw for directories
 - Files that are renamed, moved, or deleted in yazi are kept in sync with open buffers in Neovim
@@ -168,8 +166,7 @@ These are the default keybindings that are available when yazi is open:
   - `<c-g>`: search and replace in the current yazi directory using
     [grug-far](https://github.com/MagicDuck/grug-far.nvim), if available
     - if multiple files/directories are selected in yazi, the operation is limited to those only
-  - `<c-y>`: copy the relative path of the selected file(s) to the clipboard. Requires GNU `realpath` or `grealpath` on
-    OSX
+  - `<c-y>`: copy the relative path of the selected file(s) to the clipboard.
     - also available for the snacks.nvim picker, see
       [documentation/copy-relative-path-to-files.md](documentation/copy-relative-path-to-files.md) for more information
   - `<tab>`: make yazi jump to the open buffers in Neovim. See [#232](https://github.com/mikavilpas/yazi.nvim/pull/232)
@@ -330,7 +327,8 @@ return {
         -- default: grug-far.nvim
       end,
 
-      -- `grealpath` on OSX, (GNU) `realpath` otherwise
+      -- Empty uses the built-in resolver. Set to GNU `realpath` or `grealpath`
+      -- to use an external resolver instead.
       resolve_relative_path_application = "",
 
       -- the way to resolve relative paths. The default_implementation can be

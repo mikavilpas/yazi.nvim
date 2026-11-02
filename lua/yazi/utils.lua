@@ -3,6 +3,42 @@ local plenary_path = require("plenary.path")
 
 local M = {}
 
+-- Resolve existing paths physically, like GNU realpath. A missing final
+-- component is also allowed, provided its parent directory exists.
+local function canonical_path(path)
+  local resolved, err, code = vim.uv.fs_realpath(path)
+  if not resolved and code == "ENOENT" and not vim.uv.fs_lstat(path) then
+    local parent = vim.uv.fs_realpath(vim.fs.dirname(path))
+    if parent then
+      resolved = vim.fs.joinpath(parent, vim.fs.basename(path))
+    end
+  end
+  assert(resolved, err)
+  return vim.fs.normalize(resolved, { expand_env = false })
+end
+
+local function native_relative_path(start_directory, selected_file)
+  local base = canonical_path(start_directory)
+  local target = canonical_path(selected_file)
+  local prefix = ""
+
+  -- Walk up to the common ancestor without changing Neovim's cwd. Compare
+  -- literal paths: vim.fs.relpath also expands environment variables.
+  while true do
+    if base == target then
+      return prefix == "" and "." or prefix:sub(1, -2)
+    end
+    local directory = base:sub(-1) == "/" and base or base .. "/"
+    if target:sub(1, #directory) == directory then
+      return prefix .. target:sub(#directory + 1)
+    end
+    local parent = vim.fs.dirname(base)
+    assert(parent and parent ~= base, "Paths do not share a filesystem root")
+    base = parent
+    prefix = prefix .. "../"
+  end
+end
+
 ---@param realpath_application string
 ---@param args YaziGetRelativePathImplementationArguments
 ---@return string
@@ -13,7 +49,7 @@ function M.relative_path(realpath_application, args)
     "realpath_application must be set. Please report this as a bug."
   )
 
-  if vim.fn.executable(command) == 0 then
+  if command ~= "" and vim.fn.executable(command) == 0 then
     local msg = string.format(
       "error copying relative_path - the executable `%s` was not found. Try running `:healthcheck yazi` for more information.",
       command
@@ -32,6 +68,10 @@ function M.relative_path(realpath_application, args)
     start_directory = start_path
   else
     start_directory = start_path:parent()
+  end
+
+  if command == "" then
+    return native_relative_path(start_directory.filename, args.selected_file)
   end
 
   local job = vim.system({

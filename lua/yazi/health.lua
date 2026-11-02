@@ -143,6 +143,7 @@ return {
     local resolver = config.integrations.resolve_relative_path_application
     if
       resolver
+      and resolver ~= ""
       and config.keymaps
       and config.keymaps.copy_relative_path_to_selected_files ~= false
       and vim.fn.executable(resolver) ~= 1
@@ -154,7 +155,7 @@ return {
         )
       )
       vim.health.info(
-        "The default application (realpath) should be installed on most linux systems by default. On OSX, the default (grealpath) can be found in https://formulae.brew.sh/formula/coreutils"
+        'Set `resolve_relative_path_application = ""` to use the built-in resolver without an external application.'
       )
     end
 

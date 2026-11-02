@@ -79,9 +79,7 @@ function M.default()
           },
         })
       end,
-      resolve_relative_path_application = vim.uv.os_uname().sysname == "Darwin"
-          and "grealpath"
-        or "realpath",
+      resolve_relative_path_application = "",
       resolve_relative_path_implementation = nil,
       bufdelete_implementation = "bundled-snacks",
       picker_add_copy_relative_path_action = nil,

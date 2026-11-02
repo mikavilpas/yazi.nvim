@@ -3,7 +3,12 @@
 ## Usage with yazi
 
 When yazi is open, you can copy the relative path from the current file to other files or directories. By default it's
-mapped to `<c-y>` and requires GNU `realpath` or `grealpath` on OSX.
+mapped to `<c-y>`. The built-in resolver does not require GNU `realpath` or `grealpath`.
+
+Paths are resolved through symbolic links before computing the relative path. A missing final path component is
+allowed if its parent directory exists; dangling symbolic links and paths on different filesystem roots produce an
+error. To use the previous external resolver, set `integrations.resolve_relative_path_application` to `"grealpath"`
+on macOS or GNU `"realpath"` on other systems.
 
 ## Customizing the path resolution
 

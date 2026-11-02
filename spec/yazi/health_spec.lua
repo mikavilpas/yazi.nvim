@@ -270,6 +270,17 @@ Options:
   end)
 
   describe("the checks for resolve_relative_path_application", function()
+    it("does not warn when using the built-in resolver", function()
+      yazi.setup({})
+      stub(vim.fn, "executable", function()
+        return 0
+      end)
+
+      vim.cmd("checkhealth yazi")
+
+      assert_buffer_does_not_contain_text("resolve_relative_path_application")
+    end)
+
     it(
       "warns when the keymap for this integration is set but the resolver is missing",
       function()
