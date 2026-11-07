@@ -1,5 +1,5 @@
 [tools]
-fzf = "0.74.5"
+fzf = "0.75.0"
 # fd is a dependency of telescope and fzf-lua
 fd = "10.5.2"
 lua = "5.1"
