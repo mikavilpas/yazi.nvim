@@ -26,5 +26,5 @@
     "oxfmt": "0.76.0",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@12.17.0"
+  "packageManager": "pnpm@12.18.0"
 }
