@@ -177,7 +177,7 @@ importers:
         version: 21.2.3
       '@mikavilpas/knip-config':
         specifier: 1.0.1
-        version: 1.0.1(knip@6.44.2)
+        version: 1.0.1(knip@6.45.0)
       '@mikavilpas/oxfmt-config':
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.78.0)
@@ -185,8 +185,8 @@ importers:
         specifier: 26.6.6
         version: 26.6.6
       knip:
-        specifier: 6.44.2
-        version: 6.44.2
+        specifier: 6.45.0
+        version: 6.45.0
       oxfmt:
         specifier: 0.78.0
         version: 0.78.0
@@ -1891,8 +1891,8 @@ packages:
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
 
-  knip@6.44.2:
-    resolution: {integrity: sha512-6URO7pnqtOnyvSsXfW6+8C9j1lfcicxUCysXO0RgMtHTZ96HqCXh29op8iabeQW5JeIc8dJWwzSdJVWDokeScQ==}
+  knip@6.45.0:
+    resolution: {integrity: sha512-ywPAhxiJGPWD/1V5dVYawA6el74q4vgX8omkeyl0MbA1CCkdjxrvWXXVqM20a5wQWcl1NbC9ImLHYsbFEbD0Xg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -2364,8 +2364,8 @@ packages:
     engines: {node: '>=16.20.0'}
     hasBin: true
 
-  unbash@6.0.1:
-    resolution: {integrity: sha512-0db9eS5iqybux41zLkX69nk90KTci7F7eZ+gXzEG/Q7E0tAqEBhRh5fkZvk1N7jT7QkGWqq34i8SFGPFEe1V8A==}
+  unbash@6.0.4:
+    resolution: {integrity: sha512-t3OptUArewg9OpYGDskTSlxhyLDahfmZ4d36hE44Efb1y3HRLLpzsVqwH+AwBVymP4t7pP71xN+nnduudn2awA==}
     engines: {node: '>=14'}
 
   undici-types@8.9.0:
@@ -2752,9 +2752,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/knip-config@1.0.1(knip@6.44.2)':
+  '@mikavilpas/knip-config@1.0.1(knip@6.45.0)':
     dependencies:
-      knip: 6.44.2
+      knip: 6.45.0
 
   '@mikavilpas/oxfmt-config@3.0.3(oxfmt@0.78.0)':
     dependencies:
@@ -3845,7 +3845,7 @@ snapshots:
       json-schema: 0.4.0
       verror: 1.10.0
 
-  knip@6.44.2:
+  knip@6.45.0:
     dependencies:
       formatly: 0.11.4
       get-tsconfig: 4.14.3
@@ -3856,9 +3856,8 @@ snapshots:
       smol-toml: 1.9.1
       strip-json-comments: 5.0.3
       tinyglobby: 0.2.17
-      unbash: 6.0.1
+      unbash: 6.0.4
       yaml: 2.9.1
-      zod: 4.6.7
 
   kuler@2.0.0: {}
 
@@ -4372,7 +4371,7 @@ snapshots:
       '@typescript/typescript-win32-arm64': 7.0.2
       '@typescript/typescript-win32-x64': 7.0.2
 
-  unbash@6.0.1: {}
+  unbash@6.0.4: {}
 
   undici-types@8.9.0: {}
 
