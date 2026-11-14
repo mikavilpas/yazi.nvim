@@ -177,7 +177,7 @@ importers:
         version: 21.2.3
       '@mikavilpas/knip-config':
         specifier: 1.0.1
-        version: 1.0.1(knip@6.45.0)
+        version: 1.0.1(knip@6.45.1)
       '@mikavilpas/oxfmt-config':
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.78.0)
@@ -185,8 +185,8 @@ importers:
         specifier: 26.6.6
         version: 26.6.6
       knip:
-        specifier: 6.45.0
-        version: 6.45.0
+        specifier: 6.45.1
+        version: 6.45.1
       oxfmt:
         specifier: 0.78.0
         version: 0.78.0
@@ -1891,8 +1891,8 @@ packages:
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
 
-  knip@6.45.0:
-    resolution: {integrity: sha512-ywPAhxiJGPWD/1V5dVYawA6el74q4vgX8omkeyl0MbA1CCkdjxrvWXXVqM20a5wQWcl1NbC9ImLHYsbFEbD0Xg==}
+  knip@6.45.1:
+    resolution: {integrity: sha512-zp3zXKy2cZWiIttdlWU5fisKxVQaLSU6471ej0KGz1GdHdaHxpzTAO/LIyFNc3gU3v1W7LJaqvYumoO3l/u+6A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -2752,9 +2752,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/knip-config@1.0.1(knip@6.45.0)':
+  '@mikavilpas/knip-config@1.0.1(knip@6.45.1)':
     dependencies:
-      knip: 6.45.0
+      knip: 6.45.1
 
   '@mikavilpas/oxfmt-config@3.0.3(oxfmt@0.78.0)':
     dependencies:
@@ -3845,7 +3845,7 @@ snapshots:
       json-schema: 0.4.0
       verror: 1.10.0
 
-  knip@6.45.0:
+  knip@6.45.1:
     dependencies:
       formatly: 0.11.4
       get-tsconfig: 4.14.3
