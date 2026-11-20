@@ -213,7 +213,7 @@ importers:
         version: 3.0.1(oxlint-tsgolint@7.0.2007)(oxlint@1.94.0(oxlint-tsgolint@7.0.2007))
       '@tui-sandbox/library':
         specifier: 13.0.6
-        version: 13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)
+        version: 13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.1)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)
       '@types/node':
         specifier: 26.6.6
         version: 26.6.6
@@ -242,8 +242,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 6.0.0
-        version: 6.0.0
+        specifier: 6.0.1
+        version: 6.0.1
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -2364,8 +2364,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@6.0.0:
-    resolution: {integrity: sha512-cFOr1/4SZf98P0WMLb1X+RJNZrZI9Wf4xT0bjdH8OP2tJmUcuJ6jyLE8i10ecq1m/7ObGbXNa7QEF2LCXKVLqg==}
+  type-fest@6.0.1:
+    resolution: {integrity: sha512-nnRRKEpyNxX4XkeR6dpMy27ZNT5/nE3D73fs5FcKW/+OtqwSmdshWUw5azvpsMzjst5rAUe61ZxilQ70YFS9yA==}
     engines: {node: '>=22'}
 
   typescript@7.0.2:
@@ -3059,7 +3059,7 @@ snapshots:
     dependencies:
       typescript: 7.0.2
 
-  '@tui-sandbox/library@13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.0)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)':
+  '@tui-sandbox/library@13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.1)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.19.0(@trpc/server@11.19.0(typescript@7.0.2))(typescript@7.0.2)
@@ -3078,7 +3078,7 @@ snapshots:
       sirv: 3.0.2
       string-width: 8.3.0
       tsx: 4.23.15
-      type-fest: 6.0.0
+      type-fest: 6.0.1
       typescript: 7.0.2
       wait-on: 9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       winston: 3.19.0
@@ -4353,7 +4353,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@6.0.0:
+  type-fest@6.0.1:
     dependencies:
       tagged-tag: 1.0.0
 
