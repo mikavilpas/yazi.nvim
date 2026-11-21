@@ -186,7 +186,7 @@ importers:
         version: 21.2.3
       '@mikavilpas/knip-config':
         specifier: 1.0.1
-        version: 1.0.1(knip@6.45.1)
+        version: 1.0.1(knip@6.46.0)
       '@mikavilpas/oxfmt-config':
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.79.0)
@@ -194,8 +194,8 @@ importers:
         specifier: 26.6.6
         version: 26.6.6
       knip:
-        specifier: 6.45.1
-        version: 6.45.1
+        specifier: 6.46.0
+        version: 6.46.0
       oxfmt:
         specifier: 0.79.0
         version: 0.79.0
@@ -213,7 +213,7 @@ importers:
         version: 3.0.1(oxlint-tsgolint@7.0.2007)(oxlint@1.94.0(oxlint-tsgolint@7.0.2007))
       '@tui-sandbox/library':
         specifier: 13.0.6
-        version: 13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.1)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)
+        version: 13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.2)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)
       '@types/node':
         specifier: 26.6.6
         version: 26.6.6
@@ -242,8 +242,8 @@ importers:
         specifier: 1.6.0
         version: 1.6.0
       type-fest:
-        specifier: 6.0.1
-        version: 6.0.1
+        specifier: 6.0.2
+        version: 6.0.2
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -1900,8 +1900,8 @@ packages:
   jsprim@2.0.2:
     resolution: {integrity: sha512-gqXddjPqQ6G40VdnI6T6yObEC+pDNvyP95wdQhkWkg7crHH3km5qP1FsOXEkzEQwnz6gz5qGTn1c2Y52wP3OyQ==}
 
-  knip@6.45.1:
-    resolution: {integrity: sha512-zp3zXKy2cZWiIttdlWU5fisKxVQaLSU6471ej0KGz1GdHdaHxpzTAO/LIyFNc3gU3v1W7LJaqvYumoO3l/u+6A==}
+  knip@6.46.0:
+    resolution: {integrity: sha512-Ms9cSOHL27A3uSG5IG0BR/Xd6ArXWtqg7PmZib2upe52C3Ka08jMtGIWG9ROBiTMUUaeZJD6HrU8g/b7VA82cQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -2364,8 +2364,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@6.0.1:
-    resolution: {integrity: sha512-nnRRKEpyNxX4XkeR6dpMy27ZNT5/nE3D73fs5FcKW/+OtqwSmdshWUw5azvpsMzjst5rAUe61ZxilQ70YFS9yA==}
+  type-fest@6.0.2:
+    resolution: {integrity: sha512-eVBdZcUsT0GbeVcuMHJG4qiZeHF7ANdJtzMtAD+r94rw7PQZ4zAK43ik+jZZ6woURQA6QIz6Kz5uv0HbMs0AQQ==}
     engines: {node: '>=22'}
 
   typescript@7.0.2:
@@ -2761,9 +2761,9 @@ snapshots:
     dependencies:
       '@hapi/hoek': 11.0.7
 
-  '@mikavilpas/knip-config@1.0.1(knip@6.45.1)':
+  '@mikavilpas/knip-config@1.0.1(knip@6.46.0)':
     dependencies:
-      knip: 6.45.1
+      knip: 6.46.0
 
   '@mikavilpas/oxfmt-config@3.0.3(oxfmt@0.79.0)':
     dependencies:
@@ -3059,7 +3059,7 @@ snapshots:
     dependencies:
       typescript: 7.0.2
 
-  '@tui-sandbox/library@13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.1)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)':
+  '@tui-sandbox/library@13.0.6(cypress@16.3.0)(oxfmt@0.79.0)(prettier@3.9.6)(type-fest@6.0.2)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)':
     dependencies:
       '@catppuccin/palette': 1.8.0
       '@trpc/client': 11.19.0(@trpc/server@11.19.0(typescript@7.0.2))(typescript@7.0.2)
@@ -3078,7 +3078,7 @@ snapshots:
       sirv: 3.0.2
       string-width: 8.3.0
       tsx: 4.23.15
-      type-fest: 6.0.1
+      type-fest: 6.0.2
       typescript: 7.0.2
       wait-on: 9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       winston: 3.19.0
@@ -3854,7 +3854,7 @@ snapshots:
       json-schema: 0.4.0
       verror: 1.10.0
 
-  knip@6.45.1:
+  knip@6.46.0:
     dependencies:
       formatly: 0.11.4
       get-tsconfig: 4.14.3
@@ -4353,7 +4353,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@6.0.1:
+  type-fest@6.0.2:
     dependencies:
       tagged-tag: 1.0.0
 
