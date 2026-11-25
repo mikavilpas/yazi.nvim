@@ -11,15 +11,25 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: NTBBloodbath/selene-action@23ef05dd5c4d687f4d3c939f76a1c342baf454aa # v1.0.0
-        with:
-          # Github secret token
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # selene arguments, should be the same as in ../../mise.toml
-          args: --display-style=quiet ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
-          # selene version
-          # renovate: datasource=github-releases depName=Kampfkarren/selene
-          version: 0.32.0
+      - name: Install tools with UBI
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          # make the tools available for subsequent steps
+          echo "$(pwd)/bin" >> "$GITHUB_PATH"
+          curl --silent --location \
+              https://raw.githubusercontent.com/houseabsolute/ubi/master/bootstrap/bootstrap-ubi.sh |
+              TARGET="$HOME/.local/bin" sh
+
+          VERSION=$(yq '.tools."aqua:Kampfkarren/selene"' mise.toml)
+          ubi --project Kampfkarren/selene --tag "$VERSION"
+      - name: run selene
+        shell: bash
+        run: |
+          selene --version
+          selene ./lua/ ./spec/ ./integration-tests/test-environment/config-modifications
 
   markdownlint:
     name: markdownlint

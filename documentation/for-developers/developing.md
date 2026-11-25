@@ -108,7 +108,9 @@ pnpm dev
 You can use the following approach to have a nice split with unstable and stable code:
 
 1. (use lazy.nvim to install the plugin)
+
 2. Create a fork of the project in Github. Put it in a separate directory such as `~/git/yazi.nvim/`
+
 3. Specify the version you want to use in your plugin specification (see lazy.nvim
    [docs](https://github.com/folke/lazy.nvim)):
 

@@ -22,7 +22,9 @@ features or if you want to contribute to the project.
 1. Install [rustup](https://rustup.rs/), which installs the Rust toolchain. Yazi is written in rust, so you need this to
    compile and install it.
    - if you have another way of installing the Rust toolchain, you can skip this step.
+
 2. Clone the [yazi repository](https://github.com/sxyazi/yazi/) with git and navigate to it.
+
 3. Execute these commands to build+install yazi:
 
    ```sh
