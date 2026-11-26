@@ -17,7 +17,7 @@
     "concurrently": "10.0.7",
     "cypress": "16.3.0",
     "eslint-plugin-no-only-tests": "3.4.0",
-    "oxlint": "1.94.0",
+    "oxlint": "1.95.0",
     "oxlint-tsgolint": "7.0.2008",
     "tinycolor2": "1.6.0",
     "type-fest": "6.0.3",
