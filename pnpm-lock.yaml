@@ -201,8 +201,8 @@ importers:
         specifier: 3.0.3
         version: 3.0.3(oxfmt@0.80.0)
       '@types/node':
-        specifier: 26.6.7
-        version: 26.6.7
+        specifier: 26.6.10
+        version: 26.6.10
       knip:
         specifier: 6.48.0
         version: 6.48.0
@@ -225,8 +225,8 @@ importers:
         specifier: 13.0.6
         version: 13.0.6(cypress@16.3.0)(oxfmt@0.80.0)(prettier@3.9.6)(type-fest@6.0.3)(typescript@7.0.2)(wait-on@9.5.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1))(zod@4.6.7)
       '@types/node':
-        specifier: 26.6.7
-        version: 26.6.7
+        specifier: 26.6.10
+        version: 26.6.10
       '@types/tinycolor2':
         specifier: 1.4.6
         version: 1.4.6
@@ -1135,8 +1135,8 @@ packages:
   '@tybys/wasm-util@0.10.3':
     resolution: {integrity: sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==}
 
-  '@types/node@26.6.7':
-    resolution: {integrity: sha512-tovuRfrUILu6v46bMG+BgXxMvsqPBx2WO2as8Rpln+JTff1dbexMtAM4KFTejmL0axsnSWViCW7MecUQpLuBRA==}
+  '@types/node@26.6.10':
+    resolution: {integrity: sha512-WJuPHoGB8WNQuTksNF7SOQpnH02PXeDYz4iueWbBT6/hTWnShY5F3T/hoJA3fY9+uYReDZ7pyTKKx83jQa7aGg==}
 
   '@types/sinonjs__fake-timers@8.1.1':
     resolution: {integrity: sha512-0kSuKjAS0TrGLJ0M/+8MaFkGsQhZpB6pxOmvS3K8FYI72K//YmdfoW9X2qPsAKh1mkwxGD5zib9s1FIFed6E8g==}
@@ -3100,7 +3100,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@types/node@26.6.7':
+  '@types/node@26.6.10':
     dependencies:
       undici-types: 8.9.0
 
